@@ -1,0 +1,382 @@
+id: sorting
+title: "Pipeline de ordenamiento para datos de sensores"
+course: "Introducción a los algoritmos"
+subject: "Ordenamiento &amp; Búsqueda &rsaquo; Ordenamiento por comparación"
+maxCycles: 5
+rawProblem: "Escriba un módulo de ordenamiento que ingiera un flujo en tiempo real de lecturas de temperatura de sensores de almacén y produzca un búfer continuamente ordenado que un panel de monitoreo pueda consultar. Cada lectura es una tupla (sensor_id, timestamp, temperature). El almacén tiene &ldquo;unos pocos cientos&rdquo; de sensores que transmiten cada segundo. Proporcione pseudocódigo funcional para el módulo junto con una tabla que compare el algoritmo elegido con dos alternativas en complejidad temporal, uso de memoria y latencia. El sistema debe &ldquo;manejar los picos&rdquo; cuando los sensores transmiten en ráfagas."
+rawProblemShort: "Módulo de ordenamiento para lecturas de sensores en tiempo real &hellip; búfer ordenado para consultas del panel. ~cientos de sensores, cada segundo. Manejar picos."
+
+mc:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []  // sorted list of (sensor_id, timestamp, temperature)
+
+          FUNCTION ingest(reading):
+              pos = binary_search(buffer, reading.timestamp)
+              buffer.insert(pos, reading)
+              while buffer[0].timestamp &lt; current_time() - 60:
+                  buffer.remove(0)
+
+          FUNCTION poll():
+              return copy(buffer)</div>
+      <p class="text-sm" style="margin-top:8px"><strong>Tabla comparativa:</strong></p>
+      <table class="comparison-table"><thead><tr><th>Criterio</th><th>Ordenamiento por inserción (elegido)</th><th>Mergesort</th><th>Quicksort</th></tr></thead>
+      <tbody>
+      <tr><td>Tiempo (por elemento)</td><td>O(log n) búsqueda + O(n) desplazamiento</td><td>O(n log n) reordenamiento completo</td><td>O(n log n) reordenamiento completo</td></tr>
+      <tr><td>Espacio</td><td>O(1) adicional</td><td>O(n)</td><td>O(log n) pila</td></tr>
+      <tr><td>Latencia</td><td>Baja por elemento</td><td>Alta latencia por lote</td><td>Alta latencia por lote</td></tr>
+      </tbody></table>
+    summary: "Ordenamiento por inserción en arreglo ordenado. O(log n) búsqueda + O(n) desplazamiento. Ventana deslizante de 60 segundos."
+
+  framing:
+    hint: "El problema bruto está intencionalmente incompleto. Seleccione TODOS los refinamientos (suposiciones, restricciones, aclaraciones) que deberían aplicarse antes de que la IA genere una solución. Algunos refinamientos son necesarios; otros son innecesarios o incorrectos."
+    options:
+      - letter: "A"
+        text: "La clave de ordenamiento debe ser el timestamp (no la temperatura) ya que el panel necesita orden cronológico"
+        correct: true
+      - letter: "B"
+        text: "Usar sensor_id como desempate cuando los timestamps coinciden, para garantizar un ordenamiento estable"
+        correct: true
+      - letter: "C"
+        text: "Cuantificar &ldquo;unos pocos cientos&rdquo; como ~200-500 sensores produciendo 200-500 tuplas/seg en condiciones normales"
+        correct: true
+      - letter: "D"
+        text: "Definir los &ldquo;picos&rdquo; como 3 a 5 veces la tasa normal de ingesta (tasa de ráfaga), no anomalías de valores de sensores"
+        correct: true
+      - letter: "E"
+        text: "Suponer que los datos llegan preordenados por sensor_id ya que los sensores tienen posiciones físicas fijas"
+        correct: false
+      - letter: "F"
+        text: "Usar una ventana deslizante de 60 segundos en lugar de almacenar todos los datos históricos"
+        correct: true
+    studentSelections: [0, 2, 3, 5]
+    feedback:
+      grade: "B"
+      html: |
+        <div class="criticism"><strong>Correctamente seleccionados:</strong> (A) clave de ordenamiento por timestamp, (C) cuantificación del número de sensores, (D) definición de la tasa de ráfaga, (F) ventana deslizante.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Omitido:</strong> (B) desempate por sensor_id para estabilidad &mdash; sin esto, el ordenamiento es ambiguo cuando dos lecturas comparten el mismo timestamp.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Correctamente evitado:</strong> (E) preordenado por sensor_id &mdash; los sensores transmiten en momentos diferentes, NO preordenados.</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C), (D), (F).</div>
+
+  cycles:
+    - # Ciclo 1
+      judging:
+        options:
+          - letter: "A"
+            text: "Sin desempate &mdash; la posición de inserción es ambigua para lecturas con el mismo timestamp"
+            correct: true
+          - letter: "B"
+            text: "El costo de desplazamiento O(n) por inserción crea un cuello de botella durante ráfagas de 2.500 lecturas"
+            correct: true
+          - letter: "C"
+            text: "La columna de espacio de la tabla comparativa es engañosa &mdash; &ldquo;O(1) adicional&rdquo; oculta el verdadero costo de memoria"
+            correct: true
+          - letter: "D"
+            text: "poll() copia todo el búfer en cada llamada &mdash; desperdicio para consultas frecuentes"
+            correct: true
+          - letter: "E"
+            text: "Quicksort sería más rápido que el ordenamiento por inserción para este caso de uso en flujo"
+            correct: false
+        studentSelections: [1, 2]
+        doneSelected: false
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Correctamente identificados:</strong> (B) cuello de botella por desplazamiento O(n), (C) columna de espacio engañosa.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Omitidos:</strong> (D) poll() copia todo el búfer; (A) sin desempate para el mismo timestamp.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctamente evitado:</strong> (E) Quicksort NO es mejor para datos en flujo.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C), (D).</div>
+      steering:
+        options:
+          - letter: "A"
+            text: "&ldquo;Analice el costo en el peor caso de ráfagas para 2.500 lecturas. Proponga una alternativa por lotes y fusión.&rdquo;"
+            correct: true
+          - letter: "B"
+            text: "&ldquo;Corrija la tabla comparativa para distinguir el espacio del búfer del espacio auxiliar.&rdquo;"
+            correct: true
+          - letter: "C"
+            text: "&ldquo;Haga que el código sea más rápido y use menos memoria.&rdquo;"
+            correct: false
+          - letter: "D"
+            text: "&ldquo;Reescriba todo usando una lista enlazada para que las inserciones sean O(1).&rdquo;"
+            correct: false
+          - letter: "E"
+            text: "&ldquo;Agregue seguridad de hilos con bloqueos mutex alrededor del búfer.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Correctamente seleccionados:</strong> (A) análisis de ráfagas + lotes-fusión, (B) corregir tabla. Ambos son específicos y ejecutables.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctamente evitados:</strong> (C) demasiado vago, (D) la lista enlazada no ayuda, (E) fuera del alcance.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B) &mdash; conjunto óptimo.</div>
+      summaryJudging: "Cuello de botella por desplazamiento O(n), columna de espacio engañosa"
+      summarySteering: "Análisis de ráfagas + propuesta de lotes-fusión; corregir columna de espacio"
+
+    - # Ciclo 2
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                      flush()
+
+              FUNCTION flush():
+                  sort(batch_queue)                     // O(b log b)
+                  buffer = merge(buffer, batch_queue)   // O(n + b)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Análisis de ráfagas (b=2.500, n=25.000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>Anterior: 2.500 &times; O(25.000) = O(62,5M)</li>
+          <li>Nuevo: O(2.500 log 2.500) + O(27.500) = ~O(30.000)</li>
+          </ul>
+          <table class="comparison-table" style="margin-top:12px"><thead><tr><th>Criterio</th><th>Fusión por lotes (elegido)</th><th>Inserción pura</th><th>Reordenamiento completo</th></tr></thead>
+          <tbody>
+          <tr><td>Tiempo (por lote)</td><td>O(b log b + n)</td><td>O(b &times; n)</td><td>O((n+b) log(n+b))</td></tr>
+          <tr><td>Espacio auxiliar</td><td>O(b) cola de lotes</td><td>O(1)</td><td>O(log(n+b)) pila</td></tr>
+          <tr><td>Latencia</td><td>Amortizada baja</td><td>Baja por elemento, picos altos</td><td>Alta por lote</td></tr>
+          </tbody></table>
+        summary: "Fusión por lotes con batch_queue. O(b log b + n). Ráfaga: ~30K operaciones (error aritmético). BATCH_THRESHOLD no especificado."
+      judging:
+        options:
+          - letter: "A"
+            text: "La aritmética de ráfagas es incorrecta: O(2500 log 2500)+O(27500) &asymp; 55.700, no ~30.000"
+            correct: true
+          - letter: "B"
+            text: "BATCH_THRESHOLD no tiene un valor especificado ni justificación"
+            correct: true
+          - letter: "C"
+            text: "evict_old recorre todo el búfer &mdash; solo el inicio necesita verificación ya que está ordenado por timestamp"
+            correct: true
+          - letter: "D"
+            text: "El enfoque de fusión por lotes es fundamentalmente inadecuado para datos en flujo"
+            correct: false
+        studentSelections: [0, 1]
+        doneSelected: false
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Correctamente identificados:</strong> (A) error aritmético, (B) umbral no especificado.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Omitido:</strong> (C) evict_old recorre todo el búfer; solo se necesita eliminación desde el inicio &mdash; O(k) en lugar de O(n).</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctamente evitado:</strong> (D) la fusión por lotes ES válida para datos en flujo.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C).</div>
+      steering:
+        options:
+          - letter: "A"
+            text: "&ldquo;Corrija la aritmética de ráfagas: muestre el conteo paso a paso de operaciones para b=2.500, n=25.000.&rdquo;"
+            correct: true
+          - letter: "B"
+            text: "&ldquo;Especifique BATCH_THRESHOLD con justificación basada en la frecuencia de consulta y la tasa de tráfico.&rdquo;"
+            correct: true
+          - letter: "C"
+            text: "&ldquo;La solución se ve bien, solo limpie el formato.&rdquo;"
+            correct: false
+          - letter: "D"
+            text: "&ldquo;Reescriba usando un montículo en lugar de un arreglo ordenado.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Correctamente seleccionados:</strong> (A) corregir aritmética, (B) especificar umbral. Específicos y dirigidos.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctamente evitados:</strong> (C) demasiado vago, (D) reescritura innecesaria.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B) &mdash; óptimo.</div>
+      summaryJudging: "Error aritmético en el análisis de ráfagas, BATCH_THRESHOLD no especificado"
+      summarySteering: "Corregir aritmética; especificar BATCH_THRESHOLD con justificación"
+
+    - # Ciclo 3 — el estudiante marca como completado
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1 second of normal traffic
+              FLUSH_INTERVAL = 200ms
+
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)
+                  buffer = merge(buffer, batch_queue)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  if batch_queue is not empty: flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Análisis corregido de ráfagas (b=2.500, n=25.000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch): 2.500 &times; 11,3 = ~28.200 comparaciones</li>
+          <li>merge: 25.000 + 2.500 = 27.500 comparaciones</li>
+          <li>Total: ~55.700 operaciones</li>
+          <li>Enfoque anterior: 62.500.000 operaciones</li>
+          <li><strong>Aceleración: ~1.122&times;</strong></li>
+          </ul>
+        summary: "Fusión por lotes, BATCH_THRESHOLD=500, FLUSH_INTERVAL=200ms. Ráfaga corregida: ~55.700 ops. Aceleración 1.122×."
+      judging:
+        options:
+          - letter: "A"
+            text: "evict_old aún recorre todo el búfer &mdash; podría ser O(k) con un deque o puntero frontal"
+            correct: true
+          - letter: "B"
+            text: "Todo el enfoque es incorrecto &mdash; se debería usar una base de datos en su lugar"
+            correct: false
+          - letter: "C"
+            text: "La función hash no está especificada para la búsqueda de sensores"
+            correct: false
+        studentSelections: []
+        doneSelected: true
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Evaluación:</strong> Marcar como completado fue razonable pero omitió (A) evict_old aún recorre todo el búfer cuando solo se necesita eliminación desde el inicio.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Mejor:</strong> Seleccionar (A) y enviar una última corrección antes de marcar como completado.</div>
+      steering: null
+      summaryJudging: "El estudiante marcó la solución como completada"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "B"
+      judging: "B"
+      steering: "A"
+    summary: "Dirección sólida &mdash; las correcciones fueron específicas y bien dirigidas. El encuadre omitió el desempate por estabilidad (sensor_id). Juicio: identificó consistentemente los problemas principales pero omitió preocupaciones secundarias (costo de copia de poll(), optimización de evicción). Intente preguntarse &ldquo;¿qué más podría estar mal?&rdquo; después de encontrar el primer problema."
+
+oe:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []
+          batch_queue = []
+          BATCH_THRESHOLD = 500
+
+          FUNCTION ingest(reading):
+              batch_queue.append(reading)
+              if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                  flush()
+
+          FUNCTION flush():
+              sort(batch_queue, key=timestamp)
+              buffer = merge(buffer, batch_queue)
+              batch_queue = []
+              evict_old(buffer)
+
+          FUNCTION poll():
+              if batch_queue: flush()
+              return copy(buffer)  // immutable snapshot</div>
+    summary: "Fusión por lotes con cola. BATCH_THRESHOLD=500. Instantánea inmutable en poll()."
+
+  framing:
+    hint: "El problema bruto está intencionalmente incompleto. Añada secciones de refinamiento a continuación &mdash; suposiciones, restricciones, aclaraciones &mdash; para convertirlo en una tarea bien definida."
+    sections:
+      - name: "Suposiciones: clave de ordenamiento y orden"
+        text: "La clave de ordenamiento principal es el timestamp (orden cronológico para el panel). Usar sensor_id como clave secundaria para estabilidad cuando los timestamps coinciden. Las lecturas pueden llegar ligeramente desordenadas debido a la fluctuación de red."
+      - name: "Restricciones: escala y rendimiento"
+        text: "Estimación de 200-500 sensores, produciendo 200-500 tuplas/seg normalmente. Los &ldquo;picos&rdquo; corresponden a 3-5 veces la tasa normal (1.000-2.500 tuplas/seg). El búfer cubre una ventana deslizante de 60 segundos (~30.000 entradas en pico). La latencia de consulta debe permanecer por debajo de 50 ms."
+      - name: "Aclaración: formato de salida"
+        text: "El panel necesita el búfer ordenado completo (no top-k). La salida debe ser una instantánea inmutable &mdash; sin modificación concurrente durante las lecturas de poll."
+    feedback:
+      grade: "A"
+      html: |
+        <div class="criticism"><strong>Fortalezas:</strong> Excelente encuadre. Identificó la clave de ordenamiento con desempate por estabilidad, cuantificó la escala y la tasa de ráfaga, especificó la ventana del búfer, definió los requisitos de latencia de consulta y abordó la semántica de instantáneas.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Brecha menor:</strong> Podría especificar cuánto pueden llegar las lecturas fuera de orden (p. ej., fluctuación máxima de 5 segundos).</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Mejora:</strong> Añadir una sección &ldquo;Métricas de éxito&rdquo; con objetivos de rendimiento concretos (p. ej., latencia de ingesta en el percentil 99 &lt; 2 ms durante ráfaga).</div>
+
+  cycles:
+    - # Ciclo 1
+      judging:
+        sections:
+          - name: "Problema: rendimiento en ráfagas no analizado"
+            text: "La IA eligió fusión por lotes pero nunca analizó el costo en el peor caso durante una ráfaga. Con b=2.500 y n=25.000, no se proporcionan cifras reales. La tabla comparativa también carece de análisis de escenarios de ráfaga."
+          - name: "Problema: justificación del BATCH_THRESHOLD faltante"
+            text: "BATCH_THRESHOLD = 500 se indica pero nunca se justifica. ¿Por qué 500? ¿Cómo se relaciona con el intervalo de consulta de 200 ms del panel?"
+          - name: "Problema: sobrecarga de copia completa de poll()"
+            text: "poll() retorna copy(buffer) &mdash; copiar ~30.000 entradas cada 200 ms. A 5 consultas/seg, eso son 150.000 copias de entradas/seg. Considerar semántica de copia en escritura."
+        doneSelected: false
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Excelente análisis.</strong> Identificó tres problemas reales: análisis de ráfagas faltante (crítico), umbral no justificado (moderado) y sobrecarga de copia de poll() (válido).</div>
+            <div class="criticism" style="margin-top:6px"><strong>Omisión menor:</strong> evict_old() recorre todo el búfer pero solo necesita eliminar desde el inicio &mdash; optimización O(n) vs O(k).</div>
+      steering:
+        sections:
+          - name: "Instrucción: añadir análisis de rendimiento en ráfagas"
+            text: "Calcule el conteo exacto de operaciones para una ráfaga de b=2.500 en un búfer de n=25.000. Compare el enfoque anterior (inserción por elemento) vs fusión por lotes. Muestre el factor de aceleración."
+          - name: "Instrucción: justificar el BATCH_THRESHOLD"
+            text: "Proporcione razonamiento para BATCH_THRESHOLD = 500. Relaciónelo con la tasa de tráfico normal, la frecuencia de consulta del panel (200 ms) y el equilibrio entre latencia y eficiencia de fusión."
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Dirección bien dirigida.</strong> Ambas instrucciones abordan directamente los dos problemas más críticos con contexto específico.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Mejora:</strong> Podría también abordar el problema de copia de poll() en este ciclo.</div>
+      summaryJudging: "Análisis de ráfagas faltante, umbral no justificado, sobrecarga de copia de poll()"
+      summarySteering: "Añadir análisis de rendimiento en ráfagas; justificar el BATCH_THRESHOLD"
+
+    - # Ciclo 2 — el estudiante marca como completado
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1s normal traffic; flush before 200ms poll
+              FLUSH_INTERVAL = 150ms // ensures fresh data for 200ms poll cycle
+
+              buffer = deque()       // front-eviction in O(k)
+              batch_queue = []
+              snapshot = None        // cached immutable copy
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  snapshot = None    // invalidate cache
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or elapsed &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)              // O(b log b)
+                  buffer = merge(buffer, batch_queue)  // O(n + b)
+                  batch_queue = []
+                  evict_expired(buffer)                // O(k) front removal
+                  snapshot = None
+
+              FUNCTION poll():
+                  if batch_queue: flush()
+                  if snapshot is None:
+                      snapshot = freeze(buffer)        // O(n) but cached
+                  return snapshot</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Análisis de ráfagas (b=2.500, n=25.000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch): 2.500 &times; 11,3 = ~28.200 comparaciones</li>
+          <li>merge: 25.000 + 2.500 = 27.500 operaciones</li>
+          <li>Total: ~55.700 ops vs enfoque anterior: 62.500.000</li>
+          <li><strong>Aceleración: ~1.122&times;</strong></li>
+          </ul>
+        summary: "Fusión por lotes con búfer deque, instantáneas en caché. BATCH_THRESHOLD=500, FLUSH_INTERVAL=150ms. Ráfaga: ~55.700 ops (aceleración 1.122×)."
+      judging:
+        sections: []
+        doneSelected: true
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Decisión apropiada.</strong> La solución aborda todos los problemas críticos planteados. El detalle de evicción restante ya fue corregido. Marcar como completado estaba justificado.</div>
+      steering: null
+      summaryJudging: "El estudiante marcó la solución como completada"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "A"
+      judging: "A"
+      steering: "A"
+    summary: "Rendimiento excepcional en las tres dimensiones. El encuadre fue exhaustivo con suposiciones bien justificadas. El juicio identificó problemas críticos con análisis cuantificado. La dirección fue precisa e impulsó mejoras significativas. La decisión de marcar como completado en el ciclo 2 fue apropiada."

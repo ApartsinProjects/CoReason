@@ -1,0 +1,300 @@
+id: sql
+title: "Optimisation de requêtes pour l'analyse e-commerce"
+course: "Systèmes de bases de données"
+subject: "Traitement des requêtes &rsaquo; Optimisation des requêtes"
+maxCycles: 4
+rawProblem: "Écrivez une requête SQL qui génère un rapport mensuel de performance commerciale pour une plateforme de commerce en ligne. Le rapport doit afficher les produits les plus vendus regroupés par catégorie, incluant le chiffre d'affaires total, les unités vendues et la note moyenne des clients. La base de données contient &ldquo;des millions&rdquo; d'enregistrements de transactions. La requête doit s'exécuter &ldquo;assez rapidement&rdquo; pour un tableau de bord exécutif qui se rafraîchit automatiquement. Elle doit &ldquo;gérer la période des fêtes&rdquo; lorsque le volume de commandes est à son maximum."
+rawProblemShort: "Requête SQL pour rapport mensuel des ventes &hellip; meilleurs produits par catégorie, chiffre d'affaires, notes. Des millions d'enregistrements, performance du tableau de bord."
+
+mc:
+  aiSolution:
+    html: |
+      <div class="code-block">SELECT
+          c.category_name,
+          p.product_name,
+          SUM(oi.quantity) AS units_sold,
+          SUM(oi.quantity * oi.unit_price) AS total_revenue,
+          AVG(r.rating) AS avg_rating
+      FROM order_items oi
+      JOIN orders o ON oi.order_id = o.order_id
+      JOIN products p ON oi.product_id = p.product_id
+      JOIN categories c ON p.category_id = c.category_id
+      LEFT JOIN reviews r ON p.product_id = r.product_id
+      WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+      GROUP BY c.category_name, p.product_name
+      ORDER BY c.category_name, total_revenue DESC;</div>
+    summary: "SELECT basique avec JOINs, GROUP BY, ORDER BY. Pas de filtre top-N, pas d'analyse d'index, JOIN des avis non filtré."
+
+  framing:
+    hint: "Le problème comporte des exigences vagues. Sélectionnez TOUS les raffinements nécessaires pour définir la tâche avec précision avant que l'IA n'écrive la requête."
+    options:
+      - letter: "A"
+        text: "Quantifier &ldquo;des millions&rdquo; comme ~8M commandes, ~200K produits, ~40 catégories"
+        correct: true
+      - letter: "B"
+        text: "Définir &ldquo;assez rapidement&rdquo; comme un temps de réponse de la requête inférieur à 3 secondes"
+        correct: true
+      - letter: "C"
+        text: "&ldquo;Meilleurs vendeurs&rdquo; signifie les 10 premiers par catégorie classés par chiffre d'affaires"
+        correct: true
+      - letter: "D"
+        text: "Supposer que toutes les requêtes s'exécutent sur une vue matérialisée pré-construite"
+        correct: false
+      - letter: "E"
+        text: "Mensuel = mois calendaire ; inclure une comparaison mois sur mois"
+        correct: true
+      - letter: "F"
+        text: "Les notes sont garanties pour chaque produit (pas de NULLs)"
+        correct: false
+    studentSelections: [0, 2, 4]
+    feedback:
+      grade: "B"
+      html: |
+        <div class="criticism"><strong>Correctement sélectionnés :</strong> (A) quantification du volume de données, (C) top-10 par catégorie, (E) mois calendaire avec comparaison.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Manqué :</strong> (B) définition de &ldquo;assez rapidement&rdquo; &mdash; sans un SLA concret, il est impossible d'évaluer la performance de la requête.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Correctement évités :</strong> (D) vue matérialisée pré-construite surspécifie l'architecture ; (F) les notes ne sont PAS garanties pour tous les produits.</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B), (C), (E).</div>
+
+  cycles:
+    - # Cycle 1
+      judging:
+        options:
+          - letter: "A"
+            text: "Filtre top-N manquant &mdash; retourne TOUS les produits par catégorie, pas les 10 premiers"
+            correct: true
+          - letter: "B"
+            text: "Le JOIN des avis multiplie les lignes &mdash; AVG(rating) est calculé sur des lignes dupliquées"
+            correct: true
+          - letter: "C"
+            text: "GROUP BY devrait inclure product_id pour l'exactitude"
+            correct: false
+          - letter: "D"
+            text: "Pas de stratégie d'index ni d'analyse du plan d'exécution"
+            correct: true
+          - letter: "E"
+            text: "Il faudrait utiliser du NoSQL pour ce type de requête analytique"
+            correct: false
+        studentSelections: [0, 3]
+        doneSelected: false
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Correctement identifiés :</strong> (A) filtre top-N manquant, (D) pas de stratégie d'index.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Manqué :</strong> (B) le JOIN des avis crée des lignes dupliquées qui faussent AVG(rating). C'est un problème d'exactitude subtil mais critique.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctement évités :</strong> (C) GROUP BY est correct avec product_name s'il est unique ; (E) SQL est approprié ici.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B), (D).</div>
+      steering:
+        options:
+          - letter: "A"
+            text: "&ldquo;Ajoutez ROW_NUMBER() OVER (PARTITION BY catégorie ORDER BY chiffre d'affaires DESC) pour limiter aux 10 premiers par catégorie.&rdquo;"
+            correct: true
+          - letter: "B"
+            text: "&ldquo;Incluez des recommandations d'index et une analyse du plan d'exécution attendu.&rdquo;"
+            correct: true
+          - letter: "C"
+            text: "&ldquo;Ajoutez d'autres JOINs pour inclure les informations fournisseur et entrepôt.&rdquo;"
+            correct: false
+          - letter: "D"
+            text: "&ldquo;Réécrivez sous forme de procédure stockée pour de meilleures performances.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Correctement sélectionnés :</strong> (A) fonction fenêtre pour le top-N, (B) index/plan d'exécution. Les deux sont ciblés et spécifiques.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctement évités :</strong> (C) extension de périmètre non pertinente, (D) optimisation prématurée.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B) &mdash; ensemble optimal.</div>
+      summaryJudging: "Filtre top-N manquant, pas d'index/plan d'exécution"
+      summarySteering: "Ajouter ROW_NUMBER pour le top-10 ; inclure l'analyse d'index"
+
+    - # Cycle 2 — l'étudiant marque comme terminé trop tôt
+      aiUpdate:
+        html: |
+          <div class="code-block">WITH ranked_products AS (
+              SELECT
+                  c.category_name,
+                  p.product_name,
+                  SUM(oi.quantity) AS units_sold,
+                  SUM(oi.quantity * oi.unit_price) AS total_revenue,
+                  AVG(r.rating) AS avg_rating,
+                  ROW_NUMBER() OVER (
+                      PARTITION BY c.category_id
+                      ORDER BY SUM(oi.quantity * oi.unit_price) DESC
+                  ) AS rk
+              FROM order_items oi
+              JOIN orders o ON oi.order_id = o.order_id
+              JOIN products p ON oi.product_id = p.product_id
+              JOIN categories c ON p.category_id = c.category_id
+              LEFT JOIN reviews r ON p.product_id = r.product_id
+              WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+              GROUP BY c.category_id, c.category_name,
+                       p.product_id, p.product_name
+          )
+          SELECT * FROM ranked_products
+          WHERE rk &lt;= 10
+          ORDER BY category_name, rk;
+
+          -- Index recommandés :
+          -- CREATE INDEX idx_orders_date ON orders(order_date);
+          -- CREATE INDEX idx_oi_order ON order_items(order_id, product_id);</div>
+        summary: "CTE avec ROW_NUMBER pour le top-10 par catégorie. Recommandations d'index ajoutées. JOIN des avis toujours non filtré."
+      judging:
+        options:
+          - letter: "A"
+            text: "Le JOIN des avis crée encore des lignes dupliquées &mdash; AVG(rating) est faussé par le volume de commandes"
+            correct: true
+          - letter: "B"
+            text: "La comparaison mois sur mois est encore absente des exigences"
+            correct: true
+          - letter: "C"
+            text: "La CTE rend la requête plus lente que la requête originale"
+            correct: false
+        studentSelections: []
+        doneSelected: true
+        feedback:
+          grade: "C"
+          html: |
+            <div class="criticism"><strong>Achèvement prématuré.</strong> Deux vrais problèmes subsistent : (A) le JOIN des avis fausse les notes &mdash; une ligne pour un produit avec 100 commandes reçoit 100 fois le poids dans AVG ; (B) la comparaison mois sur mois était une exigence énoncée.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Mieux :</strong> Sélectionner (A) et (B), puis diriger l'IA pour les corriger avant de marquer comme terminé.</div>
+      steering: null
+      summaryJudging: "L'étudiant a marqué la solution comme terminée (prématuré)"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "B"
+      judging: "C"
+      steering: "A"
+    summary: "L'orientation était excellente &mdash; les corrections étaient spécifiques et bien choisies. Le cadrage a manqué la définition du SLA de performance. Le jugement était le point le plus faible : a manqué le problème de cardinalité des avis au cycle 1 et a terminé prématurément au cycle 2 avec deux vrais problèmes restants. Entraînez-vous à identifier tous les problèmes avant de marquer une solution comme terminée."
+
+oe:
+  aiSolution:
+    html: |
+      <div class="code-block">WITH monthly_sales AS (
+          SELECT
+              c.category_name,
+              p.product_id,
+              p.product_name,
+              SUM(oi.quantity) AS units_sold,
+              SUM(oi.quantity * oi.unit_price) AS total_revenue,
+              ROW_NUMBER() OVER (
+                  PARTITION BY c.category_id
+                  ORDER BY SUM(oi.quantity * oi.unit_price) DESC
+              ) AS rk
+          FROM order_items oi
+          JOIN orders o ON oi.order_id = o.order_id
+          JOIN products p ON oi.product_id = p.product_id
+          JOIN categories c ON p.category_id = c.category_id
+          WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+          GROUP BY c.category_id, c.category_name,
+                   p.product_id, p.product_name
+      )
+      SELECT ms.*,
+          (SELECT AVG(r.rating) FROM reviews r
+           WHERE r.product_id = ms.product_id) AS avg_rating
+      FROM monthly_sales ms
+      WHERE rk &lt;= 10
+      ORDER BY category_name, rk;</div>
+    summary: "CTE avec ROW_NUMBER pour le top-10. Sous-requête corrélée pour les notes. Pas d'analyse d'index, pas de comparaison mois sur mois."
+
+  framing:
+    hint: "Ajoutez des sections de raffinement pour clarifier les exigences vagues. Chaque section doit traiter une ambiguïté du problème brut."
+    sections:
+      - name: "Hypothèses : volume et structure des données"
+        text: "Estimation de ~8M commandes, ~200K produits, ~40 catégories dans un schéma relationnel normalisé. Les produits ont au plus une affectation de catégorie."
+      - name: "Contraintes : SLA de performance"
+        text: "Le tableau de bord se rafraîchit automatiquement toutes les 5 minutes. La requête doit retourner en moins de 3 secondes. Considérer une stratégie d'indexation pour la clause WHERE sur order_date."
+      - name: "Clarification : périmètre du rapport"
+        text: "&ldquo;Meilleurs vendeurs&rdquo; = top 10 par catégorie par chiffre d'affaires total. Mensuel = mois calendaire. Inclure une comparaison avec le mois précédent pour l'analyse des tendances."
+    feedback:
+      grade: "A"
+      html: |
+        <div class="criticism"><strong>Cadrage approfondi.</strong> A quantifié le volume de données, défini le SLA de performance, clarifié la sémantique du top-N et spécifié la comparaison mois sur mois.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Lacune mineure :</strong> Pourrait aborder comment gérer les produits sans avis (notes NULL).</div>
+
+  cycles:
+    - # Cycle 1
+      judging:
+        sections:
+          - name: "Problème : sous-requête corrélée pour les notes"
+            text: "La sous-requête pour avg_rating s'exécute une fois par ligne de résultat. Avec 400 lignes (10 par catégorie × 40 catégories), cela signifie 400 requêtes séparées. Devrait être un JOIN ou CTE pré-agrégé."
+          - name: "Problème : comparaison mois sur mois manquante"
+            text: "Les exigences spécifient une comparaison mois sur mois mais la requête n'affiche que les données du mois en cours. Il faut inclure le mois précédent dans le même jeu de résultats."
+        doneSelected: false
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Excellente analyse.</strong> Les deux problèmes sont correctement identifiés avec un raisonnement spécifique et quantifié. La préoccupation concernant la sous-requête corrélée est bien expliquée avec des estimations du nombre de lignes.</div>
+      steering:
+        sections:
+          - name: "Instruction : remplacer la sous-requête corrélée"
+            text: "Créez une CTE de notes qui calcule AVG(rating) par product_id une seule fois, puis faites un LEFT JOIN avec la requête principale. Cela élimine la sous-requête par ligne."
+          - name: "Instruction : ajouter la comparaison avec le mois précédent"
+            text: "Ajoutez une seconde CTE pour les données du mois précédent. Le SELECT final doit inclure le chiffre d'affaires du mois en cours et du mois précédent avec une colonne de pourcentage de variation."
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Bien ciblé.</strong> Les deux instructions sont spécifiques, fournissent des orientations claires d'implémentation et abordent directement les problèmes identifiés.</div>
+      summaryJudging: "Problème de performance de la sous-requête corrélée, comparaison mois sur mois manquante"
+      summarySteering: "Remplacer la sous-requête corrélée par une CTE ; ajouter la comparaison avec le mois précédent"
+
+    - # Cycle 2 — l'étudiant marque comme terminé
+      aiUpdate:
+        html: |
+          <div class="code-block">WITH product_ratings AS (
+              SELECT product_id, AVG(rating) AS avg_rating,
+                     COUNT(*) AS review_count
+              FROM reviews GROUP BY product_id
+          ),
+          current_month AS (
+              SELECT c.category_name, p.product_id, p.product_name,
+                     SUM(oi.quantity) AS units_sold,
+                     SUM(oi.quantity * oi.unit_price) AS revenue,
+                     ROW_NUMBER() OVER (PARTITION BY c.category_id
+                         ORDER BY SUM(oi.quantity*oi.unit_price) DESC) AS rk
+              FROM order_items oi
+              JOIN orders o ON oi.order_id = o.order_id
+              JOIN products p ON oi.product_id = p.product_id
+              JOIN categories c ON p.category_id = c.category_id
+              WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+              GROUP BY c.category_id, c.category_name, p.product_id, p.product_name
+          ),
+          prev_month AS (
+              SELECT p.product_id,
+                     SUM(oi.quantity * oi.unit_price) AS prev_revenue
+              FROM order_items oi
+              JOIN orders o ON oi.order_id = o.order_id
+              JOIN products p ON oi.product_id = p.product_id
+              WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month'
+                AND o.order_date &lt; DATE_TRUNC('month', CURRENT_DATE)
+              GROUP BY p.product_id
+          )
+          SELECT cm.category_name, cm.product_name, cm.units_sold,
+                 cm.revenue, pr.avg_rating, pr.review_count,
+                 pm.prev_revenue,
+                 ROUND((cm.revenue - pm.prev_revenue) / pm.prev_revenue * 100, 1) AS pct_change
+          FROM current_month cm
+          LEFT JOIN product_ratings pr ON cm.product_id = pr.product_id
+          LEFT JOIN prev_month pm ON cm.product_id = pm.product_id
+          WHERE cm.rk &lt;= 10
+          ORDER BY cm.category_name, cm.rk;
+
+          -- Index : idx_orders_date, idx_oi_order_product</div>
+        summary: "Trois CTEs : notes (pré-agrégées), mois en cours, mois précédent. Colonne de pourcentage de variation. Recommandations d'index."
+      judging:
+        sections: []
+        doneSelected: true
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Achèvement raisonnable.</strong> Les problèmes majeurs sont résolus. Préoccupation mineure restante : pct_change provoquera une erreur de division par zéro lorsque prev_revenue est NULL ou 0. Une protection NULLIF ou COALESCE serait prudente.</div>
+      steering: null
+      summaryJudging: "L'étudiant a marqué la solution comme terminée"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "A"
+      judging: "B"
+      steering: "A"
+    summary: "Forte performance globale. Le cadrage était approfondi avec une définition claire du SLA. Le jugement a correctement identifié les deux problèmes principaux au cycle 1. L'orientation a fourni des instructions spécifiques et implémentables. Déduction mineure au jugement : aurait pu détecter le cas limite de division par zéro dans la sortie finale avant de marquer comme terminé."

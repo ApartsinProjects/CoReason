@@ -1,0 +1,13 @@
+{
+  "name": "coreason-content",
+  "version": "1.0.0",
+  "description": "CoReasoning Lab content build pipeline",
+  "scripts": {
+    "build": "node build-content.js",
+    "build:watch": "node build-content.js --watch"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "glob": "^10.3.0"
+  }
+}

@@ -6,7 +6,8 @@
   <title>CoReasoning Lab — Challenge Run</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="assets/logo.png">
-  <script src="challenge-scenarios.js"></script>
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
   <style>
     .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
     .problem-panel { background: #f8f9ff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--primary); }
@@ -127,7 +128,7 @@
       <a href="07-student-analytics.html">My Results</a>
     </nav>
     <div class="user-area">
-      <select class="lang-select"><option>EN</option><option>HE</option><option>AR</option></select>
+      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Student</span>
       <span id="user-name">Noa R.</span>
       <a href="09-profile.html"><div class="avatar" id="user-avatar">NR</div></a>
@@ -192,6 +193,7 @@
     // LOAD & RENDER SCENARIO
     // ══════════════════════════════════════════════════════════
     function loadScenario() {
+      const data = getActiveData();
       const baseId = document.getElementById('challenge-picker').value;
       // Derive scenario ID from picker + mode
       const parts = baseId.split('-');
@@ -199,10 +201,10 @@
       const respType = parts[parts.length - 2];
       const scenarioId = challengeKey + '-' + respType + '-' + currentMode;
 
-      const scenario = SCENARIOS[scenarioId];
+      const scenario = data.scenarios[scenarioId];
       if (!scenario) { document.getElementById('scenario-content').innerHTML = '<p>Scenario not found: ' + scenarioId + '</p>'; return; }
 
-      const challenge = CHALLENGES[scenario.challengeId];
+      const challenge = data.challenges[scenario.challengeId];
       const variant = challenge[scenario.responseType];
       const mode = scenario.mode;
       const isOE = scenario.responseType === 'oe';
@@ -608,6 +610,13 @@
         el('summary-log').appendChild(d);
       }
     }
+
+    // ══════════════════════════════════════════════════════════
+    // LANGUAGE SWITCHING
+    // ══════════════════════════════════════════════════════════
+    document.addEventListener('langchange', function(e) {
+      loadScenario(); // reload with new language data
+    });
 
     // ══════════════════════════════════════════════════════════
     // INIT

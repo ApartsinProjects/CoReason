@@ -1,0 +1,39 @@
+id: rubric
+title: "Rubric Template"
+phases:
+  framing:
+    title: "Framing Rubric"
+    criteria:
+      - name: "Completeness"
+        description: "Did the student identify all necessary refinements?"
+        weight: 0.4
+      - name: "Correctness"
+        description: "Were the selected refinements actually necessary?"
+        weight: 0.3
+      - name: "Precision"
+        description: "Were refinements specific and well-defined?"
+        weight: 0.3
+  judging:
+    title: "Judging Rubric"
+    criteria:
+      - name: "Issue Identification"
+        description: "Did the student find all real issues?"
+        weight: 0.4
+      - name: "False Positives"
+        description: "Did the student avoid marking non-issues?"
+        weight: 0.3
+      - name: "Completion Decision"
+        description: "Was the done/continue decision appropriate?"
+        weight: 0.3
+  steering:
+    title: "Steering Rubric"
+    criteria:
+      - name: "Specificity"
+        description: "Were instructions specific and actionable?"
+        weight: 0.4
+      - name: "Relevance"
+        description: "Did instructions address the identified issues?"
+        weight: 0.3
+      - name: "Scope"
+        description: "Were instructions appropriately scoped (not too broad/narrow)?"
+        weight: 0.3

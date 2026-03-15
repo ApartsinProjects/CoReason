@@ -350,3 +350,33 @@ ul.tree-children.collapsed { display: none; }
   .filter-bar { flex-direction: column; }
   .filter-bar .form-control, .filter-bar input[type="search"] { width: 100%; min-width: unset; }
 }
+
+/* ── RTL Support (Hebrew/Arabic) ── */
+html[dir="rtl"] { direction: rtl; }
+html[dir="rtl"] body { text-align: right; }
+html[dir="rtl"] .topnav nav { margin-left: 0; margin-right: 40px; }
+html[dir="rtl"] .topnav .user-area { margin-left: 0; margin-right: auto; }
+html[dir="rtl"] .page { direction: rtl; }
+html[dir="rtl"] .filter-bar { direction: rtl; }
+html[dir="rtl"] .tabs { direction: rtl; }
+html[dir="rtl"] .card { text-align: right; }
+html[dir="rtl"] .form-group { text-align: right; }
+html[dir="rtl"] .alert { text-align: right; }
+html[dir="rtl"] .stepper { direction: rtl; }
+html[dir="rtl"] .problem-panel { border-left: none; border-right: 4px solid var(--primary); }
+html[dir="rtl"] .feedback-panel { border-left: none; border-right: 4px solid var(--teal); }
+html[dir="rtl"] .instructions-bar { direction: rtl; }
+html[dir="rtl"] .mc-option { direction: rtl; }
+html[dir="rtl"] .submit-area { direction: rtl; }
+html[dir="rtl"] .code-block { direction: ltr; text-align: left; } /* code stays LTR */
+html[dir="rtl"] .comparison-table { direction: ltr; } /* tables with code stay LTR */
+html[dir="rtl"] table th, html[dir="rtl"] table td { text-align: right; }
+html[dir="rtl"] .comparison-table th, html[dir="rtl"] .comparison-table td { text-align: left; }
+html[dir="rtl"] .substep-label { direction: rtl; }
+html[dir="rtl"] .cycle-header { direction: rtl; }
+html[dir="rtl"] .cycle-header .collapse-arrow { margin-left: 0; margin-right: auto; }
+html[dir="rtl"] .summary-raw { border-left: none; border-right: 3px solid var(--primary); }
+html[dir="rtl"] .page-header { text-align: right; }
+html[dir="rtl"] .hero { text-align: center; } /* center stays center */
+html[dir="rtl"] .btn { direction: rtl; }
+html[dir="rtl"] .grade { direction: ltr; } /* grades stay LTR */

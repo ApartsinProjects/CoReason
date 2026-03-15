@@ -1,0 +1,373 @@
+id: sorting
+title: "Sorting Pipeline for Sensor Data"
+course: intro-algorithms
+subject: "Sorting &amp; Searching &rsaquo; Comparison-based Sorting"
+maxCycles: 5
+rawProblem: "Write a sorting module that ingests a live stream of temperature readings from warehouse sensors and outputs a continuously sorted buffer that a monitoring dashboard can poll. Each reading is a (sensor_id, timestamp, temperature) tuple. The warehouse has &ldquo;a few hundred&rdquo; sensors reporting every second. Deliver working pseudocode for the module plus a table comparing your chosen algorithm against two alternatives on time complexity, space usage, and latency. The system should &ldquo;handle spikes&rdquo; when sensors report in bursts."
+rawProblemShort: "Sorting module for live sensor readings &hellip; sorted buffer for dashboard polling. ~hundreds of sensors, every second. Handle spikes."
+
+mc:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []  // sorted list of (sensor_id, timestamp, temperature)
+
+          FUNCTION ingest(reading):
+              pos = binary_search(buffer, reading.timestamp)
+              buffer.insert(pos, reading)
+              while buffer[0].timestamp &lt; current_time() - 60:
+                  buffer.remove(0)
+
+          FUNCTION poll():
+              return copy(buffer)</div>
+      <p class="text-sm" style="margin-top:8px"><strong>Comparison Table:</strong></p>
+      <table class="comparison-table"><thead><tr><th>Criterion</th><th>Insertion Sort (chosen)</th><th>Merge Sort</th><th>Quick Sort</th></tr></thead>
+      <tbody>
+      <tr><td>Time (per item)</td><td>O(log n) search + O(n) shift</td><td>O(n log n) full re-sort</td><td>O(n log n) full re-sort</td></tr>
+      <tr><td>Space</td><td>O(1) extra</td><td>O(n)</td><td>O(log n) stack</td></tr>
+      <tr><td>Latency</td><td>Low per-item</td><td>High batch latency</td><td>High batch latency</td></tr>
+      </tbody></table>
+    summary: "Insertion sort into sorted array. O(log n) search + O(n) shift. 60s sliding window."
+  framing:
+    hint: "The raw problem is intentionally incomplete. Select ALL refinements (assumptions, constraints, clarifications) that should be applied before the AI generates a solution. Some refinements are necessary; others are unnecessary or wrong."
+    options:
+      - letter: A
+        text: "Sort key should be timestamp (not temperature) since the dashboard needs chronological ordering"
+        correct: true
+      - letter: B
+        text: "Use sensor_id as tiebreaker when timestamps match, to ensure stable ordering"
+        correct: true
+      - letter: C
+        text: "Quantify &ldquo;a few hundred&rdquo; as ~200-500 sensors producing 200-500 tuples/sec under normal conditions"
+        correct: true
+      - letter: D
+        text: "Define &ldquo;spikes&rdquo; as 3-5x the normal ingestion rate (burst rate), not sensor value anomalies"
+        correct: true
+      - letter: E
+        text: "Assume data arrives pre-sorted by sensor_id since sensors have fixed physical positions"
+        correct: false
+      - letter: F
+        text: "Use a 60-second sliding window buffer rather than storing all historical data"
+        correct: true
+    studentSelections: [0, 2, 3, 5]
+    feedback:
+      grade: B
+      html: |
+        <div class="criticism"><strong>Correctly selected:</strong> (A) sort key as timestamp, (C) quantifying sensor count, (D) defining spike rate, (F) sliding window.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Missed:</strong> (B) sensor_id tiebreaker for stability &mdash; without this, sort is ambiguous when two readings share a timestamp.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Correctly avoided:</strong> (E) pre-sorted by sensor_id &mdash; sensors report at different times, NOT pre-sorted.</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C), (D), (F).</div>
+  cycles:
+    - # Cycle 1
+      judging:
+        options:
+          - letter: A
+            text: "No tiebreaker &mdash; insertion position is ambiguous for same-timestamp readings"
+            correct: true
+          - letter: B
+            text: "O(n) shift cost per insertion creates a bottleneck during bursts of 2,500 readings"
+            correct: true
+          - letter: C
+            text: "Comparison table&rsquo;s space column is misleading &mdash; &ldquo;O(1) extra&rdquo; hides true memory cost"
+            correct: true
+          - letter: D
+            text: "poll() copies the entire buffer on every call &mdash; wasteful for frequent polling"
+            correct: true
+          - letter: E
+            text: "Quick Sort would be faster than insertion for this streaming use case"
+            correct: false
+        studentSelections: [1, 2]
+        doneSelected: false
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>Correctly identified:</strong> (B) O(n) shift bottleneck, (C) misleading space column.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Missed:</strong> (D) poll() copies entire buffer; (A) no tiebreaker for same-timestamp.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctly avoided:</strong> (E) Quick Sort is NOT better for streaming data.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C), (D).</div>
+      steering:
+        options:
+          - letter: A
+            text: "&ldquo;Analyze worst-case burst cost for 2,500 readings. Propose a batch-and-merge alternative.&rdquo;"
+            correct: true
+          - letter: B
+            text: "&ldquo;Fix comparison table to distinguish buffer space from auxiliary space.&rdquo;"
+            correct: true
+          - letter: C
+            text: "&ldquo;Make the code run faster and use less memory.&rdquo;"
+            correct: false
+          - letter: D
+            text: "&ldquo;Rewrite everything using a linked list so insertions are O(1).&rdquo;"
+            correct: false
+          - letter: E
+            text: "&ldquo;Add thread safety with mutex locks around the buffer.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>Correctly selected:</strong> (A) burst analysis + batch-merge, (B) fix table. Both specific and actionable.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctly avoided:</strong> (C) too vague, (D) linked list doesn&rsquo;t help, (E) out of scope.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B) &mdash; optimal set.</div>
+      summaryJudging: "O(n) shift bottleneck, misleading space column"
+      summarySteering: "Burst analysis + batch-merge proposal; fix space column"
+    - # Cycle 2
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                      flush()
+
+              FUNCTION flush():
+                  sort(batch_queue)                     // O(b log b)
+                  buffer = merge(buffer, batch_queue)   // O(n + b)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Burst Analysis (b=2,500, n=25,000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>Old: 2,500 &times; O(25,000) = O(62.5M)</li>
+          <li>New: O(2,500 log 2,500) + O(27,500) = ~O(30,000)</li>
+          </ul>
+          <table class="comparison-table" style="margin-top:12px"><thead><tr><th>Criterion</th><th>Batch Merge (chosen)</th><th>Pure Insertion</th><th>Full Re-sort</th></tr></thead>
+          <tbody>
+          <tr><td>Time (per batch)</td><td>O(b log b + n)</td><td>O(b &times; n)</td><td>O((n+b) log(n+b))</td></tr>
+          <tr><td>Auxiliary Space</td><td>O(b) batch queue</td><td>O(1)</td><td>O(log(n+b)) stack</td></tr>
+          <tr><td>Latency</td><td>Amortized low</td><td>Low per-item, spikes high</td><td>High per-batch</td></tr>
+          </tbody></table>
+        summary: "Batch-merge with batch_queue. O(b log b + n). Burst: ~30K ops (arithmetic error). BATCH_THRESHOLD unspecified."
+      judging:
+        options:
+          - letter: A
+            text: "Burst arithmetic is wrong: O(2500 log 2500)+O(27500) &asymp; 55,700, not ~30,000"
+            correct: true
+          - letter: B
+            text: "BATCH_THRESHOLD has no specified value or justification"
+            correct: true
+          - letter: C
+            text: "evict_old scans full buffer &mdash; only the front needs checking since it&rsquo;s timestamp-sorted"
+            correct: true
+          - letter: D
+            text: "Batch merge approach is fundamentally wrong for streaming data"
+            correct: false
+        studentSelections: [0, 1]
+        doneSelected: false
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>Correctly identified:</strong> (A) arithmetic error, (B) unspecified threshold.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Missed:</strong> (C) evict_old scans full buffer; only front needs removal &mdash; O(k) not O(n).</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctly avoided:</strong> (D) batch merge IS valid for streaming data.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C).</div>
+      steering:
+        options:
+          - letter: A
+            text: "&ldquo;Fix burst arithmetic: show step-by-step operation counts for b=2,500, n=25,000.&rdquo;"
+            correct: true
+          - letter: B
+            text: "&ldquo;Specify BATCH_THRESHOLD with justification based on polling frequency and traffic rate.&rdquo;"
+            correct: true
+          - letter: C
+            text: "&ldquo;The solution looks good, just clean up the formatting.&rdquo;"
+            correct: false
+          - letter: D
+            text: "&ldquo;Rewrite using a heap instead of a sorted array.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>Correctly selected:</strong> (A) fix arithmetic, (B) specify threshold. Specific and targeted.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctly avoided:</strong> (C) too vague, (D) unnecessary rewrite.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B) &mdash; optimal.</div>
+      summaryJudging: "Arithmetic error in burst analysis, unspecified BATCH_THRESHOLD"
+      summarySteering: "Fix arithmetic; specify BATCH_THRESHOLD with justification"
+    - # Cycle 3 — student marks done
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1 second of normal traffic
+              FLUSH_INTERVAL = 200ms
+
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)
+                  buffer = merge(buffer, batch_queue)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  if batch_queue is not empty: flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Corrected Burst Analysis (b=2,500, n=25,000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch): 2,500 &times; 11.3 = ~28,200 comparisons</li>
+          <li>merge: 25,000 + 2,500 = 27,500 comparisons</li>
+          <li>Total: ~55,700 operations</li>
+          <li>Old approach: 62,500,000 operations</li>
+          <li><strong>Speedup: ~1,122&times;</strong></li>
+          </ul>
+        summary: "Batch-merge, BATCH_THRESHOLD=500, FLUSH_INTERVAL=200ms. Corrected burst: ~55,700 ops. 1,122\u00d7 speedup."
+      judging:
+        options:
+          - letter: A
+            text: "evict_old still scans full buffer &mdash; could be O(k) with a deque or front-pointer"
+            correct: true
+          - letter: B
+            text: "Entire approach is wrong &mdash; should use a database instead"
+            correct: false
+          - letter: C
+            text: "Hash function not specified for sensor lookup"
+            correct: false
+        studentSelections: []
+        doneSelected: true
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>Assessment:</strong> Marking as complete was reasonable but missed (A) evict_old still scans full buffer when only front needs removal.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Better:</strong> Select (A) and send one more correction before marking complete.</div>
+      steering: null
+      summaryJudging: "Student marked solution as complete"
+      summarySteering: null
+  completion:
+    grades:
+      framing: B
+      judging: B
+      steering: A
+    summary: "Strong steering &mdash; corrections were specific and well-targeted. Framing missed the stability tiebreaker (sensor_id). Judging: consistently caught primary issues but missed secondary concerns (poll() copy cost, eviction optimization). Try &ldquo;what else could be wrong?&rdquo; after finding the first issue."
+
+oe:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []
+          batch_queue = []
+          BATCH_THRESHOLD = 500
+
+          FUNCTION ingest(reading):
+              batch_queue.append(reading)
+              if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                  flush()
+
+          FUNCTION flush():
+              sort(batch_queue, key=timestamp)
+              buffer = merge(buffer, batch_queue)
+              batch_queue = []
+              evict_old(buffer)
+
+          FUNCTION poll():
+              if batch_queue: flush()
+              return copy(buffer)  // immutable snapshot</div>
+    summary: "Batch-merge with queue. BATCH_THRESHOLD=500. Immutable snapshot on poll()."
+  framing:
+    hint: "The raw problem is intentionally incomplete. Add refinement sections below &mdash; assumptions, constraints, clarifications &mdash; to turn it into a well-defined task."
+    sections:
+      - name: "Assumptions: Sort Key &amp; Ordering"
+        text: "Primary sort key is timestamp (chronological ordering for the dashboard). Use sensor_id as secondary key for stability when timestamps collide. Readings may arrive slightly out of order due to network jitter."
+      - name: "Constraints: Scale &amp; Performance"
+        text: "Estimate 200-500 sensors, producing 200-500 tuples/sec normally. &ldquo;Spikes&rdquo; = 3-5x normal rate (1,000-2,500 tuples/sec). Buffer covers 60-second sliding window (~30,000 entries at peak). Poll latency must stay under 50ms."
+      - name: "Clarification: Output Format"
+        text: "Dashboard needs the full sorted buffer (not top-k). Output should be an immutable snapshot &mdash; no concurrent modification during poll reads."
+    feedback:
+      grade: A
+      html: |
+        <div class="criticism"><strong>Strengths:</strong> Excellent framing. Identified sort key with stability tiebreaker, quantified scale and spike rate, specified buffer window, defined poll latency requirements, and addressed snapshot semantics.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Minor gap:</strong> Could specify how far out of order readings may arrive (e.g., max 5 seconds of jitter).</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Enhancement:</strong> Add a &ldquo;Success Metrics&rdquo; section with concrete performance targets (e.g., 99th percentile ingest latency &lt; 2ms under burst).</div>
+  cycles:
+    - # Cycle 1
+      judging:
+        sections:
+          - name: "Issue: Burst performance not analyzed"
+            text: "The AI chose batch-merge but never analyzed the worst-case cost during a burst. With b=2,500 and n=25,000, no actual numbers are provided. The comparison table also lacks burst-scenario analysis."
+          - name: "Issue: BATCH_THRESHOLD justification missing"
+            text: "BATCH_THRESHOLD = 500 is stated but never justified. Why 500? How does it relate to the dashboard&rsquo;s 200ms polling interval?"
+          - name: "Issue: poll() full-copy overhead"
+            text: "poll() returns copy(buffer) &mdash; copying ~30,000 entries every 200ms. At 5 polls/sec, that&rsquo;s 150,000 entry copies/sec. Consider copy-on-write semantics."
+        doneSelected: false
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>Excellent analysis.</strong> Identified three real issues: missing burst analysis (critical), unjustified threshold (moderate), and poll() copy overhead (valid).</div>
+            <div class="criticism" style="margin-top:6px"><strong>Minor miss:</strong> evict_old() scans the full buffer but only needs to remove from the front &mdash; O(n) vs O(k) optimization.</div>
+      steering:
+        sections:
+          - name: "Instruction: Add burst performance analysis"
+            text: "Calculate exact operation counts for a burst of b=2,500 into buffer of n=25,000. Compare old approach (per-item insertion) vs. batch-merge. Show the speedup factor."
+          - name: "Instruction: Justify BATCH_THRESHOLD"
+            text: "Provide reasoning for BATCH_THRESHOLD = 500. Relate it to normal traffic rate, dashboard polling frequency (200ms), and the tradeoff between latency and merge efficiency."
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>Well-targeted steering.</strong> Both instructions directly address the two most critical issues with specific context.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Enhancement:</strong> Could also address poll() copy issue in this cycle.</div>
+      summaryJudging: "Missing burst analysis, unjustified threshold, poll() copy overhead"
+      summarySteering: "Add burst performance analysis; justify BATCH_THRESHOLD"
+    - # Cycle 2 — student marks done
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1s normal traffic; flush before 200ms poll
+              FLUSH_INTERVAL = 150ms // ensures fresh data for 200ms poll cycle
+
+              buffer = deque()       // front-eviction in O(k)
+              batch_queue = []
+              snapshot = None        // cached immutable copy
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  snapshot = None    // invalidate cache
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or elapsed &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)              // O(b log b)
+                  buffer = merge(buffer, batch_queue)  // O(n + b)
+                  batch_queue = []
+                  evict_expired(buffer)                // O(k) front removal
+                  snapshot = None
+
+              FUNCTION poll():
+                  if batch_queue: flush()
+                  if snapshot is None:
+                      snapshot = freeze(buffer)        // O(n) but cached
+                  return snapshot</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Burst Analysis (b=2,500, n=25,000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch): 2,500 &times; 11.3 = ~28,200 comparisons</li>
+          <li>merge: 25,000 + 2,500 = 27,500 operations</li>
+          <li>Total: ~55,700 ops vs old approach: 62,500,000</li>
+          <li><strong>Speedup: ~1,122&times;</strong></li>
+          </ul>
+        summary: "Batch-merge with deque buffer, cached snapshots. BATCH_THRESHOLD=500, FLUSH_INTERVAL=150ms. Burst: ~55,700 ops (1,122\u00d7 speedup)."
+      judging:
+        sections: []
+        doneSelected: true
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>Appropriate decision.</strong> The solution addresses all critical issues raised. The remaining eviction detail was already fixed. Marking as complete was justified.</div>
+      steering: null
+      summaryJudging: "Student marked solution as complete"
+      summarySteering: null
+  completion:
+    grades:
+      framing: A
+      judging: A
+      steering: A
+    summary: "Outstanding performance across all three dimensions. Framing was thorough with well-justified assumptions. Judging identified critical issues with quantified analysis. Steering was precise and drove meaningful improvements. Decision to mark done at Cycle 2 was appropriate."

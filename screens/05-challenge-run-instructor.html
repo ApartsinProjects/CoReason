@@ -6,7 +6,8 @@
   <title>CoReasoning Lab — Instructor Preview</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="assets/logo.png">
-  <script src="challenge-scenarios.js"></script>
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
   <style>
     .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
     .problem-panel { background: #f8f9ff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--primary); }
@@ -122,7 +123,7 @@
       <a href="08-instructor-analytics.html">Analytics</a>
     </nav>
     <div class="user-area">
-      <select class="lang-select"><option>EN</option><option>HE</option><option>AR</option></select>
+      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Instructor</span>
       <span>Dr. Levy</span>
       <a href="09-profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
@@ -275,16 +276,17 @@
     // LOAD & RENDER SCENARIO
     // ══════════════════════════════════════════════════════════
     function loadScenario() {
+      var data = getActiveData();
       var baseId = document.getElementById('challenge-picker').value;
       var parts = baseId.split('-');
       var challengeKey = parts.slice(0, -2).join('-');
       var respType = parts[parts.length - 2];
       var scenarioId = challengeKey + '-' + respType + '-' + currentMode;
 
-      var scenario = SCENARIOS[scenarioId];
+      var scenario = data.scenarios[scenarioId];
       if (!scenario) { document.getElementById('scenario-content').innerHTML = '<p>Scenario not found: ' + scenarioId + '</p>'; return; }
 
-      var challenge = CHALLENGES[scenario.challengeId];
+      var challenge = data.challenges[scenario.challengeId];
       var variant = challenge[scenario.responseType];
       var mode = scenario.mode;
       var isOE = scenario.responseType === 'oe';
@@ -591,6 +593,13 @@
         el('summary-log').appendChild(d);
       }
     }
+
+    // ══════════════════════════════════════════════════════════
+    // LANGUAGE SWITCHING
+    // ══════════════════════════════════════════════════════════
+    document.addEventListener('langchange', function(e) {
+      loadScenario();
+    });
 
     // ══════════════════════════════════════════════════════════
     // INIT

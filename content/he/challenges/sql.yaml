@@ -1,0 +1,296 @@
+id: sql
+title: "אופטימיזציית שאילתות לחנות מקוונת"
+course: "מערכות מסדי נתונים"
+subject: "שאילתות SQL &rsaquo; אופטימיזציה"
+maxCycles: 4
+rawProblem: "כתבו שאילתת SQL שמייצרת דו\"ח ביצועי מכירות חודשי לפלטפורמת מסחר אלקטרוני. הדו\"ח צריך להציג מוצרים מובילים לפי קטגוריה, כולל הכנסה כוללת, יחידות שנמכרו, ודירוג לקוחות ממוצע. במסד הנתונים &ldquo;מיליוני&rdquo; רשומות עסקאות. השאילתה חייבת לרוץ &ldquo;מהר מספיק&rdquo; ללוח בקרה ניהולי שמתרענן אוטומטית. היא צריכה &ldquo;להתמודד עם שיא החגים&rdquo; כשנפח ההזמנות מגיע לשיא."
+rawProblemShort: "שאילתת SQL לדו\"ח מכירות חודשי &hellip; מוצרים מובילים לפי קטגוריה, הכנסות, דירוגים. מיליוני רשומות, ביצועי לוח בקרה."
+
+mc:
+  aiSolution:
+    html: |
+      <div class="code-block">SELECT
+          c.category_name,
+          p.product_name,
+          SUM(oi.quantity) AS units_sold,
+          SUM(oi.quantity * oi.unit_price) AS total_revenue,
+          AVG(r.rating) AS avg_rating
+      FROM order_items oi
+      JOIN orders o ON oi.order_id = o.order_id
+      JOIN products p ON oi.product_id = p.product_id
+      JOIN categories c ON p.category_id = c.category_id
+      LEFT JOIN reviews r ON p.product_id = r.product_id
+      WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+      GROUP BY c.category_name, p.product_name
+      ORDER BY c.category_name, total_revenue DESC;</div>
+    summary: "SELECT בסיסי עם JOIN-ים, GROUP BY, ORDER BY. ללא סינון top-N, ללא ניתוח אינדקסים, JOIN של ביקורות לא מסונן."
+  framing:
+    hint: "הבעיה מכילה דרישות מעורפלות. סמנו את כל ההבהרות הנדרשות כדי להגדיר את המשימה במדויק לפני שה-AI כותב את השאילתה."
+    options:
+      - letter: A
+        text: "כימות &ldquo;מיליוני&rdquo; כ-~8 מיליון הזמנות, ~200 אלף מוצרים, ~40 קטגוריות"
+        correct: true
+      - letter: B
+        text: "הגדרת &ldquo;מהר מספיק&rdquo; כזמן תגובת שאילתה מתחת ל-3 שניות"
+        correct: true
+      - letter: C
+        text: "&ldquo;מוצרים מובילים&rdquo; = 10 המובילים בכל קטגוריה לפי הכנסה"
+        correct: true
+      - letter: D
+        text: "הנחה שכל השאילתות רצות מול תצוגה ממומשת (materialized view) מוכנה מראש"
+        correct: false
+      - letter: E
+        text: "חודשי = חודש קלנדרי; לכלול השוואה חודש-מול-חודש"
+        correct: true
+      - letter: F
+        text: "דירוגים מובטחים לכל מוצר (ללא NULL-ים)"
+        correct: false
+    studentSelections: [0, 2, 4]
+    feedback:
+      grade: B
+      html: |
+        <div class="criticism"><strong>נבחרו נכון:</strong> (A) כימות נפח הנתונים, (C) 10 מובילים לפי קטגוריה, (E) חודש קלנדרי עם השוואה.</div>
+        <div class="criticism" style="margin-top:6px"><strong>לא נבחר:</strong> (B) הגדרת &ldquo;מהר מספיק&rdquo; &mdash; ללא SLA קונקרטי אין דרך להעריך ביצועי שאילתה.</div>
+        <div class="criticism" style="margin-top:6px"><strong>נמנע נכון:</strong> (D) תצוגה ממומשת מגדירה יתר את הארכיטקטורה; (F) דירוגים אינם מובטחים לכל מוצר.</div>
+        <div class="better-alt" style="margin-top:6px"><strong>אידיאלי:</strong> (A), (B), (C), (E).</div>
+  cycles:
+    - # Cycle 1
+      judging:
+        options:
+          - letter: A
+            text: "חסר סינון top-N &mdash; מחזיר את כל המוצרים בכל קטגוריה, לא רק 10 המובילים"
+            correct: true
+          - letter: B
+            text: "ה-JOIN של ביקורות מנפח את מספר השורות &mdash; AVG(rating) מחושב על שורות כפולות"
+            correct: true
+          - letter: C
+            text: "ה-GROUP BY צריך לכלול product_id לנכונות"
+            correct: false
+          - letter: D
+            text: "אין אסטרטגיית אינדקסים או ניתוח תוכנית ביצוע"
+            correct: true
+          - letter: E
+            text: "צריך להשתמש ב-NoSQL לשאילתה אנליטית מסוג זה"
+            correct: false
+        studentSelections: [0, 3]
+        doneSelected: false
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>זוהו נכון:</strong> (A) חסר סינון top-N, (D) אין אסטרטגיית אינדקסים.</div>
+            <div class="criticism" style="margin-top:6px"><strong>לא זוהה:</strong> (B) ה-JOIN של ביקורות יוצר שורות כפולות שמעוותות את AVG(rating). זו בעיית נכונות עדינה אך קריטית.</div>
+            <div class="criticism" style="margin-top:6px"><strong>נמנע נכון:</strong> (C) ה-GROUP BY תקין אם product_name ייחודי; (E) SQL מתאים כאן.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>אידיאלי:</strong> (A), (B), (D).</div>
+      steering:
+        options:
+          - letter: A
+            text: "&ldquo;הוסיפו ROW_NUMBER() OVER (PARTITION BY category ORDER BY revenue DESC) כדי להגביל ל-10 מובילים בכל קטגוריה.&rdquo;"
+            correct: true
+          - letter: B
+            text: "&ldquo;כללו המלצות אינדקסים וניתוח תוכנית ביצוע צפויה.&rdquo;"
+            correct: true
+          - letter: C
+            text: "&ldquo;הוסיפו JOIN-ים נוספים לכלול מידע על ספקים ומחסנים.&rdquo;"
+            correct: false
+          - letter: D
+            text: "&ldquo;שכתבו כ-stored procedure לביצועים טובים יותר.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>נבחרו נכון:</strong> (A) פונקציית חלון ל-top-N, (B) אינדקסים/תוכנית ביצוע. ממוקדים וספציפיים.</div>
+            <div class="criticism" style="margin-top:6px"><strong>נמנע נכון:</strong> (C) הרחבת תחום לא רלוונטית, (D) אופטימיזציה מוקדמת.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>אידיאלי:</strong> (A), (B) &mdash; הסט האופטימלי.</div>
+      summaryJudging: "חסר סינון top-N, אין אינדקסים/תוכנית ביצוע"
+      summarySteering: "הוספת ROW_NUMBER ל-10 מובילים; ניתוח אינדקסים"
+
+    - # Cycle 2 — student marks done too early
+      aiUpdate:
+        html: |
+          <div class="code-block">WITH ranked_products AS (
+              SELECT
+                  c.category_name,
+                  p.product_name,
+                  SUM(oi.quantity) AS units_sold,
+                  SUM(oi.quantity * oi.unit_price) AS total_revenue,
+                  AVG(r.rating) AS avg_rating,
+                  ROW_NUMBER() OVER (
+                      PARTITION BY c.category_id
+                      ORDER BY SUM(oi.quantity * oi.unit_price) DESC
+                  ) AS rk
+              FROM order_items oi
+              JOIN orders o ON oi.order_id = o.order_id
+              JOIN products p ON oi.product_id = p.product_id
+              JOIN categories c ON p.category_id = c.category_id
+              LEFT JOIN reviews r ON p.product_id = r.product_id
+              WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+              GROUP BY c.category_id, c.category_name,
+                       p.product_id, p.product_name
+          )
+          SELECT * FROM ranked_products
+          WHERE rk &lt;= 10
+          ORDER BY category_name, rk;
+
+          -- Recommended Indexes:
+          -- CREATE INDEX idx_orders_date ON orders(order_date);
+          -- CREATE INDEX idx_oi_order ON order_items(order_id, product_id);</div>
+        summary: "CTE עם ROW_NUMBER ל-10 מובילים בקטגוריה. המלצות אינדקסים נוספו. JOIN ביקורות עדיין לא מסונן."
+      judging:
+        options:
+          - letter: A
+            text: "ה-JOIN של ביקורות עדיין יוצר שורות כפולות &mdash; AVG(rating) מעוות לפי נפח ההזמנות"
+            correct: true
+          - letter: B
+            text: "חסרה השוואת חודש-מול-חודש שנדרשה בדרישות"
+            correct: true
+          - letter: C
+            text: "ה-CTE מאט את השאילתה ביחס למקורית"
+            correct: false
+        studentSelections: []
+        doneSelected: true
+        feedback:
+          grade: C
+          html: |
+            <div class="criticism"><strong>סיום מוקדם.</strong> נותרו שתי בעיות אמיתיות: (A) JOIN הביקורות מעוות דירוגים &mdash; מוצר עם 100 הזמנות מקבל משקל פי 100 ב-AVG; (B) השוואת חודש-מול-חודש הייתה דרישה מפורשת.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>עדיף:</strong> לבחור גם (A) וגם (B) ולהכוון את ה-AI לתקן לפני סימון כהושלם.</div>
+      steering: null
+      summaryJudging: "הסטודנטית סימנה את הפתרון כהושלם (מוקדם מדי)"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: B
+      judging: C
+      steering: A
+    summary: "ההכוונה הייתה מצוינת — התיקונים היו ספציפיים ונכונים. בעיצוב המשימה פוספסה הגדרת ה-SLA לביצועים. השיפוט היה הנקודה החלשה: פוספסה בעיית הקרדינליות של הביקורות במחזור 1 והסתיים מוקדם מדי במחזור 2 עם שתי בעיות פתוחות. תרגלו זיהוי כל הבעיות לפני סימון פתרון כהושלם."
+
+oe:
+  aiSolution:
+    html: |
+      <div class="code-block">WITH monthly_sales AS (
+          SELECT
+              c.category_name,
+              p.product_id,
+              p.product_name,
+              SUM(oi.quantity) AS units_sold,
+              SUM(oi.quantity * oi.unit_price) AS total_revenue,
+              ROW_NUMBER() OVER (
+                  PARTITION BY c.category_id
+                  ORDER BY SUM(oi.quantity * oi.unit_price) DESC
+              ) AS rk
+          FROM order_items oi
+          JOIN orders o ON oi.order_id = o.order_id
+          JOIN products p ON oi.product_id = p.product_id
+          JOIN categories c ON p.category_id = c.category_id
+          WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+          GROUP BY c.category_id, c.category_name,
+                   p.product_id, p.product_name
+      )
+      SELECT ms.*,
+          (SELECT AVG(r.rating) FROM reviews r
+           WHERE r.product_id = ms.product_id) AS avg_rating
+      FROM monthly_sales ms
+      WHERE rk &lt;= 10
+      ORDER BY category_name, rk;</div>
+    summary: "CTE עם ROW_NUMBER ל-10 מובילים. שאילתת משנה מתואמת לדירוגים. ללא ניתוח אינדקסים, ללא השוואת חודש-מול-חודש."
+  framing:
+    hint: "הוסיפו סעיפי הבהרה לחידוד הדרישות המעורפלות. כל סעיף צריך לטפל בעמימות אחת בבעיית המקור."
+    sections:
+      - name: "הנחות: נפח נתונים ומבנה"
+        text: "הערכה: ~8 מיליון הזמנות, ~200 אלף מוצרים, ~40 קטגוריות בסכמה רלציונית מנורמלת. לכל מוצר שיוך לקטגוריה אחת בלבד."
+      - name: "אילוצים: SLA ביצועים"
+        text: "לוח הבקרה מתרענן כל 5 דקות. השאילתה חייבת להחזיר תוצאה תוך 3 שניות. יש לשקול אסטרטגיית אינדוס עבור תנאי ה-WHERE על order_date."
+      - name: "הבהרה: היקף הדו\"ח"
+        text: "&ldquo;מוצרים מובילים&rdquo; = 10 מובילים בכל קטגוריה לפי הכנסה כוללת. חודשי = חודש קלנדרי. לכלול השוואה מול החודש הקודם לצורך ניתוח מגמות."
+    feedback:
+      grade: A
+      html: |
+        <div class="criticism"><strong>עיצוב משימה יסודי.</strong> כומת נפח הנתונים, הוגדר SLA לביצועים, הובהרו סמנטיקת top-N, ופורטה השוואת חודש-מול-חודש.</div>
+        <div class="criticism" style="margin-top:6px"><strong>פער קטן:</strong> ניתן היה לטפל באופן הצגת מוצרים ללא ביקורות (דירוגי NULL).</div>
+  cycles:
+    - # Cycle 1
+      judging:
+        sections:
+          - name: "בעיה: שאילתת משנה מתואמת לדירוגים"
+            text: "שאילתת המשנה ל-avg_rating רצה פעם אחת לכל שורת תוצאה. עם 400 שורות (10 לקטגוריה &times; 40 קטגוריות), מדובר ב-400 שאילתות נפרדות. יש להחליף ב-JOIN או CTE עם אגרגציה מקדימה."
+          - name: "בעיה: חסרה השוואת חודש-מול-חודש"
+            text: "הדרישות מציינות השוואת חודש-מול-חודש אך השאילתה מציגה רק נתוני החודש הנוכחי. יש לכלול את החודש הקודם באותה קבוצת תוצאות."
+        doneSelected: false
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>ניתוח מצוין.</strong> שתי הבעיות זוהו נכון עם נימוק ספציפי ומכומת. ההסבר על בעיית שאילתת המשנה המתואמת עם הערכת מספר השורות חזק במיוחד.</div>
+      steering:
+        sections:
+          - name: "הנחיה: החלפת שאילתת משנה מתואמת"
+            text: "צרו CTE של דירוגים שמחשב AVG(rating) לכל product_id פעם אחת, ואז LEFT JOIN לשאילתה הראשית. זה מבטל את שאילתת המשנה לכל שורה."
+          - name: "הנחיה: הוספת השוואת חודש קודם"
+            text: "הוסיפו CTE שני לנתוני החודש הקודם. ה-SELECT הסופי צריך לכלול הכנסות של שני החודשים עם עמודת שינוי באחוזים."
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>ממוקד היטב.</strong> שתי ההנחיות ספציפיות, מספקות הנחיית מימוש ברורה, ומתייחסות ישירות לבעיות שזוהו.</div>
+      summaryJudging: "בעיית ביצועים בשאילתת משנה מתואמת, חסרה השוואת חודש-מול-חודש"
+      summarySteering: "החלפת שאילתת משנה ב-CTE; הוספת השוואת חודש קודם"
+
+    - # Cycle 2 — student marks done
+      aiUpdate:
+        html: |
+          <div class="code-block">WITH product_ratings AS (
+              SELECT product_id, AVG(rating) AS avg_rating,
+                     COUNT(*) AS review_count
+              FROM reviews GROUP BY product_id
+          ),
+          current_month AS (
+              SELECT c.category_name, p.product_id, p.product_name,
+                     SUM(oi.quantity) AS units_sold,
+                     SUM(oi.quantity * oi.unit_price) AS revenue,
+                     ROW_NUMBER() OVER (PARTITION BY c.category_id
+                         ORDER BY SUM(oi.quantity*oi.unit_price) DESC) AS rk
+              FROM order_items oi
+              JOIN orders o ON oi.order_id = o.order_id
+              JOIN products p ON oi.product_id = p.product_id
+              JOIN categories c ON p.category_id = c.category_id
+              WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+              GROUP BY c.category_id, c.category_name, p.product_id, p.product_name
+          ),
+          prev_month AS (
+              SELECT p.product_id,
+                     SUM(oi.quantity * oi.unit_price) AS prev_revenue
+              FROM order_items oi
+              JOIN orders o ON oi.order_id = o.order_id
+              JOIN products p ON oi.product_id = p.product_id
+              WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month'
+                AND o.order_date &lt; DATE_TRUNC('month', CURRENT_DATE)
+              GROUP BY p.product_id
+          )
+          SELECT cm.category_name, cm.product_name, cm.units_sold,
+                 cm.revenue, pr.avg_rating, pr.review_count,
+                 pm.prev_revenue,
+                 ROUND((cm.revenue - pm.prev_revenue) / pm.prev_revenue * 100, 1) AS pct_change
+          FROM current_month cm
+          LEFT JOIN product_ratings pr ON cm.product_id = pr.product_id
+          LEFT JOIN prev_month pm ON cm.product_id = pm.product_id
+          WHERE cm.rk &lt;= 10
+          ORDER BY cm.category_name, cm.rk;
+
+          -- Indexes: idx_orders_date, idx_oi_order_product</div>
+        summary: "שלושה CTE-ים: דירוגים (אגרגציה מקדימה), חודש נוכחי, חודש קודם. עמודת שינוי באחוזים. המלצות אינדקסים."
+      judging:
+        sections: []
+        doneSelected: true
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>סיום סביר.</strong> הבעיות העיקריות טופלו. בעיה משנית: pct_change ייכשל בחלוקה באפס כש-prev_revenue הוא NULL או 0. שימוש ב-NULLIF או COALESCE היה מומלץ.</div>
+      steering: null
+      summaryJudging: "הסטודנטית סימנה את הפתרון כהושלם"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: A
+      judging: B
+      steering: A
+    summary: "ביצועים חזקים באופן כללי. עיצוב המשימה היה יסודי עם הגדרת SLA ברורה. השיפוט זיהה נכון את שתי הבעיות העיקריות במחזור 1. ההכוונה סיפקה הנחיות ספציפיות וניתנות למימוש. ניכוי קטן בשיפוט: ניתן היה לתפוס את מקרה הקצה של חלוקה באפס בפלט הסופי לפני סימון כהושלם."

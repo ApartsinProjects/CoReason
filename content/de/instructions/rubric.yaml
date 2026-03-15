@@ -1,0 +1,23 @@
+id: rubric
+title: "Bewertungsraster"
+skills:
+  - name: "Rahmung"
+    grades:
+      A: "Hat alle kritischen Annahmen, Einschränkungen und Klarstellungen identifiziert. Die Verfeinerungen sind gut begründet und vollständig."
+      B: "Hat die meisten notwendigen Verfeinerungen identifiziert, aber ein oder zwei wichtige übersehen. Insgesamt gutes Verständnis."
+      C: "Hat mehrere wichtige Verfeinerungen übersehen oder falsche Elemente einbezogen. Teilweises Verständnis der Mehrdeutigkeiten."
+      D: "Hat die Mehrheit der notwendigen Verfeinerungen übersehen. Minimales Verständnis der Problemdefinition."
+
+  - name: "Beurteilung"
+    grades:
+      A: "Hat alle wichtigen Mängel mit präziser, quantifizierter Analyse identifiziert. Unterscheidet korrekt zwischen echten Problemen und Fehlalarmen."
+      B: "Hat die Hauptmängel identifiziert, aber einige sekundäre übersehen. Gute Analysefähigkeit, aber nicht erschöpfend."
+      C: "Hat kritische Mängel übersehen oder die Lösung voreilig als abgeschlossen markiert. Oberflächliche Analyse."
+      D: "Konnte die wesentlichen Mängel nicht identifizieren. Unzuverlässige Bewertung von KI-Lösungen."
+
+  - name: "Steuerung"
+    grades:
+      A: "Spezifische, umsetzbare und zielgerichtete Anweisungen. Jede Anweisung adressiert direkt ein identifiziertes Problem mit Implementierungskontext."
+      B: "Im Allgemeinen gute Anweisungen, aber manchmal zu vage oder zu weit gefasst. Adressiert die meisten identifizierten Probleme."
+      C: "Vage oder irrelevante Anweisungen. Adressiert die bei der Beurteilung identifizierten Probleme nicht effektiv."
+      D: "Irrelevante, zu allgemeine oder kontraproduktive Anweisungen. Würde die KI-Lösung nicht verbessern."

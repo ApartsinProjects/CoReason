@@ -1,0 +1,382 @@
+id: sorting
+title: "Pipeline de tri pour données de capteurs"
+course: "Introduction aux algorithmes"
+subject: "Tri &amp; Recherche &rsaquo; Tri par comparaison"
+maxCycles: 5
+rawProblem: "Écrivez un module de tri qui ingère un flux en direct de lectures de température provenant de capteurs d'entrepôt et produit un tampon continuellement trié qu'un tableau de bord de surveillance peut interroger. Chaque lecture est un tuple (sensor_id, timestamp, temperature). L'entrepôt dispose de &ldquo;quelques centaines&rdquo; de capteurs qui transmettent chaque seconde. Fournissez un pseudocode fonctionnel pour le module ainsi qu'un tableau comparant l'algorithme choisi à deux alternatives en termes de complexité temporelle, d'utilisation mémoire et de latence. Le système doit &ldquo;gérer les pics&rdquo; lorsque les capteurs transmettent en rafales."
+rawProblemShort: "Module de tri pour lectures de capteurs en direct &hellip; tampon trié pour interrogation par le tableau de bord. ~centaines de capteurs, chaque seconde. Gérer les pics."
+
+mc:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []  // sorted list of (sensor_id, timestamp, temperature)
+
+          FUNCTION ingest(reading):
+              pos = binary_search(buffer, reading.timestamp)
+              buffer.insert(pos, reading)
+              while buffer[0].timestamp &lt; current_time() - 60:
+                  buffer.remove(0)
+
+          FUNCTION poll():
+              return copy(buffer)</div>
+      <p class="text-sm" style="margin-top:8px"><strong>Tableau comparatif :</strong></p>
+      <table class="comparison-table"><thead><tr><th>Critère</th><th>Tri par insertion (choisi)</th><th>Tri fusion</th><th>Tri rapide</th></tr></thead>
+      <tbody>
+      <tr><td>Temps (par élément)</td><td>O(log n) recherche + O(n) décalage</td><td>O(n log n) re-tri complet</td><td>O(n log n) re-tri complet</td></tr>
+      <tr><td>Espace</td><td>O(1) supplémentaire</td><td>O(n)</td><td>O(log n) pile</td></tr>
+      <tr><td>Latence</td><td>Faible par élément</td><td>Latence élevée par lot</td><td>Latence élevée par lot</td></tr>
+      </tbody></table>
+    summary: "Tri par insertion dans un tableau trié. O(log n) recherche + O(n) décalage. Fenêtre glissante de 60 secondes."
+
+  framing:
+    hint: "Le problème brut est intentionnellement incomplet. Sélectionnez TOUS les raffinements (hypothèses, contraintes, clarifications) qui devraient être appliqués avant que l'IA ne génère une solution. Certains raffinements sont nécessaires ; d'autres sont inutiles ou erronés."
+    options:
+      - letter: "A"
+        text: "La clé de tri doit être le timestamp (pas la température) car le tableau de bord nécessite un ordre chronologique"
+        correct: true
+      - letter: "B"
+        text: "Utiliser sensor_id comme critère de départage lorsque les timestamps sont identiques, pour garantir un ordre stable"
+        correct: true
+      - letter: "C"
+        text: "Quantifier &ldquo;quelques centaines&rdquo; comme ~200-500 capteurs produisant 200-500 tuples/sec en conditions normales"
+        correct: true
+      - letter: "D"
+        text: "Définir les &ldquo;pics&rdquo; comme 3 à 5 fois le débit normal d'ingestion (débit en rafale), et non des anomalies de valeurs de capteurs"
+        correct: true
+      - letter: "E"
+        text: "Supposer que les données arrivent pré-triées par sensor_id puisque les capteurs ont des positions physiques fixes"
+        correct: false
+      - letter: "F"
+        text: "Utiliser une fenêtre glissante de 60 secondes plutôt que de stocker toutes les données historiques"
+        correct: true
+    studentSelections: [0, 2, 3, 5]
+    feedback:
+      grade: "B"
+      html: |
+        <div class="criticism"><strong>Correctement sélectionnés :</strong> (A) clé de tri par timestamp, (C) quantification du nombre de capteurs, (D) définition du débit en rafale, (F) fenêtre glissante.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Manqué :</strong> (B) départage par sensor_id pour la stabilité &mdash; sans cela, le tri est ambigu lorsque deux lectures partagent le même timestamp.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Correctement évité :</strong> (E) pré-trié par sensor_id &mdash; les capteurs transmettent à des moments différents, PAS pré-triés.</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B), (C), (D), (F).</div>
+
+  cycles:
+    - # Cycle 1
+      judging:
+        options:
+          - letter: "A"
+            text: "Pas de départage &mdash; la position d'insertion est ambiguë pour les lectures ayant le même timestamp"
+            correct: true
+          - letter: "B"
+            text: "Le coût de décalage O(n) par insertion crée un goulot d'étranglement lors de rafales de 2 500 lectures"
+            correct: true
+          - letter: "C"
+            text: "La colonne espace du tableau comparatif est trompeuse &mdash; &ldquo;O(1) supplémentaire&rdquo; masque le vrai coût mémoire"
+            correct: true
+          - letter: "D"
+            text: "poll() copie l'intégralité du tampon à chaque appel &mdash; gaspillage pour des interrogations fréquentes"
+            correct: true
+          - letter: "E"
+            text: "Le tri rapide serait plus performant que le tri par insertion pour ce cas d'utilisation en flux"
+            correct: false
+        studentSelections: [1, 2]
+        doneSelected: false
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Correctement identifiés :</strong> (B) goulot d'étranglement du décalage O(n), (C) colonne espace trompeuse.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Manqués :</strong> (D) poll() copie l'intégralité du tampon ; (A) pas de départage pour le même timestamp.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctement évité :</strong> (E) le tri rapide n'est PAS meilleur pour les données en flux.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B), (C), (D).</div>
+      steering:
+        options:
+          - letter: "A"
+            text: "&ldquo;Analysez le coût en pire cas des rafales pour 2 500 lectures. Proposez une alternative par lot et fusion.&rdquo;"
+            correct: true
+          - letter: "B"
+            text: "&ldquo;Corrigez le tableau comparatif pour distinguer l'espace tampon de l'espace auxiliaire.&rdquo;"
+            correct: true
+          - letter: "C"
+            text: "&ldquo;Rendez le code plus rapide et utilisez moins de mémoire.&rdquo;"
+            correct: false
+          - letter: "D"
+            text: "&ldquo;Réécrivez tout en utilisant une liste chaînée pour que les insertions soient en O(1).&rdquo;"
+            correct: false
+          - letter: "E"
+            text: "&ldquo;Ajoutez la sécurité des threads avec des verrous mutex autour du tampon.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Correctement sélectionnés :</strong> (A) analyse des rafales + lot-fusion, (B) correction du tableau. Les deux sont spécifiques et exploitables.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctement évités :</strong> (C) trop vague, (D) la liste chaînée n'aide pas, (E) hors périmètre.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B) &mdash; ensemble optimal.</div>
+      summaryJudging: "Goulot d'étranglement du décalage O(n), colonne espace trompeuse"
+      summarySteering: "Analyse des rafales + proposition lot-fusion ; correction de la colonne espace"
+
+    - # Cycle 2
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                      flush()
+
+              FUNCTION flush():
+                  sort(batch_queue)                     // O(b log b)
+                  buffer = merge(buffer, batch_queue)   // O(n + b)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Analyse des rafales (b=2 500, n=25 000) :</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>Ancien : 2 500 &times; O(25 000) = O(62,5M)</li>
+          <li>Nouveau : O(2 500 log 2 500) + O(27 500) = ~O(30 000)</li>
+          </ul>
+          <table class="comparison-table" style="margin-top:12px"><thead><tr><th>Critère</th><th>Fusion par lots (choisi)</th><th>Insertion pure</th><th>Re-tri complet</th></tr></thead>
+          <tbody>
+          <tr><td>Temps (par lot)</td><td>O(b log b + n)</td><td>O(b &times; n)</td><td>O((n+b) log(n+b))</td></tr>
+          <tr><td>Espace auxiliaire</td><td>O(b) file de lots</td><td>O(1)</td><td>O(log(n+b)) pile</td></tr>
+          <tr><td>Latence</td><td>Amortie faible</td><td>Faible par élément, pics élevés</td><td>Élevée par lot</td></tr>
+          </tbody></table>
+        summary: "Fusion par lots avec batch_queue. O(b log b + n). Rafale : ~30K opérations (erreur arithmétique). BATCH_THRESHOLD non spécifié."
+      judging:
+        options:
+          - letter: "A"
+            text: "L'arithmétique des rafales est fausse : O(2500 log 2500)+O(27500) &asymp; 55 700, pas ~30 000"
+            correct: true
+          - letter: "B"
+            text: "BATCH_THRESHOLD n'a pas de valeur ni de justification spécifiées"
+            correct: true
+          - letter: "C"
+            text: "evict_old parcourt l'intégralité du tampon &mdash; seul le début doit être vérifié car il est trié par timestamp"
+            correct: true
+          - letter: "D"
+            text: "L'approche de fusion par lots est fondamentalement inadaptée aux données en flux"
+            correct: false
+        studentSelections: [0, 1]
+        doneSelected: false
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Correctement identifiés :</strong> (A) erreur arithmétique, (B) seuil non spécifié.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Manqué :</strong> (C) evict_old parcourt tout le tampon ; seul le retrait par le début est nécessaire &mdash; O(k) et non O(n).</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctement évité :</strong> (D) la fusion par lots EST valide pour les données en flux.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B), (C).</div>
+      steering:
+        options:
+          - letter: "A"
+            text: "&ldquo;Corrigez l'arithmétique des rafales : montrez le décompte étape par étape des opérations pour b=2 500, n=25 000.&rdquo;"
+            correct: true
+          - letter: "B"
+            text: "&ldquo;Spécifiez BATCH_THRESHOLD avec une justification basée sur la fréquence d'interrogation et le débit de trafic.&rdquo;"
+            correct: true
+          - letter: "C"
+            text: "&ldquo;La solution semble bonne, il suffit de nettoyer la mise en forme.&rdquo;"
+            correct: false
+          - letter: "D"
+            text: "&ldquo;Réécrivez en utilisant un tas au lieu d'un tableau trié.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Correctement sélectionnés :</strong> (A) corriger l'arithmétique, (B) spécifier le seuil. Spécifiques et ciblés.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctement évités :</strong> (C) trop vague, (D) réécriture inutile.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B) &mdash; optimal.</div>
+      summaryJudging: "Erreur arithmétique dans l'analyse des rafales, BATCH_THRESHOLD non spécifié"
+      summarySteering: "Corriger l'arithmétique ; spécifier BATCH_THRESHOLD avec justification"
+
+    - # Cycle 3 — l'étudiant marque comme terminé
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1 second of normal traffic
+              FLUSH_INTERVAL = 200ms
+
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)
+                  buffer = merge(buffer, batch_queue)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  if batch_queue is not empty: flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Analyse corrigée des rafales (b=2 500, n=25 000) :</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch) : 2 500 &times; 11,3 = ~28 200 comparaisons</li>
+          <li>merge : 25 000 + 2 500 = 27 500 comparaisons</li>
+          <li>Total : ~55 700 opérations</li>
+          <li>Ancienne approche : 62 500 000 opérations</li>
+          <li><strong>Accélération : ~1 122&times;</strong></li>
+          </ul>
+        summary: "Fusion par lots, BATCH_THRESHOLD=500, FLUSH_INTERVAL=200ms. Rafale corrigée : ~55 700 ops. Accélération 1 122×."
+      judging:
+        options:
+          - letter: "A"
+            text: "evict_old parcourt encore tout le tampon &mdash; pourrait être O(k) avec un deque ou un pointeur de tête"
+            correct: true
+          - letter: "B"
+            text: "L'approche entière est fausse &mdash; il faudrait utiliser une base de données à la place"
+            correct: false
+          - letter: "C"
+            text: "La fonction de hachage n'est pas spécifiée pour la recherche de capteurs"
+            correct: false
+        studentSelections: []
+        doneSelected: true
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Évaluation :</strong> Marquer comme terminé était raisonnable mais a manqué (A) evict_old parcourt encore tout le tampon alors que seul le retrait par le début est nécessaire.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Mieux :</strong> Sélectionner (A) et envoyer une dernière correction avant de marquer comme terminé.</div>
+      steering: null
+      summaryJudging: "L'étudiant a marqué la solution comme terminée"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "B"
+      judging: "B"
+      steering: "A"
+    summary: "Orientation solide &mdash; les corrections étaient spécifiques et bien ciblées. Le cadrage a manqué le départage par stabilité (sensor_id). Jugement : a systématiquement identifié les problèmes principaux mais a manqué les préoccupations secondaires (coût de copie de poll(), optimisation de l'éviction). Essayez &ldquo;quoi d'autre pourrait être faux ?&rdquo; après avoir trouvé le premier problème."
+
+oe:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []
+          batch_queue = []
+          BATCH_THRESHOLD = 500
+
+          FUNCTION ingest(reading):
+              batch_queue.append(reading)
+              if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                  flush()
+
+          FUNCTION flush():
+              sort(batch_queue, key=timestamp)
+              buffer = merge(buffer, batch_queue)
+              batch_queue = []
+              evict_old(buffer)
+
+          FUNCTION poll():
+              if batch_queue: flush()
+              return copy(buffer)  // immutable snapshot</div>
+    summary: "Fusion par lots avec file d'attente. BATCH_THRESHOLD=500. Instantané immuable lors de poll()."
+
+  framing:
+    hint: "Le problème brut est intentionnellement incomplet. Ajoutez des sections de raffinement ci-dessous &mdash; hypothèses, contraintes, clarifications &mdash; pour le transformer en une tâche bien définie."
+    sections:
+      - name: "Hypothèses : clé de tri et ordre"
+        text: "La clé de tri principale est le timestamp (ordre chronologique pour le tableau de bord). Utiliser sensor_id comme clé secondaire pour la stabilité lorsque les timestamps sont identiques. Les lectures peuvent arriver légèrement dans le désordre en raison de la gigue réseau."
+      - name: "Contraintes : échelle et performance"
+        text: "Estimation de 200-500 capteurs, produisant 200-500 tuples/sec en conditions normales. Les &ldquo;pics&rdquo; correspondent à 3-5 fois le débit normal (1 000-2 500 tuples/sec). Le tampon couvre une fenêtre glissante de 60 secondes (~30 000 entrées en pointe). La latence d'interrogation doit rester inférieure à 50 ms."
+      - name: "Clarification : format de sortie"
+        text: "Le tableau de bord a besoin de l'intégralité du tampon trié (pas d'un top-k). La sortie doit être un instantané immuable &mdash; pas de modification concurrente pendant les lectures de poll."
+    feedback:
+      grade: "A"
+      html: |
+        <div class="criticism"><strong>Points forts :</strong> Excellent cadrage. A identifié la clé de tri avec le départage par stabilité, quantifié l'échelle et le débit en rafale, spécifié la fenêtre du tampon, défini les exigences de latence d'interrogation et abordé la sémantique des instantanés.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Lacune mineure :</strong> Pourrait spécifier à quel point les lectures peuvent arriver dans le désordre (par ex., gigue maximale de 5 secondes).</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Amélioration :</strong> Ajouter une section &ldquo;Métriques de succès&rdquo; avec des objectifs de performance concrets (par ex., latence d'ingestion au 99e percentile &lt; 2 ms en rafale).</div>
+
+  cycles:
+    - # Cycle 1
+      judging:
+        sections:
+          - name: "Problème : performance en rafale non analysée"
+            text: "L'IA a choisi la fusion par lots mais n'a jamais analysé le coût en pire cas lors d'une rafale. Avec b=2 500 et n=25 000, aucun chiffre réel n'est fourni. Le tableau comparatif manque également d'une analyse en scénario de rafale."
+          - name: "Problème : justification du BATCH_THRESHOLD manquante"
+            text: "BATCH_THRESHOLD = 500 est indiqué mais jamais justifié. Pourquoi 500 ? Quel est le rapport avec l'intervalle d'interrogation de 200 ms du tableau de bord ?"
+          - name: "Problème : surcoût de copie complète de poll()"
+            text: "poll() retourne copy(buffer) &mdash; copier ~30 000 entrées toutes les 200 ms. À 5 interrogations/sec, cela représente 150 000 copies d'entrées/sec. Envisager une sémantique de copie sur écriture."
+        doneSelected: false
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Excellente analyse.</strong> A identifié trois vrais problèmes : analyse des rafales manquante (critique), seuil non justifié (modéré) et surcoût de copie de poll() (valide).</div>
+            <div class="criticism" style="margin-top:6px"><strong>Lacune mineure :</strong> evict_old() parcourt tout le tampon mais n'a besoin de retirer que par le début &mdash; optimisation O(n) vs O(k).</div>
+      steering:
+        sections:
+          - name: "Instruction : ajouter l'analyse de performance en rafale"
+            text: "Calculez le nombre exact d'opérations pour une rafale de b=2 500 dans un tampon de n=25 000. Comparez l'ancienne approche (insertion par élément) vs la fusion par lots. Montrez le facteur d'accélération."
+          - name: "Instruction : justifier le BATCH_THRESHOLD"
+            text: "Fournissez un raisonnement pour BATCH_THRESHOLD = 500. Reliez-le au débit de trafic normal, à la fréquence d'interrogation du tableau de bord (200 ms) et au compromis entre latence et efficacité de fusion."
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Orientation bien ciblée.</strong> Les deux instructions abordent directement les deux problèmes les plus critiques avec un contexte spécifique.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Amélioration :</strong> Pourrait également aborder le problème de copie de poll() dans ce cycle.</div>
+      summaryJudging: "Analyse des rafales manquante, seuil non justifié, surcoût de copie de poll()"
+      summarySteering: "Ajouter l'analyse de performance en rafale ; justifier le BATCH_THRESHOLD"
+
+    - # Cycle 2 — l'étudiant marque comme terminé
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1s normal traffic; flush before 200ms poll
+              FLUSH_INTERVAL = 150ms // ensures fresh data for 200ms poll cycle
+
+              buffer = deque()       // front-eviction in O(k)
+              batch_queue = []
+              snapshot = None        // cached immutable copy
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  snapshot = None    // invalidate cache
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or elapsed &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)              // O(b log b)
+                  buffer = merge(buffer, batch_queue)  // O(n + b)
+                  batch_queue = []
+                  evict_expired(buffer)                // O(k) front removal
+                  snapshot = None
+
+              FUNCTION poll():
+                  if batch_queue: flush()
+                  if snapshot is None:
+                      snapshot = freeze(buffer)        // O(n) but cached
+                  return snapshot</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Analyse des rafales (b=2 500, n=25 000) :</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch) : 2 500 &times; 11,3 = ~28 200 comparaisons</li>
+          <li>merge : 25 000 + 2 500 = 27 500 opérations</li>
+          <li>Total : ~55 700 ops vs ancienne approche : 62 500 000</li>
+          <li><strong>Accélération : ~1 122&times;</strong></li>
+          </ul>
+        summary: "Fusion par lots avec tampon deque, instantanés mis en cache. BATCH_THRESHOLD=500, FLUSH_INTERVAL=150ms. Rafale : ~55 700 ops (accélération 1 122×)."
+      judging:
+        sections: []
+        doneSelected: true
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Décision appropriée.</strong> La solution aborde tous les problèmes critiques soulevés. Le détail de l'éviction restant a déjà été corrigé. Marquer comme terminé était justifié.</div>
+      steering: null
+      summaryJudging: "L'étudiant a marqué la solution comme terminée"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "A"
+      judging: "A"
+      steering: "A"
+    summary: "Performance exceptionnelle sur les trois dimensions. Le cadrage était approfondi avec des hypothèses bien justifiées. Le jugement a identifié des problèmes critiques avec une analyse quantifiée. L'orientation était précise et a entraîné des améliorations significatives. La décision de marquer comme terminé au cycle 2 était appropriée."

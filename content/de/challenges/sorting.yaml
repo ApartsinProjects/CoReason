@@ -1,0 +1,382 @@
+id: sorting
+title: "Sortier-Pipeline für Sensordaten"
+course: "Einführung in Algorithmen"
+subject: "Sortieren &amp; Suchen &rsaquo; Vergleichsbasiertes Sortieren"
+maxCycles: 5
+rawProblem: "Schreiben Sie ein Sortiermodul, das einen Echtzeit-Datenstrom von Temperaturmesswerten aus Lagersensoren aufnimmt und einen kontinuierlich sortierten Puffer ausgibt, den ein Überwachungs-Dashboard abfragen kann. Jeder Messwert ist ein (sensor_id, timestamp, temperature)-Tupel. Das Lager verfügt über &ldquo;einige hundert&rdquo; Sensoren, die jede Sekunde Daten senden. Liefern Sie funktionsfähigen Pseudocode für das Modul sowie eine Tabelle, die den gewählten Algorithmus mit zwei Alternativen hinsichtlich Zeitkomplexität, Speicherverbrauch und Latenz vergleicht. Das System soll &ldquo;Spitzen bewältigen&rdquo;, wenn Sensoren stoßweise senden."
+rawProblemShort: "Sortiermodul für Echtzeit-Sensormesswerte &hellip; sortierter Puffer für Dashboard-Abfragen. ~Hunderte Sensoren, jede Sekunde. Spitzen bewältigen."
+
+mc:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []  // sorted list of (sensor_id, timestamp, temperature)
+
+          FUNCTION ingest(reading):
+              pos = binary_search(buffer, reading.timestamp)
+              buffer.insert(pos, reading)
+              while buffer[0].timestamp &lt; current_time() - 60:
+                  buffer.remove(0)
+
+          FUNCTION poll():
+              return copy(buffer)</div>
+      <p class="text-sm" style="margin-top:8px"><strong>Vergleichstabelle:</strong></p>
+      <table class="comparison-table"><thead><tr><th>Kriterium</th><th>Einfügesortierung (gewählt)</th><th>Mergesort</th><th>Quicksort</th></tr></thead>
+      <tbody>
+      <tr><td>Zeit (pro Element)</td><td>O(log n) Suche + O(n) Verschiebung</td><td>O(n log n) vollständige Neusortierung</td><td>O(n log n) vollständige Neusortierung</td></tr>
+      <tr><td>Speicher</td><td>O(1) zusätzlich</td><td>O(n)</td><td>O(log n) Stapel</td></tr>
+      <tr><td>Latenz</td><td>Niedrig pro Element</td><td>Hohe Batch-Latenz</td><td>Hohe Batch-Latenz</td></tr>
+      </tbody></table>
+    summary: "Einfügesortierung in sortiertes Array. O(log n) Suche + O(n) Verschiebung. 60-Sekunden-Gleitfenster."
+
+  framing:
+    hint: "Das Rohproblem ist absichtlich unvollständig. Wählen Sie ALLE Verfeinerungen (Annahmen, Einschränkungen, Klarstellungen) aus, die angewendet werden sollten, bevor die KI eine Lösung generiert. Einige Verfeinerungen sind notwendig; andere sind unnötig oder falsch."
+    options:
+      - letter: "A"
+        text: "Der Sortierschlüssel sollte der Zeitstempel sein (nicht die Temperatur), da das Dashboard eine chronologische Reihenfolge benötigt"
+        correct: true
+      - letter: "B"
+        text: "sensor_id als Tiebreaker verwenden, wenn Zeitstempel übereinstimmen, um eine stabile Sortierung zu gewährleisten"
+        correct: true
+      - letter: "C"
+        text: "&ldquo;Einige hundert&rdquo; als ~200-500 Sensoren quantifizieren, die 200-500 Tupel/Sek. unter normalen Bedingungen erzeugen"
+        correct: true
+      - letter: "D"
+        text: "&ldquo;Spitzen&rdquo; als 3-5-fache der normalen Aufnahmerate (Stoßrate) definieren, nicht als Anomalien der Sensorwerte"
+        correct: true
+      - letter: "E"
+        text: "Annehmen, dass Daten nach sensor_id vorsortiert ankommen, da Sensoren feste physische Positionen haben"
+        correct: false
+      - letter: "F"
+        text: "Ein 60-Sekunden-Gleitfenster verwenden, anstatt alle historischen Daten zu speichern"
+        correct: true
+    studentSelections: [0, 2, 3, 5]
+    feedback:
+      grade: "B"
+      html: |
+        <div class="criticism"><strong>Korrekt ausgewählt:</strong> (A) Sortierschlüssel Zeitstempel, (C) Quantifizierung der Sensoranzahl, (D) Definition der Stoßrate, (F) Gleitfenster.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Übersehen:</strong> (B) sensor_id als Tiebreaker für Stabilität &mdash; ohne diesen ist die Sortierung mehrdeutig, wenn zwei Messwerte denselben Zeitstempel haben.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Korrekt vermieden:</strong> (E) nach sensor_id vorsortiert &mdash; Sensoren senden zu unterschiedlichen Zeiten, NICHT vorsortiert.</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C), (D), (F).</div>
+
+  cycles:
+    - # Zyklus 1
+      judging:
+        options:
+          - letter: "A"
+            text: "Kein Tiebreaker &mdash; die Einfügeposition ist mehrdeutig für Messwerte mit gleichem Zeitstempel"
+            correct: true
+          - letter: "B"
+            text: "O(n)-Verschiebungskosten pro Einfügung erzeugen einen Engpass bei Stößen von 2.500 Messwerten"
+            correct: true
+          - letter: "C"
+            text: "Die Speicherspalte der Vergleichstabelle ist irreführend &mdash; &ldquo;O(1) zusätzlich&rdquo; verbirgt die wahren Speicherkosten"
+            correct: true
+          - letter: "D"
+            text: "poll() kopiert den gesamten Puffer bei jedem Aufruf &mdash; verschwenderisch bei häufigen Abfragen"
+            correct: true
+          - letter: "E"
+            text: "Quicksort wäre schneller als Einfügesortierung für diesen Streaming-Anwendungsfall"
+            correct: false
+        studentSelections: [1, 2]
+        doneSelected: false
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Korrekt identifiziert:</strong> (B) O(n)-Verschiebungsengpass, (C) irreführende Speicherspalte.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Übersehen:</strong> (D) poll() kopiert den gesamten Puffer; (A) kein Tiebreaker für gleichen Zeitstempel.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Korrekt vermieden:</strong> (E) Quicksort ist NICHT besser für Streaming-Daten.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C), (D).</div>
+      steering:
+        options:
+          - letter: "A"
+            text: "&ldquo;Analysieren Sie die Worst-Case-Stoßkosten für 2.500 Messwerte. Schlagen Sie eine Batch-and-Merge-Alternative vor.&rdquo;"
+            correct: true
+          - letter: "B"
+            text: "&ldquo;Korrigieren Sie die Vergleichstabelle, um Pufferspeicher von Hilfsspeicher zu unterscheiden.&rdquo;"
+            correct: true
+          - letter: "C"
+            text: "&ldquo;Machen Sie den Code schneller und verwenden Sie weniger Speicher.&rdquo;"
+            correct: false
+          - letter: "D"
+            text: "&ldquo;Schreiben Sie alles mit einer verketteten Liste um, damit Einfügungen O(1) sind.&rdquo;"
+            correct: false
+          - letter: "E"
+            text: "&ldquo;Fügen Sie Thread-Sicherheit mit Mutex-Sperren um den Puffer hinzu.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Korrekt ausgewählt:</strong> (A) Stoßanalyse + Batch-Merge, (B) Tabelle korrigieren. Beide sind spezifisch und umsetzbar.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Korrekt vermieden:</strong> (C) zu vage, (D) verkettete Liste hilft nicht, (E) außerhalb des Umfangs.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B) &mdash; optimale Auswahl.</div>
+      summaryJudging: "O(n)-Verschiebungsengpass, irreführende Speicherspalte"
+      summarySteering: "Stoßanalyse + Batch-Merge-Vorschlag; Speicherspalte korrigieren"
+
+    - # Zyklus 2
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                      flush()
+
+              FUNCTION flush():
+                  sort(batch_queue)                     // O(b log b)
+                  buffer = merge(buffer, batch_queue)   // O(n + b)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Stoßanalyse (b=2.500, n=25.000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>Alt: 2.500 &times; O(25.000) = O(62,5M)</li>
+          <li>Neu: O(2.500 log 2.500) + O(27.500) = ~O(30.000)</li>
+          </ul>
+          <table class="comparison-table" style="margin-top:12px"><thead><tr><th>Kriterium</th><th>Batch-Merge (gewählt)</th><th>Reine Einfügung</th><th>Vollständige Neusortierung</th></tr></thead>
+          <tbody>
+          <tr><td>Zeit (pro Batch)</td><td>O(b log b + n)</td><td>O(b &times; n)</td><td>O((n+b) log(n+b))</td></tr>
+          <tr><td>Hilfsspeicher</td><td>O(b) Batch-Warteschlange</td><td>O(1)</td><td>O(log(n+b)) Stapel</td></tr>
+          <tr><td>Latenz</td><td>Amortisiert niedrig</td><td>Niedrig pro Element, Spitzen hoch</td><td>Hoch pro Batch</td></tr>
+          </tbody></table>
+        summary: "Batch-Merge mit batch_queue. O(b log b + n). Stoß: ~30K Operationen (Rechenfehler). BATCH_THRESHOLD nicht angegeben."
+      judging:
+        options:
+          - letter: "A"
+            text: "Die Stoß-Arithmetik ist falsch: O(2500 log 2500)+O(27500) &asymp; 55.700, nicht ~30.000"
+            correct: true
+          - letter: "B"
+            text: "BATCH_THRESHOLD hat keinen angegebenen Wert oder eine Begründung"
+            correct: true
+          - letter: "C"
+            text: "evict_old durchsucht den gesamten Puffer &mdash; nur der Anfang muss geprüft werden, da er nach Zeitstempel sortiert ist"
+            correct: true
+          - letter: "D"
+            text: "Der Batch-Merge-Ansatz ist für Streaming-Daten grundsätzlich falsch"
+            correct: false
+        studentSelections: [0, 1]
+        doneSelected: false
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Korrekt identifiziert:</strong> (A) Rechenfehler, (B) nicht angegebener Schwellenwert.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Übersehen:</strong> (C) evict_old durchsucht den gesamten Puffer; nur Entfernung am Anfang nötig &mdash; O(k) statt O(n).</div>
+            <div class="criticism" style="margin-top:6px"><strong>Korrekt vermieden:</strong> (D) Batch-Merge IST für Streaming-Daten geeignet.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C).</div>
+      steering:
+        options:
+          - letter: "A"
+            text: "&ldquo;Korrigieren Sie die Stoß-Arithmetik: Zeigen Sie die schrittweise Operationszählung für b=2.500, n=25.000.&rdquo;"
+            correct: true
+          - letter: "B"
+            text: "&ldquo;Geben Sie BATCH_THRESHOLD mit Begründung basierend auf Abfragefrequenz und Verkehrsrate an.&rdquo;"
+            correct: true
+          - letter: "C"
+            text: "&ldquo;Die Lösung sieht gut aus, bereinigen Sie nur die Formatierung.&rdquo;"
+            correct: false
+          - letter: "D"
+            text: "&ldquo;Schreiben Sie es mit einem Heap anstelle eines sortierten Arrays um.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Korrekt ausgewählt:</strong> (A) Arithmetik korrigieren, (B) Schwellenwert angeben. Spezifisch und zielgerichtet.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Korrekt vermieden:</strong> (C) zu vage, (D) unnötige Umschreibung.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B) &mdash; optimal.</div>
+      summaryJudging: "Rechenfehler in der Stoßanalyse, nicht angegebener BATCH_THRESHOLD"
+      summarySteering: "Arithmetik korrigieren; BATCH_THRESHOLD mit Begründung angeben"
+
+    - # Zyklus 3 — Studierender markiert als abgeschlossen
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1 second of normal traffic
+              FLUSH_INTERVAL = 200ms
+
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)
+                  buffer = merge(buffer, batch_queue)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  if batch_queue is not empty: flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Korrigierte Stoßanalyse (b=2.500, n=25.000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch): 2.500 &times; 11,3 = ~28.200 Vergleiche</li>
+          <li>merge: 25.000 + 2.500 = 27.500 Vergleiche</li>
+          <li>Gesamt: ~55.700 Operationen</li>
+          <li>Alter Ansatz: 62.500.000 Operationen</li>
+          <li><strong>Beschleunigung: ~1.122&times;</strong></li>
+          </ul>
+        summary: "Batch-Merge, BATCH_THRESHOLD=500, FLUSH_INTERVAL=200ms. Korrigierter Stoß: ~55.700 Ops. 1.122× Beschleunigung."
+      judging:
+        options:
+          - letter: "A"
+            text: "evict_old durchsucht immer noch den gesamten Puffer &mdash; könnte O(k) sein mit einem Deque oder Front-Pointer"
+            correct: true
+          - letter: "B"
+            text: "Der gesamte Ansatz ist falsch &mdash; man sollte stattdessen eine Datenbank verwenden"
+            correct: false
+          - letter: "C"
+            text: "Hashfunktion für die Sensorsuche nicht angegeben"
+            correct: false
+        studentSelections: []
+        doneSelected: true
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Bewertung:</strong> Als abgeschlossen zu markieren war vertretbar, hat aber (A) übersehen: evict_old durchsucht immer noch den gesamten Puffer, obwohl nur Entfernung am Anfang nötig ist.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Besser:</strong> (A) auswählen und eine letzte Korrektur senden, bevor als abgeschlossen markiert wird.</div>
+      steering: null
+      summaryJudging: "Studierender hat die Lösung als abgeschlossen markiert"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "B"
+      judging: "B"
+      steering: "A"
+    summary: "Starke Steuerung &mdash; Korrekturen waren spezifisch und zielgerichtet. Bei der Rahmung fehlte der Stabilitäts-Tiebreaker (sensor_id). Beurteilung: hat durchgehend die Hauptprobleme erkannt, aber sekundäre Bedenken übersehen (Kopierkosten von poll(), Eviktionsoptimierung). Versuchen Sie &ldquo;was könnte sonst noch falsch sein?&rdquo; nachdem Sie das erste Problem gefunden haben."
+
+oe:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []
+          batch_queue = []
+          BATCH_THRESHOLD = 500
+
+          FUNCTION ingest(reading):
+              batch_queue.append(reading)
+              if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                  flush()
+
+          FUNCTION flush():
+              sort(batch_queue, key=timestamp)
+              buffer = merge(buffer, batch_queue)
+              batch_queue = []
+              evict_old(buffer)
+
+          FUNCTION poll():
+              if batch_queue: flush()
+              return copy(buffer)  // immutable snapshot</div>
+    summary: "Batch-Merge mit Warteschlange. BATCH_THRESHOLD=500. Unveränderlicher Snapshot bei poll()."
+
+  framing:
+    hint: "Das Rohproblem ist absichtlich unvollständig. Fügen Sie unten Verfeinerungsabschnitte hinzu &mdash; Annahmen, Einschränkungen, Klarstellungen &mdash; um es in eine klar definierte Aufgabe zu verwandeln."
+    sections:
+      - name: "Annahmen: Sortierschlüssel und Reihenfolge"
+        text: "Primärer Sortierschlüssel ist der Zeitstempel (chronologische Reihenfolge für das Dashboard). sensor_id als sekundärer Schlüssel für Stabilität bei Zeitstempelkollisionen verwenden. Messwerte können aufgrund von Netzwerk-Jitter leicht außer der Reihe eintreffen."
+      - name: "Einschränkungen: Skalierung und Leistung"
+        text: "Schätzung 200-500 Sensoren, die 200-500 Tupel/Sek. normal erzeugen. &ldquo;Spitzen&rdquo; = 3-5-fache der normalen Rate (1.000-2.500 Tupel/Sek.). Puffer deckt 60-Sekunden-Gleitfenster ab (~30.000 Einträge bei Spitzenlast). Abfragelatenz muss unter 50 ms bleiben."
+      - name: "Klarstellung: Ausgabeformat"
+        text: "Das Dashboard benötigt den vollständigen sortierten Puffer (nicht top-k). Die Ausgabe sollte ein unveränderlicher Snapshot sein &mdash; keine gleichzeitige Änderung während der Poll-Lesevorgänge."
+    feedback:
+      grade: "A"
+      html: |
+        <div class="criticism"><strong>Stärken:</strong> Ausgezeichnete Rahmung. Hat den Sortierschlüssel mit Stabilitäts-Tiebreaker identifiziert, Skalierung und Stoßrate quantifiziert, Pufferfenster spezifiziert, Anforderungen an die Abfragelatenz definiert und Snapshot-Semantik adressiert.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Geringfügige Lücke:</strong> Könnte angeben, wie weit Messwerte außer der Reihe eintreffen können (z. B. maximaler Jitter von 5 Sekunden).</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Verbesserung:</strong> Einen Abschnitt &ldquo;Erfolgskriterien&rdquo; mit konkreten Leistungszielen hinzufügen (z. B. 99. Perzentil Aufnahmelatenz &lt; 2 ms bei Stoß).</div>
+
+  cycles:
+    - # Zyklus 1
+      judging:
+        sections:
+          - name: "Problem: Stoßleistung nicht analysiert"
+            text: "Die KI hat Batch-Merge gewählt, aber nie die Worst-Case-Kosten während eines Stoßes analysiert. Mit b=2.500 und n=25.000 werden keine tatsächlichen Zahlen angegeben. Der Vergleichstabelle fehlt ebenfalls eine Stoßszenario-Analyse."
+          - name: "Problem: BATCH_THRESHOLD-Begründung fehlt"
+            text: "BATCH_THRESHOLD = 500 wird angegeben, aber nie begründet. Warum 500? Wie hängt es mit dem 200-ms-Abfrageintervall des Dashboards zusammen?"
+          - name: "Problem: Overhead durch vollständige poll()-Kopie"
+            text: "poll() gibt copy(buffer) zurück &mdash; Kopieren von ~30.000 Einträgen alle 200 ms. Bei 5 Abfragen/Sek. sind das 150.000 Eintragskopien/Sek. Copy-on-Write-Semantik in Betracht ziehen."
+        doneSelected: false
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Ausgezeichnete Analyse.</strong> Drei echte Probleme identifiziert: fehlende Stoßanalyse (kritisch), unbegründeter Schwellenwert (mittel) und poll()-Kopie-Overhead (berechtigt).</div>
+            <div class="criticism" style="margin-top:6px"><strong>Geringfügiges Versäumnis:</strong> evict_old() durchsucht den gesamten Puffer, muss aber nur am Anfang entfernen &mdash; O(n) vs. O(k) Optimierung.</div>
+      steering:
+        sections:
+          - name: "Anweisung: Stoßleistungsanalyse hinzufügen"
+            text: "Berechnen Sie die genaue Operationsanzahl für einen Stoß von b=2.500 in einen Puffer von n=25.000. Vergleichen Sie den alten Ansatz (Einfügung pro Element) mit Batch-Merge. Zeigen Sie den Beschleunigungsfaktor."
+          - name: "Anweisung: BATCH_THRESHOLD begründen"
+            text: "Begründen Sie BATCH_THRESHOLD = 500. Setzen Sie es in Beziehung zur normalen Verkehrsrate, zur Dashboard-Abfragefrequenz (200 ms) und zum Kompromiss zwischen Latenz und Merge-Effizienz."
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Zielgerichtete Steuerung.</strong> Beide Anweisungen adressieren direkt die beiden kritischsten Probleme mit spezifischem Kontext.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Verbesserung:</strong> Könnte auch das poll()-Kopie-Problem in diesem Zyklus adressieren.</div>
+      summaryJudging: "Fehlende Stoßanalyse, unbegründeter Schwellenwert, poll()-Kopie-Overhead"
+      summarySteering: "Stoßleistungsanalyse hinzufügen; BATCH_THRESHOLD begründen"
+
+    - # Zyklus 2 — Studierender markiert als abgeschlossen
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1s normal traffic; flush before 200ms poll
+              FLUSH_INTERVAL = 150ms // ensures fresh data for 200ms poll cycle
+
+              buffer = deque()       // front-eviction in O(k)
+              batch_queue = []
+              snapshot = None        // cached immutable copy
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  snapshot = None    // invalidate cache
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or elapsed &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)              // O(b log b)
+                  buffer = merge(buffer, batch_queue)  // O(n + b)
+                  batch_queue = []
+                  evict_expired(buffer)                // O(k) front removal
+                  snapshot = None
+
+              FUNCTION poll():
+                  if batch_queue: flush()
+                  if snapshot is None:
+                      snapshot = freeze(buffer)        // O(n) but cached
+                  return snapshot</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Stoßanalyse (b=2.500, n=25.000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch): 2.500 &times; 11,3 = ~28.200 Vergleiche</li>
+          <li>merge: 25.000 + 2.500 = 27.500 Operationen</li>
+          <li>Gesamt: ~55.700 Ops vs. alter Ansatz: 62.500.000</li>
+          <li><strong>Beschleunigung: ~1.122&times;</strong></li>
+          </ul>
+        summary: "Batch-Merge mit Deque-Puffer, zwischengespeicherte Snapshots. BATCH_THRESHOLD=500, FLUSH_INTERVAL=150ms. Stoß: ~55.700 Ops (1.122× Beschleunigung)."
+      judging:
+        sections: []
+        doneSelected: true
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Angemessene Entscheidung.</strong> Die Lösung adressiert alle aufgeworfenen kritischen Probleme. Das verbleibende Eviktionsdetail wurde bereits korrigiert. Als abgeschlossen zu markieren war gerechtfertigt.</div>
+      steering: null
+      summaryJudging: "Studierender hat die Lösung als abgeschlossen markiert"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "A"
+      judging: "A"
+      steering: "A"
+    summary: "Herausragende Leistung in allen drei Dimensionen. Die Rahmung war gründlich mit gut begründeten Annahmen. Die Beurteilung identifizierte kritische Probleme mit quantifizierter Analyse. Die Steuerung war präzise und führte zu bedeutsamen Verbesserungen. Die Entscheidung, in Zyklus 2 als abgeschlossen zu markieren, war angemessen."
