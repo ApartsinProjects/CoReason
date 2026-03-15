@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab — Create Challenge</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    .create-layout { display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
+    .phase-config { border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+    .phase-config h4 { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: var(--primary); }
+    .phase-config .phase-badge { background: var(--primary); color: #fff; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; }
+    .substep-block { background: #f8f9ff; border-radius: var(--radius); padding: 16px; margin-top: 12px; border-left: 3px solid var(--teal); }
+    .substep-block h5 { font-size: 13px; color: var(--teal); margin-bottom: 10px; }
+    .preview-section { position: sticky; top: 80px; }
+    .rubric-preview { background: #f8f9ff; border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
+    .rubric-preview h5 { font-size: 13px; color: var(--primary); margin-bottom: 8px; }
+    .rubric-preview ul { font-size: 13px; padding-left: 16px; color: var(--text-secondary); }
+    .rubric-preview li { margin-bottom: 4px; }
+    .advanced-toggle { font-size: 13px; color: var(--primary); cursor: pointer; border: none; background: none; text-decoration: underline; padding: 0; }
+    .advanced-panel { background: #fafafa; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-top: 12px; }
+    .inline-radio { display: flex; gap: 16px; }
+    .inline-radio label { display: flex; align-items: center; gap: 6px; font-size: 14px; cursor: pointer; }
+    .advanced-header { cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+    .advanced-header h3 { margin-bottom: 0; }
+    .rubric-summary { font-size: 13px; }
+    .rubric-summary h5 { font-size: 12px; color: var(--primary); margin-bottom: 4px; margin-top: 8px; }
+    .rubric-summary .grade-labels { color: var(--text-secondary); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
+    <nav>
+      <a href="03-challenge-list-instructor.html" class="active">Challenges</a>
+      <a href="06-course-catalog-instructor.html">Courses</a>
+      <a href="08-instructor-analytics.html">Analytics</a>
+    </nav>
+    <div class="user-area">
+      <select class="lang-select"><option>EN</option><option>HE</option><option>AR</option></select>
+      <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Instructor</span>
+      <span>Sarah Cohen</span>
+      <a href="09-profile.html"><div class="avatar">SC</div></a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-header">
+      <h1>Create a Public Challenge</h1>
+      <p>Define a new co-reasoning challenge for your course</p>
+    </div>
+
+    <div class="create-layout">
+      <!-- Left: Form -->
+      <div>
+        <!-- Metadata -->
+        <div class="card">
+          <h3 style="margin-bottom:16px;">Challenge Details</h3>
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" value="Neural Network Debugging">
+          </div>
+          <div class="form-group">
+            <label>Course &amp; Subject <span class="help-icon" data-tooltip="Select the course this challenge belongs to. The course determines which subject tree is available.">?</span></label>
+            <select class="form-control">
+              <option>Deep Learning 101</option>
+              <option>Database Systems</option>
+              <option>Software Engineering</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. Rubrics and problems will be generated based on the selected subjects. Check parent nodes to include all children.">?</span></label>
+            <div class="subject-tree-select" id="subjectTreeSelect">
+              <div class="subject-tree-trigger" onclick="toggleSubjectTree()">
+                <span class="subject-tree-tags" id="selectedTags">
+                  <span class="subject-tag">Backpropagation &gt; Debugging <button onclick="event.stopPropagation(); removeSubject('bp-debug')">&times;</button></span>
+                  <span class="subject-tag">Architectures &gt; CNNs <button onclick="event.stopPropagation(); removeSubject('arch-cnn')">&times;</button></span>
+                </span>
+                <span class="subject-tree-arrow">&#9662;</span>
+              </div>
+              <div class="subject-tree-dropdown" id="subjectTreeDropdown">
+                <div class="subject-tree-search">
+                  <input type="text" placeholder="Search subjects..." class="form-control" style="margin-bottom:0; font-size:13px; padding:6px 10px;">
+                </div>
+                <div class="subject-tree-body">
+                  <ul class="tree-select">
+                    <li>
+                      <label class="tree-node">
+                        <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
+                        <input type="checkbox" class="tree-checkbox" id="nn" onchange="toggleChildren(this)">
+                        <span class="tree-label">Neural Networks</span>
+                      </label>
+                      <ul class="tree-children">
+                        <li>
+                          <label class="tree-node">
+                            <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
+                            <input type="checkbox" class="tree-checkbox" id="nn-bp" onchange="toggleChildren(this)">
+                            <span class="tree-label">Backpropagation</span>
+                          </label>
+                          <ul class="tree-children">
+                            <li>
+                              <label class="tree-node">
+                                <input type="checkbox" class="tree-checkbox" id="bp-debug" checked>
+                                <span class="tree-label">Debugging</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label class="tree-node">
+                                <input type="checkbox" class="tree-checkbox" id="bp-vanish">
+                                <span class="tree-label">Vanishing Gradients</span>
+                              </label>
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <label class="tree-node">
+                            <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
+                            <input type="checkbox" class="tree-checkbox" id="nn-arch" onchange="toggleChildren(this)">
+                            <span class="tree-label">Architectures</span>
+                          </label>
+                          <ul class="tree-children">
+                            <li>
+                              <label class="tree-node">
+                                <input type="checkbox" class="tree-checkbox" id="arch-cnn" checked>
+                                <span class="tree-label">CNNs</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label class="tree-node">
+                                <input type="checkbox" class="tree-checkbox" id="arch-rnn">
+                                <span class="tree-label">RNNs</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label class="tree-node">
+                                <input type="checkbox" class="tree-checkbox" id="arch-transformer">
+                                <span class="tree-label">Transformers</span>
+                              </label>
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <label class="tree-node">
+                            <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
+                            <input type="checkbox" class="tree-checkbox" id="nn-opt" onchange="toggleChildren(this)">
+                            <span class="tree-label">Optimization</span>
+                          </label>
+                          <ul class="tree-children">
+                            <li>
+                              <label class="tree-node">
+                                <input type="checkbox" class="tree-checkbox" id="opt-lr">
+                                <span class="tree-label">Learning Rate</span>
+                              </label>
+                            </li>
+                            <li>
+                              <label class="tree-node">
+                                <input type="checkbox" class="tree-checkbox" id="opt-reg">
+                                <span class="tree-label">Regularization</span>
+                              </label>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <label class="tree-node">
+                        <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
+                        <input type="checkbox" class="tree-checkbox" id="loss" onchange="toggleChildren(this)">
+                        <span class="tree-label">Loss Functions</span>
+                      </label>
+                      <ul class="tree-children">
+                        <li>
+                          <label class="tree-node">
+                            <input type="checkbox" class="tree-checkbox" id="loss-ce">
+                            <span class="tree-label">Cross-Entropy</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label class="tree-node">
+                            <input type="checkbox" class="tree-checkbox" id="loss-mse">
+                            <span class="tree-label">MSE</span>
+                          </label>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <label class="tree-node">
+                        <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
+                        <input type="checkbox" class="tree-checkbox" id="eval" onchange="toggleChildren(this)">
+                        <span class="tree-label">Model Evaluation</span>
+                      </label>
+                      <ul class="tree-children">
+                        <li>
+                          <label class="tree-node">
+                            <input type="checkbox" class="tree-checkbox" id="eval-overfit">
+                            <span class="tree-label">Overfitting &amp; Underfitting</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label class="tree-node">
+                            <input type="checkbox" class="tree-checkbox" id="eval-cv">
+                            <span class="tree-label">Cross-Validation</span>
+                          </label>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div class="subject-tree-footer">
+                  <span class="text-sm text-muted"><strong id="selectedCount">2</strong> subjects selected</span>
+                  <button class="btn btn-sm btn-outline" onclick="clearAllSubjects()">Clear All</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" rows="3">Students will debug a neural network training pipeline with intentionally introduced issues in data preprocessing and model architecture.</textarea>
+          </div>
+
+          <!-- Visibility -->
+          <div class="form-group">
+            <label>Visibility</label>
+            <div class="alert alert-info" style="margin-bottom:0;">
+              <strong>Public</strong> — This challenge will be available to all students subscribed to the course.
+            </div>
+          </div>
+
+          <!-- Challenge Type -->
+          <div class="form-group">
+            <label>Challenge Type <span class="help-icon" data-tooltip="Practice: students see feedback after each phase and can retry. Assessment: feedback is withheld until the end, no retries allowed.">?</span></label>
+            <div class="inline-radio">
+              <label><input type="radio" name="type" checked> Practice <span class="text-muted">— feedback after each phase/cycle, retries allowed</span></label>
+              <label><input type="radio" name="type"> Assessment <span class="text-muted">— feedback at end only, no retries</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evaluation Rubrics -->
+        <div class="card">
+          <h3 style="margin-bottom:16px;">Evaluation Rubrics</h3>
+          <p class="text-sm text-muted mb-16">Rubrics are auto-generated based on your course and selected subjects. They define what constitutes good performance — rubrics are NEVER shown to students.</p>
+
+          <button class="btn btn-teal btn-lg" style="margin-bottom:16px;">&#9889; Generate Rubrics</button>
+
+          <div class="rubric-preview">
+            <h5>Framing Rubric</h5>
+            <ul>
+              <li>Identifies all missing/ambiguous requirements</li>
+              <li>Formulates reasonable and justified assumptions</li>
+              <li>Produces a complete, well-defined task statement</li>
+              <li><em>Common error: accepting problem at face value without questioning</em></li>
+            </ul>
+          </div>
+          <div class="rubric-preview">
+            <h5>Judging Rubric</h5>
+            <ul>
+              <li>Detects logical errors in AI solution</li>
+              <li>Identifies incorrect assumptions made by AI</li>
+              <li>Recognizes incomplete or partial solutions</li>
+              <li><em>Common error: focusing only on syntax, missing logical flaws</em></li>
+            </ul>
+          </div>
+          <div class="rubric-preview">
+            <h5>Steering Rubric</h5>
+            <ul>
+              <li>Commands are specific and actionable</li>
+              <li>Addresses identified issues systematically</li>
+              <li>Converges toward a correct solution</li>
+              <li><em>Common error: vague commands like "fix it" or "try again"</em></li>
+            </ul>
+          </div>
+
+          <p class="text-sm text-muted" style="margin-top:8px;">Rubrics will be regenerated when you change the subject selection.</p>
+        </div>
+
+        <!-- Advanced Settings (collapsible) -->
+        <div class="card">
+          <div class="advanced-header" onclick="toggleAdvanced()">
+            <h3>Advanced Settings</h3>
+            <span class="arrow" id="adv-arrow">&#9654;</span>
+          </div>
+          <div id="advanced-body" style="display:none">
+
+            <!-- Phase Configuration -->
+            <h4 style="margin-top:16px; margin-bottom:12px;">Phase Configuration</h4>
+
+            <!-- Phase 1: Framing -->
+            <div class="phase-config">
+              <h4><span class="phase-badge">Phase 1</span> Framing <span class="help-icon" data-tooltip="The student sees a raw, intentionally incomplete problem and must translate it into a well-defined task by adding assumptions, constraints, and clarifications.">?</span></h4>
+              <p class="text-sm text-muted mb-16">System presents a raw problem. Student translates it into a well-defined task and sends it to the AI.</p>
+              <div class="form-group">
+                <label>Framing Response Type <span class="help-icon" data-tooltip="Multiple Choice: LLM generates options representing different framings. Open-Ended: student writes structured refinement sections around the raw problem.">?</span></label>
+                <div class="inline-radio">
+                  <label><input type="radio" name="frame-type" checked> Multiple Choice</label>
+                  <label><input type="radio" name="frame-type"> Open-Ended (structured sections)</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Instructions to Students</label>
+                <textarea class="form-control" rows="3">Read the problem statement carefully. Identify missing information, ambiguous requirements, and unstated assumptions. Formulate a clear, well-defined task by specifying your assumptions.</textarea>
+              </div>
+            </div>
+
+            <!-- Phase 2: Judge+Steer Cycles -->
+            <div class="phase-config">
+              <h4><span class="phase-badge">Phase 2</span> Judge+Steer Cycles <span class="help-icon" data-tooltip="Iterative cycles where the student first identifies issues in the AI output (judging), then sends corrections (steering). The AI updates its output after each cycle.">?</span></h4>
+              <p class="text-sm text-muted mb-16">Iterative cycles. Each cycle: student judges the AI output (identifies issues — not sent to AI), then steers the AI (sends correction request).</p>
+
+              <div class="form-group">
+                <label>Max Cycles</label>
+                <input type="number" class="form-control" value="5" min="1" max="10" style="width:80px;">
+              </div>
+
+              <!-- Judging sub-step config -->
+              <div class="substep-block">
+                <h5>Sub-step A — Judging <span class="help-icon" data-tooltip="The student analyzes the AI's output and identifies gaps or errors. Judgments are recorded but NOT sent to the AI.">?</span></h5>
+                <div class="form-group">
+                  <label>Judging Response Type</label>
+                  <div class="inline-radio">
+                    <label><input type="radio" name="judge-type" checked> Multiple Choice</label>
+                    <label><input type="radio" name="judge-type"> Open-Ended (structured sections, e.g. "Gap: ...")</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Judging Instructions</label>
+                  <textarea class="form-control" rows="3">Review the AI's output carefully. Identify any gaps, errors, or issues. Select ALL issues you find — your analysis is recorded but NOT sent to the AI.</textarea>
+                </div>
+              </div>
+
+              <!-- Steering sub-step config -->
+              <div class="substep-block">
+                <h5>Sub-step B — Steering <span class="help-icon" data-tooltip="The student sends a correction or update request to the AI. The AI processes it and produces updated output for the next cycle.">?</span></h5>
+                <div class="form-group">
+                  <label>Steering Response Type</label>
+                  <div class="inline-radio">
+                    <label><input type="radio" name="steer-type" checked> Multiple Choice</label>
+                    <label><input type="radio" name="steer-type"> Open-Ended (structured sections)</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Steering Instructions</label>
+                  <textarea class="form-control" rows="3">Based on your analysis, select ALL corrections to send to the AI. Be specific — tell the AI exactly what to fix or improve.</textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- LLM Model Override -->
+            <div class="form-group">
+              <label>LLM Model Override <span class="help-icon" data-tooltip="Override the default LLM model for this challenge. Hierarchy: system default → course default → challenge override.">?</span></label>
+              <select class="form-control">
+                <option value="">System Default (GPT-4o)</option>
+                <option>GPT-4o</option>
+                <option>GPT-4o-mini</option>
+                <option>Claude 3.5 Sonnet</option>
+                <option>Gemini 2.0 Flash</option>
+              </select>
+              <p class="text-sm text-muted mt-8">Model applies to all LLM functions for this challenge.</p>
+            </div>
+
+            <!-- Default MC Options -->
+            <div class="form-group" style="margin-bottom:0;">
+              <label>Default MC Options <span class="help-icon" data-tooltip="The default number of multiple-choice options generated for all phases.">?</span></label>
+              <input type="number" class="form-control" value="6" min="4" max="10" style="width:80px;">
+              <p class="text-sm text-muted mt-8">Number of multiple-choice options generated for all phases.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="flex gap-12 mt-16">
+          <button class="btn btn-primary btn-lg">Save &amp; Publish</button>
+          <a href="03-challenge-list-instructor.html" class="btn btn-outline btn-lg">Cancel</a>
+        </div>
+      </div>
+
+      <!-- Right: Preview Panel -->
+      <div class="preview-section">
+        <div class="card">
+          <h3 style="margin-bottom:16px;">Raw Problem Preview <span class="help-icon" data-tooltip="A sample problem generated from your selected subject. Shows the kind of problems students will see, with annotated gaps visible only to you.">?</span></h3>
+          <div style="background:#f8f9ff; padding:12px; border-radius:var(--radius); font-size:13px;">
+            <p><strong>Problem:</strong> A research team has built a CNN for classifying medical images. The model achieves 98% training accuracy but only 52% on validation. The team reports that [<em>missing: dataset size and class distribution not specified</em>]...</p>
+            <p class="text-muted mt-8"><em>Note: This problem intentionally contains missing/ambiguous parts per REQ-STEP-01.</em></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-bottom:12px;">Rubric Summary</h3>
+          <div class="rubric-summary">
+            <h5>Framing</h5>
+            <div class="grade-labels"><strong>A:</strong> All gaps identified, justified assumptions <strong>B:</strong> Most gaps found, reasonable assumptions <strong>C:</strong> Partial identification, weak justification</div>
+            <h5>Judging</h5>
+            <div class="grade-labels"><strong>A:</strong> All errors detected, logical analysis <strong>B:</strong> Most errors found, some analysis gaps <strong>C:</strong> Few errors caught, surface-level review</div>
+            <h5>Steering</h5>
+            <div class="grade-labels"><strong>A:</strong> Specific, actionable, converges to solution <strong>B:</strong> Mostly specific, partial convergence <strong>C:</strong> Vague directions, slow convergence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Toggle advanced settings panel
+    function toggleAdvanced() {
+      const body = document.getElementById('advanced-body');
+      const arrow = document.getElementById('adv-arrow');
+      if (body.style.display === 'none') {
+        body.style.display = '';
+        arrow.textContent = '\u25BC';
+      } else {
+        body.style.display = 'none';
+        arrow.textContent = '\u25B6';
+      }
+    }
+
+    // Toggle the dropdown open/close
+    function toggleSubjectTree() {
+      document.getElementById('subjectTreeSelect').classList.toggle('open');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      var select = document.getElementById('subjectTreeSelect');
+      if (select && !select.contains(e.target)) {
+        select.classList.remove('open');
+      }
+    });
+
+    // Toggle tree branch expand/collapse
+    function toggleTreeBranch(toggleEl) {
+      toggleEl.classList.toggle('collapsed');
+      var li = toggleEl.closest('li');
+      var children = li.querySelector('ul.tree-children');
+      if (children) children.classList.toggle('collapsed');
+    }
+
+    // When a parent checkbox is toggled, check/uncheck all children
+    function toggleChildren(checkbox) {
+      var li = checkbox.closest('li');
+      var childCheckboxes = li.querySelectorAll('ul.tree-children .tree-checkbox');
+      childCheckboxes.forEach(function(cb) {
+        cb.checked = checkbox.checked;
+        cb.indeterminate = false;
+      });
+      updateParentState(checkbox);
+      updateSelectedTags();
+    }
+
+    // Update parent checkbox state (checked / indeterminate / unchecked)
+    function updateParentState(checkbox) {
+      var li = checkbox.closest('li');
+      var parentUl = li.parentElement;
+      if (!parentUl || !parentUl.classList.contains('tree-children')) return;
+
+      var parentLi = parentUl.closest('li');
+      if (!parentLi) return;
+
+      var parentCb = parentLi.querySelector(':scope > label .tree-checkbox');
+      if (!parentCb) return;
+
+      var siblings = parentUl.querySelectorAll(':scope > li > label .tree-checkbox');
+      var checkedCount = 0;
+      var indeterminateCount = 0;
+      siblings.forEach(function(cb) {
+        if (cb.checked) checkedCount++;
+        if (cb.indeterminate) indeterminateCount++;
+      });
+
+      if (checkedCount === siblings.length) {
+        parentCb.checked = true;
+        parentCb.indeterminate = false;
+      } else if (checkedCount === 0 && indeterminateCount === 0) {
+        parentCb.checked = false;
+        parentCb.indeterminate = false;
+      } else {
+        parentCb.checked = false;
+        parentCb.indeterminate = true;
+      }
+
+      updateParentState(parentCb);
+    }
+
+    // Rebuild the tag list from checked leaf checkboxes
+    function updateSelectedTags() {
+      var tagsContainer = document.getElementById('selectedTags');
+      var allChecked = document.querySelectorAll('.tree-checkbox:checked');
+      tagsContainer.innerHTML = '';
+      var count = 0;
+
+      allChecked.forEach(function(cb) {
+        // Only show leaf nodes (those without a direct child ul.tree-children) as tags
+        var li = cb.closest('li');
+        var directChildUl = li.querySelector(':scope > ul.tree-children');
+        if (directChildUl) return; // skip parent nodes — they have child branches
+
+        count++;
+        // Build path from ancestors
+        var path = [];
+        var current = li;
+        while (current) {
+          var label = current.querySelector(':scope > label .tree-label');
+          if (label) path.unshift(label.textContent);
+          var parentUl = current.parentElement;
+          current = (parentUl && parentUl.classList.contains('tree-children')) ? parentUl.closest('li') : null;
+        }
+        // Show last 2 levels for brevity
+        var display = path.length > 2 ? path.slice(-2).join(' > ') : path.join(' > ');
+
+        var tag = document.createElement('span');
+        tag.className = 'subject-tag';
+        tag.innerHTML = display + ' <button onclick="event.stopPropagation(); uncheckById(\'' + cb.id + '\')">&times;</button>';
+        tagsContainer.appendChild(tag);
+      });
+
+      document.getElementById('selectedCount').textContent = count;
+    }
+
+    // Remove a specific subject by unchecking it
+    function uncheckById(id) {
+      var cb = document.getElementById(id);
+      if (cb) {
+        cb.checked = false;
+        updateParentState(cb);
+        updateSelectedTags();
+      }
+    }
+
+    function removeSubject(id) {
+      uncheckById(id);
+    }
+
+    function clearAllSubjects() {
+      document.querySelectorAll('.tree-checkbox').forEach(function(cb) {
+        cb.checked = false;
+        cb.indeterminate = false;
+      });
+      updateSelectedTags();
+    }
+
+    // Attach change listeners to all leaf checkboxes
+    document.querySelectorAll('.tree-checkbox').forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        if (!this.closest('li').querySelector('ul.tree-children')) {
+          // Leaf node — update parent state
+          updateParentState(this);
+          updateSelectedTags();
+        }
+      });
+    });
+
+    // Initialize parent states on load
+    (function() {
+      // Set initial indeterminate states for parents with partial children checked
+      var allParents = document.querySelectorAll('.tree-checkbox[onchange]');
+      // Walk from bottom up
+      var leaves = document.querySelectorAll('.tree-checkbox:not([onchange])');
+      leaves.forEach(function(cb) { updateParentState(cb); });
+    })();
+  </script>
+</body>
+</html>

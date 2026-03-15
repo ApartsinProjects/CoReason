@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab — Challenge Run</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <script src="challenge-scenarios.js"></script>
+  <style>
+    .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
+    .problem-panel { background: #f8f9ff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--primary); }
+    .problem-panel h4 { color: var(--primary); font-size: 14px; margin-bottom: 8px; }
+    .instructions-bar { background: #e0f2f1; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: var(--teal); display: flex; align-items: flex-start; gap: 8px; }
+    .instructions-bar strong { white-space: nowrap; }
+    .substep-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 12px; }
+    .substep-judge { background: #fff3e0; color: var(--warning); }
+    .substep-steer { background: #e3f2fd; color: #1565c0; }
+    .cycle-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--border); cursor: pointer; }
+    .cycle-header h3 { font-size: 16px; }
+    .cycle-num { background: var(--primary); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+    .submit-area { display: flex; align-items: center; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .cycle-indicator { font-size: 13px; color: var(--text-secondary); background: #f5f5f5; padding: 6px 12px; border-radius: var(--radius); }
+    .ai-output { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .ai-output-label { font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 8px; text-transform: uppercase; }
+    .divider-line { border: none; border-top: 1px dashed var(--border); margin: 16px 0; }
+
+    /* Mode banner */
+    .mode-banner { padding: 10px 20px; border-radius: var(--radius); font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .mode-banner.practice { background: #e8f5e9; color: #2e7d32; border: 2px solid #a5d6a7; }
+    .mode-banner.assessment { background: #fff3e0; color: #ef6c00; border: 2px solid #ffcc80; }
+
+    /* MC checkboxes */
+    .mc-option { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; cursor: pointer; transition: all .15s; }
+    .mc-option:hover { border-color: var(--primary); background: #f8f9ff; }
+    .mc-option.selected { border-color: var(--primary); background: #e8eaf6; }
+    .mc-check { width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 3px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; transition: all .15s; }
+    .mc-option.selected .mc-check { border-color: var(--primary); background: var(--primary); }
+    .mc-label { font-size: 14px; }
+
+    /* OE sections */
+    .section-list { margin-bottom: 12px; }
+    .section-item { border: 1.5px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; }
+    .section-header { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #f5f5f5; }
+    .section-header input { border: none; background: transparent; font-weight: 600; font-size: 14px; flex: 1; outline: none; }
+    .section-header .remove-btn { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 16px; }
+    .section-body textarea { width: 100%; border: none; padding: 10px 12px; font-size: 14px; resize: vertical; min-height: 60px; outline: none; font-family: inherit; }
+    .add-section-btn { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1.5px dashed var(--border); border-radius: var(--radius); background: transparent; font-size: 13px; color: var(--primary); cursor: pointer; width: 100%; justify-content: center; }
+    .add-section-btn:hover { border-color: var(--primary); background: #f8f9ff; }
+
+    /* "Solution is complete" button */
+    .btn-done-judging { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border: 2px solid var(--success); border-radius: var(--radius); background: #fff; color: var(--success); font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s; margin-top: 8px; width: 100%; justify-content: center; }
+    .btn-done-judging:hover { background: #e8f5e9; }
+    .btn-done-judging.selected { background: var(--success); color: #fff; }
+
+    /* Collapsible feedback */
+    .feedback-panel { border-left: 4px solid var(--teal); padding: 0; background: #e0f2f1; border-radius: 0 var(--radius) var(--radius) 0; margin-top: 16px; overflow: hidden; }
+    .feedback-toggle { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--teal); }
+    .feedback-toggle:hover { background: rgba(0,0,0,.03); }
+    .feedback-toggle .arrow { transition: transform .2s; font-size: 12px; }
+    .feedback-toggle .arrow.collapsed { transform: rotate(-90deg); }
+    .feedback-body { padding: 0 16px 16px; }
+    .feedback-body.collapsed { display: none; }
+    .feedback-body .criticism { font-size: 14px; margin-bottom: 8px; }
+    .feedback-body .better-alt { font-size: 14px; color: var(--teal); font-style: italic; }
+
+    /* Collapsed cycle */
+    .cycle-collapsed .cycle-body { display: none; }
+    .cycle-collapsed .cycle-header { border-bottom: none; margin-bottom: 0; opacity: 0.7; }
+    .cycle-header .collapse-arrow { margin-left: auto; font-size: 12px; transition: transform .2s; }
+    .cycle-collapsed .collapse-arrow { transform: rotate(-90deg); }
+
+    /* Code block & comparison table */
+    .code-block { background: #263238; color: #eeffff; padding: 16px; border-radius: var(--radius); font-family: 'Consolas', 'Fira Code', monospace; font-size: 13px; line-height: 1.6; overflow-x: auto; margin: 8px 0; white-space: pre; }
+    .comparison-table { width: 100%; font-size: 13px; margin: 8px 0; }
+    .comparison-table th { background: #f5f5f5; font-size: 12px; }
+    .comparison-table td, .comparison-table th { padding: 8px 10px; border: 1px solid var(--border); }
+
+    /* Summary panel */
+    .summary-panel { position: sticky; top: 80px; }
+    .summary-section { margin-bottom: 12px; }
+    .summary-section h5 { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--text-secondary); margin-bottom: 6px; }
+    .summary-raw { font-size: 12px; color: var(--text-secondary); line-height: 1.5; max-height: 100px; overflow-y: auto; padding: 8px; background: #f8f9ff; border-radius: 4px; border-left: 3px solid var(--primary); }
+    .summary-solution { font-size: 12px; color: var(--text); line-height: 1.5; max-height: 120px; overflow-y: auto; padding: 8px; background: #f5f5f5; border-radius: 4px; font-family: 'Consolas', monospace; }
+    .cycle-log { font-size: 12px; }
+    .cycle-log-entry { padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .cycle-log-entry:last-child { border-bottom: none; }
+    .cycle-log-label { font-weight: 600; color: var(--primary); font-size: 11px; text-transform: uppercase; }
+
+    /* Sim controls */
+    .sim-step-icon { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #e0e0e0; color: #757575; font-size: 12px; font-weight: 700; cursor: pointer; border: 1.5px solid #bdbdbd; margin-left: 8px; transition: all .2s; }
+    .sim-step-icon:hover { background: #bdbdbd; color: #424242; transform: scale(1.15); }
+    .sim-step-icon.done { background: #c8e6c9; color: #2e7d32; border-color: #a5d6a7; cursor: default; }
+    .sim-step-icon.active { background: #fff3e0; color: #ef6c00; border-color: #ffcc80; animation: simPulse 1s infinite; }
+    @keyframes simPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(239,108,0,.3); } 50% { box-shadow: 0 0 0 6px rgba(239,108,0,0); } }
+    .llm-status { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #1a237e 0%, #00695c 100%); color: #fff; padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 500; display: none; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.25); z-index: 300; }
+    .llm-status.visible { display: inline-flex; }
+    .llm-spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .sim-hidden { display: none; }
+    .sim-reveal { animation: simFadeIn .5s ease-out; }
+    @keyframes simFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Scenario picker */
+    .sim-panel { background: linear-gradient(135deg, #f5f5f5, #eeeeee); border: 1.5px solid #bdbdbd; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #616161; flex-wrap: wrap; }
+    .sim-panel strong { color: #424242; }
+    .sim-panel .sim-badge { background: #ef6c00; color: #fff; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .sim-panel select { padding: 4px 8px; border: 1.5px solid #bdbdbd; border-radius: 4px; font-size: 13px; background: #fff; cursor: pointer; }
+    .toggle-group { display: flex; border: 1.5px solid #bdbdbd; border-radius: 4px; overflow: hidden; }
+    .toggle-btn { padding: 4px 12px; font-size: 12px; font-weight: 600; border: none; background: #fff; cursor: pointer; transition: all .15s; color: #616161; }
+    .toggle-btn.active { background: var(--primary); color: #fff; }
+    .toggle-btn:hover:not(.active) { background: #e8eaf6; }
+
+    /* Assessment deferred feedback at completion */
+    .deferred-feedback-section { margin-top: 16px; }
+    .deferred-feedback-section h4 { font-size: 14px; color: var(--teal); margin-bottom: 8px; }
+    .deferred-feedback-item { margin-bottom: 12px; }
+    .deferred-feedback-item .dfb-label { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
+    <nav>
+      <a href="03-challenge-list.html" class="active">Challenges</a>
+      <a href="06-course-catalog.html">Courses</a>
+      <a href="07-student-analytics.html">My Results</a>
+    </nav>
+    <div class="user-area">
+      <select class="lang-select"><option>EN</option><option>HE</option><option>AR</option></select>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Student</span>
+      <span id="user-name">Noa R.</span>
+      <a href="09-profile.html"><div class="avatar" id="user-avatar">NR</div></a>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- Scenario Picker -->
+    <div class="sim-panel">
+      <span class="sim-badge">Simulator</span>
+      <select id="challenge-picker" onchange="onPickerChange()">
+        <optgroup label="Sorting Pipeline for Sensor Data">
+          <option value="sorting-mc-practice">Sorting &mdash; MC</option>
+          <option value="sorting-oe-practice">Sorting &mdash; Open-Ended</option>
+        </optgroup>
+        <optgroup label="Query Optimization for E-Commerce">
+          <option value="sql-mc-practice">SQL Query &mdash; MC</option>
+          <option value="sql-oe-practice">SQL Query &mdash; Open-Ended</option>
+        </optgroup>
+        <optgroup label="API Rate Limiter for Banking App">
+          <option value="ratelimiter-mc-practice">Rate Limiter &mdash; MC</option>
+          <option value="ratelimiter-oe-practice">Rate Limiter &mdash; Open-Ended</option>
+        </optgroup>
+      </select>
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="setMode('practice', this)">Practice</button>
+        <button class="toggle-btn" onclick="setMode('assessment', this)">Assessment</button>
+      </div>
+      <button class="btn btn-sm btn-outline" onclick="loadScenario()" style="margin-left:auto;">&#8635; Reset</button>
+    </div>
+
+    <!-- Dynamic content rendered here -->
+    <div id="scenario-content"></div>
+  </main>
+
+  <!-- LLM Status -->
+  <div class="llm-status" id="llm-status">
+    <div class="llm-spinner"></div>
+    <span id="llm-status-text">Generating...</span>
+  </div>
+
+  <script>
+    // ══════════════════════════════════════════════════════════
+    // STATE
+    // ══════════════════════════════════════════════════════════
+    let currentMode = 'practice';
+    let simSteps = [];
+    let simIndex = 0;
+
+    // ══════════════════════════════════════════════════════════
+    // PICKER CONTROLS
+    // ══════════════════════════════════════════════════════════
+    function onPickerChange() { loadScenario(); }
+    function setMode(mode, btn) {
+      currentMode = mode;
+      btn.parentElement.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      loadScenario();
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // LOAD & RENDER SCENARIO
+    // ══════════════════════════════════════════════════════════
+    function loadScenario() {
+      const baseId = document.getElementById('challenge-picker').value;
+      // Derive scenario ID from picker + mode
+      const parts = baseId.split('-');
+      const challengeKey = parts.slice(0, -2).join('-');
+      const respType = parts[parts.length - 2];
+      const scenarioId = challengeKey + '-' + respType + '-' + currentMode;
+
+      const scenario = SCENARIOS[scenarioId];
+      if (!scenario) { document.getElementById('scenario-content').innerHTML = '<p>Scenario not found: ' + scenarioId + '</p>'; return; }
+
+      const challenge = CHALLENGES[scenario.challengeId];
+      const variant = challenge[scenario.responseType];
+      const mode = scenario.mode;
+      const isOE = scenario.responseType === 'oe';
+      const isPractice = mode === 'practice';
+
+      // Update user
+      document.getElementById('user-name').textContent = scenario.user.name;
+      document.getElementById('user-avatar').textContent = scenario.user.initials;
+
+      // Generate HTML
+      const html = renderAll(challenge, variant, mode, isOE, isPractice);
+      document.getElementById('scenario-content').innerHTML = html;
+
+      // Build sim steps
+      buildSteps(challenge, variant, mode, isOE, isPractice);
+      simIndex = 0;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // HTML RENDERING
+    // ══════════════════════════════════════════════════════════
+    function renderAll(ch, v, mode, isOE, isPractice) {
+      let h = '';
+      // Page header
+      h += `<div class="page-header flex-between">
+        <div><h1>${ch.title}</h1><p>${ch.course} &bull; ${ch.subject}</p></div>
+        <a href="03-challenge-list.html" class="btn btn-outline">&#10005; Exit</a>
+      </div>`;
+
+      // Mode banner
+      if (isPractice) {
+        h += `<div class="mode-banner practice"><span style="font-size:20px">&#9881;</span><span>Practice Mode</span> &mdash; Feedback after each phase, retries allowed</div>`;
+      } else {
+        h += `<div class="mode-banner assessment"><span style="font-size:20px">&#9888;</span><span>Assessment Mode</span> &mdash; Feedback revealed at completion only</div>`;
+      }
+
+      // Stepper
+      h += `<div class="stepper">
+        <div class="step-item" id="stepper-p1"><div class="step-num" id="stepper-p1-num">1</div><div>Phase 1 &mdash; Framing</div></div>
+        <div class="step-item" id="stepper-p2"><div class="step-num" id="stepper-p2-num">2</div><div>Phase 2 &mdash; Judge+Steer Cycles</div></div>
+      </div>`;
+
+      // Start card
+      h += `<div id="start-card" class="card" style="text-align:center;padding:40px">
+        <h3 style="margin-bottom:12px;color:var(--text-secondary)">Challenge Ready to Start</h3>
+        <p class="text-muted mb-16">Click &#9654; to generate the raw problem via LLM.</p>
+        <span class="sim-step-icon" onclick="nextSim()" id="sim-icon-0">&#9654;</span>
+      </div>`;
+
+      // Phase 1
+      h += `<div id="phase1" class="sim-hidden">`;
+      h += `<div class="card" style="border-left:4px solid var(--primary)">
+        <h3 style="margin-bottom:12px"><span style="color:var(--primary)">Phase 1 &mdash; Framing (${isOE ? 'Open-Ended' : 'Multiple Choice'})</span></h3>`;
+      h += `<div class="instructions-bar" style="background:#e8f5e9;color:#2e7d32"><strong>Hint:</strong> ${v.framing.hint}</div>`;
+      h += `<div class="problem-panel"><h4>Raw Problem Statement ${isOE ? '(read-only base)' : ''} <span class="help-icon" data-tooltip="This problem was generated by the LLM. It intentionally contains missing information and ambiguities.">?</span></h4><p>${ch.rawProblem}</p></div>`;
+
+      // Framing response area
+      if (isOE) {
+        h += `<div id="phase1-options">`;
+        h += `<h4 style="font-size:14px;margin-bottom:8px;color:var(--teal)">Your Refinement Sections</h4>`;
+        h += `<div class="section-list">`;
+        v.framing.sections.forEach(s => {
+          h += `<div class="section-item"><div class="section-header"><input type="text" value="${s.name}" readonly><button class="remove-btn">&times;</button></div><div class="section-body"><textarea readonly>${s.text}</textarea></div></div>`;
+        });
+        h += `</div><button class="add-section-btn">+ Add Refinement Section</button>`;
+        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-1">&#9654;</span><span class="text-sm text-muted">Submit ${v.framing.sections.length} refinement sections</span></div>`;
+        h += `</div>`;
+      } else {
+        h += `<div id="phase1-gen-btn" style="text-align:center;margin-top:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-1">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">Generate framing options (LLM)</span></div>`;
+        h += `<div id="phase1-options" class="sim-hidden">`;
+        h += `<p class="text-sm text-muted mb-8"><strong>Select all refinements that apply</strong></p>`;
+        v.framing.options.forEach((opt, i) => {
+          h += `<div class="mc-option" onclick="toggleMC(this)" data-idx="${i}"><div class="mc-check">&#10003;</div><div><div class="mc-label"><strong>(${opt.letter})</strong> ${opt.text}</div></div></div>`;
+        });
+        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-2">&#9654;</span><span class="text-sm text-muted">Submit framing &mdash; student selects ${v.framing.studentSelections.map(i => '(' + v.framing.options[i].letter + ')').join(', ')}</span></div>`;
+        h += `</div>`;
+      }
+      h += `</div>`; // end card
+
+      // Framing feedback
+      h += `<div id="phase1-feedback" class="sim-hidden phase-feedback">`;
+      h += renderFeedbackPanel('Framing Feedback', v.framing.feedback.grade, v.framing.feedback.html);
+      h += `</div>`;
+      h += `</div>`; // end phase1
+
+      // Phase 2
+      h += `<div id="phase2" class="sim-hidden"><div class="run-layout"><div>`;
+      h += `<div class="instructions-bar"><strong>Instructions:</strong> Review the AI&rsquo;s output each cycle. ${isOE ? 'Add named sections describing issues (judging), then correction instructions (steering).' : 'Select ALL issues (judging), then ALL corrections (steering).'} If satisfactory, click &ldquo;Solution is complete.&rdquo;</div>`;
+
+      // Initial AI solution
+      h += `<div id="ai-solution" class="sim-hidden"><div class="ai-output"><div class="ai-output-label">AI Solution (generated from your framing)</div>${v.aiSolution.html}</div></div>`;
+
+      // Cycles
+      v.cycles.forEach((cycle, ci) => {
+        const isLast = cycle.judging.doneSelected;
+        const label = isLast ? `Cycle ${ci + 1} (Final)` : `Cycle ${ci + 1}`;
+        h += `<div id="cycle-${ci}" class="sim-hidden"><div class="cycle-header" onclick="toggleCycle('cycle-${ci}')"><span class="cycle-num">${ci + 1}</span><h3>${label}</h3><span class="cycle-indicator">Cycle ${ci + 1} / ${ch.maxCycles} max</span><span class="collapse-arrow">&#9660;</span></div><div class="cycle-body">`;
+
+        // AI update (for cycles > 0)
+        if (cycle.aiUpdate) {
+          h += `<div id="cycle-${ci}-ai-gen" style="text-align:center;margin-bottom:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-ai-${ci}">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">Generate updated AI output (LLM)</span></div>`;
+          h += `<div id="cycle-${ci}-ai" class="sim-hidden"><div class="ai-output"><div class="ai-output-label">AI Output (updated after Cycle ${ci} steering)</div>${cycle.aiUpdate.html}</div></div>`;
+        }
+
+        // Judging gen button (MC only)
+        if (!isOE) {
+          h += `<div id="cycle-${ci}-judge-gen" style="text-align:center;margin-top:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jgen-${ci}">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">Generate judging options (LLM)</span></div>`;
+        }
+
+        // Judging area
+        h += `<div id="cycle-${ci}-judging" class="${isOE ? '' : 'sim-hidden'}">`;
+        h += `<span class="substep-label substep-judge">A &mdash; Judging: ${isOE ? 'Describe issues you identify' : 'Select all issues you identify'}</span>`;
+
+        if (isOE) {
+          h += `<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>Hint:</strong> Add a named section for each issue. Your analysis is recorded but NOT sent to the AI.</div>`;
+          if (cycle.judging.sections && cycle.judging.sections.length > 0) {
+            h += `<div class="section-list">`;
+            cycle.judging.sections.forEach(s => {
+              h += `<div class="section-item"><div class="section-header"><input type="text" value="${s.name}" readonly></div><div class="section-body"><textarea readonly>${s.text}</textarea></div></div>`;
+            });
+            h += `</div>`;
+          }
+        } else {
+          h += `<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>Hint:</strong> Select ALL issues. Missing real issues and selecting non-issues are both penalized.</div>`;
+          cycle.judging.options.forEach((opt, oi) => {
+            h += `<div class="mc-option" onclick="toggleMC(this)" data-idx="${oi}"><div class="mc-check">&#10003;</div><div><div class="mc-label"><strong>(${opt.letter})</strong> ${opt.text}</div></div></div>`;
+          });
+        }
+
+        // "Solution is complete" button
+        h += `<button class="btn-done-judging" id="done-btn-${ci}" onclick="toggleDoneBtn(this)">&#10003; Solution is complete &mdash; no modifications needed</button>`;
+
+        // Submit judging
+        const jDesc = cycle.judging.doneSelected
+          ? 'Student clicks &ldquo;Solution is complete&rdquo;'
+          : (isOE
+            ? `Student submitted ${cycle.judging.sections ? cycle.judging.sections.length : 0} issue sections`
+            : `Student selects ${cycle.judging.studentSelections.map(i => '(' + cycle.judging.options[i].letter + ')').join(', ')}`);
+        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jsub-${ci}">&#9654;</span><span class="text-sm text-muted">${jDesc}</span></div>`;
+        h += `</div>`; // end judging
+
+        // Steering area (only if not done)
+        if (cycle.steering) {
+          h += `<div id="cycle-${ci}-steering" class="sim-hidden">`;
+          h += `<hr class="divider-line">`;
+          h += `<span class="substep-label substep-steer">B &mdash; Steering: ${isOE ? 'Write correction instructions' : 'Select all corrections to send'}</span>`;
+
+          if (isOE) {
+            h += `<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>Hint:</strong> Add named instruction sections. These ARE sent to the AI.</div>`;
+            h += `<div class="section-list">`;
+            cycle.steering.sections.forEach(s => {
+              h += `<div class="section-item"><div class="section-header"><input type="text" value="${s.name}" readonly></div><div class="section-body"><textarea readonly>${s.text}</textarea></div></div>`;
+            });
+            h += `</div>`;
+          } else {
+            h += `<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>Hint:</strong> Select every correction that addresses a real issue.</div>`;
+            cycle.steering.options.forEach((opt, oi) => {
+              h += `<div class="mc-option" onclick="toggleMC(this)" data-idx="${oi}"><div class="mc-check">&#10003;</div><div><div class="mc-label"><strong>(${opt.letter})</strong> ${opt.text}</div></div></div>`;
+            });
+          }
+
+          const sDesc = isOE
+            ? `Student submitted ${cycle.steering.sections.length} instructions`
+            : `Student selects ${cycle.steering.studentSelections.map(i => '(' + cycle.steering.options[i].letter + ')').join(', ')}`;
+          h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-ssub-${ci}">&#9654;</span><span class="text-sm text-muted">${sDesc}</span></div>`;
+          h += `</div>`; // end steering
+        }
+
+        // Cycle feedback
+        h += `<div id="cycle-${ci}-feedback" class="sim-hidden phase-feedback">`;
+        h += renderFeedbackPanel(`Judging Feedback (Cycle ${ci + 1})`, cycle.judging.feedback.grade, cycle.judging.feedback.html, false);
+        if (cycle.steering) {
+          h += renderFeedbackPanel(`Steering Feedback (Cycle ${ci + 1})`, cycle.steering.feedback.grade, cycle.steering.feedback.html, true);
+        }
+        h += `</div>`;
+
+        h += `</div></div>`; // end cycle-body, cycle
+      });
+
+      // Completion
+      h += renderCompletion(v, isPractice, isOE, ch);
+
+      h += `</div>`; // end left column
+
+      // Right: Summary panel
+      h += `<div class="summary-panel"><div class="card">
+        <h3 style="margin-bottom:12px;font-size:15px">Session Summary</h3>
+        <div class="summary-section"><h5>Raw Problem</h5><div class="summary-raw">${ch.rawProblemShort}</div></div>
+        <div class="summary-section" id="summary-sol-section" style="display:none"><h5>Current AI Solution</h5><div class="summary-solution" id="summary-solution">&mdash;</div></div>
+        <div class="summary-section" id="summary-log-section" style="display:none"><h5>Steering History</h5><div class="cycle-log" id="summary-log"></div></div>
+      </div></div>`;
+
+      h += `</div></div>`; // end run-layout, phase2
+
+      return h;
+    }
+
+    function renderFeedbackPanel(title, grade, bodyHtml, startCollapsed) {
+      const cls = startCollapsed ? ' collapsed' : '';
+      return `<div class="feedback-panel" style="margin-bottom:8px">
+        <div class="feedback-toggle" onclick="toggleFeedback(this)">
+          <span>${title} <span class="grade grade-${grade}" style="width:22px;height:22px;font-size:11px;margin-left:8px">${grade}</span></span>
+          <span class="arrow${cls}">&#9660;</span>
+        </div>
+        <div class="feedback-body${cls}">${bodyHtml}</div>
+      </div>`;
+    }
+
+    function renderCompletion(v, isPractice, isOE, ch) {
+      const g = v.completion.grades;
+      let h = `<div id="completion" class="sim-hidden">
+        <div class="card" style="border-left:4px solid var(--success);margin-top:24px">
+        <h3 style="color:var(--success);margin-bottom:16px">&#10003; Challenge Complete</h3>
+        <table style="font-size:14px;margin-bottom:16px"><thead><tr><th>Skill</th><th>Grade</th></tr></thead><tbody>
+          <tr><td>Framing</td><td><span class="grade grade-${g.framing}">${g.framing}</span></td></tr>
+          <tr><td>Judging</td><td><span class="grade grade-${g.judging}">${g.judging}</span></td></tr>
+          <tr><td>Steering</td><td><span class="grade grade-${g.steering}">${g.steering}</span></td></tr>
+        </tbody></table>
+        <div class="feedback-panel" style="background:#e8f5e9;border-color:var(--success)">
+          <div class="feedback-toggle" onclick="toggleFeedback(this)">
+            <span style="color:var(--success)">Summary Feedback</span>
+            <span class="arrow">&#9660;</span>
+          </div>
+          <div class="feedback-body"><p class="text-sm">${v.completion.summary}</p></div>
+        </div>`;
+
+      // Assessment: show deferred per-phase feedback at completion
+      if (!isPractice) {
+        h += `<div class="deferred-feedback-section"><h4>Detailed Phase Feedback</h4>`;
+        h += `<div class="deferred-feedback-item"><div class="dfb-label">Framing</div>${renderFeedbackPanel('Framing', v.framing.feedback.grade, v.framing.feedback.html)}</div>`;
+        v.cycles.forEach((cycle, ci) => {
+          h += `<div class="deferred-feedback-item"><div class="dfb-label">Cycle ${ci + 1} &mdash; Judging</div>${renderFeedbackPanel('Judging', cycle.judging.feedback.grade, cycle.judging.feedback.html)}</div>`;
+          if (cycle.steering) {
+            h += `<div class="deferred-feedback-item"><div class="dfb-label">Cycle ${ci + 1} &mdash; Steering</div>${renderFeedbackPanel('Steering', cycle.steering.feedback.grade, cycle.steering.feedback.html)}</div>`;
+          }
+        });
+        h += `</div>`;
+      }
+
+      h += `<div style="margin-top:16px;text-align:center">
+          <a href="07-student-analytics.html" class="btn btn-primary">View My Results</a>
+          <a href="03-challenge-list.html" class="btn btn-outline" style="margin-left:8px">Back to Challenges</a>
+        </div></div></div>`;
+      return h;
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // SIMULATION ENGINE
+    // ══════════════════════════════════════════════════════════
+    function buildSteps(ch, v, mode, isOE, isPractice) {
+      simSteps = [];
+      const S = simSteps;
+
+      // Step: Generate problem → show Phase 1
+      S.push({ llm: 'Generating raw problem from subject tree...', fn() {
+        hide('start-card'); reveal('phase1'); setStepper(1, 'active');
+      }});
+
+      if (!isOE) {
+        // Step: Generate framing MC options
+        S.push({ llm: 'Generating framing refinement options...', fn() {
+          hide('phase1-gen-btn'); reveal('phase1-options');
+        }});
+      }
+
+      // Step: Submit framing → show AI solution
+      S.push({ llm: 'Evaluating framing & generating AI solution...', fn() {
+        if (!isOE) autoSelect('phase1-options', v.framing.studentSelections);
+        if (isPractice) reveal('phase1-feedback');
+        setStepper(1, 'done'); setStepper(2, 'active');
+        reveal('phase2'); reveal('ai-solution');
+        updateSummary({ solution: v.aiSolution.summary });
+        reveal('cycle-0');
+      }});
+
+      // Per-cycle steps
+      v.cycles.forEach((cycle, ci) => {
+        // If cycle has AI update (ci > 0): generate it
+        if (cycle.aiUpdate) {
+          S.push({ llm: `Generating updated AI output (Cycle ${ci + 1})...`, fn() {
+            hide(`cycle-${ci}-ai-gen`); reveal(`cycle-${ci}-ai`);
+            updateSummary({ solution: cycle.aiUpdate.summary });
+          }});
+        }
+
+        // MC: generate judging options
+        if (!isOE) {
+          S.push({ llm: `Generating judging options (Cycle ${ci + 1})...`, fn() {
+            hide(`cycle-${ci}-judge-gen`); reveal(`cycle-${ci}-judging`);
+          }});
+        }
+
+        // Submit judging
+        S.push({ llm: cycle.judging.doneSelected ? 'Finalizing — computing final grades...' : 'Recording judgement...', duration: cycle.judging.doneSelected ? 3000 : 800, fn() {
+          if (cycle.judging.doneSelected) {
+            el('done-btn-' + ci).classList.add('selected');
+            if (!isOE) deselectAllMC(`cycle-${ci}-judging`);
+            updateSummary({ entry: { label: `Cycle ${ci + 1} — Completed`, text: 'Student marked solution as complete' }});
+            if (isPractice) reveal(`cycle-${ci}-feedback`);
+            setStepper(2, 'done');
+            reveal('completion');
+          } else {
+            if (!isOE) autoSelect(`cycle-${ci}-judging`, cycle.judging.studentSelections);
+            updateSummary({ entry: { label: `Cycle ${ci + 1} — Issues Found`, text: cycle.summaryJudging }});
+            if (cycle.steering) reveal(`cycle-${ci}-steering`);
+          }
+        }});
+
+        // Submit steering (only if not done)
+        if (cycle.steering) {
+          S.push({ llm: 'Processing steering & evaluating cycle...', fn() {
+            if (!isOE) autoSelect(`cycle-${ci}-steering`, cycle.steering.studentSelections);
+            updateSummary({ entry: { label: `Cycle ${ci + 1} — Corrections Sent`, text: cycle.summarySteering }});
+            if (isPractice) reveal(`cycle-${ci}-feedback`);
+            // Collapse current cycle, reveal next
+            const nextCi = ci + 1;
+            if (nextCi < v.cycles.length) {
+              setTimeout(() => {
+                el(`cycle-${ci}`).classList.add('cycle-collapsed');
+                reveal(`cycle-${nextCi}`);
+              }, 600);
+            }
+          }});
+        }
+      });
+    }
+
+    function nextSim() {
+      if (simIndex >= simSteps.length) return;
+      const step = simSteps[simIndex];
+      simIndex++;
+
+      // Find the current sim icon and mark it active
+      const icons = document.querySelectorAll('.sim-step-icon:not(.done)');
+      const icon = icons[0];
+      if (icon) icon.classList.add('active');
+
+      const duration = step.duration || 2500;
+      if (step.llm) showLLM(step.llm, duration);
+
+      setTimeout(() => {
+        if (icon) { icon.classList.remove('active'); icon.classList.add('done'); icon.innerHTML = '&#10003;'; icon.onclick = null; }
+        step.fn();
+      }, duration);
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // HELPERS
+    // ══════════════════════════════════════════════════════════
+    function el(id) { return document.getElementById(id); }
+    function reveal(id) { const e = el(id); if (e) { e.classList.remove('sim-hidden'); e.classList.add('sim-reveal'); e.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } }
+    function hide(id) { const e = el(id); if (e) e.classList.add('sim-hidden'); }
+    function showLLM(text, dur) { el('llm-status-text').textContent = text; el('llm-status').classList.add('visible'); setTimeout(() => el('llm-status').classList.remove('visible'), dur); }
+
+    function setStepper(phase, state) {
+      const s = el('stepper-p' + phase);
+      if (s) s.className = 'step-item ' + state;
+      if (state === 'done') { const n = el('stepper-p' + phase + '-num'); if (n) n.innerHTML = '&#10003;'; }
+    }
+
+    function toggleMC(opt) {
+      opt.classList.toggle('selected');
+      // Deselect "done" if selecting an issue
+      const container = opt.closest('.cycle-body') || opt.closest('.card');
+      if (container) { const d = container.querySelector('.btn-done-judging.selected'); if (d && opt.classList.contains('selected')) d.classList.remove('selected'); }
+    }
+    function toggleDoneBtn(btn) {
+      btn.classList.toggle('selected');
+      if (btn.classList.contains('selected')) {
+        const container = btn.closest('.cycle-body') || btn.closest('.card');
+        if (container) container.querySelectorAll('.mc-option.selected').forEach(o => o.classList.remove('selected'));
+      }
+    }
+    function toggleFeedback(toggle) {
+      const body = toggle.nextElementSibling;
+      const arrow = toggle.querySelector('.arrow');
+      body.classList.toggle('collapsed');
+      if (arrow) arrow.classList.toggle('collapsed');
+    }
+    function toggleCycle(id) { el(id).classList.toggle('cycle-collapsed'); }
+
+    function autoSelect(containerId, indices) {
+      const container = el(containerId);
+      if (!container) return;
+      const opts = container.querySelectorAll('.mc-option');
+      opts.forEach((o, i) => { o.classList.remove('selected'); if (indices.includes(i)) o.classList.add('selected'); });
+    }
+    function deselectAllMC(containerId) {
+      const container = el(containerId);
+      if (container) container.querySelectorAll('.mc-option.selected').forEach(o => o.classList.remove('selected'));
+    }
+
+    function updateSummary(u) {
+      if (u.solution) {
+        el('summary-sol-section').style.display = '';
+        el('summary-solution').textContent = u.solution;
+      }
+      if (u.entry) {
+        el('summary-log-section').style.display = '';
+        const d = document.createElement('div');
+        d.className = 'cycle-log-entry';
+        d.innerHTML = `<div class="cycle-log-label">${u.entry.label}</div><div>${u.entry.text}</div>`;
+        el('summary-log').appendChild(d);
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // INIT
+    // ══════════════════════════════════════════════════════════
+    // Read ?scenario= from URL if provided
+    const urlParams = new URLSearchParams(window.location.search);
+    const initScenario = urlParams.get('scenario');
+    if (initScenario && SCENARIOS[initScenario]) {
+      // Set picker to match
+      const parts = initScenario.split('-');
+      const mode = parts.pop();
+      const baseId = parts.join('-') + '-practice'; // picker always stores practice variant
+      const picker = document.getElementById('challenge-picker');
+      for (let i = 0; i < picker.options.length; i++) {
+        if (picker.options[i].value === baseId || picker.options[i].value === parts.join('-') + '-' + mode) {
+          picker.selectedIndex = i; break;
+        }
+      }
+      if (mode === 'assessment') {
+        currentMode = 'assessment';
+        document.querySelectorAll('.toggle-btn').forEach(b => {
+          b.classList.toggle('active', b.textContent.trim().toLowerCase() === 'assessment');
+        });
+      }
+    }
+    loadScenario();
+  </script>
+</body>
+</html>

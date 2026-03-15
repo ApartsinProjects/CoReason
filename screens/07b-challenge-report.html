@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab &#8212; Challenge Run Report</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 16px; }
+    .back-link:hover { text-decoration: underline; }
+
+    .report-meta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+    .report-meta span { font-size: 14px; color: var(--text-secondary); }
+    .report-meta .sep { color: var(--border); }
+
+    .summary-grades { display: flex; gap: 32px; justify-content: center; padding: 28px 20px; }
+    .summary-grade-item { text-align: center; }
+    .summary-grade-circle { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; font-weight: 800; font-size: 28px; color: #fff; margin-bottom: 8px; }
+    .summary-grade-circle.grade-A { background: var(--grade-a); }
+    .summary-grade-circle.grade-B { background: var(--grade-b); }
+    .summary-grade-circle.grade-C { background: var(--grade-c); }
+    .summary-grade-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .5px; }
+
+    .section { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; cursor: pointer; user-select: none; transition: background .15s; }
+    .section-header:hover { background: #f8f9ff; }
+    .section-header h3 { font-size: 16px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 10px; }
+    .section-arrow { font-size: 12px; color: var(--text-secondary); transition: transform .2s; }
+    .section.collapsed .section-arrow { transform: rotate(-90deg); }
+    .section-body { padding: 0 20px 20px 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    .submission-block { background: #f8f9ff; border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .submission-block h4 { font-size: 13px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+    .submission-block p { font-size: 14px; color: var(--text); line-height: 1.6; }
+
+    .feedback-block { border-left: 4px solid var(--teal); padding: 16px; padding-left: 20px; background: #fafafa; border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 16px; }
+    .feedback-block h4 { font-size: 13px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+    .feedback-block p { font-size: 14px; color: var(--text); line-height: 1.6; }
+
+    .phase-grade { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+    .phase-grade-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+
+    .cycle-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .cycle-card:last-child { margin-bottom: 0; }
+    .cycle-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .cycle-header h4 { font-size: 15px; font-weight: 600; color: var(--text); }
+    .cycle-badge-final { background: var(--primary); color: #fff; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+
+    .cycle-row { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 12px; margin-bottom: 12px; }
+    .cycle-row:last-child { margin-bottom: 0; }
+    .cycle-row-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .cycle-row-label.judging { color: var(--primary); }
+    .cycle-row-label.steering { color: var(--teal); }
+    .cycle-row-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+    .ai-output-toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); cursor: pointer; padding: 8px 0; border: none; background: none; font-weight: 500; }
+    .ai-output-toggle:hover { color: var(--primary); }
+    .ai-output-toggle .toggle-arrow { font-size: 10px; transition: transform .2s; }
+    .ai-output-toggle.open .toggle-arrow { transform: rotate(90deg); }
+    .ai-output-preview { display: none; background: #f5f6fa; border-radius: var(--radius); padding: 14px; margin-top: 6px; font-size: 13px; color: var(--text-secondary); line-height: 1.6; border: 1px solid var(--border); }
+    .ai-output-preview.open { display: block; }
+
+    .final-grades { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .final-grade-card { text-align: center; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 16px; }
+    .final-grade-card h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+    .final-grade-card .summary-sentence { font-size: 13px; color: var(--text-secondary); margin-top: 12px; line-height: 1.5; }
+
+    @media (max-width: 768px) {
+      .summary-grades { flex-direction: column; align-items: center; gap: 20px; }
+      .final-grades { grid-template-columns: 1fr; }
+      .cycle-row { grid-template-columns: 1fr; }
+      .report-meta { flex-direction: column; align-items: flex-start; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
+    <nav>
+      <a href="03-challenge-list.html">Challenges</a>
+      <a href="06-course-catalog.html">Courses</a>
+      <a href="07-student-analytics.html" class="active">My Results</a>
+    </nav>
+    <div class="user-area">
+      <select class="lang-select"><option>EN</option><option>HE</option><option>AR</option></select>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Student</span>
+      <span>Sarah Cohen</span>
+      <a href="09-profile.html"><div class="avatar">SC</div></a>
+    </div>
+  </header>
+
+  <main class="page">
+    <a href="07-student-analytics.html" class="back-link">&#8592; Back to My Results</a>
+
+    <div class="page-header">
+      <h1>Challenge Run Report</h1>
+      <div class="report-meta">
+        <span><strong>Sorting Algorithm Analysis</strong></span>
+        <span class="sep">|</span>
+        <span>Software Engineering</span>
+        <span class="sep">|</span>
+        <span>Mar 8, 2026</span>
+        <span class="sep">|</span>
+        <span class="badge badge-assessment">Assessment</span>
+      </div>
+    </div>
+
+    <!-- Summary Card -->
+    <div class="card">
+      <div class="summary-grades">
+        <div class="summary-grade-item">
+          <div class="summary-grade-circle grade-A">A</div>
+          <div class="summary-grade-label">Framing</div>
+        </div>
+        <div class="summary-grade-item">
+          <div class="summary-grade-circle grade-B">B</div>
+          <div class="summary-grade-label">Judging</div>
+        </div>
+        <div class="summary-grade-item">
+          <div class="summary-grade-circle grade-A">A</div>
+          <div class="summary-grade-label">Steering</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 1 - Framing -->
+    <div class="section" id="section-framing">
+      <div class="section-header" onclick="toggleSection('section-framing')">
+        <h3><span class="phase-label phase-1">P1</span> Phase 1 &#8212; Framing</h3>
+        <span class="section-arrow">&#9660;</span>
+      </div>
+      <div class="section-body">
+        <div class="submission-block">
+          <h4>Your Submission</h4>
+          <p>The problem asks to analyze sorting algorithms but doesn&#39;t specify: input size range, whether stability matters, memory constraints. I assume: arrays of 1K-1M integers, stability not required, O(1) extra space preferred.</p>
+        </div>
+        <div class="feedback-block">
+          <h4>AI Feedback</h4>
+          <p>Strong identification of missing constraints. The assumption about O(1) extra space is well-justified given the context. Could have also questioned whether the input is partially sorted.</p>
+        </div>
+        <div class="phase-grade">
+          <span class="phase-grade-label">Grade:</span>
+          <span class="grade grade-A">A</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 - Judge+Steer Cycles -->
+    <div class="section" id="section-judge-steer">
+      <div class="section-header" onclick="toggleSection('section-judge-steer')">
+        <h3><span class="phase-label phase-2">P2</span> Phase 2 &#8212; Judge + Steer Cycles</h3>
+        <span class="section-arrow">&#9660;</span>
+      </div>
+      <div class="section-body">
+
+        <!-- Cycle 1 -->
+        <div class="cycle-card">
+          <div class="cycle-header">
+            <h4>Cycle 1</h4>
+          </div>
+
+          <div class="cycle-row">
+            <div>
+              <div class="cycle-row-label judging">Judging</div>
+              <div class="cycle-row-text">Selected issues: &#8220;Missing edge case for empty array&#8221;, &#8220;Complexity analysis incomplete for worst case&#8221;</div>
+            </div>
+            <span class="grade grade-B">B</span>
+          </div>
+
+          <div class="cycle-row">
+            <div>
+              <div class="cycle-row-label steering">Steering</div>
+              <div class="cycle-row-text">Selected corrections: &#8220;Add empty array guard clause&#8221;, &#8220;Include worst-case analysis for quicksort&#8221;</div>
+            </div>
+            <span class="grade grade-A">A</span>
+          </div>
+
+          <button class="ai-output-toggle" onclick="toggleAiOutput(this)">
+            <span class="toggle-arrow">&#9654;</span> AI Updated Output
+          </button>
+          <div class="ai-output-preview">
+            The updated analysis now includes an empty array guard clause at the entry point of each sorting function. Worst-case time complexity for quicksort has been revised to O(n&#178;) with a note on pivot selection strategies to mitigate this scenario...
+          </div>
+        </div>
+
+        <!-- Cycle 2 -->
+        <div class="cycle-card">
+          <div class="cycle-header">
+            <h4>Cycle 2</h4>
+            <span class="cycle-badge-final">Final Cycle</span>
+          </div>
+
+          <div class="cycle-row">
+            <div>
+              <div class="cycle-row-label judging">Judging</div>
+              <div class="cycle-row-text">Identified: &#8220;Partition strategy not optimal&#8221;, &#8220;No mention of cache performance&#8221;</div>
+            </div>
+            <span class="grade grade-B">B</span>
+          </div>
+
+          <div class="cycle-row">
+            <div>
+              <div class="cycle-row-label steering">Steering</div>
+              <div class="cycle-row-text">Directed: &#8220;Switch to median-of-three partitioning&#8221;, &#8220;Add cache locality analysis&#8221;</div>
+            </div>
+            <span class="grade grade-A">A</span>
+          </div>
+
+          <button class="ai-output-toggle" onclick="toggleAiOutput(this)">
+            <span class="toggle-arrow">&#9654;</span> AI Updated Output
+          </button>
+          <div class="ai-output-preview">
+            Final revision adopts median-of-three pivot selection for quicksort, reducing worst-case likelihood. A new section on cache locality compares merge sort&#39;s sequential access pattern against quicksort&#39;s in-place but less cache-friendly partitioning...
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Final Grades -->
+    <div class="card">
+      <h3 style="margin-bottom: 16px;">Final Grades</h3>
+      <div class="final-grades">
+        <div class="final-grade-card" style="border-top: 3px solid var(--grade-a);">
+          <h4>Framing</h4>
+          <span class="grade grade-A" style="width: 40px; height: 40px; font-size: 20px;">A</span>
+          <div class="summary-sentence">Strong identification of missing constraints and clear, well-justified assumptions about the problem scope.</div>
+        </div>
+        <div class="final-grade-card" style="border-top: 3px solid var(--grade-b);">
+          <h4>Judging</h4>
+          <span class="grade grade-B" style="width: 40px; height: 40px; font-size: 20px;">B</span>
+          <div class="summary-sentence">Caught key issues like edge cases and partition strategy, but missed the complexity proof gap in the AI output.</div>
+        </div>
+        <div class="final-grade-card" style="border-top: 3px solid var(--grade-a);">
+          <h4>Steering</h4>
+          <span class="grade grade-A" style="width: 40px; height: 40px; font-size: 20px;">A</span>
+          <div class="summary-sentence">Specific, actionable corrections that led to meaningful improvements in both analysis depth and code quality.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function toggleSection(id) {
+      var section = document.getElementById(id);
+      if (section) {
+        section.classList.toggle('collapsed');
+      }
+    }
+
+    function toggleAiOutput(btn) {
+      btn.classList.toggle('open');
+      var preview = btn.nextElementSibling;
+      if (preview) {
+        preview.classList.toggle('open');
+      }
+    }
+  </script>
+</body>
+</html>
