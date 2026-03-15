@@ -21,13 +21,13 @@
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
     <nav>
-      <a href="03-challenge-list-instructor.html">Challenges</a>
-      <a href="06-course-catalog-instructor.html">Courses</a>
-      <a href="08-instructor-analytics.html" class="active">Analytics</a>
+      <a href="03-challenge-list-instructor.html" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog-instructor.html" data-t="courses">Courses</a>
+      <a href="08-instructor-analytics.html" class="active" data-t="analytics">Analytics</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
-      <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Instructor</span>
+      <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
       <span>Dr. Levy</span>
       <a href="09-profile.html"><div class="avatar" style="background:#e3f2fd; color:var(--primary);">DL</div></a>
     </div>
@@ -36,11 +36,11 @@
   <main class="page">
     <div class="page-header flex-between">
       <div>
-        <h1>Course Analytics</h1>
-        <p>Public challenge results across subscribers <span class="help-icon" data-tooltip="Shows results for public challenges only. Private student challenges are not included. All instructors in the course see the same analytics.">?</span></p>
+        <h1 data-t="courseAnalytics">Course Analytics</h1>
+        <p data-t="courseAnalyticsDesc">Public challenge results across subscribers <span class="help-icon" data-tooltip="Shows results for public challenges only. Private student challenges are not included. All instructors in the course see the same analytics.">?</span></p>
       </div>
       <div class="export-bar">
-        <button class="btn btn-outline">&#128196; Export PDF</button>
+        <button class="btn btn-outline" data-t="exportPdf">&#128196; Export PDF</button>
       </div>
     </div>
 
@@ -50,13 +50,13 @@
         <option>Deep Learning 101</option>
         <option>Database Systems</option>
       </select>
-      <select class="form-control">
+      <select class="form-control" data-t-options="allChallenges">
         <option value="">All Challenges</option>
         <option selected>Neural Network Debugging</option>
         <option>Backpropagation Mastery</option>
         <option>CNN Architecture Review</option>
       </select>
-      <select class="form-control">
+      <select class="form-control" data-t-options="allStudents">
         <option value="">All Students</option>
         <option>Sarah Cohen</option>
         <option>James Park</option>
@@ -68,28 +68,28 @@
     <div class="grid grid-4 mb-24">
       <div class="card stat-card">
         <div class="stat-value">45</div>
-        <div class="stat-label">Total Subscribers</div>
+        <div class="stat-label" data-t="totalSubscribers">Total Subscribers</div>
       </div>
       <div class="card stat-card">
         <div class="stat-value">38/45</div>
-        <div class="stat-label">Completed <span class="help-icon" data-tooltip="Number of students who have submitted the challenge out of total course subscribers.">?</span></div>
+        <div class="stat-label" data-t="completed">Completed <span class="help-icon" data-tooltip="Number of students who have submitted the challenge out of total course subscribers.">?</span></div>
       </div>
       <div class="card stat-card">
         <div class="stat-value">B</div>
-        <div class="stat-label">Avg. Overall Grade <span class="help-icon" data-tooltip="Average across all students' Framing, Judging, and Steering grades for this challenge.">?</span></div>
+        <div class="stat-label" data-t="avgOverallGrade">Avg. Overall Grade <span class="help-icon" data-tooltip="Average across all students' Framing, Judging, and Steering grades for this challenge.">?</span></div>
       </div>
       <div class="card stat-card">
         <div class="stat-value">7</div>
-        <div class="stat-label">Pending Students</div>
+        <div class="stat-label" data-t="pendingStudents">Pending Students</div>
       </div>
     </div>
 
     <!-- Grade Distribution — 3 rubric dimensions (REQ-EVAL-04) -->
     <div class="card mb-24">
-      <h3 style="margin-bottom:16px;">Grade Distribution by Rubric <span class="help-icon" data-tooltip="Shows how many students received each grade (A/B/C) for each rubric dimension. Only includes completed public challenge runs.">?</span></h3>
+      <h3 style="margin-bottom:16px;" data-t="gradeDistribution">Grade Distribution by Rubric <span class="help-icon" data-tooltip="Shows how many students received each grade (A/B/C) for each rubric dimension. Only includes completed public challenge runs.">?</span></h3>
       <div class="grid grid-3">
         <div>
-          <h4 class="text-sm text-center mb-8"><span class="phase-label phase-1">P1</span> Framing</h4>
+          <h4 class="text-sm text-center mb-8"><span class="phase-label phase-1" data-t="phase1">P1</span> <span data-t="framing">Framing</span></h4>
           <div class="chart-placeholder">
             <div style="display: flex; justify-content: center; align-items: flex-end; gap: 8px; height: 120px;">
               <div style="text-align:center;"><div style="width:40px; height:80px; background:var(--grade-a); border-radius:4px 4px 0 0;"></div><div class="text-sm mt-8">A (12)</div></div>
@@ -99,7 +99,7 @@
           </div>
         </div>
         <div>
-          <h4 class="text-sm text-center mb-8"><span class="phase-label phase-2">P2</span> Judging</h4>
+          <h4 class="text-sm text-center mb-8"><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="judging">Judging</span></h4>
           <div class="chart-placeholder">
             <div style="display: flex; justify-content: center; align-items: flex-end; gap: 8px; height: 120px;">
               <div style="text-align:center;"><div style="width:40px; height:50px; background:var(--grade-a); border-radius:4px 4px 0 0;"></div><div class="text-sm mt-8">A (8)</div></div>
@@ -109,7 +109,7 @@
           </div>
         </div>
         <div>
-          <h4 class="text-sm text-center mb-8"><span class="phase-label phase-2">P2</span> Steering</h4>
+          <h4 class="text-sm text-center mb-8"><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="steering">Steering</span></h4>
           <div class="chart-placeholder">
             <div style="display: flex; justify-content: center; align-items: flex-end; gap: 8px; height: 120px;">
               <div style="text-align:center;"><div style="width:40px; height:70px; background:var(--grade-a); border-radius:4px 4px 0 0;"></div><div class="text-sm mt-8">A (10)</div></div>
@@ -124,19 +124,19 @@
     <!-- Per-Student Breakdown -->
     <div class="card">
       <div class="card-header">
-        <h3>Per-Student Results</h3>
-        <button class="btn btn-outline btn-sm">&#128196; Export PDF</button>
+        <h3 data-t="perStudentResults">Per-Student Results</h3>
+        <button class="btn btn-outline btn-sm" data-t="exportPdf">&#128196; Export PDF</button>
       </div>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Student</th>
-              <th>Completed</th>
-              <th><span class="phase-label phase-1">P1</span> Framing</th>
-              <th><span class="phase-label phase-2">P2</span> Judging</th>
-              <th><span class="phase-label phase-2">P2</span> Steering</th>
-              <th>Overall</th>
+              <th data-t="student">Student</th>
+              <th data-t="completed">Completed</th>
+              <th><span class="phase-label phase-1" data-t="phase1">P1</span> <span data-t="framing">Framing</span></th>
+              <th><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="judging">Judging</span></th>
+              <th><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="steering">Steering</span></th>
+              <th data-t="overall">Overall</th>
             </tr>
           </thead>
           <tbody>
@@ -182,7 +182,7 @@
             </tr>
             <tr class="student-row" style="color: var(--text-secondary);">
               <td>Emma Johnson</td>
-              <td><em>Not completed</em></td>
+              <td><em data-t="notCompleted">Not completed</em></td>
               <td>&mdash;</td>
               <td>&mdash;</td>
               <td>&mdash;</td>

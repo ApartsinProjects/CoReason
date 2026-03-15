@@ -74,31 +74,31 @@
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
     <nav>
-      <a href="03-challenge-list.html">Challenges</a>
-      <a href="06-course-catalog.html">Courses</a>
-      <a href="07-student-analytics.html" class="active">My Results</a>
+      <a href="03-challenge-list.html" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog.html" data-t="courses">Courses</a>
+      <a href="07-student-analytics.html" class="active" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span>Sarah Cohen</span>
-      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Student</span>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <a href="09-profile.html"><div class="avatar">SC</div></a>
     </div>
   </header>
 
   <main class="page">
     <div class="page-header">
-      <h1>My Results</h1>
-      <p>Visual summary of your performance across all challenge runs</p>
+      <h1 data-t="myResults">My Results</h1>
+      <p data-t="myResultsDesc">Visual summary of your performance across all challenge runs</p>
     </div>
 
     <!-- Grade Distribution Charts -->
     <div class="grid grid-3">
       <!-- Framing: A=4, B=2, C=0, total=6 -->
       <div class="card dist-card">
-        <h4>Framing Distribution</h4>
+        <h4 data-t="framingDistribution">Framing Distribution</h4>
         <div class="overall-grade grade-A">A</div>
-        <div class="overall-label">Most Common Grade</div>
+        <div class="overall-label" data-t="mostCommonGrade">Most Common Grade</div>
         <div class="stacked-bar">
           <div class="seg seg-a" style="width:66.7%">67%</div>
           <div class="seg seg-b" style="width:33.3%">33%</div>
@@ -112,9 +112,9 @@
 
       <!-- Judging: A=2, B=3, C=1, total=6 -->
       <div class="card dist-card">
-        <h4>Judging Distribution</h4>
+        <h4 data-t="judgingDistribution">Judging Distribution</h4>
         <div class="overall-grade grade-B">B</div>
-        <div class="overall-label">Most Common Grade</div>
+        <div class="overall-label" data-t="mostCommonGrade">Most Common Grade</div>
         <div class="stacked-bar">
           <div class="seg seg-a" style="width:33.3%">33%</div>
           <div class="seg seg-b" style="width:50%">50%</div>
@@ -129,9 +129,9 @@
 
       <!-- Steering: A=3, B=2, C=1, total=6 -->
       <div class="card dist-card">
-        <h4>Steering Distribution</h4>
+        <h4 data-t="steeringDistribution">Steering Distribution</h4>
         <div class="overall-grade grade-A">A</div>
-        <div class="overall-label">Most Common Grade</div>
+        <div class="overall-label" data-t="mostCommonGrade">Most Common Grade</div>
         <div class="stacked-bar">
           <div class="seg seg-a" style="width:50%">50%</div>
           <div class="seg seg-b" style="width:33.3%">33%</div>
@@ -147,7 +147,7 @@
 
     <!-- Trend Over Time -->
     <div class="card trend-card">
-      <h3>Trend Over Time</h3>
+      <h3 data-t="trendOverTime">Trend Over Time</h3>
       <div class="timeline">
         <div class="tl-point">
           <div class="tl-dots">
@@ -199,21 +199,21 @@
         </div>
       </div>
       <div class="tl-legend">
-        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--grade-a)"></div> Framing</div>
-        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--grade-b)"></div> Judging</div>
-        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--grade-c)"></div> Steering</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--grade-a)"></div> <span data-t="framing">Framing</span></div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--grade-b)"></div> <span data-t="judging">Judging</span></div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--grade-c)"></div> <span data-t="steering">Steering</span></div>
       </div>
     </div>
 
     <!-- Filter Bar -->
     <div class="filter-bar">
-      <select class="form-control">
+      <select class="form-control" data-t-options="allCourses">
         <option value="">All Courses</option>
         <option>Deep Learning 101</option>
         <option>Database Systems</option>
         <option>Software Engineering</option>
       </select>
-      <select class="form-control">
+      <select class="form-control" data-t-options="allTypes,practice,assessment">
         <option value="">All Types</option>
         <option>Practice</option>
         <option>Assessment</option>
@@ -222,18 +222,18 @@
 
     <!-- Completed Challenge Runs Table -->
     <div class="card">
-      <h3 style="margin-bottom:16px;">Completed Challenge Runs</h3>
+      <h3 style="margin-bottom:16px;" data-t="completedChallengeRuns">Completed Challenge Runs</h3>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Challenge</th>
-              <th>Course</th>
-              <th>Type</th>
-              <th>Date</th>
-              <th><span class="phase-label phase-1">P1</span> Framing</th>
-              <th><span class="phase-label phase-2">P2</span> Judging</th>
-              <th><span class="phase-label phase-2">P2</span> Steering</th>
+              <th data-t="challenge">Challenge</th>
+              <th data-t="course">Course</th>
+              <th data-t="type">Type</th>
+              <th data-t="date">Date</th>
+              <th><span class="phase-label phase-1" data-t="phase1">P1</span> <span data-t="framing">Framing</span></th>
+              <th><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="judging">Judging</span></th>
+              <th><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="steering">Steering</span></th>
               <th></th>
             </tr>
           </thead>
@@ -242,7 +242,7 @@
             <tr class="expandable-row" onclick="toggleRow('row1')">
               <td><strong>Sorting Algorithm Analysis</strong></td>
               <td>Software Engineering</td>
-              <td><span class="badge badge-assessment">Assessment</span></td>
+              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
               <td>Mar 8, 2026</td>
               <td><span class="grade grade-A">A</span></td>
               <td><span class="grade grade-B">B</span></td>
@@ -256,17 +256,17 @@
                 <div class="detail-content">
                   <div class="detail-grid">
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
-                      <div class="mini-label">Framing</div>
+                      <div class="mini-label" data-t="framing">Framing</div>
                       <span class="grade grade-A">A</span>
                       <div class="mini-feedback">Strong identification of missing constraints and clear task formulation.</div>
                     </div>
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
-                      <div class="mini-label">Judging</div>
+                      <div class="mini-label" data-t="judging">Judging</div>
                       <span class="grade grade-B">B</span>
                       <div class="mini-feedback">Caught edge cases but missed complexity proof gap in AI output.</div>
                     </div>
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
-                      <div class="mini-label">Steering</div>
+                      <div class="mini-label" data-t="steering">Steering</div>
                       <span class="grade grade-A">A</span>
                       <div class="mini-feedback">Specific, actionable corrections that improved the solution significantly.</div>
                     </div>
@@ -279,7 +279,7 @@
             <tr class="expandable-row" onclick="toggleRow('row2')">
               <td><strong>My Practice: Backpropagation</strong></td>
               <td>Deep Learning 101</td>
-              <td><span class="badge badge-practice">Practice</span></td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
               <td>Mar 9, 2026</td>
               <td><span class="grade grade-B">B</span></td>
               <td><span class="grade grade-C">C</span></td>
@@ -293,17 +293,17 @@
                 <div class="detail-content">
                   <div class="detail-grid">
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
-                      <div class="mini-label">Framing</div>
+                      <div class="mini-label" data-t="framing">Framing</div>
                       <span class="grade grade-B">B</span>
                       <div class="mini-feedback">Adequate assumptions but missed specifying the loss function context.</div>
                     </div>
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-c);">
-                      <div class="mini-label">Judging</div>
+                      <div class="mini-label" data-t="judging">Judging</div>
                       <span class="grade grade-C">C</span>
                       <div class="mini-feedback">Did not catch the vanishing gradient issue in the AI's proposed architecture.</div>
                     </div>
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
-                      <div class="mini-label">Steering</div>
+                      <div class="mini-label" data-t="steering">Steering</div>
                       <span class="grade grade-B">B</span>
                       <div class="mini-feedback">Corrections were directionally correct but lacked mathematical precision.</div>
                     </div>
@@ -316,7 +316,7 @@
             <tr class="expandable-row" onclick="toggleRow('row3')">
               <td><strong>Recursion Basics</strong></td>
               <td>Software Engineering</td>
-              <td><span class="badge badge-practice">Practice</span></td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
               <td>Mar 2, 2026</td>
               <td><span class="grade grade-A">A</span></td>
               <td><span class="grade grade-A">A</span></td>
@@ -330,17 +330,17 @@
                 <div class="detail-content">
                   <div class="detail-grid">
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
-                      <div class="mini-label">Framing</div>
+                      <div class="mini-label" data-t="framing">Framing</div>
                       <span class="grade grade-A">A</span>
                       <div class="mini-feedback">Excellent problem decomposition and constraint identification.</div>
                     </div>
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
-                      <div class="mini-label">Judging</div>
+                      <div class="mini-label" data-t="judging">Judging</div>
                       <span class="grade grade-A">A</span>
                       <div class="mini-feedback">Correctly identified the stack overflow risk and base case errors.</div>
                     </div>
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
-                      <div class="mini-label">Steering</div>
+                      <div class="mini-label" data-t="steering">Steering</div>
                       <span class="grade grade-B">B</span>
                       <div class="mini-feedback">Good corrections but could have pushed for tail-recursion optimization.</div>
                     </div>
@@ -353,7 +353,7 @@
             <tr class="expandable-row" onclick="toggleRow('row4')">
               <td><strong>ER Diagram Design</strong></td>
               <td>Database Systems</td>
-              <td><span class="badge badge-assessment">Assessment</span></td>
+              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
               <td>Feb 25, 2026</td>
               <td><span class="grade grade-C">C</span></td>
               <td><span class="grade grade-B">B</span></td>
@@ -367,17 +367,17 @@
                 <div class="detail-content">
                   <div class="detail-grid">
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-c);">
-                      <div class="mini-label">Framing</div>
+                      <div class="mini-label" data-t="framing">Framing</div>
                       <span class="grade grade-C">C</span>
                       <div class="mini-feedback">Missing key cardinality assumptions led to an under-specified task.</div>
                     </div>
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
-                      <div class="mini-label">Judging</div>
+                      <div class="mini-label" data-t="judging">Judging</div>
                       <span class="grade grade-B">B</span>
                       <div class="mini-feedback">Spotted normalization issues but missed the redundant relationship.</div>
                     </div>
                     <div class="detail-mini-card" style="border-left:3px solid var(--grade-c);">
-                      <div class="mini-label">Steering</div>
+                      <div class="mini-label" data-t="steering">Steering</div>
                       <span class="grade grade-C">C</span>
                       <div class="mini-feedback">Corrections were vague and did not lead to meaningful improvement.</div>
                     </div>

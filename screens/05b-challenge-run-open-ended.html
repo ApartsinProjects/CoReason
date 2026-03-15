@@ -100,9 +100,9 @@
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
     <nav>
       <a href="02-dashboard.html">Dashboard</a>
-      <a href="03-challenge-list.html" class="active">Challenges</a>
-      <a href="06-course-catalog.html">Courses</a>
-      <a href="07-student-analytics.html">My Results</a>
+      <a href="03-challenge-list.html" class="active" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog.html" data-t="courses">Courses</a>
+      <a href="07-student-analytics.html" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
@@ -113,10 +113,10 @@
 
   <main class="page">
     <div class="sim-panel">
-      <span class="sim-badge">Simulator</span>
+      <span class="sim-badge" data-t="simulator">Simulator</span>
       <strong>Open-Ended Challenge Run</strong>
       <span>— Click &#9654; icons to advance. Student writes structured sections.</span>
-      <button class="btn btn-sm btn-outline" onclick="location.reload()" style="margin-left:auto;">&#8635; Reset</button>
+      <button class="btn btn-sm btn-outline" onclick="location.reload()" style="margin-left:auto;">&#8635; <span data-t="reset">Reset</span></button>
     </div>
 
     <div class="page-header flex-between">
@@ -124,36 +124,36 @@
         <h1>Sorting Pipeline for Sensor Data</h1>
         <p>Introduction to Algorithms &bull; Sorting &amp; Searching &gt; Comparison-based Sorting</p>
       </div>
-      <a href="03-challenge-list.html" class="btn btn-outline">&#10005; Exit</a>
+      <a href="03-challenge-list.html" class="btn btn-outline">&#10005; <span data-t="exit">Exit</span></a>
     </div>
 
     <!-- Mode Banner -->
     <div class="mode-banner practice">
       <span style="font-size:20px;">&#9881;</span>
-      <span>Practice Mode</span> — Feedback after each phase, retries allowed
+      <span data-t="practiceMode">Practice Mode</span> — <span data-t="practiceModeDesc">Feedback after each phase, retries allowed</span>
     </div>
 
     <!-- Phase Stepper -->
     <div class="stepper">
-      <div class="step-item active" id="stepper-phase1"><div class="step-num" id="stepper-p1-num">1</div><div>Phase 1 — Framing</div></div>
-      <div class="step-item" id="stepper-phase2"><div class="step-num">2</div><div>Phase 2 — Judge+Steer Cycles</div></div>
+      <div class="step-item active" id="stepper-phase1"><div class="step-num" id="stepper-p1-num">1</div><div data-t="phase1">Phase 1 — Framing</div></div>
+      <div class="step-item" id="stepper-phase2"><div class="step-num">2</div><div data-t="phase2">Phase 2 — Judge+Steer Cycles</div></div>
     </div>
 
     <!-- ════════ PHASE 1 — FRAMING (Open-Ended) ════════ -->
     <div class="card" style="border-left:4px solid var(--primary);">
-      <h3 style="margin-bottom:12px;"><span style="color:var(--primary);">Phase 1 — Framing (Open-Ended)</span></h3>
+      <h3 style="margin-bottom:12px;"><span style="color:var(--primary);"><span data-t="phase1">Phase 1 — Framing</span> (<span data-t="openEnded">Open-Ended</span>)</span></h3>
 
       <div class="instructions-bar" style="background:#e8f5e9; color:#2e7d32;">
-        <strong>Hint:</strong>
+        <strong data-t="hint">Hint</strong>:
         The raw problem is intentionally incomplete. Add refinement sections below — assumptions, constraints, clarifications, success metrics — to turn it into a well-defined task. The raw problem is your starting point; your sections refine it.
       </div>
 
       <div class="problem-panel">
-        <h4>Raw Problem Statement (read-only base)</h4>
+        <h4><span data-t="rawProblemStatement">Raw Problem Statement</span> (read-only base)</h4>
         <p>Write a sorting module that ingests a live stream of temperature readings from warehouse sensors and outputs a continuously sorted buffer that a monitoring dashboard can poll. Each reading is a (sensor_id, timestamp, temperature) tuple. The warehouse has "a few hundred" sensors reporting every second. Deliver working pseudocode for the module plus a table comparing your chosen algorithm against two alternatives on time complexity, space usage, and latency. The system should "handle spikes" when sensors report in bursts.</p>
       </div>
 
-      <h4 style="font-size:14px; margin-bottom:8px; color:var(--teal);">Your Refinement Sections <span class="help-icon" data-tooltip="Add named sections to clarify the problem. Each section should have a clear name and detailed description.">?</span></h4>
+      <h4 style="font-size:14px; margin-bottom:8px; color:var(--teal);"><span data-t="refinementSections">Your Refinement Sections</span> <span class="help-icon" data-tooltip="Add named sections to clarify the problem. Each section should have a clear name and detailed description.">?</span></h4>
 
       <div class="section-list">
         <div class="section-item">
@@ -187,7 +187,7 @@
         </div>
       </div>
 
-      <button class="add-section-btn">+ Add Refinement Section</button>
+      <button class="add-section-btn" data-t="addRefinementSection">+ Add Refinement Section</button>
 
       <div class="submit-area">
         <span class="sim-step-icon done" style="cursor:default;">&#10003;</span>
@@ -198,7 +198,7 @@
     <!-- Framing Feedback — collapsible -->
     <div class="feedback-panel">
       <div class="feedback-toggle" onclick="toggleFeedback(this)">
-        <span>Framing Feedback <span class="grade grade-A" style="width:22px;height:22px;font-size:11px;margin-left:8px;">A</span></span>
+        <span><span data-t="framingFeedback">Framing Feedback</span> <span class="grade grade-A" style="width:22px;height:22px;font-size:11px;margin-left:8px;">A</span></span>
         <span class="arrow">&#9660;</span>
       </div>
       <div class="feedback-body">
@@ -212,13 +212,13 @@
     <div class="run-layout" style="margin-top:24px;">
       <div>
         <div class="instructions-bar">
-          <strong>Instructions:</strong>
-          Review the AI's output each cycle. Add named sections describing issues you find (judging), then add correction instructions (steering). If the output is satisfactory, click "Solution is complete."
+          <strong data-t="instructions">Instructions</strong>:
+          <span data-t="describeIssues">Describe issues you identify</span> / <span data-t="writeCorrections">Write correction instructions</span>
         </div>
 
         <!-- AI Solution -->
         <div class="ai-output">
-          <div class="ai-output-label">AI Solution (generated from your framing)</div>
+          <div class="ai-output-label" data-t="aiSolution">AI Solution (generated from your framing)</div>
           <div class="code-block">MODULE SortedSensorBuffer:
     buffer = []
     batch_queue = []
@@ -244,16 +244,16 @@
         <div id="cycle1-oe">
           <div class="cycle-header" onclick="toggleCycle('cycle1-oe')">
             <span class="cycle-num">1</span>
-            <h3>Cycle 1</h3>
-            <span class="cycle-indicator">Cycle 1 / 5 max</span>
+            <h3><span data-t="cycle">Cycle</span> 1</h3>
+            <span class="cycle-indicator"><span data-t="cycle">Cycle</span> 1 / 5 max</span>
             <span class="collapse-arrow">&#9660;</span>
           </div>
 
           <div class="cycle-body">
             <!-- Judging: Open-ended sections -->
-            <span class="substep-label substep-judge">A — Judging: Describe issues you identify</span>
+            <span class="substep-label substep-judge"><span data-t="judgingSubstep">A — Judging</span>: <span data-t="describeIssues">Describe issues you identify</span></span>
             <div class="instructions-bar" style="background:#fff8e1; color:#e65100; font-size:12px; padding:8px 12px; margin-bottom:12px;">
-              <strong>Hint:</strong> Add a named section for each issue you find. Be specific — describe what's wrong and where. Your analysis is recorded but NOT sent to the AI.
+              <strong data-t="hint">Hint</strong>: <span data-t="describeIssues">Describe issues you identify</span>
             </div>
 
             <div class="section-list">
@@ -284,15 +284,15 @@
             </div>
 
             <button class="btn-done-judging">
-              &#10003; Solution is complete — no modifications needed
+              &#10003; <span data-t="solutionComplete">Solution is complete — no modifications needed</span>
             </button>
 
             <hr class="divider-line">
 
             <!-- Steering: Open-ended sections -->
-            <span class="substep-label substep-steer">B — Steering: Write correction instructions</span>
+            <span class="substep-label substep-steer"><span data-t="steeringSubstep">B — Steering</span>: <span data-t="writeCorrections">Write correction instructions</span></span>
             <div class="instructions-bar" style="background:#e3f2fd; color:#0d47a1; font-size:12px; padding:8px 12px; margin-bottom:12px;">
-              <strong>Hint:</strong> Add named instruction sections. Each should tell the AI exactly what to fix or analyze. These instructions ARE sent to the AI.
+              <strong data-t="hint">Hint</strong>: <span data-t="writeCorrections">Write correction instructions</span>
             </div>
 
             <div class="section-list">
@@ -322,7 +322,7 @@
             <!-- Cycle 1 Feedback — collapsible -->
             <div class="feedback-panel" style="margin-top:16px; margin-bottom:8px;">
               <div class="feedback-toggle" onclick="toggleFeedback(this)">
-                <span>Judging Feedback (Cycle 1) <span class="grade grade-A" style="width:22px;height:22px;font-size:11px;margin-left:8px;">A</span></span>
+                <span><span data-t="judgingFeedback">Judging Feedback</span> (<span data-t="cycle">Cycle</span> 1) <span class="grade grade-A" style="width:22px;height:22px;font-size:11px;margin-left:8px;">A</span></span>
                 <span class="arrow">&#9660;</span>
               </div>
               <div class="feedback-body">
@@ -332,7 +332,7 @@
             </div>
             <div class="feedback-panel">
               <div class="feedback-toggle" onclick="toggleFeedback(this)">
-                <span>Steering Feedback (Cycle 1) <span class="grade grade-A" style="width:22px;height:22px;font-size:11px;margin-left:8px;">A</span></span>
+                <span><span data-t="steeringFeedback">Steering Feedback</span> (<span data-t="cycle">Cycle</span> 1) <span class="grade grade-A" style="width:22px;height:22px;font-size:11px;margin-left:8px;">A</span></span>
                 <span class="arrow collapsed">&#9660;</span>
               </div>
               <div class="feedback-body collapsed">
@@ -347,14 +347,14 @@
         <div id="cycle2-oe" style="margin-top:24px;">
           <div class="cycle-header" onclick="toggleCycle('cycle2-oe')">
             <span class="cycle-num">2</span>
-            <h3>Cycle 2 (Final)</h3>
-            <span class="cycle-indicator">Cycle 2 / 5 max</span>
+            <h3><span data-t="cycle">Cycle</span> 2 <span data-t="final">(Final)</span></h3>
+            <span class="cycle-indicator"><span data-t="cycle">Cycle</span> 2 / 5 max</span>
             <span class="collapse-arrow">&#9660;</span>
           </div>
 
           <div class="cycle-body">
             <div class="ai-output">
-              <div class="ai-output-label">AI Output (updated after Cycle 1 steering)</div>
+              <div class="ai-output-label" data-t="aiOutputUpdated">AI Output (updated after steering)</div>
               <div class="code-block">MODULE SortedSensorBuffer:
     BATCH_THRESHOLD = 500  // ~1s normal traffic; flush before 200ms poll
     FLUSH_INTERVAL = 150ms // ensures fresh data for 200ms poll cycle
@@ -391,9 +391,9 @@
             </div>
 
             <!-- Student clicks "Solution is complete" -->
-            <span class="substep-label substep-judge">A — Judging</span>
+            <span class="substep-label substep-judge" data-t="judgingSubstep">A — Judging</span>
             <button class="btn-done-judging selected">
-              &#10003; Solution is complete — no modifications needed
+              &#10003; <span data-t="solutionComplete">Solution is complete — no modifications needed</span>
             </button>
 
             <div class="submit-area">
@@ -405,18 +405,18 @@
 
         <!-- ════════ COMPLETION ════════ -->
         <div class="card" style="border-left:4px solid var(--success); margin-top:24px;">
-          <h3 style="color:var(--success); margin-bottom:16px;">&#10003; Challenge Complete</h3>
+          <h3 style="color:var(--success); margin-bottom:16px;">&#10003; <span data-t="challengeComplete">Challenge Complete</span></h3>
           <table style="font-size:14px; margin-bottom:16px;">
-            <thead><tr><th>Skill</th><th>Grade</th></tr></thead>
+            <thead><tr><th data-t="skill">Skill</th><th data-t="grade">Grade</th></tr></thead>
             <tbody>
-              <tr><td>Framing</td><td><span class="grade grade-A">A</span></td></tr>
-              <tr><td>Judging</td><td><span class="grade grade-A">A</span></td></tr>
-              <tr><td>Steering</td><td><span class="grade grade-A">A</span></td></tr>
+              <tr><td data-t="framing">Framing</td><td><span class="grade grade-A">A</span></td></tr>
+              <tr><td data-t="judging">Judging</td><td><span class="grade grade-A">A</span></td></tr>
+              <tr><td data-t="steering">Steering</td><td><span class="grade grade-A">A</span></td></tr>
             </tbody>
           </table>
           <div class="feedback-panel" style="background:#e8f5e9; border-color:var(--success);">
             <div class="feedback-toggle" onclick="toggleFeedback(this)">
-              <span style="color:var(--success);">Summary Feedback</span>
+              <span style="color:var(--success);" data-t="summaryFeedback">Summary Feedback</span>
               <span class="arrow">&#9660;</span>
             </div>
             <div class="feedback-body">
@@ -424,8 +424,8 @@
             </div>
           </div>
           <div style="margin-top:16px; text-align:center;">
-            <a href="07-student-analytics.html" class="btn btn-primary">View My Results</a>
-            <a href="03-challenge-list.html" class="btn btn-outline" style="margin-left:8px;">Back to Challenges</a>
+            <a href="07-student-analytics.html" class="btn btn-primary" data-t="viewMyResults">View My Results</a>
+            <a href="03-challenge-list.html" class="btn btn-outline" style="margin-left:8px;" data-t="backToChallenges">Back to Challenges</a>
           </div>
         </div>
       </div>
@@ -433,17 +433,17 @@
       <!-- Right: Summary Panel -->
       <div class="summary-panel">
         <div class="card">
-          <h3 style="margin-bottom:12px; font-size:15px;">Session Summary</h3>
+          <h3 style="margin-bottom:12px; font-size:15px;" data-t="sessionSummary">Session Summary</h3>
           <div class="summary-section">
-            <h5>Raw Problem</h5>
+            <h5 data-t="rawProblem">Raw Problem</h5>
             <div class="summary-raw">Write a sorting module for live temperature readings from warehouse sensors... sorted buffer for dashboard polling. ~hundreds of sensors, every second. Handle spikes.</div>
           </div>
           <div class="summary-section">
-            <h5>Current AI Solution</h5>
+            <h5 data-t="currentAiSolution">Current AI Solution</h5>
             <div class="summary-solution">Batch-merge with deque buffer, cached snapshots for poll(). BATCH_THRESHOLD=500, FLUSH_INTERVAL=150ms. Burst: ~55,700 ops (1,122× speedup).</div>
           </div>
           <div class="summary-section">
-            <h5>Steering History</h5>
+            <h5 data-t="steeringHistory">Steering History</h5>
             <div class="cycle-log">
               <div class="cycle-log-entry">
                 <div class="cycle-log-label">Cycle 1 — Issues Found</div>

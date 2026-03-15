@@ -123,13 +123,13 @@
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
     <nav>
-      <a href="03-challenge-list.html" class="active">Challenges</a>
-      <a href="06-course-catalog.html">Courses</a>
-      <a href="07-student-analytics.html">My Results</a>
+      <a href="03-challenge-list.html" class="active" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog.html" data-t="courses">Courses</a>
+      <a href="07-student-analytics.html" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
-      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Student</span>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span id="user-name">Noa R.</span>
       <a href="09-profile.html"><div class="avatar" id="user-avatar">NR</div></a>
     </div>
@@ -138,7 +138,7 @@
   <main class="page">
     <!-- Scenario Picker -->
     <div class="sim-panel">
-      <span class="sim-badge">Simulator</span>
+      <span class="sim-badge" data-t="simulator">Simulator</span>
       <select id="challenge-picker" onchange="onPickerChange()">
         <optgroup label="Sorting Pipeline for Sensor Data">
           <option value="sorting-mc-practice">Sorting &mdash; MC</option>
@@ -154,10 +154,10 @@
         </optgroup>
       </select>
       <div class="toggle-group">
-        <button class="toggle-btn active" onclick="setMode('practice', this)">Practice</button>
-        <button class="toggle-btn" onclick="setMode('assessment', this)">Assessment</button>
+        <button class="toggle-btn active" onclick="setMode('practice', this)" data-t="practice">Practice</button>
+        <button class="toggle-btn" onclick="setMode('assessment', this)" data-t="assessment">Assessment</button>
       </div>
-      <button class="btn btn-sm btn-outline" onclick="loadScenario()" style="margin-left:auto;">&#8635; Reset</button>
+      <button class="btn btn-sm btn-outline" onclick="loadScenario()" style="margin-left:auto;">&#8635; <span data-t="reset">Reset</span></button>
     </div>
 
     <!-- Dynamic content rendered here -->
@@ -231,95 +231,95 @@
       // Page header
       h += `<div class="page-header flex-between">
         <div><h1>${ch.title}</h1><p>${ch.course} &bull; ${ch.subject}</p></div>
-        <a href="03-challenge-list.html" class="btn btn-outline">&#10005; Exit</a>
+        <a href="03-challenge-list.html" class="btn btn-outline">&#10005; ${t('exit')}</a>
       </div>`;
 
       // Mode banner
       if (isPractice) {
-        h += `<div class="mode-banner practice"><span style="font-size:20px">&#9881;</span><span>Practice Mode</span> &mdash; Feedback after each phase, retries allowed</div>`;
+        h += `<div class="mode-banner practice"><span style="font-size:20px">&#9881;</span><span>${t('practiceMode')}</span> &mdash; ${t('practiceModeDesc')}</div>`;
       } else {
-        h += `<div class="mode-banner assessment"><span style="font-size:20px">&#9888;</span><span>Assessment Mode</span> &mdash; Feedback revealed at completion only</div>`;
+        h += `<div class="mode-banner assessment"><span style="font-size:20px">&#9888;</span><span>${t('assessmentMode')}</span> &mdash; ${t('assessmentModeDesc')}</div>`;
       }
 
       // Stepper
       h += `<div class="stepper">
-        <div class="step-item" id="stepper-p1"><div class="step-num" id="stepper-p1-num">1</div><div>Phase 1 &mdash; Framing</div></div>
-        <div class="step-item" id="stepper-p2"><div class="step-num" id="stepper-p2-num">2</div><div>Phase 2 &mdash; Judge+Steer Cycles</div></div>
+        <div class="step-item" id="stepper-p1"><div class="step-num" id="stepper-p1-num">1</div><div>${t('phase1')}</div></div>
+        <div class="step-item" id="stepper-p2"><div class="step-num" id="stepper-p2-num">2</div><div>${t('phase2')}</div></div>
       </div>`;
 
       // Start card
       h += `<div id="start-card" class="card" style="text-align:center;padding:40px">
-        <h3 style="margin-bottom:12px;color:var(--text-secondary)">Challenge Ready to Start</h3>
-        <p class="text-muted mb-16">Click &#9654; to generate the raw problem via LLM.</p>
+        <h3 style="margin-bottom:12px;color:var(--text-secondary)">${t('challengeReady')}</h3>
+        <p class="text-muted mb-16">${t('clickToGenerate')}</p>
         <span class="sim-step-icon" onclick="nextSim()" id="sim-icon-0">&#9654;</span>
       </div>`;
 
       // Phase 1
       h += `<div id="phase1" class="sim-hidden">`;
       h += `<div class="card" style="border-left:4px solid var(--primary)">
-        <h3 style="margin-bottom:12px"><span style="color:var(--primary)">Phase 1 &mdash; Framing (${isOE ? 'Open-Ended' : 'Multiple Choice'})</span></h3>`;
-      h += `<div class="instructions-bar" style="background:#e8f5e9;color:#2e7d32"><strong>Hint:</strong> ${v.framing.hint}</div>`;
-      h += `<div class="problem-panel"><h4>Raw Problem Statement ${isOE ? '(read-only base)' : ''} <span class="help-icon" data-tooltip="This problem was generated by the LLM. It intentionally contains missing information and ambiguities.">?</span></h4><p>${ch.rawProblem}</p></div>`;
+        <h3 style="margin-bottom:12px"><span style="color:var(--primary)">${t('phase1')} (${isOE ? t('openEnded') : t('multipleChoice')})</span></h3>`;
+      h += `<div class="instructions-bar" style="background:#e8f5e9;color:#2e7d32"><strong>${t('hint')}:</strong> ${v.framing.hint}</div>`;
+      h += `<div class="problem-panel"><h4>${t('rawProblemStatement')} ${isOE ? '(read-only base)' : ''} <span class="help-icon" data-tooltip="This problem was generated by the LLM. It intentionally contains missing information and ambiguities.">?</span></h4><p>${ch.rawProblem}</p></div>`;
 
       // Framing response area
       if (isOE) {
         h += `<div id="phase1-options">`;
-        h += `<h4 style="font-size:14px;margin-bottom:8px;color:var(--teal)">Your Refinement Sections</h4>`;
+        h += `<h4 style="font-size:14px;margin-bottom:8px;color:var(--teal)">${t('refinementSections')}</h4>`;
         h += `<div class="section-list">`;
         v.framing.sections.forEach(s => {
           h += `<div class="section-item"><div class="section-header"><input type="text" value="${s.name}" readonly><button class="remove-btn">&times;</button></div><div class="section-body"><textarea readonly>${s.text}</textarea></div></div>`;
         });
-        h += `</div><button class="add-section-btn">+ Add Refinement Section</button>`;
-        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-1">&#9654;</span><span class="text-sm text-muted">Submit ${v.framing.sections.length} refinement sections</span></div>`;
+        h += `</div><button class="add-section-btn">${t('addRefinementSection')}</button>`;
+        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-1">&#9654;</span><span class="text-sm text-muted">${t('submitFraming')} (${v.framing.sections.length})</span></div>`;
         h += `</div>`;
       } else {
-        h += `<div id="phase1-gen-btn" style="text-align:center;margin-top:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-1">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">Generate framing options (LLM)</span></div>`;
+        h += `<div id="phase1-gen-btn" style="text-align:center;margin-top:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-1">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">${t('generateFraming')}</span></div>`;
         h += `<div id="phase1-options" class="sim-hidden">`;
-        h += `<p class="text-sm text-muted mb-8"><strong>Select all refinements that apply</strong></p>`;
+        h += `<p class="text-sm text-muted mb-8"><strong>${t('selectRefinements')}</strong></p>`;
         v.framing.options.forEach((opt, i) => {
           h += `<div class="mc-option" onclick="toggleMC(this)" data-idx="${i}"><div class="mc-check">&#10003;</div><div><div class="mc-label"><strong>(${opt.letter})</strong> ${opt.text}</div></div></div>`;
         });
-        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-2">&#9654;</span><span class="text-sm text-muted">Submit framing &mdash; student selects ${v.framing.studentSelections.map(i => '(' + v.framing.options[i].letter + ')').join(', ')}</span></div>`;
+        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-2">&#9654;</span><span class="text-sm text-muted">${t('submitFraming')} &mdash; ${v.framing.studentSelections.map(i => '(' + v.framing.options[i].letter + ')').join(', ')}</span></div>`;
         h += `</div>`;
       }
       h += `</div>`; // end card
 
       // Framing feedback
       h += `<div id="phase1-feedback" class="sim-hidden phase-feedback">`;
-      h += renderFeedbackPanel('Framing Feedback', v.framing.feedback.grade, v.framing.feedback.html);
+      h += renderFeedbackPanel(t('framingFeedback'), v.framing.feedback.grade, v.framing.feedback.html);
       h += `</div>`;
       h += `</div>`; // end phase1
 
       // Phase 2
       h += `<div id="phase2" class="sim-hidden"><div class="run-layout"><div>`;
-      h += `<div class="instructions-bar"><strong>Instructions:</strong> Review the AI&rsquo;s output each cycle. ${isOE ? 'Add named sections describing issues (judging), then correction instructions (steering).' : 'Select ALL issues (judging), then ALL corrections (steering).'} If satisfactory, click &ldquo;Solution is complete.&rdquo;</div>`;
+      h += `<div class="instructions-bar"><strong>${t('instructions')}:</strong> Review the AI&rsquo;s output each cycle. ${isOE ? t('describeIssues') + ' / ' + t('writeCorrections') : t('selectIssues') + ' / ' + t('selectCorrections')}.</div>`;
 
       // Initial AI solution
-      h += `<div id="ai-solution" class="sim-hidden"><div class="ai-output"><div class="ai-output-label">AI Solution (generated from your framing)</div>${v.aiSolution.html}</div></div>`;
+      h += `<div id="ai-solution" class="sim-hidden"><div class="ai-output"><div class="ai-output-label">${t('aiSolution')}</div>${v.aiSolution.html}</div></div>`;
 
       // Cycles
       v.cycles.forEach((cycle, ci) => {
         const isLast = cycle.judging.doneSelected;
-        const label = isLast ? `Cycle ${ci + 1} (Final)` : `Cycle ${ci + 1}`;
-        h += `<div id="cycle-${ci}" class="sim-hidden"><div class="cycle-header" onclick="toggleCycle('cycle-${ci}')"><span class="cycle-num">${ci + 1}</span><h3>${label}</h3><span class="cycle-indicator">Cycle ${ci + 1} / ${ch.maxCycles} max</span><span class="collapse-arrow">&#9660;</span></div><div class="cycle-body">`;
+        const label = isLast ? `${t('cycle')} ${ci + 1} ${t('final')}` : `${t('cycle')} ${ci + 1}`;
+        h += `<div id="cycle-${ci}" class="sim-hidden"><div class="cycle-header" onclick="toggleCycle('cycle-${ci}')"><span class="cycle-num">${ci + 1}</span><h3>${label}</h3><span class="cycle-indicator">${t('cycleOf').replace('{0}', ci + 1).replace('{1}', ch.maxCycles)}</span><span class="collapse-arrow">&#9660;</span></div><div class="cycle-body">`;
 
         // AI update (for cycles > 0)
         if (cycle.aiUpdate) {
-          h += `<div id="cycle-${ci}-ai-gen" style="text-align:center;margin-bottom:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-ai-${ci}">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">Generate updated AI output (LLM)</span></div>`;
-          h += `<div id="cycle-${ci}-ai" class="sim-hidden"><div class="ai-output"><div class="ai-output-label">AI Output (updated after Cycle ${ci} steering)</div>${cycle.aiUpdate.html}</div></div>`;
+          h += `<div id="cycle-${ci}-ai-gen" style="text-align:center;margin-bottom:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-ai-${ci}">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">${t('generateUpdatedAi')}</span></div>`;
+          h += `<div id="cycle-${ci}-ai" class="sim-hidden"><div class="ai-output"><div class="ai-output-label">${t('aiOutputUpdated')}</div>${cycle.aiUpdate.html}</div></div>`;
         }
 
         // Judging gen button (MC only)
         if (!isOE) {
-          h += `<div id="cycle-${ci}-judge-gen" style="text-align:center;margin-top:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jgen-${ci}">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">Generate judging options (LLM)</span></div>`;
+          h += `<div id="cycle-${ci}-judge-gen" style="text-align:center;margin-top:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jgen-${ci}">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">${t('generateJudging')}</span></div>`;
         }
 
         // Judging area
         h += `<div id="cycle-${ci}-judging" class="${isOE ? '' : 'sim-hidden'}">`;
-        h += `<span class="substep-label substep-judge">A &mdash; Judging: ${isOE ? 'Describe issues you identify' : 'Select all issues you identify'}</span>`;
+        h += `<span class="substep-label substep-judge">${t('judgingSubstep')}: ${isOE ? t('describeIssues') : t('selectIssues')}</span>`;
 
         if (isOE) {
-          h += `<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>Hint:</strong> Add a named section for each issue. Your analysis is recorded but NOT sent to the AI.</div>`;
+          h += `<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>${t('hint')}:</strong> ${t('describeIssues')}</div>`;
           if (cycle.judging.sections && cycle.judging.sections.length > 0) {
             h += `<div class="section-list">`;
             cycle.judging.sections.forEach(s => {
@@ -328,56 +328,48 @@
             h += `</div>`;
           }
         } else {
-          h += `<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>Hint:</strong> Select ALL issues. Missing real issues and selecting non-issues are both penalized.</div>`;
+          h += `<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>${t('hint')}:</strong> ${t('selectIssues')}</div>`;
           cycle.judging.options.forEach((opt, oi) => {
             h += `<div class="mc-option" onclick="toggleMC(this)" data-idx="${oi}"><div class="mc-check">&#10003;</div><div><div class="mc-label"><strong>(${opt.letter})</strong> ${opt.text}</div></div></div>`;
           });
         }
 
         // "Solution is complete" button
-        h += `<button class="btn-done-judging" id="done-btn-${ci}" onclick="toggleDoneBtn(this)">&#10003; Solution is complete &mdash; no modifications needed</button>`;
+        h += `<button class="btn-done-judging" id="done-btn-${ci}" onclick="toggleDoneBtn(this)">&#10003; ${t('solutionComplete')}</button>`;
 
         // Submit judging
-        const jDesc = cycle.judging.doneSelected
-          ? 'Student clicks &ldquo;Solution is complete&rdquo;'
-          : (isOE
-            ? `Student submitted ${cycle.judging.sections ? cycle.judging.sections.length : 0} issue sections`
-            : `Student selects ${cycle.judging.studentSelections.map(i => '(' + cycle.judging.options[i].letter + ')').join(', ')}`);
-        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jsub-${ci}">&#9654;</span><span class="text-sm text-muted">${jDesc}</span></div>`;
+        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jsub-${ci}">&#9654;</span><span class="text-sm text-muted">${t('submit')}</span></div>`;
         h += `</div>`; // end judging
 
         // Steering area (only if not done)
         if (cycle.steering) {
           h += `<div id="cycle-${ci}-steering" class="sim-hidden">`;
           h += `<hr class="divider-line">`;
-          h += `<span class="substep-label substep-steer">B &mdash; Steering: ${isOE ? 'Write correction instructions' : 'Select all corrections to send'}</span>`;
+          h += `<span class="substep-label substep-steer">${t('steeringSubstep')}: ${isOE ? t('writeCorrections') : t('selectCorrections')}</span>`;
 
           if (isOE) {
-            h += `<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>Hint:</strong> Add named instruction sections. These ARE sent to the AI.</div>`;
+            h += `<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>${t('hint')}:</strong> ${t('writeCorrections')}</div>`;
             h += `<div class="section-list">`;
             cycle.steering.sections.forEach(s => {
               h += `<div class="section-item"><div class="section-header"><input type="text" value="${s.name}" readonly></div><div class="section-body"><textarea readonly>${s.text}</textarea></div></div>`;
             });
             h += `</div>`;
           } else {
-            h += `<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>Hint:</strong> Select every correction that addresses a real issue.</div>`;
+            h += `<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>${t('hint')}:</strong> ${t('selectCorrections')}</div>`;
             cycle.steering.options.forEach((opt, oi) => {
               h += `<div class="mc-option" onclick="toggleMC(this)" data-idx="${oi}"><div class="mc-check">&#10003;</div><div><div class="mc-label"><strong>(${opt.letter})</strong> ${opt.text}</div></div></div>`;
             });
           }
 
-          const sDesc = isOE
-            ? `Student submitted ${cycle.steering.sections.length} instructions`
-            : `Student selects ${cycle.steering.studentSelections.map(i => '(' + cycle.steering.options[i].letter + ')').join(', ')}`;
-          h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-ssub-${ci}">&#9654;</span><span class="text-sm text-muted">${sDesc}</span></div>`;
+          h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-ssub-${ci}">&#9654;</span><span class="text-sm text-muted">${t('submit')}</span></div>`;
           h += `</div>`; // end steering
         }
 
         // Cycle feedback
         h += `<div id="cycle-${ci}-feedback" class="sim-hidden phase-feedback">`;
-        h += renderFeedbackPanel(`Judging Feedback (Cycle ${ci + 1})`, cycle.judging.feedback.grade, cycle.judging.feedback.html, false);
+        h += renderFeedbackPanel(`${t('judgingFeedback')} (${t('cycle')} ${ci + 1})`, cycle.judging.feedback.grade, cycle.judging.feedback.html, false);
         if (cycle.steering) {
-          h += renderFeedbackPanel(`Steering Feedback (Cycle ${ci + 1})`, cycle.steering.feedback.grade, cycle.steering.feedback.html, true);
+          h += renderFeedbackPanel(`${t('steeringFeedback')} (${t('cycle')} ${ci + 1})`, cycle.steering.feedback.grade, cycle.steering.feedback.html, true);
         }
         h += `</div>`;
 
@@ -391,10 +383,10 @@
 
       // Right: Summary panel
       h += `<div class="summary-panel"><div class="card">
-        <h3 style="margin-bottom:12px;font-size:15px">Session Summary</h3>
-        <div class="summary-section"><h5>Raw Problem</h5><div class="summary-raw">${ch.rawProblemShort}</div></div>
-        <div class="summary-section" id="summary-sol-section" style="display:none"><h5>Current AI Solution</h5><div class="summary-solution" id="summary-solution">&mdash;</div></div>
-        <div class="summary-section" id="summary-log-section" style="display:none"><h5>Steering History</h5><div class="cycle-log" id="summary-log"></div></div>
+        <h3 style="margin-bottom:12px;font-size:15px">${t('sessionSummary')}</h3>
+        <div class="summary-section"><h5>${t('rawProblem')}</h5><div class="summary-raw">${ch.rawProblemShort}</div></div>
+        <div class="summary-section" id="summary-sol-section" style="display:none"><h5>${t('currentAiSolution')}</h5><div class="summary-solution" id="summary-solution">&mdash;</div></div>
+        <div class="summary-section" id="summary-log-section" style="display:none"><h5>${t('steeringHistory')}</h5><div class="cycle-log" id="summary-log"></div></div>
       </div></div>`;
 
       h += `</div></div>`; // end run-layout, phase2
@@ -417,15 +409,15 @@
       const g = v.completion.grades;
       let h = `<div id="completion" class="sim-hidden">
         <div class="card" style="border-left:4px solid var(--success);margin-top:24px">
-        <h3 style="color:var(--success);margin-bottom:16px">&#10003; Challenge Complete</h3>
-        <table style="font-size:14px;margin-bottom:16px"><thead><tr><th>Skill</th><th>Grade</th></tr></thead><tbody>
-          <tr><td>Framing</td><td><span class="grade grade-${g.framing}">${g.framing}</span></td></tr>
-          <tr><td>Judging</td><td><span class="grade grade-${g.judging}">${g.judging}</span></td></tr>
-          <tr><td>Steering</td><td><span class="grade grade-${g.steering}">${g.steering}</span></td></tr>
+        <h3 style="color:var(--success);margin-bottom:16px">&#10003; ${t('challengeComplete')}</h3>
+        <table style="font-size:14px;margin-bottom:16px"><thead><tr><th>${t('skill')}</th><th>${t('grade')}</th></tr></thead><tbody>
+          <tr><td>${t('framing')}</td><td><span class="grade grade-${g.framing}">${g.framing}</span></td></tr>
+          <tr><td>${t('judging')}</td><td><span class="grade grade-${g.judging}">${g.judging}</span></td></tr>
+          <tr><td>${t('steering')}</td><td><span class="grade grade-${g.steering}">${g.steering}</span></td></tr>
         </tbody></table>
         <div class="feedback-panel" style="background:#e8f5e9;border-color:var(--success)">
           <div class="feedback-toggle" onclick="toggleFeedback(this)">
-            <span style="color:var(--success)">Summary Feedback</span>
+            <span style="color:var(--success)">${t('summaryFeedback')}</span>
             <span class="arrow">&#9660;</span>
           </div>
           <div class="feedback-body"><p class="text-sm">${v.completion.summary}</p></div>
@@ -433,20 +425,20 @@
 
       // Assessment: show deferred per-phase feedback at completion
       if (!isPractice) {
-        h += `<div class="deferred-feedback-section"><h4>Detailed Phase Feedback</h4>`;
-        h += `<div class="deferred-feedback-item"><div class="dfb-label">Framing</div>${renderFeedbackPanel('Framing', v.framing.feedback.grade, v.framing.feedback.html)}</div>`;
+        h += `<div class="deferred-feedback-section"><h4>${t('detailedFeedback')}</h4>`;
+        h += `<div class="deferred-feedback-item"><div class="dfb-label">${t('framing')}</div>${renderFeedbackPanel(t('framing'), v.framing.feedback.grade, v.framing.feedback.html)}</div>`;
         v.cycles.forEach((cycle, ci) => {
-          h += `<div class="deferred-feedback-item"><div class="dfb-label">Cycle ${ci + 1} &mdash; Judging</div>${renderFeedbackPanel('Judging', cycle.judging.feedback.grade, cycle.judging.feedback.html)}</div>`;
+          h += `<div class="deferred-feedback-item"><div class="dfb-label">${t('cycle')} ${ci + 1} &mdash; ${t('judging')}</div>${renderFeedbackPanel(t('judging'), cycle.judging.feedback.grade, cycle.judging.feedback.html)}</div>`;
           if (cycle.steering) {
-            h += `<div class="deferred-feedback-item"><div class="dfb-label">Cycle ${ci + 1} &mdash; Steering</div>${renderFeedbackPanel('Steering', cycle.steering.feedback.grade, cycle.steering.feedback.html)}</div>`;
+            h += `<div class="deferred-feedback-item"><div class="dfb-label">${t('cycle')} ${ci + 1} &mdash; ${t('steering')}</div>${renderFeedbackPanel(t('steering'), cycle.steering.feedback.grade, cycle.steering.feedback.html)}</div>`;
           }
         });
         h += `</div>`;
       }
 
       h += `<div style="margin-top:16px;text-align:center">
-          <a href="07-student-analytics.html" class="btn btn-primary">View My Results</a>
-          <a href="03-challenge-list.html" class="btn btn-outline" style="margin-left:8px">Back to Challenges</a>
+          <a href="07-student-analytics.html" class="btn btn-primary">${t('viewMyResults')}</a>
+          <a href="03-challenge-list.html" class="btn btn-outline" style="margin-left:8px">${t('backToChallenges')}</a>
         </div></div></div>`;
       return h;
     }
@@ -614,7 +606,39 @@
     // ══════════════════════════════════════════════════════════
     // LANGUAGE SWITCHING
     // ══════════════════════════════════════════════════════════
+    function rebuildPicker() {
+      const data = getActiveData();
+      const picker = document.getElementById('challenge-picker');
+      const curVal = picker.value;
+      picker.innerHTML = '';
+      const seen = {};
+      Object.keys(data.scenarios).forEach(sid => {
+        const sc = data.scenarios[sid];
+        const ch = data.challenges[sc.challengeId];
+        if (!ch) return;
+        const groupKey = sc.challengeId;
+        if (!seen[groupKey]) {
+          seen[groupKey] = document.createElement('optgroup');
+          seen[groupKey].label = ch.title;
+          picker.appendChild(seen[groupKey]);
+        }
+        const parts = sid.split('-');
+        const mode = parts.pop();
+        if (mode !== 'practice') return; // picker only shows practice variants
+        const respType = sc.responseType === 'mc' ? 'MC' : t('openEnded');
+        const opt = document.createElement('option');
+        opt.value = sid.replace(/-practice$/, '-practice');
+        opt.textContent = ch.title.split(' ')[0] + ' \u2014 ' + respType;
+        seen[groupKey].appendChild(opt);
+      });
+      // restore selection
+      for (let i = 0; i < picker.options.length; i++) {
+        if (picker.options[i].value === curVal) { picker.selectedIndex = i; break; }
+      }
+    }
+
     document.addEventListener('langchange', function(e) {
+      rebuildPicker();
       loadScenario(); // reload with new language data
     });
 

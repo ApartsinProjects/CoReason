@@ -92,8 +92,8 @@ function getLang() { return currentLang; }
 /**
  * switchLanguage(lang)
  * Sets the active language, updates document direction for RTL languages,
- * syncs all .lang-select dropdowns, persists the choice, and dispatches
- * a 'langchange' CustomEvent so page-specific scripts can react.
+ * syncs all .lang-select dropdowns, persists the choice, auto-translates
+ * the page, and dispatches a 'langchange' CustomEvent.
  */
 function switchLanguage(lang) {
   currentLang = lang;
@@ -116,8 +116,79 @@ function switchLanguage(lang) {
   // Persist preference to localStorage
   try { localStorage.setItem('coreason-lang', lang); } catch(e) {}
 
+  // Auto-translate the page
+  translatePage();
+
   // Dispatch event so page-specific handlers can update their labels
   document.dispatchEvent(new CustomEvent('langchange', { detail: { lang: lang } }));
+}
+
+// ────────────────────────────────────────────────────────────────────
+// Auto-translation system
+// ────────────────────────────────────────────────────────────────────
+
+/**
+ * translatePage()
+ * Scans the DOM for elements with data-t attributes and replaces their
+ * text content with the translated value from the current language's
+ * uiLabels. Also handles data-t-placeholder and data-t-title.
+ *
+ * Usage in HTML:
+ *   <span data-t="challenges">Challenges</span>
+ *   <input data-t-placeholder="searchChallenges" placeholder="Search challenges...">
+ *   <button data-t-title="edit" title="Edit">...</button>
+ *   <h1 data-t="myResults">My Results</h1>
+ */
+function translatePage() {
+  // Translate text content
+  document.querySelectorAll('[data-t]').forEach(function(el) {
+    var key = el.getAttribute('data-t');
+    var val = t(key);
+    if (val && val !== key) {
+      el.textContent = val;
+    }
+  });
+
+  // Translate innerHTML (for elements with HTML entities)
+  document.querySelectorAll('[data-t-html]').forEach(function(el) {
+    var key = el.getAttribute('data-t-html');
+    var val = t(key);
+    if (val && val !== key) {
+      el.innerHTML = val;
+    }
+  });
+
+  // Translate placeholders
+  document.querySelectorAll('[data-t-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-t-placeholder');
+    var val = t(key);
+    if (val && val !== key) {
+      el.placeholder = val;
+    }
+  });
+
+  // Translate title attributes
+  document.querySelectorAll('[data-t-title]').forEach(function(el) {
+    var key = el.getAttribute('data-t-title');
+    var val = t(key);
+    if (val && val !== key) {
+      el.title = val;
+    }
+  });
+
+  // Translate select option text
+  document.querySelectorAll('[data-t-options]').forEach(function(sel) {
+    var keys = sel.getAttribute('data-t-options').split(',');
+    for (var i = 0; i < sel.options.length && i < keys.length; i++) {
+      var key = keys[i].trim();
+      if (key) {
+        var val = t(key);
+        if (val && val !== key) {
+          sel.options[i].textContent = val;
+        }
+      }
+    }
+  });
 }
 
 // ────────────────────────────────────────────────────────────────────
@@ -198,8 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // If the stored language differs from the default, apply it now
-  if (currentLang !== 'en') {
-    switchLanguage(currentLang);
-  }
+  // Apply stored language (triggers translatePage + langchange event)
+  // Always call switchLanguage to ensure initial translation
+  switchLanguage(currentLang);
 });

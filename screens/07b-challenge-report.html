@@ -81,23 +81,23 @@
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
     <nav>
-      <a href="03-challenge-list.html">Challenges</a>
-      <a href="06-course-catalog.html">Courses</a>
-      <a href="07-student-analytics.html" class="active">My Results</a>
+      <a href="03-challenge-list.html" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog.html" data-t="courses">Courses</a>
+      <a href="07-student-analytics.html" class="active" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
-      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Student</span>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span>Sarah Cohen</span>
       <a href="09-profile.html"><div class="avatar">SC</div></a>
     </div>
   </header>
 
   <main class="page">
-    <a href="07-student-analytics.html" class="back-link">&#8592; Back to My Results</a>
+    <a href="07-student-analytics.html" class="back-link" data-t="backToMyResults">&#8592; Back to My Results</a>
 
     <div class="page-header">
-      <h1>Challenge Run Report</h1>
+      <h1 data-t="challengeRunReport">Challenge Run Report</h1>
       <div class="report-meta">
         <span><strong>Sorting Algorithm Analysis</strong></span>
         <span class="sep">|</span>
@@ -105,7 +105,7 @@
         <span class="sep">|</span>
         <span>Mar 8, 2026</span>
         <span class="sep">|</span>
-        <span class="badge badge-assessment">Assessment</span>
+        <span class="badge badge-assessment" data-t="assessment">Assessment</span>
       </div>
     </div>
 
@@ -114,15 +114,15 @@
       <div class="summary-grades">
         <div class="summary-grade-item">
           <div class="summary-grade-circle grade-A">A</div>
-          <div class="summary-grade-label">Framing</div>
+          <div class="summary-grade-label" data-t="framing">Framing</div>
         </div>
         <div class="summary-grade-item">
           <div class="summary-grade-circle grade-B">B</div>
-          <div class="summary-grade-label">Judging</div>
+          <div class="summary-grade-label" data-t="judging">Judging</div>
         </div>
         <div class="summary-grade-item">
           <div class="summary-grade-circle grade-A">A</div>
-          <div class="summary-grade-label">Steering</div>
+          <div class="summary-grade-label" data-t="steering">Steering</div>
         </div>
       </div>
     </div>
@@ -130,20 +130,20 @@
     <!-- Phase 1 - Framing -->
     <div class="section" id="section-framing">
       <div class="section-header" onclick="toggleSection('section-framing')">
-        <h3><span class="phase-label phase-1">P1</span> Phase 1 &#8212; Framing</h3>
+        <h3><span class="phase-label phase-1" data-t="phase1">P1</span> <span data-t-html="phase1">Phase 1 &#8212; Framing</span></h3>
         <span class="section-arrow">&#9660;</span>
       </div>
       <div class="section-body">
         <div class="submission-block">
-          <h4>Your Submission</h4>
+          <h4 data-t="yourSubmission">Your Submission</h4>
           <p>The problem asks to analyze sorting algorithms but doesn&#39;t specify: input size range, whether stability matters, memory constraints. I assume: arrays of 1K-1M integers, stability not required, O(1) extra space preferred.</p>
         </div>
         <div class="feedback-block">
-          <h4>AI Feedback</h4>
+          <h4 data-t="aiFeedback">AI Feedback</h4>
           <p>Strong identification of missing constraints. The assumption about O(1) extra space is well-justified given the context. Could have also questioned whether the input is partially sorted.</p>
         </div>
         <div class="phase-grade">
-          <span class="phase-grade-label">Grade:</span>
+          <span class="phase-grade-label" data-t="grade">Grade:</span>
           <span class="grade grade-A">A</span>
         </div>
       </div>
@@ -152,7 +152,7 @@
     <!-- Phase 2 - Judge+Steer Cycles -->
     <div class="section" id="section-judge-steer">
       <div class="section-header" onclick="toggleSection('section-judge-steer')">
-        <h3><span class="phase-label phase-2">P2</span> Phase 2 &#8212; Judge + Steer Cycles</h3>
+        <h3><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t-html="phase2">Phase 2 &#8212; Judge + Steer Cycles</span></h3>
         <span class="section-arrow">&#9660;</span>
       </div>
       <div class="section-body">
@@ -160,12 +160,12 @@
         <!-- Cycle 1 -->
         <div class="cycle-card">
           <div class="cycle-header">
-            <h4>Cycle 1</h4>
+            <h4><span data-t="cycle">Cycle</span> 1</h4>
           </div>
 
           <div class="cycle-row">
             <div>
-              <div class="cycle-row-label judging">Judging</div>
+              <div class="cycle-row-label judging" data-t="judging">Judging</div>
               <div class="cycle-row-text">Selected issues: &#8220;Missing edge case for empty array&#8221;, &#8220;Complexity analysis incomplete for worst case&#8221;</div>
             </div>
             <span class="grade grade-B">B</span>
@@ -173,14 +173,14 @@
 
           <div class="cycle-row">
             <div>
-              <div class="cycle-row-label steering">Steering</div>
+              <div class="cycle-row-label steering" data-t="steering">Steering</div>
               <div class="cycle-row-text">Selected corrections: &#8220;Add empty array guard clause&#8221;, &#8220;Include worst-case analysis for quicksort&#8221;</div>
             </div>
             <span class="grade grade-A">A</span>
           </div>
 
           <button class="ai-output-toggle" onclick="toggleAiOutput(this)">
-            <span class="toggle-arrow">&#9654;</span> AI Updated Output
+            <span class="toggle-arrow">&#9654;</span> <span data-t="aiOutputUpdated">AI Updated Output</span>
           </button>
           <div class="ai-output-preview">
             The updated analysis now includes an empty array guard clause at the entry point of each sorting function. Worst-case time complexity for quicksort has been revised to O(n&#178;) with a note on pivot selection strategies to mitigate this scenario...
@@ -190,13 +190,13 @@
         <!-- Cycle 2 -->
         <div class="cycle-card">
           <div class="cycle-header">
-            <h4>Cycle 2</h4>
-            <span class="cycle-badge-final">Final Cycle</span>
+            <h4><span data-t="cycle">Cycle</span> 2</h4>
+            <span class="cycle-badge-final" data-t="final">Final Cycle</span>
           </div>
 
           <div class="cycle-row">
             <div>
-              <div class="cycle-row-label judging">Judging</div>
+              <div class="cycle-row-label judging" data-t="judging">Judging</div>
               <div class="cycle-row-text">Identified: &#8220;Partition strategy not optimal&#8221;, &#8220;No mention of cache performance&#8221;</div>
             </div>
             <span class="grade grade-B">B</span>
@@ -204,14 +204,14 @@
 
           <div class="cycle-row">
             <div>
-              <div class="cycle-row-label steering">Steering</div>
+              <div class="cycle-row-label steering" data-t="steering">Steering</div>
               <div class="cycle-row-text">Directed: &#8220;Switch to median-of-three partitioning&#8221;, &#8220;Add cache locality analysis&#8221;</div>
             </div>
             <span class="grade grade-A">A</span>
           </div>
 
           <button class="ai-output-toggle" onclick="toggleAiOutput(this)">
-            <span class="toggle-arrow">&#9654;</span> AI Updated Output
+            <span class="toggle-arrow">&#9654;</span> <span data-t="aiOutputUpdated">AI Updated Output</span>
           </button>
           <div class="ai-output-preview">
             Final revision adopts median-of-three pivot selection for quicksort, reducing worst-case likelihood. A new section on cache locality compares merge sort&#39;s sequential access pattern against quicksort&#39;s in-place but less cache-friendly partitioning...
@@ -223,20 +223,20 @@
 
     <!-- Final Grades -->
     <div class="card">
-      <h3 style="margin-bottom: 16px;">Final Grades</h3>
+      <h3 style="margin-bottom: 16px;" data-t="finalGrades">Final Grades</h3>
       <div class="final-grades">
         <div class="final-grade-card" style="border-top: 3px solid var(--grade-a);">
-          <h4>Framing</h4>
+          <h4 data-t="framing">Framing</h4>
           <span class="grade grade-A" style="width: 40px; height: 40px; font-size: 20px;">A</span>
           <div class="summary-sentence">Strong identification of missing constraints and clear, well-justified assumptions about the problem scope.</div>
         </div>
         <div class="final-grade-card" style="border-top: 3px solid var(--grade-b);">
-          <h4>Judging</h4>
+          <h4 data-t="judging">Judging</h4>
           <span class="grade grade-B" style="width: 40px; height: 40px; font-size: 20px;">B</span>
           <div class="summary-sentence">Caught key issues like edge cases and partition strategy, but missed the complexity proof gap in the AI output.</div>
         </div>
         <div class="final-grade-card" style="border-top: 3px solid var(--grade-a);">
-          <h4>Steering</h4>
+          <h4 data-t="steering">Steering</h4>
           <span class="grade grade-A" style="width: 40px; height: 40px; font-size: 20px;">A</span>
           <div class="summary-sentence">Specific, actionable corrections that led to meaningful improvements in both analysis depth and code quality.</div>
         </div>

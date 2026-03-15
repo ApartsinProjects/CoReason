@@ -35,13 +35,13 @@
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
     <nav>
-      <a href="03-challenge-list-instructor.html" class="active">Challenges</a>
-      <a href="06-course-catalog-instructor.html">Courses</a>
-      <a href="08-instructor-analytics.html">Analytics</a>
+      <a href="03-challenge-list-instructor.html" class="active" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog-instructor.html" data-t="courses">Courses</a>
+      <a href="08-instructor-analytics.html" data-t="analytics">Analytics</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
-      <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">Instructor</span>
+      <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
       <span>Sarah Cohen</span>
       <a href="09-profile.html"><div class="avatar">SC</div></a>
     </div>
@@ -49,7 +49,7 @@
 
   <main class="page">
     <div class="page-header">
-      <h1>Create a Public Challenge</h1>
+      <h1 data-t="createChallengeTitle">Create a Public Challenge</h1>
       <p>Define a new co-reasoning challenge for your course</p>
     </div>
 
@@ -58,13 +58,13 @@
       <div>
         <!-- Metadata -->
         <div class="card">
-          <h3 style="margin-bottom:16px;">Challenge Details</h3>
+          <h3 style="margin-bottom:16px;" data-t="createChallengeTitle">Challenge Details</h3>
           <div class="form-group">
-            <label>Title</label>
+            <label data-t="challengeTitle">Title</label>
             <input type="text" class="form-control" value="Neural Network Debugging">
           </div>
           <div class="form-group">
-            <label>Course &amp; Subject <span class="help-icon" data-tooltip="Select the course this challenge belongs to. The course determines which subject tree is available.">?</span></label>
+            <label data-t="selectCourse">Course &amp; Subject <span class="help-icon" data-tooltip="Select the course this challenge belongs to. The course determines which subject tree is available.">?</span></label>
             <select class="form-control">
               <option>Deep Learning 101</option>
               <option>Database Systems</option>
@@ -72,7 +72,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. Rubrics and problems will be generated based on the selected subjects. Check parent nodes to include all children.">?</span></label>
+            <label data-t="subjectArea">Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. Rubrics and problems will be generated based on the selected subjects. Check parent nodes to include all children.">?</span></label>
             <div class="subject-tree-select" id="subjectTreeSelect">
               <div class="subject-tree-trigger" onclick="toggleSubjectTree()">
                 <span class="subject-tree-tags" id="selectedTags">
@@ -223,7 +223,7 @@
 
           <!-- Visibility -->
           <div class="form-group">
-            <label>Visibility</label>
+            <label data-t="visibility">Visibility</label>
             <div class="alert alert-info" style="margin-bottom:0;">
               <strong>Public</strong> — This challenge will be available to all students subscribed to the course.
             </div>
@@ -231,23 +231,23 @@
 
           <!-- Challenge Type -->
           <div class="form-group">
-            <label>Challenge Type <span class="help-icon" data-tooltip="Practice: students see feedback after each phase and can retry. Assessment: feedback is withheld until the end, no retries allowed.">?</span></label>
+            <label data-t="responseType">Challenge Type <span class="help-icon" data-tooltip="Practice: students see feedback after each phase and can retry. Assessment: feedback is withheld until the end, no retries allowed.">?</span></label>
             <div class="inline-radio">
-              <label><input type="radio" name="type" checked> Practice <span class="text-muted">— feedback after each phase/cycle, retries allowed</span></label>
-              <label><input type="radio" name="type"> Assessment <span class="text-muted">— feedback at end only, no retries</span></label>
+              <label><input type="radio" name="type" checked> <span data-t="practice">Practice</span> <span class="text-muted" data-t="practiceModeDesc">— feedback after each phase/cycle, retries allowed</span></label>
+              <label><input type="radio" name="type"> <span data-t="assessment">Assessment</span> <span class="text-muted" data-t="assessmentModeDesc">— feedback at end only, no retries</span></label>
             </div>
           </div>
         </div>
 
         <!-- Evaluation Rubrics -->
         <div class="card">
-          <h3 style="margin-bottom:16px;">Evaluation Rubrics</h3>
+          <h3 style="margin-bottom:16px;" data-t="rubricPreview">Evaluation Rubrics</h3>
           <p class="text-sm text-muted mb-16">Rubrics are auto-generated based on your course and selected subjects. They define what constitutes good performance — rubrics are NEVER shown to students.</p>
 
-          <button class="btn btn-teal btn-lg" style="margin-bottom:16px;">&#9889; Generate Rubrics</button>
+          <button class="btn btn-teal btn-lg" style="margin-bottom:16px;" data-t="generateFraming">&#9889; Generate Rubrics</button>
 
           <div class="rubric-preview">
-            <h5>Framing Rubric</h5>
+            <h5 data-t="framing">Framing Rubric</h5>
             <ul>
               <li>Identifies all missing/ambiguous requirements</li>
               <li>Formulates reasonable and justified assumptions</li>
@@ -256,7 +256,7 @@
             </ul>
           </div>
           <div class="rubric-preview">
-            <h5>Judging Rubric</h5>
+            <h5 data-t="judging">Judging Rubric</h5>
             <ul>
               <li>Detects logical errors in AI solution</li>
               <li>Identifies incorrect assumptions made by AI</li>
@@ -265,7 +265,7 @@
             </ul>
           </div>
           <div class="rubric-preview">
-            <h5>Steering Rubric</h5>
+            <h5 data-t="steering">Steering Rubric</h5>
             <ul>
               <li>Commands are specific and actionable</li>
               <li>Addresses identified issues systematically</li>
@@ -280,7 +280,7 @@
         <!-- Advanced Settings (collapsible) -->
         <div class="card">
           <div class="advanced-header" onclick="toggleAdvanced()">
-            <h3>Advanced Settings</h3>
+            <h3 data-t="advancedSettings">Advanced Settings</h3>
             <span class="arrow" id="adv-arrow">&#9654;</span>
           </div>
           <div id="advanced-body" style="display:none">
@@ -290,59 +290,59 @@
 
             <!-- Phase 1: Framing -->
             <div class="phase-config">
-              <h4><span class="phase-badge">Phase 1</span> Framing <span class="help-icon" data-tooltip="The student sees a raw, intentionally incomplete problem and must translate it into a well-defined task by adding assumptions, constraints, and clarifications.">?</span></h4>
+              <h4><span class="phase-badge" data-t="phase1">Phase 1</span> <span data-t="framing">Framing</span> <span class="help-icon" data-tooltip="The student sees a raw, intentionally incomplete problem and must translate it into a well-defined task by adding assumptions, constraints, and clarifications.">?</span></h4>
               <p class="text-sm text-muted mb-16">System presents a raw problem. Student translates it into a well-defined task and sends it to the AI.</p>
               <div class="form-group">
-                <label>Framing Response Type <span class="help-icon" data-tooltip="Multiple Choice: LLM generates options representing different framings. Open-Ended: student writes structured refinement sections around the raw problem.">?</span></label>
+                <label data-t="responseType">Framing Response Type <span class="help-icon" data-tooltip="Multiple Choice: LLM generates options representing different framings. Open-Ended: student writes structured refinement sections around the raw problem.">?</span></label>
                 <div class="inline-radio">
-                  <label><input type="radio" name="frame-type" checked> Multiple Choice</label>
-                  <label><input type="radio" name="frame-type"> Open-Ended (structured sections)</label>
+                  <label><input type="radio" name="frame-type" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
+                  <label><input type="radio" name="frame-type"> <span data-t="openEnded">Open-Ended</span> (structured sections)</label>
                 </div>
               </div>
               <div class="form-group">
-                <label>Instructions to Students</label>
+                <label data-t="instructions">Instructions to Students</label>
                 <textarea class="form-control" rows="3">Read the problem statement carefully. Identify missing information, ambiguous requirements, and unstated assumptions. Formulate a clear, well-defined task by specifying your assumptions.</textarea>
               </div>
             </div>
 
             <!-- Phase 2: Judge+Steer Cycles -->
             <div class="phase-config">
-              <h4><span class="phase-badge">Phase 2</span> Judge+Steer Cycles <span class="help-icon" data-tooltip="Iterative cycles where the student first identifies issues in the AI output (judging), then sends corrections (steering). The AI updates its output after each cycle.">?</span></h4>
+              <h4><span class="phase-badge" data-t="phase2">Phase 2</span> Judge+Steer Cycles <span class="help-icon" data-tooltip="Iterative cycles where the student first identifies issues in the AI output (judging), then sends corrections (steering). The AI updates its output after each cycle.">?</span></h4>
               <p class="text-sm text-muted mb-16">Iterative cycles. Each cycle: student judges the AI output (identifies issues — not sent to AI), then steers the AI (sends correction request).</p>
 
               <div class="form-group">
-                <label>Max Cycles</label>
+                <label data-t="maxCycles">Max Cycles</label>
                 <input type="number" class="form-control" value="5" min="1" max="10" style="width:80px;">
               </div>
 
               <!-- Judging sub-step config -->
               <div class="substep-block">
-                <h5>Sub-step A — Judging <span class="help-icon" data-tooltip="The student analyzes the AI's output and identifies gaps or errors. Judgments are recorded but NOT sent to the AI.">?</span></h5>
+                <h5><span data-t="judgingSubstep">Sub-step A — Judging</span> <span class="help-icon" data-tooltip="The student analyzes the AI's output and identifies gaps or errors. Judgments are recorded but NOT sent to the AI.">?</span></h5>
                 <div class="form-group">
-                  <label>Judging Response Type</label>
+                  <label data-t="responseType">Judging Response Type</label>
                   <div class="inline-radio">
-                    <label><input type="radio" name="judge-type" checked> Multiple Choice</label>
-                    <label><input type="radio" name="judge-type"> Open-Ended (structured sections, e.g. "Gap: ...")</label>
+                    <label><input type="radio" name="judge-type" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
+                    <label><input type="radio" name="judge-type"> <span data-t="openEnded">Open-Ended</span> (structured sections, e.g. "Gap: ...")</label>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Judging Instructions</label>
+                  <label data-t="instructions">Judging Instructions</label>
                   <textarea class="form-control" rows="3">Review the AI's output carefully. Identify any gaps, errors, or issues. Select ALL issues you find — your analysis is recorded but NOT sent to the AI.</textarea>
                 </div>
               </div>
 
               <!-- Steering sub-step config -->
               <div class="substep-block">
-                <h5>Sub-step B — Steering <span class="help-icon" data-tooltip="The student sends a correction or update request to the AI. The AI processes it and produces updated output for the next cycle.">?</span></h5>
+                <h5><span data-t="steeringSubstep">Sub-step B — Steering</span> <span class="help-icon" data-tooltip="The student sends a correction or update request to the AI. The AI processes it and produces updated output for the next cycle.">?</span></h5>
                 <div class="form-group">
-                  <label>Steering Response Type</label>
+                  <label data-t="responseType">Steering Response Type</label>
                   <div class="inline-radio">
-                    <label><input type="radio" name="steer-type" checked> Multiple Choice</label>
-                    <label><input type="radio" name="steer-type"> Open-Ended (structured sections)</label>
+                    <label><input type="radio" name="steer-type" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
+                    <label><input type="radio" name="steer-type"> <span data-t="openEnded">Open-Ended</span> (structured sections)</label>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Steering Instructions</label>
+                  <label data-t="instructions">Steering Instructions</label>
                   <textarea class="form-control" rows="3">Based on your analysis, select ALL corrections to send to the AI. Be specific — tell the AI exactly what to fix or improve.</textarea>
                 </div>
               </div>
@@ -372,15 +372,15 @@
         </div>
 
         <div class="flex gap-12 mt-16">
-          <button class="btn btn-primary btn-lg">Save &amp; Publish</button>
-          <a href="03-challenge-list-instructor.html" class="btn btn-outline btn-lg">Cancel</a>
+          <button class="btn btn-primary btn-lg" data-t="publishChallenge">Save &amp; Publish</button>
+          <a href="03-challenge-list-instructor.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
         </div>
       </div>
 
       <!-- Right: Preview Panel -->
       <div class="preview-section">
         <div class="card">
-          <h3 style="margin-bottom:16px;">Raw Problem Preview <span class="help-icon" data-tooltip="A sample problem generated from your selected subject. Shows the kind of problems students will see, with annotated gaps visible only to you.">?</span></h3>
+          <h3 style="margin-bottom:16px;" data-t="livePreview">Raw Problem Preview <span class="help-icon" data-tooltip="A sample problem generated from your selected subject. Shows the kind of problems students will see, with annotated gaps visible only to you.">?</span></h3>
           <div style="background:#f8f9ff; padding:12px; border-radius:var(--radius); font-size:13px;">
             <p><strong>Problem:</strong> A research team has built a CNN for classifying medical images. The model achieves 98% training accuracy but only 52% on validation. The team reports that [<em>missing: dataset size and class distribution not specified</em>]...</p>
             <p class="text-muted mt-8"><em>Note: This problem intentionally contains missing/ambiguous parts per REQ-STEP-01.</em></p>
@@ -388,13 +388,13 @@
         </div>
 
         <div class="card">
-          <h3 style="margin-bottom:12px;">Rubric Summary</h3>
+          <h3 style="margin-bottom:12px;" data-t="rubricPreview">Rubric Summary</h3>
           <div class="rubric-summary">
-            <h5>Framing</h5>
+            <h5 data-t="framing">Framing</h5>
             <div class="grade-labels"><strong>A:</strong> All gaps identified, justified assumptions <strong>B:</strong> Most gaps found, reasonable assumptions <strong>C:</strong> Partial identification, weak justification</div>
-            <h5>Judging</h5>
+            <h5 data-t="judging">Judging</h5>
             <div class="grade-labels"><strong>A:</strong> All errors detected, logical analysis <strong>B:</strong> Most errors found, some analysis gaps <strong>C:</strong> Few errors caught, surface-level review</div>
-            <h5>Steering</h5>
+            <h5 data-t="steering">Steering</h5>
             <div class="grade-labels"><strong>A:</strong> Specific, actionable, converges to solution <strong>B:</strong> Mostly specific, partial convergence <strong>C:</strong> Vague directions, slow convergence</div>
           </div>
         </div>
