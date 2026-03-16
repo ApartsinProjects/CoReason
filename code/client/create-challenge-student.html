@@ -12,22 +12,23 @@
   </style>
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
+  <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
 </head>
 <body>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
-      <a href="03-challenge-list.html" class="active" data-t="challenges">Challenges</a>
-      <a href="06-course-catalog.html" data-t="courses">Courses</a>
-      <a href="07-student-analytics.html" data-t="myResults">My Results</a>
+      <a href="challenge-list.html" class="active" data-t="challenges">Challenges</a>
+      <a href="course-catalog.html" data-t="courses">Courses</a>
+      <a href="student-analytics.html" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span>Sarah Cohen</span>
-      <a href="09-profile.html"><div class="avatar">SC</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/00-login.html&apos;);return false;" style="margin-left:8px;background:none;border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;color:var(--text-secondary);cursor:pointer;text-decoration:none;">Logout</a>
+      <a href="profile.html"><div class="avatar">SC</div></a>
+      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
     </div>
   </header>
 
@@ -58,7 +59,7 @@
 
       <!-- Subject Tree -->
       <div class="form-group">
-        <label data-t="subjectArea">Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. The challenge problem will be generated based on the selected subjects.">?</span></label>
+        <label data-t="subjectArea" data-tooltip="subjectPath">Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. The challenge problem will be generated based on the selected subjects.">?</span></label>
         <div class="subject-tree-select" id="subjectTreeSelect">
           <div class="subject-tree-trigger" onclick="toggleSubjectTree()">
             <span class="subject-tree-tags" id="selectedTags">
@@ -210,7 +211,7 @@
 
       <!-- Visibility (locked) -->
       <div class="form-group">
-        <label data-t="visibility">Visibility</label>
+        <label data-t="visibility" data-tooltip="visibility">Visibility</label>
         <div class="alert alert-info" style="margin-bottom:0;">
           <strong data-t="private">Private</strong> &mdash; Only you can see this challenge. It won't appear in any course or instructor view.
         </div>
@@ -218,7 +219,7 @@
 
       <!-- Type (locked) -->
       <div class="form-group">
-        <label data-t="responseType">Challenge Type</label>
+        <label data-t="responseType" data-tooltip="challengeType">Challenge Type</label>
         <div class="alert alert-info" style="margin-bottom:0;">
           <strong data-t="practice">Practice</strong> mode &mdash; you'll receive feedback after each phase and can retry.
         </div>
@@ -227,15 +228,15 @@
 
     <div class="flex gap-12 mt-16">
       <button class="btn btn-primary btn-lg" data-t="createAndStart">Create &amp; Start</button>
-      <a href="03-challenge-list.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
+      <a href="challenge-list.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
     </div>
   </main>
 
   <script>
 // Check auth
 fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/00-login.html';
-}).catch(() => window.location.href = '/00-login.html');
+  if (!r.ok) window.location.href = '/login.html';
+}).catch(() => window.location.href = '/login.html');
 
     // Toggle the dropdown open/close
     function toggleSubjectTree() {

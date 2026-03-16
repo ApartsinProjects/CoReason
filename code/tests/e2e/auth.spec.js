@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 
 test.describe('Authentication', () => {
   test('sign-up page displays correctly', async ({ page }) => {
-    await page.goto('/01-sign-up.html');
+    await page.goto('/sign-up.html');
     // Check that the sign-up form elements are present
     await expect(page.locator('body')).toBeVisible();
   });
@@ -27,7 +27,7 @@ test.describe('Authentication', () => {
   });
 
   test('Google SSO button redirects', async ({ page }) => {
-    await page.goto('/01-sign-up.html');
+    await page.goto('/sign-up.html');
     // Check that Google SSO link/button exists
     const googleButton = page.locator('a[href*="google"], button:has-text("Google")');
     if (await googleButton.count() > 0) {

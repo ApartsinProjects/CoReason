@@ -14,79 +14,92 @@ class LLMService {
   }
 
   _initClient() {
-    // Try to initialize OpenAI-compatible client
-    // ModelMesh provides OpenAI-compatible interface
-    const apiKey = process.env.OPENAI_API_KEY || process.env.GEMINI_API_KEY || process.env.GROQ_API_KEY;
+    // Initialize all available LLM providers for automatic fallback
+    const OpenAI = require('openai');
+    this.providers = [];
 
-    if (!apiKey) {
-      this.logger.warn('No LLM API key configured. LLM features will use fallback responses.');
-      return;
-    }
-
-    // Use OpenAI SDK directly (ModelMesh provides same interface)
     try {
-      // Try OpenAI first
       if (process.env.OPENAI_API_KEY) {
-        const OpenAI = require('openai');
-        this.client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-        this.defaultModel = 'gpt-4o-mini';
-        this.logger.info('LLM client initialized (OpenAI)');
-      } else if (process.env.GROQ_API_KEY) {
-        const OpenAI = require('openai');
-        this.client = new OpenAI({
-          apiKey: process.env.GROQ_API_KEY,
-          baseURL: 'https://api.groq.com/openai/v1',
+        this.providers.push({
+          name: 'openai',
+          client: new OpenAI({ apiKey: process.env.OPENAI_API_KEY }),
+          model: 'gpt-4o-mini',
         });
-        this.defaultModel = 'llama-3.1-70b-versatile';
-        this.logger.info('LLM client initialized (Groq)');
+        this.logger.info('LLM provider registered: OpenAI');
+      }
+      if (process.env.GROQ_API_KEY) {
+        this.providers.push({
+          name: 'groq',
+          client: new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: 'https://api.groq.com/openai/v1' }),
+          model: 'llama-3.3-70b-versatile',
+        });
+        this.logger.info('LLM provider registered: Groq');
       }
     } catch (err) {
-      this.logger.warn('Failed to initialize LLM client:', err.message);
+      this.logger.warn('Failed to initialize LLM clients:', err.message);
+    }
+
+    if (this.providers.length > 0) {
+      this.client = this.providers[0].client;
+      this.defaultModel = this.providers[0].model;
+    } else {
+      this.client = null;
+      this.logger.warn('No LLM API key configured. LLM features will use fallback responses.');
     }
   }
 
   async _call(promptId, variables, options = {}) {
-    if (!this.client) {
+    if (this.providers.length === 0) {
       this.logger.warn(`LLM not available for prompt ${promptId}, returning fallback`);
       return null;
     }
 
-    const start = Date.now();
-    const model = options.model || this.defaultModel;
+    const { messages, temperature, max_tokens } = this.promptEngine.buildMessages(promptId, variables);
 
-    try {
-      const { messages, temperature, max_tokens } = this.promptEngine.buildMessages(promptId, variables);
+    // Try each provider with automatic fallback
+    for (let i = 0; i < this.providers.length; i++) {
+      const provider = this.providers[i];
+      const model = options.model || provider.model;
+      const start = Date.now();
 
-      this.logger.debug('LLM call', { promptId, model, variableKeys: Object.keys(variables) });
+      try {
+        this.logger.debug('LLM call', { promptId, model, provider: provider.name });
 
-      const response = await this.client.chat.completions.create({
-        model,
-        messages,
-        temperature,
-        max_tokens,
-      });
-
-      const latency = Date.now() - start;
-      const content = response.choices[0]?.message?.content || '';
-
-      if (this.tracer) {
-        this.tracer.llmCall(promptId, model, variables, {
-          usage: response.usage,
-          _latency: latency,
+        const response = await provider.client.chat.completions.create({
+          model,
+          messages,
+          temperature,
+          max_tokens,
         });
+
+        const latency = Date.now() - start;
+        const content = response.choices[0]?.message?.content || '';
+
+        if (this.tracer) {
+          this.tracer.llmCall(promptId, model, variables, {
+            usage: response.usage,
+            _latency: latency,
+          });
+        }
+
+        this.logger.info('LLM response', {
+          promptId, model, provider: provider.name, latency_ms: latency,
+          tokens: response.usage?.total_tokens,
+        });
+
+        return content;
+
+      } catch (err) {
+        const latency = Date.now() - start;
+        this.logger.warn('LLM call failed, trying next provider', {
+          promptId, model, provider: provider.name, latency_ms: latency, error: err.message,
+        });
+
+        // If this is the last provider, throw
+        if (i === this.providers.length - 1) {
+          throw new LLMError(`LLM call failed for ${promptId}: ${err.message}`, { promptId, model });
+        }
       }
-
-      this.logger.info('LLM response', {
-        promptId, model, latency_ms: latency,
-        tokens: response.usage?.total_tokens,
-      });
-
-      return content;
-
-    } catch (err) {
-      const latency = Date.now() - start;
-      this.logger.error('LLM call failed', { promptId, model, latency_ms: latency, error: err.message });
-      throw new LLMError(`LLM call failed for ${promptId}: ${err.message}`, { promptId, model });
     }
   }
 
@@ -204,6 +217,41 @@ class LLMService {
     }
   }
 
+  async generateSubjectTree({ courseName, courseDescription, institution, existingTree, instructions, language }) {
+    const variables = {
+      course_name: courseName || 'Untitled Course',
+      course_description: courseDescription || '',
+      institution: institution || '',
+      existing_tree: existingTree ? JSON.stringify(existingTree, null, 2) : '',
+      instructions: instructions || '',
+      language: language || 'English',
+    };
+
+    const result = await this._call('13-generate-subject-tree', variables);
+    if (!result) {
+      // Fallback: return a basic tree structure
+      return [
+        { name: 'Foundations', children: [{ name: 'Core Concepts' }, { name: 'Prerequisites' }] },
+        { name: 'Main Topics', children: [{ name: 'Topic 1' }, { name: 'Topic 2' }] },
+        { name: 'Advanced Topics', children: [{ name: 'Applications' }, { name: 'Research Frontiers' }] },
+      ];
+    }
+
+    try {
+      // Extract JSON from response (handle markdown code fences)
+      let jsonStr = result.trim();
+      const fenceMatch = jsonStr.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (fenceMatch) jsonStr = fenceMatch[1].trim();
+
+      const parsed = JSON.parse(jsonStr);
+      if (!Array.isArray(parsed)) throw new Error('Expected array');
+      return parsed;
+    } catch (err) {
+      this.logger.warn('Failed to parse subject tree LLM response', { error: err.message });
+      throw new LLMError('Failed to parse generated subject tree. Please try again.');
+    }
+  }
+
   async generatePreview(data) {
     const result = await this._call('12-generate-example-preview', {
       course: data.course || 'General',
@@ -217,7 +265,7 @@ class LLMService {
   getAvailableModels() {
     const models = [];
     if (process.env.OPENAI_API_KEY) models.push({ id: 'gpt-4o-mini', provider: 'openai', name: 'GPT-4o Mini' }, { id: 'gpt-4o', provider: 'openai', name: 'GPT-4o' });
-    if (process.env.GROQ_API_KEY) models.push({ id: 'llama-3.1-70b-versatile', provider: 'groq', name: 'Llama 3.1 70B' });
+    if (process.env.GROQ_API_KEY) models.push({ id: 'llama-3.3-70b-versatile', provider: 'groq', name: 'Llama 3.3 70B' });
     if (process.env.GEMINI_API_KEY) models.push({ id: 'gemini-2.0-flash', provider: 'google', name: 'Gemini 2.0 Flash' });
     if (process.env.COHERE_API_KEY) models.push({ id: 'command-r-plus', provider: 'cohere', name: 'Command R+' });
     return models;

@@ -28,7 +28,8 @@ const SINGLE_FILES = {
   'institutions.yaml': 'institutions',
   'users.yaml': 'users',
   'scenarios.yaml': 'scenarios',
-  'mockup-data.yaml': 'mockupData'
+  'mockup-data.yaml': 'mockupData',
+  'tooltips.yaml': 'tooltips'
 };
 
 // ── Helpers ────────────────────────────────────────────────────────

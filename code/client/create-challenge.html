@@ -41,22 +41,23 @@
   </style>
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
+  <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
 </head>
 <body>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
-      <a href="03-challenge-list-instructor.html" class="active" data-t="challenges">Challenges</a>
-      <a href="06-course-catalog-instructor.html" data-t="courses">Courses</a>
-      <a href="08-instructor-analytics.html" data-t="analytics">Analytics</a>
+      <a href="challenge-list-instructor.html" class="active" data-t="challenges">Challenges</a>
+      <a href="course-catalog-instructor.html" data-t="courses">Courses</a>
+      <a href="instructor-analytics.html" data-t="analytics">Analytics</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
       <span>Dr. Levy</span>
-      <a href="09-profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/00-login.html&apos;);return false;" style="margin-left:8px;background:none;border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;color:var(--text-secondary);cursor:pointer;text-decoration:none;">Logout</a>
+      <a href="profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
+      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
     </div>
   </header>
 
@@ -85,7 +86,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label data-t="subjectArea">Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. Rubrics and problems will be generated based on the selected subjects. Check parent nodes to include all children.">?</span></label>
+            <label data-t="subjectArea" data-tooltip="subjectPath">Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. Rubrics and problems will be generated based on the selected subjects. Check parent nodes to include all children.">?</span></label>
             <div class="subject-tree-select" id="subjectTreeSelect">
               <div class="subject-tree-trigger" onclick="toggleSubjectTree()">
                 <span class="subject-tree-tags" id="selectedTags">
@@ -236,7 +237,7 @@
 
           <!-- Visibility -->
           <div class="form-group">
-            <label data-t="visibility">Visibility</label>
+            <label data-t="visibility" data-tooltip="visibility">Visibility</label>
             <div class="alert alert-info" style="margin-bottom:0;">
               <strong>Public</strong> — This challenge will be available to all students subscribed to the course.
             </div>
@@ -244,7 +245,7 @@
 
           <!-- Challenge Type -->
           <div class="form-group">
-            <label data-t="responseType">Challenge Type <span class="help-icon" data-tooltip="Practice: students see feedback after each phase and can retry. Assessment: feedback is withheld until the end, no retries allowed.">?</span></label>
+            <label data-t="responseType" data-tooltip="challengeType">Challenge Type <span class="help-icon" data-tooltip="Practice: students see feedback after each phase and can retry. Assessment: feedback is withheld until the end, no retries allowed.">?</span></label>
             <div class="inline-radio">
               <label><input type="radio" name="type" checked> <span data-t="practice">Practice</span> <span class="text-muted" data-t="practiceModeDesc">— feedback after each phase/cycle, retries allowed</span></label>
               <label><input type="radio" name="type"> <span data-t="assessment">Assessment</span> <span class="text-muted" data-t="assessmentModeDesc">— feedback at end only, no retries</span></label>
@@ -306,7 +307,7 @@
               <h4><span class="phase-badge" data-t="phase1">Phase 1</span> <span data-t="framing">Framing</span> <span class="help-icon" data-tooltip="The student sees a raw, intentionally incomplete problem and must translate it into a well-defined task by adding assumptions, constraints, and clarifications.">?</span></h4>
               <p class="text-sm text-muted mb-16">System presents a raw problem. Student translates it into a well-defined task and sends it to the AI.</p>
               <div class="form-group">
-                <label data-t="responseType">Framing Response Type <span class="help-icon" data-tooltip="Multiple Choice: LLM generates options representing different framings. Open-Ended: student writes structured refinement sections around the raw problem.">?</span></label>
+                <label data-t="responseType" data-tooltip="responseType">Framing Response Type <span class="help-icon" data-tooltip="Multiple Choice: LLM generates options representing different framings. Open-Ended: student writes structured refinement sections around the raw problem.">?</span></label>
                 <div class="inline-radio">
                   <label><input type="radio" name="frame-type" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
                   <label><input type="radio" name="frame-type"> <span data-t="openEnded">Open-Ended</span> (structured sections)</label>
@@ -324,7 +325,7 @@
               <p class="text-sm text-muted mb-16">Iterative cycles. Each cycle: student judges the AI output (identifies issues — not sent to AI), then steers the AI (sends correction request).</p>
 
               <div class="form-group">
-                <label data-t="maxCycles">Max Cycles</label>
+                <label data-t="maxCycles" data-tooltip="maxCycles">Max Cycles</label>
                 <input type="number" class="form-control" value="5" min="1" max="10" style="width:80px;">
               </div>
 
@@ -386,7 +387,7 @@
 
         <div class="flex gap-12 mt-16">
           <button class="btn btn-primary btn-lg" data-t="publishChallenge">Save &amp; Publish</button>
-          <a href="03-challenge-list-instructor.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
+          <a href="challenge-list-instructor.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
         </div>
       </div>
 
@@ -418,8 +419,8 @@
   <script>
 // Check auth
 fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/00-login.html';
-}).catch(() => window.location.href = '/00-login.html');
+  if (!r.ok) window.location.href = '/login.html';
+}).catch(() => window.location.href = '/login.html');
 
     // Toggle advanced settings panel
     function toggleAdvanced() {

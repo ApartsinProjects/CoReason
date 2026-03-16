@@ -63,42 +63,43 @@
   </style>
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
+  <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
 </head>
 <body>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
-      <a href="03-challenge-list-instructor.html" data-t="challenges">Challenges</a>
-      <a href="06-course-catalog-instructor.html" class="active" data-t="courses">Courses</a>
-      <a href="08-instructor-analytics.html" data-t="analytics">Analytics</a>
+      <a href="challenge-list-instructor.html" data-t="challenges">Challenges</a>
+      <a href="course-catalog-instructor.html" class="active" data-t="courses">Courses</a>
+      <a href="instructor-analytics.html" data-t="analytics">Analytics</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
       <span>Dr. Levy</span>
-      <a href="09-profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/00-login.html&apos;);return false;" style="margin-left:8px;background:none;border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;color:var(--text-secondary);cursor:pointer;text-decoration:none;">Logout</a>
+      <a href="profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
+      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
     </div>
   </header>
 
   <main class="page">
     <!-- Breadcrumb -->
     <div class="breadcrumb">
-      <a href="06-course-catalog-instructor.html" data-t="courses">Courses</a>
+      <a href="course-catalog-instructor.html" data-t="courses">Courses</a>
       <span class="sep">›</span>
-      <a href="06-course-catalog-instructor.html">Deep Learning 101</a>
+      <a href="course-catalog-instructor.html">Deep Learning 101</a>
       <span class="sep">›</span>
       <span>Edit Subject Tree</span>
     </div>
 
     <div class="page-header flex-between">
       <div>
-        <h1>Subject Tree — Deep Learning 101</h1>
+        <h1 data-tooltip="subjectTree">Subject Tree — Deep Learning 101</h1>
         <p>Define the topic hierarchy used for challenge creation, rubric generation, and analytics</p>
       </div>
       <div style="display:flex; gap:8px;">
-        <button class="btn btn-outline" onclick="window.location='06-course-catalog-instructor.html'" data-t="cancel">Cancel</button>
+        <button class="btn btn-outline" onclick="window.location='course-catalog-instructor.html'" data-t="cancel">Cancel</button>
         <button class="btn btn-primary" id="saveBtn" data-t="saveChanges">Save Changes</button>
       </div>
     </div>
@@ -116,6 +117,7 @@
           <button class="btn btn-teal btn-sm" onclick="addRootNode()">+ Add Root Node</button>
           <button class="btn btn-outline btn-sm" onclick="expandAll()">Expand All</button>
           <button class="btn btn-outline btn-sm" onclick="collapseAll()">Collapse All</button>
+          <button class="btn btn-primary btn-sm" id="aiGenerateBtn" onclick="aiGenerateTree()" style="background:linear-gradient(135deg,#5c6bc0,#7c4dff);border:none;">🤖 AI Generate</button>
           <span style="flex:1"></span>
           <input type="search" class="form-control" placeholder="Search nodes..." style="max-width:200px; font-size:13px; padding:5px 10px;" oninput="searchNodes(this.value)">
         </div>
@@ -402,8 +404,8 @@
   <script>
 // Check auth
 fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/00-login.html';
-}).catch(() => window.location.href = '/00-login.html');
+  if (!r.ok) window.location.href = '/login.html';
+}).catch(() => window.location.href = '/login.html');
 
     var selectedNodeId = null;
     var changeCount = 0;
@@ -601,16 +603,186 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       });
     }
 
-    // Save button
-    document.getElementById('saveBtn').addEventListener('click', function() {
+    // --- AI Generate Subject Tree ---
+    async function aiGenerateTree() {
+      const btn = document.getElementById('aiGenerateBtn');
+      const origText = btn.innerHTML;
+
+      // Get course ID from URL or use a default
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseId = urlParams.get('courseId');
+
+      if (!courseId) {
+        // If no courseId in URL, prompt for course name to generate from
+        const courseName = prompt('Enter the course name to generate a subject tree for:');
+        if (!courseName) return;
+        await generateFromName(courseName, btn, origText);
+        return;
+      }
+
+      btn.innerHTML = '⏳ Generating...';
+      btn.disabled = true;
+
+      try {
+        const lang = document.documentElement.lang || 'en';
+        const langMap = { en: 'English', he: 'Hebrew', fr: 'French', de: 'German', es: 'Spanish' };
+        const data = await API.post('/courses/' + courseId + '/subjects/generate', {
+          language: langMap[lang] || 'English',
+        });
+
+        if (data && data.tree) {
+          renderGeneratedTree(data.tree);
+          logChange('🤖', 'AI generated subject tree (' + countGeneratedNodes(data.tree) + ' nodes)');
+          updateCounts();
+        }
+      } catch (err) {
+        alert('AI generation failed: ' + (err.message || 'Unknown error'));
+      } finally {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+      }
+    }
+
+    async function generateFromName(courseName, btn, origText) {
+      btn.innerHTML = '⏳ Generating...';
+      btn.disabled = true;
+
+      try {
+        // Use the LLM preview endpoint as fallback when no courseId
+        const lang = document.documentElement.lang || 'en';
+        const langMap = { en: 'English', he: 'Hebrew', fr: 'French', de: 'German', es: 'Spanish' };
+
+        // Try all courses to find a matching one
+        const courses = await API.get('/courses');
+        const match = courses.find(c => c.name.toLowerCase().includes(courseName.toLowerCase()));
+
+        if (match) {
+          const data = await API.post('/courses/' + match.id + '/subjects/generate', {
+            language: langMap[lang] || 'English',
+          });
+          if (data && data.tree) {
+            renderGeneratedTree(data.tree);
+            logChange('🤖', 'AI generated subject tree for <strong>' + match.name + '</strong>');
+            updateCounts();
+          }
+        } else {
+          alert('Course "' + courseName + '" not found. Please enter the exact course name.');
+        }
+      } catch (err) {
+        alert('AI generation failed: ' + (err.message || 'Unknown error'));
+      } finally {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+      }
+    }
+
+    function renderGeneratedTree(tree) {
+      var container = document.getElementById('subjectTree');
+      container.innerHTML = '';
+      var counter = { val: 0 };
+      tree.forEach(function(node) {
+        container.appendChild(buildTreeNode(node, counter));
+      });
+    }
+
+    function buildTreeNode(node, counter) {
+      var id = 'gen-' + (++counter.val);
+      var li = document.createElement('li');
+      li.id = 'node-' + id;
+
+      var hasChildren = node.children && node.children.length > 0;
+      var html = '<div class="tree-edit-node" onclick="selectNode(\'' + id + '\', this)">' +
+        '<span class="drag-handle">⠿</span>';
+      if (hasChildren) {
+        html += '<span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>';
+      }
+      html += '<span class="node-label" contenteditable="true" spellcheck="false">' + escapeHtml(node.name) + '</span>' +
+        '<div class="node-actions">' +
+          '<button onclick="event.stopPropagation(); addChildNode(\'' + id + '\')">+</button>' +
+          '<button onclick="event.stopPropagation(); duplicateNode(\'' + id + '\')">⧉</button>' +
+          '<button class="danger" onclick="event.stopPropagation(); deleteNode(\'' + id + '\')">✕</button>' +
+        '</div>' +
+      '</div>';
+
+      li.innerHTML = html;
+
+      if (hasChildren) {
+        var ul = document.createElement('ul');
+        ul.className = 'tree-children';
+        node.children.forEach(function(child) {
+          ul.appendChild(buildTreeNode(child, counter));
+        });
+        li.appendChild(ul);
+        var addBtn = document.createElement('button');
+        addBtn.className = 'add-node-btn';
+        addBtn.textContent = '+ Add child';
+        addBtn.onclick = function() { addChildNode(id); };
+        li.appendChild(addBtn);
+      }
+
+      return li;
+    }
+
+    function escapeHtml(text) {
+      var div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function countGeneratedNodes(tree) {
+      if (!Array.isArray(tree)) return 0;
+      return tree.reduce(function(sum, n) { return sum + 1 + countGeneratedNodes(n.children); }, 0);
+    }
+
+    // Save button — serialize tree from DOM and save via API
+    document.getElementById('saveBtn').addEventListener('click', async function() {
       if (changes.length === 0) {
         alert('No changes to save.');
         return;
       }
-      alert('Subject tree saved successfully! (' + changes.length + ' changes applied)');
-      changes = [];
-      document.getElementById('changeLog').innerHTML = '<div class="change-entry"><span class="change-icon">✅</span><span class="change-text">All changes saved</span></div>';
+
+      var urlParams = new URLSearchParams(window.location.search);
+      var courseId = urlParams.get('courseId');
+
+      // Serialize tree from DOM
+      var tree = serializeTree(document.getElementById('subjectTree'));
+
+      if (courseId) {
+        try {
+          this.disabled = true;
+          this.textContent = 'Saving...';
+          await API.put('/courses/' + courseId + '/subjects', { tree: tree });
+          changes = [];
+          document.getElementById('changeLog').innerHTML = '<div class="change-entry"><span class="change-icon">✅</span><span class="change-text">All changes saved</span></div>';
+          alert('Subject tree saved successfully!');
+        } catch (err) {
+          alert('Save failed: ' + (err.message || 'Unknown error'));
+        } finally {
+          this.disabled = false;
+          this.textContent = 'Save Changes';
+        }
+      } else {
+        alert('Subject tree saved successfully! (' + changes.length + ' changes applied)');
+        changes = [];
+        document.getElementById('changeLog').innerHTML = '<div class="change-entry"><span class="change-icon">✅</span><span class="change-text">All changes saved</span></div>';
+      }
     });
+
+    function serializeTree(ul) {
+      var nodes = [];
+      var items = ul.querySelectorAll(':scope > li');
+      items.forEach(function(li) {
+        var label = li.querySelector(':scope > .tree-edit-node .node-label');
+        if (!label) return;
+        var node = { name: label.textContent.trim() };
+        var childUl = li.querySelector(':scope > ul.tree-children');
+        if (childUl && childUl.children.length > 0) {
+          node.children = serializeTree(childUl);
+        }
+        nodes.push(node);
+      });
+      return nodes;
+    }
 
     // Sync detail name → tree label
     document.getElementById('detailName').addEventListener('input', function() {

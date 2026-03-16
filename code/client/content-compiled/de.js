@@ -1304,6 +1304,60 @@ window.CONTENT["de"] = {
       }
     ]
   },
+  "tooltips": {
+    "challengeType": {
+      "title": "Aufgabentyp",
+      "text": "Uebungsaufgaben dienen dem Lernen — es wird keine Note erfasst. Pruefungsaufgaben fliessen in Ihre Kursnote ein."
+    },
+    "visibility": {
+      "title": "Sichtbarkeit",
+      "text": "Oeffentliche Aufgaben sind fuer alle eingeschriebenen Studierenden sichtbar. Private Aufgaben sind nur fuer Sie sichtbar."
+    },
+    "maxCycles": {
+      "title": "Maximale Zyklen",
+      "text": "Die maximale Anzahl erlaubter Bewertungs- und Steuerungszyklen. Mehr Zyklen geben Ihnen mehr Moeglichkeiten, die KI-Ausgabe zu verbessern."
+    },
+    "subjectPath": {
+      "title": "Themenpfad",
+      "text": "Die thematische Hierarchie, zu der diese Aufgabe gehoert, innerhalb des Themenbaums des Kurses."
+    },
+    "responseType": {
+      "title": "Antworttyp",
+      "text": "Multiple-Choice bietet Ihnen Optionen zur Auswahl. Offene Antwort laesst Sie Ihre eigene Argumentation schreiben."
+    },
+    "framingPhase": {
+      "title": "Rahmungsphase",
+      "text": "In dieser Phase bewerten Sie den ersten Ansatz der KI zum Problem, bevor eine Loesung generiert wird."
+    },
+    "judgingPhase": {
+      "title": "Bewertungsphase",
+      "text": "Ueberpruefen Sie die KI-generierte Loesung und identifizieren Sie, was richtig ist, was falsch ist und was verbessert werden koennte."
+    },
+    "steeringPhase": {
+      "title": "Steuerungsphase",
+      "text": "Leiten Sie die KI an, ihre Fehler zu beheben, indem Sie spezifisches Feedback und Richtung geben."
+    },
+    "coReasoningScore": {
+      "title": "Co-Reasoning-Bewertung",
+      "text": "Ihre Gesamtleistungsbewertung, die Rahmungsgenauigkeit, Bewertungsqualitaet und Steuerungseffektivitaet kombiniert."
+    },
+    "rubric": {
+      "title": "Bewertungsraster",
+      "text": "Die Bewertungskriterien, die zur Beurteilung Ihrer Co-Reasoning-Leistung in jeder Phase verwendet werden."
+    },
+    "subjectTree": {
+      "title": "Themenbaum",
+      "text": "Eine hierarchische Organisation von Themen innerhalb eines Kurses. Aufgaben werden bestimmten Knoten zugeordnet."
+    },
+    "courseSubscription": {
+      "title": "Kursanmeldung",
+      "text": "Melden Sie sich fuer einen Kurs an, um auf dessen Aufgaben zuzugreifen und Ihren Fortschritt zu verfolgen."
+    },
+    "analyticsOverview": {
+      "title": "Analyseuebersicht",
+      "text": "Sehen Sie Ihre Leistungstrends, Notenverteilungen und detaillierte Aufschluesselungen ueber alle Aufgaben."
+    }
+  },
   "challenges": {
     "sql": {
       "id": "sql",

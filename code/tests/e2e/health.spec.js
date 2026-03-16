@@ -14,7 +14,7 @@ test.describe('Smoke Tests', () => {
   });
 
   test('login page loads', async ({ page }) => {
-    await page.goto('/00-login.html');
+    await page.goto('/login.html');
     await expect(page.locator('body')).toBeVisible();
   });
 });

@@ -3,7 +3,7 @@ const { Router } = require('express');
 const { CourseService } = require('../services/course.service');
 const { requireAuth } = require('../middleware/auth');
 
-module.exports = function courseRoutes(db, logger) {
+module.exports = function courseRoutes(db, logger, llmService) {
   const router = Router();
   const courseService = new CourseService(db, logger);
 
@@ -83,5 +83,44 @@ module.exports = function courseRoutes(db, logger) {
     } catch (err) { next(err); }
   });
 
+  // PUT /api/v1/courses/:id/subjects
+  router.put('/:id/subjects', requireAuth, async (req, res, next) => {
+    try {
+      const tree = await courseService.updateSubjectTree(req.params.id, req.body.tree, req.user.id);
+      res.json(tree);
+    } catch (err) { next(err); }
+  });
+
+  // POST /api/v1/courses/:id/subjects/generate — Generate subject tree with LLM
+  router.post('/:id/subjects/generate', requireAuth, async (req, res, next) => {
+    try {
+      const course = await courseService.getById(req.params.id);
+      const institution = course.institution_name || '';
+      const existingTree = await courseService.getSubjectTree(req.params.id);
+
+      const tree = await llmService.generateSubjectTree({
+        courseName: course.name,
+        courseDescription: course.description || '',
+        institution,
+        existingTree: existingTree.length > 0 ? existingTree : null,
+        instructions: req.body.instructions || '',
+        language: req.body.language || 'English',
+      });
+
+      // Optionally auto-save if requested
+      if (req.body.autoSave) {
+        await courseService.updateSubjectTree(req.params.id, tree, req.user.id);
+      }
+
+      logger.info('Subject tree generated via LLM', { courseId: req.params.id, nodeCount: countNodes(tree) });
+      res.json({ tree, generated: true });
+    } catch (err) { next(err); }
+  });
+
   return router;
+};
+
+function countNodes(tree) {
+  if (!Array.isArray(tree)) return 0;
+  return tree.reduce((sum, node) => sum + 1 + countNodes(node.children), 0);
 };

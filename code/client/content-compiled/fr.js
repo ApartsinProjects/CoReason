@@ -1304,6 +1304,60 @@ window.CONTENT["fr"] = {
       }
     ]
   },
+  "tooltips": {
+    "challengeType": {
+      "title": "Type de defi",
+      "text": "Les defis d'entrainement sont destines a l'apprentissage — aucune note n'est enregistree. Les defis d'evaluation comptent pour votre note de cours."
+    },
+    "visibility": {
+      "title": "Visibilite",
+      "text": "Les defis publics sont visibles par tous les etudiants inscrits. Les defis prives ne sont visibles que par vous."
+    },
+    "maxCycles": {
+      "title": "Cycles maximum",
+      "text": "Le nombre maximum de cycles Jugement+Pilotage autorises. Plus de cycles vous donnent plus de chances d'ameliorer la sortie de l'IA."
+    },
+    "subjectPath": {
+      "title": "Chemin du sujet",
+      "text": "La hierarchie thematique a laquelle appartient ce defi, au sein de l'arbre des sujets du cours."
+    },
+    "responseType": {
+      "title": "Type de reponse",
+      "text": "Le choix multiple vous propose des options. La reponse ouverte vous permet d'ecrire votre propre raisonnement."
+    },
+    "framingPhase": {
+      "title": "Phase de cadrage",
+      "text": "Dans cette phase, vous evaluez l'approche initiale de l'IA au probleme avant qu'une solution ne soit generee."
+    },
+    "judgingPhase": {
+      "title": "Phase de jugement",
+      "text": "Examinez la solution generee par l'IA et identifiez ce qui est correct, ce qui est errone et ce qui pourrait etre ameliore."
+    },
+    "steeringPhase": {
+      "title": "Phase de pilotage",
+      "text": "Guidez l'IA pour corriger ses erreurs en fournissant un retour et une direction specifiques."
+    },
+    "coReasoningScore": {
+      "title": "Score de co-raisonnement",
+      "text": "Votre score de performance global combinant la precision du cadrage, la qualite du jugement et l'efficacite du pilotage."
+    },
+    "rubric": {
+      "title": "Grille d'evaluation",
+      "text": "Les criteres d'evaluation utilises pour evaluer votre performance de co-raisonnement a chaque phase."
+    },
+    "subjectTree": {
+      "title": "Arbre des sujets",
+      "text": "Une organisation hierarchique des sujets au sein d'un cours. Les defis sont associes a des noeuds specifiques."
+    },
+    "courseSubscription": {
+      "title": "Inscription au cours",
+      "text": "Inscrivez-vous a un cours pour acceder a ses defis et suivre votre progression."
+    },
+    "analyticsOverview": {
+      "title": "Vue d'ensemble analytique",
+      "text": "Consultez vos tendances de performance, distributions de notes et analyses detaillees a travers les defis."
+    }
+  },
   "challenges": {
     "sql": {
       "id": "sql",

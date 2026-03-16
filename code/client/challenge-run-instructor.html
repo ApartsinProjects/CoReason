@@ -8,6 +8,7 @@
   <link rel="icon" href="assets/logo.png">
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
+  <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
   <style>
     .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
@@ -140,16 +141,16 @@
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
-      <a href="03-challenge-list-instructor.html" class="active" data-t="challenges">Challenges</a>
-      <a href="06-course-catalog-instructor.html" data-t="courses">Courses</a>
-      <a href="08-instructor-analytics.html" data-t="analytics">Analytics</a>
+      <a href="challenge-list-instructor.html" class="active" data-t="challenges">Challenges</a>
+      <a href="course-catalog-instructor.html" data-t="courses">Courses</a>
+      <a href="instructor-analytics.html" data-t="analytics">Analytics</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
       <span>Dr. Levy</span>
-      <a href="09-profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/00-login.html&apos;);return false;" style="margin-left:8px;background:none;border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;color:var(--text-secondary);cursor:pointer;text-decoration:none;">Logout</a>
+      <a href="profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
+      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
     </div>
   </header>
 
@@ -161,7 +162,7 @@
     </div>
 
     <div class="overlay-section" id="overlay-active-rubric">
-      <h4>Active Rubric</h4>
+      <h4 data-tooltip="rubric">Active Rubric</h4>
       <div class="overlay-rubric" id="overlay-rubric-content">
         <p style="color:#999;font-style:italic">Start the simulation to see the active rubric for each phase.</p>
       </div>
@@ -199,7 +200,7 @@
         <span class="preview-icon">&#9888;&#65039;</span>
         <span>INSTRUCTOR PREVIEW MODE &mdash; You are viewing this challenge as students will see it. Grading rubrics and expected answers are shown in the overlay panel.</span>
       </div>
-      <a href="03-challenge-list-instructor.html" class="btn btn-outline btn-sm" style="white-space:nowrap">&#10005; Exit Preview</a>
+      <a href="challenge-list-instructor.html" class="btn btn-outline btn-sm" style="white-space:nowrap">&#10005; Exit Preview</a>
     </div>
 
     <div class="sim-panel">
@@ -236,8 +237,8 @@
   <script>
 // Check auth
 fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/00-login.html';
-}).catch(() => window.location.href = '/00-login.html');
+  if (!r.ok) window.location.href = '/login.html';
+}).catch(() => window.location.href = '/login.html');
 
     // ══════════════════════════════════════════════════════════
     // OVERLAY CONTROL
@@ -333,7 +334,7 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
     // ══════════════════════════════════════════════════════════
     function renderAll(ch, v, mode, isOE, isPractice) {
       var h = '';
-      h += '<div class="page-header flex-between"><div><h1>' + ch.title + '</h1><p>' + ch.course + ' &bull; ' + ch.subject + '</p></div><a href="03-challenge-list-instructor.html" class="btn btn-outline">&#10005; ' + t('exit') + '</a></div>';
+      h += '<div class="page-header flex-between"><div><h1>' + ch.title + '</h1><p>' + ch.course + ' &bull; ' + ch.subject + '</p></div><a href="challenge-list-instructor.html" class="btn btn-outline">&#10005; ' + t('exit') + '</a></div>';
 
       if (isPractice) {
         h += '<div class="mode-banner practice"><span style="font-size:20px">&#9881;</span><span>' + t('practiceMode') + '</span> &mdash; ' + t('practiceModeDesc') + '</div>';
@@ -346,7 +347,7 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       h += '<div id="start-card" class="card" style="text-align:center;padding:40px"><h3 style="margin-bottom:12px;color:var(--text-secondary)">' + t('challengeReady') + '</h3><p class="text-muted mb-16">' + t('clickToGenerate') + '</p><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-0">&#9654;</span></div>';
 
       // Phase 1
-      h += '<div id="phase1" class="sim-hidden"><div class="card" style="border-left:4px solid var(--primary)"><h3 style="margin-bottom:12px"><span style="color:var(--primary)">' + t('phase1') + ' (' + (isOE ? t('openEnded') : t('multipleChoice')) + ')</span></h3>';
+      h += '<div id="phase1" class="sim-hidden"><div class="card" style="border-left:4px solid var(--primary)"><h3 style="margin-bottom:12px" data-tooltip="framingPhase"><span style="color:var(--primary)">' + t('phase1') + ' (' + (isOE ? t('openEnded') : t('multipleChoice')) + ')</span></h3>';
       h += '<div class="instructions-bar" style="background:#e8f5e9;color:#2e7d32"><strong>' + t('hint') + ':</strong> ' + v.framing.hint + '</div>';
       h += '<div class="problem-panel"><h4>' + t('rawProblemStatement') + '</h4><p>' + ch.rawProblem + '</p></div>';
 
@@ -389,7 +390,7 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
           h += '<div id="cycle-' + ci + '-judge-gen" style="text-align:center;margin-top:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jgen-' + ci + '">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">' + t('generateJudging') + '</span></div>';
         }
 
-        h += '<div id="cycle-' + ci + '-judging" class="' + (isOE ? '' : 'sim-hidden') + '"><span class="substep-label substep-judge">' + t('judgingSubstep') + '</span>';
+        h += '<div id="cycle-' + ci + '-judging" class="' + (isOE ? '' : 'sim-hidden') + '"><span class="substep-label substep-judge" data-tooltip="judgingPhase">' + t('judgingSubstep') + '</span>';
 
         if (isOE) {
           if (cycle.judging.sections && cycle.judging.sections.length > 0) {
@@ -409,7 +410,7 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
         h += '<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jsub-' + ci + '">&#9654;</span><span class="text-sm text-muted">' + t('submit') + '</span></div></div>';
 
         if (cycle.steering) {
-          h += '<div id="cycle-' + ci + '-steering" class="sim-hidden"><hr class="divider-line"><span class="substep-label substep-steer">' + t('steeringSubstep') + '</span>';
+          h += '<div id="cycle-' + ci + '-steering" class="sim-hidden"><hr class="divider-line"><span class="substep-label substep-steer" data-tooltip="steeringPhase">' + t('steeringSubstep') + '</span>';
           if (isOE) {
             h += '<div class="section-list">';
             cycle.steering.sections.forEach(function(s) {
@@ -465,7 +466,7 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
         h += '</div>';
       }
 
-      h += '<div style="margin-top:16px;text-align:center"><a href="08-instructor-analytics.html" class="btn btn-primary">' + t('viewAnalytics') + '</a><a href="03-challenge-list-instructor.html" class="btn btn-outline" style="margin-left:8px">' + t('backToChallenges') + '</a></div></div></div>';
+      h += '<div style="margin-top:16px;text-align:center"><a href="instructor-analytics.html" class="btn btn-primary">' + t('viewAnalytics') + '</a><a href="challenge-list-instructor.html" class="btn btn-outline" style="margin-left:8px">' + t('backToChallenges') + '</a></div></div></div>';
       return h;
     }
 

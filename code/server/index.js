@@ -102,7 +102,7 @@ async function startServer() {
   app.use('/api/v1/auth', require('./routes/auth.routes')(db, passport, config, logger));
   app.use('/api/v1/users', require('./routes/user.routes')(db, logger));
   app.use('/api/v1/institutions', require('./routes/institution.routes')(db, logger));
-  app.use('/api/v1/courses', require('./routes/course.routes')(db, logger));
+  app.use('/api/v1/courses', require('./routes/course.routes')(db, logger, llmService));
   app.use('/api/v1/challenges', require('./routes/challenge.routes')(db, logger));
   app.use('/api/v1/runs', require('./routes/run.routes')(db, logger, llmService));
   app.use('/api/v1/analytics', require('./routes/analytics.routes')(db, logger));

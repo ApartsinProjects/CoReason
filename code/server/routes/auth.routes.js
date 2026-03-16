@@ -38,10 +38,10 @@ module.exports = function authRoutes(db, passport, config, logger) {
 
   // GET /api/v1/auth/google/callback
   router.get('/google/callback',
-    passport.authenticate('google', { failureRedirect: '/00-login.html' }),
+    passport.authenticate('google', { failureRedirect: '/login.html' }),
     (req, res) => {
       logger.info('Google login successful', { userId: req.user.id });
-      res.redirect('/03-challenge-list.html');
+      res.redirect('/challenge-list.html');
     }
   );
 

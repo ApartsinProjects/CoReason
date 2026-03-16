@@ -8,6 +8,7 @@
   <link rel="icon" href="assets/logo.png">
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
+  <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
   <style>
     .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
@@ -118,15 +119,15 @@
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
       <a href="02-dashboard.html">Dashboard</a>
-      <a href="03-challenge-list.html" class="active" data-t="challenges">Challenges</a>
-      <a href="06-course-catalog.html" data-t="courses">Courses</a>
-      <a href="07-student-analytics.html" data-t="myResults">My Results</a>
+      <a href="challenge-list.html" class="active" data-t="challenges">Challenges</a>
+      <a href="course-catalog.html" data-t="courses">Courses</a>
+      <a href="student-analytics.html" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span>Maria S.</span>
-      <a href="09-profile.html"><div class="avatar">MS</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/00-login.html&apos;);return false;" style="margin-left:8px;background:none;border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;color:var(--text-secondary);cursor:pointer;text-decoration:none;">Logout</a>
+      <a href="profile.html"><div class="avatar">MS</div></a>
+      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
     </div>
   </header>
 
@@ -143,7 +144,7 @@
         <h1>Sorting Pipeline for Sensor Data</h1>
         <p>Introduction to Algorithms &bull; Sorting &amp; Searching &gt; Comparison-based Sorting</p>
       </div>
-      <a href="03-challenge-list.html" class="btn btn-outline">&#10005; <span data-t="exit">Exit</span></a>
+      <a href="challenge-list.html" class="btn btn-outline">&#10005; <span data-t="exit">Exit</span></a>
     </div>
 
     <!-- Mode Banner -->
@@ -160,7 +161,7 @@
 
     <!-- ════════ PHASE 1 — FRAMING (Open-Ended) ════════ -->
     <div class="card" style="border-left:4px solid var(--primary);">
-      <h3 style="margin-bottom:12px;"><span style="color:var(--primary);"><span data-t="framing">Framing</span> (<span data-t="openEnded">Open-Ended</span>)</span></h3>
+      <h3 style="margin-bottom:12px;" data-tooltip="framingPhase"><span style="color:var(--primary);"><span data-t="framing">Framing</span> (<span data-t="openEnded">Open-Ended</span>)</span></h3>
 
       <div class="instructions-bar" style="background:#e8f5e9; color:#2e7d32;">
         <strong data-t="hint">Hint</strong>:
@@ -243,7 +244,7 @@
 
           <div class="cycle-body">
             <!-- Judging: Open-ended sections -->
-            <span class="substep-label substep-judge"><span data-t="judgingSubstep">A — Judging</span>: <span data-t="describeIssues">Describe issues you identify</span></span>
+            <span class="substep-label substep-judge" data-tooltip="judgingPhase"><span data-t="judgingSubstep">A — Judging</span>: <span data-t="describeIssues">Describe issues you identify</span></span>
             <div class="instructions-bar" style="background:#fff8e1; color:#e65100; font-size:12px; padding:8px 12px; margin-bottom:12px;">
               <strong data-t="hint">Hint</strong>: <span data-t="describeIssues">Describe issues you identify</span>
             </div>
@@ -262,7 +263,7 @@
             <hr class="divider-line">
 
             <!-- Steering: Open-ended sections -->
-            <span class="substep-label substep-steer"><span data-t="steeringSubstep">B — Steering</span>: <span data-t="writeCorrections">Write correction instructions</span></span>
+            <span class="substep-label substep-steer" data-tooltip="steeringPhase"><span data-t="steeringSubstep">B — Steering</span>: <span data-t="writeCorrections">Write correction instructions</span></span>
             <div class="instructions-bar" style="background:#e3f2fd; color:#0d47a1; font-size:12px; padding:8px 12px; margin-bottom:12px;">
               <strong data-t="hint">Hint</strong>: <span data-t="writeCorrections">Write correction instructions</span>
             </div>
@@ -351,7 +352,7 @@
             </div>
 
             <!-- Student clicks "Solution is complete" -->
-            <span class="substep-label substep-judge" data-t="judgingSubstep">A — Judging</span>
+            <span class="substep-label substep-judge" data-tooltip="judgingPhase" data-t="judgingSubstep">A — Judging</span>
             <button class="btn-done-judging selected">
               &#10003; <span data-t="solutionComplete">Solution is complete — no modifications needed</span>
             </button>
@@ -384,8 +385,8 @@
             </div>
           </div>
           <div style="margin-top:16px; text-align:center;">
-            <a href="07-student-analytics.html" class="btn btn-primary" data-t="viewMyResults">View My Results</a>
-            <a href="03-challenge-list.html" class="btn btn-outline" style="margin-left:8px;" data-t="backToChallenges">Back to Challenges</a>
+            <a href="student-analytics.html" class="btn btn-primary" data-t="viewMyResults">View My Results</a>
+            <a href="challenge-list.html" class="btn btn-outline" style="margin-left:8px;" data-t="backToChallenges">Back to Challenges</a>
           </div>
         </div>
       </div>
@@ -450,8 +451,8 @@
   <script>
 // Check auth
 fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/00-login.html';
-}).catch(() => window.location.href = '/00-login.html');
+  if (!r.ok) window.location.href = '/login.html';
+}).catch(() => window.location.href = '/login.html');
 
     function toggleFeedback(el) {
       const body = el.nextElementSibling;
