@@ -1,5 +1,5 @@
 // ============================================================
-// CoReasoning Lab — Challenge Run Scenario Data (Hebrew)
+// AI CoReasoning Lab — Challenge Run Scenario Data (Hebrew)
 // Hebrew adaptation of challenge-scenarios.js for Israeli CS courses.
 // Code and pseudocode remain in English; all user-facing text in Hebrew.
 // ============================================================

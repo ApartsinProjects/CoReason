@@ -13,7 +13,7 @@ const CoReasonTour = (() => {
 
   const TOURS = {
     student: [
-      { target: '.topnav', title: 'Welcome to CoReasoning Lab!', text: 'This is your learning platform for developing critical AI evaluation skills.', position: 'bottom' },
+      { target: '.topnav', title: 'Welcome to AI CoReasoning Lab!', text: 'This is your learning platform for developing critical AI evaluation skills.', position: 'bottom' },
       { target: '.topnav a[href*="challenge-list"]', title: 'Your Challenges', text: 'Browse available challenges, filter by course, type, or status.', position: 'bottom' },
       { target: '.topnav a[href*="course-catalog"]', title: 'Course Catalog', text: 'Subscribe to courses to access their challenges and track progress.', position: 'bottom' },
       { target: '.topnav a[href*="analytics"]', title: 'Your Analytics', text: 'View your grades and track improvement across Framing, Judging, and Steering skills.', position: 'bottom' },

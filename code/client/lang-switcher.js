@@ -1,5 +1,5 @@
 /**
- * CoReasoning Lab — Language Switcher Utility
+ * AI CoReasoning Lab — Language Switcher Utility
  * ============================================
  * Shared script that manages language switching across all mockup screens.
  *

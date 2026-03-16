@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * CoReasoning Lab — Content Build Script
+ * AI CoReasoning Lab — Content Build Script
  * =======================================
  * Reads YAML files from content/{lang}/ and compiles them into JS files
  * that can be loaded via <script> tags (file:// compatible).

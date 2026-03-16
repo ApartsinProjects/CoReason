@@ -116,6 +116,13 @@ class AuthService {
     const { password_hash, ...safeUser } = user;
     return safeUser;
   }
+
+  async findByEmail(email) {
+    const user = await this.db('users').where({ email: email.toLowerCase().trim() }).first();
+    if (!user) return null;
+    const { password_hash, ...safeUser } = user;
+    return safeUser;
+  }
 }
 
 module.exports = { AuthService };

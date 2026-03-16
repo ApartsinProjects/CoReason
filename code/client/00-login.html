@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CoReasoning Lab — Sign In</title>
+  <title>AI CoReasoning Lab — Sign In</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="assets/logo.png">
   <script src="content-compiled/all.js"></script>
@@ -27,13 +27,25 @@
     .footer-link { text-align: center; margin-top: 20px; font-size: 14px; color: rgba(255,255,255,.7); }
     .footer-link a { color: #fff; text-decoration: underline; }
     .error-message { background: #fce4ec; color: #c62828; padding: 10px 14px; border-radius: var(--radius); font-size: 13px; margin-bottom: 16px; display: none; }
+    .test-users-card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: var(--shadow-lg); margin-top: 20px; }
+    .test-users-card h3 { font-size: 16px; color: var(--primary); margin-bottom: 4px; text-align: center; }
+    .test-users-card p { font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; text-align: center; }
+    .test-user-list { display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
+    .test-user-btn { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: var(--radius); border: 1.5px solid var(--border); background: #fff; cursor: pointer; transition: all .15s; text-align: left; width: 100%; }
+    .test-user-btn:hover { border-color: var(--primary); background: #f0f1ff; }
+    .test-user-btn .tu-info { flex: 1; }
+    .test-user-btn .tu-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .test-user-btn .tu-detail { font-size: 12px; color: var(--text-secondary); }
+    .test-user-btn .tu-role { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; text-transform: capitalize; }
+    .test-user-btn .tu-role.student { background: #e3f2fd; color: #1565c0; }
+    .test-user-btn .tu-role.instructor { background: #e8f5e9; color: #2e7d32; }
   </style>
 </head>
 <body>
   <div class="login-container">
     <div class="login-logo">
-      <img src="assets/logo.png" alt="CoReasoning Lab">
-      <h1>CoReasoning Lab</h1>
+      <img src="assets/logo.png" alt="AI CoReasoning Lab">
+      <h1>AI CoReasoning Lab</h1>
       <p data-t="aiPoweredAssessment">AI-Powered Co-Reasoning Assessment</p>
     </div>
 
@@ -67,6 +79,15 @@
       </form>
     </div>
 
+    <!-- Test Users Card -->
+    <div class="test-users-card" id="testUsersCard">
+      <h3>🧪 Quick Login — Test Users</h3>
+      <p>Select a test user to sign in instantly (no password required)</p>
+      <div class="test-user-list" id="testUserList">
+        <div style="text-align:center;color:var(--text-secondary);padding:12px;">Loading test users...</div>
+      </div>
+    </div>
+
     <div class="footer-link">
       <span data-t="dontHaveAccount">Don't have an account?</span> <a href="01-sign-up.html" data-t="signUp">Sign up</a>
     </div>
@@ -77,6 +98,54 @@
     const errorMsg = document.getElementById('errorMsg');
     const loginBtn = document.getElementById('loginBtn');
 
+    // --- Load test users ---
+    (async function loadTestUsers() {
+      try {
+        const users = await API.get('/auth/test-users');
+        const list = document.getElementById('testUserList');
+        if (!users || users.length === 0) {
+          list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:12px;">No test users available</div>';
+          return;
+        }
+        list.innerHTML = users.map(u => `
+          <button type="button" class="test-user-btn" data-email="${u.email}" data-role="${u.role}">
+            <div class="tu-info">
+              <div class="tu-name">${u.name}</div>
+              <div class="tu-detail">${u.institution || 'No institution'}</div>
+            </div>
+            <span class="tu-role ${u.role}">${u.role}</span>
+          </button>
+        `).join('');
+
+        list.querySelectorAll('.test-user-btn').forEach(btn => {
+          btn.addEventListener('click', async function() {
+            const email = this.dataset.email;
+            const role = this.dataset.role;
+            errorMsg.style.display = 'none';
+            this.style.opacity = '0.6';
+            this.style.pointerEvents = 'none';
+            try {
+              const data = await API.post('/auth/test-login', { email });
+              if (role === 'instructor') {
+                window.location.href = '/03-challenge-list-instructor.html';
+              } else {
+                window.location.href = '/03-challenge-list.html';
+              }
+            } catch (err) {
+              errorMsg.textContent = err.message || 'Test login failed.';
+              errorMsg.style.display = 'block';
+              this.style.opacity = '1';
+              this.style.pointerEvents = '';
+            }
+          });
+        });
+      } catch (err) {
+        document.getElementById('testUserList').innerHTML =
+          '<div style="text-align:center;color:var(--text-secondary);padding:12px;">Could not load test users</div>';
+      }
+    })();
+
+    // --- Email/password login ---
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
       errorMsg.style.display = 'none';

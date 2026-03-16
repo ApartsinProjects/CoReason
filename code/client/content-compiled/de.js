@@ -2262,7 +2262,7 @@ window.CONTENT["de"] = {
       "sections": [
         {
           "title": "Überblick",
-          "content": "Das CoReasoning Lab hilft Ihnen, Fähigkeiten zum kritischen Denken zu entwickeln,\nindem Sie mit KI-Systemen zusammenarbeiten. Sie lernen, Probleme zu rahmen,\nKI-generierte Lösungen zu bewerten und Verbesserungen iterativ zu steuern.\n"
+          "content": "Das AI CoReasoning Lab hilft Ihnen, Fähigkeiten zum kritischen Denken zu entwickeln,\nindem Sie mit KI-Systemen zusammenarbeiten. Sie lernen, Probleme zu rahmen,\nKI-generierte Lösungen zu bewerten und Verbesserungen iterativ zu steuern.\n"
         },
         {
           "title": "Phase 1 — Rahmung",
@@ -2321,7 +2321,7 @@ window.CONTENT["de"] = {
       "sections": [
         {
           "title": "Überblick",
-          "content": "Das CoReasoning Lab ist ein pädagogisches Werkzeug, das darauf ausgelegt ist,\ndie Fähigkeiten zum kritischen Denken der Studierenden im Kontext der\nKI-Zusammenarbeit zu entwickeln. Als Dozent können Sie Aufgaben erstellen,\nden Fortschritt der Studierenden verfolgen und die Leistung der Klasse analysieren.\n"
+          "content": "Das AI CoReasoning Lab ist ein pädagogisches Werkzeug, das darauf ausgelegt ist,\ndie Fähigkeiten zum kritischen Denken der Studierenden im Kontext der\nKI-Zusammenarbeit zu entwickeln. Als Dozent können Sie Aufgaben erstellen,\nden Fortschritt der Studierenden verfolgen und die Leistung der Klasse analysieren.\n"
         },
         {
           "title": "Aufgabenerstellung",

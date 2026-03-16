@@ -52,6 +52,37 @@ module.exports = function authRoutes(db, passport, config, logger) {
     });
   });
 
+  // GET /api/v1/auth/test-login — login as test user (no password)
+  router.post('/test-login', async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      if (!email) {
+        return res.status(400).json({ error: { code: 'MISSING_EMAIL', message: 'Email is required' } });
+      }
+      const user = await authService.findByEmail(email);
+      if (!user) {
+        return res.status(404).json({ error: { code: 'USER_NOT_FOUND', message: 'Test user not found' } });
+      }
+      req.login(user, (err) => {
+        if (err) return next(err);
+        res.json({ user });
+      });
+    } catch (err) { next(err); }
+  });
+
+  // GET /api/v1/auth/test-users — list available test users
+  router.get('/test-users', async (req, res, next) => {
+    try {
+      const users = await db('users')
+        .leftJoin('institutions', 'users.institution_id', 'institutions.id')
+        .select('users.id', 'users.email', 'users.name', 'users.role', 'institutions.name as institution')
+        .orderBy('users.role')
+        .orderBy('institutions.name')
+        .orderBy('users.name');
+      res.json(users);
+    } catch (err) { next(err); }
+  });
+
   // GET /api/v1/auth/me
   router.get('/me', async (req, res, next) => {
     try {

@@ -1,5 +1,5 @@
 // ============================================================
-// CoReasoning Lab — Challenge Run Scenario Data
+// AI CoReasoning Lab — Challenge Run Scenario Data
 // Separates content from page structure and rendering logic.
 // Each challenge has MC + OE variants; mode (practice/assessment)
 // is handled by the template rendering engine.

@@ -1,5 +1,5 @@
 /**
- * CoReasoning Lab — Content Loader & Language Switcher
+ * AI CoReasoning Lab — Content Loader & Language Switcher
  * =====================================================
  * Replaces the original lang-switcher.js with a unified content API.
  * Expects compiled content bundles to be loaded first via:

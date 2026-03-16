@@ -2262,7 +2262,7 @@ window.CONTENT["es"] = {
       "sections": [
         {
           "title": "Descripción general",
-          "content": "El CoReasoning Lab le ayuda a desarrollar habilidades de pensamiento crítico\nal colaborar con sistemas de IA. Aprenderá a encuadrar problemas, evaluar\nsoluciones generadas por IA y dirigir mejoras de manera iterativa.\n"
+          "content": "El AI CoReasoning Lab le ayuda a desarrollar habilidades de pensamiento crítico\nal colaborar con sistemas de IA. Aprenderá a encuadrar problemas, evaluar\nsoluciones generadas por IA y dirigir mejoras de manera iterativa.\n"
         },
         {
           "title": "Fase 1 — Encuadre",
@@ -2321,7 +2321,7 @@ window.CONTENT["es"] = {
       "sections": [
         {
           "title": "Descripción general",
-          "content": "El CoReasoning Lab es una herramienta pedagógica diseñada para desarrollar\nlas habilidades de razonamiento crítico de los estudiantes en el contexto\nde la colaboración con IA. Como instructor, puede crear desafíos, hacer\nseguimiento del progreso de los estudiantes y analizar el rendimiento de la clase.\n"
+          "content": "El AI CoReasoning Lab es una herramienta pedagógica diseñada para desarrollar\nlas habilidades de razonamiento crítico de los estudiantes en el contexto\nde la colaboración con IA. Como instructor, puede crear desafíos, hacer\nseguimiento del progreso de los estudiantes y analizar el rendimiento de la clase.\n"
         },
         {
           "title": "Creación de desafíos",

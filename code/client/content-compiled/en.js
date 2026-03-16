@@ -2286,7 +2286,7 @@ window.CONTENT["en"] = {
       "sections": [
         {
           "title": "Getting Started",
-          "content": "Welcome to CoReasoning Lab. Here you'll practice critical evaluation of AI-generated solutions through structured challenges."
+          "content": "Welcome to AI CoReasoning Lab. Here you'll practice critical evaluation of AI-generated solutions through structured challenges."
         },
         {
           "title": "Challenge Flow",

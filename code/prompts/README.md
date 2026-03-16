@@ -1,4 +1,4 @@
-# CoReasoning Lab — Prompt Library
+# AI CoReasoning Lab — Prompt Library
 
 All prompts are YAML-configured templates (REQ-PLAT-04). Each file contains one or more prompt templates with placeholders in `{{double_braces}}` notation.
 
