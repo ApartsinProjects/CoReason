@@ -7,7 +7,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install && npm run build && npx knex --knexfile server/db/knexfile.js migrate:latest
+    buildCommand: npm install && npm run build && npm run db:setup
     startCommand: node server/index.js
     envVars:
       - key: NODE_ENV

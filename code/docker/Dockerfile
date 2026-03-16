@@ -18,8 +18,9 @@ COPY --from=builder /app/prompts ./prompts
 COPY --from=builder /app/scenarios ./scenarios
 COPY --from=builder /app/build-content.js ./
 COPY --from=builder /app/package.json ./
+COPY --from=builder /app/import ./import
 RUN mkdir -p logs data
 ENV NODE_ENV=production
 EXPOSE 3000
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "server/index.js"]
+CMD ["sh", "-c", "npm run db:setup && node server/index.js"]
