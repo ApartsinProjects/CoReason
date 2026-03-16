@@ -22,6 +22,7 @@
   </style>
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
+  <script src="js/api-client.js"></script>
 </head>
 <body>
   <header class="topnav">
@@ -36,6 +37,7 @@
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span>Sarah Cohen</span>
       <a href="09-profile.html"><div class="avatar" style="outline:2px solid #fff;">SC</div></a>
+      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/00-login.html&apos;);return false;" style="margin-left:8px;background:none;border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;color:var(--text-secondary);cursor:pointer;text-decoration:none;">Logout</a>
     </div>
   </header>
 
@@ -128,5 +130,12 @@
       <button class="btn btn-outline" data-t="cancel">Cancel</button>
     </div>
   </main>
+<script>
+// Check auth
+fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
+  if (!r.ok) window.location.href = '/00-login.html';
+}).catch(() => window.location.href = '/00-login.html');
+
+</script>
 </body>
 </html>

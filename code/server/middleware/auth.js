@@ -5,7 +5,10 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const { AuthError, ForbiddenError } = require('../utils/errors');
 
-function configurePassport(passport, config, logger) {
+function configurePassport(passport, config, logger, db) {
+  const { AuthService } = require('../services/auth.service');
+  const authService = new AuthService(db, logger);
+
   // Serialize/deserialize user for session
   passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -13,9 +16,9 @@ function configurePassport(passport, config, logger) {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      // This will be wired to the database once models are ready
-      // For now, store full user object in session
-      done(null, { id });
+      const user = await authService.findById(id);
+      if (!user) return done(null, false);
+      done(null, user);
     } catch (err) {
       done(err);
     }
@@ -26,11 +29,12 @@ function configurePassport(passport, config, logger) {
     { usernameField: 'email' },
     async (email, password, done) => {
       try {
-        // Will be wired to UserService.findByEmail
         logger.info('Local auth attempt', { email });
-        done(null, false, { message: 'Not yet implemented' });
+        const user = await authService.login(email, password);
+        done(null, user);
       } catch (err) {
-        done(err);
+        logger.warn('Local auth failed', { email, error: err.message });
+        done(null, false, { message: err.message || 'Invalid credentials' });
       }
     }
   ));
@@ -53,16 +57,10 @@ function configurePassport(passport, config, logger) {
             googleId: profile.id,
             email: profile.emails?.[0]?.value,
           });
-          // Will be wired to UserService.findOrCreateByGoogle
-          const user = {
-            id: profile.id,
-            email: profile.emails?.[0]?.value,
-            name: profile.displayName,
-            profileImage: profile.photos?.[0]?.value,
-            provider: 'google',
-          };
+          const user = await authService.findOrCreateByGoogle(profile);
           done(null, user);
         } catch (err) {
+          logger.error('Google auth error', { error: err.message });
           done(err);
         }
       }

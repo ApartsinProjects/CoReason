@@ -8,6 +8,7 @@
   <link rel="icon" href="assets/logo.png">
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
+  <script src="js/api-client.js"></script>
   <style>
     .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
     .problem-panel { background: #f8f9ff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--primary); }
@@ -125,6 +126,7 @@
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span>Maria S.</span>
       <a href="09-profile.html"><div class="avatar">MS</div></a>
+      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/00-login.html&apos;);return false;" style="margin-left:8px;background:none;border:1px solid var(--border);border-radius:var(--radius);padding:4px 10px;font-size:12px;color:var(--text-secondary);cursor:pointer;text-decoration:none;">Logout</a>
     </div>
   </header>
 
@@ -446,6 +448,11 @@
   <div class="llm-status" id="llm-status"><div class="llm-spinner"></div><span id="llm-status-text">Generating...</span></div>
 
   <script>
+// Check auth
+fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
+  if (!r.ok) window.location.href = '/00-login.html';
+}).catch(() => window.location.href = '/00-login.html');
+
     function toggleFeedback(el) {
       const body = el.nextElementSibling;
       const arrow = el.querySelector('.arrow');

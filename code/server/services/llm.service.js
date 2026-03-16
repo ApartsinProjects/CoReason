@@ -19,7 +19,7 @@ class LLMService {
     const apiKey = process.env.OPENAI_API_KEY || process.env.GEMINI_API_KEY || process.env.GROQ_API_KEY;
 
     if (!apiKey) {
-      this.logger.warn('No LLM API key configured. LLM features will use placeholders.');
+      this.logger.warn('No LLM API key configured. LLM features will use fallback responses.');
       return;
     }
 
@@ -47,7 +47,7 @@ class LLMService {
 
   async _call(promptId, variables, options = {}) {
     if (!this.client) {
-      this.logger.warn(`LLM not available for prompt ${promptId}, returning placeholder`);
+      this.logger.warn(`LLM not available for prompt ${promptId}, returning fallback`);
       return null;
     }
 

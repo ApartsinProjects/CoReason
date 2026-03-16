@@ -22,7 +22,7 @@ async function startServer() {
 
   // --- Security & parsing ---
   app.use(helmet({
-    contentSecurityPolicy: false,  // Allow inline scripts in mockup HTML
+    contentSecurityPolicy: false,  // Allow inline scripts for frontend pages
   }));
   app.use(cors({
     origin: true,
@@ -61,7 +61,7 @@ async function startServer() {
   // --- Passport ---
   app.use(passport.initialize());
   app.use(passport.session());
-  require('./middleware/auth').configurePassport(passport, config, logger);
+  // Passport configured after DB init below
 
   // --- Request logging ---
   app.use(requestLogger(logger));
@@ -71,6 +71,9 @@ async function startServer() {
   app.locals.db = db;
   app.locals.config = config;
   app.locals.logger = logger;
+
+  // --- Configure Passport with DB access ---
+  require('./middleware/auth').configurePassport(passport, config, logger, db);
 
   // --- Services that need shared instances ---
   const { TraceRecorder } = require('./utils/trace');
@@ -111,7 +114,7 @@ async function startServer() {
     res.json({ status: 'ok', env: process.env.NODE_ENV, timestamp: new Date().toISOString() });
   });
 
-  // --- Static files (mockup screens) ---
+  // --- Static files ---
   const staticDir = path.resolve(__dirname, config.server.static_dir || '../client');
   app.use(express.static(staticDir));
 

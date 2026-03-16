@@ -14,7 +14,7 @@ class AnalyticsService {
       .select(
         'challenge_runs.*',
         'challenges.title as challenge_title',
-        'challenges.subject'
+        'challenges.subject_path'
       )
       .where('challenge_runs.user_id', userId)
       .orderBy('challenge_runs.created_at', 'desc');
@@ -40,7 +40,7 @@ class AnalyticsService {
       recent_runs: runs.slice(0, 10).map(r => ({
         id: r.id,
         challenge_title: r.challenge_title,
-        subject: r.subject,
+        subject_path: r.subject_path,
         status: r.status,
         created_at: r.created_at,
       })),
@@ -57,7 +57,7 @@ class AnalyticsService {
     if (!challenge) throw new NotFoundError('Challenge', challengeId);
 
     return {
-      challenge: { id: challenge.id, title: challenge.title, subject: challenge.subject },
+      challenge: { id: challenge.id, title: challenge.title, subject_path: challenge.subject_path },
       runs: runs.map(r => ({
         id: r.id,
         status: r.status,
@@ -94,7 +94,7 @@ class AnalyticsService {
       challenges: challenges.map(c => ({
         id: c.id,
         title: c.title,
-        subject: c.subject,
+        subject_path: c.subject_path,
         runs_count: runs.filter(r => r.challenge_id === c.id).length,
       })),
     };

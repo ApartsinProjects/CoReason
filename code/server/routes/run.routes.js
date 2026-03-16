@@ -1,6 +1,6 @@
 'use strict';
 const { Router } = require('express');
-const { ChallengeRunService } = require('../services/run.service');
+const { ChallengeRunService } = require('../services/challenge-run.service');
 const { requireAuth } = require('../middleware/auth');
 
 module.exports = function runRoutes(db, logger, llmService) {
@@ -18,7 +18,7 @@ module.exports = function runRoutes(db, logger, llmService) {
   // GET /api/v1/runs/:runId
   router.get('/:runId', requireAuth, async (req, res, next) => {
     try {
-      const run = await runService.getRun(req.params.runId, req.user.id);
+      const run = await runService.getRunState(req.params.runId, req.user.id);
       res.json(run);
     } catch (err) { next(err); }
   });
@@ -50,7 +50,7 @@ module.exports = function runRoutes(db, logger, llmService) {
   // PUT /api/v1/runs/:runId/complete
   router.put('/:runId/complete', requireAuth, async (req, res, next) => {
     try {
-      const result = await runService.completeRun(req.params.runId, req.user.id);
+      const result = await runService.markComplete(req.params.runId, req.user.id);
       res.json(result);
     } catch (err) { next(err); }
   });

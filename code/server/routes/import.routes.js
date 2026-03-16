@@ -10,7 +10,7 @@ module.exports = function importRoutes(db, logger) {
   // POST /api/v1/import/batch
   router.post('/batch', requireAuth, async (req, res, next) => {
     try {
-      const result = await importService.batchImport(req.body, req.user.id);
+      const result = await importService.importFromYAML(req.body);
       res.status(202).json(result);
     } catch (err) { next(err); }
   });
