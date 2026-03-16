@@ -81,7 +81,7 @@ window.CONTENT["he"] = {
     "orSignUpWithEmail": "או הרשמה עם דוא״ל",
     "dontHaveAccount": "אין לך חשבון?",
     "alreadyHaveAccount": "כבר יש לך חשבון?",
-    "aiPoweredAssessment": "הערכת חשיבה-משותפת מבוססת AI",
+    "aiPoweredAssessment": "הערכה ותרגול לחשיבה-משותפת אדם–AI",
     "selectInstitution": "בחרו את המוסד שלכם...",
     "enterFullName": "הזינו את שמכם המלא",
     "createPassword": "צרו סיסמה",

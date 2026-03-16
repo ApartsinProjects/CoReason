@@ -81,7 +81,7 @@ window.CONTENT["de"] = {
     "orSignUpWithEmail": "oder mit E-Mail registrieren",
     "dontHaveAccount": "Sie haben noch kein Konto?",
     "alreadyHaveAccount": "Sie haben bereits ein Konto?",
-    "aiPoweredAssessment": "KI-gestützte Co-Reasoning-Bewertung",
+    "aiPoweredAssessment": "Bewertung und Übung für Mensch–KI Co-Reasoning",
     "selectInstitution": "Wählen Sie Ihre Einrichtung...",
     "enterFullName": "Geben Sie Ihren vollständigen Namen ein",
     "createPassword": "Erstellen Sie ein Passwort",

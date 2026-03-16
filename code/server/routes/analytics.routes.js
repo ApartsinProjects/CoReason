@@ -1,11 +1,13 @@
 'use strict';
 const { Router } = require('express');
 const { AnalyticsService } = require('../services/analytics.service');
+const { PDFService } = require('../services/pdf.service');
 const { requireAuth } = require('../middleware/auth');
 
 module.exports = function analyticsRoutes(db, logger) {
   const router = Router();
   const analyticsService = new AnalyticsService(db, logger);
+  const pdfService = new PDFService(logger);
 
   // GET /api/v1/analytics/student
   router.get('/student', requireAuth, async (req, res, next) => {
@@ -36,6 +38,21 @@ module.exports = function analyticsRoutes(db, logger) {
     try {
       const data = await analyticsService.exportInstructorData(req.params.courseId);
       res.json(data);
+    } catch (err) { next(err); }
+  });
+
+  // GET /api/v1/analytics/instructor/:courseId/export/pdf
+  router.get('/instructor/:courseId/export/pdf', requireAuth, async (req, res, next) => {
+    try {
+      const data = await analyticsService.exportInstructorData(req.params.courseId);
+      const pdfBuffer = await pdfService.generateInstructorReport(data);
+
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="analytics-${data.course?.name || 'report'}-${new Date().toISOString().slice(0, 10)}.pdf"`,
+        'Content-Length': pdfBuffer.length,
+      });
+      res.send(pdfBuffer);
     } catch (err) { next(err); }
   });
 

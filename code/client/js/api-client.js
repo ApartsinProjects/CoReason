@@ -127,6 +127,10 @@ const API = (() => {
       challengeDetail: (id) => request('GET', `/analytics/student/challenge/${id}`),
       instructor: (courseId) => request('GET', `/analytics/instructor/${courseId}`),
       export: (courseId) => request('GET', `/analytics/instructor/${courseId}/export`),
+      exportPdf: (courseId) => {
+        // Direct download — open in new tab/download
+        window.open(`${BASE_URL}/analytics/instructor/${courseId}/export/pdf`, '_blank');
+      },
     },
 
     // --- Import ---

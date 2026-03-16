@@ -43,7 +43,7 @@
         <p data-t="courseAnalyticsDesc">Public challenge results across subscribers <span class="help-icon" data-tooltip="Shows results for public challenges only. Private student challenges are not included. All instructors in the course see the same analytics.">?</span></p>
       </div>
       <div class="export-bar">
-        <button class="btn btn-outline" data-t="exportPdf">&#128196; Export PDF</button>
+        <button class="btn btn-outline" data-t="exportPdf" onclick="exportPdf()">&#128196; Export PDF</button>
       </div>
     </div>
 
@@ -128,7 +128,7 @@
     <div class="card">
       <div class="card-header">
         <h3 data-t="perStudentResults">Per-Student Results</h3>
-        <button class="btn btn-outline btn-sm" data-t="exportPdf">&#128196; Export PDF</button>
+        <button class="btn btn-outline btn-sm" data-t="exportPdf" onclick="exportPdf()">&#128196; Export PDF</button>
       </div>
       <div class="table-wrap">
         <table>
@@ -203,44 +203,89 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
   if (!r.ok) window.location.href = '/login.html';
 }).catch(() => window.location.href = '/login.html');
 
-  (function() {
-    var selects = document.querySelectorAll('.filter-bar select');
-    var courseSelect = selects[0];
-    var challengeSelect = selects[1];
-    var studentSelect = selects[2];
-    var rows = document.querySelectorAll('tbody .student-row');
+let currentCourseId = null;
 
-    // Challenge options per course
-    var challengesByCourse = {
-      'Deep Learning 101': ['Neural Network Debugging', 'Backpropagation Mastery', 'CNN Architecture Review'],
-      'Database Systems': ['SQL Query Optimization', 'Normalization Challenge']
-    };
-
-    courseSelect.addEventListener('change', function() {
-      var course = courseSelect.value;
-      // Update challenge options
-      var opts = challengesByCourse[course] || [];
-      challengeSelect.innerHTML = '<option value="">All Challenges</option>';
-      opts.forEach(function(c) {
-        var o = document.createElement('option');
-        o.textContent = c;
-        challengeSelect.appendChild(o);
-      });
-      applyFilters();
+// Load courses dynamically
+(async function loadCourses() {
+  var selects = document.querySelectorAll('.filter-bar select');
+  var courseSelect = selects[0];
+  try {
+    var courses = await API.get('/courses');
+    courseSelect.innerHTML = '';
+    if (!courses || courses.length === 0) {
+      courseSelect.innerHTML = '<option value="">No courses</option>';
+      return;
+    }
+    courses.forEach(function(c) {
+      var opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.name;
+      courseSelect.appendChild(opt);
     });
+    currentCourseId = courses[0].id;
+    loadAnalytics(currentCourseId);
+  } catch (err) {
+    courseSelect.innerHTML = '<option value="">Failed to load</option>';
+  }
+})();
 
-    challengeSelect.addEventListener('change', applyFilters);
-    studentSelect.addEventListener('change', applyFilters);
+// Course change handler
+document.querySelector('.filter-bar select').addEventListener('change', function() {
+  currentCourseId = this.value;
+  if (currentCourseId) loadAnalytics(currentCourseId);
+});
 
-    function applyFilters() {
+// Load analytics data for selected course
+async function loadAnalytics(courseId) {
+  try {
+    var data = await API.analytics.instructor(courseId);
+    // Update stats
+    var statCards = document.querySelectorAll('.stat-card .stat-value');
+    if (statCards[0]) statCards[0].textContent = data.active_students || 0;
+    if (statCards[1]) statCards[1].textContent = (data.completed_runs || 0) + '/' + (data.total_runs || 0);
+    if (statCards[3]) statCards[3].textContent = Math.max(0, (data.active_students || 0) - (data.completed_runs || 0));
+
+    // Update challenge filter
+    var selects = document.querySelectorAll('.filter-bar select');
+    var challengeSelect = selects[1];
+    challengeSelect.innerHTML = '<option value="">All Challenges</option>';
+    (data.challenges || []).forEach(function(c) {
+      var opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.title + ' (' + c.runs_count + ')';
+      challengeSelect.appendChild(opt);
+    });
+  } catch (err) {
+    console.error('Failed to load analytics:', err);
+  }
+}
+
+// Export PDF
+function exportPdf() {
+  if (!currentCourseId) {
+    alert('Please select a course first.');
+    return;
+  }
+  API.analytics.exportPdf(currentCourseId);
+}
+
+// Filter rows
+(function() {
+  var selects = document.querySelectorAll('.filter-bar select');
+  var studentSelect = selects[2];
+  var rows = document.querySelectorAll('tbody .student-row');
+
+  if (studentSelect) {
+    studentSelect.addEventListener('change', function() {
       var student = studentSelect.value;
       rows.forEach(function(row) {
         var show = true;
         if (student && row.getAttribute('data-student') !== student) show = false;
         row.style.display = show ? '' : 'none';
       });
-    }
-  })();
+    });
+  }
+})();
   </script>
 </body>
 </html>
