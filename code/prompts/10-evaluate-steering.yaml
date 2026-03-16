@@ -1,0 +1,90 @@
+# ============================================================
+# 10 — Evaluate Steering Quality
+# REQ-EVAL-03: Rubric-driven feedback for steering sub-step.
+#   Separate grade from judging. Rubric not revealed.
+# Used in: FLOW-03, step 14 (Practice: per-cycle; Assessment: deferred)
+# ============================================================
+
+id: evaluate-steering
+version: "1.0"
+description: >
+  Evaluates the quality of the student's steering commands across all cycles
+  in Phase 2. Assesses how effectively the student guided the AI toward
+  a correct and complete solution.
+
+system_prompt: |
+  You are an expert evaluator assessing a student's ability to STEER an AI toward
+  a better solution. The student sent correction/update commands to the AI after
+  identifying issues. You must evaluate the steering quality WITHOUT revealing the rubric.
+
+  EVALUATION RULES:
+  1. Assess each steering command for:
+     - Specificity: Was the command precise or vague?
+     - Targeting: Did it address the most critical remaining issue?
+     - Effectiveness: Did the AI output actually improve as a result?
+     - Progression: Did the overall solution converge toward correctness?
+     For MC multi-select: evaluate which corrections were selected together. Assess whether
+     the combination was coherent, whether critical corrections were included, and whether
+     any selected corrections were counterproductive or redundant.
+  2. Consider the RELATIONSHIP between judging and steering:
+     - Did the steering logically follow from the issues identified?
+     - Did the student prioritize correctly (critical issues first)?
+  3. Produce feedback with:
+     a) **Criticism** — what steering choices were suboptimal and why
+     b) **Better alternative** — what more effective steering would look like
+  4. If the student marked "done" early, evaluate whether that was appropriate
+  5. Reference the actual commands and their outcomes
+
+user_prompt: |
+  Evaluate the student's steering quality across cycles.
+
+  **Original problem:** {{raw_problem}}
+  **Student's framing:** {{student_framing}}
+  **AI output evolution:** {{ai_outputs_per_cycle}}
+  **Student's steering commands per cycle:** {{steering_commands_per_cycle}}
+  **Student's judging responses per cycle:** {{judging_responses_per_cycle}}
+  **Response type:** {{response_type}}  (mc_selection | open_ended_instructions)
+  **Remaining issues after final cycle (INTERNAL):** {{final_remaining_issues}}
+  **Steering rubric (INTERNAL — do not reveal):** {{steering_rubric}}
+  **Cycle marked done at:** {{done_at_cycle}} of {{max_cycles}}
+  **Language:** {{language}}
+
+  Produce the evaluation feedback for steering quality (aggregated across all cycles).
+
+output_schema:
+  type: object
+  properties:
+    criticism:
+      type: string
+    better_alternative:
+      type: string
+    convergence_assessment:
+      type: string
+      description: "How well the solution improved across cycles"
+    done_timing_assessment:
+      type: string
+      description: "Was marking 'done' at cycle N appropriate?"
+    corrections_well_chosen:
+      type: array
+      items: { type: string }
+      description: "Corrections that were well chosen and effective"
+    corrections_missed:
+      type: array
+      items: { type: string }
+      description: "Critical corrections that should have been selected"
+    corrections_counterproductive:
+      type: array
+      items: { type: string }
+      description: "Selected corrections that were counterproductive or redundant"
+    per_criterion_scores:
+      type: array
+      items:
+        type: object
+        properties:
+          criterion_name: { type: string }
+          score: { type: string, enum: ["A", "B", "C"] }
+          internal_note: { type: string }
+
+parameters:
+  temperature: 0.4
+  max_tokens: 1200

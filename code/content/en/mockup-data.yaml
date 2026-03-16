@@ -1,0 +1,643 @@
+# Canonical display data for all mockup screens
+# This is the SINGLE SOURCE OF TRUTH for all hardcoded content
+
+# ─── Current Users (the logged-in personas) ───
+studentUser:
+  name: "Sarah Cohen"
+  email: "s.cohen@tau.ac.il"
+  avatar: "SC"
+  institution: "Tel Aviv University"
+  role: "student"
+  memberSince: "January 15, 2026"
+  challengesCreated: 4
+  challengesExecuted: 12
+  subscribedCourses:
+    - id: "deep-learning-101"
+      name: "Deep Learning 101"
+    - id: "database-systems"
+      name: "Database Systems"
+    - id: "software-engineering"
+      name: "Software Engineering"
+
+instructorUser:
+  name: "Dr. Dana Levy"
+  email: "d.levy@tau.ac.il"
+  avatar: "DL"
+  institution: "Tel Aviv University"
+  role: "instructor"
+  memberSince: "September 1, 2024"
+
+# ─── All Demo Users (for mockup mode switcher) ───
+allUsers:
+  - id: "sarah"
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    avatar: "SC"
+    institution: "Tel Aviv University"
+    role: "student"
+  - id: "levy"
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    avatar: "DL"
+    institution: "Tel Aviv University"
+    role: "instructor"
+  - id: "alex"
+    name: "Alex Mueller"
+    email: "a.mueller@tum.de"
+    avatar: "AM"
+    institution: "TU Munich"
+    role: "student"
+  - id: "weber"
+    name: "Prof. Klaus Weber"
+    email: "k.weber@tum.de"
+    avatar: "KW"
+    institution: "TU Munich"
+    role: "instructor"
+  - id: "maria"
+    name: "María García"
+    email: "m.garcia@ub.edu"
+    avatar: "MG"
+    institution: "Universidad de Barcelona"
+    role: "student"
+  - id: "dupont"
+    name: "Prof. Claire Dupont"
+    email: "c.dupont@sorbonne.fr"
+    avatar: "CD"
+    institution: "Sorbonne Université"
+    role: "instructor"
+
+# ─── Challenge List (Student View) ───
+studentChallenges:
+  - id: "neural-network-debugging"
+    name: "Neural Network Debugging"
+    course: "Deep Learning 101"
+    type: "practice"
+    visibility: "public"
+    created: "Mar 14"
+    creator: "Dr. Levy"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "sql-query-optimization"
+    name: "SQL Query Optimization"
+    course: "Database Systems"
+    type: "assessment"
+    visibility: "public"
+    created: "Mar 13"
+    creator: "Dr. Levy"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "api-design-review"
+    name: "API Design Review"
+    course: "Software Engineering"
+    type: "practice"
+    visibility: "public"
+    created: "Mar 10"
+    creator: "Dr. Patel"
+    lastAttempt: "Mar 12"
+    status: "in-progress"
+    isNew: false
+  - id: "sorting-algorithm-analysis"
+    name: "Sorting Algorithm Analysis"
+    course: "Software Engineering"
+    type: "assessment"
+    visibility: "public"
+    created: "Mar 5"
+    creator: "Dr. Patel"
+    lastAttempt: "Mar 8"
+    status: "completed"
+    isNew: false
+  - id: "my-practice-backpropagation"
+    name: "My Practice: Backpropagation"
+    course: "Deep Learning 101"
+    type: "practice"
+    visibility: "private"
+    created: "Mar 7"
+    creator: "Me"
+    lastAttempt: "Mar 9"
+    status: "completed"
+    isNew: false
+  - id: "recursion-basics"
+    name: "Recursion Basics"
+    course: "Software Engineering"
+    type: "practice"
+    visibility: "public"
+    created: "Feb 28"
+    creator: "Dr. Patel"
+    lastAttempt: "Mar 2"
+    status: "completed"
+    isNew: false
+
+# ─── Challenge List (Instructor View) ───
+instructorChallenges:
+  - id: "sorting-algorithm-analysis"
+    name: "Sorting Algorithm Analysis"
+    course: "Software Engineering"
+    type: "assessment"
+    visibility: "public"
+    submissions: "38/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "neural-network-debugging"
+    name: "Neural Network Debugging"
+    course: "Deep Learning 101"
+    type: "practice"
+    visibility: "public"
+    submissions: "22/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "sql-query-optimization"
+    name: "SQL Query Optimization"
+    course: "Database Systems"
+    type: "assessment"
+    visibility: "public"
+    submissions: "41/42"
+    avgGrade: "A"
+    status: "published"
+  - id: "rate-limiter-design"
+    name: "Rate Limiter Design"
+    course: "Software Engineering"
+    type: "practice"
+    visibility: "private"
+    submissions: null
+    avgGrade: null
+    status: "draft"
+  - id: "cnn-architecture-review"
+    name: "CNN Architecture Review"
+    course: "Deep Learning 101"
+    type: "assessment"
+    visibility: "public"
+    submissions: "30/45"
+    avgGrade: "B"
+    status: "published"
+
+# ─── Course Catalog ───
+courseCatalog:
+  - id: "deep-learning-101"
+    name: "Deep Learning 101"
+    department: "Computer Science"
+    instructorCount: 3
+    challengeCount: 8
+    studentCount: 45
+    subscribed: true
+    subjects: ["Neural Networks", "CNNs", "RNNs", "Optimization", "Regularization"]
+  - id: "database-systems"
+    name: "Database Systems"
+    department: "Computer Science"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 62
+    subscribed: true
+    subjects: ["SQL", "Query Optimization", "Indexing", "Normalization"]
+  - id: "software-engineering"
+    name: "Software Engineering"
+    department: "Computer Science"
+    instructorCount: 2
+    challengeCount: 12
+    studentCount: 78
+    subscribed: true
+    subjects: ["Design Patterns", "API Design", "Testing", "Refactoring"]
+  - id: "linear-algebra-ml"
+    name: "Linear Algebra for ML"
+    department: "Mathematics"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 33
+    subscribed: false
+    subjects: ["Vectors", "Matrices", "Eigenvalues", "SVD"]
+  - id: "statistical-inference"
+    name: "Statistical Inference"
+    department: "Data Science"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 41
+    subscribed: false
+    subjects: ["Hypothesis Testing", "Regression", "Bayesian Methods"]
+  - id: "signal-processing"
+    name: "Signal Processing"
+    department: "Electrical Engineering"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 28
+    subscribed: false
+    subjects: ["Fourier Transform", "Filters", "Sampling"]
+  - id: "constitutional-law"
+    name: "Constitutional Law"
+    department: "Law"
+    instructorCount: 2
+    challengeCount: 4
+    studentCount: 52
+    subscribed: false
+    subjects: ["Standards of Review", "Equal Protection", "Due Process", "First Amendment"]
+  - id: "learning-experience-design"
+    name: "Learning Experience Design"
+    department: "Instructional Technologies"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 35
+    subscribed: false
+    subjects: ["Curriculum Mapping", "Assessment Design", "Adaptive Learning", "Multimedia Principles"]
+  - id: "educational-data-mining"
+    name: "Educational Data Mining"
+    department: "Instructional Technologies"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 28
+    subscribed: false
+    subjects: ["Learning Analytics", "Student Modeling", "Knowledge Tracing", "Predictive Models"]
+  - id: "medical-imaging"
+    name: "Medical Imaging Systems"
+    department: "Digital Medical Technologies"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 40
+    subscribed: false
+    subjects: ["CT Reconstruction", "MRI Sequences", "Ultrasound Processing", "Image Segmentation"]
+  - id: "clinical-decision-support"
+    name: "Clinical Decision Support Systems"
+    department: "Digital Medical Technologies"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 32
+    subscribed: false
+    subjects: ["Diagnostic Algorithms", "Evidence-Based Medicine", "Risk Scoring", "Clinical Pathways"]
+  - id: "ehealth-interoperability"
+    name: "eHealth Interoperability"
+    department: "Digital Medical Technologies"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 22
+    subscribed: false
+    subjects: ["HL7 FHIR", "DICOM Standards", "EHR Integration", "Health Data Privacy"]
+
+# ─── Student Analytics ───
+studentAnalytics:
+  gradeDistribution:
+    framing:
+      a: 4
+      b: 6
+      c: 2
+      mostCommon: "B"
+    judging:
+      a: 2
+      b: 7
+      c: 3
+      mostCommon: "B"
+    steering:
+      a: 5
+      b: 5
+      c: 2
+      mostCommon: "A"
+  trend:
+    - label: "Recursion Basics"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+    - label: "ER Diagram Design"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+    - label: "Query Optimization"
+      framing: "B"
+      judging: "C"
+      steering: "C"
+    - label: "Backpropagation"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+    - label: "Sorting Algo"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+    - label: "CNN Arch."
+      framing: "A"
+      judging: "A"
+      steering: "A"
+  completedRuns:
+    - id: 1
+      name: "Sorting Algorithm Analysis"
+      course: "Software Engineering"
+      type: "assessment"
+      responseMode: "mc"
+      date: "Mar 8, 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 4
+      issuesAvailable: 6
+      framingFeedback: "Strong identification of missing constraints and clear task formulation."
+      judgingFeedback: "Caught edge cases but missed complexity proof gap in AI output."
+      steeringFeedback: "Specific, actionable corrections that improved the solution significantly."
+    - id: 2
+      name: "My Practice: Backpropagation"
+      course: "Deep Learning 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "Mar 9, 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Adequate assumptions but missed specifying the loss function context."
+      judgingFeedback: "Did not catch the vanishing gradient issue in the AI's proposed architecture."
+      steeringFeedback: "Corrections were directionally correct but lacked mathematical precision."
+    - id: 3
+      name: "Recursion Basics"
+      course: "Software Engineering"
+      type: "practice"
+      responseMode: "oe"
+      date: "Mar 2, 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 4
+      issuesAvailable: 4
+      framingFeedback: "Excellent problem decomposition and constraint identification."
+      judgingFeedback: "Correctly identified the stack overflow risk and base case errors."
+      steeringFeedback: "Good corrections but could have pushed for tail-recursion optimization."
+    - id: 4
+      name: "ER Diagram Design"
+      course: "Database Systems"
+      type: "assessment"
+      responseMode: "mc"
+      date: "Feb 25, 2026"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Missing key cardinality assumptions led to an under-specified task."
+      judgingFeedback: "Spotted normalization issues but missed the redundant relationship."
+      steeringFeedback: "Corrections were vague and did not lead to meaningful improvement."
+    - id: 5
+      name: "Query Optimization"
+      course: "Database Systems"
+      type: "practice"
+      responseMode: "mc"
+      date: "Feb 20, 2026"
+      framing: "B"
+      judging: "C"
+      steering: "C"
+      cyclesUsed: 5
+      maxCycles: 5
+      issuesFound: 1
+      issuesAvailable: 4
+      framingFeedback: "Identified scale constraints but missed indexing assumptions."
+      judgingFeedback: "Focused on syntax issues, missed the join order inefficiency."
+      steeringFeedback: "Vague corrections — 'optimize the query' without specifying how."
+    - id: 6
+      name: "CNN Architecture Review"
+      course: "Deep Learning 101"
+      type: "assessment"
+      responseMode: "oe"
+      date: "Feb 15, 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 5
+      issuesAvailable: 5
+      framingFeedback: "Comprehensive analysis covering all architectural constraints."
+      judgingFeedback: "Identified all major issues including subtle pooling dimension error."
+      steeringFeedback: "Precise, prioritized corrections that resolved all identified issues."
+    - id: 7
+      name: "Linked List Operations"
+      course: "Software Engineering"
+      type: "practice"
+      responseMode: "mc"
+      date: "Feb 10, 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Good memory constraint identification but missed thread safety."
+      judgingFeedback: "Caught the null pointer issue but missed the cycle detection gap."
+      steeringFeedback: "Clear, specific instructions that addressed the core issue."
+    - id: 8
+      name: "Index Selection"
+      course: "Database Systems"
+      type: "practice"
+      responseMode: "oe"
+      date: "Feb 5, 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 5
+      framingFeedback: "Strong workload characterization and cardinality estimation."
+      judgingFeedback: "Identified covering index issue but missed the composite key order problem."
+      steeringFeedback: "Mostly specific but sent two corrections simultaneously, diluting focus."
+    - id: 9
+      name: "Gradient Descent"
+      course: "Deep Learning 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "Jan 30, 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Reasonable learning rate assumptions but missed batch size considerations."
+      judgingFeedback: "Caught the convergence issue but not the saddle point concern."
+      steeringFeedback: "Targeted correction that directly addressed the learning rate schedule."
+    - id: 10
+      name: "Binary Search Variants"
+      course: "Software Engineering"
+      type: "assessment"
+      responseMode: "mc"
+      date: "Jan 25, 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Clear boundary condition analysis and sorted-input assumption."
+      judgingFeedback: "Found the off-by-one error but missed the integer overflow risk."
+      steeringFeedback: "Good direction but could have been more specific about the fix."
+    - id: 11
+      name: "Normalization Forms"
+      course: "Database Systems"
+      type: "practice"
+      responseMode: "oe"
+      date: "Jan 20, 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Identified functional dependencies but missed transitive dependency analysis."
+      judgingFeedback: "Focused on 1NF/2NF issues but missed the 3NF violation entirely."
+      steeringFeedback: "Corrections were relevant but lacked the formal decomposition steps."
+    - id: 12
+      name: "Loss Function Selection"
+      course: "Deep Learning 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "Jan 15, 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 1
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 3
+      framingFeedback: "Excellent classification of the problem type and loss function requirements."
+      judgingFeedback: "Caught all issues including the label smoothing omission."
+      steeringFeedback: "Single, precise correction that resolved the core issue in one cycle."
+
+# ─── Challenge Report (07b detail for challenge 1) ───
+challengeReport:
+  challengeName: "Sorting Algorithm Analysis"
+  course: "Software Engineering"
+  date: "Mar 8, 2026"
+  type: "assessment"
+  responseMode: "mc"
+  cyclesUsed: 2
+  maxCycles: 5
+  framing:
+    grade: "A"
+    submission: "The problem asks to analyze sorting algorithms but doesn't specify: input size range, whether stability matters, memory constraints. I assume: arrays of 1K-1M integers, stability not required, O(1) extra space preferred."
+    feedback: "Strong identification of missing constraints. The assumption about O(1) extra space is well-justified given the context. Could have also questioned whether the input is partially sorted."
+    summary: "Strong identification of missing constraints and clear, well-justified assumptions about the problem scope."
+  judging:
+    grade: "B"
+    summary: "Caught key issues like edge cases and partition strategy, but missed the complexity proof gap in the AI output."
+  steering:
+    grade: "A"
+    summary: "Specific, actionable corrections that led to meaningful improvements in both analysis depth and code quality."
+  cycles:
+    - num: 1
+      judgingText: "Selected issues: 'Missing edge case for empty array', 'Complexity analysis incomplete for worst case'"
+      judgingGrade: "B"
+      steeringText: "Selected corrections: 'Add empty array guard clause', 'Include worst-case analysis for quicksort'"
+      steeringGrade: "A"
+      aiOutput: "The updated analysis now includes an empty array guard clause at the entry point of each sorting function. Worst-case time complexity for quicksort has been revised to O(n²) with a note on pivot selection strategies to mitigate this scenario..."
+    - num: 2
+      isFinal: true
+      judgingText: "Identified: 'Partition strategy not optimal', 'No mention of cache performance'"
+      judgingGrade: "B"
+      steeringText: "Directed: 'Switch to median-of-three partitioning', 'Add cache locality analysis'"
+      steeringGrade: "A"
+      aiOutput: "Final revision adopts median-of-three pivot selection for quicksort, reducing worst-case likelihood. A new section on cache locality compares merge sort's sequential access pattern against quicksort's in-place but less cache-friendly partitioning..."
+
+# ─── Instructor Analytics ───
+instructorAnalytics:
+  selectedCourse: "Deep Learning 101"
+  selectedChallenge: "Neural Network Debugging"
+  stats:
+    totalSubscribers: 45
+    completed: "38/45"
+    avgGrade: "B"
+    pendingStudents: 7
+  gradeDistribution:
+    framing:
+      a: 12
+      b: 18
+      c: 8
+    judging:
+      a: 8
+      b: 16
+      c: 14
+    steering:
+      a: 10
+      b: 18
+      c: 10
+  perStudentResults:
+    - name: "Sarah Cohen"
+      completed: "Mar 14, 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      overall: "A"
+    - name: "James Park"
+      completed: "Mar 13, 2026"
+      framing: "B"
+      judging: "B"
+      steering: "C"
+      overall: "B"
+    - name: "Maria Santos"
+      completed: "Mar 13, 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      overall: "A"
+    - name: "Ahmed Hassan"
+      completed: "Mar 12, 2026"
+      framing: "C"
+      judging: "C"
+      steering: "C"
+      overall: "C"
+    - name: "Li Wei"
+      completed: "Mar 12, 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      overall: "B"
+    - name: "Emma Johnson"
+      completed: null
+      framing: null
+      judging: null
+      steering: null
+      overall: null
+
+# ─── Profile Data ───
+profileData:
+  student:
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    institution: "Tel Aviv University"
+    role: "student"
+    registrationDate: "January 15, 2026"
+    challengesCreated: 4
+    challengesExecuted: 12
+    subscribedCourses: ["Deep Learning 101", "Database Systems", "Software Engineering"]
+  instructor:
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    institution: "Tel Aviv University"
+    role: "instructor"
+    registrationDate: "September 1, 2024"
+    challengesCreated: 12
+    coursesManaged: 2
+
+# ─── Instructor Course Catalog ───
+instructorCourses:
+  - id: "deep-learning-101"
+    name: "Deep Learning 101"
+    department: "Computer Science"
+    role: "Lead Instructor"
+    studentCount: 45
+    challengeCount: 8
+    instructorCount: 3
+    subjects: ["Neural Networks", "CNNs", "RNNs", "Optimization", "Regularization"]
+  - id: "database-systems"
+    name: "Database Systems"
+    department: "Computer Science"
+    role: "Co-Instructor"
+    studentCount: 62
+    challengeCount: 5
+    instructorCount: 2
+    subjects: ["SQL", "Query Optimization", "Indexing", "Normalization"]

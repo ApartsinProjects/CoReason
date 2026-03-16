@@ -1,0 +1,23 @@
+id: rubric
+title: "Rúbrica de evaluación"
+skills:
+  - name: "Encuadre"
+    grades:
+      A: "Identificó todas las suposiciones críticas, restricciones y aclaraciones. Los refinamientos están bien justificados y son completos."
+      B: "Identificó la mayoría de los refinamientos necesarios pero omitió uno o dos importantes. Buena comprensión general."
+      C: "Omitió varios refinamientos importantes o incluyó elementos incorrectos. Comprensión parcial de las ambigüedades."
+      D: "Omitió la mayoría de los refinamientos necesarios. Comprensión mínima de la definición del problema."
+
+  - name: "Juicio"
+    grades:
+      A: "Identificó todos los defectos importantes con un análisis preciso y cuantificado. Distingue correctamente entre problemas reales y falsos positivos."
+      B: "Identificó los defectos principales pero omitió algunos secundarios. Buena capacidad analítica pero no exhaustiva."
+      C: "Omitió defectos críticos o marcó la solución como completada prematuramente. Análisis superficial."
+      D: "No logró identificar los defectos principales. Evaluación poco fiable de las soluciones IA."
+
+  - name: "Dirección"
+    grades:
+      A: "Instrucciones específicas, ejecutables y bien dirigidas. Cada instrucción aborda directamente un problema identificado con contexto de implementación."
+      B: "Instrucciones generalmente buenas pero a veces demasiado vagas o amplias. Aborda la mayoría de los problemas identificados."
+      C: "Instrucciones vagas o fuera de tema. No aborda eficazmente los problemas identificados durante el juicio."
+      D: "Instrucciones irrelevantes, demasiado genéricas o contraproducentes. No mejoraría la solución IA."

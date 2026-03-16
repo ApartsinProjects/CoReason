@@ -1,0 +1,292 @@
+id: sql
+title: "Query Optimization for E-Commerce Analytics"
+course: database-systems
+subject: "Query Processing &rsaquo; Query Optimization"
+maxCycles: 4
+rawProblem: "Write a SQL query that generates a monthly sales performance report for an e-commerce platform. The report should show top-selling products grouped by category, including total revenue, units sold, and average customer rating. The database has &ldquo;millions&rdquo; of transaction records. The query must run &ldquo;quickly enough&rdquo; for an executive dashboard that auto-refreshes. It should &ldquo;handle the holiday rush&rdquo; when order volume peaks."
+rawProblemShort: "Monthly sales report SQL query &hellip; top products by category, revenue, ratings. Millions of records, dashboard performance."
+
+mc:
+  aiSolution:
+    html: |
+      <div class="code-block">SELECT
+          c.category_name,
+          p.product_name,
+          SUM(oi.quantity) AS units_sold,
+          SUM(oi.quantity * oi.unit_price) AS total_revenue,
+          AVG(r.rating) AS avg_rating
+      FROM order_items oi
+      JOIN orders o ON oi.order_id = o.order_id
+      JOIN products p ON oi.product_id = p.product_id
+      JOIN categories c ON p.category_id = c.category_id
+      LEFT JOIN reviews r ON p.product_id = r.product_id
+      WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+      GROUP BY c.category_name, p.product_name
+      ORDER BY c.category_name, total_revenue DESC;</div>
+    summary: "Basic SELECT with JOINs, GROUP BY, ORDER BY. No top-N filter, no index analysis, reviews JOIN unfiltered."
+  framing:
+    hint: "The problem has vague requirements. Select ALL refinements needed to define the task precisely before the AI writes the query."
+    options:
+      - letter: A
+        text: "Quantify &ldquo;millions&rdquo; as ~8M orders, ~200K products, ~40 categories"
+        correct: true
+      - letter: B
+        text: "Define &ldquo;quickly enough&rdquo; as query response under 3 seconds"
+        correct: true
+      - letter: C
+        text: "&ldquo;Top-selling&rdquo; means top 10 per category ranked by revenue"
+        correct: true
+      - letter: D
+        text: "Assume all queries run against a pre-built materialized view"
+        correct: false
+      - letter: E
+        text: "Monthly = calendar month; include month-over-month comparison"
+        correct: true
+      - letter: F
+        text: "Ratings are guaranteed to exist for every product (no NULLs)"
+        correct: false
+    studentSelections: [0, 2, 4]
+    feedback:
+      grade: B
+      html: |
+        <div class="criticism"><strong>Correctly selected:</strong> (A) quantifying data volume, (C) top-10 per category, (E) calendar month with comparison.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Missed:</strong> (B) defining &ldquo;quickly enough&rdquo; &mdash; without a concrete SLA, there&rsquo;s no way to evaluate query performance.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Correctly avoided:</strong> (D) pre-built materialized view over-specifies architecture; (F) ratings are NOT guaranteed for all products.</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (C), (E).</div>
+  cycles:
+    - # Cycle 1
+      judging:
+        options:
+          - letter: A
+            text: "Missing top-N filter &mdash; returns ALL products per category, not top 10"
+            correct: true
+          - letter: B
+            text: "Reviews JOIN inflates row count &mdash; AVG(rating) is computed across duplicated rows"
+            correct: true
+          - letter: C
+            text: "GROUP BY should include product_id for correctness"
+            correct: false
+          - letter: D
+            text: "No index strategy or execution plan analysis"
+            correct: true
+          - letter: E
+            text: "Should use NoSQL for this kind of analytics query"
+            correct: false
+        studentSelections: [0, 3]
+        doneSelected: false
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>Correctly identified:</strong> (A) missing top-N filter, (D) no index strategy.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Missed:</strong> (B) reviews JOIN creates duplicate rows that distort AVG(rating). This is a subtle but critical correctness issue.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctly avoided:</strong> (C) GROUP BY is fine with product_name if unique; (E) SQL is appropriate here.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B), (D).</div>
+      steering:
+        options:
+          - letter: A
+            text: "&ldquo;Add ROW_NUMBER() OVER (PARTITION BY category ORDER BY revenue DESC) to limit to top 10 per category.&rdquo;"
+            correct: true
+          - letter: B
+            text: "&ldquo;Include index recommendations and expected execution plan analysis.&rdquo;"
+            correct: true
+          - letter: C
+            text: "&ldquo;Add more JOINs to include supplier and warehouse information.&rdquo;"
+            correct: false
+          - letter: D
+            text: "&ldquo;Rewrite as a stored procedure for better performance.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>Correctly selected:</strong> (A) window function for top-N, (B) index/execution plan. Both targeted and specific.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctly avoided:</strong> (C) irrelevant scope expansion, (D) premature optimization.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Ideal:</strong> (A), (B) &mdash; optimal set.</div>
+      summaryJudging: "Missing top-N filter, no index/execution plan"
+      summarySteering: "Add ROW_NUMBER for top-10; include index analysis"
+    - # Cycle 2 — student marks done too early
+      aiUpdate:
+        html: |
+          <div class="code-block">WITH ranked_products AS (
+              SELECT
+                  c.category_name,
+                  p.product_name,
+                  SUM(oi.quantity) AS units_sold,
+                  SUM(oi.quantity * oi.unit_price) AS total_revenue,
+                  AVG(r.rating) AS avg_rating,
+                  ROW_NUMBER() OVER (
+                      PARTITION BY c.category_id
+                      ORDER BY SUM(oi.quantity * oi.unit_price) DESC
+                  ) AS rk
+              FROM order_items oi
+              JOIN orders o ON oi.order_id = o.order_id
+              JOIN products p ON oi.product_id = p.product_id
+              JOIN categories c ON p.category_id = c.category_id
+              LEFT JOIN reviews r ON p.product_id = r.product_id
+              WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+              GROUP BY c.category_id, c.category_name,
+                       p.product_id, p.product_name
+          )
+          SELECT * FROM ranked_products
+          WHERE rk &lt;= 10
+          ORDER BY category_name, rk;
+
+          -- Recommended Indexes:
+          -- CREATE INDEX idx_orders_date ON orders(order_date);
+          -- CREATE INDEX idx_oi_order ON order_items(order_id, product_id);</div>
+        summary: "CTE with ROW_NUMBER for top-10 per category. Index recommendations added. Reviews JOIN still unfiltered."
+      judging:
+        options:
+          - letter: A
+            text: "Reviews JOIN still creates duplicate rows &mdash; AVG(rating) is distorted by order volume"
+            correct: true
+          - letter: B
+            text: "Month-over-month comparison is still missing from requirements"
+            correct: true
+          - letter: C
+            text: "CTE makes it slower than the original query"
+            correct: false
+        studentSelections: []
+        doneSelected: true
+        feedback:
+          grade: C
+          html: |
+            <div class="criticism"><strong>Premature completion.</strong> Two real issues remain: (A) reviews JOIN distorts ratings &mdash; a row for a product with 100 orders gets 100&times; weight in AVG; (B) month-over-month comparison was a stated requirement.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Better:</strong> Select both (A) and (B), then steer the AI to fix them before marking complete.</div>
+      steering: null
+      summaryJudging: "Student marked solution as complete (premature)"
+      summarySteering: null
+  completion:
+    grades:
+      framing: B
+      judging: C
+      steering: A
+    summary: "Steering was excellent &mdash; corrections were specific and well-chosen. Framing missed the performance SLA definition. Judging was the weakest area: missed the reviews cardinality issue in Cycle 1 and ended prematurely in Cycle 2 with two real issues remaining. Practice identifying all issues before marking a solution complete."
+
+oe:
+  aiSolution:
+    html: |
+      <div class="code-block">WITH monthly_sales AS (
+          SELECT
+              c.category_name,
+              p.product_id,
+              p.product_name,
+              SUM(oi.quantity) AS units_sold,
+              SUM(oi.quantity * oi.unit_price) AS total_revenue,
+              ROW_NUMBER() OVER (
+                  PARTITION BY c.category_id
+                  ORDER BY SUM(oi.quantity * oi.unit_price) DESC
+              ) AS rk
+          FROM order_items oi
+          JOIN orders o ON oi.order_id = o.order_id
+          JOIN products p ON oi.product_id = p.product_id
+          JOIN categories c ON p.category_id = c.category_id
+          WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+          GROUP BY c.category_id, c.category_name,
+                   p.product_id, p.product_name
+      )
+      SELECT ms.*,
+          (SELECT AVG(r.rating) FROM reviews r
+           WHERE r.product_id = ms.product_id) AS avg_rating
+      FROM monthly_sales ms
+      WHERE rk &lt;= 10
+      ORDER BY category_name, rk;</div>
+    summary: "CTE with ROW_NUMBER for top-10. Correlated subquery for ratings. No index analysis, no month-over-month."
+  framing:
+    hint: "Add refinement sections to clarify the vague requirements. Each section should address one ambiguity in the raw problem."
+    sections:
+      - name: "Assumptions: Data Volume &amp; Structure"
+        text: "Estimate ~8M orders, ~200K products, ~40 categories in a normalized relational schema. Products have at most one category assignment."
+      - name: "Constraints: Performance SLA"
+        text: "Dashboard auto-refreshes every 5 minutes. Query must return in under 3 seconds. Consider indexing strategy for the WHERE clause on order_date."
+      - name: "Clarification: Report Scope"
+        text: "&ldquo;Top-selling&rdquo; = top 10 per category by total revenue. Monthly = calendar month. Include comparison with previous month for trend analysis."
+    feedback:
+      grade: A
+      html: |
+        <div class="criticism"><strong>Thorough framing.</strong> Quantified data volume, defined performance SLA, clarified top-N semantics, and specified month-over-month comparison.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Minor gap:</strong> Could address how to handle products with no reviews (NULL ratings).</div>
+  cycles:
+    - # Cycle 1
+      judging:
+        sections:
+          - name: "Issue: Correlated subquery for ratings"
+            text: "The subquery for avg_rating runs once per result row. With 400 rows (10 per category &times; 40 categories), this means 400 separate queries. Should be a pre-aggregated JOIN or CTE."
+          - name: "Issue: Missing month-over-month comparison"
+            text: "Requirements specify month-over-month comparison but query only shows current month data. Need to include previous month in the same result set."
+        doneSelected: false
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>Excellent analysis.</strong> Both issues are correctly identified with specific, quantified reasoning. The correlated subquery concern is well-explained with row count estimates.</div>
+      steering:
+        sections:
+          - name: "Instruction: Replace correlated subquery"
+            text: "Create a ratings CTE that computes AVG(rating) per product_id once, then LEFT JOIN it to the main query. This eliminates the per-row subquery."
+          - name: "Instruction: Add previous month comparison"
+            text: "Add a second CTE for previous month data. Final SELECT should include both current and previous month revenue with a percent-change column."
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>Well-targeted.</strong> Both instructions are specific, provide clear implementation guidance, and directly address the identified issues.</div>
+      summaryJudging: "Correlated subquery performance issue, missing month-over-month"
+      summarySteering: "Replace correlated subquery with CTE; add previous month comparison"
+    - # Cycle 2 — student marks done
+      aiUpdate:
+        html: |
+          <div class="code-block">WITH product_ratings AS (
+              SELECT product_id, AVG(rating) AS avg_rating,
+                     COUNT(*) AS review_count
+              FROM reviews GROUP BY product_id
+          ),
+          current_month AS (
+              SELECT c.category_name, p.product_id, p.product_name,
+                     SUM(oi.quantity) AS units_sold,
+                     SUM(oi.quantity * oi.unit_price) AS revenue,
+                     ROW_NUMBER() OVER (PARTITION BY c.category_id
+                         ORDER BY SUM(oi.quantity*oi.unit_price) DESC) AS rk
+              FROM order_items oi
+              JOIN orders o ON oi.order_id = o.order_id
+              JOIN products p ON oi.product_id = p.product_id
+              JOIN categories c ON p.category_id = c.category_id
+              WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE)
+              GROUP BY c.category_id, c.category_name, p.product_id, p.product_name
+          ),
+          prev_month AS (
+              SELECT p.product_id,
+                     SUM(oi.quantity * oi.unit_price) AS prev_revenue
+              FROM order_items oi
+              JOIN orders o ON oi.order_id = o.order_id
+              JOIN products p ON oi.product_id = p.product_id
+              WHERE o.order_date &gt;= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month'
+                AND o.order_date &lt; DATE_TRUNC('month', CURRENT_DATE)
+              GROUP BY p.product_id
+          )
+          SELECT cm.category_name, cm.product_name, cm.units_sold,
+                 cm.revenue, pr.avg_rating, pr.review_count,
+                 pm.prev_revenue,
+                 ROUND((cm.revenue - pm.prev_revenue) / pm.prev_revenue * 100, 1) AS pct_change
+          FROM current_month cm
+          LEFT JOIN product_ratings pr ON cm.product_id = pr.product_id
+          LEFT JOIN prev_month pm ON cm.product_id = pm.product_id
+          WHERE cm.rk &lt;= 10
+          ORDER BY cm.category_name, cm.rk;
+
+          -- Indexes: idx_orders_date, idx_oi_order_product</div>
+        summary: "Three CTEs: ratings (pre-aggregated), current month, previous month. Percent-change column. Index hints."
+      judging:
+        sections: []
+        doneSelected: true
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>Reasonable completion.</strong> Major issues are resolved. Minor remaining concern: pct_change will error on division by zero when prev_revenue is NULL or 0. A NULLIF or COALESCE guard would be prudent.</div>
+      steering: null
+      summaryJudging: "Student marked solution as complete"
+      summarySteering: null
+  completion:
+    grades:
+      framing: A
+      judging: B
+      steering: A
+    summary: "Strong overall performance. Framing was thorough with clear SLA definition. Judging correctly identified the two main issues in Cycle 1. Steering provided specific, implementable instructions. Minor deduction on judging: could have caught the division-by-zero edge case in the final output before marking complete."

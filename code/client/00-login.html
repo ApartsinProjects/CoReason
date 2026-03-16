@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab — Sign In</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+  <style>
+    body { background: linear-gradient(135deg, var(--primary) 0%, var(--teal) 100%); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-container { width: 100%; max-width: 460px; }
+    .login-logo { text-align: center; margin-bottom: 32px; }
+    .login-logo img { height: 64px; width: 64px; border-radius: 12px; margin-bottom: 12px; }
+    .login-logo h1 { color: #fff; font-size: 28px; }
+    .login-logo p { color: rgba(255,255,255,.7); font-size: 14px; }
+    .login-card { background: #fff; border-radius: 12px; padding: 32px; box-shadow: var(--shadow-lg); }
+    .login-card h2 { font-size: 20px; margin-bottom: 24px; text-align: center; color: var(--primary); }
+    .sso-buttons { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .btn-sso { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: var(--radius); border: 1.5px solid var(--border); background: #fff; font-size: 14px; font-weight: 500; cursor: pointer; transition: all .15s; width: 100%; }
+    .btn-sso:hover { border-color: var(--primary); background: #f8f9ff; }
+    .btn-sso svg { width: 20px; height: 20px; }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--text-secondary); font-size: 13px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .footer-link { text-align: center; margin-top: 20px; font-size: 14px; color: rgba(255,255,255,.7); }
+    .footer-link a { color: #fff; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-logo">
+      <img src="assets/logo.png" alt="CoReasoning Lab">
+      <h1>CoReasoning Lab</h1>
+      <p data-t="aiPoweredAssessment">AI-Powered Co-Reasoning Assessment</p>
+    </div>
+
+    <div class="login-card">
+      <h2 data-t="welcomeBack">Welcome Back</h2>
+
+      <!-- SSO Buttons -->
+      <div class="sso-buttons">
+        <button class="btn-sso">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          <span data-t="continueWithGoogle">Continue with Google</span>
+        </button>
+        <button class="btn-sso">
+          <svg viewBox="0 0 24 24"><path fill="#00A4EF" d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z"/></svg>
+          <span data-t="continueWithMicrosoft">Continue with Microsoft</span>
+        </button>
+      </div>
+
+      <div class="divider" data-t="orSignInWithEmail">or sign in with email</div>
+
+      <!-- Email/Password -->
+      <div class="form-group">
+        <label data-t="email">Email</label>
+        <input type="email" class="form-control" placeholder="you@university.edu" value="s.cohen@tau.ac.il">
+      </div>
+      <div class="form-group">
+        <label data-t="password">Password</label>
+        <input type="password" class="form-control" data-t-placeholder="enterPassword" placeholder="Enter your password" value="********">
+      </div>
+
+      <button class="btn btn-primary btn-lg" style="width:100%; justify-content:center; margin-top:8px;" data-t="signIn">Sign In</button>
+    </div>
+
+    <div class="footer-link">
+      <span data-t="dontHaveAccount">Don't have an account?</span> <a href="01-sign-up.html" data-t="signUp">Sign up</a>
+    </div>
+  </div>
+</body>
+</html>

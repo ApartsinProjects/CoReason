@@ -1,0 +1,23 @@
+id: rubric
+title: "Grille d'évaluation"
+skills:
+  - name: "Cadrage"
+    grades:
+      A: "A identifié toutes les hypothèses critiques, les contraintes et les clarifications. Les raffinements sont bien justifiés et complets."
+      B: "A identifié la plupart des raffinements nécessaires mais en a manqué un ou deux importants. Bonne compréhension globale."
+      C: "A manqué plusieurs raffinements importants ou a inclus des éléments incorrects. Compréhension partielle des ambiguïtés."
+      D: "A manqué la majorité des raffinements nécessaires. Compréhension minimale de la définition du problème."
+
+  - name: "Jugement"
+    grades:
+      A: "A identifié tous les défauts importants avec une analyse précise et quantifiée. Distingue correctement les vrais problèmes des faux."
+      B: "A identifié les défauts principaux mais en a manqué certains secondaires. Bonne capacité d'analyse mais pas exhaustive."
+      C: "A manqué des défauts critiques ou a marqué la solution comme terminée prématurément. Analyse superficielle."
+      D: "N'a pas réussi à identifier les défauts majeurs. Évaluation peu fiable des solutions IA."
+
+  - name: "Orientation"
+    grades:
+      A: "Instructions spécifiques, exploitables et bien ciblées. Chaque instruction aborde directement un problème identifié avec un contexte d'implémentation."
+      B: "Instructions généralement bonnes mais parfois trop vagues ou trop larges. Aborde la plupart des problèmes identifiés."
+      C: "Instructions vagues ou hors sujet. Ne cible pas efficacement les problèmes identifiés lors du jugement."
+      D: "Instructions non pertinentes, trop génériques ou contre-productives. N'améliorerait pas la solution IA."

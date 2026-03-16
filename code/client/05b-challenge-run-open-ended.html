@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab — Challenge Run (Open-Ended Simulator)</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+  <style>
+    .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
+    .problem-panel { background: #f8f9ff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--primary); }
+    .problem-panel h4 { color: var(--primary); font-size: 14px; margin-bottom: 8px; }
+    .instructions-bar { background: #e0f2f1; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: var(--teal); display: flex; align-items: flex-start; gap: 8px; }
+    .instructions-bar strong { white-space: nowrap; }
+    .substep-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 12px; }
+    .substep-judge { background: #fff3e0; color: var(--warning); }
+    .substep-steer { background: #e3f2fd; color: #1565c0; }
+    .cycle-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--border); cursor: pointer; }
+    .cycle-header h3 { font-size: 16px; }
+    .cycle-num { background: var(--primary); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+    .submit-area { display: flex; align-items: center; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .cycle-indicator { font-size: 13px; color: var(--text-secondary); background: #f5f5f5; padding: 6px 12px; border-radius: var(--radius); }
+    .ai-output { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .ai-output-label { font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 8px; text-transform: uppercase; }
+    .divider-line { border: none; border-top: 1px dashed var(--border); margin: 16px 0; }
+
+    /* Mode banner */
+    .mode-banner { padding: 10px 20px; border-radius: var(--radius); font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .mode-banner.practice { background: #e8f5e9; color: #2e7d32; border: 2px solid #a5d6a7; }
+    .mode-banner.assessment { background: #fff3e0; color: #ef6c00; border: 2px solid #ffcc80; }
+
+    /* Open-ended section items */
+    .section-list { margin-bottom: 12px; }
+    .section-item { border: 1.5px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; }
+    .section-header { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #f5f5f5; }
+    .section-header input { border: none; background: transparent; font-weight: 600; font-size: 14px; flex: 1; outline: none; }
+    .section-header .remove-btn { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 16px; }
+    .section-body textarea { width: 100%; border: none; padding: 10px 12px; font-size: 14px; resize: vertical; min-height: 60px; outline: none; font-family: inherit; }
+    .add-section-btn { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1.5px dashed var(--border); border-radius: var(--radius); background: transparent; font-size: 13px; color: var(--primary); cursor: pointer; width: 100%; justify-content: center; }
+    .add-section-btn:hover { border-color: var(--primary); background: #f8f9ff; }
+
+    /* "Solution is complete" button */
+    .btn-done-judging { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border: 2px solid var(--success); border-radius: var(--radius); background: #fff; color: var(--success); font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s; margin-top: 8px; width: 100%; justify-content: center; }
+    .btn-done-judging:hover { background: #e8f5e9; }
+    .btn-done-judging.selected { background: var(--success); color: #fff; }
+
+    /* Collapsible feedback */
+    .feedback-panel { border-left: 4px solid var(--teal); padding: 0; background: #e0f2f1; border-radius: 0 var(--radius) var(--radius) 0; margin-top: 16px; overflow: hidden; }
+    .feedback-toggle { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--teal); }
+    .feedback-toggle:hover { background: rgba(0,0,0,.03); }
+    .feedback-toggle .arrow { transition: transform .2s; font-size: 12px; }
+    .feedback-toggle .arrow.collapsed { transform: rotate(-90deg); }
+    .feedback-body { padding: 0 16px 16px; }
+    .feedback-body.collapsed { display: none; }
+    .feedback-body .criticism { font-size: 14px; margin-bottom: 8px; }
+    .feedback-body .better-alt { font-size: 14px; color: var(--teal); font-style: italic; }
+
+    /* Collapsed cycle */
+    .cycle-collapsed .cycle-body { display: none; }
+    .cycle-collapsed .cycle-header { border-bottom: none; margin-bottom: 0; opacity: 0.7; }
+    .cycle-header .collapse-arrow { margin-left: auto; font-size: 12px; transition: transform .2s; }
+    .cycle-collapsed .collapse-arrow { transform: rotate(-90deg); }
+
+    /* Code block */
+    .code-block { background: #263238; color: #eeffff; padding: 16px; border-radius: var(--radius); font-family: 'Consolas', 'Fira Code', monospace; font-size: 13px; line-height: 1.6; overflow-x: auto; margin: 8px 0; white-space: pre; }
+
+    /* Summary panel */
+    .summary-panel { position: sticky; top: 80px; }
+    .summary-section { margin-bottom: 12px; }
+    .summary-section h5 { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--text-secondary); margin-bottom: 6px; }
+    .summary-raw { font-size: 12px; color: var(--text-secondary); line-height: 1.5; max-height: 100px; overflow-y: auto; padding: 8px; background: #f8f9ff; border-radius: 4px; border-left: 3px solid var(--primary); }
+    .summary-solution { font-size: 12px; color: var(--text); line-height: 1.5; max-height: 120px; overflow-y: auto; padding: 8px; background: #f5f5f5; border-radius: 4px; font-family: 'Consolas', monospace; }
+    .cycle-log { font-size: 12px; }
+    .cycle-log-entry { padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .cycle-log-entry:last-child { border-bottom: none; }
+    .cycle-log-label { font-weight: 600; color: var(--primary); font-size: 11px; text-transform: uppercase; }
+
+    /* Sim controls */
+    .sim-step-icon { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #e0e0e0; color: #757575; font-size: 12px; font-weight: 700; cursor: pointer; border: 1.5px solid #bdbdbd; margin-left: 8px; transition: all .2s; }
+    .sim-step-icon:hover { background: #bdbdbd; color: #424242; transform: scale(1.15); }
+    .sim-step-icon.done { background: #c8e6c9; color: #2e7d32; border-color: #a5d6a7; cursor: default; }
+    .sim-step-icon.active { background: #fff3e0; color: #ef6c00; border-color: #ffcc80; animation: simPulse 1s infinite; }
+    @keyframes simPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(239,108,0,.3); } 50% { box-shadow: 0 0 0 6px rgba(239,108,0,0); } }
+    .llm-status { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #1a237e 0%, #00695c 100%); color: #fff; padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 500; display: none; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.25); z-index: 300; }
+    .llm-status.visible { display: inline-flex; }
+    .llm-spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .sim-panel { background: linear-gradient(135deg, #f5f5f5, #eeeeee); border: 1.5px solid #bdbdbd; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #616161; }
+    .sim-panel strong { color: #424242; }
+    .sim-panel .sim-badge { background: #ef6c00; color: #fff; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .sim-hidden { display: none; }
+    .sim-reveal { animation: simFadeIn .5s ease-out; }
+    @keyframes simFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Summary status */
+    .summary-status-bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: linear-gradient(135deg, #ede7f6, #e3f2fd); border-radius: var(--radius); margin-bottom: 12px; font-size: 12px; font-weight: 600; color: var(--primary); }
+    .summary-badge { display: inline-block; font-size: 10px; padding: 1px 6px; background: #ede7f6; color: var(--primary); border-radius: 3px; font-weight: 600; margin-left: 6px; vertical-align: middle; }
+
+    /* Responsive: challenge-run open-ended */
+    @media (max-width: 768px) {
+      .run-layout { grid-template-columns: 1fr !important; }
+      .summary-panel { position: static !important; order: -1; }
+      .sim-panel { flex-direction: column; align-items: stretch; }
+    }
+    @media (max-width: 480px) {
+      .mode-banner { padding: 8px 12px; font-size: 13px; }
+      .problem-panel { padding: 14px; }
+      .code-block { padding: 12px; font-size: 12px; }
+      .instructions-bar { font-size: 12px; padding: 8px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
+    <nav>
+      <a href="02-dashboard.html">Dashboard</a>
+      <a href="03-challenge-list.html" class="active" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog.html" data-t="courses">Courses</a>
+      <a href="07-student-analytics.html" data-t="myResults">My Results</a>
+    </nav>
+    <div class="user-area">
+      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <span>Maria S.</span>
+      <a href="09-profile.html"><div class="avatar">MS</div></a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="sim-panel">
+      <span class="sim-badge" data-t="simulator">Simulator</span>
+      <strong>Open-Ended Challenge Run</strong>
+      <span>— Click &#9654; icons to advance. Student writes structured sections.</span>
+      <button class="btn btn-sm btn-outline" onclick="location.reload()" style="margin-left:auto;">&#8635; <span data-t="reset">Reset</span></button>
+    </div>
+
+    <div class="page-header flex-between">
+      <div>
+        <h1>Sorting Pipeline for Sensor Data</h1>
+        <p>Introduction to Algorithms &bull; Sorting &amp; Searching &gt; Comparison-based Sorting</p>
+      </div>
+      <a href="03-challenge-list.html" class="btn btn-outline">&#10005; <span data-t="exit">Exit</span></a>
+    </div>
+
+    <!-- Mode Banner -->
+    <div class="mode-banner practice">
+      <span style="font-size:20px;">&#9881;</span>
+      <span data-t="practiceMode">Practice Mode</span> — <span data-t="practiceModeDesc">Feedback after each phase, retries allowed</span>
+    </div>
+
+    <!-- Phase Stepper -->
+    <div class="stepper">
+      <div class="step-item active" id="stepper-phase1"><div class="step-num" id="stepper-p1-num">1</div><div data-t="phase1">Phase 1 — Framing</div></div>
+      <div class="step-item" id="stepper-phase2"><div class="step-num">2</div><div data-t="phase2">Phase 2 — Judge+Steer Cycles</div></div>
+    </div>
+
+    <!-- ════════ PHASE 1 — FRAMING (Open-Ended) ════════ -->
+    <div class="card" style="border-left:4px solid var(--primary);">
+      <h3 style="margin-bottom:12px;"><span style="color:var(--primary);"><span data-t="framing">Framing</span> (<span data-t="openEnded">Open-Ended</span>)</span></h3>
+
+      <div class="instructions-bar" style="background:#e8f5e9; color:#2e7d32;">
+        <strong data-t="hint">Hint</strong>:
+        The raw problem is intentionally incomplete. Add refinement sections below — assumptions, constraints, clarifications, success metrics — to turn it into a well-defined task. The raw problem is your starting point; your sections refine it.
+      </div>
+
+      <div class="problem-panel">
+        <h4><span data-t="rawProblemStatement">Raw Problem Statement</span> (read-only base)</h4>
+        <p>Write a sorting module that ingests a live stream of temperature readings from warehouse sensors and outputs a continuously sorted buffer that a monitoring dashboard can poll. Each reading is a (sensor_id, timestamp, temperature) tuple. The warehouse has "a few hundred" sensors reporting every second. Deliver working pseudocode for the module plus a table comparing your chosen algorithm against two alternatives on time complexity, space usage, and latency. The system should "handle spikes" when sensors report in bursts.</p>
+      </div>
+
+      <h4 style="font-size:14px; margin-bottom:8px; color:var(--teal);"><span data-t="refinementSections">Your Refinement Sections</span> <span class="help-icon" data-tooltip="Add named sections to clarify the problem. Each section should have a clear name and detailed description.">?</span></h4>
+
+      <div class="section-list" id="framingSections">
+        <!-- Sections added dynamically -->
+      </div>
+      <p class="text-sm text-muted" id="framingEmpty" style="text-align:center; padding:20px 0; color:#bbb;">No sections yet — click below to add your first refinement</p>
+
+      <button class="add-section-btn" onclick="addSection('framingSections', 'Section title...', 'Describe your assumption, constraint, or clarification...')">+ Add Refinement Section</button>
+
+      <div class="submit-area">
+        <button class="btn btn-primary" id="submitFramingBtn" disabled>Submit Framing</button>
+        <span class="text-sm text-muted" id="framingCount">0 sections</span>
+      </div>
+    </div>
+
+    <!-- Framing Feedback — collapsible -->
+    <div class="feedback-panel">
+      <div class="feedback-toggle" onclick="toggleFeedback(this)">
+        <span><span data-t="framingFeedback">Framing Feedback</span> <span class="grade grade-A" style="width:22px;height:22px;font-size:11px;margin-left:8px;">A</span></span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="feedback-body">
+        <div class="criticism"><strong>Strengths:</strong> Excellent framing. Identified sort key with stability tiebreaker, quantified scale and spike rate, specified buffer window, defined poll latency requirements, and addressed the output format question (snapshot vs. view).</div>
+        <div class="criticism" style="margin-top:6px;"><strong>Minor gap:</strong> Could have questioned whether readings arrive in-order or out-of-order more explicitly — the "approximately chronological" assumption should specify how far out of order (e.g., max 5 seconds of jitter).</div>
+        <div class="better-alt" style="margin-top:6px;"><strong>Enhancement:</strong> Add a "Success Metrics" section specifying concrete performance targets (e.g., 99th percentile ingest latency &lt; 2ms under burst).</div>
+      </div>
+    </div>
+
+    <!-- ════════ PHASE 2 — JUDGE + STEER (Open-Ended) ════════ -->
+    <div class="run-layout" style="margin-top:24px;">
+      <div>
+        <div class="instructions-bar">
+          <strong data-t="instructions">Instructions</strong>:
+          <span data-t="describeIssues">Describe issues you identify</span> / <span data-t="writeCorrections">Write correction instructions</span>
+        </div>
+
+        <!-- AI Solution -->
+        <div class="ai-output">
+          <div class="ai-output-label" data-t="aiSolution">AI Solution (generated from your framing)</div>
+          <div class="code-block">MODULE SortedSensorBuffer:
+    buffer = []
+    batch_queue = []
+    BATCH_THRESHOLD = 500
+
+    FUNCTION ingest(reading):
+        batch_queue.append(reading)
+        if len(batch_queue) >= BATCH_THRESHOLD or time_since_last_flush > 50ms:
+            flush()
+
+    FUNCTION flush():
+        sort(batch_queue, key=timestamp)
+        buffer = merge(buffer, batch_queue)
+        batch_queue = []
+        evict_old(buffer)
+
+    FUNCTION poll():
+        if batch_queue: flush()
+        return copy(buffer)  // immutable snapshot</div>
+        </div>
+
+        <!-- ════════ CYCLE 1 (Open-Ended) ════════ -->
+        <div id="cycle1-oe">
+          <div class="cycle-header" onclick="toggleCycle('cycle1-oe')">
+            <span class="cycle-num">1</span>
+            <h3><span data-t="cycle">Cycle</span> 1</h3>
+            <span class="cycle-indicator"><span data-t="cycle">Cycle</span> 1 / 5 max</span>
+            <span class="collapse-arrow">&#9660;</span>
+          </div>
+
+          <div class="cycle-body">
+            <!-- Judging: Open-ended sections -->
+            <span class="substep-label substep-judge"><span data-t="judgingSubstep">A — Judging</span>: <span data-t="describeIssues">Describe issues you identify</span></span>
+            <div class="instructions-bar" style="background:#fff8e1; color:#e65100; font-size:12px; padding:8px 12px; margin-bottom:12px;">
+              <strong data-t="hint">Hint</strong>: <span data-t="describeIssues">Describe issues you identify</span>
+            </div>
+
+            <div class="section-list" id="judgingSections1">
+              <!-- Issues added dynamically -->
+            </div>
+            <p class="text-sm text-muted" id="judgingEmpty1" style="text-align:center; padding:16px 0; color:#bbb;">No issues identified yet — click below to add an issue</p>
+
+            <button class="add-section-btn" onclick="addSection('judgingSections1', 'Issue title...', 'Describe the issue you found in the AI output...')">+ Add Issue</button>
+
+            <button class="btn-done-judging" id="doneJudging1" onclick="toggleDoneJudging(this)">
+              &#10003; <span data-t="solutionComplete">Solution is complete — no modifications needed</span>
+            </button>
+
+            <hr class="divider-line">
+
+            <!-- Steering: Open-ended sections -->
+            <span class="substep-label substep-steer"><span data-t="steeringSubstep">B — Steering</span>: <span data-t="writeCorrections">Write correction instructions</span></span>
+            <div class="instructions-bar" style="background:#e3f2fd; color:#0d47a1; font-size:12px; padding:8px 12px; margin-bottom:12px;">
+              <strong data-t="hint">Hint</strong>: <span data-t="writeCorrections">Write correction instructions</span>
+            </div>
+
+            <div class="section-list" id="steeringSections1">
+              <!-- Instructions added dynamically -->
+            </div>
+            <p class="text-sm text-muted" id="steeringEmpty1" style="text-align:center; padding:16px 0; color:#bbb;">No steering instructions yet — click below to add one</p>
+
+            <button class="add-section-btn" onclick="addSection('steeringSections1', 'Instruction title...', 'Describe what you want the AI to fix or improve...')">+ Add Steering Instruction</button>
+
+            <div class="submit-area">
+              <button class="btn btn-primary" id="submitCycle1Btn" disabled>Submit Cycle 1</button>
+              <span class="text-sm text-muted" id="cycle1Count">0 issues · 0 instructions</span>
+            </div>
+
+            <!-- Cycle 1 Feedback — collapsible -->
+            <div class="feedback-panel" style="margin-top:16px; margin-bottom:8px;">
+              <div class="feedback-toggle" onclick="toggleFeedback(this)">
+                <span><span data-t="judgingFeedback">Judging Feedback</span> (<span data-t="cycle">Cycle</span> 1) <span class="grade grade-A" style="width:22px;height:22px;font-size:11px;margin-left:8px;">A</span></span>
+                <span class="arrow">&#9660;</span>
+              </div>
+              <div class="feedback-body">
+                <div class="criticism"><strong>Excellent analysis.</strong> Identified three real issues: missing burst analysis (critical), unjustified threshold (moderate), and poll() copy overhead (minor but valid). Each issue was described with specific detail and quantified where possible.</div>
+                <div class="criticism" style="margin-top:6px;"><strong>Minor miss:</strong> evict_old() scans the full buffer but only needs to remove from the front (since it's timestamp-sorted). This is an O(n) vs O(k) optimization.</div>
+              </div>
+            </div>
+            <div class="feedback-panel">
+              <div class="feedback-toggle" onclick="toggleFeedback(this)">
+                <span><span data-t="steeringFeedback">Steering Feedback</span> (<span data-t="cycle">Cycle</span> 1) <span class="grade grade-A" style="width:22px;height:22px;font-size:11px;margin-left:8px;">A</span></span>
+                <span class="arrow collapsed">&#9660;</span>
+              </div>
+              <div class="feedback-body collapsed">
+                <div class="criticism"><strong>Steering was well-targeted.</strong> Both instructions directly address the two most critical issues. The instructions are specific and give the AI enough context to produce meaningful improvements.</div>
+                <div class="better-alt"><strong>Enhancement:</strong> Could also have addressed the poll() copy issue in this cycle — addressing 3 issues per cycle is fine when they're well-specified.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ════════ CYCLE 2 (Final — Solution Complete) ════════ -->
+        <div id="cycle2-oe" style="margin-top:24px;">
+          <div class="cycle-header" onclick="toggleCycle('cycle2-oe')">
+            <span class="cycle-num">2</span>
+            <h3><span data-t="cycle">Cycle</span> 2 <span data-t="final">(Final)</span></h3>
+            <span class="cycle-indicator"><span data-t="cycle">Cycle</span> 2 / 5 max</span>
+            <span class="collapse-arrow">&#9660;</span>
+          </div>
+
+          <div class="cycle-body">
+            <div class="ai-output">
+              <div class="ai-output-label" data-t="aiOutputUpdated">AI Output (updated after steering)</div>
+              <div class="code-block">MODULE SortedSensorBuffer:
+    BATCH_THRESHOLD = 500  // ~1s normal traffic; flush before 200ms poll
+    FLUSH_INTERVAL = 150ms // ensures fresh data for 200ms poll cycle
+
+    buffer = deque()       // front-eviction in O(k)
+    batch_queue = []
+    snapshot = None        // cached immutable copy
+
+    FUNCTION ingest(reading):
+        batch_queue.append(reading)
+        snapshot = None    // invalidate cache
+        if len(batch_queue) >= BATCH_THRESHOLD or elapsed > FLUSH_INTERVAL:
+            flush()
+
+    FUNCTION flush():
+        merge_sort(batch_queue)              // O(b log b)
+        buffer = merge(buffer, batch_queue)  // O(n + b)
+        batch_queue = []
+        evict_expired(buffer)                // O(k) front removal
+        snapshot = None
+
+    FUNCTION poll():
+        if batch_queue: flush()
+        if snapshot is None:
+            snapshot = freeze(buffer)        // O(n) but cached
+        return snapshot</div>
+              <p class="text-sm" style="margin-top:8px;"><strong>Burst Analysis (b=2,500, n=25,000):</strong></p>
+              <ul class="text-sm" style="padding-left:20px; margin-top:4px;">
+                <li>merge_sort(batch): 2,500 &times; 11.3 = ~28,200 comparisons</li>
+                <li>merge: 25,000 + 2,500 = 27,500 operations</li>
+                <li>Total: ~55,700 ops vs old approach: 62,500,000</li>
+                <li><strong>Speedup: ~1,122&times;</strong></li>
+              </ul>
+            </div>
+
+            <!-- Student clicks "Solution is complete" -->
+            <span class="substep-label substep-judge" data-t="judgingSubstep">A — Judging</span>
+            <button class="btn-done-judging selected">
+              &#10003; <span data-t="solutionComplete">Solution is complete — no modifications needed</span>
+            </button>
+
+            <div class="submit-area">
+              <span class="sim-step-icon done" style="cursor:default;">&#10003;</span>
+              <span class="text-sm text-muted">Student marked solution as complete</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ════════ COMPLETION ════════ -->
+        <div class="card" style="border-left:4px solid var(--success); margin-top:24px;">
+          <h3 style="color:var(--success); margin-bottom:16px;">&#10003; <span data-t="challengeComplete">Challenge Complete</span></h3>
+          <table style="font-size:14px; margin-bottom:16px;">
+            <thead><tr><th data-t="skill">Skill</th><th data-t="grade">Grade</th></tr></thead>
+            <tbody>
+              <tr><td data-t="framing">Framing</td><td><span class="grade grade-A">A</span></td></tr>
+              <tr><td data-t="judging">Judging</td><td><span class="grade grade-A">A</span></td></tr>
+              <tr><td data-t="steering">Steering</td><td><span class="grade grade-A">A</span></td></tr>
+            </tbody>
+          </table>
+          <div class="feedback-panel" style="background:#e8f5e9; border-color:var(--success);">
+            <div class="feedback-toggle" onclick="toggleFeedback(this)">
+              <span style="color:var(--success);" data-t="summaryFeedback">Summary Feedback</span>
+              <span class="arrow">&#9660;</span>
+            </div>
+            <div class="feedback-body">
+              <p class="text-sm">Outstanding performance across all three dimensions. Framing was thorough with well-justified assumptions. Judging identified critical issues with specific, quantified analysis. Steering was precise and drove meaningful improvements. The decision to mark "done" at Cycle 2 was appropriate — the remaining minor optimization (evict_old) was within acceptable bounds. Consider looking for efficiency optimizations even when core logic is correct.</p>
+            </div>
+          </div>
+          <div style="margin-top:16px; text-align:center;">
+            <a href="07-student-analytics.html" class="btn btn-primary" data-t="viewMyResults">View My Results</a>
+            <a href="03-challenge-list.html" class="btn btn-outline" style="margin-left:8px;" data-t="backToChallenges">Back to Challenges</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Summary Panel -->
+      <div class="summary-panel">
+        <div class="card">
+          <h3 style="margin-bottom:12px; font-size:15px;" data-t="sessionSummary">Session Summary</h3>
+
+          <!-- Summary generation status -->
+          <div class="summary-status" id="summaryStatus" style="display:none;">
+            <div class="summary-status-bar">
+              <div class="llm-spinner" style="width:14px;height:14px;border-width:2px;"></div>
+              <span id="summaryStatusText">Summarizing...</span>
+            </div>
+          </div>
+
+          <div class="summary-section">
+            <h5 data-t="rawProblem">Raw Problem</h5>
+            <div class="summary-raw">Write a sorting module for live temperature readings from warehouse sensors... sorted buffer for dashboard polling. ~hundreds of sensors, every second. Handle spikes.</div>
+          </div>
+
+          <div class="summary-section" id="summaryFraming">
+            <h5>Framing Summary <span class="summary-badge" id="framingSummaryBadge" style="display:none;">AI-generated</span></h5>
+            <div class="summary-raw" id="framingSummaryContent" style="border-left-color:var(--teal);">
+              <span class="text-muted" style="font-style:italic;">Awaiting student framing submission...</span>
+            </div>
+          </div>
+
+          <div class="summary-section">
+            <h5 data-t="currentAiSolution">Current AI Solution</h5>
+            <div class="summary-solution" id="solutionSummaryContent">
+              <span class="text-muted" style="font-style:italic;">Will be generated after framing...</span>
+            </div>
+          </div>
+
+          <div class="summary-section">
+            <h5 data-t="steeringHistory">Steering History</h5>
+            <div class="cycle-log" id="cycleLog">
+              <div class="cycle-log-entry" style="color:#bbb; font-style:italic;">
+                No cycles yet
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sim: Demo summary updates -->
+        <div class="card" style="background:#f5f5f5; border:1.5px solid #bdbdbd;">
+          <h3 style="margin-bottom:8px; font-size:13px; color:#616161;">▶ Simulate Summary Updates</h3>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <button class="btn btn-outline btn-sm" onclick="simSummaryAfterFraming()" id="simBtn1">1. After Framing Submitted</button>
+            <button class="btn btn-outline btn-sm" onclick="simSummaryAfterCycle1()" id="simBtn2" disabled>2. After Cycle 1</button>
+            <button class="btn btn-outline btn-sm" onclick="simSummaryAfterComplete()" id="simBtn3" disabled>3. After Completion</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="llm-status" id="llm-status"><div class="llm-spinner"></div><span id="llm-status-text">Generating...</span></div>
+
+  <script>
+    function toggleFeedback(el) {
+      const body = el.nextElementSibling;
+      const arrow = el.querySelector('.arrow');
+      body.classList.toggle('collapsed');
+      arrow.classList.toggle('collapsed');
+    }
+    function toggleCycle(id) {
+      document.getElementById(id).classList.toggle('cycle-collapsed');
+    }
+
+    // ── Interactive open-ended sections ──
+
+    function addSection(containerId, titlePlaceholder, bodyPlaceholder) {
+      var container = document.getElementById(containerId);
+      if (!container) return;
+
+      // Hide empty message
+      var emptyMsg = container.nextElementSibling;
+      if (emptyMsg && emptyMsg.id && emptyMsg.id.indexOf('Empty') !== -1) {
+        emptyMsg.style.display = 'none';
+      }
+
+      var item = document.createElement('div');
+      item.className = 'section-item sim-reveal';
+      item.innerHTML =
+        '<div class="section-header">' +
+          '<input type="text" placeholder="' + titlePlaceholder + '">' +
+          '<button class="remove-btn" onclick="removeSection(this, \'' + containerId + '\')">&times;</button>' +
+        '</div>' +
+        '<div class="section-body">' +
+          '<textarea placeholder="' + bodyPlaceholder + '"></textarea>' +
+        '</div>';
+      container.appendChild(item);
+
+      // Focus the title input
+      item.querySelector('input').focus();
+
+      // Update counts
+      updateSectionCounts();
+    }
+
+    function removeSection(btn, containerId) {
+      var item = btn.closest('.section-item');
+      if (item) item.remove();
+
+      // Show empty message if no sections left
+      var container = document.getElementById(containerId);
+      if (container && container.children.length === 0) {
+        var emptyMsg = container.nextElementSibling;
+        if (emptyMsg && emptyMsg.id && emptyMsg.id.indexOf('Empty') !== -1) {
+          emptyMsg.style.display = '';
+        }
+      }
+
+      updateSectionCounts();
+    }
+
+    function updateSectionCounts() {
+      // Framing count
+      var framingSections = document.getElementById('framingSections');
+      if (framingSections) {
+        var count = framingSections.children.length;
+        var countEl = document.getElementById('framingCount');
+        var submitBtn = document.getElementById('submitFramingBtn');
+        if (countEl) countEl.textContent = count + ' section' + (count !== 1 ? 's' : '');
+        if (submitBtn) submitBtn.disabled = count === 0;
+      }
+
+      // Cycle 1 counts
+      var judgingSections = document.getElementById('judgingSections1');
+      var steeringSections = document.getElementById('steeringSections1');
+      if (judgingSections && steeringSections) {
+        var jCount = judgingSections.children.length;
+        var sCount = steeringSections.children.length;
+        var doneBtn = document.getElementById('doneJudging1');
+        var isDone = doneBtn && doneBtn.classList.contains('selected');
+        var countEl = document.getElementById('cycle1Count');
+        var submitBtn = document.getElementById('submitCycle1Btn');
+        if (countEl) countEl.textContent = jCount + ' issue' + (jCount !== 1 ? 's' : '') + ' · ' + sCount + ' instruction' + (sCount !== 1 ? 's' : '');
+        if (submitBtn) submitBtn.disabled = !isDone && (jCount === 0 || sCount === 0);
+      }
+    }
+
+    function toggleDoneJudging(btn) {
+      btn.classList.toggle('selected');
+      updateSectionCounts();
+    }
+
+    // ── Summary simulation ──
+
+    function showSummarySpinner(statusText, callback) {
+      var status = document.getElementById('summaryStatus');
+      var text = document.getElementById('summaryStatusText');
+      status.style.display = '';
+      text.textContent = statusText;
+      setTimeout(function() {
+        status.style.display = 'none';
+        if (callback) callback();
+      }, 2000);
+    }
+
+    function simSummaryAfterFraming() {
+      document.getElementById('simBtn1').disabled = true;
+      showSummarySpinner('Summarizing student framing...', function() {
+        // Update framing summary
+        document.getElementById('framingSummaryContent').innerHTML =
+          '<strong>Student framing:</strong> Defined sort key (timestamp, sensor_id tiebreaker), quantified scale (200-500 sensors, ~500 tuples/sec), burst = 3-5x, 60s sliding window, poll latency &lt;50ms, immutable snapshot output.';
+        document.getElementById('framingSummaryBadge').style.display = '';
+
+        // Show another spinner for AI solution
+        showSummarySpinner('Generating AI solution...', function() {
+          document.getElementById('solutionSummaryContent').innerHTML =
+            'Batch-merge module: accumulate in batch_queue, flush at threshold (500) or timeout. merge_sort + merge into sorted buffer. poll() returns copy(buffer).';
+          document.getElementById('simBtn2').disabled = false;
+        });
+      });
+    }
+
+    function simSummaryAfterCycle1() {
+      document.getElementById('simBtn2').disabled = true;
+      showSummarySpinner('Summarizing Cycle 1 feedback...', function() {
+        // Update cycle log
+        document.getElementById('cycleLog').innerHTML =
+          '<div class="cycle-log-entry sim-reveal">' +
+            '<div class="cycle-log-label">Cycle 1 — Issues Found</div>' +
+            '<div>Missing burst analysis, unjustified threshold, poll() copy overhead</div>' +
+          '</div>' +
+          '<div class="cycle-log-entry sim-reveal">' +
+            '<div class="cycle-log-label">Cycle 1 — Instructions Sent</div>' +
+            '<div>Add burst performance analysis; justify BATCH_THRESHOLD</div>' +
+          '</div>';
+
+        // Show spinner for updated solution summary
+        showSummarySpinner('Summarizing updated AI output...', function() {
+          document.getElementById('solutionSummaryContent').innerHTML =
+            'Batch-merge with deque buffer, cached snapshots for poll(). BATCH_THRESHOLD=500, FLUSH_INTERVAL=150ms. Burst: ~55,700 ops (1,122× speedup).';
+          document.getElementById('simBtn3').disabled = false;
+        });
+      });
+    }
+
+    function simSummaryAfterComplete() {
+      document.getElementById('simBtn3').disabled = true;
+      showSummarySpinner('Generating final summary...', function() {
+        document.getElementById('cycleLog').innerHTML +=
+          '<div class="cycle-log-entry sim-reveal">' +
+            '<div class="cycle-log-label" style="color:var(--success);">Cycle 2 — Completed ✓</div>' +
+            '<div>Student marked solution as complete</div>' +
+          '</div>';
+      });
+    }
+  </script>
+</body>
+</html>

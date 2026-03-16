@@ -1,0 +1,87 @@
+'use strict';
+const { Router } = require('express');
+const { CourseService } = require('../services/course.service');
+const { requireAuth } = require('../middleware/auth');
+
+module.exports = function courseRoutes(db, logger) {
+  const router = Router();
+  const courseService = new CourseService(db, logger);
+
+  // GET /api/v1/courses
+  router.get('/', async (req, res, next) => {
+    try {
+      const filters = {
+        institutionId: req.query.institutionId,
+        search: req.query.search,
+      };
+      const courses = await courseService.list(filters);
+      res.json(courses);
+    } catch (err) { next(err); }
+  });
+
+  // POST /api/v1/courses
+  router.post('/', requireAuth, async (req, res, next) => {
+    try {
+      const course = await courseService.create(req.body, req.user.id);
+      res.status(201).json(course);
+    } catch (err) { next(err); }
+  });
+
+  // GET /api/v1/courses/:id
+  router.get('/:id', async (req, res, next) => {
+    try {
+      const course = await courseService.getById(req.params.id);
+      res.json(course);
+    } catch (err) { next(err); }
+  });
+
+  // PUT /api/v1/courses/:id
+  router.put('/:id', requireAuth, async (req, res, next) => {
+    try {
+      const course = await courseService.update(req.params.id, req.body, req.user.id);
+      res.json(course);
+    } catch (err) { next(err); }
+  });
+
+  // POST /api/v1/courses/:id/subscribe
+  router.post('/:id/subscribe', requireAuth, async (req, res, next) => {
+    try {
+      await courseService.subscribe(req.params.id, req.user.id);
+      res.json({ message: 'Subscribed successfully' });
+    } catch (err) { next(err); }
+  });
+
+  // DELETE /api/v1/courses/:id/subscribe
+  router.delete('/:id/subscribe', requireAuth, async (req, res, next) => {
+    try {
+      await courseService.unsubscribe(req.params.id, req.user.id);
+      res.json({ message: 'Unsubscribed successfully' });
+    } catch (err) { next(err); }
+  });
+
+  // POST /api/v1/courses/:id/join
+  router.post('/:id/join', requireAuth, async (req, res, next) => {
+    try {
+      await courseService.joinAsInstructor(req.params.id, req.user.id);
+      res.json({ message: 'Joined as instructor' });
+    } catch (err) { next(err); }
+  });
+
+  // DELETE /api/v1/courses/:id/leave
+  router.delete('/:id/leave', requireAuth, async (req, res, next) => {
+    try {
+      await courseService.leaveAsInstructor(req.params.id, req.user.id);
+      res.json({ message: 'Left course' });
+    } catch (err) { next(err); }
+  });
+
+  // GET /api/v1/courses/:id/subjects
+  router.get('/:id/subjects', async (req, res, next) => {
+    try {
+      const subjects = await courseService.getSubjectTree(req.params.id);
+      res.json(subjects);
+    } catch (err) { next(err); }
+  });
+
+  return router;
+};

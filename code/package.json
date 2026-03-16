@@ -1,0 +1,62 @@
+{
+  "name": "coreason",
+  "version": "1.0.0",
+  "description": "CoReasoning Lab — AI co-reasoning assessment platform",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "build": "node build-content.js",
+    "build:watch": "node build-content.js --watch",
+    "db:migrate": "knex --knexfile server/db/knexfile.js migrate:latest",
+    "db:rollback": "knex --knexfile server/db/knexfile.js migrate:rollback",
+    "db:seed": "knex --knexfile server/db/knexfile.js seed:run",
+    "db:reset": "npm run db:rollback && npm run db:migrate && npm run db:seed",
+    "import": "node server/cli/import.js",
+    "test": "jest --config jest.config.js",
+    "test:unit": "jest --config jest.config.js --testPathPattern=tests/unit",
+    "test:integration": "jest --config jest.config.js --testPathPattern=tests/integration",
+    "test:e2e": "npx playwright test",
+    "test:all": "npm run test:unit && npm run test:integration && npm run test:e2e",
+    "lint": "eslint server/ client/js/ tests/",
+    "lint:fix": "eslint --fix server/ client/js/ tests/",
+    "format": "prettier --write \"server/**/*.js\" \"client/js/**/*.js\" \"tests/**/*.js\"",
+    "docker:dev": "docker compose -f docker/docker-compose.dev.yml up --build",
+    "docker:prod": "docker compose -f docker/docker-compose.yml up --build -d"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.0.0",
+    "compression": "^1.7.4",
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "glob": "^10.3.0",
+    "helmet": "^8.0.0",
+    "js-yaml": "^4.1.0",
+    "knex": "^3.1.0",
+    "lru-cache": "^11.0.0",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^6.29.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.13.0",
+    "uuid": "^10.0.0",
+    "winston": "^3.14.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "eslint": "^9.12.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.3.0",
+    "supertest": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

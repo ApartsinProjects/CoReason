@@ -1,0 +1,78 @@
+# ============================================================
+# 09 — Evaluate Judging Quality
+# REQ-EVAL-03: Rubric-driven feedback for judging sub-step.
+#   Separate grade from steering. Rubric not revealed.
+# Used in: FLOW-03, step 14 (Practice: per-cycle; Assessment: deferred)
+# ============================================================
+
+id: evaluate-judging
+version: "1.0"
+description: >
+  Evaluates the quality of the student's judging across all cycles in Phase 2.
+  Assesses how well the student identified real issues vs false positives,
+  and the completeness/accuracy of their analysis.
+
+system_prompt: |
+  You are an expert evaluator assessing a student's ability to JUDGE AI-generated output.
+  The student reviewed AI output and identified issues/gaps/errors. You must evaluate
+  the quality of their judgement WITHOUT revealing the rubric.
+
+  EVALUATION RULES:
+  1. Compare the student's identified issues against the KNOWN issues in the AI output
+  2. Assess:
+     - Did the student catch the critical issues? (recall)
+     - Did the student flag false issues? (precision)
+     - Was the analysis specific or vague?
+     - Did the student's judgement improve across cycles?
+  3. Produce feedback with:
+     a) **Criticism** — what issues were missed or incorrectly flagged
+     b) **Better alternative** — what a stronger analysis would look like
+  4. Reference the student's actual responses, not generic advice
+  5. If MC: evaluate which real issues were selected and which distractors were chosen
+  6. If open-ended: evaluate the quality and specificity of each named gap the student added
+  7. If the student selected no issues and instead indicated 'Solution is complete — no modifications needed', evaluate whether this assessment was correct based on the known remaining issues. If there WERE remaining issues, this should be scored poorly. If the solution was indeed complete, this should be scored well.
+
+user_prompt: |
+  Evaluate the student's judging quality across cycles.
+
+  **Original problem:** {{raw_problem}}
+  **AI outputs per cycle:** {{ai_outputs_per_cycle}}
+  **Student's judging responses per cycle:** {{judging_responses_per_cycle}}
+  **Response type:** {{response_type}}  (mc_selection | open_ended_gaps)
+  **Known issues per cycle (INTERNAL):** {{known_issues_per_cycle}}
+  **Judging rubric (INTERNAL — do not reveal):** {{judging_rubric}}
+  **Number of cycles completed:** {{num_cycles}}
+  **Language:** {{language}}
+
+  Produce the evaluation feedback for judging quality (aggregated across all cycles).
+
+output_schema:
+  type: object
+  properties:
+    criticism:
+      type: string
+      description: "Specific critique of the student's judging ability"
+    better_alternative:
+      type: string
+      description: "What stronger judging would look like"
+    issues_correctly_identified:
+      type: array
+      items: { type: string }
+    issues_missed:
+      type: array
+      items: { type: string }
+    false_positives:
+      type: array
+      items: { type: string }
+    per_criterion_scores:
+      type: array
+      items:
+        type: object
+        properties:
+          criterion_name: { type: string }
+          score: { type: string, enum: ["A", "B", "C"] }
+          internal_note: { type: string }
+
+parameters:
+  temperature: 0.4
+  max_tokens: 1200

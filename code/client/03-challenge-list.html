@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab — Challenges</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    .challenge-actions { display: flex; gap: 4px; }
+    .challenge-actions .btn { padding: 4px 8px; font-size: 12px; }
+    .completion-bar { display: flex; align-items: center; gap: 8px; }
+    .completion-bar .progress { width: 60px; }
+    .view-toggle { display: flex; gap: 0; border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .view-toggle button { padding: 6px 14px; background: #fff; border: none; font-size: 13px; cursor: pointer; }
+    .view-toggle button.active { background: var(--primary); color: #fff; }
+  </style>
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
+    <nav>
+      <a href="03-challenge-list.html" class="active" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog.html" data-t="courses">Courses</a>
+      <a href="07-student-analytics.html" data-t="myResults">My Results</a>
+    </nav>
+    <div class="user-area">
+      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
+      <span>Sarah Cohen</span>
+      <a href="09-profile.html"><div class="avatar">SC</div></a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-header flex-between">
+      <div>
+        <h1 data-t="challenges">Challenges</h1>
+        <p data-t="challengeListDesc">Browse, filter, and run challenges from your courses</p>
+      </div>
+      <a href="04b-create-challenge-student.html" class="btn btn-primary" data-t="createChallenge">+ Create Challenge</a>
+    </div>
+
+    <!-- Filter Bar (REQ-LIST-04) -->
+    <div class="filter-bar">
+      <input type="search" class="form-control" data-t-placeholder="searchChallenges" placeholder="Search challenges...">
+      <select class="form-control" data-t-options="allCourses">
+        <option value="">All Courses</option>
+        <option>Deep Learning 101</option>
+        <option>Database Systems</option>
+        <option>Software Engineering</option>
+      </select>
+      <select class="form-control" data-t-options="allTypes,practice,assessment">
+        <option value="">All Types</option>
+        <option>Practice</option>
+        <option>Assessment</option>
+      </select>
+      <select class="form-control" data-t-options="allVisibility,public,private">
+        <option value="">All Visibility</option>
+        <option>Public</option>
+        <option>Private</option>
+      </select>
+      <select class="form-control" data-t-options="allStatus,notStarted,inProgress,completed,archived">
+        <option value="">All Status</option>
+        <option>Not Started</option>
+        <option>In Progress</option>
+        <option>Completed</option>
+        <option>Archived</option>
+      </select>
+    </div>
+
+    <!-- Challenge Table (REQ-LIST-01, REQ-LIST-02) -->
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th data-t="challenge">Challenge</th>
+              <th data-t="course">Course</th>
+              <th data-t="type">Type</th>
+              <th data-t="visibility">Visibility</th>
+              <th data-t="created">Created</th>
+              <th data-t="creator">Creator</th>
+              <th data-t="lastAttempt">Last Attempt</th>
+              <th data-t="status">Status</th>
+              <th data-t="actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- New published challenge with visual cue (REQ-COURSE-06, REQ-LIST-02) -->
+            <tr data-course="Deep Learning 101" data-type="Practice" data-visibility="Public" data-status="Not Started" data-tab="public">
+              <td><span class="badge badge-new" data-t="new">NEW</span></td>
+              <td><strong>Neural Network Debugging</strong></td>
+              <td>Deep Learning 101</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td><span class="badge badge-public" data-t="public">Public</span></td>
+              <td>Mar 14</td>
+              <td>Dr. Levy</td>
+              <td>&mdash;</td>
+              <td><span class="status status-not-started" data-t="notStarted">Not Started</span></td>
+              <td><a href="05-challenge-run.html" class="btn btn-teal btn-sm" data-t="start">Start</a></td>
+            </tr>
+            <tr data-course="Database Systems" data-type="Practice" data-visibility="Public" data-status="Not Started" data-tab="public">
+              <td><span class="badge badge-new" data-t="new">NEW</span></td>
+              <td><strong>SQL Query Optimization</strong></td>
+              <td>Database Systems</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td><span class="badge badge-public" data-t="public">Public</span></td>
+              <td>Mar 13</td>
+              <td>Prof. Kim</td>
+              <td>&mdash;</td>
+              <td><span class="status status-not-started" data-t="notStarted">Not Started</span></td>
+              <td><a href="05-challenge-run.html" class="btn btn-teal btn-sm" data-t="start">Start</a></td>
+            </tr>
+            <tr data-course="Software Engineering" data-type="Practice" data-visibility="Public" data-status="In Progress" data-tab="public">
+              <td></td>
+              <td><strong>API Design Review</strong></td>
+              <td>Software Engineering</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td><span class="badge badge-public" data-t="public">Public</span></td>
+              <td>Mar 10</td>
+              <td>Dr. Patel</td>
+              <td>Mar 12</td>
+              <td><span class="status status-in-progress" data-t="inProgress">In Progress</span></td>
+              <td><a href="05-challenge-run.html" class="btn btn-outline btn-sm" data-t="resume">Resume</a></td>
+            </tr>
+            <tr data-course="Software Engineering" data-type="Assessment" data-visibility="Public" data-status="Completed" data-tab="public">
+              <td></td>
+              <td><strong>Sorting Algorithm Analysis</strong></td>
+              <td>Software Engineering</td>
+              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
+              <td><span class="badge badge-public" data-t="public">Public</span></td>
+              <td>Mar 5</td>
+              <td>Dr. Patel</td>
+              <td>Mar 8</td>
+              <td><span class="status status-completed" data-t="completed">Completed</span></td>
+              <td><a href="07b-challenge-report.html?id=1" class="btn btn-outline btn-sm" data-t="results">Results</a></td>
+            </tr>
+            <!-- Private challenge (REQ-VIS-02) -->
+            <tr data-course="Deep Learning 101" data-type="Practice" data-visibility="Private" data-status="Completed" data-tab="private">
+              <td></td>
+              <td><strong>My Practice: Backpropagation</strong></td>
+              <td>Deep Learning 101</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td><span class="badge badge-private" data-t="private">Private</span></td>
+              <td>Mar 7</td>
+              <td>Me</td>
+              <td>Mar 9</td>
+              <td><span class="status status-completed" data-t="completed">Completed</span></td>
+              <td>
+                <div class="challenge-actions">
+                  <a href="05-challenge-run.html" class="btn btn-outline btn-sm" data-t="runAgain">Run Again</a>
+                  <button class="btn btn-outline btn-sm" title="Rename">&#9998;</button>
+                  <button class="btn btn-outline btn-sm" title="Archive">&#128451;</button>
+                  <button class="btn btn-outline btn-sm" title="Delete" style="color:var(--danger);">&#128465;</button>
+                </div>
+              </td>
+            </tr>
+            <tr data-course="Software Engineering" data-type="Practice" data-visibility="Public" data-status="Completed" data-tab="public">
+              <td></td>
+              <td><strong style="color:var(--text-secondary);">Recursion Basics</strong></td>
+              <td>Software Engineering</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td><span class="badge badge-public" data-t="public">Public</span></td>
+              <td>Feb 28</td>
+              <td>Dr. Patel</td>
+              <td>Mar 2</td>
+              <td><span class="status status-completed" data-t="completed">Completed</span></td>
+              <td><a href="07b-challenge-report.html?id=1" class="btn btn-outline btn-sm" data-t="results">Results</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script>
+  (function() {
+    var rows = document.querySelectorAll('tbody tr');
+    var selects = document.querySelectorAll('.filter-bar select');
+    var searchInput = document.querySelector('.filter-bar input[type="search"]');
+
+    function getSelectVal(idx) { return selects[idx] ? selects[idx].value : ''; }
+
+    function applyFilters() {
+      var query = searchInput.value.toLowerCase().trim();
+      var course = getSelectVal(0);
+      var type = getSelectVal(1);
+      var vis = getSelectVal(2);
+      var status = getSelectVal(3);
+
+      rows.forEach(function(row) {
+        var show = true;
+        if (course && row.getAttribute('data-course') !== course) show = false;
+        if (type && row.getAttribute('data-type') !== type) show = false;
+        if (vis && row.getAttribute('data-visibility') !== vis) show = false;
+        if (status && row.getAttribute('data-status') !== status) show = false;
+        if (query && row.textContent.toLowerCase().indexOf(query) === -1) show = false;
+        row.style.display = show ? '' : 'none';
+      });
+    }
+
+    selects.forEach(function(s) { s.addEventListener('change', applyFilters); });
+    searchInput.addEventListener('input', applyFilters);
+  })();
+  </script>
+</body>
+</html>

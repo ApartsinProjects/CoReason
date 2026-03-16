@@ -1,0 +1,328 @@
+id: rateLimiter
+title: "Limiteur de débit d'API pour application bancaire"
+course: "Génie logiciel"
+subject: "Conception de systèmes &rsaquo; Conception d'API &amp; Sécurité"
+maxCycles: 4
+rawProblem: "Concevez un middleware de limitation de débit pour une API REST desservant une application bancaire mobile. Le limiteur doit empêcher les abus tout en permettant aux utilisateurs légitimes d'effectuer des opérations normales comme consulter leurs soldes à plusieurs reprises. Le système gère un &ldquo;trafic intense&rdquo; et doit être &ldquo;hautement disponible.&rdquo; Fournissez le pseudocode du middleware, comparez au moins deux algorithmes de limitation de débit et expliquez votre choix de stockage."
+rawProblemShort: "Middleware de limitation de débit pour API bancaire &hellip; empêcher les abus, permettre l'utilisation légitime. Trafic intense, haute disponibilité."
+
+mc:
+  aiSolution:
+    html: |
+      <div class="code-block">MIDDLEWARE RateLimiter:
+          limits = {
+              "/auth":     {max: 5,  window: 60},
+              "/balance":  {max: 60, window: 60},
+              "/transfer": {max: 10, window: 60},
+              "default":   {max: 30, window: 60}
+          }
+          store = {}  // in-memory dictionary
+
+          FUNCTION handle(request):
+              key = request.user_id + ":" + request.endpoint
+              limit = limits[request.endpoint] OR limits["default"]
+
+              current = store.get(key, {count: 0, start: now()})
+              if now() - current.start &gt; limit.window:
+                  current = {count: 0, start: now()}
+
+              current.count += 1
+              store[key] = current
+
+              if current.count &gt; limit.max:
+                  return Response(429, {"Retry-After": ...})
+
+              return next(request)</div>
+      <p class="text-sm" style="margin-top:8px"><strong>Comparaison des algorithmes :</strong></p>
+      <table class="comparison-table"><thead><tr><th>Critère</th><th>Fenêtre fixe (choisi)</th><th>Token Bucket</th></tr></thead>
+      <tbody>
+      <tr><td>Précision</td><td>Peut autoriser 2&times; la limite aux frontières</td><td>Lisse, pas de problèmes aux frontières</td></tr>
+      <tr><td>Mémoire</td><td>O(1) par clé</td><td>O(1) par clé</td></tr>
+      <tr><td>Complexité</td><td>Simple</td><td>Modérée</td></tr>
+      </tbody></table>
+    summary: "Compteur à fenêtre fixe, stockage en mémoire. Limites par point d'accès. Comparaison avec token bucket."
+
+  framing:
+    hint: "Le problème comporte plusieurs ambiguïtés. Sélectionnez TOUS les raffinements nécessaires pour cadrer correctement la conception du limiteur de débit."
+    options:
+      - letter: "A"
+        text: "Quantifier &ldquo;trafic intense&rdquo; comme ~10 000 req/sec globalement, ~100 req/min par utilisateur"
+        correct: true
+      - letter: "B"
+        text: "Limites de débit différentes par type de point d'accès (auth : strict, solde : souple, virement : modéré)"
+        correct: true
+      - letter: "C"
+        text: "&ldquo;Hautement disponible&rdquo; = en cas de panne du limiteur, laisser passer le trafic (fail-open) plutôt que le bloquer"
+        correct: true
+      - letter: "D"
+        text: "Tous les points d'accès devraient avoir des limites de débit identiques pour la simplicité"
+        correct: false
+      - letter: "E"
+        text: "Retourner HTTP 429 avec en-tête Retry-After en cas de limitation de débit"
+        correct: true
+      - letter: "F"
+        text: "Stocker l'état de limitation de débit uniquement en mémoire applicative (pas besoin de stockage partagé)"
+        correct: false
+    studentSelections: [0, 1, 4]
+    feedback:
+      grade: "B"
+      html: |
+        <div class="criticism"><strong>Correctement sélectionnés :</strong> (A) quantification du trafic, (B) limites par point d'accès, (E) HTTP 429 + Retry-After.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Manqué :</strong> (C) comportement fail-open &mdash; critique pour une application bancaire où bloquer tout le trafic est pire qu'autoriser quelques abus.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Correctement évités :</strong> (D) des limites identiques ignorent la sensibilité des points d'accès ; (F) la mémoire locale seule ne fonctionnera pas avec plusieurs serveurs API.</div>
+        <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B), (C), (E).</div>
+
+  cycles:
+    - # Cycle 1
+      judging:
+        options:
+          - letter: "A"
+            text: "Le compteur à fenêtre fixe autorise une rafale 2&times; aux frontières de fenêtre (attaque par frontière)"
+            correct: true
+          - letter: "B"
+            text: "Le stockage en mémoire ne fonctionnera pas avec plusieurs serveurs API &mdash; nécessite un stockage partagé"
+            correct: true
+          - letter: "C"
+            text: "Pas de nettoyage des entrées expirées dans le stockage &mdash; la mémoire croîtra sans limite"
+            correct: true
+          - letter: "D"
+            text: "Les limites de débit par point d'accès ajoutent une complexité inutile"
+            correct: false
+          - letter: "E"
+            text: "Il faudrait utiliser des tokens JWT au lieu de la limitation de débit"
+            correct: false
+        studentSelections: [0, 1]
+        doneSelected: false
+        feedback:
+          grade: "B"
+          html: |
+            <div class="criticism"><strong>Correctement identifiés :</strong> (A) vulnérabilité d'attaque par frontière, (B) stockage partagé nécessaire.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Manqué :</strong> (C) pas d'expiration/nettoyage entraîne une fuite mémoire. Important pour les services à longue durée d'exécution.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctement évités :</strong> (D) les limites par point d'accès sont une exigence ; (E) JWT et limitation de débit servent des objectifs différents.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B), (C).</div>
+      steering:
+        options:
+          - letter: "A"
+            text: "&ldquo;Remplacez la fenêtre fixe par un journal de fenêtre glissante ou un token bucket pour empêcher les attaques par frontière.&rdquo;"
+            correct: true
+          - letter: "B"
+            text: "&ldquo;Utilisez Redis comme stockage partagé avec TTL pour l'expiration et le nettoyage automatiques.&rdquo;"
+            correct: true
+          - letter: "C"
+            text: "&ldquo;Augmentez simplement les limites de débit pour que les utilisateurs ne soient pas bloqués.&rdquo;"
+            correct: false
+          - letter: "D"
+            text: "&ldquo;Ajoutez un blocage basé sur l'IP au lieu d'une limitation par utilisateur.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Correctement sélectionnés :</strong> (A) meilleur algorithme, (B) Redis avec TTL. Les deux adressent les causes profondes.</div>
+            <div class="criticism" style="margin-top:6px"><strong>Correctement évités :</strong> (C) ne résout pas le problème ; (D) préoccupation entièrement différente.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Idéal :</strong> (A), (B) &mdash; optimal.</div>
+      summaryJudging: "Vulnérabilité d'attaque par frontière, nécessite un stockage partagé"
+      summarySteering: "Utiliser fenêtre glissante/token bucket ; ajouter Redis avec TTL"
+
+    - # Cycle 2 — l'étudiant marque comme terminé
+      aiUpdate:
+        html: |
+          <div class="code-block">MIDDLEWARE RateLimiter:
+              redis = RedisClient(cluster_mode=true)
+              limits = { ... per-endpoint as before ... }
+
+              FUNCTION handle(request):
+                  key = request.user_id + ":" + classify(request.endpoint)
+                  limit = get_limit(request.endpoint)
+
+                  // Sliding window log
+                  now_ms = current_timestamp_ms()
+                  window_start = now_ms - (limit.window * 1000)
+
+                  PIPELINE:
+                      redis.ZREMRANGEBYSCORE(key, 0, window_start)
+                      redis.ZADD(key, now_ms, unique_id())
+                      count = redis.ZCARD(key)
+                      redis.EXPIRE(key, limit.window)
+
+                  if count &gt; limit.max:
+                      retry_after = compute_retry_after(key, limit)
+                      return Response(429, {"Retry-After": retry_after})
+
+                  return next(request)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>Comparaison mise à jour :</strong></p>
+          <table class="comparison-table"><thead><tr><th>Critère</th><th>Journal fenêtre glissante (choisi)</th><th>Token Bucket</th><th>Fenêtre fixe</th></tr></thead>
+          <tbody>
+          <tr><td>Précision</td><td>Exacte &mdash; pas de problèmes aux frontières</td><td>Lisse, approximative</td><td>Rafale 2&times; aux bords</td></tr>
+          <tr><td>Mémoire</td><td>O(n) par utilisateur par fenêtre</td><td>O(1) par utilisateur</td><td>O(1) par utilisateur</td></tr>
+          <tr><td>Complexité</td><td>Modérée (ensembles triés)</td><td>Modérée</td><td>Simple</td></tr>
+          <tr><td>Distribué</td><td>Ensembles triés Redis</td><td>Redis + Lua</td><td>Compteur Redis</td></tr>
+          </tbody></table>
+        summary: "Journal de fenêtre glissante avec ensembles triés Redis. Pipeline pour l'atomicité. TTL pour le nettoyage automatique. Tableau comparatif mis à jour."
+      judging:
+        options:
+          - letter: "A"
+            text: "Pas de comportement fail-open &mdash; une panne de Redis fera planter le middleware ou bloquera tout le trafic"
+            correct: true
+          - letter: "B"
+            text: "Le journal de fenêtre glissante utilise O(n) de mémoire par utilisateur &mdash; les utilisateurs intensifs consomment significativement la mémoire Redis"
+            correct: true
+          - letter: "C"
+            text: "Redis est trop lent pour la limitation de débit à grande échelle"
+            correct: false
+        studentSelections: []
+        doneSelected: true
+        feedback:
+          grade: "C"
+          html: |
+            <div class="criticism"><strong>Achèvement prématuré.</strong> Deux problèmes subsistent : (A) pas de fail-open &mdash; critique pour une application bancaire ; si Redis tombe en panne, toutes les requêtes sont bloquées. (B) O(n) de mémoire par utilisateur pourrait être coûteux à grande échelle &mdash; le token bucket serait en O(1).</div>
+            <div class="better-alt" style="margin-top:6px"><strong>Mieux :</strong> Sélectionner au minimum (A) et diriger l'IA pour ajouter un try/catch avec comportement fail-open.</div>
+      steering: null
+      summaryJudging: "L'étudiant a marqué la solution comme terminée (prématuré)"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "B"
+      judging: "C"
+      steering: "A"
+    summary: "L'orientation était solide &mdash; des corrections bien ciblées qui ont entraîné de réelles améliorations. Le cadrage a manqué l'exigence de fail-open. Jugement : a identifié les problèmes principaux au cycle 1 mais a terminé prématurément au cycle 2, manquant le comportement critique de fail-open et la préoccupation de coût mémoire. Pour les systèmes de production, considérez toujours les modes de défaillance avant de marquer comme terminé."
+
+oe:
+  aiSolution:
+    html: |
+      <div class="code-block">MIDDLEWARE RateLimiter:
+          redis = RedisClient(cluster_mode=true)
+          limits = {
+              "auth":     {max: 5,  window: 60, refill_rate: 1},
+              "balance":  {max: 60, window: 60, refill_rate: 10},
+              "transfer": {max: 10, window: 60, refill_rate: 2},
+              "default":  {max: 30, window: 60, refill_rate: 5}
+          }
+
+          FUNCTION handle(request):
+              key = user_id + ":" + classify(endpoint)
+              limit = get_limit(endpoint)
+
+              // Token bucket via Redis
+              bucket = redis.HGETALL(key)
+              if bucket is empty:
+                  bucket = {tokens: limit.max, last_refill: now()}
+
+              elapsed = now() - bucket.last_refill
+              refill = floor(elapsed / (limit.window / limit.max))
+              bucket.tokens = min(limit.max, bucket.tokens + refill)
+              bucket.last_refill = now()
+
+              if bucket.tokens &lt;= 0:
+                  return Response(429, {"Retry-After": ...})
+
+              bucket.tokens -= 1
+              redis.HMSET(key, bucket)
+              redis.EXPIRE(key, limit.window * 2)
+              return next(request)</div>
+    summary: "Token bucket avec Redis HASH. Limites par point d'accès avec taux de remplissage. Lecture-modification-écriture non atomique."
+
+  framing:
+    hint: "Ajoutez des sections clarifiant les ambiguïtés du problème. Chaque section doit raffiner un aspect vague."
+    sections:
+      - name: "Contraintes : estimations de trafic"
+        text: "Débit global ~10 000 req/sec. Limites souples par utilisateur variant selon le point d'accès : auth 5/min, solde 60/min, virements 10/min. Les utilisateurs normaux atteignent ~20 % des limites."
+      - name: "Hypothèses : niveaux de points d'accès"
+        text: "Les points d'accès sont classés par niveaux : critique (virements, paiements), standard (solde, historique) et auth (connexion, OTP). Chaque niveau a des paramètres de limitation de débit distincts."
+      - name: "Clarification : comportement en cas de panne"
+        text: "&ldquo;Hautement disponible&rdquo; signifie que le limiteur de débit doit fonctionner en mode fail-open : si le backend de stockage est injoignable, autoriser les requêtes et consigner un avertissement plutôt que de bloquer les utilisateurs légitimes."
+    feedback:
+      grade: "A"
+      html: |
+        <div class="criticism"><strong>Excellent cadrage.</strong> A quantifié le trafic, défini les niveaux de points d'accès et &mdash; de manière cruciale &mdash; spécifié le comportement fail-open. La clarification du comportement en cas de panne démontre une pensée systémique solide.</div>
+        <div class="criticism" style="margin-top:6px"><strong>Lacune mineure :</strong> Pourrait spécifier la tolérance aux rafales par niveau (par ex., autoriser 2&times; la limite pendant 5 secondes pour les consultations de solde).</div>
+
+  cycles:
+    - # Cycle 1
+      judging:
+        sections:
+          - name: "Problème : condition de concurrence dans le token bucket"
+            text: "La lecture-modification-écriture sur le HASH Redis n'est pas atomique. Deux requêtes concurrentes pourraient toutes les deux lire tokens=1, toutes les deux décrémenter et toutes les deux passer &mdash; autorisant 2× la limite. Nécessite Redis MULTI/EXEC ou un script Lua."
+          - name: "Problème : pas de comportement fail-open"
+            text: "Si Redis est indisponible, le middleware lancera une exception ou se bloquera. Devrait envelopper les appels Redis dans un try/catch et basculer en fail-open en cas d'erreur, comme spécifié dans notre cadrage."
+          - name: "Problème : comparaison d'algorithmes manquante"
+            text: "Les exigences demandent une comparaison d'au moins deux algorithmes. Seul le token bucket est implémenté ; aucun tableau comparatif n'est fourni."
+        doneSelected: false
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Analyse approfondie.</strong> Les trois problèmes sont réels et bien décrits. L'explication de la condition de concurrence avec un exemple concret (tokens=1, deux requêtes concurrentes) est particulièrement solide.</div>
+      steering:
+        sections:
+          - name: "Instruction : corriger l'atomicité avec un script Lua"
+            text: "Encapsulez la lecture-modification-écriture dans un script Lua Redis (EVAL) pour que l'ensemble vérification-et-décrémentation du bucket soit atomique. Cela empêche la condition de concurrence."
+          - name: "Instruction : ajouter un try/catch fail-open"
+            text: "Encapsulez toutes les opérations Redis dans un try/catch. En cas d'erreur Redis, consignez un avertissement avec le user_id et le point d'accès, puis autorisez la requête (fail-open)."
+          - name: "Instruction : ajouter un tableau comparatif"
+            text: "Incluez un tableau comparatif : token bucket vs journal de fenêtre glissante vs fenêtre fixe. Comparez la précision, la mémoire, la complexité et l'adaptabilité en environnement distribué."
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Précis et complet.</strong> Les trois instructions abordent directement les problèmes identifiés avec des orientations d'implémentation spécifiques. La suggestion du script Lua est la bonne approche pour l'atomicité Redis.</div>
+      summaryJudging: "Condition de concurrence, pas de fail-open, tableau comparatif manquant"
+      summarySteering: "Corriger l'atomicité avec Lua ; ajouter le fail-open ; ajouter la comparaison d'algorithmes"
+
+    - # Cycle 2 — l'étudiant marque comme terminé
+      aiUpdate:
+        html: |
+          <div class="code-block">MIDDLEWARE RateLimiter:
+              redis = RedisClient(cluster_mode=true)
+              limits = { ... per-endpoint tiers ... }
+
+              LUA_SCRIPT = """
+                  local key = KEYS[1]
+                  local max = tonumber(ARGV[1])
+                  local refill = tonumber(ARGV[2])
+                  local now = tonumber(ARGV[3])
+                  local window = tonumber(ARGV[4])
+                  local bucket = redis.call('HGETALL', key)
+                  -- ... atomic check, refill, decrement ...
+                  if tokens &lt;= 0 then return 0 end
+                  tokens = tokens - 1
+                  redis.call('HMSET', key, 'tokens', tokens, 'last', now)
+                  redis.call('EXPIRE', key, window * 2)
+                  return tokens
+              """
+
+              FUNCTION handle(request):
+                  key = user_id + ":" + classify(endpoint)
+                  limit = get_limit(endpoint)
+                  TRY:
+                      remaining = redis.EVAL(LUA_SCRIPT, key, limit.max,
+                                              limit.refill_rate, now(), limit.window)
+                      if remaining &lt; 0:
+                          return Response(429, {"Retry-After": compute_wait(limit)})
+                  CATCH RedisError:
+                      log.warn("Rate limiter unavailable, failing open", user_id)
+                      // fail-open: allow the request
+                  return next(request)</div>
+          <table class="comparison-table" style="margin-top:12px"><thead><tr><th>Algorithme</th><th>Précision</th><th>Mémoire</th><th>Complexité</th><th>Distribué</th></tr></thead>
+          <tbody>
+          <tr><td><strong>Token Bucket</strong> (choisi)</td><td>Lisse, autorise les rafales jusqu'au max</td><td>O(1) par utilisateur</td><td>Modérée (Lua)</td><td>Redis HASH + Lua</td></tr>
+          <tr><td>Journal fenêtre glissante</td><td>Exact</td><td>O(n) par utilisateur par fenêtre</td><td>Modérée (ensembles triés)</td><td>Redis ZSET</td></tr>
+          <tr><td>Fenêtre fixe</td><td>Rafale 2&times; aux frontières</td><td>O(1) par utilisateur</td><td>Simple</td><td>Redis INCR</td></tr>
+          </tbody></table>
+        summary: "Token bucket atomique via script Lua. Fail-open en cas d'erreur Redis. Tableau comparatif des algorithmes ajouté."
+      judging:
+        sections: []
+        doneSelected: true
+        feedback:
+          grade: "A"
+          html: |
+            <div class="criticism"><strong>Bonne décision de terminer.</strong> Les trois problèmes du cycle 1 sont traités : atomicité via script Lua, fail-open avec journalisation et tableau comparatif complet. La solution est prête pour la production.</div>
+      steering: null
+      summaryJudging: "L'étudiant a marqué la solution comme terminée"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: "A"
+      judging: "A"
+      steering: "A"
+    summary: "Performance exceptionnelle. Le cadrage a démontré une pensée systémique solide avec l'exigence de fail-open. Le jugement était approfondi &mdash; a identifié la condition de concurrence, le fail-open manquant et la comparaison manquante en une seule passe. L'orientation était précise avec des détails d'implémentation exploitables. Décision d'achèvement appropriée après la résolution de tous les problèmes."

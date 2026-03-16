@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab — Profile</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    .profile-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
+    .profile-avatar { width: 96px; height: 96px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; color: var(--primary); position: relative; }
+    .profile-avatar .edit-overlay { position: absolute; bottom: 0; right: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; border: 2px solid #fff; }
+    .profile-info h2 { font-size: 24px; margin-bottom: 4px; }
+    .profile-info .role-badge { display: inline-flex; align-items: center; gap: 4px; background: #e8eaf6; color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+    .profile-field { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .profile-field:last-child { border-bottom: none; }
+    .profile-field .field-label { font-size: 13px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+    .profile-field .field-value { font-size: 14px; }
+    .profile-field .editable { display: flex; align-items: center; gap: 8px; }
+    .profile-field .edit-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 14px; }
+    .course-chip { display: inline-flex; align-items: center; gap: 4px; background: #e8eaf6; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 13px; margin: 2px 4px 2px 0; }
+  </style>
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
+    <nav>
+      <a href="03-challenge-list.html" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog.html" data-t="courses">Courses</a>
+      <a href="07-student-analytics.html" data-t="myResults">My Results</a>
+    </nav>
+    <div class="user-area">
+      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
+      <span>Sarah Cohen</span>
+      <a href="09-profile.html"><div class="avatar" style="outline:2px solid #fff;">SC</div></a>
+    </div>
+  </header>
+
+  <main class="page" style="max-width:720px;">
+    <div class="page-header">
+      <h1 data-t="myProfile">My Profile</h1>
+      <p>View and edit your profile (FLOW-12, REQ-PROF-01, REQ-PROF-02, REQ-PROF-03)</p>
+    </div>
+
+    <div class="card">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar">
+          SC
+          <div class="edit-overlay" title="Change profile image (REQ-PROF-03)">&#9998;</div>
+        </div>
+        <div class="profile-info">
+          <h2>Sarah Cohen</h2>
+          <span class="role-badge" data-t="student">&#127891; Student</span>
+          <p class="text-sm text-muted mt-8" data-t="memberSince">Member since January 15, 2026</p>
+        </div>
+      </div>
+
+      <!-- Profile Fields (REQ-PROF-01) -->
+      <div class="profile-field">
+        <div>
+          <div class="field-label" data-t="fullName">Full Name</div>
+          <div class="field-value editable">
+            Sarah Cohen
+            <button class="edit-btn" title="Edit name (REQ-PROF-03)">&#9998;</button>
+          </div>
+        </div>
+      </div>
+      <div class="profile-field">
+        <div>
+          <div class="field-label" data-t="email">Email</div>
+          <div class="field-value">s.cohen@tau.ac.il</div>
+        </div>
+        <span class="text-sm text-muted" data-t="readOnly">Read-only</span>
+      </div>
+      <div class="profile-field">
+        <div>
+          <div class="field-label" data-t="institution">Institution (REQ-AUTH-03)</div>
+          <div class="field-value">Tel Aviv University</div>
+        </div>
+        <span class="text-sm text-muted" data-t="readOnly">Read-only</span>
+      </div>
+      <div class="profile-field">
+        <div>
+          <div class="field-label" data-t="role">Role (REQ-AUTH-02)</div>
+          <div class="field-value"><span class="role-badge" data-t="student">Student</span></div>
+        </div>
+        <span class="text-sm text-muted" data-t-html="cannotBeChanged">Fixed &mdash; cannot be changed</span>
+      </div>
+      <div class="profile-field">
+        <div>
+          <div class="field-label" data-t="dateOfRegistration">Date of Registration</div>
+          <div class="field-value">January 15, 2026</div>
+        </div>
+      </div>
+      <div class="profile-field">
+        <div>
+          <div class="field-label" data-t="courseSubscriptions">Course Subscriptions</div>
+          <div class="field-value" style="margin-top:4px;">
+            <span class="course-chip">Deep Learning 101</span>
+            <span class="course-chip">Database Systems</span>
+            <span class="course-chip">Software Engineering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics (REQ-PROF-02) -->
+    <div class="card mt-24">
+      <h3 style="margin-bottom:16px;" data-t="statistics">Statistics</h3>
+      <div class="grid grid-2">
+        <div class="stat-card card">
+          <div class="stat-value">4</div>
+          <div class="stat-label" data-t="challengesCreated">Challenges Created</div>
+        </div>
+        <div class="stat-card card">
+          <div class="stat-value">12</div>
+          <div class="stat-label" data-t="challengesExecuted">Challenges Executed (Runs Completed)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-12 mt-24">
+      <button class="btn btn-primary" data-t="saveChanges">Save Changes</button>
+      <button class="btn btn-outline" data-t="cancel">Cancel</button>
+    </div>
+  </main>
+</body>
+</html>

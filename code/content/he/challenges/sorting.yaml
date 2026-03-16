@@ -1,0 +1,378 @@
+id: sorting
+title: "צינור מיון לנתוני חיישנים"
+course: "מבוא לאלגוריתמים"
+subject: "מיון וחיפוש &rsaquo; מיון מבוסס השוואות"
+maxCycles: 5
+rawProblem: "כתבו מודול מיון שקולט זרם חי של קריאות טמפרטורה מחיישני מחסן ומפיק חוצץ ממוין ברציפות שלוח בקרה (dashboard) יכול לדגום. כל קריאה היא שלשה (sensor_id, timestamp, temperature). במחסן יש &ldquo;כמה מאות&rdquo; חיישנים שמדווחים כל שנייה. ספקו פסאודו-קוד עבור המודול וכן טבלת השוואה של האלגוריתם שבחרתם מול שתי חלופות &mdash; סיבוכיות זמן, צריכת זיכרון והשהיה. המערכת צריכה &ldquo;להתמודד עם פרצי עומס&rdquo; כשהחיישנים מדווחים בפרצים."
+rawProblemShort: "מודול מיון לקריאות חיישנים בזמן אמת &hellip; חוצץ ממוין לדגימת לוח בקרה. ~מאות חיישנים, כל שנייה. טיפול בפרצי עומס."
+
+mc:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []  // sorted list of (sensor_id, timestamp, temperature)
+
+          FUNCTION ingest(reading):
+              pos = binary_search(buffer, reading.timestamp)
+              buffer.insert(pos, reading)
+              while buffer[0].timestamp &lt; current_time() - 60:
+                  buffer.remove(0)
+
+          FUNCTION poll():
+              return copy(buffer)</div>
+      <p class="text-sm" style="margin-top:8px"><strong>טבלת השוואה:</strong></p>
+      <table class="comparison-table"><thead><tr><th>קריטריון</th><th>מיון הכנסה (נבחר)</th><th>מיון מיזוג</th><th>מיון מהיר</th></tr></thead>
+      <tbody>
+      <tr><td>זמן (לפריט)</td><td>O(log n) חיפוש + O(n) הזזה</td><td>O(n log n) מיון מלא</td><td>O(n log n) מיון מלא</td></tr>
+      <tr><td>זיכרון</td><td>O(1) נוסף</td><td>O(n)</td><td>O(log n) מחסנית</td></tr>
+      <tr><td>השהיה</td><td>נמוכה לפריט</td><td>השהיית אצווה גבוהה</td><td>השהיית אצווה גבוהה</td></tr>
+      </tbody></table>
+    summary: "מיון הכנסה למערך ממוין. O(log n) חיפוש + O(n) הזזה. חלון הזזה של 60 שניות."
+  framing:
+    hint: "בעיית המקור מעורפלת בכוונה. סמנו את כל ההבהרות (הנחות, אילוצים, חידודים) שיש להחיל לפני שה-AI מייצר פתרון. חלק מההבהרות הכרחיות; אחרות מיותרות או שגויות."
+    options:
+      - letter: A
+        text: "מפתח המיון צריך להיות timestamp (לא טמפרטורה) כי לוח הבקרה דורש סדר כרונולוגי"
+        correct: true
+      - letter: B
+        text: "שימוש ב-sensor_id כמפתח משני כשה-timestamp זהה, להבטחת יציבות המיון"
+        correct: true
+      - letter: C
+        text: "כימות &ldquo;כמה מאות&rdquo; כ-200-500 חיישנים המייצרים 200-500 שלשות/שנייה בתנאים רגילים"
+        correct: true
+      - letter: D
+        text: "הגדרת &ldquo;פרצי עומס&rdquo; כקצב של 3-5 מונים מהקצב הרגיל (burst rate), לא חריגות בערכי החיישנים"
+        correct: true
+      - letter: E
+        text: "הנחה שהנתונים מגיעים ממוינים לפי sensor_id כי לחיישנים יש מיקום פיזי קבוע"
+        correct: false
+      - letter: F
+        text: "שימוש בחלון הזזה של 60 שניות במקום אחסון כל הנתונים ההיסטוריים"
+        correct: true
+    studentSelections: [0, 2, 3, 5]
+    feedback:
+      grade: B
+      html: |
+        <div class="criticism"><strong>נבחרו נכון:</strong> (A) מפתח מיון לפי timestamp, (C) כימות מספר החיישנים, (D) הגדרת קצב פרצי עומס, (F) חלון הזזה.</div>
+        <div class="criticism" style="margin-top:6px"><strong>לא נבחר:</strong> (B) מפתח משני sensor_id ליציבות &mdash; בלעדיו המיון לא חד-משמעי כש-timestamp זהה בשתי קריאות.</div>
+        <div class="criticism" style="margin-top:6px"><strong>נמנע נכון:</strong> (E) הנתונים אינם ממוינים לפי sensor_id &mdash; חיישנים מדווחים בזמנים שונים.</div>
+        <div class="better-alt" style="margin-top:6px"><strong>אידיאלי:</strong> (A), (B), (C), (D), (F).</div>
+  cycles:
+    - # Cycle 1
+      judging:
+        options:
+          - letter: A
+            text: "אין מפתח משני &mdash; מיקום ההכנסה לא חד-משמעי כשלשתי קריאות יש timestamp זהה"
+            correct: true
+          - letter: B
+            text: "עלות O(n) להזזה בכל הכנסה יוצרת צוואר בקבוק בפרצי עומס של 2,500 קריאות"
+            correct: true
+          - letter: C
+            text: "עמודת הזיכרון בטבלת ההשוואה מטעה &mdash; &ldquo;O(1) נוסף&rdquo; מסתיר את העלות האמיתית"
+            correct: true
+          - letter: D
+            text: "poll() מעתיק את כל החוצץ בכל קריאה &mdash; בזבזני כשהדגימה תכופה"
+            correct: true
+          - letter: E
+            text: "מיון מהיר (Quick Sort) יהיה מהיר יותר ממיון הכנסה לשימוש בזרימה"
+            correct: false
+        studentSelections: [1, 2]
+        doneSelected: false
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>זוהו נכון:</strong> (B) צוואר בקבוק O(n) בהזזה, (C) עמודת זיכרון מטעה.</div>
+            <div class="criticism" style="margin-top:6px"><strong>לא זוהו:</strong> (D) poll() מעתיק את כל החוצץ; (A) חסר מפתח משני ל-timestamp זהה.</div>
+            <div class="criticism" style="margin-top:6px"><strong>נמנע נכון:</strong> (E) מיון מהיר אינו מתאים לנתוני זרימה.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>אידיאלי:</strong> (A), (B), (C), (D).</div>
+      steering:
+        options:
+          - letter: A
+            text: "&ldquo;נתחו את עלות המקרה הגרוע בפרץ עומס של 2,500 קריאות. הציעו חלופה מבוססת אצווה-ומיזוג.&rdquo;"
+            correct: true
+          - letter: B
+            text: "&ldquo;תקנו את טבלת ההשוואה כך שתבחין בין זיכרון החוצץ לבין זיכרון עזר.&rdquo;"
+            correct: true
+          - letter: C
+            text: "&ldquo;תגרמו לקוד לרוץ מהר יותר ולהשתמש בפחות זיכרון.&rdquo;"
+            correct: false
+          - letter: D
+            text: "&ldquo;שכתבו הכל באמצעות רשימה מקושרת כדי שהכנסות יהיו O(1).&rdquo;"
+            correct: false
+          - letter: E
+            text: "&ldquo;הוסיפו בטיחות תהליכונים (thread safety) עם mutex סביב החוצץ.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>נבחרו נכון:</strong> (A) ניתוח פרצי עומס + אצווה-מיזוג, (B) תיקון טבלה. ספציפיים וניתנים לביצוע.</div>
+            <div class="criticism" style="margin-top:6px"><strong>נמנע נכון:</strong> (C) מעורפל מדי, (D) רשימה מקושרת לא עוזרת, (E) מחוץ לתחום.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>אידיאלי:</strong> (A), (B) &mdash; הסט האופטימלי.</div>
+      summaryJudging: "צוואר בקבוק O(n) בהזזה, עמודת זיכרון מטעה"
+      summarySteering: "ניתוח פרצי עומס + הצעת אצווה-מיזוג; תיקון עמודת זיכרון"
+
+    - # Cycle 2
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                      flush()
+
+              FUNCTION flush():
+                  sort(batch_queue)                     // O(b log b)
+                  buffer = merge(buffer, batch_queue)   // O(n + b)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>ניתוח פרץ עומס (b=2,500, n=25,000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>ישן: 2,500 &times; O(25,000) = O(62.5M)</li>
+          <li>חדש: O(2,500 log 2,500) + O(27,500) = ~O(30,000)</li>
+          </ul>
+          <table class="comparison-table" style="margin-top:12px"><thead><tr><th>קריטריון</th><th>מיזוג אצוות (נבחר)</th><th>הכנסה טהורה</th><th>מיון מלא מחדש</th></tr></thead>
+          <tbody>
+          <tr><td>זמן (לאצווה)</td><td>O(b log b + n)</td><td>O(b &times; n)</td><td>O((n+b) log(n+b))</td></tr>
+          <tr><td>זיכרון עזר</td><td>O(b) תור אצווה</td><td>O(1)</td><td>O(log(n+b)) מחסנית</td></tr>
+          <tr><td>השהיה</td><td>נמוכה ממוצעת</td><td>נמוכה לפריט, גבוהה בפרצים</td><td>גבוהה לאצווה</td></tr>
+          </tbody></table>
+        summary: "אצווה-מיזוג עם batch_queue. O(b log b + n). פרץ: ~30K פעולות (שגיאת חשבון). BATCH_THRESHOLD לא מוגדר."
+      judging:
+        options:
+          - letter: A
+            text: "החשבון בניתוח הפרץ שגוי: O(2500 log 2500)+O(27500) &asymp; 55,700, לא ~30,000"
+            correct: true
+          - letter: B
+            text: "ל-BATCH_THRESHOLD אין ערך מוגדר או הצדקה"
+            correct: true
+          - letter: C
+            text: "evict_old סורק את כל החוצץ &mdash; רק החלק הקדמי צריך בדיקה כי הוא ממוין לפי timestamp"
+            correct: true
+          - letter: D
+            text: "גישת מיזוג האצוות שגויה מיסודה לנתוני זרימה"
+            correct: false
+        studentSelections: [0, 1]
+        doneSelected: false
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>זוהו נכון:</strong> (A) שגיאת חשבון, (B) סף לא מוגדר.</div>
+            <div class="criticism" style="margin-top:6px"><strong>לא זוהה:</strong> (C) evict_old סורק את כל החוצץ; רק הכניסות הקדמיות צריכות הסרה &mdash; O(k) במקום O(n).</div>
+            <div class="criticism" style="margin-top:6px"><strong>נמנע נכון:</strong> (D) מיזוג אצוות כן מתאים לנתוני זרימה.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>אידיאלי:</strong> (A), (B), (C).</div>
+      steering:
+        options:
+          - letter: A
+            text: "&ldquo;תקנו את חשבון הפרץ: הציגו ספירת פעולות צעד-אחר-צעד עבור b=2,500, n=25,000.&rdquo;"
+            correct: true
+          - letter: B
+            text: "&ldquo;ציינו BATCH_THRESHOLD עם הצדקה על בסיס תדירות הדגימה וקצב התנועה.&rdquo;"
+            correct: true
+          - letter: C
+            text: "&ldquo;הפתרון נראה טוב, פשוט סדרו את העיצוב.&rdquo;"
+            correct: false
+          - letter: D
+            text: "&ldquo;שכתבו באמצעות ערימה (heap) במקום מערך ממוין.&rdquo;"
+            correct: false
+        studentSelections: [0, 1]
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>נבחרו נכון:</strong> (A) תיקון חשבון, (B) הגדרת סף. ספציפיים וממוקדים.</div>
+            <div class="criticism" style="margin-top:6px"><strong>נמנע נכון:</strong> (C) מעורפל מדי, (D) שכתוב מיותר.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>אידיאלי:</strong> (A), (B) &mdash; אופטימלי.</div>
+      summaryJudging: "שגיאת חשבון בניתוח הפרץ, BATCH_THRESHOLD לא מוגדר"
+      summarySteering: "תיקון חשבון; הגדרת BATCH_THRESHOLD עם הצדקה"
+
+    - # Cycle 3 — student marks done
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1 second of normal traffic
+              FLUSH_INTERVAL = 200ms
+
+              buffer = []
+              batch_queue = []
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)
+                  buffer = merge(buffer, batch_queue)
+                  batch_queue = []
+                  evict_old(buffer)
+
+              FUNCTION poll():
+                  if batch_queue is not empty: flush()
+                  return copy(buffer)</div>
+          <p class="text-sm" style="margin-top:8px"><strong>ניתוח פרץ מתוקן (b=2,500, n=25,000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch): 2,500 &times; 11.3 = ~28,200 השוואות</li>
+          <li>merge: 25,000 + 2,500 = 27,500 השוואות</li>
+          <li>סה"כ: ~55,700 פעולות</li>
+          <li>גישה ישנה: 62,500,000 פעולות</li>
+          <li><strong>שיפור: ~1,122&times;</strong></li>
+          </ul>
+        summary: "אצווה-מיזוג, BATCH_THRESHOLD=500, FLUSH_INTERVAL=200ms. פרץ מתוקן: ~55,700 פעולות. שיפור של 1,122×."
+      judging:
+        options:
+          - letter: A
+            text: "evict_old עדיין סורק את כל החוצץ &mdash; אפשר O(k) עם deque או מצביע קדמי"
+            correct: true
+          - letter: B
+            text: "כל הגישה שגויה &mdash; צריך להשתמש במסד נתונים במקום"
+            correct: false
+          - letter: C
+            text: "פונקציית הגיבוב (hash) לא מוגדרת לחיפוש חיישנים"
+            correct: false
+        studentSelections: []
+        doneSelected: true
+        feedback:
+          grade: B
+          html: |
+            <div class="criticism"><strong>הערכה:</strong> סימון כהושלם היה סביר אך פספס את (A) &mdash; evict_old עדיין סורק את כל החוצץ כשרק החלק הקדמי צריך הסרה.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>עדיף:</strong> לבחור (A) ולשלוח תיקון אחד נוסף לפני סימון כהושלם.</div>
+      steering: null
+      summaryJudging: "הסטודנט/ית סימן/ה את הפתרון כהושלם"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: B
+      judging: B
+      steering: A
+    summary: "הכוונה חזקה — התיקונים היו ספציפיים וממוקדים היטב. בעיצוב המשימה פוספס מפתח היציבות (sensor_id). בשיפוט: זוהו בעקביות בעיות עיקריות אך פוספסו בעיות משניות (עלות העתקת poll(), אופטימיזציית פינוי). נסו לשאול \"מה עוד יכול להיות בעייתי?\" אחרי שמוצאים את הבעיה הראשונה."
+
+oe:
+  aiSolution:
+    html: |
+      <div class="code-block">MODULE SortedSensorBuffer:
+          buffer = []
+          batch_queue = []
+          BATCH_THRESHOLD = 500
+
+          FUNCTION ingest(reading):
+              batch_queue.append(reading)
+              if len(batch_queue) &gt;= BATCH_THRESHOLD or time_since_last_flush &gt; 50ms:
+                  flush()
+
+          FUNCTION flush():
+              sort(batch_queue, key=timestamp)
+              buffer = merge(buffer, batch_queue)
+              batch_queue = []
+              evict_old(buffer)
+
+          FUNCTION poll():
+              if batch_queue: flush()
+              return copy(buffer)  // immutable snapshot</div>
+    summary: "אצווה-מיזוג עם תור. BATCH_THRESHOLD=500. תמונת מצב בלתי משתנה ב-poll()."
+  framing:
+    hint: "בעיית המקור מעורפלת בכוונה. הוסיפו סעיפי הבהרה למטה &mdash; הנחות, אילוצים, חידודים &mdash; כדי להפוך אותה למשימה מוגדרת היטב."
+    sections:
+      - name: "הנחות: מפתח מיון וסדר"
+        text: "מפתח המיון העיקרי הוא timestamp (סדר כרונולוגי ללוח הבקרה). שימוש ב-sensor_id כמפתח משני ליציבות כש-timestamp זהה. קריאות עשויות להגיע מעט שלא בסדר בגלל ריצוד רשת (jitter)."
+      - name: "אילוצים: היקף וביצועים"
+        text: "הערכה: 200-500 חיישנים, המייצרים 200-500 שלשות/שנייה בתנאים רגילים. &ldquo;פרצי עומס&rdquo; = 3-5 מונים מהקצב הרגיל (1,000-2,500 שלשות/שנייה). החוצץ מכסה חלון הזזה של 60 שניות (~30,000 כניסות בשיא). השהיית דגימה מקסימלית: 50 אלפיות שנייה."
+      - name: "הבהרה: פורמט פלט"
+        text: "לוח הבקרה צריך את כל החוצץ הממוין (לא top-k). הפלט צריך להיות תמונת מצב בלתי משתנה — ללא שינוי במקביל בזמן קריאות דגימה."
+    feedback:
+      grade: A
+      html: |
+        <div class="criticism"><strong>חוזקות:</strong> עיצוב משימה מצוין. זוהה מפתח המיון עם מפתח משני ליציבות, כומת ההיקף וקצב הפרצים, הוגדר חלון החוצץ, נקבעו דרישות השהיית דגימה, וטופלה סמנטיקת תמונת מצב.</div>
+        <div class="criticism" style="margin-top:6px"><strong>פער קטן:</strong> ניתן לציין עד כמה קריאות עשויות להגיע שלא בסדר (למשל, ריצוד מקסימלי של 5 שניות).</div>
+        <div class="better-alt" style="margin-top:6px"><strong>שיפור:</strong> הוספת סעיף &ldquo;מדדי הצלחה&rdquo; עם יעדי ביצועים קונקרטיים (למשל, אחוזון 99 של השהיית קליטה &lt; 2ms בפרץ).</div>
+  cycles:
+    - # Cycle 1
+      judging:
+        sections:
+          - name: "בעיה: ביצועי פרץ לא נותחו"
+            text: "ה-AI בחר אצווה-מיזוג אך לא ניתח את עלות המקרה הגרוע בפרץ. עם b=2,500 ו-n=25,000, לא סופקו מספרים ממשיים. גם בטבלת ההשוואה חסר ניתוח תרחיש פרץ."
+          - name: "בעיה: חסרה הצדקה ל-BATCH_THRESHOLD"
+            text: "BATCH_THRESHOLD = 500 נקבע אך לא הוצדק. למה 500? מה הקשר למרווח הדגימה של 200ms בלוח הבקרה?"
+          - name: "בעיה: תקורת העתקה מלאה ב-poll()"
+            text: "poll() מחזיר copy(buffer) — העתקה של ~30,000 כניסות כל 200ms. ב-5 דגימות/שנייה זה 150,000 העתקות כניסות/שנייה. שקלו סמנטיקת copy-on-write."
+        doneSelected: false
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>ניתוח מצוין.</strong> זוהו שלוש בעיות אמיתיות: חסר ניתוח פרץ (קריטי), סף לא מוצדק (בינוני), ותקורת העתקה ב-poll() (תקף).</div>
+            <div class="criticism" style="margin-top:6px"><strong>פער קטן:</strong> evict_old() סורק את כל החוצץ אך צריך להסיר רק מהחזית &mdash; אופטימיזציה של O(n) ל-O(k).</div>
+      steering:
+        sections:
+          - name: "הנחיה: הוספת ניתוח ביצועי פרץ"
+            text: "חשבו ספירת פעולות מדויקת לפרץ של b=2,500 לתוך חוצץ של n=25,000. השוו גישה ישנה (הכנסה פרטנית) מול אצווה-מיזוג. הציגו את יחס השיפור."
+          - name: "הנחיה: הצדקת BATCH_THRESHOLD"
+            text: "ספקו נימוק ל-BATCH_THRESHOLD = 500. קשרו אותו לקצב התנועה הרגיל, תדירות דגימת לוח הבקרה (200ms), ולפשרה בין השהיה ליעילות מיזוג."
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>הכוונה ממוקדת היטב.</strong> שתי ההנחיות מתייחסות ישירות לשתי הבעיות הקריטיות ביותר עם הקשר ספציפי.</div>
+            <div class="better-alt" style="margin-top:6px"><strong>שיפור:</strong> ניתן היה לטפל גם בבעיית העתקת poll() במחזור זה.</div>
+      summaryJudging: "חסר ניתוח פרץ, סף לא מוצדק, תקורת העתקה ב-poll()"
+      summarySteering: "הוספת ניתוח ביצועי פרץ; הצדקת BATCH_THRESHOLD"
+
+    - # Cycle 2 — student marks done
+      aiUpdate:
+        html: |
+          <div class="code-block">MODULE SortedSensorBuffer:
+              BATCH_THRESHOLD = 500  // ~1s normal traffic; flush before 200ms poll
+              FLUSH_INTERVAL = 150ms // ensures fresh data for 200ms poll cycle
+
+              buffer = deque()       // front-eviction in O(k)
+              batch_queue = []
+              snapshot = None        // cached immutable copy
+
+              FUNCTION ingest(reading):
+                  batch_queue.append(reading)
+                  snapshot = None    // invalidate cache
+                  if len(batch_queue) &gt;= BATCH_THRESHOLD or elapsed &gt; FLUSH_INTERVAL:
+                      flush()
+
+              FUNCTION flush():
+                  merge_sort(batch_queue)              // O(b log b)
+                  buffer = merge(buffer, batch_queue)  // O(n + b)
+                  batch_queue = []
+                  evict_expired(buffer)                // O(k) front removal
+                  snapshot = None
+
+              FUNCTION poll():
+                  if batch_queue: flush()
+                  if snapshot is None:
+                      snapshot = freeze(buffer)        // O(n) but cached
+                  return snapshot</div>
+          <p class="text-sm" style="margin-top:8px"><strong>ניתוח פרץ (b=2,500, n=25,000):</strong></p>
+          <ul class="text-sm" style="padding-left:20px;margin-top:4px">
+          <li>merge_sort(batch): 2,500 &times; 11.3 = ~28,200 השוואות</li>
+          <li>merge: 25,000 + 2,500 = 27,500 פעולות</li>
+          <li>סה"כ: ~55,700 פעולות מול גישה ישנה: 62,500,000</li>
+          <li><strong>שיפור: ~1,122&times;</strong></li>
+          </ul>
+        summary: "אצווה-מיזוג עם חוצץ deque, תמונות מצב מאוחסנות. BATCH_THRESHOLD=500, FLUSH_INTERVAL=150ms. פרץ: ~55,700 פעולות (שיפור 1,122×)."
+      judging:
+        sections: []
+        doneSelected: true
+        feedback:
+          grade: A
+          html: |
+            <div class="criticism"><strong>החלטה נכונה.</strong> הפתרון מטפל בכל הבעיות הקריטיות שעלו. פרט הפינוי כבר תוקן. סימון כהושלם היה מוצדק.</div>
+      steering: null
+      summaryJudging: "הסטודנטית סימנה את הפתרון כהושלם"
+      summarySteering: null
+
+  completion:
+    grades:
+      framing: A
+      judging: A
+      steering: A
+    summary: "ביצועים מצטיינים בכל שלושת הממדים. עיצוב המשימה היה יסודי עם הנחות מנומקות. השיפוט זיהה בעיות קריטיות עם ניתוח כמותי. ההכוונה הייתה מדויקת והובילה לשיפורים משמעותיים. ההחלטה לסמן כהושלם במחזור 2 הייתה נכונה."

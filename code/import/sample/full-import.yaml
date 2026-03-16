@@ -1,0 +1,171 @@
+version: "1.0"
+import:
+  institutions:
+    - name: "Tel Aviv University"
+      country: "Israel"
+      departments: ["Computer Science", "Mathematics", "Physics", "Philosophy", "Economics"]
+    - name: "MIT"
+      country: "USA"
+      departments: ["EECS", "Mathematics", "Physics", "Management", "Linguistics"]
+    - name: "University of Oxford"
+      country: "UK"
+      departments: ["Computer Science", "Mathematics", "Philosophy", "Law", "Economics"]
+    - name: "ETH Zurich"
+      country: "Switzerland"
+      departments: ["Computer Science", "Mathematics", "Physics", "Engineering"]
+    - name: "Technion"
+      country: "Israel"
+      departments: ["Computer Science", "Electrical Engineering", "Mathematics", "Physics"]
+    - name: "Stanford University"
+      country: "USA"
+      departments: ["Computer Science", "Mathematics", "Philosophy", "Education", "Law"]
+    - name: "University of Tokyo"
+      country: "Japan"
+      departments: ["Information Science", "Mathematics", "Physics", "Economics"]
+    - name: "Tsinghua University"
+      country: "China"
+      departments: ["Computer Science", "Engineering", "Mathematics", "Economics"]
+    - name: "Hebrew University"
+      country: "Israel"
+      departments: ["Computer Science", "Mathematics", "Philosophy", "Law", "Education"]
+
+  users:
+    - email: "noa.cohen@tau.ac.il"
+      name: "Noa Cohen"
+      role: student
+      institution: "Tel Aviv University"
+      password: "demo123"
+    - email: "ahmed.hassan@tau.ac.il"
+      name: "Ahmed Hassan"
+      role: student
+      institution: "Tel Aviv University"
+      password: "demo123"
+    - email: "maria.garcia@mit.edu"
+      name: "Maria Garcia"
+      role: student
+      institution: "MIT"
+      password: "demo123"
+    - email: "dr.levy@tau.ac.il"
+      name: "Dr. Sarah Levy"
+      role: instructor
+      institution: "Tel Aviv University"
+      password: "demo123"
+    - email: "prof.chen@mit.edu"
+      name: "Prof. Wei Chen"
+      role: instructor
+      institution: "MIT"
+      password: "demo123"
+    - email: "li.wei@tsinghua.edu.cn"
+      name: "Li Wei"
+      role: student
+      institution: "Tsinghua University"
+      password: "demo123"
+    - email: "sarah.miller@oxford.ac.uk"
+      name: "Sarah Miller"
+      role: student
+      institution: "University of Oxford"
+      password: "demo123"
+
+  courses:
+    - name: "Introduction to Algorithms"
+      institution: "Tel Aviv University"
+      instructors: ["dr.levy@tau.ac.il"]
+      description: "Fundamental algorithmic techniques and data structures"
+      subject_tree:
+        - name: "Sorting & Searching"
+          children:
+            - name: "Comparison-based Sorting"
+            - name: "Hash-based Searching"
+            - name: "Binary Search Variants"
+        - name: "Graph Algorithms"
+          children:
+            - name: "Shortest Paths"
+            - name: "Minimum Spanning Trees"
+            - name: "Network Flow"
+        - name: "Dynamic Programming"
+          children:
+            - name: "Memoization"
+            - name: "Tabulation"
+    - name: "Classical Mechanics"
+      institution: "MIT"
+      instructors: ["prof.chen@mit.edu"]
+      description: "Newtonian mechanics, Lagrangian and Hamiltonian formulations"
+      subject_tree:
+        - name: "Kinematics"
+          children:
+            - name: "Linear Motion"
+            - name: "Projectile Motion"
+            - name: "Circular Motion"
+        - name: "Dynamics"
+          children:
+            - name: "Newton's Laws"
+            - name: "Friction & Drag"
+            - name: "Oscillations"
+    - name: "Ethics"
+      institution: "University of Oxford"
+      instructors: []
+      description: "Moral philosophy and ethical reasoning"
+      subject_tree:
+        - name: "Normative Ethics"
+          children:
+            - name: "Utilitarianism"
+            - name: "Deontology"
+            - name: "Virtue Ethics"
+        - name: "Applied Ethics"
+          children:
+            - name: "AI Ethics"
+            - name: "Bioethics"
+    - name: "Linear Algebra"
+      institution: "Tel Aviv University"
+      instructors: ["dr.levy@tau.ac.il"]
+      description: "Vector spaces, matrices, and linear transformations"
+      subject_tree:
+        - name: "Vector Spaces"
+        - name: "Matrix Operations"
+        - name: "Eigenvalues & Eigenvectors"
+    - name: "Microeconomics"
+      institution: "MIT"
+      instructors: ["prof.chen@mit.edu"]
+      description: "Consumer theory, producer theory, and market structures"
+      subject_tree:
+        - name: "Supply & Demand"
+        - name: "Consumer Choice"
+        - name: "Market Structures"
+
+  challenges:
+    - title: "Sorting Pipeline for Sensor Data"
+      course: "Introduction to Algorithms"
+      creator: "dr.levy@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 5
+      subject_path: ["Sorting & Searching", "Comparison-based Sorting"]
+    - title: "Optimizing Graph Traversal"
+      course: "Introduction to Algorithms"
+      creator: "dr.levy@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Graph Algorithms", "Shortest Paths"]
+    - title: "Projectile Motion Analysis"
+      course: "Classical Mechanics"
+      creator: "prof.chen@mit.edu"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 5
+      subject_path: ["Kinematics", "Projectile Motion"]
+    - title: "The Trolley Problem Revisited"
+      course: "Ethics"
+      creator: "dr.levy@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Applied Ethics", "AI Ethics"]

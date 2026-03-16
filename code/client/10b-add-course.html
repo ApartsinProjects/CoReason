@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab — Add New Course</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    .create-course-layout { display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
+    .preview-panel { position: sticky; top: 80px; }
+    .instructor-list { list-style: none; padding: 0; }
+    .instructor-list li { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--radius); margin-bottom: 6px; background: #f8f9ff; }
+    .instructor-list .avatar-sm { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+    .instructor-list .info { flex: 1; }
+    .instructor-list .info .name { font-size: 13px; font-weight: 600; }
+    .instructor-list .info .email { font-size: 11px; color: var(--text-secondary); }
+    .instructor-list .role-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+    .instructor-list .role-tag.lead { background: var(--teal); color: #fff; }
+    .instructor-list .role-tag.co { background: #e0f2f1; color: #00695c; }
+    .step-indicator { display: flex; gap: 0; margin-bottom: 24px; }
+    .step-indicator .step { flex: 1; text-align: center; padding: 12px 16px; background: #f5f5f5; font-size: 13px; font-weight: 600; color: var(--text-secondary); position: relative; }
+    .step-indicator .step.active { background: var(--primary); color: #fff; }
+    .step-indicator .step.done { background: #e0f2f1; color: #00695c; }
+    .step-indicator .step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .step-indicator .step:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .step-indicator .step .step-num { display: block; font-size: 18px; font-weight: 700; }
+    .llm-config { background: #f8f9ff; border-radius: var(--radius); padding: 16px; margin-top: 12px; border-left: 3px solid var(--primary); }
+    .llm-config h5 { font-size: 13px; color: var(--primary); margin-bottom: 8px; }
+    .preview-card { background: #fafafa; border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
+    .preview-card h4 { font-size: 14px; margin-bottom: 8px; }
+    .preview-card .tag-list { display: flex; flex-wrap: wrap; gap: 4px; }
+    .preview-card .tag { display: inline-block; background: #e8eaf6; color: var(--primary); font-size: 12px; padding: 2px 8px; border-radius: 4px; }
+    .enroll-info { display: flex; gap: 8px; align-items: center; padding: 10px 14px; background: #fff8e1; border-radius: var(--radius); font-size: 13px; margin-top: 12px; }
+
+    @media (max-width: 768px) {
+      .create-course-layout { grid-template-columns: 1fr !important; }
+      .preview-panel { position: static !important; order: -1; }
+    }
+  </style>
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
+    <nav>
+      <a href="03-challenge-list-instructor.html" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog-instructor.html" class="active" data-t="courses">Courses</a>
+      <a href="08-instructor-analytics.html" data-t="analytics">Analytics</a>
+    </nav>
+    <div class="user-area">
+      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
+      <span>Dr. Levy</span>
+      <a href="09-profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-header">
+      <h1>Add New Course</h1>
+      <p>Create a new course within your institution and configure its subject tree</p>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="step-indicator">
+      <div class="step active" id="step1">
+        <span class="step-num">1</span>
+        Course Details
+      </div>
+      <div class="step" id="step2">
+        <span class="step-num">2</span>
+        Subject Tree
+      </div>
+      <div class="step" id="step3">
+        <span class="step-num">3</span>
+        Settings
+      </div>
+    </div>
+
+    <div class="create-course-layout">
+      <!-- Left: Form -->
+      <div>
+        <!-- Step 1: Course Details -->
+        <div class="card" id="formStep1">
+          <h3 style="margin-bottom:16px;">Course Details</h3>
+
+          <div class="form-group">
+            <label>Course Name <span style="color:var(--danger);">*</span></label>
+            <input type="text" class="form-control" id="courseName" placeholder="e.g., Introduction to Machine Learning" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label>Course Code</label>
+            <input type="text" class="form-control" id="courseCode" placeholder="e.g., CS-401" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label>Department <span style="color:var(--danger);">*</span></label>
+            <select class="form-control" id="courseDept" onchange="updatePreview()">
+              <option value="">Select department...</option>
+              <option>Computer Science</option>
+              <option>Electrical Engineering</option>
+              <option>Mathematics</option>
+              <option>Data Science</option>
+              <option>Physics</option>
+              <option>Digital Medical Technologies</option>
+              <option>Instructional Technologies</option>
+              <option>Law</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Institution</label>
+            <input type="text" class="form-control" value="Tel Aviv University" disabled style="opacity:0.7;">
+            <p class="text-sm text-muted mt-4">Courses are scoped to your institution and cannot be changed</p>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" rows="3" id="courseDesc" placeholder="Brief description of the course content and objectives..." oninput="updatePreview()"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Semester / Term</label>
+            <div style="display:flex; gap:8px;">
+              <select class="form-control" style="flex:1;">
+                <option>Spring</option>
+                <option>Fall</option>
+                <option>Summer</option>
+                <option>Year-round</option>
+              </select>
+              <input type="number" class="form-control" value="2026" style="width:100px;">
+            </div>
+          </div>
+
+          <!-- Instructors -->
+          <div class="form-group">
+            <label>Instructors</label>
+            <ul class="instructor-list" id="instructorList">
+              <li>
+                <div class="avatar-sm" style="background:#e3f2fd;color:var(--primary);">DL</div>
+                <div class="info">
+                  <div class="name">Dr. Dana Levy</div>
+                  <div class="email">d.levy@tau.ac.il</div>
+                </div>
+                <span class="role-tag lead">Lead</span>
+              </li>
+            </ul>
+            <div style="display:flex; gap:8px; margin-top:8px;">
+              <input type="email" class="form-control" id="addInstructorEmail" placeholder="Co-instructor email..." style="flex:1;">
+              <button class="btn btn-outline btn-sm" onclick="addCoInstructor()">+ Add</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Initial Subject Tree -->
+        <div class="card" id="formStep2">
+          <h3 style="margin-bottom:16px;">Initial Subject Tree</h3>
+          <p class="text-sm text-muted mb-16">Define the initial topic hierarchy. You can refine it later from the Subject Tree Editor.</p>
+
+          <div class="form-group">
+            <label>Quick Setup Method</label>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+              <button class="btn btn-teal btn-sm" onclick="showTreeMethod('ai')">🤖 AI-Generate from Syllabus</button>
+              <button class="btn btn-outline btn-sm" onclick="showTreeMethod('template')">📋 Use Template</button>
+              <button class="btn btn-outline btn-sm" onclick="showTreeMethod('manual')">✏️ Build Manually</button>
+              <button class="btn btn-outline btn-sm" onclick="showTreeMethod('import')">📥 Import YAML</button>
+            </div>
+          </div>
+
+          <!-- AI generation panel -->
+          <div id="methodAI" class="llm-config">
+            <h5>AI-Generate Subject Tree</h5>
+            <p class="text-sm text-muted mb-12">Paste your course syllabus or topic list and the AI will generate a structured subject tree.</p>
+            <div class="form-group">
+              <textarea class="form-control" rows="5" placeholder="Paste syllabus, topic outline, or course description here...&#10;&#10;Example:&#10;Week 1: Introduction to Neural Networks&#10;Week 2: Backpropagation&#10;Week 3: CNNs&#10;..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Target Depth</label>
+              <select class="form-control" style="width:150px;">
+                <option>2 levels</option>
+                <option selected>3 levels</option>
+                <option>4 levels</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-sm">⚡ Generate Subject Tree</button>
+          </div>
+
+          <!-- Template panel (hidden by default) -->
+          <div id="methodTemplate" style="display:none;">
+            <div class="form-group">
+              <label>Choose a Template</label>
+              <select class="form-control" id="templateSelect">
+                <option value="">Select template...</option>
+                <option>Computer Science — Introductory</option>
+                <option>Computer Science — Advanced</option>
+                <option>Data Science — Applied</option>
+                <option>Mathematics — Pure</option>
+                <option>Engineering — General</option>
+              </select>
+              <p class="text-sm text-muted mt-4">Templates provide a starting point you can customize in the Subject Tree Editor.</p>
+            </div>
+          </div>
+
+          <!-- Manual panel (hidden by default) -->
+          <div id="methodManual" style="display:none;">
+            <p class="text-sm text-muted mb-12">Add root topics below. You can add child topics after course creation in the Subject Tree Editor.</p>
+            <div id="manualTopics">
+              <div style="display:flex; gap:8px; margin-bottom:6px;">
+                <input type="text" class="form-control" placeholder="Root topic name..." style="flex:1;">
+                <button class="btn btn-outline btn-sm" onclick="this.closest('div').remove()">✕</button>
+              </div>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="addManualTopic()" style="margin-top:4px;">+ Add Topic</button>
+          </div>
+
+          <!-- Import panel (hidden by default) -->
+          <div id="methodImport" style="display:none;">
+            <div class="form-group">
+              <label>Upload YAML File</label>
+              <div style="border:2px dashed var(--border); border-radius:var(--radius); padding:32px; text-align:center; color:var(--text-secondary);">
+                <p style="font-size:24px; margin-bottom:8px;">📄</p>
+                <p>Drag & drop a YAML file here, or <a href="#" style="color:var(--primary);">browse</a></p>
+                <p class="text-sm text-muted mt-8">Accepts .yaml or .yml files matching the CoReason subject tree schema</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Settings -->
+        <div class="card" id="formStep3">
+          <h3 style="margin-bottom:16px;">Course Settings</h3>
+
+          <div class="form-group">
+            <label>Default LLM Model</label>
+            <select class="form-control">
+              <option value="">System Default (GPT-4o)</option>
+              <option>GPT-4o</option>
+              <option>GPT-4o-mini</option>
+              <option>Claude 3.5 Sonnet</option>
+              <option>Gemini 2.0 Flash</option>
+            </select>
+            <p class="text-sm text-muted mt-4">Individual challenges can override this setting.</p>
+          </div>
+
+          <div class="form-group">
+            <label>Default Max Cycles</label>
+            <input type="number" class="form-control" value="3" min="1" max="10" style="width:80px;">
+            <p class="text-sm text-muted mt-4">Default maximum judge+steer cycles per challenge.</p>
+          </div>
+
+          <div class="form-group">
+            <label>Student Enrollment</label>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <label style="display:flex; align-items:center; gap:8px; font-size:14px; cursor:pointer;">
+                <input type="radio" name="enrollment" checked> Open — any student from the institution can subscribe
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; font-size:14px; cursor:pointer;">
+                <input type="radio" name="enrollment"> Approval Required — instructor must approve each subscription
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; font-size:14px; cursor:pointer;">
+                <input type="radio" name="enrollment"> Invite Only — students need an enrollment code
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Enrollment Code (for Invite Only)</label>
+            <div style="display:flex; gap:8px;">
+              <input type="text" class="form-control" value="" placeholder="Auto-generated on creation" disabled style="flex:1; opacity:0.6;">
+              <button class="btn btn-outline btn-sm" disabled style="opacity:0.6;">Generate</button>
+            </div>
+          </div>
+
+          <div class="enroll-info">
+            <span>💡</span>
+            <span>Students discover courses via the Course Catalog and can subscribe based on your enrollment settings.</span>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="flex gap-12 mt-16">
+          <button class="btn btn-primary btn-lg" onclick="createCourse()">Create Course</button>
+          <a href="06-course-catalog-instructor.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
+        </div>
+      </div>
+
+      <!-- Right: Live Preview -->
+      <div class="preview-panel">
+        <div class="card">
+          <h3 style="margin-bottom:16px;">Course Preview</h3>
+          <div class="preview-card">
+            <div style="font-size:12px; color:var(--teal); font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px;" id="previewDept">Department</div>
+            <h4 id="previewName" style="color:var(--text-secondary); font-style:italic;">Course name...</h4>
+            <p class="text-sm text-muted" id="previewDesc">Description will appear here</p>
+            <div style="margin-top:12px; font-size:13px; color:var(--text-secondary);">
+              <span>🏫 Tel Aviv University</span>
+              <span style="margin-left:12px;">📅 Spring 2026</span>
+            </div>
+            <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
+              <div class="tag-list" id="previewTags">
+                <span class="text-sm text-muted">Subject tree will appear here after setup</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-bottom:12px;">Checklist</h3>
+          <div style="font-size:13px;">
+            <div style="padding:6px 0; display:flex; gap:8px; align-items:center;" id="checkName">
+              <span style="color:#ccc;">○</span> Course name
+            </div>
+            <div style="padding:6px 0; display:flex; gap:8px; align-items:center;" id="checkDept">
+              <span style="color:#ccc;">○</span> Department
+            </div>
+            <div style="padding:6px 0; display:flex; gap:8px; align-items:center;" id="checkTree">
+              <span style="color:#ccc;">○</span> Subject tree
+            </div>
+            <div style="padding:6px 0; display:flex; gap:8px; align-items:center;" id="checkSettings">
+              <span style="color:var(--teal);">●</span> Settings (defaults OK)
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-bottom:12px;">What Happens Next?</h3>
+          <ol style="font-size:13px; padding-left:18px; color:var(--text-secondary); line-height:1.8;">
+            <li>Course is created and visible in your course list</li>
+            <li>Students from your institution can discover and subscribe</li>
+            <li>You can refine the subject tree anytime</li>
+            <li>Create challenges linked to subjects</li>
+            <li>Rubrics are auto-generated from your subject tree</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function updatePreview() {
+      var name = document.getElementById('courseName').value;
+      var dept = document.getElementById('courseDept').value;
+      var desc = document.getElementById('courseDesc').value;
+
+      document.getElementById('previewName').textContent = name || 'Course name...';
+      document.getElementById('previewName').style.fontStyle = name ? 'normal' : 'italic';
+      document.getElementById('previewName').style.color = name ? 'var(--text-primary)' : 'var(--text-secondary)';
+      document.getElementById('previewDept').textContent = dept || 'Department';
+      document.getElementById('previewDesc').textContent = desc || 'Description will appear here';
+
+      // Update checklist
+      var checkName = document.getElementById('checkName');
+      var checkDept = document.getElementById('checkDept');
+      checkName.querySelector('span').textContent = name ? '●' : '○';
+      checkName.querySelector('span').style.color = name ? 'var(--teal)' : '#ccc';
+      checkDept.querySelector('span').textContent = dept ? '●' : '○';
+      checkDept.querySelector('span').style.color = dept ? 'var(--teal)' : '#ccc';
+    }
+
+    function showTreeMethod(method) {
+      ['AI', 'Template', 'Manual', 'Import'].forEach(function(m) {
+        var el = document.getElementById('method' + m);
+        if (el) el.style.display = 'none';
+      });
+      var target = document.getElementById('method' + method.charAt(0).toUpperCase() + method.slice(1));
+      if (target) target.style.display = '';
+
+      // Update checklist
+      var checkTree = document.getElementById('checkTree');
+      checkTree.querySelector('span').textContent = '●';
+      checkTree.querySelector('span').style.color = 'var(--teal)';
+    }
+
+    function addManualTopic() {
+      var container = document.getElementById('manualTopics');
+      var div = document.createElement('div');
+      div.style.cssText = 'display:flex; gap:8px; margin-bottom:6px;';
+      div.innerHTML = '<input type="text" class="form-control" placeholder="Root topic name..." style="flex:1;"><button class="btn btn-outline btn-sm" onclick="this.closest(\'div\').remove()">✕</button>';
+      container.appendChild(div);
+      div.querySelector('input').focus();
+    }
+
+    function addCoInstructor() {
+      var emailInput = document.getElementById('addInstructorEmail');
+      var email = emailInput.value.trim();
+      if (!email) return;
+
+      var list = document.getElementById('instructorList');
+      var li = document.createElement('li');
+      var initials = email.split('@')[0].split('.').map(function(s) { return s.charAt(0).toUpperCase(); }).join('');
+      li.innerHTML =
+        '<div class="avatar-sm" style="background:#e8eaf6;color:var(--primary);">' + initials + '</div>' +
+        '<div class="info"><div class="name">' + email.split('@')[0].replace('.', ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); }) + '</div><div class="email">' + email + '</div></div>' +
+        '<span class="role-tag co">Co</span>' +
+        '<button onclick="this.closest(\'li\').remove()" style="border:none;background:none;cursor:pointer;color:var(--text-secondary);font-size:16px;">✕</button>';
+      list.appendChild(li);
+      emailInput.value = '';
+    }
+
+    function createCourse() {
+      var name = document.getElementById('courseName').value.trim();
+      var dept = document.getElementById('courseDept').value;
+
+      if (!name) { alert('Please enter a course name.'); return; }
+      if (!dept) { alert('Please select a department.'); return; }
+
+      alert('Course "' + name + '" created successfully!\n\nYou can now refine the subject tree and start creating challenges.');
+      window.location.href = '06-course-catalog-instructor.html';
+    }
+  </script>
+</body>
+</html>

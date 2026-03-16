@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab — My Challenges</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    .challenge-actions { display: flex; gap: 4px; }
+    .challenge-actions .btn { padding: 4px 8px; font-size: 12px; }
+    .completion-bar { display: flex; align-items: center; gap: 8px; }
+    .completion-bar .progress { width: 60px; }
+    .view-toggle { display: flex; gap: 0; border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .view-toggle button { padding: 6px 14px; background: #fff; border: none; font-size: 13px; cursor: pointer; }
+    .view-toggle button.active { background: var(--primary); color: #fff; }
+
+    /* Instructor-specific styles */
+    .bulk-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background: #f5f5f5;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .bulk-actions label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .bulk-actions .btn {
+      padding: 4px 14px;
+      font-size: 12px;
+    }
+    .status-published {
+      color: #2e7d32;
+      background: #e8f5e9;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status-draft {
+      color: #e65100;
+      background: #fff3e0;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .submissions-cell {
+      font-variant-numeric: tabular-nums;
+    }
+    .more-menu {
+      position: relative;
+      display: inline-block;
+    }
+    .more-menu button {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2px 8px;
+      font-size: 16px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .more-menu button:hover {
+      background: #f5f5f5;
+    }
+    .grade-cell {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    tr.draft-row {
+      background: #fffde7;
+    }
+  </style>
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
+    <nav>
+      <a href="03-challenge-list-instructor.html" class="active" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog-instructor.html" data-t="courses">Courses</a>
+      <a href="08-instructor-analytics.html" data-t="analytics">Analytics</a>
+    </nav>
+    <div class="user-area">
+      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
+      <span>Dr. Levy</span>
+      <a href="09-profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-header flex-between">
+      <div>
+        <h1 data-t="myChallenges">My Challenges</h1>
+        <p data-t="challengeListDesc">Manage challenges you've created and monitor student performance</p>
+      </div>
+      <a href="04-create-challenge.html" class="btn btn-primary" data-t="createChallenge">+ Create Challenge</a>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <input type="search" class="form-control" data-t-placeholder="searchChallenges" placeholder="Search challenges...">
+      <select class="form-control" data-t-options="allCourses">
+        <option value="">All Courses</option>
+        <option>Deep Learning 101</option>
+        <option>Database Systems</option>
+        <option>Software Engineering</option>
+      </select>
+      <select class="form-control" data-t-options="allTypes,practice,assessment">
+        <option value="">All Types</option>
+        <option>Practice</option>
+        <option>Assessment</option>
+      </select>
+      <select class="form-control" data-t-options="allVisibility,public,private">
+        <option value="">All Visibility</option>
+        <option>Public</option>
+        <option>Private</option>
+      </select>
+      <select class="form-control" data-t-options="allStatus,published,draft,archived">
+        <option value="">All Status</option>
+        <option>Published</option>
+        <option>Draft</option>
+        <option>Archived</option>
+      </select>
+    </div>
+
+    <!-- Bulk Actions Bar -->
+    <div class="bulk-actions">
+      <label><input type="checkbox"> <span data-t="selectAll">Select All</span></label>
+      <button class="btn btn-outline" data-t="publish">Publish Selected</button>
+      <button class="btn btn-outline" data-t="archive">Archive Selected</button>
+    </div>
+
+    <!-- Challenge Table -->
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:32px"><input type="checkbox"></th>
+              <th data-t="challenge">Challenge</th>
+              <th data-t="course">Course</th>
+              <th data-t="type">Type</th>
+              <th data-t="visibility">Visibility</th>
+              <th data-t="submissions">Submissions</th>
+              <th data-t="avgGrade">Avg Grade</th>
+              <th data-t="status">Status</th>
+              <th data-t="actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 1. Sorting Algorithm Analysis -->
+            <tr data-course="Software Engineering" data-type="Assessment" data-visibility="Public" data-status="Published" data-tab="mine">
+              <td><input type="checkbox"></td>
+              <td><strong>Sorting Algorithm Analysis</strong></td>
+              <td>Software Engineering</td>
+              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
+              <td><span class="badge badge-public" data-t="public">Public</span></td>
+              <td class="submissions-cell">38/45</td>
+              <td class="grade-cell"><span class="grade grade-B">B</span></td>
+              <td><span class="status-published" data-t="published">Published</span></td>
+              <td>
+                <div class="challenge-actions">
+                  <a href="04-create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
+                  <a href="08-instructor-analytics.html" class="btn btn-outline btn-sm" title="Analytics" data-t="analytics">Analytics</a>
+                  <a href="05-challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
+                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
+                </div>
+              </td>
+            </tr>
+            <!-- 2. Neural Network Debugging -->
+            <tr data-course="Deep Learning 101" data-type="Practice" data-visibility="Public" data-status="Published" data-tab="mine">
+              <td><input type="checkbox"></td>
+              <td><strong>Neural Network Debugging</strong></td>
+              <td>Deep Learning 101</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td><span class="badge badge-public" data-t="public">Public</span></td>
+              <td class="submissions-cell">22/45</td>
+              <td class="grade-cell"><span class="grade grade-B">B</span></td>
+              <td><span class="status-published" data-t="published">Published</span></td>
+              <td>
+                <div class="challenge-actions">
+                  <a href="04-create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
+                  <a href="08-instructor-analytics.html" class="btn btn-outline btn-sm" title="Analytics" data-t="analytics">Analytics</a>
+                  <a href="05-challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
+                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
+                </div>
+              </td>
+            </tr>
+            <!-- 3. SQL Query Optimization -->
+            <tr data-course="Database Systems" data-type="Assessment" data-visibility="Public" data-status="Published" data-tab="mine">
+              <td><input type="checkbox"></td>
+              <td><strong>SQL Query Optimization</strong></td>
+              <td>Database Systems</td>
+              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
+              <td><span class="badge badge-public" data-t="public">Public</span></td>
+              <td class="submissions-cell">41/42</td>
+              <td class="grade-cell"><span class="grade grade-A">A</span></td>
+              <td><span class="status-published" data-t="published">Published</span></td>
+              <td>
+                <div class="challenge-actions">
+                  <a href="04-create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
+                  <a href="08-instructor-analytics.html" class="btn btn-outline btn-sm" title="Analytics" data-t="analytics">Analytics</a>
+                  <a href="05-challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
+                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
+                </div>
+              </td>
+            </tr>
+            <!-- 4. Rate Limiter Design (Draft) -->
+            <tr class="draft-row" data-course="Software Engineering" data-type="Practice" data-visibility="Private" data-status="Draft" data-tab="mine">
+              <td><input type="checkbox"></td>
+              <td><strong>Rate Limiter Design</strong></td>
+              <td>Software Engineering</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td><span class="badge badge-private" data-t="private">Private</span></td>
+              <td class="submissions-cell">&mdash;</td>
+              <td class="grade-cell">&mdash;</td>
+              <td><span class="status-draft" data-t="draft">Draft</span></td>
+              <td>
+                <div class="challenge-actions">
+                  <a href="04-create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
+                  <a href="05-challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
+                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
+                </div>
+              </td>
+            </tr>
+            <!-- 5. CNN Architecture Review -->
+            <tr data-course="Deep Learning 101" data-type="Assessment" data-visibility="Public" data-status="Published" data-tab="course">
+              <td><input type="checkbox"></td>
+              <td><strong>CNN Architecture Review</strong></td>
+              <td>Deep Learning 101</td>
+              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
+              <td><span class="badge badge-public" data-t="public">Public</span></td>
+              <td class="submissions-cell">30/45</td>
+              <td class="grade-cell"><span class="grade grade-B">B</span></td>
+              <td><span class="status-published" data-t="published">Published</span></td>
+              <td>
+                <div class="challenge-actions">
+                  <a href="04-create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
+                  <a href="08-instructor-analytics.html" class="btn btn-outline btn-sm" title="Analytics" data-t="analytics">Analytics</a>
+                  <a href="05-challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
+                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script>
+  (function() {
+    var rows = document.querySelectorAll('tbody tr');
+    var selects = document.querySelectorAll('.filter-bar select');
+    var searchInput = document.querySelector('.filter-bar input[type="search"]');
+
+    function getSelectVal(idx) { return selects[idx] ? selects[idx].value : ''; }
+
+    function applyFilters() {
+      var query = searchInput.value.toLowerCase().trim();
+      var course = getSelectVal(0);
+      var type = getSelectVal(1);
+      var vis = getSelectVal(2);
+      var status = getSelectVal(3);
+
+      rows.forEach(function(row) {
+        var show = true;
+        if (course && row.getAttribute('data-course') !== course) show = false;
+        if (type && row.getAttribute('data-type') !== type) show = false;
+        if (vis && row.getAttribute('data-visibility') !== vis) show = false;
+        if (status && row.getAttribute('data-status') !== status) show = false;
+        if (query && row.textContent.toLowerCase().indexOf(query) === -1) show = false;
+        row.style.display = show ? '' : 'none';
+      });
+    }
+
+    selects.forEach(function(s) { s.addEventListener('change', applyFilters); });
+    searchInput.addEventListener('input', applyFilters);
+  })();
+  </script>
+</body>
+</html>

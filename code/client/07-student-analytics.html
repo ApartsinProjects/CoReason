@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoReasoning Lab — My Results</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    /* Grade Distribution Cards */
+    .dist-card { text-align: center; }
+    .dist-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 12px; color: var(--text); }
+    .overall-grade { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; font-weight: 800; font-size: 28px; color: #fff; margin-bottom: 12px; }
+    .overall-grade.grade-A { background: var(--grade-a); }
+    .overall-grade.grade-B { background: var(--grade-b); }
+    .overall-grade.grade-C { background: var(--grade-c); }
+    .overall-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; }
+
+    .stacked-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
+    .stacked-bar .seg { display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; min-width: 20px; transition: width .3s; }
+    .seg-a { background: var(--grade-a); }
+    .seg-b { background: var(--grade-b); }
+    .seg-c { background: var(--grade-c); }
+    .count-labels { font-size: 13px; color: var(--text-secondary); display: flex; justify-content: center; gap: 16px; }
+    .count-labels span { font-weight: 600; }
+    .count-labels .lbl-a { color: var(--grade-a); }
+    .count-labels .lbl-b { color: var(--grade-b); }
+    .count-labels .lbl-c { color: var(--grade-c); }
+
+    /* Trend Timeline */
+    .trend-card { padding: 24px; }
+    .trend-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 20px; }
+    .timeline { display: flex; align-items: flex-end; gap: 0; justify-content: space-between; position: relative; }
+    .timeline::before { content: ''; position: absolute; bottom: 44px; left: 24px; right: 24px; height: 2px; background: var(--border); z-index: 0; }
+    .tl-point { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; position: relative; z-index: 1; }
+    .tl-dots { display: flex; gap: 4px; margin-bottom: 8px; }
+    .tl-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+    .tl-dot.dot-a { background: var(--grade-a); }
+    .tl-dot.dot-b { background: var(--grade-b); }
+    .tl-dot.dot-c { background: var(--grade-c); }
+    .tl-label { font-size: 11px; color: var(--text-secondary); text-align: center; max-width: 80px; line-height: 1.3; }
+    .tl-legend { display: flex; gap: 16px; margin-top: 16px; justify-content: center; }
+    .tl-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+    .tl-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    /* Table enhancements */
+    .phase-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; padding: 2px 8px; border-radius: 4px; }
+    .phase-1 { background: #e8eaf6; color: var(--primary); }
+    .phase-2 { background: #e0f2f1; color: var(--teal); }
+
+    .view-report-link { color: var(--primary); text-decoration: none; font-size: 13px; font-weight: 500; }
+    .view-report-link:hover { text-decoration: underline; }
+
+    .expandable-row { cursor: pointer; }
+    .expandable-row:hover td { background: #f0f1fa; }
+    .detail-row { display: none; }
+    .detail-row.open { display: table-row; }
+    .detail-content { padding: 16px 24px; }
+    .detail-content .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .detail-mini-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; text-align: center; }
+    .detail-mini-card .mini-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+    .detail-mini-card .mini-feedback { font-size: 13px; color: var(--text); margin-top: 8px; text-align: left; }
+
+    @media (max-width: 768px) {
+      .detail-content .detail-grid { grid-template-columns: 1fr; }
+      .timeline { flex-wrap: wrap; gap: 16px; }
+      .timeline::before { display: none; }
+    }
+  </style>
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> CoReasoning Lab</a>
+    <nav>
+      <a href="03-challenge-list.html" data-t="challenges">Challenges</a>
+      <a href="06-course-catalog.html" data-t="courses">Courses</a>
+      <a href="07-student-analytics.html" class="active" data-t="myResults">My Results</a>
+    </nav>
+    <div class="user-area">
+      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <span>Sarah Cohen</span>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
+      <a href="09-profile.html"><div class="avatar">SC</div></a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-header">
+      <h1 data-t="myResults">My Results</h1>
+      <p data-t="myResultsDesc">Visual summary of your performance across all challenge runs</p>
+    </div>
+
+    <!-- Filter Bar — top-level, controls all analytics below -->
+    <div class="filter-bar" id="analyticsFilters">
+      <select class="form-control" id="filterCourse" onchange="applyFilters()">
+        <option value="" data-t="allCourses">All Courses</option>
+        <option value="Deep Learning 101">Deep Learning 101</option>
+        <option value="Database Systems">Database Systems</option>
+        <option value="Software Engineering">Software Engineering</option>
+      </select>
+      <select class="form-control" id="filterType" onchange="applyFilters()">
+        <option value="" data-t="allTypes">All Types</option>
+        <option value="practice" data-t="practice">Practice</option>
+        <option value="assessment" data-t="assessment">Assessment</option>
+      </select>
+      <select class="form-control" id="filterGrade" onchange="applyFilters()">
+        <option value="" data-t="allGrades">All Grades</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
+      <span id="filterCount" style="font-size:13px;color:var(--text-secondary);margin-left:auto;"></span>
+    </div>
+
+    <!-- Grade Distribution Charts -->
+    <div class="grid grid-3" id="gradeDistSection">
+      <!-- Framing: A=4, B=2, C=0, total=6 -->
+      <div class="card dist-card">
+        <h4 data-t="framingDistribution">Framing Distribution</h4>
+        <div class="overall-grade grade-A">A</div>
+        <div class="overall-label" data-t="mostCommonGrade">Most Common Grade</div>
+        <div class="stacked-bar">
+          <div class="seg seg-a" style="width:66.7%">67%</div>
+          <div class="seg seg-b" style="width:33.3%">33%</div>
+        </div>
+        <div class="count-labels">
+          <span class="lbl-a">A: 4</span>
+          <span class="lbl-b">B: 2</span>
+          <span class="lbl-c">C: 0</span>
+        </div>
+      </div>
+
+      <!-- Judging: A=2, B=3, C=1, total=6 -->
+      <div class="card dist-card">
+        <h4 data-t="judgingDistribution">Judging Distribution</h4>
+        <div class="overall-grade grade-B">B</div>
+        <div class="overall-label" data-t="mostCommonGrade">Most Common Grade</div>
+        <div class="stacked-bar">
+          <div class="seg seg-a" style="width:33.3%">33%</div>
+          <div class="seg seg-b" style="width:50%">50%</div>
+          <div class="seg seg-c" style="width:16.7%">17%</div>
+        </div>
+        <div class="count-labels">
+          <span class="lbl-a">A: 2</span>
+          <span class="lbl-b">B: 3</span>
+          <span class="lbl-c">C: 1</span>
+        </div>
+      </div>
+
+      <!-- Steering: A=3, B=2, C=1, total=6 -->
+      <div class="card dist-card">
+        <h4 data-t="steeringDistribution">Steering Distribution</h4>
+        <div class="overall-grade grade-A">A</div>
+        <div class="overall-label" data-t="mostCommonGrade">Most Common Grade</div>
+        <div class="stacked-bar">
+          <div class="seg seg-a" style="width:50%">50%</div>
+          <div class="seg seg-b" style="width:33.3%">33%</div>
+          <div class="seg seg-c" style="width:16.7%">17%</div>
+        </div>
+        <div class="count-labels">
+          <span class="lbl-a">A: 3</span>
+          <span class="lbl-b">B: 2</span>
+          <span class="lbl-c">C: 1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trend Over Time -->
+    <div class="card trend-card">
+      <h3 data-t="trendOverTime">Trend Over Time</h3>
+      <div class="timeline" id="trendTimeline">
+        <div class="tl-point" data-course="Database Systems" data-type="practice" data-framing="B" data-judging="C" data-steering="C">
+          <div class="tl-dots">
+            <div class="tl-dot dot-b" title="Framing: B"></div>
+            <div class="tl-dot dot-c" title="Judging: C"></div>
+            <div class="tl-dot dot-c" title="Steering: C"></div>
+          </div>
+          <div class="tl-label">Query Optim.</div>
+        </div>
+        <div class="tl-point" data-course="Database Systems" data-type="assessment" data-framing="C" data-judging="B" data-steering="C">
+          <div class="tl-dots">
+            <div class="tl-dot dot-c" title="Framing: C"></div>
+            <div class="tl-dot dot-b" title="Judging: B"></div>
+            <div class="tl-dot dot-c" title="Steering: C"></div>
+          </div>
+          <div class="tl-label">ER Diagram</div>
+        </div>
+        <div class="tl-point" data-course="Software Engineering" data-type="practice" data-framing="A" data-judging="A" data-steering="B">
+          <div class="tl-dots">
+            <div class="tl-dot dot-a" title="Framing: A"></div>
+            <div class="tl-dot dot-a" title="Judging: A"></div>
+            <div class="tl-dot dot-b" title="Steering: B"></div>
+          </div>
+          <div class="tl-label">Recursion</div>
+        </div>
+        <div class="tl-point" data-course="Software Engineering" data-type="assessment" data-framing="A" data-judging="B" data-steering="A">
+          <div class="tl-dots">
+            <div class="tl-dot dot-a" title="Framing: A"></div>
+            <div class="tl-dot dot-b" title="Judging: B"></div>
+            <div class="tl-dot dot-a" title="Steering: A"></div>
+          </div>
+          <div class="tl-label">Sorting Algo</div>
+        </div>
+        <div class="tl-point" data-course="Deep Learning 101" data-type="practice" data-framing="B" data-judging="C" data-steering="B">
+          <div class="tl-dots">
+            <div class="tl-dot dot-b" title="Framing: B"></div>
+            <div class="tl-dot dot-c" title="Judging: C"></div>
+            <div class="tl-dot dot-b" title="Steering: B"></div>
+          </div>
+          <div class="tl-label">Backprop.</div>
+        </div>
+        <div class="tl-point" data-course="Deep Learning 101" data-type="assessment" data-framing="A" data-judging="A" data-steering="A">
+          <div class="tl-dots">
+            <div class="tl-dot dot-a" title="Framing: A"></div>
+            <div class="tl-dot dot-a" title="Judging: A"></div>
+            <div class="tl-dot dot-a" title="Steering: A"></div>
+          </div>
+          <div class="tl-label">CNN Arch.</div>
+        </div>
+      </div>
+      <div class="tl-legend">
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--grade-a)"></div> <span data-t="framing">Framing</span></div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--grade-b)"></div> <span data-t="judging">Judging</span></div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--grade-c)"></div> <span data-t="steering">Steering</span></div>
+      </div>
+    </div>
+
+    <!-- Completed Challenge Runs Table -->
+    <div class="card">
+      <h3 style="margin-bottom:16px;" data-t="completedChallengeRuns">Completed Challenge Runs</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-t="challenge">Challenge</th>
+              <th data-t="course">Course</th>
+              <th data-t="type">Type</th>
+              <th data-t="date">Date</th>
+              <th><span class="phase-label phase-1" data-t="phase1">P1</span> <span data-t="framing">Framing</span></th>
+              <th><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="judging">Judging</span></th>
+              <th><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="steering">Steering</span></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1 -->
+            <tr class="expandable-row" data-course="Software Engineering" data-type="assessment" data-framing="A" data-judging="B" data-steering="A" onclick="toggleRow('row1')">
+              <td><strong>Sorting Algorithm Analysis</strong></td>
+              <td>Software Engineering</td>
+              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
+              <td>Mar 8, 2026</td>
+              <td><span class="grade grade-A">A</span></td>
+              <td><span class="grade grade-B">B</span></td>
+              <td><span class="grade grade-A">A</span></td>
+              <td>
+                <a href="07b-challenge-report.html?id=1" class="view-report-link" onclick="event.stopPropagation()">View Report &rarr;</a>
+              </td>
+            </tr>
+            <tr class="detail-row" id="row1">
+              <td colspan="8" style="padding:0;border:none;">
+                <div class="detail-content">
+                  <div class="detail-grid">
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
+                      <div class="mini-label" data-t="framing">Framing</div>
+                      <span class="grade grade-A">A</span>
+                      <div class="mini-feedback">Strong identification of missing constraints and clear task formulation.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
+                      <div class="mini-label" data-t="judging">Judging</div>
+                      <span class="grade grade-B">B</span>
+                      <div class="mini-feedback">Caught edge cases but missed complexity proof gap in AI output.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
+                      <div class="mini-label" data-t="steering">Steering</div>
+                      <span class="grade grade-A">A</span>
+                      <div class="mini-feedback">Specific, actionable corrections that improved the solution significantly.</div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr class="expandable-row" data-course="Deep Learning 101" data-type="practice" data-framing="B" data-judging="C" data-steering="B" onclick="toggleRow('row2')">
+              <td><strong>My Practice: Backpropagation</strong></td>
+              <td>Deep Learning 101</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td>Mar 9, 2026</td>
+              <td><span class="grade grade-B">B</span></td>
+              <td><span class="grade grade-C">C</span></td>
+              <td><span class="grade grade-B">B</span></td>
+              <td>
+                <a href="07b-challenge-report.html?id=2" class="view-report-link" onclick="event.stopPropagation()">View Report &rarr;</a>
+              </td>
+            </tr>
+            <tr class="detail-row" id="row2">
+              <td colspan="8" style="padding:0;border:none;">
+                <div class="detail-content">
+                  <div class="detail-grid">
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
+                      <div class="mini-label" data-t="framing">Framing</div>
+                      <span class="grade grade-B">B</span>
+                      <div class="mini-feedback">Adequate assumptions but missed specifying the loss function context.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-c);">
+                      <div class="mini-label" data-t="judging">Judging</div>
+                      <span class="grade grade-C">C</span>
+                      <div class="mini-feedback">Did not catch the vanishing gradient issue in the AI's proposed architecture.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
+                      <div class="mini-label" data-t="steering">Steering</div>
+                      <span class="grade grade-B">B</span>
+                      <div class="mini-feedback">Corrections were directionally correct but lacked mathematical precision.</div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 3 -->
+            <tr class="expandable-row" data-course="Software Engineering" data-type="practice" data-framing="A" data-judging="A" data-steering="B" onclick="toggleRow('row3')">
+              <td><strong>Recursion Basics</strong></td>
+              <td>Software Engineering</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td>Mar 2, 2026</td>
+              <td><span class="grade grade-A">A</span></td>
+              <td><span class="grade grade-A">A</span></td>
+              <td><span class="grade grade-B">B</span></td>
+              <td>
+                <a href="07b-challenge-report.html?id=3" class="view-report-link" onclick="event.stopPropagation()">View Report &rarr;</a>
+              </td>
+            </tr>
+            <tr class="detail-row" id="row3">
+              <td colspan="8" style="padding:0;border:none;">
+                <div class="detail-content">
+                  <div class="detail-grid">
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
+                      <div class="mini-label" data-t="framing">Framing</div>
+                      <span class="grade grade-A">A</span>
+                      <div class="mini-feedback">Excellent problem decomposition and constraint identification.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
+                      <div class="mini-label" data-t="judging">Judging</div>
+                      <span class="grade grade-A">A</span>
+                      <div class="mini-feedback">Correctly identified the stack overflow risk and base case errors.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
+                      <div class="mini-label" data-t="steering">Steering</div>
+                      <span class="grade grade-B">B</span>
+                      <div class="mini-feedback">Good corrections but could have pushed for tail-recursion optimization.</div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 4 -->
+            <tr class="expandable-row" data-course="Database Systems" data-type="assessment" data-framing="C" data-judging="B" data-steering="C" onclick="toggleRow('row4')">
+              <td><strong>ER Diagram Design</strong></td>
+              <td>Database Systems</td>
+              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
+              <td>Feb 25, 2026</td>
+              <td><span class="grade grade-C">C</span></td>
+              <td><span class="grade grade-B">B</span></td>
+              <td><span class="grade grade-C">C</span></td>
+              <td>
+                <a href="07b-challenge-report.html?id=4" class="view-report-link" onclick="event.stopPropagation()">View Report &rarr;</a>
+              </td>
+            </tr>
+            <tr class="detail-row" id="row4">
+              <td colspan="8" style="padding:0;border:none;">
+                <div class="detail-content">
+                  <div class="detail-grid">
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-c);">
+                      <div class="mini-label" data-t="framing">Framing</div>
+                      <span class="grade grade-C">C</span>
+                      <div class="mini-feedback">Missing key cardinality assumptions led to an under-specified task.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
+                      <div class="mini-label" data-t="judging">Judging</div>
+                      <span class="grade grade-B">B</span>
+                      <div class="mini-feedback">Spotted normalization issues but missed the redundant relationship.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-c);">
+                      <div class="mini-label" data-t="steering">Steering</div>
+                      <span class="grade grade-C">C</span>
+                      <div class="mini-feedback">Corrections were vague and did not lead to meaningful improvement.</div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <!-- Row 5 -->
+            <tr class="expandable-row" data-course="Database Systems" data-type="practice" data-framing="B" data-judging="C" data-steering="C" onclick="toggleRow('row5')">
+              <td><strong>Query Optimization</strong></td>
+              <td>Database Systems</td>
+              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
+              <td>Feb 18, 2026</td>
+              <td><span class="grade grade-B">B</span></td>
+              <td><span class="grade grade-C">C</span></td>
+              <td><span class="grade grade-C">C</span></td>
+              <td>
+                <a href="07b-challenge-report.html?id=5" class="view-report-link" onclick="event.stopPropagation()">View Report &rarr;</a>
+              </td>
+            </tr>
+            <tr class="detail-row" id="row5">
+              <td colspan="8" style="padding:0;border:none;">
+                <div class="detail-content">
+                  <div class="detail-grid">
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-b);">
+                      <div class="mini-label" data-t="framing">Framing</div>
+                      <span class="grade grade-B">B</span>
+                      <div class="mini-feedback">Reasonable query decomposition but missed indexing constraints.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-c);">
+                      <div class="mini-label" data-t="judging">Judging</div>
+                      <span class="grade grade-C">C</span>
+                      <div class="mini-feedback">Failed to identify the suboptimal join order in the AI's plan.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-c);">
+                      <div class="mini-label" data-t="steering">Steering</div>
+                      <span class="grade grade-C">C</span>
+                      <div class="mini-feedback">Suggestions were too general to improve execution performance.</div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 6 -->
+            <tr class="expandable-row" data-course="Deep Learning 101" data-type="assessment" data-framing="A" data-judging="A" data-steering="A" onclick="toggleRow('row6')">
+              <td><strong>CNN Architecture Design</strong></td>
+              <td>Deep Learning 101</td>
+              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
+              <td>Mar 12, 2026</td>
+              <td><span class="grade grade-A">A</span></td>
+              <td><span class="grade grade-A">A</span></td>
+              <td><span class="grade grade-A">A</span></td>
+              <td>
+                <a href="07b-challenge-report.html?id=6" class="view-report-link" onclick="event.stopPropagation()">View Report &rarr;</a>
+              </td>
+            </tr>
+            <tr class="detail-row" id="row6">
+              <td colspan="8" style="padding:0;border:none;">
+                <div class="detail-content">
+                  <div class="detail-grid">
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
+                      <div class="mini-label" data-t="framing">Framing</div>
+                      <span class="grade grade-A">A</span>
+                      <div class="mini-feedback">Excellent specification of layer requirements and performance targets.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
+                      <div class="mini-label" data-t="judging">Judging</div>
+                      <span class="grade grade-A">A</span>
+                      <div class="mini-feedback">Accurately identified parameter inefficiency and pooling issues.</div>
+                    </div>
+                    <div class="detail-mini-card" style="border-left:3px solid var(--grade-a);">
+                      <div class="mini-label" data-t="steering">Steering</div>
+                      <span class="grade grade-A">A</span>
+                      <div class="mini-feedback">Precise corrections led to a significantly improved architecture.</div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- No results message -->
+      <div id="noResults" style="display:none;text-align:center;padding:32px;color:var(--text-secondary);">
+        <p style="font-size:16px;" data-t="noMatchingResults">No challenge runs match the selected filters.</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function toggleRow(id) {
+      var row = document.getElementById(id);
+      if (row) row.classList.toggle('open');
+    }
+
+    function applyFilters() {
+      var course = document.getElementById('filterCourse').value;
+      var type = document.getElementById('filterType').value;
+      var grade = document.getElementById('filterGrade').value;
+
+      // --- Filter table rows ---
+      var rows = document.querySelectorAll('tr.expandable-row');
+      var visibleCount = 0;
+      var gradeData = { framing: {A:0,B:0,C:0}, judging: {A:0,B:0,C:0}, steering: {A:0,B:0,C:0} };
+
+      rows.forEach(function(row) {
+        var detailRow = row.nextElementSibling;
+        var matchCourse = !course || row.dataset.course === course;
+        var matchType = !type || row.dataset.type === type;
+        var matchGrade = !grade || row.dataset.framing === grade || row.dataset.judging === grade || row.dataset.steering === grade;
+
+        if (matchCourse && matchType && matchGrade) {
+          row.style.display = '';
+          if (detailRow && detailRow.classList.contains('detail-row')) detailRow.style.display = '';
+          visibleCount++;
+          gradeData.framing[row.dataset.framing]++;
+          gradeData.judging[row.dataset.judging]++;
+          gradeData.steering[row.dataset.steering]++;
+        } else {
+          row.style.display = 'none';
+          if (detailRow && detailRow.classList.contains('detail-row')) {
+            detailRow.style.display = 'none';
+            detailRow.classList.remove('open');
+          }
+        }
+      });
+
+      // Show/hide "no results"
+      document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+      document.querySelector('.table-wrap').style.display = visibleCount === 0 ? 'none' : '';
+
+      // Update filter count
+      var total = rows.length;
+      var countEl = document.getElementById('filterCount');
+      if (course || type || grade) {
+        countEl.textContent = visibleCount + ' / ' + total;
+      } else {
+        countEl.textContent = '';
+      }
+
+      // --- Update grade distribution cards ---
+      updateDistCard(0, gradeData.framing, visibleCount);
+      updateDistCard(1, gradeData.judging, visibleCount);
+      updateDistCard(2, gradeData.steering, visibleCount);
+
+      // --- Filter timeline points ---
+      var points = document.querySelectorAll('#trendTimeline .tl-point');
+      points.forEach(function(pt) {
+        var matchC = !course || pt.dataset.course === course;
+        var matchT = !type || pt.dataset.type === type;
+        var matchG = !grade || pt.dataset.framing === grade || pt.dataset.judging === grade || pt.dataset.steering === grade;
+        pt.style.display = (matchC && matchT && matchG) ? '' : 'none';
+      });
+    }
+
+    function updateDistCard(index, counts, total) {
+      var cards = document.querySelectorAll('.dist-card');
+      if (!cards[index]) return;
+      var card = cards[index];
+
+      // Find most common
+      var most = 'A';
+      if (counts.B >= counts.A && counts.B >= counts.C) most = 'B';
+      if (counts.C > counts.A && counts.C > counts.B) most = 'C';
+      if (total === 0) most = '-';
+
+      // Update overall grade circle
+      var circle = card.querySelector('.overall-grade');
+      circle.textContent = most;
+      circle.className = 'overall-grade' + (most !== '-' ? ' grade-' + most : '');
+
+      // Update stacked bar
+      var bar = card.querySelector('.stacked-bar');
+      if (total > 0) {
+        var pA = Math.round(counts.A / total * 100);
+        var pB = Math.round(counts.B / total * 100);
+        var pC = Math.round(counts.C / total * 100);
+        bar.innerHTML = '';
+        if (pA > 0) bar.innerHTML += '<div class="seg seg-a" style="width:' + pA + '%">' + pA + '%</div>';
+        if (pB > 0) bar.innerHTML += '<div class="seg seg-b" style="width:' + pB + '%">' + pB + '%</div>';
+        if (pC > 0) bar.innerHTML += '<div class="seg seg-c" style="width:' + pC + '%">' + pC + '%</div>';
+      } else {
+        bar.innerHTML = '<div class="seg" style="width:100%;background:#e0e0e0;color:#999;">—</div>';
+      }
+
+      // Update count labels
+      var labels = card.querySelector('.count-labels');
+      labels.innerHTML = '<span class="lbl-a">A: ' + counts.A + '</span><span class="lbl-b">B: ' + counts.B + '</span><span class="lbl-c">C: ' + counts.C + '</span>';
+    }
+  </script>
+</body>
+</html>

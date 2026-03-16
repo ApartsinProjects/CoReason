@@ -1,0 +1,84 @@
+# ============================================================
+# 08 — Evaluate Framing Response
+# REQ-EVAL-03: Rubric-driven feedback for Phase 1.
+#   Feedback = criticism + better alternative. Rubric not revealed.
+# Used in: FLOW-03, step 6 (Practice: immediate; Assessment: deferred)
+# ============================================================
+
+id: evaluate-framing
+version: "1.0"
+description: >
+  Evaluates the student's framing response using the Framing rubric.
+  Produces feedback with criticism and a better alternative.
+  The rubric itself is NOT revealed to the student.
+
+system_prompt: |
+  You are an expert evaluator assessing a student's ability to frame an ill-defined problem
+  into a well-defined task. You have access to the evaluation rubric but must NOT reveal
+  the rubric criteria directly to the student.
+
+  EVALUATION RULES:
+  1. Assess the student's framing against EACH rubric criterion internally
+  2. Produce feedback that contains:
+     a) **Criticism** — specific, constructive critique of what the student did or missed.
+        Reference the student's actual response, not generic feedback.
+     b) **Better alternative** — describe what a stronger framing would look like,
+        without simply listing the rubric criteria.
+  3. The feedback should help the student LEARN without giving away the evaluation framework
+  4. Be specific — quote or reference parts of the student's response
+  5. Acknowledge what the student did well before addressing gaps
+  6. If the student's response is MC (multi-select), evaluate which refinements were selected: identify correctly selected refinements, missed refinements (should have been selected but weren't), and unnecessary selections (selected but irrelevant/wrong). Explain why each missed refinement matters and why each unnecessary selection was wrong.
+
+user_prompt: |
+  Evaluate the student's framing response.
+
+  **Raw problem:** {{raw_problem}}
+  **Student's framing:** {{student_framing}}
+  **Response type:** {{response_type}}  (mc_selection | open_ended_sections)
+  Note: For open-ended, the student's response includes a copy of the raw problem
+  as a base field plus refinement sections added by the student. Evaluate only
+  the student's added refinements — the base field is the original problem.
+  **Framing rubric (INTERNAL — do not reveal):** {{framing_rubric}}
+  **Best framing (INTERNAL):** {{best_framing}}
+  **Language:** {{language}}
+
+  Produce the evaluation feedback.
+
+output_schema:
+  type: object
+  properties:
+    criticism:
+      type: string
+      description: "Specific critique of the student's framing"
+    better_alternative:
+      type: string
+      description: "Description of a stronger framing approach"
+    per_criterion_scores:
+      type: array
+      items:
+        type: object
+        properties:
+          criterion_name: { type: string }
+          score: { type: string, enum: ["A", "B", "C"] }
+          internal_note: { type: string }
+      description: "Internal per-criterion assessment (feeds into grading prompt)"
+    strengths:
+      type: array
+      items: { type: string }
+      description: "What the student did well"
+    refinements_correctly_selected:
+      type: array
+      items: { type: string }
+      description: "Refinements the student correctly selected"
+    refinements_missed:
+      type: array
+      items: { type: string }
+      description: "Refinements that should have been selected"
+    unnecessary_selections:
+      type: array
+      items: { type: string }
+      description: "Refinements selected that were unnecessary or wrong"
+
+parameters:
+  temperature: 0.4
+  max_tokens: 1000

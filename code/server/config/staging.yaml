@@ -1,0 +1,21 @@
+server:
+  port: ${PORT}
+  trust_proxy: true
+
+database:
+  client: pg
+  connection: ${DATABASE_URL}
+  pool:
+    min: 2
+    max: 10
+
+auth:
+  session_secret: ${SESSION_SECRET}
+  google:
+    callback_url: /api/auth/google/callback
+
+logging:
+  level: info
+  console: true
+  file: true
+  trace: true

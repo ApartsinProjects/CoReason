@@ -1,0 +1,49 @@
+id: student-guide
+title: "Guide de l'étudiant"
+sections:
+  - title: "Vue d'ensemble"
+    content: |
+      Le CoReasoning Lab vous aide à développer des compétences de pensée critique
+      en collaborant avec des systèmes d'IA. Vous apprendrez à cadrer des problèmes,
+      à évaluer des solutions générées par l'IA et à diriger les améliorations de manière itérative.
+
+  - title: "Phase 1 — Cadrage"
+    content: |
+      On vous présente un problème brut intentionnellement vague. Votre tâche est d'identifier
+      les hypothèses manquantes, les contraintes et les clarifications nécessaires avant
+      que l'IA ne génère une solution.
+
+      En mode choix multiples (CM), sélectionnez tous les raffinements qui s'appliquent.
+      En mode réponse ouverte (RO), rédigez vos propres sections de raffinement.
+
+  - title: "Phase 2 — Cycles Jugement+Orientation"
+    content: |
+      Après que l'IA a généré une solution, vous alternez entre deux sous-étapes :
+
+      A — Jugement : Identifiez les défauts, les erreurs et les éléments manquants
+      dans la solution actuelle de l'IA.
+
+      B — Orientation : Formulez des instructions spécifiques et exploitables pour
+      guider l'IA dans l'amélioration de sa solution.
+
+      Répétez les cycles jusqu'à ce que la solution soit satisfaisante, puis marquez-la
+      comme terminée.
+
+  - title: "Modes"
+    content: |
+      Mode entraînement : Vous recevez un retour après chaque phase. Les nouvelles
+      tentatives sont autorisées pour que vous puissiez apprendre de vos erreurs.
+
+      Mode évaluation : Le retour n'est révélé qu'à la fin. Cela simule des
+      conditions d'examen réelles.
+
+  - title: "Conseils pour réussir"
+    content: |
+      - Lisez attentivement le problème brut avant de sélectionner les raffinements.
+      - Cherchez les termes vagues comme « quelques », « rapidement » ou « gérer ».
+      - Lors du jugement, demandez-vous « quoi d'autre pourrait être faux ? » après
+        avoir trouvé le premier problème.
+      - Les instructions d'orientation doivent être spécifiques et exploitables — évitez
+        les formulations vagues comme « améliorer » ou « rendre plus rapide ».
+      - Ne marquez pas une solution comme terminée prématurément — vérifiez les cas
+        limites et les modes de défaillance.

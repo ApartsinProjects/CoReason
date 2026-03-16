@@ -1,0 +1,643 @@
+# Kanonische Anzeigedaten fuer alle Mockup-Bildschirme
+# Dies ist die EINZIGE QUELLE DER WAHRHEIT fuer alle fest codierten Inhalte
+
+# ─── Aktuelle Benutzer (die angemeldeten Personas) ───
+studentUser:
+  name: "Sarah Cohen"
+  email: "s.cohen@tau.ac.il"
+  avatar: "SC"
+  institution: "Universitaet Tel Aviv"
+  role: "student"
+  memberSince: "15. Januar 2026"
+  challengesCreated: 4
+  challengesExecuted: 12
+  subscribedCourses:
+    - id: "deep-learning-101"
+      name: "Deep Learning 101"
+    - id: "database-systems"
+      name: "Datenbanksysteme"
+    - id: "software-engineering"
+      name: "Softwaretechnik"
+
+instructorUser:
+  name: "Dr. Dana Levy"
+  email: "d.levy@tau.ac.il"
+  avatar: "DL"
+  institution: "Universitaet Tel Aviv"
+  role: "instructor"
+  memberSince: "1. September 2024"
+
+# ─── All Demo Users (for mockup mode switcher) ───
+allUsers:
+  - id: "sarah"
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    avatar: "SC"
+    institution: "Tel Aviv University"
+    role: "student"
+  - id: "levy"
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    avatar: "DL"
+    institution: "Tel Aviv University"
+    role: "instructor"
+  - id: "alex"
+    name: "Alex Mueller"
+    email: "a.mueller@tum.de"
+    avatar: "AM"
+    institution: "TU Munich"
+    role: "student"
+  - id: "weber"
+    name: "Prof. Klaus Weber"
+    email: "k.weber@tum.de"
+    avatar: "KW"
+    institution: "TU Munich"
+    role: "instructor"
+  - id: "maria"
+    name: "María García"
+    email: "m.garcia@ub.edu"
+    avatar: "MG"
+    institution: "Universidad de Barcelona"
+    role: "student"
+  - id: "dupont"
+    name: "Prof. Claire Dupont"
+    email: "c.dupont@sorbonne.fr"
+    avatar: "CD"
+    institution: "Sorbonne Université"
+    role: "instructor"
+
+# ─── Aufgabenliste (Studierendenansicht) ───
+studentChallenges:
+  - id: "neural-network-debugging"
+    name: "Debugging neuronaler Netze"
+    course: "Deep Learning 101"
+    type: "practice"
+    visibility: "public"
+    created: "14. Maerz"
+    creator: "Dr. Levy"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "sql-query-optimization"
+    name: "SQL-Abfrageoptimierung"
+    course: "Datenbanksysteme"
+    type: "assessment"
+    visibility: "public"
+    created: "13. Maerz"
+    creator: "Dr. Levy"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "api-design-review"
+    name: "API-Design-Ueberpruefung"
+    course: "Softwaretechnik"
+    type: "practice"
+    visibility: "public"
+    created: "10. Maerz"
+    creator: "Dr. Patel"
+    lastAttempt: "12. Maerz"
+    status: "in-progress"
+    isNew: false
+  - id: "sorting-algorithm-analysis"
+    name: "Analyse von Sortieralgorithmen"
+    course: "Softwaretechnik"
+    type: "assessment"
+    visibility: "public"
+    created: "5. Maerz"
+    creator: "Dr. Patel"
+    lastAttempt: "8. Maerz"
+    status: "completed"
+    isNew: false
+  - id: "my-practice-backpropagation"
+    name: "Meine Uebung: Backpropagation"
+    course: "Deep Learning 101"
+    type: "practice"
+    visibility: "private"
+    created: "7. Maerz"
+    creator: "Ich"
+    lastAttempt: "9. Maerz"
+    status: "completed"
+    isNew: false
+  - id: "recursion-basics"
+    name: "Grundlagen der Rekursion"
+    course: "Softwaretechnik"
+    type: "practice"
+    visibility: "public"
+    created: "28. Feb."
+    creator: "Dr. Patel"
+    lastAttempt: "2. Maerz"
+    status: "completed"
+    isNew: false
+
+# ─── Aufgabenliste (Dozentenansicht) ───
+instructorChallenges:
+  - id: "sorting-algorithm-analysis"
+    name: "Analyse von Sortieralgorithmen"
+    course: "Softwaretechnik"
+    type: "assessment"
+    visibility: "public"
+    submissions: "38/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "neural-network-debugging"
+    name: "Debugging neuronaler Netze"
+    course: "Deep Learning 101"
+    type: "practice"
+    visibility: "public"
+    submissions: "22/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "sql-query-optimization"
+    name: "SQL-Abfrageoptimierung"
+    course: "Datenbanksysteme"
+    type: "assessment"
+    visibility: "public"
+    submissions: "41/42"
+    avgGrade: "A"
+    status: "published"
+  - id: "rate-limiter-design"
+    name: "Rate-Limiter-Entwurf"
+    course: "Softwaretechnik"
+    type: "practice"
+    visibility: "private"
+    submissions: null
+    avgGrade: null
+    status: "draft"
+  - id: "cnn-architecture-review"
+    name: "CNN-Architektur-Ueberpruefung"
+    course: "Deep Learning 101"
+    type: "assessment"
+    visibility: "public"
+    submissions: "30/45"
+    avgGrade: "B"
+    status: "published"
+
+# ─── Kurskatalog ───
+courseCatalog:
+  - id: "deep-learning-101"
+    name: "Deep Learning 101"
+    department: "Informatik"
+    instructorCount: 3
+    challengeCount: 8
+    studentCount: 45
+    subscribed: true
+    subjects: ["Neuronale Netze", "CNNs", "RNNs", "Optimierung", "Regularisierung"]
+  - id: "database-systems"
+    name: "Datenbanksysteme"
+    department: "Informatik"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 62
+    subscribed: true
+    subjects: ["SQL", "Abfrageoptimierung", "Indizierung", "Normalisierung"]
+  - id: "software-engineering"
+    name: "Softwaretechnik"
+    department: "Informatik"
+    instructorCount: 2
+    challengeCount: 12
+    studentCount: 78
+    subscribed: true
+    subjects: ["Entwurfsmuster", "API-Design", "Testen", "Refactoring"]
+  - id: "linear-algebra-ml"
+    name: "Lineare Algebra fuer ML"
+    department: "Mathematik"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 33
+    subscribed: false
+    subjects: ["Vektoren", "Matrizen", "Eigenwerte", "SVD"]
+  - id: "statistical-inference"
+    name: "Statistische Inferenz"
+    department: "Datenwissenschaft"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 41
+    subscribed: false
+    subjects: ["Hypothesentests", "Regression", "Bayessche Methoden"]
+  - id: "signal-processing"
+    name: "Signalverarbeitung"
+    department: "Elektrotechnik"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 28
+    subscribed: false
+    subjects: ["Fourier-Transformation", "Filter", "Abtastung"]
+  - id: "constitutional-law"
+    name: "Verfassungsrecht"
+    department: "Rechtswissenschaften"
+    instructorCount: 2
+    challengeCount: 4
+    studentCount: 52
+    subscribed: false
+    subjects: ["Pruefungsmasstaebe", "Gleichheitsschutz", "Rechtsstaatlichkeit", "Meinungsfreiheit"]
+  - id: "learning-experience-design"
+    name: "Lerndesign und Didaktik"
+    department: "Unterrichtstechnologien"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 35
+    subscribed: false
+    subjects: ["Curriculum-Mapping", "Prüfungsgestaltung", "Adaptives Lernen", "Multimedia-Prinzipien"]
+  - id: "educational-data-mining"
+    name: "Educational Data Mining"
+    department: "Unterrichtstechnologien"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 28
+    subscribed: false
+    subjects: ["Lernanalytik", "Lernermodellierung", "Wissensverfolgung", "Prädiktive Modelle"]
+  - id: "medical-imaging"
+    name: "Medizinische Bildgebungssysteme"
+    department: "Digitale Medizintechnik"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 40
+    subscribed: false
+    subjects: ["CT-Rekonstruktion", "MRT-Sequenzen", "Ultraschallverarbeitung", "Bildsegmentierung"]
+  - id: "clinical-decision-support"
+    name: "Klinische Entscheidungsunterstützung"
+    department: "Digitale Medizintechnik"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 32
+    subscribed: false
+    subjects: ["Diagnostische Algorithmen", "Evidenzbasierte Medizin", "Risikobewertung", "Klinische Pfade"]
+  - id: "ehealth-interoperability"
+    name: "eHealth-Interoperabilität"
+    department: "Digitale Medizintechnik"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 22
+    subscribed: false
+    subjects: ["HL7 FHIR", "DICOM-Standards", "EHR-Integration", "Gesundheitsdatenschutz"]
+
+# ─── Studierendenanalytik ───
+studentAnalytics:
+  gradeDistribution:
+    framing:
+      a: 4
+      b: 6
+      c: 2
+      mostCommon: "B"
+    judging:
+      a: 2
+      b: 7
+      c: 3
+      mostCommon: "B"
+    steering:
+      a: 5
+      b: 5
+      c: 2
+      mostCommon: "A"
+  trend:
+    - label: "Rekursion Grundl."
+      framing: "A"
+      judging: "A"
+      steering: "B"
+    - label: "ER-Diagramm"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+    - label: "Abfrageoptim."
+      framing: "B"
+      judging: "C"
+      steering: "C"
+    - label: "Backpropagation"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+    - label: "Sortieralgo."
+      framing: "A"
+      judging: "B"
+      steering: "A"
+    - label: "CNN-Arch."
+      framing: "A"
+      judging: "A"
+      steering: "A"
+  completedRuns:
+    - id: 1
+      name: "Analyse von Sortieralgorithmen"
+      course: "Softwaretechnik"
+      type: "assessment"
+      responseMode: "mc"
+      date: "8. Maerz 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 4
+      issuesAvailable: 6
+      framingFeedback: "Starke Identifikation fehlender Einschraenkungen und klare Aufgabenformulierung."
+      judgingFeedback: "Randfaelle erkannt, aber die Luecke im Komplexitaetsbeweis in der KI-Ausgabe uebersehen."
+      steeringFeedback: "Spezifische, umsetzbare Korrekturen, die die Loesung deutlich verbessert haben."
+    - id: 2
+      name: "Meine Uebung: Backpropagation"
+      course: "Deep Learning 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "9. Maerz 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Angemessene Annahmen, aber der Kontext der Verlustfunktion wurde nicht spezifiziert."
+      judgingFeedback: "Das Problem des verschwindenden Gradienten in der vorgeschlagenen Architektur der KI wurde nicht erkannt."
+      steeringFeedback: "Die Korrekturen gingen in die richtige Richtung, waren aber mathematisch ungenau."
+    - id: 3
+      name: "Grundlagen der Rekursion"
+      course: "Softwaretechnik"
+      type: "practice"
+      responseMode: "oe"
+      date: "2. Maerz 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 4
+      issuesAvailable: 4
+      framingFeedback: "Hervorragende Problemzerlegung und Identifikation der Einschraenkungen."
+      judgingFeedback: "Das Risiko eines Stapelueberlaufs und die Basisfehler wurden korrekt erkannt."
+      steeringFeedback: "Gute Korrekturen, haette aber auf Endrekursionsoptimierung draengen koennen."
+    - id: 4
+      name: "ER-Diagramm-Entwurf"
+      course: "Datenbanksysteme"
+      type: "assessment"
+      responseMode: "mc"
+      date: "25. Februar 2026"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Fehlende Kardinalitaetsannahmen fuehrten zu einer unterspezifizierten Aufgabe."
+      judgingFeedback: "Normalisierungsprobleme erkannt, aber die redundante Beziehung uebersehen."
+      steeringFeedback: "Die Korrekturen waren vage und fuehrten nicht zu einer sinnvollen Verbesserung."
+    - id: 5
+      name: "Abfrageoptimierung"
+      course: "Datenbanksysteme"
+      type: "practice"
+      responseMode: "mc"
+      date: "20. Februar 2026"
+      framing: "B"
+      judging: "C"
+      steering: "C"
+      cyclesUsed: 5
+      maxCycles: 5
+      issuesFound: 1
+      issuesAvailable: 4
+      framingFeedback: "Skalierungseinschraenkungen identifiziert, aber Indizierungsannahmen uebersehen."
+      judgingFeedback: "Auf Syntaxprobleme konzentriert, die Ineffizienz der Join-Reihenfolge uebersehen."
+      steeringFeedback: "Vage Korrekturen — 'Abfrage optimieren' ohne zu spezifizieren wie."
+    - id: 6
+      name: "CNN-Architektur-Ueberpruefung"
+      course: "Deep Learning 101"
+      type: "assessment"
+      responseMode: "oe"
+      date: "15. Februar 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 5
+      issuesAvailable: 5
+      framingFeedback: "Umfassende Analyse, die alle architektonischen Einschraenkungen abdeckt."
+      judgingFeedback: "Alle wesentlichen Probleme identifiziert, einschliesslich des subtilen Pooling-Dimensionsfehlers."
+      steeringFeedback: "Praezise, priorisierte Korrekturen, die alle identifizierten Probleme behoben haben."
+    - id: 7
+      name: "Operationen mit verketteten Listen"
+      course: "Softwaretechnik"
+      type: "practice"
+      responseMode: "mc"
+      date: "10. Februar 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Gute Identifikation der Speichereinschraenkungen, aber Thread-Sicherheit uebersehen."
+      judgingFeedback: "Das Nullzeiger-Problem erkannt, aber die Luecke bei der Zykluserkennung uebersehen."
+      steeringFeedback: "Klare, spezifische Anweisungen, die das Kernproblem adressiert haben."
+    - id: 8
+      name: "Indexauswahl"
+      course: "Datenbanksysteme"
+      type: "practice"
+      responseMode: "oe"
+      date: "5. Februar 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 5
+      framingFeedback: "Starke Arbeitslastcharakterisierung und Kardinalitaetsschaetzung."
+      judgingFeedback: "Das Problem des abdeckenden Index erkannt, aber das Problem der zusammengesetzten Schluesselreihenfolge uebersehen."
+      steeringFeedback: "Groesstenteils spezifisch, aber zwei Korrekturen gleichzeitig gesendet, was den Fokus verwaessert hat."
+    - id: 9
+      name: "Gradientenabstieg"
+      course: "Deep Learning 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "30. Januar 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Vernuenftige Annahmen zur Lernrate, aber Ueberlegungen zur Batchgroesse uebersehen."
+      judgingFeedback: "Das Konvergenzproblem erkannt, aber nicht das Sattelpunkt-Problem."
+      steeringFeedback: "Gezielte Korrektur, die den Lernratenplan direkt adressiert hat."
+    - id: 10
+      name: "Varianten der binaeren Suche"
+      course: "Softwaretechnik"
+      type: "assessment"
+      responseMode: "mc"
+      date: "25. Januar 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Klare Analyse der Randbedingungen und Annahme sortierter Eingabe."
+      judgingFeedback: "Den Off-by-one-Fehler gefunden, aber das Risiko eines Ganzzahlueberlaufs uebersehen."
+      steeringFeedback: "Gute Richtung, haette aber spezifischer bei der Korrektur sein koennen."
+    - id: 11
+      name: "Normalformen"
+      course: "Datenbanksysteme"
+      type: "practice"
+      responseMode: "oe"
+      date: "20. Januar 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Funktionale Abhaengigkeiten identifiziert, aber die Analyse transitiver Abhaengigkeiten uebersehen."
+      judgingFeedback: "Auf 1NF/2NF-Probleme konzentriert, aber die 3NF-Verletzung vollstaendig uebersehen."
+      steeringFeedback: "Die Korrekturen waren relevant, aber es fehlten die formalen Zerlegungsschritte."
+    - id: 12
+      name: "Auswahl der Verlustfunktion"
+      course: "Deep Learning 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "15. Januar 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 1
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 3
+      framingFeedback: "Hervorragende Klassifikation des Problemtyps und der Anforderungen an die Verlustfunktion."
+      judgingFeedback: "Alle Probleme erkannt, einschliesslich der fehlenden Label-Glaettung."
+      steeringFeedback: "Einzelne, praezise Korrektur, die das Kernproblem in einem Zyklus geloest hat."
+
+# ─── Aufgabenbericht (07b-Detail fuer Aufgabe 1) ───
+challengeReport:
+  challengeName: "Analyse von Sortieralgorithmen"
+  course: "Softwaretechnik"
+  date: "8. Maerz 2026"
+  type: "assessment"
+  responseMode: "mc"
+  cyclesUsed: 2
+  maxCycles: 5
+  framing:
+    grade: "A"
+    submission: "Das Problem verlangt die Analyse von Sortieralgorithmen, spezifiziert aber nicht: Eingabegroessenbereich, ob Stabilitaet wichtig ist, Speichereinschraenkungen. Ich nehme an: Arrays von 1K-1M Ganzzahlen, Stabilitaet nicht erforderlich, O(1) zusaetzlicher Speicher bevorzugt."
+    feedback: "Starke Identifikation fehlender Einschraenkungen. Die Annahme ueber O(1) zusaetzlichen Speicher ist im Kontext gut begruendet. Haette auch hinterfragen koennen, ob die Eingabe teilweise sortiert ist."
+    summary: "Starke Identifikation fehlender Einschraenkungen und klare, gut begruendete Annahmen ueber den Problemumfang."
+  judging:
+    grade: "B"
+    summary: "Schluesselprobleme wie Randfaelle und Partitionierungsstrategie erkannt, aber die Luecke im Komplexitaetsbeweis in der KI-Ausgabe uebersehen."
+  steering:
+    grade: "A"
+    summary: "Spezifische, umsetzbare Korrekturen, die zu deutlichen Verbesserungen sowohl in der Analysetiefe als auch in der Codequalitaet gefuehrt haben."
+  cycles:
+    - num: 1
+      judgingText: "Ausgewaehlte Probleme: 'Fehlender Randfall fuer leeres Array', 'Komplexitaetsanalyse fuer den schlechtesten Fall unvollstaendig'"
+      judgingGrade: "B"
+      steeringText: "Ausgewaehlte Korrekturen: 'Schutzklausel fuer leeres Array hinzufuegen', 'Worst-Case-Analyse fuer Quicksort einbeziehen'"
+      steeringGrade: "A"
+      aiOutput: "Die aktualisierte Analyse enthaelt nun eine Schutzklausel fuer leere Arrays am Einstiegspunkt jeder Sortierfunktion. Die Worst-Case-Zeitkomplexitaet fuer Quicksort wurde auf O(n²) revidiert, mit einem Hinweis auf Pivot-Auswahlstrategien zur Abmilderung dieses Szenarios..."
+    - num: 2
+      isFinal: true
+      judgingText: "Identifiziert: 'Partitionierungsstrategie nicht optimal', 'Keine Erwaehnung der Cache-Leistung'"
+      judgingGrade: "B"
+      steeringText: "Angewiesen: 'Zu Median-von-drei-Partitionierung wechseln', 'Cache-Lokalitaetsanalyse hinzufuegen'"
+      steeringGrade: "A"
+      aiOutput: "Die endgueltige Ueberarbeitung uebernimmt die Median-von-drei-Pivotauswahl fuer Quicksort, was die Wahrscheinlichkeit des schlechtesten Falls reduziert. Ein neuer Abschnitt zur Cache-Lokalitaet vergleicht das sequenzielle Zugriffsmuster von Mergesort mit der In-place- aber weniger cache-freundlichen Partitionierung von Quicksort..."
+
+# ─── Dozentenanalytik ───
+instructorAnalytics:
+  selectedCourse: "Deep Learning 101"
+  selectedChallenge: "Debugging neuronaler Netze"
+  stats:
+    totalSubscribers: 45
+    completed: "38/45"
+    avgGrade: "B"
+    pendingStudents: 7
+  gradeDistribution:
+    framing:
+      a: 12
+      b: 18
+      c: 8
+    judging:
+      a: 8
+      b: 16
+      c: 14
+    steering:
+      a: 10
+      b: 18
+      c: 10
+  perStudentResults:
+    - name: "Sarah Cohen"
+      completed: "14. Maerz 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      overall: "A"
+    - name: "James Park"
+      completed: "13. Maerz 2026"
+      framing: "B"
+      judging: "B"
+      steering: "C"
+      overall: "B"
+    - name: "Maria Santos"
+      completed: "13. Maerz 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      overall: "A"
+    - name: "Ahmed Hassan"
+      completed: "12. Maerz 2026"
+      framing: "C"
+      judging: "C"
+      steering: "C"
+      overall: "C"
+    - name: "Li Wei"
+      completed: "12. Maerz 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      overall: "B"
+    - name: "Emma Johnson"
+      completed: null
+      framing: null
+      judging: null
+      steering: null
+      overall: null
+
+# ─── Profildaten ───
+profileData:
+  student:
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    institution: "Universitaet Tel Aviv"
+    role: "student"
+    registrationDate: "15. Januar 2026"
+    challengesCreated: 4
+    challengesExecuted: 12
+    subscribedCourses: ["Deep Learning 101", "Datenbanksysteme", "Softwaretechnik"]
+  instructor:
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    institution: "Universitaet Tel Aviv"
+    role: "instructor"
+    registrationDate: "1. September 2024"
+    challengesCreated: 12
+    coursesManaged: 2
+
+# ─── Dozenten-Kurskatalog ───
+instructorCourses:
+  - id: "deep-learning-101"
+    name: "Deep Learning 101"
+    department: "Informatik"
+    role: "Leitender Dozent"
+    studentCount: 45
+    challengeCount: 8
+    instructorCount: 3
+    subjects: ["Neuronale Netze", "CNNs", "RNNs", "Optimierung", "Regularisierung"]
+  - id: "database-systems"
+    name: "Datenbanksysteme"
+    department: "Informatik"
+    role: "Co-Dozent"
+    studentCount: 62
+    challengeCount: 5
+    instructorCount: 2
+    subjects: ["SQL", "Abfrageoptimierung", "Indizierung", "Normalisierung"]

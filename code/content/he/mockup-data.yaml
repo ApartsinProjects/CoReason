@@ -1,0 +1,643 @@
+# נתוני תצוגה קנוניים לכל מסכי המוקאפ
+# זהו מקור האמת היחיד לכל התוכן הקבוע
+
+# ─── משתמשים נוכחיים (הפרסונות המחוברות) ───
+studentUser:
+  name: "Sarah Cohen"
+  email: "s.cohen@tau.ac.il"
+  avatar: "SC"
+  institution: "אוניברסיטת תל אביב"
+  role: "student"
+  memberSince: "15 בינואר, 2026"
+  challengesCreated: 4
+  challengesExecuted: 12
+  subscribedCourses:
+    - id: "deep-learning-101"
+      name: "למידה עמוקה 101"
+    - id: "database-systems"
+      name: "מערכות מסדי נתונים"
+    - id: "software-engineering"
+      name: "הנדסת תוכנה"
+
+instructorUser:
+  name: "Dr. Dana Levy"
+  email: "d.levy@tau.ac.il"
+  avatar: "DL"
+  institution: "אוניברסיטת תל אביב"
+  role: "instructor"
+  memberSince: "1 בספטמבר, 2024"
+
+# ─── All Demo Users (for mockup mode switcher) ───
+allUsers:
+  - id: "sarah"
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    avatar: "SC"
+    institution: "Tel Aviv University"
+    role: "student"
+  - id: "levy"
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    avatar: "DL"
+    institution: "Tel Aviv University"
+    role: "instructor"
+  - id: "alex"
+    name: "Alex Mueller"
+    email: "a.mueller@tum.de"
+    avatar: "AM"
+    institution: "TU Munich"
+    role: "student"
+  - id: "weber"
+    name: "Prof. Klaus Weber"
+    email: "k.weber@tum.de"
+    avatar: "KW"
+    institution: "TU Munich"
+    role: "instructor"
+  - id: "maria"
+    name: "María García"
+    email: "m.garcia@ub.edu"
+    avatar: "MG"
+    institution: "Universidad de Barcelona"
+    role: "student"
+  - id: "dupont"
+    name: "Prof. Claire Dupont"
+    email: "c.dupont@sorbonne.fr"
+    avatar: "CD"
+    institution: "Sorbonne Université"
+    role: "instructor"
+
+# ─── רשימת אתגרים (תצוגת סטודנט) ───
+studentChallenges:
+  - id: "neural-network-debugging"
+    name: "ניפוי שגיאות ברשת נוירונים"
+    course: "למידה עמוקה 101"
+    type: "practice"
+    visibility: "public"
+    created: "14 במרץ"
+    creator: "ד\"ר לוי"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "sql-query-optimization"
+    name: "אופטימיזציית שאילתות SQL"
+    course: "מערכות מסדי נתונים"
+    type: "assessment"
+    visibility: "public"
+    created: "13 במרץ"
+    creator: "ד\"ר לוי"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "api-design-review"
+    name: "סקירת תכנון API"
+    course: "הנדסת תוכנה"
+    type: "practice"
+    visibility: "public"
+    created: "10 במרץ"
+    creator: "ד\"ר פטל"
+    lastAttempt: "12 במרץ"
+    status: "in-progress"
+    isNew: false
+  - id: "sorting-algorithm-analysis"
+    name: "ניתוח אלגוריתמי מיון"
+    course: "הנדסת תוכנה"
+    type: "assessment"
+    visibility: "public"
+    created: "5 במרץ"
+    creator: "ד\"ר פטל"
+    lastAttempt: "8 במרץ"
+    status: "completed"
+    isNew: false
+  - id: "my-practice-backpropagation"
+    name: "התרגול שלי: התפשטות לאחור"
+    course: "למידה עמוקה 101"
+    type: "practice"
+    visibility: "private"
+    created: "7 במרץ"
+    creator: "אני"
+    lastAttempt: "9 במרץ"
+    status: "completed"
+    isNew: false
+  - id: "recursion-basics"
+    name: "יסודות הרקורסיה"
+    course: "הנדסת תוכנה"
+    type: "practice"
+    visibility: "public"
+    created: "28 בפברואר"
+    creator: "ד\"ר פטל"
+    lastAttempt: "2 במרץ"
+    status: "completed"
+    isNew: false
+
+# ─── רשימת אתגרים (תצוגת מרצה) ───
+instructorChallenges:
+  - id: "sorting-algorithm-analysis"
+    name: "ניתוח אלגוריתמי מיון"
+    course: "הנדסת תוכנה"
+    type: "assessment"
+    visibility: "public"
+    submissions: "38/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "neural-network-debugging"
+    name: "ניפוי שגיאות ברשת נוירונים"
+    course: "למידה עמוקה 101"
+    type: "practice"
+    visibility: "public"
+    submissions: "22/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "sql-query-optimization"
+    name: "אופטימיזציית שאילתות SQL"
+    course: "מערכות מסדי נתונים"
+    type: "assessment"
+    visibility: "public"
+    submissions: "41/42"
+    avgGrade: "A"
+    status: "published"
+  - id: "rate-limiter-design"
+    name: "תכנון Rate Limiter"
+    course: "הנדסת תוכנה"
+    type: "practice"
+    visibility: "private"
+    submissions: null
+    avgGrade: null
+    status: "draft"
+  - id: "cnn-architecture-review"
+    name: "סקירת ארכיטקטורת CNN"
+    course: "למידה עמוקה 101"
+    type: "assessment"
+    visibility: "public"
+    submissions: "30/45"
+    avgGrade: "B"
+    status: "published"
+
+# ─── קטלוג קורסים ───
+courseCatalog:
+  - id: "deep-learning-101"
+    name: "למידה עמוקה 101"
+    department: "מדעי המחשב"
+    instructorCount: 3
+    challengeCount: 8
+    studentCount: 45
+    subscribed: true
+    subjects: ["רשתות נוירונים", "רשתות קונבולוציה", "רשתות נוירונים חוזרות", "אופטימיזציה", "רגולריזציה"]
+  - id: "database-systems"
+    name: "מערכות מסדי נתונים"
+    department: "מדעי המחשב"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 62
+    subscribed: true
+    subjects: ["SQL", "אופטימיזציית שאילתות", "אינדקס", "נורמליזציה"]
+  - id: "software-engineering"
+    name: "הנדסת תוכנה"
+    department: "מדעי המחשב"
+    instructorCount: 2
+    challengeCount: 12
+    studentCount: 78
+    subscribed: true
+    subjects: ["תבניות עיצוב", "תכנון API", "בדיקות", "שיפור קוד"]
+  - id: "linear-algebra-ml"
+    name: "אלגברה לינארית ללמידת מכונה"
+    department: "מתמטיקה"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 33
+    subscribed: false
+    subjects: ["וקטורים", "מטריצות", "ערכים עצמיים", "SVD"]
+  - id: "statistical-inference"
+    name: "הסקה סטטיסטית"
+    department: "מדעי הנתונים"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 41
+    subscribed: false
+    subjects: ["בדיקת השערות", "רגרסיה", "שיטות בייסיאניות"]
+  - id: "signal-processing"
+    name: "עיבוד אותות"
+    department: "הנדסת חשמל"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 28
+    subscribed: false
+    subjects: ["התמרת פורייה", "מסננים", "דגימה"]
+  - id: "constitutional-law"
+    name: "משפט חוקתי"
+    department: "משפטים"
+    instructorCount: 2
+    challengeCount: 4
+    studentCount: 52
+    subscribed: false
+    subjects: ["רמות ביקורת שיפוטית", "שוויון", "הליך הוגן", "חופש הביטוי"]
+  - id: "learning-experience-design"
+    name: "עיצוב חוויות למידה"
+    department: "טכנולוגיות הוראה"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 35
+    subscribed: false
+    subjects: ["מיפוי תכניות לימודים", "עיצוב הערכה", "למידה מותאמת", "עקרונות מולטימדיה"]
+  - id: "educational-data-mining"
+    name: "כריית נתונים חינוכיים"
+    department: "טכנולוגיות הוראה"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 28
+    subscribed: false
+    subjects: ["אנליטיקת למידה", "מודלים של לומדים", "מעקב ידע", "מודלים חיזויים"]
+  - id: "medical-imaging"
+    name: "מערכות הדמיה רפואית"
+    department: "טכנולוגיות רפואיות דיגיטליות"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 40
+    subscribed: false
+    subjects: ["שחזור CT", "רצפי MRI", "עיבוד אולטרסאונד", "פילוח תמונות"]
+  - id: "clinical-decision-support"
+    name: "מערכות תמיכה בהחלטות קליניות"
+    department: "טכנולוגיות רפואיות דיגיטליות"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 32
+    subscribed: false
+    subjects: ["אלגוריתמי אבחון", "רפואה מבוססת ראיות", "ניקוד סיכונים", "מסלולים קליניים"]
+  - id: "ehealth-interoperability"
+    name: "יכולת פעולה הדדית בבריאות דיגיטלית"
+    department: "טכנולוגיות רפואיות דיגיטליות"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 22
+    subscribed: false
+    subjects: ["HL7 FHIR", "תקני DICOM", "אינטגרציית רשומות רפואיות", "פרטיות מידע רפואי"]
+
+# ─── אנליטיקת סטודנט ───
+studentAnalytics:
+  gradeDistribution:
+    framing:
+      a: 4
+      b: 6
+      c: 2
+      mostCommon: "B"
+    judging:
+      a: 2
+      b: 7
+      c: 3
+      mostCommon: "B"
+    steering:
+      a: 5
+      b: 5
+      c: 2
+      mostCommon: "A"
+  trend:
+    - label: "יסודות הרקורסיה"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+    - label: "עיצוב דיאגרמת ER"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+    - label: "אופטימיזציית שאילתות"
+      framing: "B"
+      judging: "C"
+      steering: "C"
+    - label: "התפשטות לאחור"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+    - label: "אלגו' מיון"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+    - label: "ארכ' CNN"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+  completedRuns:
+    - id: 1
+      name: "ניתוח אלגוריתמי מיון"
+      course: "הנדסת תוכנה"
+      type: "assessment"
+      responseMode: "mc"
+      date: "8 במרץ, 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 4
+      issuesAvailable: 6
+      framingFeedback: "זיהוי חזק של אילוצים חסרים וניסוח ברור של המשימה."
+      judgingFeedback: "זיהה מקרי קצה אך החמיץ פער בהוכחת הסיבוכיות בפלט הבינה המלאכותית."
+      steeringFeedback: "תיקונים ספציפיים וניתנים לביצוע ששיפרו את הפתרון באופן משמעותי."
+    - id: 2
+      name: "התרגול שלי: התפשטות לאחור"
+      course: "למידה עמוקה 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "9 במרץ, 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "הנחות מספקות אך החמיץ ציון הקשר פונקציית ההפסד."
+      judgingFeedback: "לא זיהה את בעיית הגרדיאנט הנעלם בארכיטקטורה שהוצעה על ידי הבינה המלאכותית."
+      steeringFeedback: "התיקונים היו בכיוון הנכון אך חסרו דיוק מתמטי."
+    - id: 3
+      name: "יסודות הרקורסיה"
+      course: "הנדסת תוכנה"
+      type: "practice"
+      responseMode: "oe"
+      date: "2 במרץ, 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 4
+      issuesAvailable: 4
+      framingFeedback: "פירוק בעיה מצוין וזיהוי אילוצים."
+      judgingFeedback: "זיהה נכון את סיכון גלישת המחסנית ושגיאות תנאי הבסיס."
+      steeringFeedback: "תיקונים טובים אך היה ניתן לדחוף לאופטימיזציית רקורסיית זנב."
+    - id: 4
+      name: "עיצוב דיאגרמת ER"
+      course: "מערכות מסדי נתונים"
+      type: "assessment"
+      responseMode: "mc"
+      date: "25 בפברואר, 2026"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "הנחות קרדינליות חסרות הובילו למשימה לא מוגדרת דיה."
+      judgingFeedback: "זיהה בעיות נורמליזציה אך החמיץ את הקשר המיותר."
+      steeringFeedback: "התיקונים היו מעורפלים ולא הובילו לשיפור משמעותי."
+    - id: 5
+      name: "אופטימיזציית שאילתות"
+      course: "מערכות מסדי נתונים"
+      type: "practice"
+      responseMode: "mc"
+      date: "20 בפברואר, 2026"
+      framing: "B"
+      judging: "C"
+      steering: "C"
+      cyclesUsed: 5
+      maxCycles: 5
+      issuesFound: 1
+      issuesAvailable: 4
+      framingFeedback: "זיהה אילוצי קנה מידה אך החמיץ הנחות אינדוקס."
+      judgingFeedback: "התמקד בבעיות תחביר, החמיץ את חוסר היעילות בסדר ה-join."
+      steeringFeedback: "תיקונים מעורפלים — 'לייעל את השאילתה' ללא ציון כיצד."
+    - id: 6
+      name: "סקירת ארכיטקטורת CNN"
+      course: "למידה עמוקה 101"
+      type: "assessment"
+      responseMode: "oe"
+      date: "15 בפברואר, 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 5
+      issuesAvailable: 5
+      framingFeedback: "ניתוח מקיף המכסה את כל האילוצים הארכיטקטוניים."
+      judgingFeedback: "זיהה את כל הבעיות העיקריות כולל שגיאת ממד pooling עדינה."
+      steeringFeedback: "תיקונים מדויקים ומתועדפים שפתרו את כל הבעיות שזוהו."
+    - id: 7
+      name: "פעולות ברשימה מקושרת"
+      course: "הנדסת תוכנה"
+      type: "practice"
+      responseMode: "mc"
+      date: "10 בפברואר, 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "זיהוי טוב של אילוצי זיכרון אך החמיץ בטיחות חוטים (thread safety)."
+      judgingFeedback: "זיהה את בעיית המצביע הריק אך החמיץ פער זיהוי מעגלים."
+      steeringFeedback: "הוראות ברורות וספציפיות שטיפלו בבעיה המרכזית."
+    - id: 8
+      name: "בחירת אינדקס"
+      course: "מערכות מסדי נתונים"
+      type: "practice"
+      responseMode: "oe"
+      date: "5 בפברואר, 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 5
+      framingFeedback: "אפיון עומסי עבודה חזק והערכת קרדינליות."
+      judgingFeedback: "זיהה בעיית אינדקס מכסה אך החמיץ את בעיית סדר המפתח המורכב."
+      steeringFeedback: "ברובו ספציפי אך שלח שני תיקונים במקביל, מה שהפחית מיקוד."
+    - id: 9
+      name: "ירידת גרדיאנט"
+      course: "למידה עמוקה 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "30 בינואר, 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "הנחות סבירות לגבי קצב למידה אך החמיץ שיקולי גודל אצווה."
+      judgingFeedback: "זיהה את בעיית ההתכנסות אך לא את חשש נקודת האוכף."
+      steeringFeedback: "תיקון ממוקד שטיפל ישירות בלוח זמני קצב הלמידה."
+    - id: 10
+      name: "גרסאות חיפוש בינארי"
+      course: "הנדסת תוכנה"
+      type: "assessment"
+      responseMode: "mc"
+      date: "25 בינואר, 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "ניתוח ברור של תנאי גבול והנחת קלט ממוין."
+      judgingFeedback: "מצא את שגיאת ה-off-by-one אך החמיץ סיכון גלישת מספר שלם."
+      steeringFeedback: "כיוון טוב אך היה יכול להיות ספציפי יותר לגבי התיקון."
+    - id: 11
+      name: "צורות נורמליזציה"
+      course: "מערכות מסדי נתונים"
+      type: "practice"
+      responseMode: "oe"
+      date: "20 בינואר, 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "זיהה תלויות פונקציונליות אך החמיץ ניתוח תלות טרנזיטיבית."
+      judgingFeedback: "התמקד בבעיות 1NF/2NF אך החמיץ לחלוטין את הפרת 3NF."
+      steeringFeedback: "התיקונים היו רלוונטיים אך חסרו צעדי הפירוק הפורמליים."
+    - id: 12
+      name: "בחירת פונקציית הפסד"
+      course: "למידה עמוקה 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "15 בינואר, 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 1
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 3
+      framingFeedback: "סיווג מצוין של סוג הבעיה ודרישות פונקציית ההפסד."
+      judgingFeedback: "זיהה את כל הבעיות כולל השמטת החלקת תוויות."
+      steeringFeedback: "תיקון יחיד ומדויק שפתר את הבעיה המרכזית במחזור אחד."
+
+# ─── דוח אתגר (פירוט 07b לאתגר 1) ───
+challengeReport:
+  challengeName: "ניתוח אלגוריתמי מיון"
+  course: "הנדסת תוכנה"
+  date: "8 במרץ, 2026"
+  type: "assessment"
+  responseMode: "mc"
+  cyclesUsed: 2
+  maxCycles: 5
+  framing:
+    grade: "A"
+    submission: "הבעיה מבקשת לנתח אלגוריתמי מיון אך לא מציינת: טווח גודל קלט, האם יציבות חשובה, אילוצי זיכרון. אני מניח: מערכים של 1K-1M מספרים שלמים, יציבות לא נדרשת, מרחב נוסף O(1) מועדף."
+    feedback: "זיהוי חזק של אילוצים חסרים. ההנחה לגבי מרחב נוסף O(1) מוצדקת היטב בהקשר הנתון. ניתן היה גם לשאול האם הקלט ממוין חלקית."
+    summary: "זיהוי חזק של אילוצים חסרים והנחות ברורות ומוצדקות לגבי היקף הבעיה."
+  judging:
+    grade: "B"
+    summary: "זיהה בעיות מפתח כמו מקרי קצה ואסטרטגיית חלוקה, אך החמיץ פער בהוכחת הסיבוכיות בפלט הבינה המלאכותית."
+  steering:
+    grade: "A"
+    summary: "תיקונים ספציפיים וניתנים לביצוע שהובילו לשיפורים משמעותיים הן בעומק הניתוח והן באיכות הקוד."
+  cycles:
+    - num: 1
+      judgingText: "בעיות שנבחרו: 'מקרה קצה חסר למערך ריק', 'ניתוח סיבוכיות לא שלם למקרה הגרוע'"
+      judgingGrade: "B"
+      steeringText: "תיקונים שנבחרו: 'הוסף תנאי שמירה למערך ריק', 'כלול ניתוח מקרה גרוע ל-quicksort'"
+      steeringGrade: "A"
+      aiOutput: "הניתוח המעודכן כולל כעת תנאי שמירה למערך ריק בנקודת הכניסה של כל פונקציית מיון. סיבוכיות הזמן במקרה הגרוע ל-quicksort תוקנה ל-O(n²) עם הערה על אסטרטגיות בחירת ציר לצמצום תרחיש זה..."
+    - num: 2
+      isFinal: true
+      judgingText: "זוהה: 'אסטרטגיית חלוקה לא אופטימלית', 'אין אזכור של ביצועי מטמון'"
+      judgingGrade: "B"
+      steeringText: "הנחיה: 'עבור לחלוקת חציון-של-שלושה', 'הוסף ניתוח מקומיות מטמון'"
+      steeringGrade: "A"
+      aiOutput: "הגרסה הסופית מאמצת בחירת ציר חציון-של-שלושה ל-quicksort, המפחיתה את הסבירות למקרה הגרוע. סעיף חדש על מקומיות מטמון משווה את דפוס הגישה הרציף של merge sort מול החלוקה במקום אך פחות ידידותית למטמון של quicksort..."
+
+# ─── אנליטיקת מרצה ───
+instructorAnalytics:
+  selectedCourse: "למידה עמוקה 101"
+  selectedChallenge: "ניפוי שגיאות ברשת נוירונים"
+  stats:
+    totalSubscribers: 45
+    completed: "38/45"
+    avgGrade: "B"
+    pendingStudents: 7
+  gradeDistribution:
+    framing:
+      a: 12
+      b: 18
+      c: 8
+    judging:
+      a: 8
+      b: 16
+      c: 14
+    steering:
+      a: 10
+      b: 18
+      c: 10
+  perStudentResults:
+    - name: "Sarah Cohen"
+      completed: "14 במרץ, 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      overall: "A"
+    - name: "James Park"
+      completed: "13 במרץ, 2026"
+      framing: "B"
+      judging: "B"
+      steering: "C"
+      overall: "B"
+    - name: "Maria Santos"
+      completed: "13 במרץ, 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      overall: "A"
+    - name: "Ahmed Hassan"
+      completed: "12 במרץ, 2026"
+      framing: "C"
+      judging: "C"
+      steering: "C"
+      overall: "C"
+    - name: "Li Wei"
+      completed: "12 במרץ, 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      overall: "B"
+    - name: "Emma Johnson"
+      completed: null
+      framing: null
+      judging: null
+      steering: null
+      overall: null
+
+# ─── נתוני פרופיל ───
+profileData:
+  student:
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    institution: "אוניברסיטת תל אביב"
+    role: "student"
+    registrationDate: "15 בינואר, 2026"
+    challengesCreated: 4
+    challengesExecuted: 12
+    subscribedCourses: ["למידה עמוקה 101", "מערכות מסדי נתונים", "הנדסת תוכנה"]
+  instructor:
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    institution: "אוניברסיטת תל אביב"
+    role: "instructor"
+    registrationDate: "1 בספטמבר, 2024"
+    challengesCreated: 12
+    coursesManaged: 2
+
+# ─── קטלוג קורסי מרצה ───
+instructorCourses:
+  - id: "deep-learning-101"
+    name: "למידה עמוקה 101"
+    department: "מדעי המחשב"
+    role: "מרצה ראשי"
+    studentCount: 45
+    challengeCount: 8
+    instructorCount: 3
+    subjects: ["רשתות נוירונים", "רשתות קונבולוציה", "רשתות נוירונים חוזרות", "אופטימיזציה", "רגולריזציה"]
+  - id: "database-systems"
+    name: "מערכות מסדי נתונים"
+    department: "מדעי המחשב"
+    role: "מרצה שותף/ה"
+    studentCount: 62
+    challengeCount: 5
+    instructorCount: 2
+    subjects: ["SQL", "אופטימיזציית שאילתות", "אינדקס", "נורמליזציה"]

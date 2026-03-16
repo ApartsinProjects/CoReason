@@ -1,0 +1,52 @@
+server:
+  port: 3000
+  static_dir: ../client
+  trust_proxy: false
+
+database:
+  client: better-sqlite3
+  connection:
+    filename: ./data/coreason-dev.sqlite3
+  useNullAsDefault: true
+
+auth:
+  session_secret: dev-secret-change-me
+  session_max_age: 2592000000  # 30 days
+  google:
+    callback_url: /api/auth/google/callback
+    scope:
+      - email
+      - profile
+
+llm:
+  config_file: ./server/llm/modelmesh-config.yaml
+  default_model: chat
+  max_cost_per_run: 0.50
+  retry:
+    max_retries: 3
+    backoff_ms: 1000
+
+logging:
+  level: debug
+  dir: ./logs
+  console: true
+  file: true
+  trace: true
+  max_file_size: 10485760  # 10MB
+  max_files: 5
+
+import:
+  content_dir: ./content
+  prompts_dir: ./prompts
+  scenarios_dir: ./scenarios
+
+i18n:
+  default_language: en
+  supported_languages:
+    - en
+    - de
+    - es
+    - fr
+    - he
+  rtl_languages:
+    - he
