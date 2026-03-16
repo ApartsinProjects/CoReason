@@ -252,6 +252,23 @@ class LLMService {
     }
   }
 
+  async generateRubricPreview({ course, subjects, language }) {
+    const result = await this._call('14-generate-rubric-preview', {
+      course: course || 'General',
+      subjects: Array.isArray(subjects) ? subjects.join(', ') : String(subjects),
+      language: language || 'English',
+    });
+    if (!result) return null;
+    try {
+      let jsonStr = result.trim();
+      const fenceMatch = jsonStr.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (fenceMatch) jsonStr = fenceMatch[1].trim();
+      return JSON.parse(jsonStr);
+    } catch {
+      return null;
+    }
+  }
+
   async generatePreview(data) {
     const result = await this._call('12-generate-example-preview', {
       course: data.course || 'General',

@@ -95,6 +95,8 @@ async function startServer() {
       evaluateFraming: async () => ({ grade: 'N/A', feedback: { message: 'LLM not available' } }),
       evaluateJudging: async () => ({ grade: 'N/A', feedback: { message: 'LLM not available' } }),
       evaluateSteering: async () => ({ grade: 'N/A', feedback: { message: 'LLM not available' } }),
+      generateRubricPreview: async () => null,
+      generateSubjectTree: async () => [{ name: 'Topic 1', children: [{ name: 'Subtopic 1' }] }],
     };
   }
 
@@ -103,7 +105,7 @@ async function startServer() {
   app.use('/api/v1/users', require('./routes/user.routes')(db, logger));
   app.use('/api/v1/institutions', require('./routes/institution.routes')(db, logger));
   app.use('/api/v1/courses', require('./routes/course.routes')(db, logger, llmService));
-  app.use('/api/v1/challenges', require('./routes/challenge.routes')(db, logger));
+  app.use('/api/v1/challenges', require('./routes/challenge.routes')(db, logger, llmService));
   app.use('/api/v1/runs', require('./routes/run.routes')(db, logger, llmService));
   app.use('/api/v1/analytics', require('./routes/analytics.routes')(db, logger));
   app.use('/api/v1/import', require('./routes/import.routes')(db, logger));

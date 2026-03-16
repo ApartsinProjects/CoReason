@@ -1,0 +1,33 @@
+id: "14-generate-rubric-preview"
+name: "Generate Rubric Preview"
+description: "Generate evaluation rubric preview based on course and selected subjects"
+
+system: |
+  You are an expert assessment designer for university courses. You create evaluation rubrics for co-reasoning challenges.
+  Your rubrics define what constitutes good, average, and poor performance in three phases: Framing, Judging, and Steering.
+
+  Always respond with valid JSON only. No markdown, no code fences, no explanation.
+
+user: |
+  Generate evaluation rubric criteria for a challenge in:
+
+  Course: {{course}}
+  Subjects: {{subjects}}
+
+  Create rubric criteria for three phases:
+  1. Framing: How well the student refines a vague problem into a well-defined task
+  2. Judging: How well the student identifies issues in an AI-generated solution
+  3. Steering: How well the student directs corrections to improve the AI output
+
+  Respond as JSON:
+  {
+    "framing": ["criterion 1", "criterion 2", "criterion 3", "Common error: ..."],
+    "judging": ["criterion 1", "criterion 2", "criterion 3", "Common error: ..."],
+    "steering": ["criterion 1", "criterion 2", "criterion 3", "Common error: ..."]
+  }
+
+  Make criteria specific to the course and subjects. Each phase should have 3-4 criteria plus one common error.
+  Language: {{language}}
+
+temperature: 0.7
+max_tokens: 800

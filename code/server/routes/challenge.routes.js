@@ -3,7 +3,7 @@ const { Router } = require('express');
 const { ChallengeService } = require('../services/challenge.service');
 const { requireAuth } = require('../middleware/auth');
 
-module.exports = function challengeRoutes(db, logger) {
+module.exports = function challengeRoutes(db, logger, llmService) {
   const router = Router();
   const challengeService = new ChallengeService(db, logger);
 
@@ -18,6 +18,26 @@ module.exports = function challengeRoutes(db, logger) {
       const challenges = await challengeService.list(filters);
       res.json(challenges);
     } catch (err) { next(err); }
+  });
+
+  // POST /api/v1/challenges/preview-rubric — Generate rubric preview asynchronously
+  // Must be BEFORE /:id routes to avoid being caught as an ID
+  router.post('/preview-rubric', requireAuth, async (req, res, next) => {
+    try {
+      const { course, subjects } = req.body;
+      if (!subjects || !Array.isArray(subjects) || subjects.length === 0) {
+        return res.json({ rubrics: null });
+      }
+      const rubrics = await llmService.generateRubricPreview({
+        course: course || 'General',
+        subjects,
+        language: req.body.language || 'English',
+      });
+      res.json({ rubrics });
+    } catch (err) {
+      logger.warn('Rubric preview generation failed:', err.message);
+      res.json({ rubrics: null, error: err.message });
+    }
   });
 
   // POST /api/v1/challenges

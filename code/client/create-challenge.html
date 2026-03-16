@@ -79,152 +79,28 @@
           </div>
           <div class="form-group">
             <label data-t="selectCourse">Course &amp; Subject <span class="help-icon" data-tooltip="Select the course this challenge belongs to. The course determines which subject tree is available.">?</span></label>
-            <select class="form-control">
-              <option>Deep Learning 101</option>
-              <option>Database Systems</option>
-              <option>Software Engineering</option>
+            <select class="form-control" id="courseSelect" onchange="onCourseChange(this.value)">
+              <option value="">Loading courses...</option>
             </select>
           </div>
           <div class="form-group">
-            <label data-t="subjectArea" data-tooltip="subjectPath">Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. Rubrics and problems will be generated based on the selected subjects. Check parent nodes to include all children.">?</span></label>
+            <label data-t="subjectArea">Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. Rubrics and problems will be generated based on the selected subjects. Check parent nodes to include all children.">?</span></label>
             <div class="subject-tree-select" id="subjectTreeSelect">
               <div class="subject-tree-trigger" onclick="toggleSubjectTree()">
-                <span class="subject-tree-tags" id="selectedTags">
-                  <span class="subject-tag">Backpropagation &gt; Debugging <button onclick="event.stopPropagation(); removeSubject('bp-debug')">&times;</button></span>
-                  <span class="subject-tag">Architectures &gt; CNNs <button onclick="event.stopPropagation(); removeSubject('arch-cnn')">&times;</button></span>
-                </span>
+                <span class="subject-tree-tags" id="selectedTags"></span>
                 <span class="subject-tree-arrow">&#9662;</span>
               </div>
               <div class="subject-tree-dropdown" id="subjectTreeDropdown">
                 <div class="subject-tree-search">
                   <input type="text" placeholder="Search subjects..." class="form-control" style="margin-bottom:0; font-size:13px; padding:6px 10px;">
                 </div>
-                <div class="subject-tree-body">
-                  <ul class="tree-select">
-                    <li>
-                      <label class="tree-node">
-                        <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                        <input type="checkbox" class="tree-checkbox" id="nn" onchange="toggleChildren(this)">
-                        <span class="tree-label">Neural Networks</span>
-                      </label>
-                      <ul class="tree-children">
-                        <li>
-                          <label class="tree-node">
-                            <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                            <input type="checkbox" class="tree-checkbox" id="nn-bp" onchange="toggleChildren(this)">
-                            <span class="tree-label">Backpropagation</span>
-                          </label>
-                          <ul class="tree-children">
-                            <li>
-                              <label class="tree-node">
-                                <input type="checkbox" class="tree-checkbox" id="bp-debug" checked>
-                                <span class="tree-label">Debugging</span>
-                              </label>
-                            </li>
-                            <li>
-                              <label class="tree-node">
-                                <input type="checkbox" class="tree-checkbox" id="bp-vanish">
-                                <span class="tree-label">Vanishing Gradients</span>
-                              </label>
-                            </li>
-                          </ul>
-                        </li>
-                        <li>
-                          <label class="tree-node">
-                            <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                            <input type="checkbox" class="tree-checkbox" id="nn-arch" onchange="toggleChildren(this)">
-                            <span class="tree-label">Architectures</span>
-                          </label>
-                          <ul class="tree-children">
-                            <li>
-                              <label class="tree-node">
-                                <input type="checkbox" class="tree-checkbox" id="arch-cnn" checked>
-                                <span class="tree-label">CNNs</span>
-                              </label>
-                            </li>
-                            <li>
-                              <label class="tree-node">
-                                <input type="checkbox" class="tree-checkbox" id="arch-rnn">
-                                <span class="tree-label">RNNs</span>
-                              </label>
-                            </li>
-                            <li>
-                              <label class="tree-node">
-                                <input type="checkbox" class="tree-checkbox" id="arch-transformer">
-                                <span class="tree-label">Transformers</span>
-                              </label>
-                            </li>
-                          </ul>
-                        </li>
-                        <li>
-                          <label class="tree-node">
-                            <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                            <input type="checkbox" class="tree-checkbox" id="nn-opt" onchange="toggleChildren(this)">
-                            <span class="tree-label">Optimization</span>
-                          </label>
-                          <ul class="tree-children">
-                            <li>
-                              <label class="tree-node">
-                                <input type="checkbox" class="tree-checkbox" id="opt-lr">
-                                <span class="tree-label">Learning Rate</span>
-                              </label>
-                            </li>
-                            <li>
-                              <label class="tree-node">
-                                <input type="checkbox" class="tree-checkbox" id="opt-reg">
-                                <span class="tree-label">Regularization</span>
-                              </label>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <label class="tree-node">
-                        <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                        <input type="checkbox" class="tree-checkbox" id="loss" onchange="toggleChildren(this)">
-                        <span class="tree-label">Loss Functions</span>
-                      </label>
-                      <ul class="tree-children">
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="loss-ce">
-                            <span class="tree-label">Cross-Entropy</span>
-                          </label>
-                        </li>
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="loss-mse">
-                            <span class="tree-label">MSE</span>
-                          </label>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <label class="tree-node">
-                        <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                        <input type="checkbox" class="tree-checkbox" id="eval" onchange="toggleChildren(this)">
-                        <span class="tree-label">Model Evaluation</span>
-                      </label>
-                      <ul class="tree-children">
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="eval-overfit">
-                            <span class="tree-label">Overfitting &amp; Underfitting</span>
-                          </label>
-                        </li>
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="eval-cv">
-                            <span class="tree-label">Cross-Validation</span>
-                          </label>
-                        </li>
-                      </ul>
-                    </li>
+                <div class="subject-tree-body" id="subjectTreeBody">
+                  <ul class="tree-select" id="treeSelectRoot">
+                    <li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">Select a course to load subjects...</span></li>
                   </ul>
                 </div>
                 <div class="subject-tree-footer">
-                  <span class="text-sm text-muted"><strong id="selectedCount">2</strong> subjects selected</span>
+                  <span class="text-sm text-muted"><strong id="selectedCount">0</strong> subjects selected</span>
                   <button class="btn btn-sm btn-outline" onclick="clearAllSubjects()">Clear All</button>
                 </div>
               </div>
@@ -245,50 +121,12 @@
 
           <!-- Challenge Type -->
           <div class="form-group">
-            <label data-t="responseType" data-tooltip="challengeType">Challenge Type <span class="help-icon" data-tooltip="Practice: students see feedback after each phase and can retry. Assessment: feedback is withheld until the end, no retries allowed.">?</span></label>
+            <label>Challenge Type <span class="help-icon" data-tooltip="Practice: students see feedback after each phase and can retry. Assessment: feedback is withheld until the end, no retries allowed.">?</span></label>
             <div class="inline-radio">
-              <label><input type="radio" name="type" checked> <span data-t="practice">Practice</span> <span class="text-muted" data-t="practiceModeDesc">— feedback after each phase/cycle, retries allowed</span></label>
-              <label><input type="radio" name="type"> <span data-t="assessment">Assessment</span> <span class="text-muted" data-t="assessmentModeDesc">— feedback at end only, no retries</span></label>
+              <label><input type="radio" name="type" checked> <span data-t="practice">Practice</span></label>
+              <label><input type="radio" name="type"> <span data-t="assessment">Assessment</span></label>
             </div>
           </div>
-        </div>
-
-        <!-- Evaluation Rubrics -->
-        <div class="card">
-          <h3 style="margin-bottom:16px;" data-t="rubricPreview">Evaluation Rubrics</h3>
-          <p class="text-sm text-muted mb-16">Rubrics are auto-generated based on your course and selected subjects. They define what constitutes good performance — rubrics are NEVER shown to students.</p>
-
-          <button class="btn btn-teal btn-lg" style="margin-bottom:16px;" data-t="generateFraming">&#9889; Generate Rubrics</button>
-
-          <div class="rubric-preview">
-            <h5 data-t="framing">Framing Rubric</h5>
-            <ul>
-              <li>Identifies all missing/ambiguous requirements</li>
-              <li>Formulates reasonable and justified assumptions</li>
-              <li>Produces a complete, well-defined task statement</li>
-              <li><em>Common error: accepting problem at face value without questioning</em></li>
-            </ul>
-          </div>
-          <div class="rubric-preview">
-            <h5 data-t="judging">Judging Rubric</h5>
-            <ul>
-              <li>Detects logical errors in AI solution</li>
-              <li>Identifies incorrect assumptions made by AI</li>
-              <li>Recognizes incomplete or partial solutions</li>
-              <li><em>Common error: focusing only on syntax, missing logical flaws</em></li>
-            </ul>
-          </div>
-          <div class="rubric-preview">
-            <h5 data-t="steering">Steering Rubric</h5>
-            <ul>
-              <li>Commands are specific and actionable</li>
-              <li>Addresses identified issues systematically</li>
-              <li>Converges toward a correct solution</li>
-              <li><em>Common error: vague commands like "fix it" or "try again"</em></li>
-            </ul>
-          </div>
-
-          <p class="text-sm text-muted" style="margin-top:8px;">Rubrics will be regenerated when you change the subject selection.</p>
         </div>
 
         <!-- Advanced Settings (collapsible) -->
@@ -307,14 +145,14 @@
               <h4><span class="phase-badge" data-t="phase1">Phase 1</span> <span data-t="framing">Framing</span> <span class="help-icon" data-tooltip="The student sees a raw, intentionally incomplete problem and must translate it into a well-defined task by adding assumptions, constraints, and clarifications.">?</span></h4>
               <p class="text-sm text-muted mb-16">System presents a raw problem. Student translates it into a well-defined task and sends it to the AI.</p>
               <div class="form-group">
-                <label data-t="responseType" data-tooltip="responseType">Framing Response Type <span class="help-icon" data-tooltip="Multiple Choice: LLM generates options representing different framings. Open-Ended: student writes structured refinement sections around the raw problem.">?</span></label>
+                <label data-t="responseType">Framing Response Type <span class="help-icon" data-tooltip="Multiple Choice: LLM generates options representing different framings. Open-Ended: student writes structured refinement sections around the raw problem.">?</span></label>
                 <div class="inline-radio">
                   <label><input type="radio" name="frame-type" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
                   <label><input type="radio" name="frame-type"> <span data-t="openEnded">Open-Ended</span> (structured sections)</label>
                 </div>
               </div>
               <div class="form-group">
-                <label data-t="instructions">Instructions to Students</label>
+                <label data-t="instructions">Instructions for Students</label>
                 <textarea class="form-control" rows="3">Read the problem statement carefully. Identify missing information, ambiguous requirements, and unstated assumptions. Formulate a clear, well-defined task by specifying your assumptions.</textarea>
               </div>
             </div>
@@ -340,7 +178,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label data-t="instructions">Judging Instructions</label>
+                  <label data-t="instructions">Instructions for Students</label>
                   <textarea class="form-control" rows="3">Review the AI's output carefully. Identify any gaps, errors, or issues. Select ALL issues you find — your analysis is recorded but NOT sent to the AI.</textarea>
                 </div>
               </div>
@@ -356,7 +194,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label data-t="instructions">Steering Instructions</label>
+                  <label data-t="instructions">Instructions for Students</label>
                   <textarea class="form-control" rows="3">Based on your analysis, select ALL corrections to send to the AI. Be specific — tell the AI exactly what to fix or improve.</textarea>
                 </div>
               </div>
@@ -394,7 +232,7 @@
       <!-- Right: Preview Panel -->
       <div class="preview-section">
         <div class="card">
-          <h3 style="margin-bottom:16px;" data-t="livePreview">Raw Problem Preview <span class="help-icon" data-tooltip="A sample problem generated from your selected subject. Shows the kind of problems students will see, with annotated gaps visible only to you.">?</span></h3>
+          <h3 style="margin-bottom:16px;" data-t="livePreview">Example Raw Problem for Students <span class="help-icon" data-tooltip="A sample problem generated from your selected subject. Shows the kind of problems students will see, with annotated gaps visible only to you.">?</span></h3>
           <div style="background:#f8f9ff; padding:12px; border-radius:var(--radius); font-size:13px;">
             <p><strong>Problem:</strong> A research team has built a CNN for classifying medical images. The model achieves 98% training accuracy but only 52% on validation. The team reports that [<em>missing: dataset size and class distribution not specified</em>]...</p>
             <p class="text-muted mt-8"><em>Note: This problem intentionally contains missing/ambiguous parts per REQ-STEP-01.</em></p>
@@ -402,7 +240,7 @@
         </div>
 
         <div class="card">
-          <h3 style="margin-bottom:12px;" data-t="rubricPreview">Rubric Summary</h3>
+          <h3 style="margin-bottom:12px;" data-t="rubricPreview">Challenge Evaluation Rubric</h3>
           <div class="rubric-summary">
             <h5 data-t="framing">Framing</h5>
             <div class="grade-labels"><strong>A:</strong> All gaps identified, justified assumptions <strong>B:</strong> Most gaps found, reasonable assumptions <strong>C:</strong> Partial identification, weak justification</div>
@@ -417,167 +255,332 @@
   </main>
 
   <script>
-// Check auth
+// Check auth and load user info
+let currentUser = null;
 fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
   if (!r.ok) window.location.href = '/login.html';
+  return r.json();
+}).then(data => {
+  currentUser = data;
 }).catch(() => window.location.href = '/login.html');
 
-    // Toggle advanced settings panel
-    function toggleAdvanced() {
-      const body = document.getElementById('advanced-body');
-      const arrow = document.getElementById('adv-arrow');
-      if (body.style.display === 'none') {
-        body.style.display = '';
-        arrow.textContent = '\u25BC';
-      } else {
-        body.style.display = 'none';
-        arrow.textContent = '\u25B6';
-      }
-    }
+// --- Unique ID counter for tree nodes ---
+let _treeNodeId = 0;
+function nextTreeId() { return 'tn-' + (++_treeNodeId); }
 
-    // Toggle the dropdown open/close
-    function toggleSubjectTree() {
-      document.getElementById('subjectTreeSelect').classList.toggle('open');
+// --- Load courses from API ---
+(async function loadCourses() {
+  try {
+    const courses = await API.get('/courses');
+    const select = document.getElementById('courseSelect');
+    if (!courses || courses.length === 0) {
+      select.innerHTML = '<option value="">No courses available</option>';
+      return;
     }
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      var select = document.getElementById('subjectTreeSelect');
-      if (select && !select.contains(e.target)) {
-        select.classList.remove('open');
-      }
+    let html = '<option value="">Select a course...</option>';
+    courses.forEach(function(c) {
+      html += '<option value="' + c.id + '">' + c.name + '</option>';
     });
+    select.innerHTML = html;
+  } catch (err) {
+    document.getElementById('courseSelect').innerHTML = '<option value="">Failed to load courses</option>';
+  }
+})();
 
-    // Toggle tree branch expand/collapse
-    function toggleTreeBranch(toggleEl) {
-      toggleEl.classList.toggle('collapsed');
-      var li = toggleEl.closest('li');
-      var children = li.querySelector('ul.tree-children');
-      if (children) children.classList.toggle('collapsed');
+// --- When course changes, load its subject tree ---
+async function onCourseChange(courseId) {
+  clearAllSubjects();
+  const root = document.getElementById('treeSelectRoot');
+
+  if (!courseId) {
+    root.innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">Select a course to load subjects...</span></li>';
+    return;
+  }
+
+  root.innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">Loading subjects...</span></li>';
+
+  try {
+    const subjects = await API.get('/courses/' + courseId + '/subjects');
+    if (!subjects || subjects.length === 0) {
+      root.innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">No subjects defined for this course. <a href="edit-subject-tree.html?courseId=' + courseId + '">Create subject tree</a></span></li>';
+      return;
     }
+    root.innerHTML = '';
+    subjects.forEach(function(node) {
+      root.appendChild(buildSubjectTreeNode(node));
+    });
+    // Attach change listeners to new checkboxes
+    attachTreeListeners();
+  } catch (err) {
+    root.innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">Failed to load subjects.</span></li>';
+  }
+}
 
-    // When a parent checkbox is toggled, check/uncheck all children
-    function toggleChildren(checkbox) {
-      var li = checkbox.closest('li');
-      var childCheckboxes = li.querySelectorAll('ul.tree-children .tree-checkbox');
-      childCheckboxes.forEach(function(cb) {
-        cb.checked = checkbox.checked;
-        cb.indeterminate = false;
-      });
-      updateParentState(checkbox);
-      updateSelectedTags();
-    }
+// --- Build a subject tree node recursively from JSON ---
+function buildSubjectTreeNode(node) {
+  var li = document.createElement('li');
+  var label = document.createElement('label');
+  label.className = 'tree-node';
 
-    // Update parent checkbox state (checked / indeterminate / unchecked)
-    function updateParentState(checkbox) {
-      var li = checkbox.closest('li');
-      var parentUl = li.parentElement;
-      if (!parentUl || !parentUl.classList.contains('tree-children')) return;
+  var hasChildren = node.children && node.children.length > 0;
+  var cbId = nextTreeId();
 
-      var parentLi = parentUl.closest('li');
-      if (!parentLi) return;
+  if (hasChildren) {
+    var toggle = document.createElement('span');
+    toggle.className = 'tree-toggle';
+    toggle.innerHTML = '&#9660;';
+    toggle.addEventListener('click', function(e) { e.preventDefault(); toggleTreeBranch(this); });
+    label.appendChild(toggle);
+  }
 
-      var parentCb = parentLi.querySelector(':scope > label .tree-checkbox');
-      if (!parentCb) return;
+  var cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.className = 'tree-checkbox';
+  cb.id = cbId;
+  if (hasChildren) {
+    cb.addEventListener('change', function() { toggleChildren(this); });
+  }
+  label.appendChild(cb);
 
-      var siblings = parentUl.querySelectorAll(':scope > li > label .tree-checkbox');
-      var checkedCount = 0;
-      var indeterminateCount = 0;
-      siblings.forEach(function(cb) {
-        if (cb.checked) checkedCount++;
-        if (cb.indeterminate) indeterminateCount++;
-      });
+  var span = document.createElement('span');
+  span.className = 'tree-label';
+  span.textContent = node.name;
+  label.appendChild(span);
 
-      if (checkedCount === siblings.length) {
-        parentCb.checked = true;
-        parentCb.indeterminate = false;
-      } else if (checkedCount === 0 && indeterminateCount === 0) {
-        parentCb.checked = false;
-        parentCb.indeterminate = false;
-      } else {
-        parentCb.checked = false;
-        parentCb.indeterminate = true;
-      }
+  li.appendChild(label);
 
-      updateParentState(parentCb);
-    }
+  if (hasChildren) {
+    var ul = document.createElement('ul');
+    ul.className = 'tree-children';
+    node.children.forEach(function(child) {
+      ul.appendChild(buildSubjectTreeNode(child));
+    });
+    li.appendChild(ul);
+  }
 
-    // Rebuild the tag list from checked leaf checkboxes
-    function updateSelectedTags() {
-      var tagsContainer = document.getElementById('selectedTags');
-      var allChecked = document.querySelectorAll('.tree-checkbox:checked');
-      tagsContainer.innerHTML = '';
-      var count = 0;
+  return li;
+}
 
-      allChecked.forEach(function(cb) {
-        // Only show leaf nodes (those without a direct child ul.tree-children) as tags
-        var li = cb.closest('li');
-        var directChildUl = li.querySelector(':scope > ul.tree-children');
-        if (directChildUl) return; // skip parent nodes — they have child branches
-
-        count++;
-        // Build path from ancestors
-        var path = [];
-        var current = li;
-        while (current) {
-          var label = current.querySelector(':scope > label .tree-label');
-          if (label) path.unshift(label.textContent);
-          var parentUl = current.parentElement;
-          current = (parentUl && parentUl.classList.contains('tree-children')) ? parentUl.closest('li') : null;
-        }
-        // Show last 2 levels for brevity
-        var display = path.length > 2 ? path.slice(-2).join(' > ') : path.join(' > ');
-
-        var tag = document.createElement('span');
-        tag.className = 'subject-tag';
-        tag.innerHTML = display + ' <button onclick="event.stopPropagation(); uncheckById(\'' + cb.id + '\')">&times;</button>';
-        tagsContainer.appendChild(tag);
-      });
-
-      document.getElementById('selectedCount').textContent = count;
-    }
-
-    // Remove a specific subject by unchecking it
-    function uncheckById(id) {
-      var cb = document.getElementById(id);
-      if (cb) {
-        cb.checked = false;
-        updateParentState(cb);
-        updateSelectedTags();
-      }
-    }
-
-    function removeSubject(id) {
-      uncheckById(id);
-    }
-
-    function clearAllSubjects() {
-      document.querySelectorAll('.tree-checkbox').forEach(function(cb) {
-        cb.checked = false;
-        cb.indeterminate = false;
-      });
-      updateSelectedTags();
-    }
-
-    // Attach change listeners to all leaf checkboxes
-    document.querySelectorAll('.tree-checkbox').forEach(function(cb) {
+// --- Attach change listeners to dynamically created leaf checkboxes ---
+function attachTreeListeners() {
+  document.querySelectorAll('#treeSelectRoot .tree-checkbox').forEach(function(cb) {
+    // Only add listener to leaves (no onchange for toggleChildren)
+    if (!cb.closest('li').querySelector(':scope > ul.tree-children')) {
       cb.addEventListener('change', function() {
-        if (!this.closest('li').querySelector('ul.tree-children')) {
-          // Leaf node — update parent state
-          updateParentState(this);
-          updateSelectedTags();
-        }
+        updateParentState(this);
+        updateSelectedTags();
+        scheduleRubricUpdate();
       });
-    });
+    }
+  });
+}
 
-    // Initialize parent states on load
-    (function() {
-      // Set initial indeterminate states for parents with partial children checked
-      var allParents = document.querySelectorAll('.tree-checkbox[onchange]');
-      // Walk from bottom up
-      var leaves = document.querySelectorAll('.tree-checkbox:not([onchange])');
-      leaves.forEach(function(cb) { updateParentState(cb); });
-    })();
+// --- Toggle advanced settings panel ---
+function toggleAdvanced() {
+  const body = document.getElementById('advanced-body');
+  const arrow = document.getElementById('adv-arrow');
+  if (body.style.display === 'none') {
+    body.style.display = '';
+    arrow.textContent = '\u25BC';
+  } else {
+    body.style.display = 'none';
+    arrow.textContent = '\u25B6';
+  }
+}
+
+// --- Toggle the dropdown open/close ---
+function toggleSubjectTree() {
+  document.getElementById('subjectTreeSelect').classList.toggle('open');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  var select = document.getElementById('subjectTreeSelect');
+  if (select && !select.contains(e.target)) {
+    select.classList.remove('open');
+  }
+});
+
+// --- Toggle tree branch expand/collapse ---
+function toggleTreeBranch(toggleEl) {
+  toggleEl.classList.toggle('collapsed');
+  var li = toggleEl.closest('li');
+  var children = li.querySelector('ul.tree-children');
+  if (children) children.classList.toggle('collapsed');
+}
+
+// --- When a parent checkbox is toggled, check/uncheck all children ---
+function toggleChildren(checkbox) {
+  var li = checkbox.closest('li');
+  var childCheckboxes = li.querySelectorAll('ul.tree-children .tree-checkbox');
+  childCheckboxes.forEach(function(cb) {
+    cb.checked = checkbox.checked;
+    cb.indeterminate = false;
+  });
+  updateParentState(checkbox);
+  updateSelectedTags();
+  scheduleRubricUpdate();
+}
+
+// --- Update parent checkbox state (checked / indeterminate / unchecked) ---
+function updateParentState(checkbox) {
+  var li = checkbox.closest('li');
+  var parentUl = li.parentElement;
+  if (!parentUl || !parentUl.classList.contains('tree-children')) return;
+
+  var parentLi = parentUl.closest('li');
+  if (!parentLi) return;
+
+  var parentCb = parentLi.querySelector(':scope > label .tree-checkbox');
+  if (!parentCb) return;
+
+  var siblings = parentUl.querySelectorAll(':scope > li > label .tree-checkbox');
+  var checkedCount = 0;
+  var indeterminateCount = 0;
+  siblings.forEach(function(cb) {
+    if (cb.checked) checkedCount++;
+    if (cb.indeterminate) indeterminateCount++;
+  });
+
+  if (checkedCount === siblings.length) {
+    parentCb.checked = true;
+    parentCb.indeterminate = false;
+  } else if (checkedCount === 0 && indeterminateCount === 0) {
+    parentCb.checked = false;
+    parentCb.indeterminate = false;
+  } else {
+    parentCb.checked = false;
+    parentCb.indeterminate = true;
+  }
+
+  updateParentState(parentCb);
+}
+
+// --- Rebuild the tag list from checked leaf checkboxes ---
+function updateSelectedTags() {
+  var tagsContainer = document.getElementById('selectedTags');
+  var allChecked = document.querySelectorAll('#treeSelectRoot .tree-checkbox:checked');
+  tagsContainer.innerHTML = '';
+  var count = 0;
+
+  allChecked.forEach(function(cb) {
+    var li = cb.closest('li');
+    var directChildUl = li.querySelector(':scope > ul.tree-children');
+    if (directChildUl) return; // skip parent nodes
+
+    count++;
+    var path = [];
+    var current = li;
+    while (current) {
+      var label = current.querySelector(':scope > label .tree-label');
+      if (label) path.unshift(label.textContent);
+      var parentUl = current.parentElement;
+      current = (parentUl && parentUl.classList.contains('tree-children')) ? parentUl.closest('li') : null;
+    }
+    var display = path.length > 2 ? path.slice(-2).join(' > ') : path.join(' > ');
+
+    var tag = document.createElement('span');
+    tag.className = 'subject-tag';
+    tag.innerHTML = display + ' <button onclick="event.stopPropagation(); uncheckById(\'' + cb.id + '\')">&times;</button>';
+    tagsContainer.appendChild(tag);
+  });
+
+  document.getElementById('selectedCount').textContent = count;
+}
+
+// --- Remove a specific subject by unchecking it ---
+function uncheckById(id) {
+  var cb = document.getElementById(id);
+  if (cb) {
+    cb.checked = false;
+    updateParentState(cb);
+    updateSelectedTags();
+    scheduleRubricUpdate();
+  }
+}
+
+function removeSubject(id) {
+  uncheckById(id);
+}
+
+function clearAllSubjects() {
+  document.querySelectorAll('#treeSelectRoot .tree-checkbox').forEach(function(cb) {
+    cb.checked = false;
+    cb.indeterminate = false;
+  });
+  updateSelectedTags();
+}
+
+// --- Async rubric update (non-blocking) ---
+let _rubricTimer = null;
+function scheduleRubricUpdate() {
+  // Debounce: wait 800ms after last subject change before updating rubrics
+  if (_rubricTimer) clearTimeout(_rubricTimer);
+  _rubricTimer = setTimeout(function() { updateRubricsAsync(); }, 800);
+}
+
+async function updateRubricsAsync() {
+  // Gather selected subjects
+  var selected = getSelectedSubjectNames();
+  if (selected.length === 0) return;
+
+  var courseSelect = document.getElementById('courseSelect');
+  var courseName = courseSelect.selectedOptions[0]?.textContent || '';
+
+  // Target the right-pane rubric summary
+  var rubricSummary = document.querySelector('.rubric-summary');
+  if (!rubricSummary) return;
+  rubricSummary.style.opacity = '0.5';
+
+  var statusEl = document.getElementById('rubricStatus');
+  if (!statusEl) {
+    statusEl = document.createElement('p');
+    statusEl.id = 'rubricStatus';
+    statusEl.className = 'text-sm text-muted';
+    statusEl.style.marginTop = '8px';
+    rubricSummary.parentElement.appendChild(statusEl);
+  }
+  statusEl.innerHTML = '<em>Updating rubrics...</em>';
+
+  try {
+    var result = await API.post('/challenges/preview-rubric', {
+      course: courseName,
+      subjects: selected,
+    });
+    if (result && result.rubrics) {
+      // Rebuild rubric summary with LLM-generated content
+      var html = '';
+      if (result.rubrics.framing) {
+        html += '<h5>Framing</h5><div class="grade-labels">' + result.rubrics.framing.join(' · ') + '</div>';
+      }
+      if (result.rubrics.judging) {
+        html += '<h5>Judging</h5><div class="grade-labels">' + result.rubrics.judging.join(' · ') + '</div>';
+      }
+      if (result.rubrics.steering) {
+        html += '<h5>Steering</h5><div class="grade-labels">' + result.rubrics.steering.join(' · ') + '</div>';
+      }
+      rubricSummary.innerHTML = html;
+      statusEl.innerHTML = '<em>Rubrics updated for: ' + selected.slice(0, 3).join(', ') + (selected.length > 3 ? '...' : '') + '</em>';
+    } else {
+      statusEl.innerHTML = '<em>Rubrics will be generated when you publish.</em>';
+    }
+  } catch (err) {
+    statusEl.innerHTML = '<em>Rubric preview not available — will generate on publish.</em>';
+  }
+  rubricSummary.style.opacity = '1';
+}
+
+// --- Get selected subject names (leaf nodes only) ---
+function getSelectedSubjectNames() {
+  var names = [];
+  document.querySelectorAll('#treeSelectRoot .tree-checkbox:checked').forEach(function(cb) {
+    var li = cb.closest('li');
+    if (li.querySelector(':scope > ul.tree-children')) return; // skip parents
+    var label = li.querySelector(':scope > label .tree-label');
+    if (label) names.push(label.textContent);
+  });
+  return names;
+}
   </script>
 </body>
 </html>

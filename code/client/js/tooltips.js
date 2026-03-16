@@ -38,6 +38,39 @@
     document.querySelectorAll('[data-tooltip]').forEach(function(target) {
       var key = target.dataset.tooltip;
 
+      // Skip elements that are already help-icon spans (inline tooltips with custom text)
+      if (target.classList.contains('help-icon')) {
+        // This is an inline help icon with custom tooltip text — use it directly as the icon
+        var icon = target;
+        if (!icon.style.cssText) {
+          icon.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e8eaf6;color:#3949ab;font-size:10px;font-weight:700;cursor:help;margin-left:4px;vertical-align:middle;flex-shrink:0;';
+        }
+        // Attach tooltip behavior for inline text (not from YAML key)
+        icon.addEventListener('mouseenter', function(e) {
+          var inlineText = icon.dataset.tooltip;
+          titleEl.textContent = '';
+          textEl.textContent = inlineText || '';
+          tooltipEl.style.opacity = '1';
+          var rect = icon.getBoundingClientRect();
+          var left = rect.left + rect.width / 2;
+          var top = rect.bottom + TOOLTIP_OFFSET;
+          tooltipEl.style.left = left + 'px';
+          tooltipEl.style.top = top + 'px';
+          tooltipEl.style.transform = 'translateX(-50%)';
+          requestAnimationFrame(function() {
+            var ttRect = tooltipEl.getBoundingClientRect();
+            if (ttRect.right > window.innerWidth - 10) { tooltipEl.style.left = (window.innerWidth - ttRect.width - 10) + 'px'; tooltipEl.style.transform = 'none'; }
+            if (ttRect.left < 10) { tooltipEl.style.left = '10px'; tooltipEl.style.transform = 'none'; }
+            if (ttRect.bottom > window.innerHeight) { tooltipEl.style.top = (rect.top - ttRect.height - TOOLTIP_OFFSET) + 'px'; }
+          });
+        });
+        icon.addEventListener('mouseleave', function() { tooltipEl.style.opacity = '0'; });
+        return; // skip creating a new icon
+      }
+
+      // Skip if this element already has a help-icon child (avoid duplicates)
+      if (target.querySelector('.help-icon')) return;
+
       // Create question mark icon
       var icon = document.createElement('span');
       icon.className = 'help-icon';
