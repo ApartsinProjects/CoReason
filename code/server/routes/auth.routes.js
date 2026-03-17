@@ -1,6 +1,7 @@
 'use strict';
 const { Router } = require('express');
 const { AuthService } = require('../services/auth.service');
+const { AUTH_REDIRECTS } = require('../utils/constants');
 
 module.exports = function authRoutes(db, passport, config, logger) {
   const router = Router();
@@ -38,22 +39,30 @@ module.exports = function authRoutes(db, passport, config, logger) {
 
   // GET /api/v1/auth/google/callback
   router.get('/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login.html' }),
+    passport.authenticate('google', { failureRedirect: AUTH_REDIRECTS.GOOGLE_FAILURE }),
     (req, res) => {
       logger.info('Google login successful', { userId: req.user.id });
-      res.redirect('/challenge-list.html');
+      res.redirect(AUTH_REDIRECTS.GOOGLE_SUCCESS);
     }
   );
 
   // POST /api/v1/auth/logout
   router.post('/logout', (req, res) => {
+    const userId = req.user?.id || null;
+    const email = req.user?.email || null;
     req.logout(() => {
+      logger.info('User logged out', { userId, email });
       res.json({ message: 'Logged out' });
     });
   });
 
-  // GET /api/v1/auth/test-login — login as test user (no password)
-  router.post('/test-login', async (req, res, next) => {
+  // POST /api/v1/auth/test-login — login as test user (no password, dev only)
+  router.post('/test-login', (req, res, next) => {
+    if (process.env.NODE_ENV === 'production') {
+      return res.status(403).json({ error: { code: 'FORBIDDEN', message: 'Test login disabled in production' } });
+    }
+    next();
+  }, async (req, res, next) => {
     try {
       const { email } = req.body;
       if (!email) {
@@ -70,8 +79,13 @@ module.exports = function authRoutes(db, passport, config, logger) {
     } catch (err) { next(err); }
   });
 
-  // GET /api/v1/auth/test-users — list available test users
-  router.get('/test-users', async (req, res, next) => {
+  // GET /api/v1/auth/test-users — list available test users (dev only)
+  router.get('/test-users', (req, res, next) => {
+    if (process.env.NODE_ENV === 'production') {
+      return res.status(403).json({ error: { code: 'FORBIDDEN', message: 'Test users disabled in production' } });
+    }
+    next();
+  }, async (req, res, next) => {
     try {
       const users = await db('users')
         .leftJoin('institutions', 'users.institution_id', 'institutions.id')

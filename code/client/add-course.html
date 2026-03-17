@@ -18,14 +18,21 @@
     .instructor-list .role-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
     .instructor-list .role-tag.lead { background: var(--teal); color: #fff; }
     .instructor-list .role-tag.co { background: #e0f2f1; color: #00695c; }
-    .step-indicator { display: flex; gap: 0; margin-bottom: 24px; }
-    .step-indicator .step { flex: 1; text-align: center; padding: 12px 16px; background: #f5f5f5; font-size: 13px; font-weight: 600; color: var(--text-secondary); position: relative; }
-    .step-indicator .step.active { background: var(--primary); color: #fff; }
-    .step-indicator .step.done { background: #e0f2f1; color: #00695c; }
-    .step-indicator .step:first-child { border-radius: var(--radius) 0 0 var(--radius); }
-    .step-indicator .step:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
-    .step-indicator .step .step-num { display: block; font-size: 18px; font-weight: 700; }
     .llm-config { background: #f8f9ff; border-radius: var(--radius); padding: 16px; margin-top: 12px; border-left: 3px solid var(--primary); }
+    /* Manual tree builder */
+    .manual-tree { list-style: none; padding: 0; margin: 0; }
+    .manual-tree ul { list-style: none; padding-left: 24px; margin: 0; }
+    .manual-tree li { margin-bottom: 4px; }
+    .manual-tree .tree-node-row { display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: var(--radius); transition: background .1s; }
+    .manual-tree .tree-node-row:hover { background: #f5f0ff; }
+    .manual-tree .tree-node-row input { flex: 1; border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; font-size: 13px; }
+    .manual-tree .tree-node-row input:focus { border-color: var(--primary); outline: none; }
+    .manual-tree .tree-node-row button { padding: 2px 6px; font-size: 12px; background: none; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; color: var(--text-secondary); line-height: 1; }
+    .manual-tree .tree-node-row button:hover { background: #f0f0f0; }
+    .manual-tree .tree-node-row button.danger:hover { background: #fbe9e7; color: var(--danger); border-color: var(--danger); }
+    .manual-tree .tree-indent { color: #ccc; font-size: 14px; user-select: none; }
+    #methodButtons .active-method { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+    #yamlDropZone.drag-over { border-color: var(--primary); background: #f0f0ff; }
     .llm-config h5 { font-size: 13px; color: var(--primary); margin-bottom: 8px; }
     .preview-card { background: #fafafa; border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
     .preview-card h4 { font-size: 14px; margin-bottom: 8px; }
@@ -42,6 +49,7 @@
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
 </head>
 <body>
   <header class="topnav">
@@ -54,9 +62,10 @@
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
-      <span>Dr. Levy</span>
-      <a href="profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">&mdash;</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar" style="background:#e3f2fd;color:var(--primary);">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
     </div>
   </header>
 
@@ -64,22 +73,6 @@
     <div class="page-header">
       <h1>Add New Course</h1>
       <p>Create a new course within your institution and configure its subject tree</p>
-    </div>
-
-    <!-- Step indicator -->
-    <div class="step-indicator">
-      <div class="step active" id="step1">
-        <span class="step-num">1</span>
-        Course Details
-      </div>
-      <div class="step" id="step2">
-        <span class="step-num">2</span>
-        Subject Tree
-      </div>
-      <div class="step" id="step3">
-        <span class="step-num">3</span>
-        Settings
-      </div>
     </div>
 
     <div class="create-course-layout">
@@ -100,25 +93,16 @@
           </div>
 
           <div class="form-group">
-            <label>Department <span style="color:var(--danger);">*</span></label>
+            <label data-t="department">Department <span style="color:var(--danger);">*</span></label>
             <select class="form-control" id="courseDept" onchange="updatePreview()">
-              <option value="">Select department...</option>
-              <option>Computer Science</option>
-              <option>Electrical Engineering</option>
-              <option>Mathematics</option>
-              <option>Data Science</option>
-              <option>Physics</option>
-              <option>Digital Medical Technologies</option>
-              <option>Instructional Technologies</option>
-              <option>Law</option>
-              <option>Other</option>
+              <option value="" data-t="selectDepartment">Select department...</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>Institution</label>
-            <input type="text" class="form-control" value="Tel Aviv University" disabled style="opacity:0.7;">
-            <p class="text-sm text-muted mt-4">Courses are scoped to your institution and cannot be changed</p>
+            <label data-t="institution">Institution</label>
+            <input type="text" class="form-control" id="courseInstitution" value="" disabled style="opacity:0.7;">
+            <p class="text-sm text-muted mt-4" data-t="institutionScopedNote">Courses are scoped to your institution and cannot be changed</p>
           </div>
 
           <div class="form-group">
@@ -135,7 +119,7 @@
                 <option>Summer</option>
                 <option>Year-round</option>
               </select>
-              <input type="number" class="form-control" value="2026" style="width:100px;">
+              <input type="number" class="form-control" id="courseYear" style="width:100px;">
             </div>
           </div>
 
@@ -143,14 +127,7 @@
           <div class="form-group">
             <label>Instructors</label>
             <ul class="instructor-list" id="instructorList">
-              <li>
-                <div class="avatar-sm" style="background:#e3f2fd;color:var(--primary);">DL</div>
-                <div class="info">
-                  <div class="name">Dr. Dana Levy</div>
-                  <div class="email">d.levy@tau.ac.il</div>
-                </div>
-                <span class="role-tag lead">Lead</span>
-              </li>
+              <!-- Lead instructor populated dynamically from current user -->
             </ul>
             <div style="display:flex; gap:8px; margin-top:8px;">
               <input type="email" class="form-control" id="addInstructorEmail" placeholder="Co-instructor email..." style="flex:1;">
@@ -165,71 +142,95 @@
           <p class="text-sm text-muted mb-16">Define the initial topic hierarchy. You can refine it later from the Subject Tree Editor.</p>
 
           <div class="form-group">
-            <label>Quick Setup Method</label>
-            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-              <button class="btn btn-teal btn-sm" onclick="showTreeMethod('ai')">🤖 AI-Generate from Syllabus</button>
-              <button class="btn btn-outline btn-sm" onclick="showTreeMethod('template')">📋 Use Template</button>
-              <button class="btn btn-outline btn-sm" onclick="showTreeMethod('manual')">✏️ Build Manually</button>
-              <button class="btn btn-outline btn-sm" onclick="showTreeMethod('import')">📥 Import YAML</button>
+            <label>Setup Method</label>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;" id="methodButtons">
+              <button class="btn btn-teal btn-sm" onclick="showTreeMethod('ai')" id="btnMethodAI" style="background:linear-gradient(135deg,#5c6bc0,#7c4dff);border:none;color:#fff;">🤖 AI Generate</button>
+              <button class="btn btn-outline btn-sm" onclick="showTreeMethod('manual')" id="btnMethodManual">✏️ Build Manually</button>
+              <button class="btn btn-outline btn-sm" onclick="showTreeMethod('import')" id="btnMethodImport">📥 Import YAML</button>
             </div>
           </div>
 
           <!-- AI generation panel -->
           <div id="methodAI" class="llm-config">
             <h5>AI-Generate Subject Tree</h5>
-            <p class="text-sm text-muted mb-12">Paste your course syllabus or topic list and the AI will generate a structured subject tree.</p>
+            <p class="text-sm text-muted mb-12">Uses the course name and description you entered above to generate a structured subject tree via LLM. You can optionally add extra guidance below.</p>
             <div class="form-group">
-              <textarea class="form-control" rows="5" placeholder="Paste syllabus, topic outline, or course description here...&#10;&#10;Example:&#10;Week 1: Introduction to Neural Networks&#10;Week 2: Backpropagation&#10;Week 3: CNNs&#10;..."></textarea>
+              <label>Additional Instructions <span style="color:var(--text-secondary);font-weight:400;">(optional)</span></label>
+              <textarea class="form-control" rows="3" id="aiTreeInstructions" placeholder="e.g., Focus on practical applications, include a section on ethics, use 3 levels of depth..."></textarea>
             </div>
             <div class="form-group">
               <label>Target Depth</label>
-              <select class="form-control" style="width:150px;">
-                <option>2 levels</option>
-                <option selected>3 levels</option>
-                <option>4 levels</option>
+              <select class="form-control" id="aiTreeDepth" style="width:150px;">
+                <option value="2">2 levels</option>
+                <option value="3" selected>3 levels</option>
+                <option value="4">4 levels</option>
               </select>
             </div>
-            <button class="btn btn-primary btn-sm">⚡ Generate Subject Tree</button>
-          </div>
-
-          <!-- Template panel (hidden by default) -->
-          <div id="methodTemplate" style="display:none;">
-            <div class="form-group">
-              <label>Choose a Template</label>
-              <select class="form-control" id="templateSelect">
-                <option value="">Select template...</option>
-                <option>Computer Science — Introductory</option>
-                <option>Computer Science — Advanced</option>
-                <option>Data Science — Applied</option>
-                <option>Mathematics — Pure</option>
-                <option>Engineering — General</option>
-              </select>
-              <p class="text-sm text-muted mt-4">Templates provide a starting point you can customize in the Subject Tree Editor.</p>
-            </div>
+            <button class="btn btn-primary btn-sm" id="btnGenerateTree" onclick="generateSubjectTree()">⚡ Generate Subject Tree</button>
+            <span id="aiTreeStatus" class="text-sm text-muted" style="margin-left:12px;"></span>
           </div>
 
           <!-- Manual panel (hidden by default) -->
           <div id="methodManual" style="display:none;">
-            <p class="text-sm text-muted mb-12">Add root topics below. You can add child topics after course creation in the Subject Tree Editor.</p>
-            <div id="manualTopics">
-              <div style="display:flex; gap:8px; margin-bottom:6px;">
-                <input type="text" class="form-control" placeholder="Root topic name..." style="flex:1;">
-                <button class="btn btn-outline btn-sm" onclick="this.closest('div').remove()">✕</button>
-              </div>
+            <p class="text-sm text-muted mb-12">Build your subject tree by adding topics and sub-topics. Drag to reorder, click + to nest.</p>
+            <div id="manualTreeContainer">
+              <ul class="manual-tree" id="manualTree"></ul>
             </div>
-            <button class="btn btn-outline btn-sm" onclick="addManualTopic()" style="margin-top:4px;">+ Add Topic</button>
+            <div style="display:flex; gap:8px; margin-top:8px;">
+              <button class="btn btn-teal btn-sm" onclick="addManualRootTopic()">+ Add Root Topic</button>
+            </div>
           </div>
 
           <!-- Import panel (hidden by default) -->
           <div id="methodImport" style="display:none;">
             <div class="form-group">
-              <label>Upload YAML File</label>
-              <div style="border:2px dashed var(--border); border-radius:var(--radius); padding:32px; text-align:center; color:var(--text-secondary);">
+              <label>Import YAML File
+                <span class="help-icon" onclick="event.preventDefault(); document.getElementById('yamlHelpPanel').style.display = document.getElementById('yamlHelpPanel').style.display === 'none' ? '' : 'none';" style="cursor:pointer;">?</span>
+              </label>
+              <!-- YAML help panel -->
+              <div id="yamlHelpPanel" style="display:none; background:#f8f9ff; border:1px solid var(--border); border-radius:var(--radius); padding:14px; margin-bottom:12px; font-size:13px;">
+                <strong>YAML Subject Tree Format</strong>
+                <p class="text-sm text-muted" style="margin:6px 0 8px;">Each node has a <code>name</code> and optional <code>children</code> array:</p>
+                <pre style="background:#fff; border:1px solid var(--border); border-radius:4px; padding:10px; font-size:12px; overflow-x:auto; margin:0;">- name: "Sorting &amp; Searching"
+  children:
+    - name: "Comparison-based Sorting"
+    - name: "Hash-based Searching"
+    - name: "Binary Search Variants"
+- name: "Graph Algorithms"
+  children:
+    - name: "Shortest Paths"
+    - name: "Minimum Spanning Trees"
+- name: "Dynamic Programming"</pre>
+                <p class="text-sm text-muted" style="margin-top:8px;">Alternatively, use simple indented lists (dashes with indentation to indicate nesting):</p>
+                <pre style="background:#fff; border:1px solid var(--border); border-radius:4px; padding:10px; font-size:12px; overflow-x:auto; margin:0;">- Sorting &amp; Searching
+  - Comparison-based Sorting
+  - Hash-based Searching
+- Graph Algorithms
+  - Shortest Paths
+  - Minimum Spanning Trees</pre>
+              </div>
+              <div id="yamlDropZone" style="border:2px dashed var(--border); border-radius:var(--radius); padding:32px; text-align:center; color:var(--text-secondary); cursor:pointer; transition: border-color .15s, background .15s;" onclick="document.getElementById('yamlFileInput').click()">
                 <p style="font-size:24px; margin-bottom:8px;">📄</p>
-                <p>Drag & drop a YAML file here, or <a href="#" style="color:var(--primary);">browse</a></p>
-                <p class="text-sm text-muted mt-8">Accepts .yaml or .yml files matching the CoReason subject tree schema</p>
+                <p>Drag & drop a YAML file here, or <a href="#" onclick="event.preventDefault(); event.stopPropagation(); document.getElementById('yamlFileInput').click();" style="color:var(--primary);">browse</a></p>
+                <p class="text-sm text-muted mt-8">Accepts .yaml or .yml files</p>
+              </div>
+              <input type="file" id="yamlFileInput" accept=".yaml,.yml" style="display:none;" onchange="handleYamlFileImport(event)">
+              <div style="margin-top:8px;"><strong>Or paste YAML directly:</strong></div>
+              <textarea class="form-control" id="yamlPasteArea" rows="6" placeholder="Paste your YAML subject tree here..." style="font-family:monospace; font-size:12px; margin-top:6px;"></textarea>
+              <button class="btn btn-primary btn-sm" onclick="parseYamlFromPaste()" style="margin-top:8px;">Parse & Preview</button>
+            </div>
+          </div>
+
+          <!-- Tree Preview (shared by all methods) -->
+          <div id="treePreviewSection" style="display:none; margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h5 style="margin:0; font-size:14px;">Generated Subject Tree</h5>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <span class="text-sm text-muted"><strong id="treeNodeCount">0</strong> nodes · <strong id="treeDepthCount">0</strong> levels</span>
+                <button class="btn btn-outline btn-sm" onclick="clearGeneratedTree()" style="font-size:11px;">Clear</button>
               </div>
             </div>
+            <ul class="tree-select" id="treePreview" style="max-height:300px; overflow-y:auto;"></ul>
           </div>
         </div>
 
@@ -238,13 +239,9 @@
           <h3 style="margin-bottom:16px;">Course Settings</h3>
 
           <div class="form-group">
-            <label>Default LLM Model</label>
-            <select class="form-control">
-              <option value="">System Default (GPT-4o)</option>
-              <option>GPT-4o</option>
-              <option>GPT-4o-mini</option>
-              <option>Claude 3.5 Sonnet</option>
-              <option>Gemini 2.0 Flash</option>
+            <label data-t="defaultLlmModel">Default LLM Model</label>
+            <select class="form-control" id="llmModelSelect">
+              <option value="" data-t="systemDefault">System Default</option>
             </select>
             <p class="text-sm text-muted mt-4">Individual challenges can override this setting.</p>
           </div>
@@ -255,32 +252,9 @@
             <p class="text-sm text-muted mt-4">Default maximum judge+steer cycles per challenge.</p>
           </div>
 
-          <div class="form-group">
-            <label>Student Enrollment</label>
-            <div style="display:flex; flex-direction:column; gap:8px;">
-              <label style="display:flex; align-items:center; gap:8px; font-size:14px; cursor:pointer;">
-                <input type="radio" name="enrollment" checked> Open — any student from the institution can subscribe
-              </label>
-              <label style="display:flex; align-items:center; gap:8px; font-size:14px; cursor:pointer;">
-                <input type="radio" name="enrollment"> Approval Required — instructor must approve each subscription
-              </label>
-              <label style="display:flex; align-items:center; gap:8px; font-size:14px; cursor:pointer;">
-                <input type="radio" name="enrollment"> Invite Only — students need an enrollment code
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Enrollment Code (for Invite Only)</label>
-            <div style="display:flex; gap:8px;">
-              <input type="text" class="form-control" value="" placeholder="Auto-generated on creation" disabled style="flex:1; opacity:0.6;">
-              <button class="btn btn-outline btn-sm" disabled style="opacity:0.6;">Generate</button>
-            </div>
-          </div>
-
           <div class="enroll-info">
             <span>💡</span>
-            <span>Students discover courses via the Course Catalog and can subscribe based on your enrollment settings.</span>
+            <span>Any student from your institution can enroll in this course via the Course Catalog.</span>
           </div>
         </div>
 
@@ -300,8 +274,8 @@
             <h4 id="previewName" style="color:var(--text-secondary); font-style:italic;">Course name...</h4>
             <p class="text-sm text-muted" id="previewDesc">Description will appear here</p>
             <div style="margin-top:12px; font-size:13px; color:var(--text-secondary);">
-              <span>🏫 Tel Aviv University</span>
-              <span style="margin-left:12px;">📅 Spring 2026</span>
+              <span id="previewInstitution"></span>
+              <span style="margin-left:12px;" id="previewTerm"></span>
             </div>
             <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
               <div class="tag-list" id="previewTags">
@@ -344,10 +318,96 @@
   </main>
 
   <script>
-// Check auth
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-}).catch(() => window.location.href = '/login.html');
+    // --- Initialize dynamic data ---
+    (async function initPage() {
+      // Set current year
+      var yearInput = document.getElementById('courseYear');
+      if (yearInput) yearInput.value = new Date().getFullYear();
+
+      // Wait for user-header to populate
+      var checkUser = setInterval(function() {
+        if (window._currentUser) {
+          clearInterval(checkUser);
+          var user = window._currentUser;
+          // Set institution field
+          var instInput = document.getElementById('courseInstitution');
+          if (instInput) instInput.value = user.institution_name || user.institutionName || '';
+          var previewInst = document.getElementById('previewInstitution');
+          if (previewInst) previewInst.textContent = user.institution_name || user.institutionName || '';
+
+          // Populate lead instructor from current user
+          var list = document.getElementById('instructorList');
+          if (list && user.name) {
+            var initials = user.name.split(' ').map(function(w) { return w[0]; }).join('').toUpperCase().slice(0, 2);
+            list.innerHTML = '<li>' +
+              '<div class="avatar-sm" style="background:#e3f2fd;color:var(--primary);">' + initials + '</div>' +
+              '<div class="info"><div class="name">' + (user.name || '') + '</div><div class="email">' + (user.email || '') + '</div></div>' +
+              '<span class="role-tag lead" data-t="lead">Lead</span></li>';
+          }
+
+          // Load departments from institution
+          loadDepartments(user.institution_id || user.institutionId);
+        }
+      }, 100);
+      setTimeout(function() { clearInterval(checkUser); }, 3000);
+
+      // Load LLM models
+      try {
+        var data = await API.llm.models();
+        var models = data.models || data || [];
+        var select = document.getElementById('llmModelSelect');
+        if (select && models.length > 0) {
+          models.forEach(function(m) {
+            var opt = document.createElement('option');
+            opt.value = typeof m === 'string' ? m : (m.id || m.name);
+            opt.textContent = typeof m === 'string' ? m : (m.label || m.name);
+            select.appendChild(opt);
+          });
+        }
+      } catch (err) {
+        console.warn('Could not load LLM models:', err.message);
+      }
+
+      // (Templates removed — use AI Generate, Manual, or YAML Import instead)
+    })();
+
+    // --- Load departments from institution ---
+    async function loadDepartments(institutionId) {
+      var deptSelect = document.getElementById('courseDept');
+      try {
+        var data;
+        if (institutionId) {
+          data = await API.get('/institutions/' + institutionId);
+        } else {
+          data = await API.get('/institutions');
+          data = (data.institutions || data || [])[0] || {};
+        }
+        var departments = [];
+        if (data.departments) {
+          try { departments = typeof data.departments === 'string' ? JSON.parse(data.departments) : data.departments; }
+          catch(e) { departments = []; }
+        }
+        if (departments.length > 0) {
+          departments.forEach(function(d) {
+            var opt = document.createElement('option');
+            opt.value = d;
+            opt.textContent = d;
+            deptSelect.appendChild(opt);
+          });
+        }
+        // Always add "Other" as fallback
+        var otherOpt = document.createElement('option');
+        otherOpt.value = 'Other';
+        otherOpt.textContent = t('other') || 'Other';
+        deptSelect.appendChild(otherOpt);
+      } catch (err) {
+        console.warn('Could not load departments:', err.message);
+        var otherOpt = document.createElement('option');
+        otherOpt.value = 'Other';
+        otherOpt.textContent = t('other') || 'Other';
+        deptSelect.appendChild(otherOpt);
+      }
+    }
 
     function updatePreview() {
       var name = document.getElementById('courseName').value;
@@ -369,13 +429,21 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       checkDept.querySelector('span').style.color = dept ? 'var(--teal)' : '#ccc';
     }
 
+    // --- Subject tree state ---
+    var _subjectTree = []; // The generated/imported/manual tree
+
     function showTreeMethod(method) {
-      ['AI', 'Template', 'Manual', 'Import'].forEach(function(m) {
+      ['AI', 'Manual', 'Import'].forEach(function(m) {
         var el = document.getElementById('method' + m);
         if (el) el.style.display = 'none';
       });
       var target = document.getElementById('method' + method.charAt(0).toUpperCase() + method.slice(1));
       if (target) target.style.display = '';
+
+      // Update active button style
+      document.querySelectorAll('#methodButtons .btn').forEach(function(b) { b.classList.remove('active-method'); });
+      var btnId = { ai: 'btnMethodAI', manual: 'btnMethodManual', import: 'btnMethodImport' }[method];
+      if (btnId) document.getElementById(btnId).classList.add('active-method');
 
       // Update checklist
       var checkTree = document.getElementById('checkTree');
@@ -383,13 +451,357 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       checkTree.querySelector('span').style.color = 'var(--teal)';
     }
 
+    // ========================
+    // A) AI Generate
+    // ========================
+    async function generateSubjectTree() {
+      var courseName = document.getElementById('courseName').value.trim();
+      var courseDesc = document.getElementById('courseDesc') ? document.getElementById('courseDesc').value.trim() : '';
+
+      if (!courseName) {
+        alert(t('pleaseEnterCourseName') || 'Please enter a course name first (Step 1) so the AI knows what to generate.');
+        return;
+      }
+
+      var btn = document.getElementById('btnGenerateTree');
+      var status = document.getElementById('aiTreeStatus');
+      btn.disabled = true;
+      btn.textContent = '⏳ ' + (t('generating') || 'Generating...');
+      status.textContent = '';
+
+      try {
+        // We need a course to exist first — create a temporary one or use a preview endpoint
+        // Since the course doesn't exist yet, we'll call the LLM via a generic generation endpoint
+        var instructions = (document.getElementById('aiTreeInstructions').value || '').trim();
+        var depth = document.getElementById('aiTreeDepth').value || '3';
+        if (instructions) {
+          instructions += ' Target depth: ' + depth + ' levels.';
+        } else {
+          instructions = 'Target depth: ' + depth + ' levels.';
+        }
+
+        // Try to call subject tree generation via the LLM config endpoint
+        var result = await API.post('/courses/generate-subject-tree', {
+          courseName: courseName,
+          courseDescription: courseDesc,
+          instructions: instructions,
+        });
+
+        var tree = result.tree || result || [];
+        if (tree.length > 0) {
+          _subjectTree = tree;
+          renderTreePreview(tree);
+          status.textContent = '✓ ' + countNodes(tree) + ' ' + (t('nodes') || 'nodes');
+          status.style.color = 'var(--teal)';
+        } else {
+          status.textContent = t('aiGenerationFailed') || 'No tree returned. Try adding more description.';
+          status.style.color = 'var(--danger)';
+        }
+      } catch (err) {
+        status.textContent = (t('aiGenerationFailed') || 'Generation failed') + ': ' + (err.message || t('unknownError') || 'Unknown error');
+        status.style.color = 'var(--danger)';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '⚡ ' + (t('subjectTree') || 'Generate Subject Tree');
+      }
+    }
+
+    // ========================
+    // B) Manual Tree Builder
+    // ========================
+    var _manualNodeId = 0;
+
+    function addManualRootTopic() {
+      var tree = document.getElementById('manualTree');
+      var node = createManualNode('', 0);
+      tree.appendChild(node);
+      node.querySelector('input').focus();
+      syncManualTreeToState();
+    }
+
+    function createManualNode(name, depth) {
+      var id = 'mn-' + (++_manualNodeId);
+      var li = document.createElement('li');
+      li.id = id;
+      li.dataset.depth = depth;
+
+      var row = document.createElement('div');
+      row.className = 'tree-node-row';
+
+      // Indent indicator
+      if (depth > 0) {
+        var indent = document.createElement('span');
+        indent.className = 'tree-indent';
+        indent.textContent = '└';
+        row.appendChild(indent);
+      }
+
+      var input = document.createElement('input');
+      input.type = 'text';
+      input.value = name;
+      input.placeholder = depth === 0 ? 'Root topic name...' : 'Sub-topic name...';
+      input.addEventListener('input', function() { syncManualTreeToState(); });
+      row.appendChild(input);
+
+      // Add child button
+      var addBtn = document.createElement('button');
+      addBtn.textContent = '+';
+      addBtn.title = 'Add sub-topic';
+      addBtn.onclick = function() { addManualChild(id); };
+      row.appendChild(addBtn);
+
+      // Delete button
+      var delBtn = document.createElement('button');
+      delBtn.textContent = '✕';
+      delBtn.className = 'danger';
+      delBtn.title = 'Remove';
+      delBtn.onclick = function() { removeManualNode(id); };
+      row.appendChild(delBtn);
+
+      li.appendChild(row);
+      return li;
+    }
+
+    function addManualChild(parentId) {
+      var parentLi = document.getElementById(parentId);
+      if (!parentLi) return;
+      var childUl = parentLi.querySelector(':scope > ul');
+      if (!childUl) {
+        childUl = document.createElement('ul');
+        parentLi.appendChild(childUl);
+      }
+      var depth = parseInt(parentLi.dataset.depth || '0') + 1;
+      var node = createManualNode('', depth);
+      childUl.appendChild(node);
+      node.querySelector('input').focus();
+      syncManualTreeToState();
+    }
+
+    function removeManualNode(id) {
+      var node = document.getElementById(id);
+      if (node) node.remove();
+      syncManualTreeToState();
+    }
+
+    function syncManualTreeToState() {
+      _subjectTree = serializeManualTree(document.getElementById('manualTree'));
+      if (_subjectTree.length > 0) {
+        renderTreePreview(_subjectTree);
+      } else {
+        document.getElementById('treePreviewSection').style.display = 'none';
+      }
+    }
+
+    function serializeManualTree(ul) {
+      var nodes = [];
+      var items = ul.querySelectorAll(':scope > li');
+      items.forEach(function(li) {
+        var input = li.querySelector(':scope > .tree-node-row input');
+        if (!input) return;
+        var name = input.value.trim();
+        if (!name) return;
+        var node = { name: name };
+        var childUl = li.querySelector(':scope > ul');
+        if (childUl && childUl.children.length > 0) {
+          var children = serializeManualTree(childUl);
+          if (children.length > 0) node.children = children;
+        }
+        nodes.push(node);
+      });
+      return nodes;
+    }
+
+    // ========================
+    // C) YAML Import
+    // ========================
+    function handleYamlFileImport(event) {
+      var file = event.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('yamlPasteArea').value = e.target.result;
+        parseYamlFromPaste();
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function parseYamlFromPaste() {
+      var yaml = document.getElementById('yamlPasteArea').value.trim();
+      if (!yaml) { alert('Please paste or upload YAML content first.'); return; }
+
+      try {
+        var lines = yaml.split('\n').filter(function(l) { return l.trim() && !l.trim().startsWith('#'); });
+        var tree = parseSimpleYaml(lines);
+        if (tree.length > 0) {
+          _subjectTree = tree;
+          renderTreePreview(tree);
+        } else {
+          alert('Could not parse YAML. Check the format using the help icon (?) above.');
+        }
+      } catch (err) {
+        alert('YAML parse error: ' + err.message);
+      }
+    }
+
+    function parseSimpleYaml(lines) {
+      var nodes = [];
+      var stack = [{ children: nodes, indent: -1 }];
+
+      lines.forEach(function(line) {
+        // Match "  - name: value" or "  - value" patterns
+        var match = line.match(/^(\s*)[-]?\s*(?:name:\s*)?["']?([^"'\n]+?)["']?\s*$/);
+        if (!match) return;
+        // Skip "children:" lines
+        if (match[2].trim() === 'children:' || match[2].trim() === 'children') return;
+        var indent = match[1].length;
+        var name = match[2].trim();
+        if (!name) return;
+
+        var node = { name: name, children: [] };
+
+        while (stack.length > 1 && stack[stack.length - 1].indent >= indent) {
+          stack.pop();
+        }
+
+        stack[stack.length - 1].children.push(node);
+        stack.push({ children: node.children, indent: indent });
+      });
+
+      // Clean up empty children arrays
+      function cleanTree(tree) {
+        tree.forEach(function(n) {
+          if (n.children.length === 0) delete n.children;
+          else cleanTree(n.children);
+        });
+      }
+      cleanTree(nodes);
+      return nodes;
+    }
+
+    // Drag & drop for YAML import
+    (function setupDragDrop() {
+      var zone = document.getElementById('yamlDropZone');
+      if (!zone) return;
+      ['dragenter', 'dragover'].forEach(function(ev) {
+        zone.addEventListener(ev, function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+      });
+      ['dragleave', 'drop'].forEach(function(ev) {
+        zone.addEventListener(ev, function(e) { e.preventDefault(); zone.classList.remove('drag-over'); });
+      });
+      zone.addEventListener('drop', function(e) {
+        var file = e.dataTransfer.files[0];
+        if (file && (file.name.endsWith('.yaml') || file.name.endsWith('.yml'))) {
+          var reader = new FileReader();
+          reader.onload = function(ev) {
+            document.getElementById('yamlPasteArea').value = ev.target.result;
+            parseYamlFromPaste();
+          };
+          reader.readAsText(file);
+        } else {
+          alert('Please drop a .yaml or .yml file.');
+        }
+      });
+    })();
+
+    // ========================
+    // Tree Preview (shared)
+    // ========================
+    function renderTreePreview(tree) {
+      var container = document.getElementById('treePreview');
+      container.innerHTML = '';
+      tree.forEach(function(node) {
+        container.appendChild(buildPreviewNode(node));
+      });
+      document.getElementById('treePreviewSection').style.display = '';
+      document.getElementById('treeNodeCount').textContent = countNodes(tree);
+      document.getElementById('treeDepthCount').textContent = maxDepth(tree);
+
+      // Update preview tags
+      updatePreviewTags(tree);
+
+      // Update checklist
+      var checkTree = document.getElementById('checkTree');
+      checkTree.querySelector('span').textContent = '●';
+      checkTree.querySelector('span').style.color = 'var(--teal)';
+    }
+
+    function buildPreviewNode(node) {
+      var li = document.createElement('li');
+      var label = document.createElement('label');
+      label.className = 'tree-node';
+      var hasChildren = node.children && node.children.length > 0;
+
+      if (hasChildren) {
+        var toggle = document.createElement('span');
+        toggle.className = 'tree-toggle';
+        toggle.innerHTML = '&#9660;';
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          toggle.classList.toggle('collapsed');
+          var ul = li.querySelector(':scope > ul.tree-children');
+          if (ul) ul.classList.toggle('collapsed');
+        });
+        label.appendChild(toggle);
+      }
+
+      var span = document.createElement('span');
+      span.className = 'tree-label';
+      span.textContent = node.name;
+      label.appendChild(span);
+      li.appendChild(label);
+
+      if (hasChildren) {
+        var ul = document.createElement('ul');
+        ul.className = 'tree-children';
+        node.children.forEach(function(child) {
+          ul.appendChild(buildPreviewNode(child));
+        });
+        li.appendChild(ul);
+      }
+      return li;
+    }
+
+    function clearGeneratedTree() {
+      _subjectTree = [];
+      document.getElementById('treePreviewSection').style.display = 'none';
+      document.getElementById('treePreview').innerHTML = '';
+      updatePreviewTags([]);
+      var checkTree = document.getElementById('checkTree');
+      checkTree.querySelector('span').textContent = '○';
+      checkTree.querySelector('span').style.color = '#ccc';
+    }
+
+    function countNodes(tree) {
+      if (!Array.isArray(tree)) return 0;
+      return tree.reduce(function(s, n) { return s + 1 + countNodes(n.children); }, 0);
+    }
+
+    function maxDepth(tree) {
+      if (!Array.isArray(tree) || tree.length === 0) return 0;
+      return 1 + Math.max.apply(null, tree.map(function(n) { return maxDepth(n.children); }).concat([0]));
+    }
+
+    function updatePreviewTags(tree) {
+      var tagsEl = document.getElementById('previewTags');
+      if (!tagsEl) return;
+      if (!tree || tree.length === 0) {
+        tagsEl.innerHTML = '<span class="text-sm text-muted">Subject tree will appear here after setup</span>';
+        return;
+      }
+      tagsEl.innerHTML = '';
+      // Show root-level topics as tags
+      tree.forEach(function(node) {
+        var tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.textContent = node.name;
+        tagsEl.appendChild(tag);
+      });
+    }
+
     function addManualTopic() {
-      var container = document.getElementById('manualTopics');
-      var div = document.createElement('div');
-      div.style.cssText = 'display:flex; gap:8px; margin-bottom:6px;';
-      div.innerHTML = '<input type="text" class="form-control" placeholder="Root topic name..." style="flex:1;"><button class="btn btn-outline btn-sm" onclick="this.closest(\'div\').remove()">✕</button>';
-      container.appendChild(div);
-      div.querySelector('input').focus();
+      // Legacy alias
+      addManualRootTopic();
     }
 
     function addCoInstructor() {
@@ -409,15 +821,36 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       emailInput.value = '';
     }
 
-    function createCourse() {
+    async function createCourse() {
       var name = document.getElementById('courseName').value.trim();
       var dept = document.getElementById('courseDept').value;
+      var desc = document.getElementById('courseDesc') ? document.getElementById('courseDesc').value.trim() : '';
 
-      if (!name) { alert('Please enter a course name.'); return; }
-      if (!dept) { alert('Please select a department.'); return; }
+      if (!name) { alert(t('pleaseEnterCourseName') || 'Please enter a course name.'); return; }
+      if (!dept) { alert(t('pleaseSelectDepartment') || 'Please select a department.'); return; }
 
-      alert('Course "' + name + '" created successfully!\n\nYou can now refine the subject tree and start creating challenges.');
-      window.location.href = 'course-catalog-instructor.html';
+      var btn = document.querySelector('[onclick="createCourse()"]');
+      if (btn) { btn.disabled = true; btn.textContent = t('creating') || 'Creating...'; }
+
+      try {
+        var course = await API.courses.create({
+          name: name,
+          description: desc,
+          department: dept,
+          subjectTree: _subjectTree.length > 0 ? _subjectTree : undefined,
+        });
+        var courseId = course.id || course._id;
+        if (_subjectTree.length > 0) {
+          alert((t('courseCreatedSuccess') || 'Course created successfully!') + '\n\n' + (t('courseCreatedNext') || 'You can now start creating challenges.'));
+          window.location.href = 'course-catalog-instructor.html';
+        } else {
+          alert((t('courseCreatedSuccess') || 'Course created successfully!') + '\n\n' + (t('courseCreatedNext') || 'You can now set up the subject tree and start creating challenges.'));
+          window.location.href = 'edit-subject-tree.html?courseId=' + courseId;
+        }
+      } catch (err) {
+        alert((t('createCourseFailed') || 'Failed to create course') + ': ' + (err.message || t('unknownError') || 'Unknown error'));
+        if (btn) { btn.disabled = false; btn.textContent = t('createCourse') || 'Create Course'; }
+      }
     }
   </script>
 </body>

@@ -36,7 +36,15 @@ const API = (() => {
 
       if (res.status === 204) return null;
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch (parseErr) {
+        if (!res.ok) {
+          throw new ApiError('PARSE_ERROR', `Request failed: ${res.status}`, res.status);
+        }
+        throw new ApiError('PARSE_ERROR', 'Invalid JSON response from server', res.status);
+      }
 
       if (!res.ok) {
         const err = data.error || {};
@@ -129,7 +137,7 @@ const API = (() => {
       export: (courseId) => request('GET', `/analytics/instructor/${courseId}/export`),
       exportPdf: (courseId) => {
         // Direct download — open in new tab/download
-        window.open(`${BASE_URL}/analytics/instructor/${courseId}/export/pdf`, '_blank');
+        window.open(`${baseUrl}/analytics/instructor/${courseId}/export/pdf`, '_blank');
       },
     },
 

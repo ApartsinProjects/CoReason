@@ -1,40 +1,105 @@
 # English tooltip help texts
+#
+# ── Shared Tooltips (used on both student and instructor pages) ──
 challengeType:
   title: "Challenge Type"
-  text: "Practice challenges are for learning — no grade is recorded. Assessment challenges count toward your course grade."
+  text: "Practice challenges allow retries with feedback after each phase. Assessment challenges are graded with feedback only at the end."
 visibility:
   title: "Visibility"
-  text: "Public challenges are visible to all enrolled students. Private challenges are only visible to you."
+  text: "Public challenges are visible to all enrolled students. Private challenges are only visible to their creator."
 maxCycles:
   title: "Max Cycles"
-  text: "The maximum number of Judge+Steer cycles allowed. More cycles give you more chances to improve the AI's output."
+  text: "The maximum number of Judge+Steer cycles allowed per run."
 subjectPath:
   title: "Subject Path"
   text: "The topic hierarchy this challenge belongs to, within the course's subject tree."
 responseType:
   title: "Response Type"
-  text: "Multiple-choice gives you options to pick from. Open-ended lets you write your own reasoning."
+  text: "Multiple-choice gives pre-generated options. Open-ended allows free-form written reasoning."
 framingPhase:
   title: "Framing Phase"
-  text: "In this phase, you evaluate the AI's initial approach to the problem before any solution is generated."
+  text: "The student evaluates the raw problem and translates it into a well-defined task by adding assumptions and constraints."
 judgingPhase:
   title: "Judging Phase"
-  text: "Review the AI-generated solution and identify what's correct, what's wrong, and what could be improved."
+  text: "The student reviews the AI-generated solution, identifying what's correct, wrong, or could be improved."
 steeringPhase:
   title: "Steering Phase"
-  text: "Guide the AI to fix its mistakes by providing specific feedback and direction."
+  text: "The student provides specific feedback to guide the AI toward a better solution."
 coReasoningScore:
   title: "Co-Reasoning Score"
-  text: "Your overall performance score combining framing accuracy, judgment quality, and steering effectiveness."
+  text: "Overall performance combining framing accuracy, judgment quality, and steering effectiveness."
 rubric:
   title: "Rubric"
-  text: "The grading criteria used to evaluate your co-reasoning performance in each phase."
+  text: "The grading criteria used to evaluate co-reasoning performance in each phase."
 subjectTree:
   title: "Subject Tree"
   text: "A hierarchical organization of topics within a course. Challenges are mapped to specific nodes."
+#
+# ── Student-Facing Tooltips ──
 courseSubscription:
   title: "Course Subscription"
   text: "Subscribe to a course to access its challenges and track your progress."
 analyticsOverview:
-  title: "Analytics Overview"
-  text: "View your performance trends, score distributions, and detailed breakdowns across challenges."
+  title: "Your Analytics"
+  text: "View your performance trends, score distributions, and detailed breakdowns across your challenge runs."
+# Student challenge list columns
+colChallenge:
+  title: "Challenge"
+  text: "The name of the challenge. Click to view details or start a run."
+colCourse:
+  title: "Course"
+  text: "The course this challenge belongs to."
+colType:
+  title: "Type"
+  text: "Practice challenges allow retries with feedback. Assessment challenges are graded with feedback at the end only."
+colVisibility:
+  title: "Visibility"
+  text: "Public challenges are from your subscribed courses. Private challenges are ones you created for yourself."
+colCreated:
+  title: "Created"
+  text: "The date this challenge was published or created."
+colCreator:
+  title: "Creator"
+  text: "The instructor or student who created this challenge."
+colLastAttempt:
+  title: "Last Attempt"
+  text: "When you last attempted this challenge, if ever."
+colStatus:
+  title: "Status"
+  text: "Your progress: Not Started, In Progress, or Completed."
+colActions:
+  title: "Actions"
+  text: "Available actions: Start, Resume, View Results, or Run Again."
+#
+# ── Instructor-Facing Tooltips ──
+instrAnalyticsOverview:
+  title: "Course Analytics"
+  text: "Aggregated performance data across all students in this course. Only includes public challenge results."
+instrCourseSubscription:
+  title: "Course Management"
+  text: "Manage your course settings, subject tree, and challenge assignments."
+# Instructor challenge list columns
+instrColChallenge:
+  title: "Challenge"
+  text: "The challenge title. Click to edit or view student submissions."
+instrColCourse:
+  title: "Course"
+  text: "The course this challenge is assigned to."
+instrColType:
+  title: "Type"
+  text: "Practice: students see feedback after each phase. Assessment: feedback withheld until completion."
+instrColVisibility:
+  title: "Visibility"
+  text: "Public challenges are available to all course subscribers. Private challenges are visible only to their creator."
+instrColSubmissions:
+  title: "Submissions"
+  text: "Total number of student runs for this challenge, including in-progress and completed attempts."
+instrColAvgGrade:
+  title: "Avg Grade"
+  text: "Average grade across all completed student runs, combining Framing, Judging, and Steering scores."
+instrColStatus:
+  title: "Status"
+  text: "Challenge lifecycle: Draft (not yet visible), Published (live), or Archived (hidden)."
+instrColActions:
+  title: "Actions"
+  text: "Available actions: Edit, Preview, View Analytics, or Delete."

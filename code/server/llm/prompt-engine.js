@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const { PATHS, PROMPT_DEFAULTS } = require('../utils/constants');
 
 class PromptEngine {
   constructor(logger) {
@@ -12,7 +13,7 @@ class PromptEngine {
   }
 
   _loadPrompts() {
-    const promptsDir = path.resolve(__dirname, '../../prompts');
+    const promptsDir = path.resolve(__dirname, PATHS.PROMPTS_DIR_FROM_LLM);
     if (!fs.existsSync(promptsDir)) {
       this.logger.warn('Prompts directory not found');
       return;
@@ -53,12 +54,14 @@ class PromptEngine {
 
     const messages = [];
 
-    if (prompt.system) {
-      messages.push({ role: 'system', content: this.fillTemplate(prompt.system, variables) });
+    const systemContent = prompt.system || prompt.system_prompt;
+    if (systemContent) {
+      messages.push({ role: 'system', content: this.fillTemplate(systemContent, variables) });
     }
 
-    if (prompt.user) {
-      messages.push({ role: 'user', content: this.fillTemplate(prompt.user, variables) });
+    const userContent = prompt.user || prompt.user_prompt;
+    if (userContent) {
+      messages.push({ role: 'user', content: this.fillTemplate(userContent, variables) });
     }
 
     // Handle messages array format
@@ -71,11 +74,13 @@ class PromptEngine {
       }
     }
 
+    // Check both root-level and nested parameters block
+    const params = prompt.parameters || {};
     return {
       messages,
-      temperature: prompt.temperature || 0.7,
-      max_tokens: prompt.max_tokens || 2000,
-      output_format: prompt.output_format || 'text',
+      temperature: prompt.temperature || params.temperature || PROMPT_DEFAULTS.TEMPERATURE,
+      max_tokens: prompt.max_tokens || params.max_tokens || PROMPT_DEFAULTS.MAX_TOKENS,
+      output_format: prompt.output_format || params.output_format || PROMPT_DEFAULTS.OUTPUT_FORMAT,
     };
   }
 

@@ -2,9 +2,10 @@
 
 const { AppError } = require('../utils/errors');
 const { LRUCache } = require('lru-cache');
+const { ERROR_HANDLER } = require('../utils/constants');
 
 // Cache recent errors for monitoring
-const errorCache = new LRUCache({ max: 1000, ttl: 3600000 }); // 1 hour TTL
+const errorCache = new LRUCache({ max: ERROR_HANDLER.CACHE_MAX, ttl: ERROR_HANDLER.CACHE_TTL_MS });
 
 function errorHandler(logger) {
   return (err, req, res, next) => {

@@ -43,6 +43,7 @@
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
 </head>
 <body>
   <header class="topnav">
@@ -55,9 +56,10 @@
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
-      <span>Dr. Levy</span>
-      <a href="profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">&mdash;</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar" style="background:#e3f2fd;color:var(--primary);">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
     </div>
   </header>
 
@@ -75,7 +77,7 @@
           <h3 style="margin-bottom:16px;" data-t="createChallengeTitle">Challenge Details</h3>
           <div class="form-group">
             <label data-t="challengeTitle">Title</label>
-            <input type="text" class="form-control" value="Neural Network Debugging">
+            <input type="text" class="form-control" id="challengeTitle" data-t-placeholder="challengeTitlePlaceholder" placeholder="Enter challenge title...">
           </div>
           <div class="form-group">
             <label data-t="selectCourse">Course &amp; Subject <span class="help-icon" data-tooltip="Select the course this challenge belongs to. The course determines which subject tree is available.">?</span></label>
@@ -107,8 +109,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Description</label>
-            <textarea class="form-control" rows="3">Students will debug a neural network training pipeline with intentionally introduced issues in data preprocessing and model architecture.</textarea>
+            <label data-t="description">Description</label>
+            <textarea class="form-control" id="challengeDescription" rows="3" data-t-placeholder="challengeDescPlaceholder" placeholder="Describe the challenge objectives and context..."></textarea>
           </div>
 
           <!-- Visibility -->
@@ -123,8 +125,8 @@
           <div class="form-group">
             <label>Challenge Type <span class="help-icon" data-tooltip="Practice: students see feedback after each phase and can retry. Assessment: feedback is withheld until the end, no retries allowed.">?</span></label>
             <div class="inline-radio">
-              <label><input type="radio" name="type" checked> <span data-t="practice">Practice</span></label>
-              <label><input type="radio" name="type"> <span data-t="assessment">Assessment</span></label>
+              <label><input type="radio" name="type" value="practice" checked> <span data-t="practice">Practice</span></label>
+              <label><input type="radio" name="type" value="assessment"> <span data-t="assessment">Assessment</span></label>
             </div>
           </div>
         </div>
@@ -147,13 +149,13 @@
               <div class="form-group">
                 <label data-t="responseType">Framing Response Type <span class="help-icon" data-tooltip="Multiple Choice: LLM generates options representing different framings. Open-Ended: student writes structured refinement sections around the raw problem.">?</span></label>
                 <div class="inline-radio">
-                  <label><input type="radio" name="frame-type" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
-                  <label><input type="radio" name="frame-type"> <span data-t="openEnded">Open-Ended</span> (structured sections)</label>
+                  <label><input type="radio" name="frame-type" value="mc" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
+                  <label><input type="radio" name="frame-type" value="open"> <span data-t="openEnded">Open-Ended</span> (structured sections)</label>
                 </div>
               </div>
               <div class="form-group">
                 <label data-t="instructions">Instructions for Students</label>
-                <textarea class="form-control" rows="3">Read the problem statement carefully. Identify missing information, ambiguous requirements, and unstated assumptions. Formulate a clear, well-defined task by specifying your assumptions.</textarea>
+                <textarea class="form-control" id="framingInstructions" rows="3">Read the problem statement carefully. Identify missing information, ambiguous requirements, and unstated assumptions. Formulate a clear, well-defined task by specifying your assumptions.</textarea>
               </div>
             </div>
 
@@ -164,7 +166,7 @@
 
               <div class="form-group">
                 <label data-t="maxCycles" data-tooltip="maxCycles">Max Cycles</label>
-                <input type="number" class="form-control" value="5" min="1" max="10" style="width:80px;">
+                <input type="number" class="form-control" id="maxCycles" value="5" min="1" max="10" style="width:80px;">
               </div>
 
               <!-- Judging sub-step config -->
@@ -173,13 +175,13 @@
                 <div class="form-group">
                   <label data-t="responseType">Judging Response Type</label>
                   <div class="inline-radio">
-                    <label><input type="radio" name="judge-type" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
-                    <label><input type="radio" name="judge-type"> <span data-t="openEnded">Open-Ended</span> (structured sections, e.g. "Gap: ...")</label>
+                    <label><input type="radio" name="judge-type" value="mc" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
+                    <label><input type="radio" name="judge-type" value="open"> <span data-t="openEnded">Open-Ended</span> (structured sections, e.g. "Gap: ...")</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <label data-t="instructions">Instructions for Students</label>
-                  <textarea class="form-control" rows="3">Review the AI's output carefully. Identify any gaps, errors, or issues. Select ALL issues you find — your analysis is recorded but NOT sent to the AI.</textarea>
+                  <textarea class="form-control" id="judgingInstructions" rows="3">Review the AI's output carefully. Identify any gaps, errors, or issues. Select ALL issues you find — your analysis is recorded but NOT sent to the AI.</textarea>
                 </div>
               </div>
 
@@ -189,13 +191,13 @@
                 <div class="form-group">
                   <label data-t="responseType">Steering Response Type</label>
                   <div class="inline-radio">
-                    <label><input type="radio" name="steer-type" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
-                    <label><input type="radio" name="steer-type"> <span data-t="openEnded">Open-Ended</span> (structured sections)</label>
+                    <label><input type="radio" name="steer-type" value="mc" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
+                    <label><input type="radio" name="steer-type" value="open"> <span data-t="openEnded">Open-Ended</span> (structured sections)</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <label data-t="instructions">Instructions for Students</label>
-                  <textarea class="form-control" rows="3">Based on your analysis, select ALL corrections to send to the AI. Be specific — tell the AI exactly what to fix or improve.</textarea>
+                  <textarea class="form-control" id="steeringInstructions" rows="3">Based on your analysis, select ALL corrections to send to the AI. Be specific — tell the AI exactly what to fix or improve.</textarea>
                 </div>
               </div>
             </div>
@@ -203,12 +205,8 @@
             <!-- LLM Model Override -->
             <div class="form-group">
               <label>LLM Model Override <span class="help-icon" data-tooltip="Override the default LLM model for this challenge. Hierarchy: system default → course default → challenge override.">?</span></label>
-              <select class="form-control">
-                <option value="">System Default (GPT-4o)</option>
-                <option>GPT-4o</option>
-                <option>GPT-4o-mini</option>
-                <option>Claude 3.5 Sonnet</option>
-                <option>Gemini 2.0 Flash</option>
+              <select class="form-control" id="llmModelSelect">
+                <option value="" data-t="systemDefault">System Default</option>
               </select>
               <p class="text-sm text-muted mt-8">Model applies to all LLM functions for this challenge.</p>
             </div>
@@ -224,7 +222,7 @@
         </div>
 
         <div class="flex gap-12 mt-16">
-          <button class="btn btn-primary btn-lg" data-t="publishChallenge">Save &amp; Publish</button>
+          <button class="btn btn-primary btn-lg" id="btnPublish" onclick="publishChallenge()" data-t="publishChallenge">Save &amp; Publish</button>
           <a href="challenge-list-instructor.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
         </div>
       </div>
@@ -232,22 +230,16 @@
       <!-- Right: Preview Panel -->
       <div class="preview-section">
         <div class="card">
-          <h3 style="margin-bottom:16px;" data-t="livePreview">Example Raw Problem for Students <span class="help-icon" data-tooltip="A sample problem generated from your selected subject. Shows the kind of problems students will see, with annotated gaps visible only to you.">?</span></h3>
-          <div style="background:#f8f9ff; padding:12px; border-radius:var(--radius); font-size:13px;">
-            <p><strong>Problem:</strong> A research team has built a CNN for classifying medical images. The model achieves 98% training accuracy but only 52% on validation. The team reports that [<em>missing: dataset size and class distribution not specified</em>]...</p>
-            <p class="text-muted mt-8"><em>Note: This problem intentionally contains missing/ambiguous parts per REQ-STEP-01.</em></p>
+          <h3 style="margin-bottom:16px;" data-t="livePreview">Example Raw Problem <span class="help-icon" data-tooltip="A sample problem generated from your selected subject. Shows the kind of problems students will see, with annotated gaps visible only to you.">?</span></h3>
+          <div style="background:#f8f9ff; padding:12px; border-radius:var(--radius); font-size:13px;" id="problemPreviewContent">
+            <p class="text-muted" data-t="selectSubjectsToPreview">Select course and subjects to see a sample problem preview.</p>
           </div>
         </div>
 
         <div class="card">
-          <h3 style="margin-bottom:12px;" data-t="rubricPreview">Challenge Evaluation Rubric</h3>
-          <div class="rubric-summary">
-            <h5 data-t="framing">Framing</h5>
-            <div class="grade-labels"><strong>A:</strong> All gaps identified, justified assumptions <strong>B:</strong> Most gaps found, reasonable assumptions <strong>C:</strong> Partial identification, weak justification</div>
-            <h5 data-t="judging">Judging</h5>
-            <div class="grade-labels"><strong>A:</strong> All errors detected, logical analysis <strong>B:</strong> Most errors found, some analysis gaps <strong>C:</strong> Few errors caught, surface-level review</div>
-            <h5 data-t="steering">Steering</h5>
-            <div class="grade-labels"><strong>A:</strong> Specific, actionable, converges to solution <strong>B:</strong> Mostly specific, partial convergence <strong>C:</strong> Vague directions, slow convergence</div>
+          <h3 style="margin-bottom:12px;" data-t="rubricPreview">Evaluation Rubric</h3>
+          <div class="rubric-summary" id="rubricSummaryContent">
+            <p class="text-muted text-sm" data-t="rubricWillGenerate">Rubric criteria will be generated based on selected subjects.</p>
           </div>
         </div>
       </div>
@@ -255,21 +247,34 @@
   </main>
 
   <script>
-// Check auth and load user info
 let currentUser = null;
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-  return r.json();
-}).then(data => {
-  currentUser = data;
-}).catch(() => window.location.href = '/login.html');
 
 // --- Unique ID counter for tree nodes ---
 let _treeNodeId = 0;
 function nextTreeId() { return 'tn-' + (++_treeNodeId); }
 
-// --- Load courses from API ---
-(async function loadCourses() {
+// --- Load LLM models from API ---
+(async function loadLLMModels() {
+  try {
+    var data = await API.llm.models();
+    var models = data.models || data || [];
+    var select = document.getElementById('llmModelSelect');
+    if (select && models.length > 0) {
+      models.forEach(function(m) {
+        var opt = document.createElement('option');
+        opt.value = typeof m === 'string' ? m : (m.id || m.name);
+        opt.textContent = typeof m === 'string' ? m : (m.label || m.name);
+        select.appendChild(opt);
+      });
+    }
+  } catch (err) {
+    // Silently fail — system default will be used
+    console.warn('Could not load LLM models:', err.message);
+  }
+})();
+
+// --- Load courses from API (returns a promise so edit mode can await it) ---
+var _coursesLoaded = (async function loadCourses() {
   try {
     const courses = await API.get('/courses');
     const select = document.getElementById('courseSelect');
@@ -514,9 +519,38 @@ function clearAllSubjects() {
 // --- Async rubric update (non-blocking) ---
 let _rubricTimer = null;
 function scheduleRubricUpdate() {
-  // Debounce: wait 800ms after last subject change before updating rubrics
+  // Debounce: wait 800ms after last subject change before updating rubrics & problem preview
   if (_rubricTimer) clearTimeout(_rubricTimer);
-  _rubricTimer = setTimeout(function() { updateRubricsAsync(); }, 800);
+  _rubricTimer = setTimeout(function() { updateRubricsAsync(); updateProblemPreview(); }, 800);
+}
+
+// --- Async problem preview ---
+async function updateProblemPreview() {
+  var selected = getSelectedSubjectNames();
+  var previewEl = document.getElementById('problemPreviewContent');
+  if (!previewEl) return;
+  if (selected.length === 0) {
+    previewEl.innerHTML = '<p class="text-muted">Select course and subjects to see a sample problem preview.</p>';
+    return;
+  }
+  var courseSelect = document.getElementById('courseSelect');
+  var courseName = (courseSelect.selectedOptions[0] && courseSelect.selectedOptions[0].textContent) || '';
+  previewEl.innerHTML = '<p class="text-muted"><em>Generating sample problem...</em></p>';
+  previewEl.style.opacity = '0.5';
+  try {
+    var result = await API.post('/challenges/preview-problem', {
+      course: courseName,
+      subjects: selected,
+    });
+    if (result && result.problem) {
+      previewEl.innerHTML = '<div style="white-space:pre-wrap;">' + result.problem + '</div>';
+    } else {
+      previewEl.innerHTML = '<p class="text-muted">Problem preview will be generated when the challenge runs.</p>';
+    }
+  } catch (err) {
+    previewEl.innerHTML = '<p class="text-muted">Problem preview not available — will generate during challenge run.</p>';
+  }
+  previewEl.style.opacity = '1';
 }
 
 async function updateRubricsAsync() {
@@ -525,10 +559,10 @@ async function updateRubricsAsync() {
   if (selected.length === 0) return;
 
   var courseSelect = document.getElementById('courseSelect');
-  var courseName = courseSelect.selectedOptions[0]?.textContent || '';
+  var courseName = (courseSelect.selectedOptions[0] && courseSelect.selectedOptions[0].textContent) || '';
 
   // Target the right-pane rubric summary
-  var rubricSummary = document.querySelector('.rubric-summary');
+  var rubricSummary = document.getElementById('rubricSummaryContent');
   if (!rubricSummary) return;
   rubricSummary.style.opacity = '0.5';
 
@@ -551,13 +585,13 @@ async function updateRubricsAsync() {
       // Rebuild rubric summary with LLM-generated content
       var html = '';
       if (result.rubrics.framing) {
-        html += '<h5>Framing</h5><div class="grade-labels">' + result.rubrics.framing.join(' · ') + '</div>';
+        html += '<h5>Framing <span class="help-icon" data-tooltip="How well students identify the core problem and frame their approach before seeing the AI solution.">?</span></h5><div class="grade-labels">' + result.rubrics.framing.join(' · ') + '</div>';
       }
       if (result.rubrics.judging) {
-        html += '<h5>Judging</h5><div class="grade-labels">' + result.rubrics.judging.join(' · ') + '</div>';
+        html += '<h5>Judging <span class="help-icon" data-tooltip="How accurately students evaluate the AI-generated solution, identifying strengths, weaknesses, and errors.">?</span></h5><div class="grade-labels">' + result.rubrics.judging.join(' · ') + '</div>';
       }
       if (result.rubrics.steering) {
-        html += '<h5>Steering</h5><div class="grade-labels">' + result.rubrics.steering.join(' · ') + '</div>';
+        html += '<h5>Steering <span class="help-icon" data-tooltip="How effectively students guide the AI to improve its solution through targeted feedback and corrections.">?</span></h5><div class="grade-labels">' + result.rubrics.steering.join(' · ') + '</div>';
       }
       rubricSummary.innerHTML = html;
       statusEl.innerHTML = '<em>Rubrics updated for: ' + selected.slice(0, 3).join(', ') + (selected.length > 3 ? '...' : '') + '</em>';
@@ -580,6 +614,189 @@ function getSelectedSubjectNames() {
     if (label) names.push(label.textContent);
   });
   return names;
+}
+
+// --- Collect form data ---
+function collectFormData() {
+  var checkedType = document.querySelector('input[name="type"]:checked');
+  return {
+    title: document.getElementById('challengeTitle').value.trim(),
+    courseId: document.getElementById('courseSelect').value,
+    description: document.getElementById('challengeDescription').value.trim(),
+    subjectPath: getSelectedSubjectNames(),
+    challengeType: checkedType ? checkedType.value : 'practice',
+    visibility: 'public',
+    maxCycles: parseInt(document.getElementById('maxCycles').value || '5'),
+    instructions: {
+      framing: document.getElementById('framingInstructions').value.trim(),
+      judging: document.getElementById('judgingInstructions').value.trim(),
+      steering: document.getElementById('steeringInstructions').value.trim(),
+    },
+    responseConfig: {
+      framing: (document.querySelector('input[name="frame-type"]:checked') || {}).value || 'mc',
+      judging: (document.querySelector('input[name="judge-type"]:checked') || {}).value || 'mc',
+      steering: (document.querySelector('input[name="steer-type"]:checked') || {}).value || 'mc',
+    },
+  };
+}
+
+// --- Check if editing an existing challenge ---
+var _editingChallengeId = null;
+var _pendingSubjectPath = null; // subjects to pre-select after tree loads
+(async function checkEditMode() {
+  var params = new URLSearchParams(window.location.search);
+  var id = params.get('id');
+  if (!id) return;
+  _editingChallengeId = id;
+
+  try {
+    // Wait for courses dropdown to be populated before setting value
+    await _coursesLoaded;
+
+    var ch = await API.challenges.get(id);
+
+    // Populate basic fields
+    document.getElementById('challengeTitle').value = ch.title || '';
+    document.getElementById('challengeDescription').value = ch.description || '';
+
+    // Handle both snake_case (from API) and camelCase field names
+    var courseId = ch.course_id || ch.courseId;
+    var maxCycles = ch.max_cycles || ch.maxCycles;
+    var challengeType = ch.challenge_type || ch.challengeType;
+    var subjectPath = ch.subject_path || ch.subjectPath;
+    var responseConfig = ch.response_config || ch.responseConfig;
+    var instructions = ch.instructions;
+
+    // Parse JSON strings if needed
+    if (typeof subjectPath === 'string') {
+      try { subjectPath = JSON.parse(subjectPath); } catch(e) { subjectPath = []; }
+    }
+    if (typeof responseConfig === 'string') {
+      try { responseConfig = JSON.parse(responseConfig); } catch(e) { responseConfig = null; }
+    }
+    if (typeof instructions === 'string') {
+      try { instructions = JSON.parse(instructions); } catch(e) { instructions = null; }
+    }
+
+    // Set course — dropdown is now populated so this will work
+    if (courseId) {
+      document.getElementById('courseSelect').value = courseId;
+      // Store subjects to pre-select after tree loads
+      _pendingSubjectPath = subjectPath || [];
+      await onCourseChange(courseId);
+      // After subjects loaded, pre-select them
+      if (_pendingSubjectPath && _pendingSubjectPath.length > 0) {
+        preselectSubjects(_pendingSubjectPath);
+        _pendingSubjectPath = null;
+      }
+    }
+
+    if (maxCycles) document.getElementById('maxCycles').value = maxCycles;
+    if (challengeType) {
+      var radio = document.querySelector('input[name="type"][value="' + challengeType + '"]');
+      if (radio) radio.checked = true;
+    }
+    if (responseConfig) {
+      ['frame-type', 'judge-type', 'steer-type'].forEach(function(name, i) {
+        var key = ['framing', 'judging', 'steering'][i];
+        var val = responseConfig[key];
+        if (val) {
+          var radio = document.querySelector('input[name="' + name + '"][value="' + val + '"]');
+          if (radio) radio.checked = true;
+        }
+      });
+    }
+    if (instructions) {
+      if (instructions.framing) document.getElementById('framingInstructions').value = instructions.framing;
+      if (instructions.judging) document.getElementById('judgingInstructions').value = instructions.judging;
+      if (instructions.steering) document.getElementById('steeringInstructions').value = instructions.steering;
+    }
+
+    // Update page title and buttons for editing
+    document.querySelector('.page-header h1').textContent = t('editChallenge') || 'Edit Challenge';
+    var publishBtn = document.getElementById('btnPublish');
+    if (publishBtn) publishBtn.textContent = t('saveAndPublish') || 'Save & Publish';
+
+  } catch (err) {
+    console.error('Failed to load challenge for editing:', err);
+    alert('Failed to load challenge: ' + err.message);
+  }
+})();
+
+// --- Pre-select subjects in the tree by matching names ---
+function preselectSubjects(subjectNames) {
+  if (!subjectNames || subjectNames.length === 0) return;
+  var nameSet = new Set(subjectNames.map(function(s) { return s.toLowerCase(); }));
+  var checkboxes = document.querySelectorAll('#treeSelectRoot .tree-checkbox');
+  checkboxes.forEach(function(cb) {
+    var li = cb.closest('li');
+    var label = li.querySelector(':scope > label .tree-label');
+    if (label && nameSet.has(label.textContent.toLowerCase())) {
+      cb.checked = true;
+    }
+  });
+  // Update parent states for all checked checkboxes
+  checkboxes.forEach(function(cb) {
+    if (cb.checked) updateParentState(cb);
+  });
+  updateSelectedTags();
+  // Trigger rubric update with pre-selected subjects
+  scheduleRubricUpdate();
+}
+
+// --- Publish challenge ---
+async function publishChallenge() {
+  var data = collectFormData();
+  if (!data.title) { alert(t('pleaseEnterTitle') || 'Please enter a challenge title.'); return; }
+  if (!data.courseId) { alert(t('pleaseSelectCourse') || 'Please select a course.'); return; }
+  if (data.subjectPath.length === 0) { alert(t('pleaseSelectSubject') || 'Please select at least one subject.'); return; }
+
+  var btn = document.getElementById('btnPublish');
+  btn.disabled = true;
+  btn.textContent = t('publishing') || 'Publishing...';
+
+  try {
+    var challenge;
+    if (_editingChallengeId) {
+      challenge = await API.challenges.update(_editingChallengeId, data);
+      await API.challenges.publish(_editingChallengeId);
+    } else {
+      challenge = await API.challenges.create(data);
+      await API.challenges.publish(challenge.id);
+    }
+    window.location.href = 'challenge-list-instructor.html';
+  } catch (err) {
+    console.error('Publish failed:', err);
+    alert((t('publishFailed') || 'Failed to publish challenge') + ': ' + err.message);
+    btn.disabled = false;
+    btn.textContent = t('publishChallenge') || 'Save & Publish';
+  }
+}
+
+// --- Save as draft ---
+async function saveDraft() {
+  var data = collectFormData();
+  data.status = 'draft';
+  if (!data.title) { alert(t('pleaseEnterTitle') || 'Please enter a challenge title.'); return; }
+  if (!data.courseId) { alert(t('pleaseSelectCourse') || 'Please select a course.'); return; }
+
+  var btn = document.getElementById('btnDraft');
+  btn.disabled = true;
+  btn.textContent = t('saving') || 'Saving...';
+
+  try {
+    if (_editingChallengeId) {
+      await API.challenges.update(_editingChallengeId, data);
+    } else {
+      await API.challenges.create(data);
+    }
+    window.location.href = 'challenge-list-instructor.html';
+  } catch (err) {
+    console.error('Save draft failed:', err);
+    alert((t('saveFailed') || 'Failed to save draft') + ': ' + err.message);
+    btn.disabled = false;
+    btn.textContent = t('saveAsDraft') || 'Save as Draft';
+  }
 }
   </script>
 </body>

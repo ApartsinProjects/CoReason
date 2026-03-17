@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI CoReasoning Lab — Admin Panel</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+  <style>
+    .admin-layout { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .admin-header h1 { font-size: 22px; color: var(--primary); }
+    .admin-header .env-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+    .env-badge.dev { background: #e8f5e9; color: #2e7d32; }
+    .env-badge.prod { background: #fce4ec; color: #c62828; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 28px; }
+    .kpi-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-align: center; }
+    .kpi-card .kpi-value { font-size: 28px; font-weight: 700; color: var(--primary); }
+    .kpi-card .kpi-label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .5px; margin-top: 4px; }
+    .admin-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+    .admin-tabs button { background: none; border: none; padding: 10px 20px; font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s; }
+    .admin-tabs button.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .admin-tabs button:hover { color: var(--primary); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .admin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .admin-table th { text-align: left; padding: 8px 12px; background: #f5f5f5; border-bottom: 2px solid var(--border); font-weight: 700; color: var(--text-secondary); text-transform: uppercase; font-size: 11px; letter-spacing: .5px; }
+    .admin-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    .admin-table tr:hover td { background: #fafafa; }
+    .prompt-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; }
+    .prompt-card .prompt-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #f5f5f5; cursor: pointer; font-weight: 600; font-size: 14px; }
+    .prompt-card .prompt-header:hover { background: #eee; }
+    .prompt-card .prompt-body { display: none; padding: 16px; }
+    .prompt-card .prompt-body.open { display: block; }
+    .prompt-card pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: var(--radius); overflow-x: auto; font-size: 12px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; max-height: 500px; overflow-y: auto; }
+    .config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .config-item { display: flex; justify-content: space-between; padding: 10px 14px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); }
+    .config-item .config-key { font-weight: 600; font-size: 13px; }
+    .config-item .config-val { font-size: 13px; color: var(--text-secondary); }
+    .config-item .config-val.yes { color: #2e7d32; font-weight: 600; }
+    .config-item .config-val.no { color: #c62828; font-weight: 600; }
+    .db-table-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+    .db-table-item { display: flex; justify-content: space-between; padding: 8px 14px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; }
+    .db-table-item .table-name { font-weight: 600; font-family: monospace; }
+    .db-table-item .table-count { color: var(--primary); font-weight: 700; }
+    .loading-msg { text-align: center; padding: 40px; color: var(--text-secondary); }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+    .badge-student { background: #e3f2fd; color: #1565c0; }
+    .badge-instructor { background: #f3e5f5; color: #7b1fa2; }
+    .badge-draft { background: #fff3e0; color: #e65100; }
+    .badge-published { background: #e8f5e9; color: #2e7d32; }
+    .badge-archived { background: #eceff1; color: #546e7a; }
+    .badge-in_progress { background: #fff3e0; color: #e65100; }
+    .badge-completed { background: #e8f5e9; color: #2e7d32; }
+    .badge-abandoned { background: #fce4ec; color: #c62828; }
+    @media (max-width: 768px) { .config-grid { grid-template-columns: 1fr; } .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
+    <nav><span style="color:var(--primary);font-weight:700;font-size:14px;">ADMIN PANEL</span></nav>
+    <div class="user-area">
+      <span style="font-size:12px;color:var(--text-secondary);">Direct access only</span>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+    <div class="admin-header">
+      <h1>System Administration</h1>
+      <span id="envBadge" class="env-badge dev">DEV</span>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="kpi-card"><div class="kpi-value" id="kpiUsers">—</div><div class="kpi-label" data-t="users">Users</div></div>
+      <div class="kpi-card"><div class="kpi-value" id="kpiInstitutions">—</div><div class="kpi-label" data-t="institutions">Institutions</div></div>
+      <div class="kpi-card"><div class="kpi-value" id="kpiCourses">—</div><div class="kpi-label" data-t="courses">Courses</div></div>
+      <div class="kpi-card"><div class="kpi-value" id="kpiChallenges">—</div><div class="kpi-label" data-t="challenges">Challenges</div></div>
+      <div class="kpi-card"><div class="kpi-value" id="kpiRuns">—</div><div class="kpi-label" data-t="runs">Runs</div></div>
+      <div class="kpi-card"><div class="kpi-value" id="kpiCompleted">—</div><div class="kpi-label" data-t="completed">Completed</div></div>
+      <div class="kpi-card"><div class="kpi-value" id="kpiSubs">—</div><div class="kpi-label" data-t="subscriptions">Subscriptions</div></div>
+      <div class="kpi-card"><div class="kpi-value" id="kpiPrompts">—</div><div class="kpi-label">Prompts (DB)</div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="active" onclick="showTab('config', this)">Config</button>
+      <button onclick="showTab('db', this)">Database</button>
+      <button onclick="showTab('users', this)">Users</button>
+      <button onclick="showTab('institutions', this)">Institutions</button>
+      <button onclick="showTab('courses', this)">Courses</button>
+      <button onclick="showTab('challenges', this)">Challenges</button>
+      <button onclick="showTab('runs', this)">Runs</button>
+      <button onclick="showTab('prompts', this)">Prompt Templates</button>
+    </div>
+
+    <!-- Config Tab -->
+    <div id="tab-config" class="tab-content active">
+      <div class="config-grid" id="configGrid"><div class="loading-msg">Loading configuration...</div></div>
+    </div>
+
+    <!-- Database Tab -->
+    <div id="tab-db" class="tab-content">
+      <h3 style="margin-bottom:12px;">Table Row Counts</h3>
+      <div class="db-table-grid" id="dbTableGrid"><div class="loading-msg">Loading...</div></div>
+    </div>
+
+    <!-- Users Tab -->
+    <div id="tab-users" class="tab-content">
+      <table class="admin-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Institution</th><th>Language</th><th>Created</th></tr></thead>
+      <tbody id="usersBody"><tr><td colspan="6" class="loading-msg">Loading...</td></tr></tbody></table>
+    </div>
+
+    <!-- Institutions Tab -->
+    <div id="tab-institutions" class="tab-content">
+      <table class="admin-table"><thead><tr><th>Name</th><th>Country</th><th>Departments</th><th>Created</th></tr></thead>
+      <tbody id="institutionsBody"><tr><td colspan="4" class="loading-msg">Loading...</td></tr></tbody></table>
+    </div>
+
+    <!-- Courses Tab -->
+    <div id="tab-courses" class="tab-content">
+      <table class="admin-table"><thead><tr><th>Name</th><th>Institution</th><th>Status</th><th>Subscribers</th><th>Challenges</th><th>Created</th></tr></thead>
+      <tbody id="coursesBody"><tr><td colspan="6" class="loading-msg">Loading...</td></tr></tbody></table>
+    </div>
+
+    <!-- Challenges Tab -->
+    <div id="tab-challenges" class="tab-content">
+      <table class="admin-table"><thead><tr><th>Title</th><th>Creator</th><th>Course</th><th>Type</th><th>Visibility</th><th>Status</th><th>Runs</th><th>Created</th></tr></thead>
+      <tbody id="challengesBody"><tr><td colspan="8" class="loading-msg">Loading...</td></tr></tbody></table>
+    </div>
+
+    <!-- Runs Tab -->
+    <div id="tab-runs" class="tab-content">
+      <table class="admin-table"><thead><tr><th>User</th><th>Challenge</th><th>Status</th><th>Cycle</th><th>Grade</th><th>Started</th><th>Completed</th></tr></thead>
+      <tbody id="runsBody"><tr><td colspan="7" class="loading-msg">Loading...</td></tr></tbody></table>
+    </div>
+
+    <!-- Prompts Tab -->
+    <div id="tab-prompts" class="tab-content">
+      <div id="promptsList"><div class="loading-msg">Loading prompt templates...</div></div>
+    </div>
+  </div>
+
+  <script src="js/api-client.js"></script>
+  <script>
+    var BASE = '/api/v1/admin';
+
+    // Wrapper for fetch that includes credentials for auth
+    function adminFetch(url) {
+      return fetch(url, { credentials: 'include' });
+    }
+
+    function showTab(name, btn) {
+      document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+      document.querySelectorAll('.admin-tabs button').forEach(function(el) { el.classList.remove('active'); });
+      document.getElementById('tab-' + name).classList.add('active');
+      if (btn) btn.classList.add('active');
+      if (!loaded[name]) { loaders[name](); loaded[name] = true; }
+    }
+
+    var loaded = { config: false, db: false, users: false, institutions: false, courses: false, challenges: false, runs: false, prompts: false };
+
+    function fmt(d) { return d ? new Date(d).toLocaleDateString() : '—'; }
+    function badge(val, type) { return '<span class="badge badge-' + (val || '').replace(/\s/g,'_') + '">' + (val || '—') + '</span>'; }
+
+    var loaders = {
+      config: function() {
+        adminFetch(BASE + '/config').then(function(r) { return r.json(); }).then(function(c) {
+          var envBadge = document.getElementById('envBadge');
+          envBadge.textContent = (c.node_env || 'dev').toUpperCase();
+          envBadge.className = 'env-badge ' + (c.node_env === 'production' ? 'prod' : 'dev');
+          var items = [
+            ['Environment', c.node_env],
+            ['Database', c.database_client],
+            ['Port', c.port],
+            ['Uptime', Math.floor(c.uptime_seconds / 60) + ' min'],
+            ['Memory', c.memory_mb + ' MB'],
+            ['OpenAI', c.has_openai ? 'Configured' : 'Missing', c.has_openai],
+            ['Groq', c.has_groq ? 'Configured' : 'Missing', c.has_groq],
+            ['Gemini', c.has_gemini ? 'Key present' : 'Missing', c.has_gemini],
+            ['Google OAuth', c.has_google_oauth ? 'Configured' : 'Missing', c.has_google_oauth],
+            ['Database URL', c.has_database_url ? 'Set (PG)' : 'Not set (SQLite)', null],
+            ['Session Secret', c.session_secret_set ? 'Custom' : 'Default', c.session_secret_set],
+            ['LLM Providers', c.llm_providers.join(', ') || 'None'],
+          ];
+          var html = '';
+          items.forEach(function(item) {
+            var valClass = '';
+            if (item[2] === true) valClass = ' yes';
+            else if (item[2] === false) valClass = ' no';
+            html += '<div class="config-item"><span class="config-key">' + item[0] + '</span><span class="config-val' + valClass + '">' + item[1] + '</span></div>';
+          });
+          document.getElementById('configGrid').innerHTML = html;
+        }).catch(function(err) { document.getElementById('configGrid').innerHTML = '<div class="loading-msg" style="color:var(--danger);">Failed to load config: ' + escHtml(err.message || 'Unknown error') + '</div>'; });
+      },
+      db: function() {
+        adminFetch(BASE + '/db-tables').then(function(r) { return r.json(); }).then(function(data) {
+          var html = '';
+          Object.keys(data.tables).forEach(function(t) {
+            html += '<div class="db-table-item"><span class="table-name">' + t + '</span><span class="table-count">' + data.tables[t] + '</span></div>';
+          });
+          document.getElementById('dbTableGrid').innerHTML = html;
+        }).catch(function(err) { document.getElementById('dbTableGrid').innerHTML = '<div class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</div>'; });
+      },
+      users: function() {
+        adminFetch(BASE + '/users').then(function(r) { return r.json(); }).then(function(data) {
+          var html = '';
+          (data.users || []).forEach(function(u) {
+            html += '<tr><td>' + escHtml(u.name || '') + '</td><td>' + escHtml(u.email || '') + '</td><td>' + badge(u.role) + '</td><td>' + escHtml(u.institution_name || '—') + '</td><td>' + (u.preferred_language || 'en') + '</td><td>' + fmt(u.created_at) + '</td></tr>';
+          });
+          document.getElementById('usersBody').innerHTML = html || '<tr><td colspan="6">No users</td></tr>';
+        }).catch(function(err) { document.getElementById('usersBody').innerHTML = '<tr><td colspan="6" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
+      },
+      institutions: function() {
+        adminFetch(BASE + '/institutions').then(function(r) { return r.json(); }).then(function(data) {
+          var html = '';
+          (data.institutions || []).forEach(function(inst) {
+            var deps = '';
+            try { deps = JSON.parse(inst.departments || '[]').join(', '); } catch(e) { deps = inst.departments || ''; }
+            html += '<tr><td>' + escHtml(inst.name || '') + '</td><td>' + escHtml(inst.country || '—') + '</td><td>' + escHtml(deps || '—') + '</td><td>' + fmt(inst.created_at) + '</td></tr>';
+          });
+          document.getElementById('institutionsBody').innerHTML = html || '<tr><td colspan="4">No institutions</td></tr>';
+        }).catch(function(err) { document.getElementById('institutionsBody').innerHTML = '<tr><td colspan="4" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
+      },
+      courses: function() {
+        adminFetch(BASE + '/courses').then(function(r) { return r.json(); }).then(function(data) {
+          var html = '';
+          (data.courses || []).forEach(function(c) {
+            html += '<tr><td>' + escHtml(c.name || '') + '</td><td>' + escHtml(c.institution_name || '—') + '</td><td>' + badge(c.status) + '</td><td>' + c.subscribers + '</td><td>' + c.challenges_count + '</td><td>' + fmt(c.created_at) + '</td></tr>';
+          });
+          document.getElementById('coursesBody').innerHTML = html || '<tr><td colspan="6">No courses</td></tr>';
+        }).catch(function(err) { document.getElementById('coursesBody').innerHTML = '<tr><td colspan="6" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
+      },
+      challenges: function() {
+        adminFetch(BASE + '/challenges').then(function(r) { return r.json(); }).then(function(data) {
+          var html = '';
+          (data.challenges || []).forEach(function(c) {
+            html += '<tr><td>' + escHtml(c.title || '') + '</td><td>' + escHtml(c.creator_name || '—') + '</td><td>' + escHtml(c.course_name || '—') + '</td><td>' + badge(c.challenge_type) + '</td><td>' + badge(c.visibility) + '</td><td>' + badge(c.status) + '</td><td>' + c.runs_count + '</td><td>' + fmt(c.created_at) + '</td></tr>';
+          });
+          document.getElementById('challengesBody').innerHTML = html || '<tr><td colspan="8">No challenges</td></tr>';
+        }).catch(function(err) { document.getElementById('challengesBody').innerHTML = '<tr><td colspan="8" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
+      },
+      runs: function() {
+        adminFetch(BASE + '/runs').then(function(r) { return r.json(); }).then(function(data) {
+          var html = '';
+          (data.runs || []).forEach(function(r) {
+            var grades = '';
+            try { var g = typeof r.grades === 'string' ? JSON.parse(r.grades) : (r.grades || {}); grades = [g.framing, g.judging, g.steering].filter(Boolean).join('/') || (r.framing_grade || '—'); } catch(e) { grades = r.framing_grade || '—'; }
+            html += '<tr><td>' + escHtml(r.user_name || '—') + '</td><td>' + escHtml(r.challenge_title || '—') + '</td><td>' + badge(r.status) + '</td><td>' + (r.current_cycle || 0) + '</td><td>' + grades + '</td><td>' + fmt(r.started_at || r.created_at) + '</td><td>' + fmt(r.completed_at) + '</td></tr>';
+          });
+          document.getElementById('runsBody').innerHTML = html || '<tr><td colspan="7">No runs</td></tr>';
+        }).catch(function(err) { document.getElementById('runsBody').innerHTML = '<tr><td colspan="7" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
+      },
+      prompts: function() {
+        adminFetch(BASE + '/prompt-templates').then(function(r) { return r.json(); }).then(function(data) {
+          var html = '<h3 style="margin-bottom:12px;">File-based Templates (' + (data.file_templates || []).length + ')</h3>';
+          (data.file_templates || []).forEach(function(t) {
+            var id = 'prompt-' + t.filename.replace(/[^a-z0-9]/gi, '-');
+            html += '<div class="prompt-card"><div class="prompt-header" onclick="togglePrompt(\'' + id + '\')">' + t.filename + ' <span style="font-size:12px;color:var(--text-secondary);">(click to expand)</span></div><div class="prompt-body" id="' + id + '"><pre>' + escHtml(t.content) + '</pre></div></div>';
+          });
+          if ((data.db_templates || []).length > 0) {
+            html += '<h3 style="margin:24px 0 12px;">Database Templates (' + data.db_templates.length + ')</h3>';
+            data.db_templates.forEach(function(t) {
+              var id = 'dbprompt-' + t.filename.replace(/[^a-z0-9]/gi, '-');
+              html += '<div class="prompt-card"><div class="prompt-header" onclick="togglePrompt(\'' + id + '\')">' + t.filename + '</div><div class="prompt-body" id="' + id + '"><pre>' + escHtml(t.content) + '</pre></div></div>';
+            });
+          } else {
+            html += '<p style="margin-top:16px;color:var(--text-secondary);font-size:13px;">No database-stored templates. Templates are loaded from YAML files at server startup.</p>';
+          }
+          document.getElementById('promptsList').innerHTML = html;
+        }).catch(function(err) { document.getElementById('promptsList').innerHTML = '<div class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</div>'; });
+      }
+    };
+
+    function togglePrompt(id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.toggle('open');
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // Load overview KPIs
+    adminFetch(BASE + '/overview').then(function(r) { return r.json(); }).then(function(d) {
+      document.getElementById('kpiUsers').textContent = d.users;
+      document.getElementById('kpiInstitutions').textContent = d.institutions;
+      document.getElementById('kpiCourses').textContent = d.courses;
+      document.getElementById('kpiChallenges').textContent = d.challenges;
+      document.getElementById('kpiRuns').textContent = d.runs;
+      document.getElementById('kpiCompleted').textContent = d.completed_runs;
+      document.getElementById('kpiSubs').textContent = d.subscriptions;
+      document.getElementById('kpiPrompts').textContent = d.prompt_templates_db;
+    }).catch(function(err) { document.getElementById('kpiGrid').innerHTML = '<div class="loading-msg" style="color:var(--danger);grid-column:1/-1;">Failed to load KPIs: ' + escHtml(err.message || 'Unknown error') + '</div>'; });
+
+    // Auto-load config tab
+    loaders.config();
+    loaded.config = true;
+  </script>
+</body>
+</html>

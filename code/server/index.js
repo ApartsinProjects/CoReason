@@ -11,6 +11,7 @@ const { loadConfig } = require('./utils/config');
 const { createLogger } = require('./utils/logger');
 const { requestLogger } = require('./middleware/request-logger');
 const { errorHandler } = require('./middleware/error-handler');
+const { SERVER, LLM_FALLBACK, LLM_FALLBACK_FRAMING_OPTIONS, LLM_FALLBACK_JUDGING_OPTIONS, LLM_FALLBACK_STEERING_OPTIONS, LLM_STUB_SUBJECT_TREE, GRADES } = require('./utils/constants');
 
 // Load environment variables
 require('dotenv').config({ path: path.resolve(__dirname, '../.env.all') });
@@ -29,7 +30,7 @@ async function startServer() {
     credentials: true,
   }));
   app.use(compression());
-  app.use(express.json({ limit: '1mb' }));
+  app.use(express.json({ limit: SERVER.JSON_BODY_LIMIT }));
   app.use(express.urlencoded({ extended: true }));
 
   // --- Session ---
@@ -43,7 +44,7 @@ async function startServer() {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
     },
-    name: 'coreason.sid',
+    name: SERVER.SESSION_COOKIE_NAME,
   };
 
   // Use PostgreSQL session store in production
@@ -51,7 +52,7 @@ async function startServer() {
     const PgSession = require('connect-pg-simple')(session);
     sessionConfig.store = new PgSession({
       conString: process.env.DATABASE_URL || config.database.connection,
-      tableName: 'user_sessions',
+      tableName: SERVER.SESSION_TABLE_NAME,
       createTableIfMissing: true,
     });
   }
@@ -87,16 +88,19 @@ async function startServer() {
     logger.warn('Failed to initialize LLMService:', err.message);
     // Provide a stub so routes don't crash
     llmService = {
-      generatePreview: async () => 'LLM service not available',
+      generatePreview: async () => LLM_FALLBACK.SERVICE_NOT_AVAILABLE,
       getAvailableModels: () => [],
-      generateProblem: async () => 'LLM service not available',
-      generateAISolution: async () => 'LLM service not available',
-      generateUpdatedOutput: async (data) => (data.currentSolution || '') + '\n\n[LLM not available]',
-      evaluateFraming: async () => ({ grade: 'N/A', feedback: { message: 'LLM not available' } }),
-      evaluateJudging: async () => ({ grade: 'N/A', feedback: { message: 'LLM not available' } }),
-      evaluateSteering: async () => ({ grade: 'N/A', feedback: { message: 'LLM not available' } }),
+      generateProblem: async () => LLM_FALLBACK.SERVICE_NOT_AVAILABLE,
+      generateAISolution: async () => LLM_FALLBACK.SERVICE_NOT_AVAILABLE,
+      generateUpdatedOutput: async (data) => (data.currentSolution || '') + LLM_FALLBACK.NOT_AVAILABLE_SUFFIX,
+      evaluateFraming: async () => ({ grade: GRADES.NA, feedback: { message: LLM_FALLBACK.SERVICE_NOT_AVAILABLE } }),
+      evaluateJudging: async () => ({ grade: GRADES.NA, feedback: { message: LLM_FALLBACK.SERVICE_NOT_AVAILABLE } }),
+      evaluateSteering: async () => ({ grade: GRADES.NA, feedback: { message: LLM_FALLBACK.SERVICE_NOT_AVAILABLE } }),
+      generateFramingMC: async () => LLM_FALLBACK_FRAMING_OPTIONS,
+      generateJudgingMC: async () => LLM_FALLBACK_JUDGING_OPTIONS,
+      generateSteeringMC: async () => LLM_FALLBACK_STEERING_OPTIONS,
       generateRubricPreview: async () => null,
-      generateSubjectTree: async () => [{ name: 'Topic 1', children: [{ name: 'Subtopic 1' }] }],
+      generateSubjectTree: async () => LLM_STUB_SUBJECT_TREE,
     };
   }
 
@@ -110,10 +114,22 @@ async function startServer() {
   app.use('/api/v1/analytics', require('./routes/analytics.routes')(db, logger));
   app.use('/api/v1/import', require('./routes/import.routes')(db, logger));
   app.use('/api/v1/llm', require('./routes/llm.routes')(db, logger, llmService));
+  app.use('/api/v1/admin', require('./routes/admin.routes')(db, logger));
 
   // --- Health check ---
-  app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', env: process.env.NODE_ENV, timestamp: new Date().toISOString() });
+  app.get('/api/health', async (req, res) => {
+    let dbOk = false;
+    try { await db.raw('SELECT 1'); dbOk = true; } catch { /* db down */ }
+    const llmOk = !!(llmService && llmService.providers && llmService.providers.length > 0);
+    const status = dbOk ? 'ok' : 'degraded';
+    res.status(dbOk ? 200 : 503).json({
+      status,
+      env: process.env.NODE_ENV,
+      timestamp: new Date().toISOString(),
+      database: dbOk ? 'connected' : 'error',
+      llm: llmOk ? 'available' : 'fallback',
+      uptime_seconds: Math.floor(process.uptime()),
+    });
   });
 
   // --- Static files ---
@@ -131,7 +147,7 @@ async function startServer() {
   app.use(errorHandler(logger));
 
   // --- Start ---
-  const port = process.env.PORT || config.server.port || 3000;
+  const port = process.env.PORT || config.server.port || SERVER.DEFAULT_PORT;
   const server = app.listen(port, () => {
     logger.info(`CoReason server started`, {
       port,
@@ -149,7 +165,7 @@ async function startServer() {
       logger.info('Server shut down complete');
       process.exit(0);
     });
-    setTimeout(() => process.exit(1), 10000);
+    setTimeout(() => process.exit(1), SERVER.GRACEFUL_SHUTDOWN_TIMEOUT_MS);
   };
   process.on('SIGTERM', () => shutdown('SIGTERM'));
   process.on('SIGINT', () => shutdown('SIGINT'));

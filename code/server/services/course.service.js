@@ -2,6 +2,8 @@
 
 const { v4: uuidv4 } = require('uuid');
 const { NotFoundError, ForbiddenError, ConflictError } = require('../utils/errors');
+const { COURSE_STATUS } = require('../utils/constants');
+const { safeParse } = require('../utils/helpers');
 
 class CourseService {
   constructor(db, logger) {
@@ -16,7 +18,7 @@ class CourseService {
         'courses.*',
         'institutions.name as institution_name'
       )
-      .where('courses.status', 'active');
+      .where('courses.status', COURSE_STATUS.ACTIVE);
 
     if (filters.institutionId) {
       query = query.where('courses.institution_id', filters.institutionId);
@@ -38,23 +40,26 @@ class CourseService {
     return course;
   }
 
-  async create({ name, description, institutionId, subjectTree, stewardConfig }, userId) {
+  async create({ name, description, institutionId, department, subjectTree, stewardConfig }, userId) {
     const course = {
       id: uuidv4(),
       name,
       description: description || null,
       institution_id: institutionId || null,
+      department: department || null,
       subject_tree: JSON.stringify(subjectTree || []),
       steward_config: JSON.stringify(stewardConfig || {}),
-      status: 'active',
+      status: COURSE_STATUS.ACTIVE,
     };
-    await this.db('courses').insert(course);
 
-    // Add creator as instructor
-    await this.db('course_instructors').insert({
-      id: uuidv4(),
-      user_id: userId,
-      course_id: course.id,
+    // Use transaction to ensure both course and instructor membership are created atomically
+    await this.db.transaction(async (trx) => {
+      await trx('courses').insert(course);
+      await trx('course_instructors').insert({
+        id: uuidv4(),
+        user_id: userId,
+        course_id: course.id,
+      });
     });
 
     this.logger.info('Course created', { courseId: course.id, name, userId });
@@ -65,7 +70,7 @@ class CourseService {
     // Verify instructor
     await this._requireInstructor(id, userId);
 
-    const allowed = ['name', 'description', 'subject_tree', 'steward_config', 'status'];
+    const allowed = ['name', 'description', 'department', 'subject_tree', 'steward_config', 'status'];
     const filtered = {};
     for (const key of allowed) {
       if (updates[key] !== undefined) {
@@ -121,9 +126,7 @@ class CourseService {
 
   async getSubjectTree(courseId) {
     const course = await this.getById(courseId);
-    const tree = typeof course.subject_tree === 'string'
-      ? JSON.parse(course.subject_tree) : course.subject_tree;
-    return tree || [];
+    return safeParse(course.subject_tree, []);
   }
 
   async updateSubjectTree(courseId, tree, userId) {

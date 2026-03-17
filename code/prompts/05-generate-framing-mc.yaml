@@ -52,6 +52,7 @@ user_prompt: |
   **Language:** {{language}}
 
   Each option should represent a single refinement (assumption, constraint, clarification, or metric) the student might add to the raw problem.
+  Write all option text and explanations in {{language}}.
 
 output_schema:
   type: object
@@ -73,4 +74,4 @@ parameters:
   max_tokens: 2000
   num_options_default: 5
   num_correct_default: 3
-  num_incorrect_default: 3
+  num_incorrect_default: 2

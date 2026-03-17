@@ -1,40 +1,105 @@
 # Spanish tooltip help texts
+#
+# ── Shared Tooltips (used on both student and instructor pages) ──
 challengeType:
   title: "Tipo de desafio"
-  text: "Los desafios de practica son para aprender — no se registra nota. Los desafios de evaluacion cuentan para tu nota del curso."
+  text: "Los desafios de practica permiten reintentos con retroalimentacion tras cada fase. Los desafios de evaluacion se califican con retroalimentacion solo al final."
 visibility:
   title: "Visibilidad"
-  text: "Los desafios publicos son visibles para todos los estudiantes inscritos. Los desafios privados solo son visibles para ti."
+  text: "Los desafios publicos son visibles para todos los estudiantes inscritos. Los desafios privados solo son visibles para su creador."
 maxCycles:
   title: "Ciclos maximos"
-  text: "El numero maximo de ciclos de Juicio+Direccion permitidos. Mas ciclos te dan mas oportunidades de mejorar la salida de la IA."
+  text: "El numero maximo de ciclos de Juicio+Direccion permitidos. Mas ciclos ofrecen mas oportunidades de mejorar la salida de la IA."
 subjectPath:
   title: "Ruta del tema"
   text: "La jerarquia tematica a la que pertenece este desafio, dentro del arbol de temas del curso."
 responseType:
   title: "Tipo de respuesta"
-  text: "La opcion multiple te ofrece opciones para elegir. La respuesta abierta te permite escribir tu propio razonamiento."
+  text: "La opcion multiple ofrece opciones predefinidas. La respuesta abierta permite razonamiento escrito libre."
 framingPhase:
   title: "Fase de encuadre"
-  text: "En esta fase, evaluas el enfoque inicial de la IA sobre el problema antes de que se genere cualquier solucion."
+  text: "El estudiante evalua el problema en bruto y lo traduce en una tarea bien definida anadiendo supuestos y restricciones."
 judgingPhase:
   title: "Fase de juicio"
-  text: "Revisa la solucion generada por la IA e identifica lo que es correcto, lo que esta mal y lo que podria mejorarse."
+  text: "El estudiante revisa la solucion generada por la IA e identifica lo que es correcto, lo que esta mal y lo que podria mejorarse."
 steeringPhase:
   title: "Fase de direccion"
-  text: "Guia a la IA para corregir sus errores proporcionando retroalimentacion y direccion especificas."
+  text: "El estudiante proporciona retroalimentacion especifica para guiar a la IA hacia una mejor solucion."
 coReasoningScore:
   title: "Puntuacion de co-razonamiento"
-  text: "Tu puntuacion de rendimiento general que combina precision de encuadre, calidad de juicio y efectividad de direccion."
+  text: "Rendimiento general que combina la precision del encuadre, la calidad del juicio y la efectividad de la direccion."
 rubric:
   title: "Rubrica"
-  text: "Los criterios de evaluacion utilizados para evaluar tu rendimiento de co-razonamiento en cada fase."
+  text: "Los criterios de evaluacion utilizados para calificar el rendimiento de co-razonamiento en cada fase."
 subjectTree:
   title: "Arbol de temas"
   text: "Una organizacion jerarquica de temas dentro de un curso. Los desafios se asignan a nodos especificos."
+#
+# ── Student-Facing Tooltips ──
 courseSubscription:
   title: "Suscripcion al curso"
   text: "Suscribete a un curso para acceder a sus desafios y seguir tu progreso."
 analyticsOverview:
-  title: "Vista general de analiticas"
-  text: "Consulta tus tendencias de rendimiento, distribuciones de notas y desgloses detallados en todos los desafios."
+  title: "Tus estadisticas"
+  text: "Consulta tus tendencias de rendimiento, distribuciones de notas y desgloses detallados en todas tus sesiones de desafio."
+# Student challenge list columns
+colChallenge:
+  title: "Desafio"
+  text: "El nombre del desafio. Haz clic para ver los detalles o iniciar una sesion."
+colCourse:
+  title: "Curso"
+  text: "El curso al que pertenece este desafio."
+colType:
+  title: "Tipo"
+  text: "Los desafios de practica permiten reintentos con retroalimentacion. Los desafios de evaluacion se califican con retroalimentacion solo al final."
+colVisibility:
+  title: "Visibilidad"
+  text: "Los desafios publicos provienen de tus cursos suscritos. Los desafios privados son los que creaste para ti mismo."
+colCreated:
+  title: "Fecha de creacion"
+  text: "La fecha en que este desafio fue publicado o creado."
+colCreator:
+  title: "Creador"
+  text: "El instructor o estudiante que creo este desafio."
+colLastAttempt:
+  title: "Ultimo intento"
+  text: "La ultima vez que intentaste este desafio, si alguna vez lo hiciste."
+colStatus:
+  title: "Estado"
+  text: "Tu progreso: No iniciado, En progreso o Completado."
+colActions:
+  title: "Acciones"
+  text: "Acciones disponibles como Iniciar, Reanudar, Ver resultados o Ejecutar de nuevo."
+#
+# ── Instructor-Facing Tooltips ──
+instrAnalyticsOverview:
+  title: "Estadisticas del curso"
+  text: "Datos de rendimiento agregados de todos los estudiantes de este curso. Solo incluye resultados de desafios publicos."
+instrCourseSubscription:
+  title: "Gestion del curso"
+  text: "Administra la configuracion de tu curso, el arbol de temas y las asignaciones de desafios."
+# Instructor challenge list columns
+instrColChallenge:
+  title: "Desafio"
+  text: "El titulo del desafio. Haz clic para editar o ver las entregas de los estudiantes."
+instrColCourse:
+  title: "Curso"
+  text: "El curso al que esta asignado este desafio."
+instrColType:
+  title: "Tipo"
+  text: "Practica: los estudiantes reciben retroalimentacion tras cada fase. Evaluacion: la retroalimentacion se retiene hasta la finalizacion."
+instrColVisibility:
+  title: "Visibilidad"
+  text: "Los desafios publicos estan disponibles para todos los suscritos al curso. Los desafios privados solo son visibles para su creador."
+instrColSubmissions:
+  title: "Entregas"
+  text: "Numero total de sesiones de estudiantes para este desafio, incluyendo intentos en progreso y completados."
+instrColAvgGrade:
+  title: "Nota media"
+  text: "Nota media en todas las sesiones completadas de estudiantes, combinando las puntuaciones de encuadre, juicio y direccion."
+instrColStatus:
+  title: "Estado"
+  text: "Ciclo de vida del desafio: Borrador (aun no visible), Publicado (activo) o Archivado (oculto)."
+instrColActions:
+  title: "Acciones"
+  text: "Acciones disponibles: Editar, Vista previa, Ver estadisticas o Eliminar."

@@ -11,7 +11,8 @@
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
   <style>
-    .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; }
+    .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; min-width: 0; }
+    .run-layout > div { min-width: 0; overflow: hidden; }
     .problem-panel { background: #f8f9ff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--primary); }
     .problem-panel h4 { color: var(--primary); font-size: 14px; margin-bottom: 8px; }
     .instructions-bar { background: #e0f2f1; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: var(--teal); display: flex; align-items: flex-start; gap: 8px; }
@@ -24,8 +25,10 @@
     .cycle-num { background: var(--primary); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
     .submit-area { display: flex; align-items: center; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
     .cycle-indicator { font-size: 13px; color: var(--text-secondary); background: #f5f5f5; padding: 6px 12px; border-radius: var(--radius); }
-    .ai-output { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+    .ai-output { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; overflow: hidden; }
     .ai-output-label { font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 8px; text-transform: uppercase; }
+    #ai-solution-content { max-height: 400px; overflow-y: auto; overflow-x: auto; white-space: pre-wrap; word-break: break-word; font-size: 14px; line-height: 1.6; }
+    #ai-solution-content pre, #ai-solution-content code { white-space: pre; overflow-x: auto; }
     .divider-line { border: none; border-top: 1px dashed var(--border); margin: 16px 0; }
 
     /* Mode banner */
@@ -37,6 +40,7 @@
     .mc-option { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; cursor: pointer; transition: all .15s; }
     .mc-option:hover { border-color: var(--primary); background: #f8f9ff; }
     .mc-option.selected { border-color: var(--primary); background: #e8eaf6; }
+    .mc-option.disabled { opacity: 0.6; pointer-events: none; }
     .mc-check { width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 3px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; transition: all .15s; }
     .mc-option.selected .mc-check { border-color: var(--primary); background: var(--primary); }
     .mc-label { font-size: 14px; }
@@ -90,29 +94,17 @@
     .cycle-log-entry:last-child { border-bottom: none; }
     .cycle-log-label { font-weight: 600; color: var(--primary); font-size: 11px; text-transform: uppercase; }
 
-    /* Sim controls */
-    .sim-step-icon { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #e0e0e0; color: #757575; font-size: 12px; font-weight: 700; cursor: pointer; border: 1.5px solid #bdbdbd; margin-left: 8px; transition: all .2s; }
-    .sim-step-icon:hover { background: #bdbdbd; color: #424242; transform: scale(1.15); }
-    .sim-step-icon.done { background: #c8e6c9; color: #2e7d32; border-color: #a5d6a7; cursor: default; }
-    .sim-step-icon.active { background: #fff3e0; color: #ef6c00; border-color: #ffcc80; animation: simPulse 1s infinite; }
-    @keyframes simPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(239,108,0,.3); } 50% { box-shadow: 0 0 0 6px rgba(239,108,0,0); } }
+    /* LLM status */
     .llm-status { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #1a237e 0%, #00695c 100%); color: #fff; padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 500; display: none; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.25); z-index: 300; }
     .llm-status.visible { display: inline-flex; }
     .llm-spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .sim-hidden { display: none; }
     .sim-reveal { animation: simFadeIn .5s ease-out; }
     @keyframes simFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Scenario picker */
-    .sim-panel { background: linear-gradient(135deg, #f5f5f5, #eeeeee); border: 1.5px solid #bdbdbd; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #616161; flex-wrap: wrap; }
-    .sim-panel strong { color: #424242; }
-    .sim-panel .sim-badge { background: #ef6c00; color: #fff; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-    .sim-panel select { padding: 4px 8px; border: 1.5px solid #bdbdbd; border-radius: 4px; font-size: 13px; background: #fff; cursor: pointer; }
-    .toggle-group { display: flex; border: 1.5px solid #bdbdbd; border-radius: 4px; overflow: hidden; }
-    .toggle-btn { padding: 4px 12px; font-size: 12px; font-weight: 600; border: none; background: #fff; cursor: pointer; transition: all .15s; color: #616161; }
-    .toggle-btn.active { background: var(--primary); color: #fff; }
-    .toggle-btn:hover:not(.active) { background: #e8eaf6; }
+    /* Error toast */
+    .error-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #c62828; color: #fff; padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 500; display: none; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.25); z-index: 301; cursor: pointer; }
+    .error-toast.visible { display: inline-flex; }
 
     /* Assessment deferred feedback at completion */
     .deferred-feedback-section { margin-top: 16px; }
@@ -120,16 +112,16 @@
     .deferred-feedback-item { margin-bottom: 12px; }
     .deferred-feedback-item .dfb-label { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
 
+    /* Instructor preview banner */
+    .preview-banner { padding: 12px 20px; border-radius: var(--radius); font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px; margin-bottom: 16px; background: #fff3e0; color: #e65100; border: 2px solid #ffcc80; }
+    .preview-banner .preview-icon { font-size: 20px; }
+
     /* Responsive: challenge-run */
     @media (max-width: 768px) {
       .run-layout { grid-template-columns: 1fr !important; }
       .summary-panel { position: static !important; order: -1; }
-      .sim-panel { flex-direction: column; align-items: stretch; }
-      .sim-panel select { width: 100%; }
-      .sim-panel .btn { margin-left: 0 !important; }
     }
     @media (max-width: 480px) {
-      .sim-panel { padding: 10px 12px; gap: 8px; font-size: 12px; }
       .mode-banner { padding: 8px 12px; font-size: 13px; }
       .problem-panel { padding: 14px; }
       .code-block { padding: 12px; font-size: 12px; }
@@ -148,567 +140,1068 @@
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
-      <span id="user-name">Sarah Cohen</span>
-      <a href="profile.html"><div class="avatar" id="user-avatar">SC</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userName">Student</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar">S</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
     </div>
   </header>
 
   <main class="page">
-    <!-- Scenario Picker -->
-    <div class="sim-panel">
-      <span class="sim-badge" data-t="simulator">Simulator</span>
-      <select id="challenge-picker" onchange="onPickerChange()">
-        <optgroup label="Sorting Pipeline for Sensor Data">
-          <option value="sorting-mc-practice">Sorting &mdash; MC</option>
-          <option value="sorting-oe-practice">Sorting &mdash; Open-Ended</option>
-        </optgroup>
-        <optgroup label="Query Optimization for E-Commerce">
-          <option value="sql-mc-practice">SQL Query &mdash; MC</option>
-          <option value="sql-oe-practice">SQL Query &mdash; Open-Ended</option>
-        </optgroup>
-        <optgroup label="API Rate Limiter for Banking App">
-          <option value="ratelimiter-mc-practice">Rate Limiter &mdash; MC</option>
-          <option value="ratelimiter-oe-practice">Rate Limiter &mdash; Open-Ended</option>
-        </optgroup>
-      </select>
-      <div class="toggle-group">
-        <button class="toggle-btn active" onclick="setMode('practice', this)" data-t="practice">Practice</button>
-        <button class="toggle-btn" onclick="setMode('assessment', this)" data-t="assessment">Assessment</button>
+    <div id="scenario-content">
+      <div class="card" style="text-align:center;padding:40px">
+        <div class="llm-spinner" style="width:32px;height:32px;border-width:3px;margin:0 auto 16px;border-color:rgba(26,35,126,.2);border-top-color:var(--primary)"></div>
+        <p class="text-muted" data-t="loading">Loading...</p>
       </div>
-      <button class="btn btn-sm btn-outline" onclick="loadScenario()" style="margin-left:auto;">&#8635; <span data-t="reset">Reset</span></button>
     </div>
-
-    <!-- Dynamic content rendered here -->
-    <div id="scenario-content"></div>
   </main>
 
   <!-- LLM Status -->
   <div class="llm-status" id="llm-status">
     <div class="llm-spinner"></div>
-    <span id="llm-status-text">Generating...</span>
+    <span id="llm-status-text" data-t="generating">Generating...</span>
+  </div>
+
+  <!-- Error Toast -->
+  <div class="error-toast" id="error-toast" onclick="this.classList.remove('visible')">
+    <span id="error-toast-text" data-t="error">Error</span>
   </div>
 
   <script>
-// Check auth
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-}).catch(() => window.location.href = '/login.html');
+'use strict';
 
-    // ══════════════════════════════════════════════════════════
-    // STATE
-    // ══════════════════════════════════════════════════════════
-    let currentMode = 'practice';
-    let simSteps = [];
-    let simIndex = 0;
+// ================================================================
+// INSTRUCTOR PREVIEW DETECTION
+// ================================================================
+const _urlParams = new URLSearchParams(window.location.search);
+const isInstructorPreview = _urlParams.get('preview') === 'instructor';
 
-    // ══════════════════════════════════════════════════════════
-    // PICKER CONTROLS
-    // ══════════════════════════════════════════════════════════
-    function onPickerChange() { loadScenario(); }
-    function setMode(mode, btn) {
-      currentMode = mode;
-      btn.parentElement.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      loadScenario();
+// Swap nav links and role badge for instructor preview
+if (isInstructorPreview) {
+  document.addEventListener('DOMContentLoaded', function() {
+    const nav = document.querySelector('header.topnav nav');
+    if (nav) {
+      nav.innerHTML =
+        '<a href="challenge-list-instructor.html" class="active" data-t="challenges">Challenges</a>' +
+        '<a href="course-catalog-instructor.html" data-t="courses">Courses</a>' +
+        '<a href="instructor-analytics.html" data-t="analytics">Analytics</a>';
+    }
+    // Swap role badge from Student to Instructor
+    const roleBadge = document.querySelector('header.topnav .user-area [data-t="student"]');
+    if (roleBadge) {
+      roleBadge.setAttribute('data-t', 'instructor');
+      roleBadge.textContent = 'Instructor';
+      roleBadge.style.background = '#e0f2f1';
+      roleBadge.style.color = '#00695c';
+    }
+  });
+}
+
+// ================================================================
+// AUTH CHECK
+// ================================================================
+let currentUser = null;
+(async function authCheck() {
+  try {
+    const me = await API.auth.me();
+    currentUser = me.user || me;
+    if (currentUser.name) document.getElementById('userName').textContent = currentUser.name;
+    if (currentUser.name) {
+      const parts = currentUser.name.split(' ');
+      document.getElementById('userAvatar').textContent =
+        parts.map(p => p[0]).join('').toUpperCase().slice(0, 2);
+    }
+  } catch (e) {
+    window.location.href = '/login.html';
+    return;
+  }
+  init();
+})();
+
+// ================================================================
+// STATE
+// ================================================================
+let runState = {
+  runId: null,
+  challengeId: null,
+  rawProblem: '',
+  aiSolution: '',
+  framingOptions: null,
+  judgingOptions: null,
+  steeringOptions: null,
+  responseType: 'mc',     // 'mc' or 'open-ended' (phase1)
+  phase2ResponseType: 'mc', // 'mc' or 'open-ended' (phase2)
+  challengeType: 'practice',
+  maxCycles: 5,
+  currentCycle: 0,
+  phase: 'start',         // start | framing | judging | steering | complete
+  challengeTitle: '',
+  challengeCourse: '',
+  challengeSubject: '',
+  // Collected feedback for assessment deferred display
+  collectedFeedback: { framing: null, cycles: [] },
+};
+
+// ================================================================
+// HELPERS
+// ================================================================
+function el(id) { return document.getElementById(id); }
+
+const challengeListUrl = isInstructorPreview ? 'challenge-list-instructor.html' : 'challenge-list.html';
+
+function previewBannerHtml() {
+  if (!isInstructorPreview) return '';
+  return '<div class="preview-banner"><span class="preview-icon">&#128065;</span> <span data-t="instructorPreview">' + (t('instructorPreview') || 'Instructor Preview') + '</span> &mdash; <span data-t="previewNotRecorded">' + (t('previewNotRecorded') || 'This run will not be recorded') + '</span></div>';
+}
+
+function reveal(id) {
+  const e = el(id);
+  if (e) {
+    e.style.display = '';
+    e.classList.add('sim-reveal');
+    e.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function hide(id) {
+  const e = el(id);
+  if (e) e.style.display = 'none';
+}
+
+function showLLM(text) {
+  el('llm-status-text').textContent = text;
+  el('llm-status').classList.add('visible');
+}
+
+function hideLLM() {
+  el('llm-status').classList.remove('visible');
+}
+
+function showError(msg) {
+  el('error-toast-text').textContent = msg;
+  el('error-toast').classList.add('visible');
+  setTimeout(() => el('error-toast').classList.remove('visible'), 6000);
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function formatSolution(text) {
+  if (!text) return '';
+  // If it looks like it contains HTML, return as-is
+  if (/<[a-z][\s\S]*>/i.test(text)) return text;
+  // Otherwise wrap in a code block or paragraphs
+  if (text.includes('\n')) {
+    return '<div class="code-block">' + escHtml(text) + '</div>';
+  }
+  return '<p>' + escHtml(text) + '</p>';
+}
+
+function formatFeedback(fb) {
+  if (!fb) return '';
+  if (typeof fb === 'string') return '<p>' + escHtml(fb) + '</p>';
+  if (fb.message) return '<p>' + escHtml(fb.message) + '</p>';
+  if (fb.html) return fb.html;
+  return '<p>' + escHtml(JSON.stringify(fb)) + '</p>';
+}
+
+function setStepper(phase, state) {
+  const s = el('stepper-p' + phase);
+  if (s) s.className = 'step-item ' + state;
+  if (state === 'done') {
+    const n = el('stepper-p' + phase + '-num');
+    if (n) n.innerHTML = '&#10003;';
+  }
+}
+
+function toggleMC(opt) {
+  if (opt.classList.contains('disabled')) return;
+  opt.classList.toggle('selected');
+  // Deselect "done" if selecting an issue
+  const container = opt.closest('.cycle-body') || opt.closest('.card');
+  if (container) {
+    const d = container.querySelector('.btn-done-judging.selected');
+    if (d && opt.classList.contains('selected')) d.classList.remove('selected');
+  }
+}
+
+function toggleDoneBtn(btn) {
+  btn.classList.toggle('selected');
+  if (btn.classList.contains('selected')) {
+    const container = btn.closest('.cycle-body') || btn.closest('.card');
+    if (container) container.querySelectorAll('.mc-option.selected').forEach(o => o.classList.remove('selected'));
+  }
+}
+
+function toggleFeedback(toggle) {
+  const body = toggle.nextElementSibling;
+  const arrow = toggle.querySelector('.arrow');
+  if (body) body.classList.toggle('collapsed');
+  if (arrow) arrow.classList.toggle('collapsed');
+}
+
+function toggleCycle(id) {
+  const elem = el(id);
+  if (elem) elem.classList.toggle('cycle-collapsed');
+}
+
+function getSelectedLetters(containerId) {
+  const container = el(containerId);
+  if (!container) return [];
+  return Array.from(container.querySelectorAll('.mc-option.selected')).map(o => {
+    const strong = o.querySelector('strong');
+    if (strong) return strong.textContent.replace(/[()]/g, '').trim();
+    return o.dataset.letter || '';
+  }).filter(Boolean);
+}
+
+function getOESections(containerId) {
+  const container = el(containerId);
+  if (!container) return [];
+  const sections = [];
+  container.querySelectorAll('.section-item').forEach(item => {
+    const nameInput = item.querySelector('.section-header input');
+    const textarea = item.querySelector('.section-body textarea');
+    if (nameInput && textarea) {
+      sections.push({ name: nameInput.value, text: textarea.value });
+    }
+  });
+  return sections;
+}
+
+function addSection(listId) {
+  const list = el(listId);
+  if (!list) return;
+  const item = document.createElement('div');
+  item.className = 'section-item';
+  item.innerHTML = '<div class="section-header"><input type="text" placeholder="Section title"><button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div><div class="section-body"><textarea placeholder="Describe your refinement..."></textarea></div>';
+  list.appendChild(item);
+}
+
+function updateSummary(opts) {
+  if (opts.rawProblem) {
+    const sec = el('summary-raw');
+    if (sec) sec.textContent = opts.rawProblem;
+  }
+  if (opts.solution) {
+    const sec = el('summary-sol-section');
+    if (sec) sec.style.display = '';
+    const sol = el('summary-solution');
+    if (sol) sol.textContent = typeof opts.solution === 'string' ? opts.solution.slice(0, 300) : '';
+  }
+  if (opts.entry) {
+    const logSec = el('summary-log-section');
+    if (logSec) logSec.style.display = '';
+    const log = el('summary-log');
+    if (log) {
+      const d = document.createElement('div');
+      d.className = 'cycle-log-entry sim-reveal';
+      d.innerHTML = '<div class="cycle-log-label">' + escHtml(opts.entry.label) + '</div><div>' + escHtml(opts.entry.text) + '</div>';
+      log.appendChild(d);
+    }
+  }
+}
+
+function renderFeedbackPanel(title, grade, bodyHtml, startCollapsed) {
+  const cls = startCollapsed ? ' collapsed' : '';
+  const gradeHtml = grade ? ' <span class="grade grade-' + grade + '" style="width:22px;height:22px;font-size:11px;margin-left:8px">' + escHtml(grade) + '</span>' : '';
+  return '<div class="feedback-panel" style="margin-bottom:8px">' +
+    '<div class="feedback-toggle" onclick="toggleFeedback(this)">' +
+    '<span>' + escHtml(title) + gradeHtml + '</span>' +
+    '<span class="arrow' + cls + '">&#9660;</span>' +
+    '</div>' +
+    '<div class="feedback-body' + cls + '">' + bodyHtml + '</div>' +
+    '</div>';
+}
+
+function disableInputsIn(containerId) {
+  const container = el(containerId);
+  if (!container) return;
+  container.querySelectorAll('.mc-option').forEach(o => o.classList.add('disabled'));
+  container.querySelectorAll('textarea, input').forEach(o => o.setAttribute('readonly', 'readonly'));
+  container.querySelectorAll('button:not(.feedback-toggle)').forEach(o => { o.disabled = true; o.style.opacity = '0.5'; });
+}
+
+// ================================================================
+// INITIALIZATION
+// ================================================================
+async function init() {
+  const params = new URLSearchParams(window.location.search);
+  const challengeId = params.get('challengeId');
+  const resumeRunId = params.get('runId');
+
+  if (resumeRunId) {
+    await resumeRun(resumeRunId);
+  } else if (challengeId) {
+    renderStartScreen(challengeId);
+  } else {
+    el('scenario-content').innerHTML =
+      '<div class="card" style="text-align:center;padding:40px"><h3>No challenge specified</h3><p class="text-muted">Please select a challenge from the <a href="' + challengeListUrl + '">challenge list</a>.</p></div>';
+  }
+}
+
+// ================================================================
+// RESUME AN EXISTING RUN
+// ================================================================
+async function resumeRun(runId) {
+  showLLM(t('loading') || 'Loading run...');
+  try {
+    const state = await API.runs.get(runId);
+    hideLLM();
+
+    if (!state || !state.challenge || !state.run) {
+      showError(t('errorLoadingRun') || 'Failed to load run data. Please try again.');
+      return;
     }
 
-    // ══════════════════════════════════════════════════════════
-    // LOAD & RENDER SCENARIO
-    // ══════════════════════════════════════════════════════════
-    function loadScenario() {
-      const data = getActiveData();
-      const baseId = document.getElementById('challenge-picker').value;
-      // Derive scenario ID from picker + mode
-      const parts = baseId.split('-');
-      const challengeKey = parts.slice(0, -2).join('-');
-      const respType = parts[parts.length - 2];
-      const scenarioId = challengeKey + '-' + respType + '-' + currentMode;
+    runState.runId = runId;
+    runState.challengeId = state.challenge.id;
+    runState.challengeTitle = state.challenge.title || '';
+    runState.challengeType = state.challenge.challengeType || 'practice';
+    runState.maxCycles = state.challenge.maxCycles || 5;
+    runState.rawProblem = state.rawProblem || '';
+    runState.aiSolution = state.run.ai_solution || '';
+    runState.currentCycle = state.run.current_cycle || 0;
 
-      const scenario = data.scenarios[scenarioId];
-      if (!scenario) { document.getElementById('scenario-content').innerHTML = '<p>Scenario not found: ' + scenarioId + '</p>'; return; }
+    const rc = state.challenge.responseConfig || {};
+    const _rtVal = rc.phase1 || 'mc';
+    runState.responseType = (_rtVal === 'open-ended' || _rtVal === 'oe') ? 'open-ended' : 'mc';
+    runState.phase2ResponseType = (rc.phase2 === 'open-ended' || rc.phase2 === 'oe') ? 'open-ended' : 'mc';
 
-      const challenge = data.challenges[scenario.challengeId];
-      const variant = challenge[scenario.responseType];
-      const mode = scenario.mode;
-      const isOE = scenario.responseType === 'oe';
-      const isPractice = mode === 'practice';
-
-      // Update user
-      document.getElementById('user-name').textContent = scenario.user.name;
-      document.getElementById('user-avatar').textContent = scenario.user.initials;
-
-      // Generate HTML
-      const html = renderAll(challenge, variant, mode, isOE, isPractice);
-      document.getElementById('scenario-content').innerHTML = html;
-
-      // Build sim steps
-      buildSteps(challenge, variant, mode, isOE, isPractice);
-      simIndex = 0;
-    }
-
-    // ══════════════════════════════════════════════════════════
-    // HTML RENDERING
-    // ══════════════════════════════════════════════════════════
-    function renderAll(ch, v, mode, isOE, isPractice) {
-      let h = '';
-      // Page header
-      h += `<div class="page-header flex-between">
-        <div><h1>${ch.title}</h1><p>${ch.course} &bull; ${ch.subject}</p></div>
-        <a href="challenge-list.html" class="btn btn-outline">&#10005; ${t('exit')}</a>
-      </div>`;
-
-      // Mode banner
-      if (isPractice) {
-        h += `<div class="mode-banner practice"><span style="font-size:20px">&#9881;</span><span>${t('practiceMode')}</span> &mdash; ${t('practiceModeDesc')}</div>`;
+    if (state.run.status === 'completed') {
+      // Show completed state
+      const grades = state.run.grades || {};
+      renderCompletedScreen(grades, state);
+    } else {
+      // For simplicity, show where the user left off
+      // If framing not submitted, restart framing
+      if (!state.run.framing_response) {
+        renderStartScreen(runState.challengeId);
       } else {
-        h += `<div class="mode-banner assessment"><span style="font-size:20px">&#9888;</span><span>${t('assessmentMode')}</span> &mdash; ${t('assessmentModeDesc')}</div>`;
+        // Resume at current cycle
+        renderPhase2(state);
       }
+    }
+  } catch (err) {
+    hideLLM();
+    showError(err.message || 'Failed to load run');
+    el('scenario-content').innerHTML =
+      '<div class="card" style="text-align:center;padding:40px"><h3>Failed to load run</h3><p class="text-muted">' + escHtml(err.message) + '</p><a href="' + challengeListUrl + '" class="btn btn-outline">' + t('backToChallenges') + '</a></div>';
+  }
+}
 
-      // Stepper
-      h += `<div class="stepper">
-        <div class="step-item" id="stepper-p1"><div class="step-num" id="stepper-p1-num">1</div><div>${t('phase1')}</div></div>
-        <div class="step-item" id="stepper-p2"><div class="step-num" id="stepper-p2-num">2</div><div>${t('phase2')}</div></div>
-      </div>`;
+// ================================================================
+// START SCREEN
+// ================================================================
+function renderStartScreen(challengeId) {
+  runState.challengeId = challengeId;
+  const isPractice = runState.challengeType === 'practice';
 
-      // Start card
-      h += `<div id="start-card" class="card" style="text-align:center;padding:40px">
-        <h3 style="margin-bottom:12px;color:var(--text-secondary)">${t('challengeReady')}</h3>
-        <p class="text-muted mb-16">${t('clickToGenerate')}</p>
-        <span class="sim-step-icon" onclick="nextSim()" id="sim-icon-0">&#9654;</span>
-      </div>`;
+  let h = '';
+  h += '<div class="page-header flex-between">';
+  h += '<div><h1 data-t="challengeRun">' + t('challengeRun') + '</h1><p class="text-muted">' + t('clickToGenerate') + '</p></div>';
+  h += '<a href="' + challengeListUrl + '" class="btn btn-outline">&#10005; ' + t('exit') + '</a>';
+  h += '</div>';
 
-      // Phase 1
-      h += `<div id="phase1" class="sim-hidden">`;
-      h += `<div class="card" style="border-left:4px solid var(--primary)">
-        <h3 style="margin-bottom:12px" data-tooltip="framingPhase"><span style="color:var(--primary)">${t('phase1')} (${isOE ? t('openEnded') : t('multipleChoice')})</span></h3>`;
-      h += `<div class="instructions-bar" style="background:#e8f5e9;color:#2e7d32"><strong>${t('hint')}:</strong> ${v.framing.hint}</div>`;
-      h += `<div class="problem-panel"><h4>${t('rawProblemStatement')} ${isOE ? '(read-only base)' : ''} <span class="help-icon" data-tooltip="This problem was generated by the LLM. It intentionally contains missing information and ambiguities.">?</span></h4><p>${ch.rawProblem}</p></div>`;
+  h += previewBannerHtml();
 
-      // Framing response area
-      if (isOE) {
-        h += `<div id="phase1-options">`;
-        h += `<h4 style="font-size:14px;margin-bottom:8px;color:var(--teal)">${t('refinementSections')}</h4>`;
-        h += `<div class="section-list">`;
-        v.framing.sections.forEach(s => {
-          h += `<div class="section-item"><div class="section-header"><input type="text" value="${s.name}" readonly><button class="remove-btn">&times;</button></div><div class="section-body"><textarea readonly>${s.text}</textarea></div></div>`;
-        });
-        h += `</div><button class="add-section-btn">${t('addRefinementSection')}</button>`;
-        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-1">&#9654;</span><span class="text-sm text-muted">${t('submitFraming')} (${v.framing.sections.length})</span></div>`;
-        h += `</div>`;
-      } else {
-        h += `<div id="phase1-gen-btn" style="text-align:center;margin-top:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-1">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">${t('generateFraming')}</span></div>`;
-        h += `<div id="phase1-options" class="sim-hidden">`;
-        h += `<p class="text-sm text-muted mb-8"><strong>${t('selectRefinements')}</strong></p>`;
-        v.framing.options.forEach((opt, i) => {
-          h += `<div class="mc-option" onclick="toggleMC(this)" data-idx="${i}"><div class="mc-check">&#10003;</div><div><div class="mc-label"><strong>(${opt.letter})</strong> ${opt.text}</div></div></div>`;
-        });
-        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-2">&#9654;</span><span class="text-sm text-muted">${t('submitFraming')} &mdash; ${v.framing.studentSelections.map(i => '(' + v.framing.options[i].letter + ')').join(', ')}</span></div>`;
-        h += `</div>`;
-      }
-      h += `</div>`; // end card
+  h += '<div class="stepper">';
+  h += '<div class="step-item" id="stepper-p1"><div class="step-num" id="stepper-p1-num">1</div><div>' + t('phase1') + '</div></div>';
+  h += '<div class="step-item" id="stepper-p2"><div class="step-num" id="stepper-p2-num">2</div><div>' + t('phase2') + '</div></div>';
+  h += '</div>';
 
-      // Framing feedback
-      h += `<div id="phase1-feedback" class="sim-hidden phase-feedback">`;
-      h += renderFeedbackPanel(t('framingFeedback'), v.framing.feedback.grade, v.framing.feedback.html);
-      h += `</div>`;
-      h += `</div>`; // end phase1
+  h += '<div id="start-card" class="card" style="text-align:center;padding:40px">';
+  h += '<h3 style="margin-bottom:12px;color:var(--text-secondary)">' + t('challengeReady') + '</h3>';
+  h += '<p class="text-muted mb-16">' + t('clickToGenerate') + '</p>';
+  h += '<button class="btn btn-primary" onclick="startRun()">&#9654; ' + t('startChallenge') + '</button>';
+  h += '</div>';
 
-      // Phase 2
-      h += `<div id="phase2" class="sim-hidden"><div class="run-layout"><div>`;
-      h += `<div class="instructions-bar"><strong>${t('instructions')}:</strong> Review the AI&rsquo;s output each cycle. ${isOE ? t('describeIssues') + ' / ' + t('writeCorrections') : t('selectIssues') + ' / ' + t('selectCorrections')}.</div>`;
+  el('scenario-content').innerHTML = h;
+}
 
-      // Initial AI solution
-      h += `<div id="ai-solution" class="sim-hidden"><div class="ai-output"><div class="ai-output-label">${t('aiSolution')}</div>${v.aiSolution.html}</div></div>`;
+// ================================================================
+// START RUN (API call)
+// ================================================================
+async function startRun() {
+  const challengeId = runState.challengeId;
+  if (!challengeId) { showError('No challenge ID'); return; }
 
-      // Cycles
-      v.cycles.forEach((cycle, ci) => {
-        const isLast = cycle.judging.doneSelected;
-        const label = isLast ? `${t('cycle')} ${ci + 1} ${t('final')}` : `${t('cycle')} ${ci + 1}`;
-        h += `<div id="cycle-${ci}" class="sim-hidden"><div class="cycle-header" onclick="toggleCycle('cycle-${ci}')"><span class="cycle-num">${ci + 1}</span><h3>${label}</h3><span class="cycle-indicator">${t('cycleOf').replace('{0}', ci + 1).replace('{1}', ch.maxCycles)}</span><span class="collapse-arrow">&#9660;</span></div><div class="cycle-body">`;
+  showLLM(t('generatingProblem') || 'Generating raw problem from subject tree...');
+  const startBtn = document.querySelector('#start-card .btn');
+  if (startBtn) { startBtn.disabled = true; startBtn.textContent = t('loading') || 'Loading...'; }
 
-        // AI update (for cycles > 0)
-        if (cycle.aiUpdate) {
-          h += `<div id="cycle-${ci}-ai-gen" style="text-align:center;margin-bottom:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-ai-${ci}">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">${t('generateUpdatedAi')}</span></div>`;
-          h += `<div id="cycle-${ci}-ai" class="sim-hidden"><div class="ai-output"><div class="ai-output-label">${t('aiOutputUpdated')}</div>${cycle.aiUpdate.html}</div></div>`;
-        }
+  try {
+    const data = await API.runs.start(challengeId);
+    hideLLM();
 
-        // Judging gen button (MC only)
-        if (!isOE) {
-          h += `<div id="cycle-${ci}-judge-gen" style="text-align:center;margin-top:16px"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jgen-${ci}">&#9654;</span><span class="text-sm text-muted" style="margin-left:8px">${t('generateJudging')}</span></div>`;
-        }
+    runState.runId = data.runId;
+    runState.rawProblem = data.rawProblem;
+    runState.framingOptions = data.framingOptions;
+    const _rtVal2 = data.responseType || 'mc';
+    runState.responseType = (_rtVal2 === 'open-ended' || _rtVal2 === 'oe') ? 'open-ended' : 'mc';
+    runState.maxCycles = data.maxCycles || 5;
+    runState.challengeType = data.challengeType || 'practice';
 
-        // Judging area
-        h += `<div id="cycle-${ci}-judging" class="${isOE ? '' : 'sim-hidden'}">`;
-        h += `<span class="substep-label substep-judge" data-tooltip="judgingPhase">${t('judgingSubstep')}: ${isOE ? t('describeIssues') : t('selectIssues')}</span>`;
+    renderFramingPhase();
+  } catch (err) {
+    hideLLM();
+    showError(err.message || 'Failed to start challenge run');
+    if (startBtn) { startBtn.disabled = false; startBtn.textContent = '▶ ' + (t('startChallenge') || 'Start'); }
+  }
+}
 
-        if (isOE) {
-          h += `<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>${t('hint')}:</strong> ${t('describeIssues')}</div>`;
-          if (cycle.judging.sections && cycle.judging.sections.length > 0) {
-            h += `<div class="section-list">`;
-            cycle.judging.sections.forEach(s => {
-              h += `<div class="section-item"><div class="section-header"><input type="text" value="${s.name}" readonly></div><div class="section-body"><textarea readonly>${s.text}</textarea></div></div>`;
-            });
-            h += `</div>`;
-          }
-        } else {
-          h += `<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>${t('hint')}:</strong> ${t('selectIssues')}</div>`;
-          cycle.judging.options.forEach((opt, oi) => {
-            h += `<div class="mc-option" onclick="toggleMC(this)" data-idx="${oi}"><div class="mc-check">&#10003;</div><div><div class="mc-label"><strong>(${opt.letter})</strong> ${opt.text}</div></div></div>`;
-          });
-        }
+// ================================================================
+// PHASE 1 - FRAMING
+// ================================================================
+function renderFramingPhase() {
+  runState.phase = 'framing';
+  const isOE = runState.responseType === 'open-ended';
+  const isPractice = runState.challengeType === 'practice';
 
-        // "Solution is complete" button
-        h += `<button class="btn-done-judging" id="done-btn-${ci}" onclick="toggleDoneBtn(this)">&#10003; ${t('solutionComplete')}</button>`;
+  let h = '';
 
-        // Submit judging
-        h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-jsub-${ci}">&#9654;</span><span class="text-sm text-muted">${t('submit')}</span></div>`;
-        h += `</div>`; // end judging
+  // Page header
+  h += '<div class="page-header flex-between">';
+  h += '<div><h1>' + escHtml(runState.challengeTitle || t('challengeRun')) + '</h1>';
+  if (runState.challengeCourse) h += '<p>' + escHtml(runState.challengeCourse) + ' &bull; ' + escHtml(runState.challengeSubject) + '</p>';
+  h += '</div>';
+  h += '<a href="' + challengeListUrl + '" class="btn btn-outline">&#10005; ' + t('exit') + '</a>';
+  h += '</div>';
 
-        // Steering area (only if not done)
-        if (cycle.steering) {
-          h += `<div id="cycle-${ci}-steering" class="sim-hidden">`;
-          h += `<hr class="divider-line">`;
-          h += `<span class="substep-label substep-steer" data-tooltip="steeringPhase">${t('steeringSubstep')}: ${isOE ? t('writeCorrections') : t('selectCorrections')}</span>`;
+  h += previewBannerHtml();
 
-          if (isOE) {
-            h += `<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>${t('hint')}:</strong> ${t('writeCorrections')}</div>`;
-            h += `<div class="section-list">`;
-            cycle.steering.sections.forEach(s => {
-              h += `<div class="section-item"><div class="section-header"><input type="text" value="${s.name}" readonly></div><div class="section-body"><textarea readonly>${s.text}</textarea></div></div>`;
-            });
-            h += `</div>`;
-          } else {
-            h += `<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>${t('hint')}:</strong> ${t('selectCorrections')}</div>`;
-            cycle.steering.options.forEach((opt, oi) => {
-              h += `<div class="mc-option" onclick="toggleMC(this)" data-idx="${oi}"><div class="mc-check">&#10003;</div><div><div class="mc-label"><strong>(${opt.letter})</strong> ${opt.text}</div></div></div>`;
-            });
-          }
+  // Mode banner
+  if (isPractice) {
+    h += '<div class="mode-banner practice"><span style="font-size:20px">&#9881;</span><span>' + t('practiceMode') + '</span> &mdash; ' + t('practiceModeDesc') + '</div>';
+  } else {
+    h += '<div class="mode-banner assessment"><span style="font-size:20px">&#9888;</span><span>' + t('assessmentMode') + '</span> &mdash; ' + t('assessmentModeDesc') + '</div>';
+  }
 
-          h += `<div class="submit-area"><span class="sim-step-icon" onclick="nextSim()" id="sim-icon-ssub-${ci}">&#9654;</span><span class="text-sm text-muted">${t('submit')}</span></div>`;
-          h += `</div>`; // end steering
-        }
+  // Stepper
+  h += '<div class="stepper">';
+  h += '<div class="step-item active" id="stepper-p1"><div class="step-num" id="stepper-p1-num">1</div><div>' + t('phase1') + '</div></div>';
+  h += '<div class="step-item" id="stepper-p2"><div class="step-num" id="stepper-p2-num">2</div><div>' + t('phase2') + '</div></div>';
+  h += '</div>';
 
-        // Cycle feedback
-        h += `<div id="cycle-${ci}-feedback" class="sim-hidden phase-feedback">`;
-        h += renderFeedbackPanel(`${t('judgingFeedback')} (${t('cycle')} ${ci + 1})`, cycle.judging.feedback.grade, cycle.judging.feedback.html, false);
-        if (cycle.steering) {
-          h += renderFeedbackPanel(`${t('steeringFeedback')} (${t('cycle')} ${ci + 1})`, cycle.steering.feedback.grade, cycle.steering.feedback.html, true);
-        }
-        h += `</div>`;
+  // Phase 1 card
+  h += '<div class="card" style="border-left:4px solid var(--primary)">';
+  h += '<h3 style="margin-bottom:12px"><span style="color:var(--primary)">' + t('phase1') + ' (' + (isOE ? t('openEnded') : t('multipleChoice')) + ')</span></h3>';
 
-        h += `</div></div>`; // end cycle-body, cycle
+  // Raw problem
+  h += '<div class="problem-panel"><h4>' + t('rawProblemStatement') + ' <span class="help-icon" data-tooltip="This is the AI-generated problem statement. Read it carefully to understand the context before framing your approach.">?</span></h4><p>' + escHtml(runState.rawProblem) + '</p></div>';
+
+  // Framing input area
+  h += '<div id="framing-input">';
+
+  if (isOE) {
+    h += '<h4 style="font-size:14px;margin-bottom:8px;color:var(--teal)">' + t('refinementSections') + ' <span class="help-icon" data-tooltip="Add sections to refine and restructure the problem. Each section should address a specific aspect — constraints, variables, sub-problems, or assumptions.">?</span></h4>';
+    h += '<div class="section-list" id="framing-sections">';
+    h += '<div class="section-item"><div class="section-header"><input type="text" placeholder="' + (t('sectionTitle') || 'Section title') + '"><button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div><div class="section-body"><textarea placeholder="' + (t('describeRefinement') || 'Describe your refinement...') + '"></textarea></div></div>';
+    h += '</div>';
+    h += '<button class="add-section-btn" onclick="addSection(\'framing-sections\')">+ ' + t('addRefinementSection') + '</button>';
+  } else {
+    // MC options
+    if (runState.framingOptions && runState.framingOptions.length > 0) {
+      h += '<p class="text-sm text-muted mb-8"><strong>' + t('selectRefinements') + '</strong></p>';
+      runState.framingOptions.forEach(function(opt) {
+        h += '<div class="mc-option" onclick="toggleMC(this)" data-letter="' + escHtml(opt.letter) + '">';
+        h += '<div class="mc-check">&#10003;</div>';
+        h += '<div><div class="mc-label"><strong>(' + escHtml(opt.letter) + ')</strong> ' + escHtml(opt.text) + '</div></div>';
+        h += '</div>';
       });
+    } else {
+      h += '<p class="text-muted">' + (t('noFramingOptions') || 'No framing options available.') + '</p>';
+    }
+  }
 
-      // Completion
-      h += renderCompletion(v, isPractice, isOE, ch);
+  // Submit button
+  h += '<div class="submit-area">';
+  h += '<button class="btn btn-primary" id="submit-framing-btn" onclick="submitFraming()">' + t('submitFraming') + '</button>';
+  h += '</div>';
 
-      h += `</div>`; // end left column
+  h += '</div>'; // end framing-input
+  h += '</div>'; // end card
 
-      // Right: Summary panel
-      h += `<div class="summary-panel"><div class="card">
-        <h3 style="margin-bottom:12px;font-size:15px">${t('sessionSummary')}</h3>
-        <div id="summary-status" style="display:none">
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:linear-gradient(135deg,#ede7f6,#e3f2fd);border-radius:var(--radius);margin-bottom:12px;font-size:12px;font-weight:600;color:var(--primary)">
-            <div class="llm-spinner" style="width:14px;height:14px;border-width:2px"></div>
-            <span id="summary-status-text">Summarizing...</span>
-          </div>
-        </div>
-        <div class="summary-section"><h5>${t('rawProblem')}</h5><div class="summary-raw">${ch.rawProblemShort}</div></div>
-        <div class="summary-section" id="summary-sol-section" style="display:none"><h5>${t('currentAiSolution')}</h5><div class="summary-solution" id="summary-solution">&mdash;</div></div>
-        <div class="summary-section" id="summary-log-section" style="display:none"><h5>${t('steeringHistory')}</h5><div class="cycle-log" id="summary-log"></div></div>
-      </div></div>`;
+  // Framing feedback area (hidden initially)
+  h += '<div id="framing-feedback" style="display:none"></div>';
 
-      h += `</div></div>`; // end run-layout, phase2
+  el('scenario-content').innerHTML = h;
+}
 
-      return h;
+// ================================================================
+// SUBMIT FRAMING
+// ================================================================
+async function submitFraming() {
+  const isOE = runState.responseType === 'open-ended';
+  let response;
+
+  if (isOE) {
+    const sections = getOESections('framing-sections');
+    if (sections.length === 0 || sections.every(s => !s.text.trim())) {
+      showError(t('pleaseProvideResponse') || 'Please provide at least one section with content.');
+      return;
+    }
+    response = { type: 'open-ended', sections: sections };
+  } else {
+    const selected = getSelectedLetters('framing-input');
+    if (selected.length === 0) {
+      showError(t('pleaseSelectOption') || 'Please select at least one option.');
+      return;
+    }
+    response = { type: 'mc', selectedLetters: selected };
+  }
+
+  const btn = el('submit-framing-btn');
+  if (btn) { btn.disabled = true; btn.textContent = t('loading') || 'Submitting...'; }
+  disableInputsIn('framing-input');
+
+  showLLM(t('evaluatingFraming') || 'Evaluating framing & generating AI solution...');
+
+  try {
+    const data = await API.runs.submitFraming(runState.runId, response);
+    hideLLM();
+
+    runState.aiSolution = data.aiSolution;
+    runState.currentCycle = data.currentCycle || 1;
+    runState.judgingOptions = data.judgingOptions;
+
+    // Store feedback for potential deferred display
+    runState.collectedFeedback.framing = {
+      feedback: data.framingFeedback,
+      grade: data.framingGrade,
+    };
+
+    // Show framing feedback (practice mode only -- server returns null for assessment)
+    if (data.framingFeedback) {
+      const fbHtml = renderFeedbackPanel(
+        t('framingFeedback'),
+        data.framingGrade,
+        formatFeedback(data.framingFeedback)
+      );
+      el('framing-feedback').innerHTML = fbHtml;
+      reveal('framing-feedback');
     }
 
-    function renderFeedbackPanel(title, grade, bodyHtml, startCollapsed) {
-      const cls = startCollapsed ? ' collapsed' : '';
-      return `<div class="feedback-panel" style="margin-bottom:8px">
-        <div class="feedback-toggle" onclick="toggleFeedback(this)">
-          <span>${title} <span class="grade grade-${grade}" style="width:22px;height:22px;font-size:11px;margin-left:8px">${grade}</span></span>
-          <span class="arrow${cls}">&#9660;</span>
-        </div>
-        <div class="feedback-body${cls}">${bodyHtml}</div>
-      </div>`;
-    }
+    setStepper(1, 'done');
 
-    function renderCompletion(v, isPractice, isOE, ch) {
-      const g = v.completion.grades;
-      let h = `<div id="completion" class="sim-hidden">
-        <div class="card" style="border-left:4px solid var(--success);margin-top:24px">
-        <h3 style="color:var(--success);margin-bottom:16px">&#10003; ${t('challengeComplete')}</h3>
-        <table style="font-size:14px;margin-bottom:16px"><thead><tr><th>${t('skill')}</th><th>${t('grade')}</th></tr></thead><tbody>
-          <tr><td>${t('framing')}</td><td><span class="grade grade-${g.framing}">${g.framing}</span></td></tr>
-          <tr><td>${t('judging')}</td><td><span class="grade grade-${g.judging}">${g.judging}</span></td></tr>
-          <tr><td>${t('steering')}</td><td><span class="grade grade-${g.steering}">${g.steering}</span></td></tr>
-        </tbody></table>
-        <div class="feedback-panel" style="background:#e8f5e9;border-color:var(--success)">
-          <div class="feedback-toggle" onclick="toggleFeedback(this)">
-            <span style="color:var(--success)">${t('summaryFeedback')}</span>
-            <span class="arrow">&#9660;</span>
-          </div>
-          <div class="feedback-body"><p class="text-sm">${v.completion.summary}</p></div>
-        </div>`;
+    // Transition to Phase 2 after a short delay
+    setTimeout(function() { renderPhase2Initial(); }, 800);
 
-      // Assessment: show deferred per-phase feedback at completion
-      if (!isPractice) {
-        h += `<div class="deferred-feedback-section"><h4>${t('detailedFeedback')}</h4>`;
-        h += `<div class="deferred-feedback-item"><div class="dfb-label">${t('framing')}</div>${renderFeedbackPanel(t('framing'), v.framing.feedback.grade, v.framing.feedback.html)}</div>`;
-        v.cycles.forEach((cycle, ci) => {
-          h += `<div class="deferred-feedback-item"><div class="dfb-label">${t('cycle')} ${ci + 1} &mdash; ${t('judging')}</div>${renderFeedbackPanel(t('judging'), cycle.judging.feedback.grade, cycle.judging.feedback.html)}</div>`;
-          if (cycle.steering) {
-            h += `<div class="deferred-feedback-item"><div class="dfb-label">${t('cycle')} ${ci + 1} &mdash; ${t('steering')}</div>${renderFeedbackPanel(t('steering'), cycle.steering.feedback.grade, cycle.steering.feedback.html)}</div>`;
-          }
-        });
-        h += `</div>`;
-      }
+  } catch (err) {
+    hideLLM();
+    showError(err.message || 'Failed to submit framing');
+    if (btn) { btn.disabled = false; btn.textContent = t('submitFraming'); }
+  }
+}
 
-      h += `<div style="margin-top:16px;text-align:center">
-          <a href="challenge-report.html?id=1" class="btn btn-primary">${t('viewReport') || 'View Report'}</a>
-          <a href="student-analytics.html" class="btn btn-outline" style="margin-left:8px">${t('viewMyResults')}</a>
-          <a href="challenge-list.html" class="btn btn-outline" style="margin-left:8px">${t('backToChallenges')}</a>
-        </div></div></div>`;
-      return h;
-    }
+// ================================================================
+// PHASE 2 - JUDGE + STEER CYCLES (initial render)
+// ================================================================
+function renderPhase2Initial() {
+  runState.phase = 'judging';
+  runState.responseType = runState.phase2ResponseType || 'mc';
+  const isOE = runState.responseType === 'open-ended';
+  const isPractice = runState.challengeType === 'practice';
 
-    // ══════════════════════════════════════════════════════════
-    // SIMULATION ENGINE
-    // ══════════════════════════════════════════════════════════
-    function buildSteps(ch, v, mode, isOE, isPractice) {
-      simSteps = [];
-      const S = simSteps;
+  let h = '';
 
-      // Step: Generate problem → show Phase 1
-      S.push({ llm: 'Generating raw problem from subject tree...', fn() {
-        hide('start-card'); reveal('phase1'); setStepper(1, 'active');
-      }});
+  // Page header
+  h += '<div class="page-header flex-between">';
+  h += '<div><h1>' + escHtml(runState.challengeTitle || t('challengeRun')) + '</h1></div>';
+  h += '<a href="' + challengeListUrl + '" class="btn btn-outline">&#10005; ' + t('exit') + '</a>';
+  h += '</div>';
 
-      if (!isOE) {
-        // Step: Generate framing MC options
-        S.push({ llm: 'Generating framing refinement options...', fn() {
-          hide('phase1-gen-btn'); reveal('phase1-options');
-        }});
-      }
+  h += previewBannerHtml();
 
-      // Step: Submit framing → show AI solution
-      S.push({ llm: 'Evaluating framing & generating AI solution...', fn() {
-        if (!isOE) autoSelect('phase1-options', v.framing.studentSelections);
-        if (isPractice) reveal('phase1-feedback');
-        setStepper(1, 'done'); setStepper(2, 'active');
-        reveal('phase2'); reveal('ai-solution');
-        updateSummary({ solution: v.aiSolution.summary, statusText: 'Summarizing AI solution...' });
-        reveal('cycle-0');
-      }});
+  // Mode banner
+  if (isPractice) {
+    h += '<div class="mode-banner practice"><span style="font-size:20px">&#9881;</span><span>' + t('practiceMode') + '</span> &mdash; ' + t('practiceModeDesc') + '</div>';
+  } else {
+    h += '<div class="mode-banner assessment"><span style="font-size:20px">&#9888;</span><span>' + t('assessmentMode') + '</span> &mdash; ' + t('assessmentModeDesc') + '</div>';
+  }
 
-      // Per-cycle steps
-      v.cycles.forEach((cycle, ci) => {
-        // If cycle has AI update (ci > 0): generate it
-        if (cycle.aiUpdate) {
-          S.push({ llm: `Generating updated AI output (Cycle ${ci + 1})...`, fn() {
-            hide(`cycle-${ci}-ai-gen`); reveal(`cycle-${ci}-ai`);
-            updateSummary({ solution: cycle.aiUpdate.summary, statusText: 'Summarizing updated output...' });
-          }});
-        }
+  // Stepper
+  h += '<div class="stepper">';
+  h += '<div class="step-item done" id="stepper-p1"><div class="step-num" id="stepper-p1-num">&#10003;</div><div>' + t('phase1') + '</div></div>';
+  h += '<div class="step-item active" id="stepper-p2"><div class="step-num" id="stepper-p2-num">2</div><div>' + t('phase2') + '</div></div>';
+  h += '</div>';
 
-        // MC: generate judging options
-        if (!isOE) {
-          S.push({ llm: `Generating judging options (Cycle ${ci + 1})...`, fn() {
-            hide(`cycle-${ci}-judge-gen`); reveal(`cycle-${ci}-judging`);
-          }});
-        }
+  h += '<div class="run-layout"><div>';
 
-        // Submit judging
-        S.push({ llm: cycle.judging.doneSelected ? 'Finalizing — computing final grades...' : 'Recording judgement...', duration: cycle.judging.doneSelected ? 3000 : 800, fn() {
-          if (cycle.judging.doneSelected) {
-            el('done-btn-' + ci).classList.add('selected');
-            if (!isOE) deselectAllMC(`cycle-${ci}-judging`);
-            updateSummary({ entry: { label: `Cycle ${ci + 1} — Completed`, text: 'Student marked solution as complete' }, statusText: 'Generating final summary...' });
-            if (isPractice) reveal(`cycle-${ci}-feedback`);
-            setStepper(2, 'done');
-            reveal('completion');
-          } else {
-            if (!isOE) autoSelect(`cycle-${ci}-judging`, cycle.judging.studentSelections);
-            updateSummary({ entry: { label: `Cycle ${ci + 1} — Issues Found`, text: cycle.summaryJudging }, statusText: 'Summarizing student feedback...' });
-            if (cycle.steering) reveal(`cycle-${ci}-steering`);
-          }
-        }});
+  // Instructions
+  h += '<div class="instructions-bar"><strong>' + t('instructions') + ':</strong> ' +
+    (isOE ? t('describeIssues') + ' / ' + t('writeCorrections') : t('selectIssues') + ' / ' + t('selectCorrections')) +
+    '</div>';
 
-        // Submit steering (only if not done)
-        if (cycle.steering) {
-          S.push({ llm: 'Processing steering & evaluating cycle...', fn() {
-            if (!isOE) autoSelect(`cycle-${ci}-steering`, cycle.steering.studentSelections);
-            updateSummary({ entry: { label: `Cycle ${ci + 1} — Corrections Sent`, text: cycle.summarySteering }, statusText: 'Summarizing steering instructions...' });
-            if (isPractice) reveal(`cycle-${ci}-feedback`);
-            // Collapse current cycle, reveal next
-            const nextCi = ci + 1;
-            if (nextCi < v.cycles.length) {
-              setTimeout(() => {
-                el(`cycle-${ci}`).classList.add('cycle-collapsed');
-                reveal(`cycle-${nextCi}`);
-              }, 600);
-            }
-          }});
-        }
+  // AI Solution display
+  h += '<div class="ai-output"><div class="ai-output-label">' + t('aiSolution') + '</div>' +
+    '<div id="ai-solution-content">' + formatSolution(runState.aiSolution) + '</div></div>';
+
+  // Active cycle container
+  h += '<div id="active-cycle"></div>';
+
+  // Completion container (hidden)
+  h += '<div id="completion" style="display:none"></div>';
+
+  h += '</div>'; // end left col
+
+  // Right: Summary panel
+  h += '<div class="summary-panel"><div class="card">';
+  h += '<h3 style="margin-bottom:12px;font-size:15px">' + t('sessionSummary') + '</h3>';
+  h += '<div class="summary-section"><h5>' + t('rawProblem') + '</h5><div class="summary-raw" id="summary-raw">' + escHtml(runState.rawProblem).slice(0, 200) + '</div></div>';
+  h += '<div class="summary-section" id="summary-sol-section"><h5>' + t('currentAiSolution') + '</h5><div class="summary-solution" id="summary-solution">' + escHtml(typeof runState.aiSolution === 'string' ? runState.aiSolution.slice(0, 200) : '') + '</div></div>';
+  h += '<div class="summary-section" id="summary-log-section" style="display:none"><h5>' + t('steeringHistory') + '</h5><div class="cycle-log" id="summary-log"></div></div>';
+  h += '</div></div>';
+
+  h += '</div>'; // end run-layout
+
+  el('scenario-content').innerHTML = h;
+
+  // Render the first judging cycle
+  renderJudgingCycle(runState.currentCycle);
+}
+
+// Render from a resumed state (after framing already submitted)
+function renderPhase2(state) {
+  runState.aiSolution = state.run.ai_solution || '';
+  runState.currentCycle = state.run.current_cycle || 1;
+  runState.challengeTitle = state.challenge.title || '';
+  runState.challengeType = state.challenge.challengeType || 'practice';
+  runState.maxCycles = state.challenge.maxCycles || 5;
+
+  const rc = state.challenge.responseConfig || {};
+  runState.phase2ResponseType = (rc.phase2 === 'open-ended' || rc.phase2 === 'oe') ? 'open-ended' : 'mc';
+  runState.responseType = runState.phase2ResponseType;
+
+  // We need judging options for the current cycle -- re-render Phase 2
+  renderPhase2Initial();
+}
+
+// ================================================================
+// RENDER JUDGING CYCLE
+// ================================================================
+function renderJudgingCycle(cycleNum) {
+  runState.phase = 'judging';
+  runState.currentCycle = cycleNum;
+  const isOE = runState.responseType === 'open-ended';
+  const maxCycles = runState.maxCycles;
+
+  let h = '';
+  h += '<div id="cycle-' + cycleNum + '">';
+  h += '<div class="cycle-header" onclick="toggleCycle(\'cycle-' + cycleNum + '\')">';
+  h += '<span class="cycle-num">' + cycleNum + '</span>';
+  h += '<h3>' + t('cycle') + ' ' + cycleNum + '</h3>';
+  h += '<span class="cycle-indicator">' + t('cycleOf').replace('{0}', cycleNum).replace('{1}', maxCycles) + '</span>';
+  h += '<span class="collapse-arrow">&#9660;</span>';
+  h += '</div>';
+  h += '<div class="cycle-body">';
+
+  // Judging substep
+  h += '<span class="substep-label substep-judge">' + t('judgingSubstep') + ': ' + (isOE ? t('describeIssues') : t('selectIssues')) + '</span>';
+
+  h += '<div id="judging-area-' + cycleNum + '">';
+
+  if (isOE) {
+    h += '<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>' + t('hint') + ':</strong> ' + t('describeIssues') + '</div>';
+    h += '<div class="section-list" id="judging-sections-' + cycleNum + '">';
+    h += '<div class="section-item"><div class="section-header"><input type="text" placeholder="' + (t('issueTitle') || 'Issue title') + '"><button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div><div class="section-body"><textarea placeholder="' + (t('describeIssue') || 'Describe the issue...') + '"></textarea></div></div>';
+    h += '</div>';
+    h += '<button class="add-section-btn" onclick="addSection(\'judging-sections-' + cycleNum + '\')">+ ' + (t('addSection') || 'Add Section') + '</button>';
+  } else {
+    h += '<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>' + t('hint') + ':</strong> ' + t('selectIssues') + '</div>';
+    if (runState.judgingOptions && runState.judgingOptions.length > 0) {
+      runState.judgingOptions.forEach(function(opt) {
+        h += '<div class="mc-option" onclick="toggleMC(this)" data-letter="' + escHtml(opt.letter) + '">';
+        h += '<div class="mc-check">&#10003;</div>';
+        h += '<div><div class="mc-label"><strong>(' + escHtml(opt.letter) + ')</strong> ' + escHtml(opt.text) + '</div></div>';
+        h += '</div>';
       });
+    } else {
+      h += '<p class="text-muted">' + (t('noJudgingOptions') || 'No judging options available. Use the "Solution is Complete" button if the solution looks correct.') + '</p>';
     }
+  }
 
-    function nextSim() {
-      if (simIndex >= simSteps.length) return;
-      const step = simSteps[simIndex];
-      simIndex++;
+  // "Solution is complete" button
+  h += '<button class="btn-done-judging" id="done-btn-' + cycleNum + '" onclick="toggleDoneBtn(this)">&#10003; ' + t('solutionComplete') + '</button>';
 
-      // Find the current sim icon and mark it active
-      const icons = document.querySelectorAll('.sim-step-icon:not(.done)');
-      const icon = icons[0];
-      if (icon) icon.classList.add('active');
+  // Submit judging
+  h += '<div class="submit-area">';
+  h += '<button class="btn btn-primary" id="submit-judging-btn-' + cycleNum + '" onclick="submitJudging(' + cycleNum + ')">' + t('submit') + '</button>';
+  h += '</div>';
 
-      const duration = step.duration || 2500;
-      if (step.llm) showLLM(step.llm, duration);
+  h += '</div>'; // end judging-area
 
-      setTimeout(() => {
-        if (icon) { icon.classList.remove('active'); icon.classList.add('done'); icon.innerHTML = '&#10003;'; icon.onclick = null; }
-        step.fn();
-      }, duration);
+  // Steering area (will be populated after judging)
+  h += '<div id="steering-area-' + cycleNum + '" style="display:none"></div>';
+
+  // Feedback area
+  h += '<div id="cycle-feedback-' + cycleNum + '" style="display:none"></div>';
+
+  h += '</div>'; // end cycle-body
+  h += '</div>'; // end cycle
+
+  el('active-cycle').innerHTML = h;
+  el('active-cycle').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ================================================================
+// SUBMIT JUDGING
+// ================================================================
+async function submitJudging(cycleNum) {
+  const isOE = runState.responseType === 'open-ended';
+  const doneBtn = el('done-btn-' + cycleNum);
+  const isDone = doneBtn && doneBtn.classList.contains('selected');
+
+  let response;
+  if (isDone) {
+    response = { type: 'complete', markedComplete: true };
+  } else if (isOE) {
+    const sections = getOESections('judging-sections-' + cycleNum);
+    if (sections.length === 0 || sections.every(s => !s.text.trim())) {
+      showError(t('pleaseProvideResponse') || 'Please describe at least one issue, or mark the solution as complete.');
+      return;
     }
-
-    // ══════════════════════════════════════════════════════════
-    // HELPERS
-    // ══════════════════════════════════════════════════════════
-    function el(id) { return document.getElementById(id); }
-    function reveal(id) { const e = el(id); if (e) { e.classList.remove('sim-hidden'); e.classList.add('sim-reveal'); e.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } }
-    function hide(id) { const e = el(id); if (e) e.classList.add('sim-hidden'); }
-    function showLLM(text, dur) { el('llm-status-text').textContent = text; el('llm-status').classList.add('visible'); setTimeout(() => el('llm-status').classList.remove('visible'), dur); }
-
-    function setStepper(phase, state) {
-      const s = el('stepper-p' + phase);
-      if (s) s.className = 'step-item ' + state;
-      if (state === 'done') { const n = el('stepper-p' + phase + '-num'); if (n) n.innerHTML = '&#10003;'; }
+    response = { type: 'open-ended', sections: sections };
+  } else {
+    const selected = getSelectedLetters('judging-area-' + cycleNum);
+    if (selected.length === 0) {
+      showError(t('pleaseSelectOption') || 'Please select at least one issue, or mark the solution as complete.');
+      return;
     }
+    response = { type: 'mc', selectedLetters: selected };
+  }
 
-    function toggleMC(opt) {
-      opt.classList.toggle('selected');
-      // Deselect "done" if selecting an issue
-      const container = opt.closest('.cycle-body') || opt.closest('.card');
-      if (container) { const d = container.querySelector('.btn-done-judging.selected'); if (d && opt.classList.contains('selected')) d.classList.remove('selected'); }
-    }
-    function toggleDoneBtn(btn) {
-      btn.classList.toggle('selected');
-      if (btn.classList.contains('selected')) {
-        const container = btn.closest('.cycle-body') || btn.closest('.card');
-        if (container) container.querySelectorAll('.mc-option.selected').forEach(o => o.classList.remove('selected'));
+  const btn = el('submit-judging-btn-' + cycleNum);
+  if (btn) { btn.disabled = true; btn.textContent = t('loading') || 'Submitting...'; }
+  disableInputsIn('judging-area-' + cycleNum);
+
+  showLLM(isDone ? (t('finalizing') || 'Finalizing -- computing final grades...') : (t('recordingJudgement') || 'Recording judgement...'));
+
+  try {
+    const data = await API.runs.submitJudging(runState.runId, cycleNum, response);
+    hideLLM();
+
+    updateSummary({
+      entry: {
+        label: t('cycle') + ' ' + cycleNum + ' -- ' + (isDone ? t('completed') || 'Completed' : t('issuesFound') || 'Issues Found'),
+        text: isDone ? (t('markedComplete') || 'Student marked solution as complete') : (t('issuesSubmitted') || 'Issues submitted for steering'),
       }
-    }
-    function toggleFeedback(toggle) {
-      const body = toggle.nextElementSibling;
-      const arrow = toggle.querySelector('.arrow');
-      body.classList.toggle('collapsed');
-      if (arrow) arrow.classList.toggle('collapsed');
-    }
-    function toggleCycle(id) { el(id).classList.toggle('cycle-collapsed'); }
-
-    function autoSelect(containerId, indices) {
-      const container = el(containerId);
-      if (!container) return;
-      const opts = container.querySelectorAll('.mc-option');
-      opts.forEach((o, i) => { o.classList.remove('selected'); if (indices.includes(i)) o.classList.add('selected'); });
-    }
-    function deselectAllMC(containerId) {
-      const container = el(containerId);
-      if (container) container.querySelectorAll('.mc-option.selected').forEach(o => o.classList.remove('selected'));
-    }
-
-    function updateSummary(u) {
-      // Show summarizing spinner
-      var statusEl = el('summary-status');
-      var statusText = el('summary-status-text');
-      if (statusEl) {
-        statusEl.style.display = '';
-        statusText.textContent = u.statusText || 'Summarizing...';
-        setTimeout(function() { statusEl.style.display = 'none'; }, 1500);
-      }
-
-      setTimeout(function() {
-        if (u.solution) {
-          el('summary-sol-section').style.display = '';
-          el('summary-solution').textContent = u.solution;
-        }
-        if (u.entry) {
-          el('summary-log-section').style.display = '';
-          const d = document.createElement('div');
-          d.className = 'cycle-log-entry sim-reveal';
-          d.innerHTML = `<div class="cycle-log-label">${u.entry.label}</div><div>${u.entry.text}</div>`;
-          el('summary-log').appendChild(d);
-        }
-      }, 1500);
-    }
-
-    // ══════════════════════════════════════════════════════════
-    // LANGUAGE SWITCHING
-    // ══════════════════════════════════════════════════════════
-    function rebuildPicker() {
-      const data = getActiveData();
-      const picker = document.getElementById('challenge-picker');
-      const curVal = picker.value;
-      picker.innerHTML = '';
-      const seen = {};
-      Object.keys(data.scenarios).forEach(sid => {
-        const sc = data.scenarios[sid];
-        const ch = data.challenges[sc.challengeId];
-        if (!ch) return;
-        const groupKey = sc.challengeId;
-        if (!seen[groupKey]) {
-          seen[groupKey] = document.createElement('optgroup');
-          seen[groupKey].label = ch.title;
-          picker.appendChild(seen[groupKey]);
-        }
-        const parts = sid.split('-');
-        const mode = parts.pop();
-        if (mode !== 'practice') return; // picker only shows practice variants
-        const respType = sc.responseType === 'mc' ? 'MC' : t('openEnded');
-        const opt = document.createElement('option');
-        opt.value = sid.replace(/-practice$/, '-practice');
-        opt.textContent = ch.title.split(' ')[0] + ' \u2014 ' + respType;
-        seen[groupKey].appendChild(opt);
-      });
-      // restore selection
-      for (let i = 0; i < picker.options.length; i++) {
-        if (picker.options[i].value === curVal) { picker.selectedIndex = i; break; }
-      }
-    }
-
-    document.addEventListener('langchange', function(e) {
-      rebuildPicker();
-      loadScenario(); // reload with new language data
     });
 
-    // ══════════════════════════════════════════════════════════
-    // INIT
-    // ══════════════════════════════════════════════════════════
-    // Read ?scenario= from URL if provided
-    const urlParams = new URLSearchParams(window.location.search);
-    const initScenario = urlParams.get('scenario');
-    if (initScenario && SCENARIOS[initScenario]) {
-      // Set picker to match
-      const parts = initScenario.split('-');
-      const mode = parts.pop();
-      const baseId = parts.join('-') + '-practice'; // picker always stores practice variant
-      const picker = document.getElementById('challenge-picker');
-      for (let i = 0; i < picker.options.length; i++) {
-        if (picker.options[i].value === baseId || picker.options[i].value === parts.join('-') + '-' + mode) {
-          picker.selectedIndex = i; break;
-        }
+    if (isDone) {
+      // User marked solution as complete — still allow optional steering before finalizing
+      runState.steeringOptions = data.steeringOptions;
+      runState.markedComplete = true;
+      renderSteeringStep(cycleNum, true);
+    } else {
+      // Show steering
+      runState.steeringOptions = data.steeringOptions;
+      runState.markedComplete = false;
+      renderSteeringStep(cycleNum);
+    }
+  } catch (err) {
+    hideLLM();
+    showError(err.message || 'Failed to submit judging');
+    if (btn) { btn.disabled = false; btn.textContent = t('submit'); }
+  }
+}
+
+// ================================================================
+// RENDER STEERING STEP
+// ================================================================
+function renderSteeringStep(cycleNum, showCompleteOption) {
+  runState.phase = 'steering';
+  const isOE = runState.responseType === 'open-ended';
+
+  let h = '';
+  h += '<hr class="divider-line">';
+  h += '<span class="substep-label substep-steer">' + t('steeringSubstep') + ': ' + (isOE ? t('writeCorrections') : t('selectCorrections')) + '</span>';
+
+  if (showCompleteOption) {
+    h += '<div class="instructions-bar" style="background:#e8f5e9;color:#2e7d32;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>' + (t('hint') || 'Hint') + ':</strong> ' + (t('markedCompleteSteeringHint') || 'You marked the solution as complete. You may still submit optional steering corrections, or skip to finalize.') + '</div>';
+  }
+
+  h += '<div id="steering-input-' + cycleNum + '">';
+
+  if (isOE) {
+    h += '<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>' + t('hint') + ':</strong> ' + t('writeCorrections') + '</div>';
+    h += '<div class="section-list" id="steering-sections-' + cycleNum + '">';
+    h += '<div class="section-item"><div class="section-header"><input type="text" placeholder="' + (t('correctionTitle') || 'Correction title') + '"><button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div><div class="section-body"><textarea placeholder="' + (t('describeCorrection') || 'Describe the correction...') + '"></textarea></div></div>';
+    h += '</div>';
+    h += '<button class="add-section-btn" onclick="addSection(\'steering-sections-' + cycleNum + '\')">+ ' + (t('addSection') || 'Add Section') + '</button>';
+  } else {
+    h += '<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>' + t('hint') + ':</strong> ' + t('selectCorrections') + '</div>';
+    if (runState.steeringOptions && runState.steeringOptions.length > 0) {
+      runState.steeringOptions.forEach(function(opt) {
+        h += '<div class="mc-option" onclick="toggleMC(this)" data-letter="' + escHtml(opt.letter) + '">';
+        h += '<div class="mc-check">&#10003;</div>';
+        h += '<div><div class="mc-label"><strong>(' + escHtml(opt.letter) + ')</strong> ' + escHtml(opt.text) + '</div></div>';
+        h += '</div>';
+      });
+    } else {
+      h += '<p class="text-muted">' + (t('noSteeringOptions') || 'No steering options available.') + '</p>';
+    }
+  }
+
+  h += '<div class="submit-area">';
+  h += '<button class="btn btn-primary" id="submit-steering-btn-' + cycleNum + '" onclick="submitSteering(' + cycleNum + ')">' + t('submit') + '</button>';
+  if (showCompleteOption) {
+    h += ' <button class="btn btn-outline" style="color:var(--success);border-color:var(--success);" onclick="completeRun()">&#10003; ' + (t('skipAndComplete') || 'Skip & Complete') + '</button>';
+  }
+  h += '</div>';
+
+  h += '</div>'; // end steering-input
+
+  const area = el('steering-area-' + cycleNum);
+  area.innerHTML = h;
+  reveal('steering-area-' + cycleNum);
+}
+
+// ================================================================
+// SUBMIT STEERING
+// ================================================================
+async function submitSteering(cycleNum) {
+  const isOE = runState.responseType === 'open-ended';
+  let response;
+
+  if (isOE) {
+    const sections = getOESections('steering-sections-' + cycleNum);
+    if (sections.length === 0 || sections.every(s => !s.text.trim())) {
+      showError(t('pleaseProvideResponse') || 'Please provide at least one correction.');
+      return;
+    }
+    response = { type: 'open-ended', sections: sections };
+  } else {
+    const selected = getSelectedLetters('steering-input-' + cycleNum);
+    if (selected.length === 0) {
+      showError(t('pleaseSelectOption') || 'Please select at least one correction.');
+      return;
+    }
+    response = { type: 'mc', selectedLetters: selected };
+  }
+
+  const btn = el('submit-steering-btn-' + cycleNum);
+  if (btn) { btn.disabled = true; btn.textContent = t('loading') || 'Submitting...'; }
+  disableInputsIn('steering-input-' + cycleNum);
+
+  showLLM(t('processSteering') || 'Processing steering & evaluating cycle...');
+
+  try {
+    const data = await API.runs.submitSteering(runState.runId, cycleNum, response);
+    hideLLM();
+
+    // Update AI solution
+    if (data.updatedSolution) {
+      runState.aiSolution = data.updatedSolution;
+      const solEl = el('ai-solution-content');
+      if (solEl) solEl.innerHTML = formatSolution(data.updatedSolution);
+      updateSummary({ solution: data.updatedSolution });
+    }
+
+    runState.currentCycle = data.currentCycle;
+    runState.maxCycles = data.maxCycles;
+
+    // Store cycle feedback
+    const cycleFb = {
+      judgingFeedback: data.judgingFeedback,
+      judgingGrade: data.judgingGrade,
+      steeringFeedback: data.steeringFeedback,
+      steeringGrade: data.steeringGrade,
+    };
+    runState.collectedFeedback.cycles.push(cycleFb);
+
+    // Show feedback (practice mode: server sends it; assessment: null)
+    if (data.judgingFeedback || data.steeringFeedback) {
+      let fbHtml = '';
+      if (data.judgingFeedback) {
+        fbHtml += renderFeedbackPanel(
+          t('judgingFeedback') + ' (' + t('cycle') + ' ' + cycleNum + ')',
+          data.judgingGrade,
+          formatFeedback(data.judgingFeedback),
+          false
+        );
       }
-      if (mode === 'assessment') {
-        currentMode = 'assessment';
-        document.querySelectorAll('.toggle-btn').forEach(b => {
-          b.classList.toggle('active', b.textContent.trim().toLowerCase() === 'assessment');
-        });
+      if (data.steeringFeedback) {
+        fbHtml += renderFeedbackPanel(
+          t('steeringFeedback') + ' (' + t('cycle') + ' ' + cycleNum + ')',
+          data.steeringGrade,
+          formatFeedback(data.steeringFeedback),
+          true
+        );
+      }
+      const fbEl = el('cycle-feedback-' + cycleNum);
+      if (fbEl) {
+        fbEl.innerHTML = fbHtml;
+        reveal('cycle-feedback-' + cycleNum);
       }
     }
-    loadScenario();
+
+    updateSummary({
+      entry: {
+        label: t('cycle') + ' ' + cycleNum + ' -- ' + (t('correctionsSent') || 'Corrections Sent'),
+        text: (t('steeringSubmitted') || 'Steering corrections submitted'),
+      }
+    });
+
+    // Check if max cycles reached
+    if (data.currentCycle > data.maxCycles) {
+      await completeRun();
+    } else {
+      // Get next judging options from the steering response
+      runState.judgingOptions = data.nextJudgingOptions;
+
+      // Collapse current cycle and start next
+      const currentCycleEl = el('cycle-' + cycleNum);
+      if (currentCycleEl) currentCycleEl.classList.add('cycle-collapsed');
+
+      renderJudgingCycle(data.currentCycle);
+    }
+  } catch (err) {
+    hideLLM();
+    showError(err.message || 'Failed to submit steering');
+    if (btn) { btn.disabled = false; btn.textContent = t('submit'); }
+  }
+}
+
+// ================================================================
+// COMPLETE RUN
+// ================================================================
+async function completeRun() {
+  showLLM(t('computingGrades') || 'Computing final grades...');
+
+  try {
+    const data = await API.runs.complete(runState.runId);
+    hideLLM();
+
+    setStepper(2, 'done');
+    renderCompletion(data.grades);
+  } catch (err) {
+    hideLLM();
+    showError(err.message || 'Failed to complete run');
+  }
+}
+
+// ================================================================
+// RENDER COMPLETION
+// ================================================================
+function renderCompletion(grades) {
+  runState.phase = 'complete';
+  const isPractice = runState.challengeType === 'practice';
+  const g = grades || { framing: 'C', judging: 'C', steering: 'C' };
+
+  let h = '';
+  h += '<div class="card" style="border-left:4px solid var(--success);margin-top:24px">';
+  h += '<h3 style="color:var(--success);margin-bottom:16px">&#10003; ' + t('challengeComplete') + '</h3>';
+  h += '<table style="font-size:14px;margin-bottom:16px"><thead><tr><th>' + t('skill') + '</th><th>' + t('grade') + '</th></tr></thead><tbody>';
+  h += '<tr><td>' + t('framing') + '</td><td><span class="grade grade-' + g.framing + '">' + escHtml(g.framing) + '</span></td></tr>';
+  h += '<tr><td>' + t('judging') + '</td><td><span class="grade grade-' + g.judging + '">' + escHtml(g.judging) + '</span></td></tr>';
+  h += '<tr><td>' + t('steering') + '</td><td><span class="grade grade-' + g.steering + '">' + escHtml(g.steering) + '</span></td></tr>';
+  h += '</tbody></table>';
+
+  // Assessment mode: show deferred feedback from all phases
+  if (!isPractice) {
+    h += '<div class="deferred-feedback-section"><h4>' + t('detailedFeedback') + '</h4>';
+
+    // Framing feedback
+    if (runState.collectedFeedback.framing && runState.collectedFeedback.framing.feedback) {
+      h += '<div class="deferred-feedback-item"><div class="dfb-label">' + t('framing') + '</div>';
+      h += renderFeedbackPanel(
+        t('framing'),
+        runState.collectedFeedback.framing.grade,
+        formatFeedback(runState.collectedFeedback.framing.feedback)
+      );
+      h += '</div>';
+    }
+
+    // Cycle feedback - for assessment these were null during the run,
+    // so we fetch the full report to get deferred feedback
+    h += '<div id="deferred-cycle-feedback"></div>';
+    h += '</div>';
+
+    // Load deferred feedback from report endpoint
+    loadDeferredFeedback();
+  }
+
+  // Action buttons
+  h += '<div style="margin-top:16px;text-align:center">';
+  h += '<a href="challenge-report.html?runId=' + runState.runId + '" class="btn btn-primary">' + (t('viewReport') || 'View Report') + '</a>';
+  h += '<a href="' + (isInstructorPreview ? 'instructor-analytics.html' : 'student-analytics.html') + '" class="btn btn-outline" style="margin-left:8px">' + (isInstructorPreview ? t('analytics') : t('viewMyResults')) + '</a>';
+  h += '<a href="' + challengeListUrl + '" class="btn btn-outline" style="margin-left:8px">' + t('backToChallenges') + '</a>';
+  h += '</div>';
+
+  h += '</div>'; // end card
+
+  const completionEl = el('completion');
+  if (completionEl) {
+    completionEl.innerHTML = h;
+    reveal('completion');
+  } else {
+    // If we completed from framing start card (edge case)
+    el('scenario-content').innerHTML += '<div id="completion">' + h + '</div>';
+  }
+}
+
+function renderCompletedScreen(grades, state) {
+  // Render a minimal completed view for resumed completed runs
+  let h = '';
+  h += '<div class="page-header flex-between">';
+  h += '<div><h1>' + escHtml(state.challenge.title || t('challengeRun')) + '</h1></div>';
+  h += '<a href="' + challengeListUrl + '" class="btn btn-outline">&#10005; ' + t('exit') + '</a>';
+  h += '</div>';
+
+  h += previewBannerHtml();
+
+  h += '<div class="stepper">';
+  h += '<div class="step-item done" id="stepper-p1"><div class="step-num" id="stepper-p1-num">&#10003;</div><div>' + t('phase1') + '</div></div>';
+  h += '<div class="step-item done" id="stepper-p2"><div class="step-num" id="stepper-p2-num">&#10003;</div><div>' + t('phase2') + '</div></div>';
+  h += '</div>';
+
+  h += '<div id="completion"></div>';
+
+  el('scenario-content').innerHTML = h;
+  renderCompletion(grades);
+}
+
+async function loadDeferredFeedback() {
+  try {
+    const report = await API.runs.report(runState.runId);
+    const container = el('deferred-cycle-feedback');
+    if (!container) return;
+
+    let h = '';
+    if (report.cycles && report.cycles.length > 0) {
+      report.cycles.forEach(function(cycle, i) {
+        if (cycle.judging_feedback) {
+          h += '<div class="deferred-feedback-item"><div class="dfb-label">' + t('cycle') + ' ' + cycle.cycle_num + ' -- ' + t('judging') + '</div>';
+          h += renderFeedbackPanel(t('judging'), cycle.judging_grade, formatFeedback(cycle.judging_feedback));
+          h += '</div>';
+        }
+        if (cycle.steering_feedback) {
+          h += '<div class="deferred-feedback-item"><div class="dfb-label">' + t('cycle') + ' ' + cycle.cycle_num + ' -- ' + t('steering') + '</div>';
+          h += renderFeedbackPanel(t('steering'), cycle.steering_grade, formatFeedback(cycle.steering_feedback));
+          h += '</div>';
+        }
+      });
+    }
+    container.innerHTML = h;
+  } catch (err) {
+    console.error('Failed to load deferred feedback:', err);
+  }
+}
+
+// ================================================================
+// LANGUAGE SWITCHING
+// ================================================================
+document.addEventListener('langchange', function() {
+  // On language change, if we're at the start screen, re-render
+  // If mid-run, we just rely on data-t auto-translation
+  if (runState.phase === 'start') {
+    renderStartScreen(runState.challengeId);
+  }
+});
   </script>
 </body>
 </html>

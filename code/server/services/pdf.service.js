@@ -1,6 +1,7 @@
 'use strict';
 
 const PDFDocument = require('pdfkit');
+const { RUN_STATUS, GRADE_LETTERS, PDF, PDF_LAYOUT } = require('../utils/constants');
 
 class PDFService {
   constructor(logger) {
@@ -15,7 +16,7 @@ class PDFService {
   async generateInstructorReport(data) {
     return new Promise((resolve, reject) => {
       try {
-        const doc = new PDFDocument({ size: 'A4', margin: 50, bufferPages: true });
+        const doc = new PDFDocument({ size: 'A4', margin: PDF_LAYOUT.MARGIN, bufferPages: true });
         const chunks = [];
 
         doc.on('data', (chunk) => chunks.push(chunk));
@@ -24,10 +25,10 @@ class PDFService {
 
         // --- Title page ---
         doc.fontSize(24).font('Helvetica-Bold').fillColor('#1a237e')
-          .text('AI CoReasoning Lab', { align: 'center' });
+          .text(PDF.APP_NAME, { align: 'center' });
         doc.moveDown(0.5);
         doc.fontSize(18).fillColor('#333')
-          .text('Course Analytics Report', { align: 'center' });
+          .text(PDF.REPORT_TITLE, { align: 'center' });
         doc.moveDown(0.3);
         doc.fontSize(14).font('Helvetica').fillColor('#666')
           .text(data.course?.name || 'Unknown Course', { align: 'center' });
@@ -36,12 +37,12 @@ class PDFService {
           .text(`Exported: ${new Date(data.exported_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`, { align: 'center' });
 
         doc.moveDown(1);
-        doc.moveTo(50, doc.y).lineTo(545, doc.y).stroke('#ddd');
+        doc.moveTo(PDF_LAYOUT.MARGIN, doc.y).lineTo(PDF_LAYOUT.RIGHT_BOUNDARY, doc.y).stroke('#ddd');
         doc.moveDown(1);
 
         // --- Summary ---
         const runs = data.runs || [];
-        const completed = runs.filter(r => r.status === 'completed');
+        const completed = runs.filter(r => r.status === RUN_STATUS.COMPLETED);
         const students = [...new Set(runs.map(r => r.student_email))];
 
         doc.fontSize(14).font('Helvetica-Bold').fillColor('#1a237e')
@@ -61,21 +62,21 @@ class PDFService {
 
         const grades = { framing: {}, judging: {}, steering: {} };
         for (const run of completed) {
-          const phases = run.phases || {};
-          if (phases.framing?.evaluation?.grade) {
-            const g = phases.framing.evaluation.grade;
+          // Framing grade is stored directly on the run
+          if (run.framing_grade) {
+            const g = run.framing_grade;
             grades.framing[g] = (grades.framing[g] || 0) + 1;
           }
-          if (phases.cycles) {
-            for (const cycle of Object.values(phases.cycles)) {
-              if (cycle.judging?.evaluation?.grade) {
-                const g = cycle.judging.evaluation.grade;
-                grades.judging[g] = (grades.judging[g] || 0) + 1;
-              }
-              if (cycle.steering?.evaluation?.grade) {
-                const g = cycle.steering.evaluation.grade;
-                grades.steering[g] = (grades.steering[g] || 0) + 1;
-              }
+          // Judging/steering grades come from cycles array
+          const runCycles = run.cycles || [];
+          for (const cycle of runCycles) {
+            if (cycle.judging_grade) {
+              const g = cycle.judging_grade;
+              grades.judging[g] = (grades.judging[g] || 0) + 1;
+            }
+            if (cycle.steering_grade) {
+              const g = cycle.steering_grade;
+              grades.steering[g] = (grades.steering[g] || 0) + 1;
             }
           }
         }
@@ -84,7 +85,7 @@ class PDFService {
         for (const [phase, dist] of Object.entries(grades)) {
           const total = Object.values(dist).reduce((s, v) => s + v, 0);
           if (total === 0) continue;
-          const parts = ['A', 'B', 'C', 'D', 'F']
+          const parts = GRADE_LETTERS
             .filter(g => dist[g])
             .map(g => `${g}: ${dist[g]}`)
             .join('  |  ');
@@ -99,7 +100,7 @@ class PDFService {
 
         // Table header
         const tableTop = doc.y;
-        const col = { name: 50, challenge: 180, status: 340, framing: 410, judging: 450, steering: 490 };
+        const col = PDF_LAYOUT.TABLE_COLUMNS;
 
         doc.fontSize(9).font('Helvetica-Bold').fillColor('#666');
         doc.text('Student', col.name, tableTop);
@@ -109,32 +110,31 @@ class PDFService {
         doc.text('Jdg', col.judging, tableTop);
         doc.text('Str', col.steering, tableTop);
 
-        doc.moveTo(50, doc.y + 4).lineTo(545, doc.y + 4).stroke('#ddd');
+        doc.moveTo(PDF_LAYOUT.MARGIN, doc.y + 4).lineTo(PDF_LAYOUT.RIGHT_BOUNDARY, doc.y + 4).stroke('#ddd');
         doc.moveDown(0.5);
 
         // Table rows
         doc.font('Helvetica').fontSize(9).fillColor('#333');
         for (const run of runs) {
-          if (doc.y > 720) {
+          if (doc.y > PDF_LAYOUT.PAGE_BREAK_Y) {
             doc.addPage();
-            doc.y = 50;
+            doc.y = PDF_LAYOUT.MARGIN;
           }
 
-          const phases = run.phases || {};
-          const framingGrade = phases.framing?.evaluation?.grade || '—';
+          const framingGrade = run.framing_grade || '—';
           let judgingGrade = '—';
           let steeringGrade = '—';
-          if (phases.cycles) {
-            const cycleKeys = Object.keys(phases.cycles);
-            const lastCycle = phases.cycles[cycleKeys[cycleKeys.length - 1]];
-            if (lastCycle?.judging?.evaluation?.grade) judgingGrade = lastCycle.judging.evaluation.grade;
-            if (lastCycle?.steering?.evaluation?.grade) steeringGrade = lastCycle.steering.evaluation.grade;
+          const runCycles = run.cycles || [];
+          if (runCycles.length > 0) {
+            const lastCycle = runCycles[runCycles.length - 1];
+            if (lastCycle.judging_grade) judgingGrade = lastCycle.judging_grade;
+            if (lastCycle.steering_grade) steeringGrade = lastCycle.steering_grade;
           }
 
           const y = doc.y;
-          doc.text(run.student_name || 'Unknown', col.name, y, { width: 125 });
-          doc.text((run.challenge_title || '').substring(0, 25), col.challenge, y, { width: 155 });
-          doc.text(run.status || '', col.status, y, { width: 65 });
+          doc.text(run.student_name || 'Unknown', col.name, y, { width: PDF_LAYOUT.TABLE_COLUMN_WIDTHS.name });
+          doc.text((run.challenge_title || '').substring(0, PDF_LAYOUT.CHALLENGE_TITLE_MAX_LENGTH), col.challenge, y, { width: PDF_LAYOUT.TABLE_COLUMN_WIDTHS.challenge });
+          doc.text(run.status || '', col.status, y, { width: PDF_LAYOUT.TABLE_COLUMN_WIDTHS.status });
           doc.text(framingGrade, col.framing, y);
           doc.text(judgingGrade, col.judging, y);
           doc.text(steeringGrade, col.steering, y);
@@ -142,7 +142,7 @@ class PDFService {
         }
 
         if (runs.length === 0) {
-          doc.fontSize(11).fillColor('#999').text('No challenge runs recorded yet.', 50);
+          doc.fontSize(11).fillColor('#999').text('No challenge runs recorded yet.', PDF_LAYOUT.MARGIN);
         }
 
         // --- Footer ---
@@ -150,7 +150,7 @@ class PDFService {
         for (let i = 0; i < pageCount; i++) {
           doc.switchToPage(i);
           doc.fontSize(8).fillColor('#999')
-            .text(`AI CoReasoning Lab — Page ${i + 1} of ${pageCount}`, 50, 780, { align: 'center' });
+            .text(`${PDF.APP_NAME} — Page ${i + 1} of ${pageCount}`, PDF_LAYOUT.MARGIN, PDF_LAYOUT.FOOTER_Y, { align: 'center' });
         }
 
         doc.end();

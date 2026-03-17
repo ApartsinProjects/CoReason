@@ -65,6 +65,7 @@
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
 </head>
 <body>
   <header class="topnav">
@@ -77,9 +78,10 @@
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
-      <span>Dr. Levy</span>
-      <a href="profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">&mdash;</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar" style="background:#e3f2fd;color:var(--primary);">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
     </div>
   </header>
 
@@ -88,15 +90,15 @@
     <div class="breadcrumb">
       <a href="course-catalog-instructor.html" data-t="courses">Courses</a>
       <span class="sep">›</span>
-      <a href="course-catalog-instructor.html">Deep Learning 101</a>
+      <a href="course-catalog-instructor.html" id="breadcrumbCourse">...</a>
       <span class="sep">›</span>
-      <span>Edit Subject Tree</span>
+      <span data-t="editSubjectTree">Edit Subject Tree</span>
     </div>
 
     <div class="page-header flex-between">
       <div>
-        <h1 data-tooltip="subjectTree">Subject Tree — Deep Learning 101</h1>
-        <p>Define the topic hierarchy used for challenge creation, rubric generation, and analytics</p>
+        <h1 data-tooltip="subjectTree"><span data-t="subjectTree">Subject Tree</span> — <span id="courseNameHeader">...</span></h1>
+        <p data-t="subjectTreeDesc">Define the topic hierarchy used for challenge creation, rubric generation, and analytics</p>
       </div>
       <div style="display:flex; gap:8px;">
         <button class="btn btn-outline" onclick="window.location='course-catalog-instructor.html'" data-t="cancel">Cancel</button>
@@ -107,7 +109,7 @@
     <!-- Info alert -->
     <div class="alert alert-info" style="display:flex; align-items:center; gap:8px; margin-bottom:20px;">
       <span>&#8505;&#65039;</span>
-      <span>Changes to the subject tree affect future challenges and rubric generation. Existing challenges retain their original subject mapping.</span>
+      <span data-t="subjectTreeWarning">Changes to the subject tree affect future challenges and rubric generation. Existing challenges retain their original subject mapping.</span>
     </div>
 
     <div class="tree-editor-layout">
@@ -123,215 +125,11 @@
         </div>
 
         <ul class="tree-select" id="subjectTree">
-          <!-- Root: Neural Networks -->
-          <li id="node-nn">
-            <div class="tree-edit-node" onclick="selectNode('nn', this)" id="edit-nn">
-              <span class="drag-handle" title="Drag to reorder">⠿</span>
-              <span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>
-              <span class="node-label" contenteditable="true" spellcheck="false">Neural Networks</span>
-              <div class="node-actions">
-                <button onclick="event.stopPropagation(); addChildNode('nn')" title="Add child">+</button>
-                <button onclick="event.stopPropagation(); duplicateNode('nn')" title="Duplicate">⧉</button>
-                <button class="danger" onclick="event.stopPropagation(); deleteNode('nn')" title="Delete">✕</button>
-              </div>
-            </div>
-            <ul class="tree-children">
-              <li id="node-nn-bp">
-                <div class="tree-edit-node" onclick="selectNode('nn-bp', this)">
-                  <span class="drag-handle">⠿</span>
-                  <span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>
-                  <span class="node-label" contenteditable="true" spellcheck="false">Backpropagation</span>
-                  <div class="node-actions">
-                    <button onclick="event.stopPropagation(); addChildNode('nn-bp')">+</button>
-                    <button onclick="event.stopPropagation(); duplicateNode('nn-bp')">⧉</button>
-                    <button class="danger" onclick="event.stopPropagation(); deleteNode('nn-bp')">✕</button>
-                  </div>
-                </div>
-                <ul class="tree-children">
-                  <li id="node-bp-debug">
-                    <div class="tree-edit-node" onclick="selectNode('bp-debug', this)">
-                      <span class="drag-handle">⠿</span>
-                      <span class="node-label" contenteditable="true" spellcheck="false">Debugging</span>
-                      <div class="node-actions">
-                        <button onclick="event.stopPropagation(); duplicateNode('bp-debug')">⧉</button>
-                        <button class="danger" onclick="event.stopPropagation(); deleteNode('bp-debug')">✕</button>
-                      </div>
-                    </div>
-                  </li>
-                  <li id="node-bp-vanish">
-                    <div class="tree-edit-node" onclick="selectNode('bp-vanish', this)">
-                      <span class="drag-handle">⠿</span>
-                      <span class="node-label" contenteditable="true" spellcheck="false">Vanishing Gradients</span>
-                      <div class="node-actions">
-                        <button onclick="event.stopPropagation(); duplicateNode('bp-vanish')">⧉</button>
-                        <button class="danger" onclick="event.stopPropagation(); deleteNode('bp-vanish')">✕</button>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                <button class="add-node-btn" onclick="addChildNode('nn-bp')">+ Add child</button>
-              </li>
-              <li id="node-nn-arch">
-                <div class="tree-edit-node" onclick="selectNode('nn-arch', this)">
-                  <span class="drag-handle">⠿</span>
-                  <span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>
-                  <span class="node-label" contenteditable="true" spellcheck="false">Architectures</span>
-                  <div class="node-actions">
-                    <button onclick="event.stopPropagation(); addChildNode('nn-arch')">+</button>
-                    <button onclick="event.stopPropagation(); duplicateNode('nn-arch')">⧉</button>
-                    <button class="danger" onclick="event.stopPropagation(); deleteNode('nn-arch')">✕</button>
-                  </div>
-                </div>
-                <ul class="tree-children">
-                  <li id="node-arch-cnn">
-                    <div class="tree-edit-node" onclick="selectNode('arch-cnn', this)">
-                      <span class="drag-handle">⠿</span>
-                      <span class="node-label" contenteditable="true" spellcheck="false">CNNs</span>
-                      <div class="node-actions">
-                        <button onclick="event.stopPropagation(); duplicateNode('arch-cnn')">⧉</button>
-                        <button class="danger" onclick="event.stopPropagation(); deleteNode('arch-cnn')">✕</button>
-                      </div>
-                    </div>
-                  </li>
-                  <li id="node-arch-rnn">
-                    <div class="tree-edit-node" onclick="selectNode('arch-rnn', this)">
-                      <span class="drag-handle">⠿</span>
-                      <span class="node-label" contenteditable="true" spellcheck="false">RNNs</span>
-                      <div class="node-actions">
-                        <button onclick="event.stopPropagation(); duplicateNode('arch-rnn')">⧉</button>
-                        <button class="danger" onclick="event.stopPropagation(); deleteNode('arch-rnn')">✕</button>
-                      </div>
-                    </div>
-                  </li>
-                  <li id="node-arch-transformer">
-                    <div class="tree-edit-node" onclick="selectNode('arch-transformer', this)">
-                      <span class="drag-handle">⠿</span>
-                      <span class="node-label" contenteditable="true" spellcheck="false">Transformers</span>
-                      <div class="node-actions">
-                        <button onclick="event.stopPropagation(); duplicateNode('arch-transformer')">⧉</button>
-                        <button class="danger" onclick="event.stopPropagation(); deleteNode('arch-transformer')">✕</button>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                <button class="add-node-btn" onclick="addChildNode('nn-arch')">+ Add child</button>
-              </li>
-              <li id="node-nn-opt">
-                <div class="tree-edit-node" onclick="selectNode('nn-opt', this)">
-                  <span class="drag-handle">⠿</span>
-                  <span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>
-                  <span class="node-label" contenteditable="true" spellcheck="false">Optimization</span>
-                  <div class="node-actions">
-                    <button onclick="event.stopPropagation(); addChildNode('nn-opt')">+</button>
-                    <button onclick="event.stopPropagation(); duplicateNode('nn-opt')">⧉</button>
-                    <button class="danger" onclick="event.stopPropagation(); deleteNode('nn-opt')">✕</button>
-                  </div>
-                </div>
-                <ul class="tree-children">
-                  <li id="node-opt-lr">
-                    <div class="tree-edit-node" onclick="selectNode('opt-lr', this)">
-                      <span class="drag-handle">⠿</span>
-                      <span class="node-label" contenteditable="true" spellcheck="false">Learning Rate</span>
-                      <div class="node-actions">
-                        <button onclick="event.stopPropagation(); duplicateNode('opt-lr')">⧉</button>
-                        <button class="danger" onclick="event.stopPropagation(); deleteNode('opt-lr')">✕</button>
-                      </div>
-                    </div>
-                  </li>
-                  <li id="node-opt-reg">
-                    <div class="tree-edit-node" onclick="selectNode('opt-reg', this)">
-                      <span class="drag-handle">⠿</span>
-                      <span class="node-label" contenteditable="true" spellcheck="false">Regularization</span>
-                      <div class="node-actions">
-                        <button onclick="event.stopPropagation(); duplicateNode('opt-reg')">⧉</button>
-                        <button class="danger" onclick="event.stopPropagation(); deleteNode('opt-reg')">✕</button>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-                <button class="add-node-btn" onclick="addChildNode('nn-opt')">+ Add child</button>
-              </li>
-            </ul>
-            <button class="add-node-btn" onclick="addChildNode('nn')">+ Add child</button>
-          </li>
-
-          <!-- Root: Loss Functions -->
-          <li id="node-loss">
-            <div class="tree-edit-node" onclick="selectNode('loss', this)">
-              <span class="drag-handle">⠿</span>
-              <span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>
-              <span class="node-label" contenteditable="true" spellcheck="false">Loss Functions</span>
-              <div class="node-actions">
-                <button onclick="event.stopPropagation(); addChildNode('loss')">+</button>
-                <button onclick="event.stopPropagation(); duplicateNode('loss')">⧉</button>
-                <button class="danger" onclick="event.stopPropagation(); deleteNode('loss')">✕</button>
-              </div>
-            </div>
-            <ul class="tree-children">
-              <li id="node-loss-ce">
-                <div class="tree-edit-node" onclick="selectNode('loss-ce', this)">
-                  <span class="drag-handle">⠿</span>
-                  <span class="node-label" contenteditable="true" spellcheck="false">Cross-Entropy</span>
-                  <div class="node-actions">
-                    <button onclick="event.stopPropagation(); duplicateNode('loss-ce')">⧉</button>
-                    <button class="danger" onclick="event.stopPropagation(); deleteNode('loss-ce')">✕</button>
-                  </div>
-                </div>
-              </li>
-              <li id="node-loss-mse">
-                <div class="tree-edit-node" onclick="selectNode('loss-mse', this)">
-                  <span class="drag-handle">⠿</span>
-                  <span class="node-label" contenteditable="true" spellcheck="false">MSE</span>
-                  <div class="node-actions">
-                    <button onclick="event.stopPropagation(); duplicateNode('loss-mse')">⧉</button>
-                    <button class="danger" onclick="event.stopPropagation(); deleteNode('loss-mse')">✕</button>
-                  </div>
-                </div>
-              </li>
-            </ul>
-            <button class="add-node-btn" onclick="addChildNode('loss')">+ Add child</button>
-          </li>
-
-          <!-- Root: Model Evaluation -->
-          <li id="node-eval">
-            <div class="tree-edit-node" onclick="selectNode('eval', this)">
-              <span class="drag-handle">⠿</span>
-              <span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>
-              <span class="node-label" contenteditable="true" spellcheck="false">Model Evaluation</span>
-              <div class="node-actions">
-                <button onclick="event.stopPropagation(); addChildNode('eval')">+</button>
-                <button onclick="event.stopPropagation(); duplicateNode('eval')">⧉</button>
-                <button class="danger" onclick="event.stopPropagation(); deleteNode('eval')">✕</button>
-              </div>
-            </div>
-            <ul class="tree-children">
-              <li id="node-eval-overfit">
-                <div class="tree-edit-node" onclick="selectNode('eval-overfit', this)">
-                  <span class="drag-handle">⠿</span>
-                  <span class="node-label" contenteditable="true" spellcheck="false">Overfitting &amp; Underfitting</span>
-                  <div class="node-actions">
-                    <button onclick="event.stopPropagation(); duplicateNode('eval-overfit')">⧉</button>
-                    <button class="danger" onclick="event.stopPropagation(); deleteNode('eval-overfit')">✕</button>
-                  </div>
-                </div>
-              </li>
-              <li id="node-eval-cv">
-                <div class="tree-edit-node" onclick="selectNode('eval-cv', this)">
-                  <span class="drag-handle">⠿</span>
-                  <span class="node-label" contenteditable="true" spellcheck="false">Cross-Validation</span>
-                  <div class="node-actions">
-                    <button onclick="event.stopPropagation(); duplicateNode('eval-cv')">⧉</button>
-                    <button class="danger" onclick="event.stopPropagation(); deleteNode('eval-cv')">✕</button>
-                  </div>
-                </div>
-              </li>
-            </ul>
-            <button class="add-node-btn" onclick="addChildNode('eval')">+ Add child</button>
-          </li>
+          <li><span class="text-muted" style="padding:12px;display:block;font-size:13px;" data-t="loadingSubjects">Loading subject tree...</span></li>
         </ul>
 
         <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-          <span class="text-sm text-muted"><strong id="nodeCount">11</strong> nodes · <strong id="depthCount">3</strong> levels deep</span>
+          <span class="text-sm text-muted"><strong id="nodeCount">0</strong> <span data-t="nodes">nodes</span> · <strong id="depthCount">0</strong> <span data-t="levelsDeep">levels deep</span></span>
           <button class="btn btn-outline btn-sm" onclick="addRootNode()">+ Add Root Node</button>
         </div>
       </div>
@@ -339,38 +137,38 @@
       <!-- Right: Node Detail Panel -->
       <div class="node-detail">
         <div class="card" id="detailPanel">
-          <h3 style="margin-bottom:16px;">Node Details</h3>
+          <h3 style="margin-bottom:16px;" data-t="nodeDetails">Node Details</h3>
           <div id="detailContent">
             <div id="noSelection" style="text-align:center; padding:40px 0; color:var(--text-secondary);">
               <p style="font-size:32px; margin-bottom:8px;">🌳</p>
-              <p>Click a node to view and edit its details</p>
+              <p data-t="clickNodeToEdit">Click a node to view and edit its details</p>
             </div>
             <div id="selectedDetail" style="display:none;">
-              <div class="node-path" id="detailPath">Neural Networks › Backpropagation › Debugging</div>
+              <div class="node-path" id="detailPath"></div>
               <div class="detail-field">
-                <label>Node Name</label>
-                <input type="text" class="form-control" id="detailName" value="Debugging">
+                <label data-t="nodeName">Node Name</label>
+                <input type="text" class="form-control" id="detailName" value="">
               </div>
               <div class="detail-field">
-                <label>Description (optional)</label>
-                <textarea class="form-control" id="detailDesc" rows="2" placeholder="Brief description for rubric context...">Techniques for identifying and fixing issues in neural network training</textarea>
+                <label data-t="descriptionOptional">Description (optional)</label>
+                <textarea class="form-control" id="detailDesc" rows="2" data-t-placeholder="descriptionForRubric" placeholder="Brief description for rubric context..."></textarea>
               </div>
               <div class="detail-field">
-                <label>Keywords (for rubric generation)</label>
-                <input type="text" class="form-control" id="detailKeywords" value="debug, troubleshoot, diagnose, training issues" placeholder="Comma-separated keywords...">
+                <label data-t="keywordsForRubric">Keywords (for rubric generation)</label>
+                <input type="text" class="form-control" id="detailKeywords" value="" data-t-placeholder="commaSeparatedKeywords" placeholder="Comma-separated keywords...">
               </div>
               <div class="stats-row">
                 <div class="mini-stat">
-                  <div class="val">3</div>
-                  <div class="lbl">Challenges</div>
+                  <div class="val" id="statChallenges">—</div>
+                  <div class="lbl" data-t="challenges">Challenges</div>
                 </div>
                 <div class="mini-stat">
-                  <div class="val">12</div>
-                  <div class="lbl">Attempts</div>
+                  <div class="val" id="statAttempts">—</div>
+                  <div class="lbl" data-t="attempts">Attempts</div>
                 </div>
                 <div class="mini-stat">
-                  <div class="val">B</div>
-                  <div class="lbl">Avg Grade</div>
+                  <div class="val" id="statAvgGrade">—</div>
+                  <div class="lbl" data-t="avgGrade">Avg Grade</div>
                 </div>
               </div>
             </div>
@@ -379,7 +177,7 @@
 
         <!-- Unsaved changes -->
         <div class="card" id="changesCard">
-          <h3 style="margin-bottom:12px;">Unsaved Changes</h3>
+          <h3 style="margin-bottom:12px;" data-t="unsavedChanges">Unsaved Changes</h3>
           <div class="change-log" id="changeLog">
             <div class="change-entry">
               <span class="change-icon">✏️</span>
@@ -390,26 +188,59 @@
 
         <!-- Import/Export -->
         <div class="card">
-          <h3 style="margin-bottom:12px;">Import / Export</h3>
+          <h3 style="margin-bottom:12px;" data-t="importExport">Import / Export</h3>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn btn-outline btn-sm">📥 Import YAML</button>
-            <button class="btn btn-outline btn-sm">📤 Export YAML</button>
-            <button class="btn btn-outline btn-sm">📋 Copy as JSON</button>
+            <button class="btn btn-outline btn-sm" onclick="importYaml()">📥 Import YAML</button>
+            <button class="btn btn-outline btn-sm" onclick="exportYaml()">📤 Export YAML</button>
+            <button class="btn btn-outline btn-sm" onclick="copyAsJson()">📋 Copy as JSON</button>
           </div>
+          <input type="file" id="yamlFileInput" accept=".yaml,.yml" style="display:none;" onchange="handleYamlImport(event)">
         </div>
       </div>
     </div>
   </main>
 
   <script>
-// Check auth
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-}).catch(() => window.location.href = '/login.html');
-
     var selectedNodeId = null;
     var changeCount = 0;
     var changes = [];
+    var _courseId = new URLSearchParams(window.location.search).get('courseId');
+
+    // --- Load course info and subject tree from API ---
+    (async function initPage() {
+      if (!_courseId) {
+        document.getElementById('courseNameHeader').textContent = t('noCourseSelected') || 'No course selected';
+        document.getElementById('breadcrumbCourse').textContent = '—';
+        document.getElementById('subjectTree').innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">' + (t('noCourseId') || 'No courseId provided in URL.') + '</span></li>';
+        return;
+      }
+
+      try {
+        // Load course details
+        var course = await API.get('/courses/' + _courseId);
+        var courseName = course.name || 'Untitled';
+        document.getElementById('courseNameHeader').textContent = courseName;
+        document.getElementById('breadcrumbCourse').textContent = courseName;
+        document.title = 'AI CoReasoning Lab — ' + (t('editSubjectTree') || 'Edit Subject Tree') + ' — ' + courseName;
+      } catch (err) {
+        document.getElementById('courseNameHeader').textContent = t('unknownCourse') || 'Unknown Course';
+        document.getElementById('breadcrumbCourse').textContent = '—';
+      }
+
+      try {
+        // Load subject tree
+        var subjects = await API.get('/courses/' + _courseId + '/subjects');
+        if (subjects && subjects.length > 0) {
+          renderGeneratedTree(subjects);
+          updateCounts();
+        } else {
+          document.getElementById('subjectTree').innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">' + (t('noSubjectsDefined') || 'No subjects defined yet. Add a root node or use AI Generate.') + '</span></li>';
+          updateCounts();
+        }
+      } catch (err) {
+        document.getElementById('subjectTree').innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">' + (t('failedLoadSubjects') || 'Failed to load subjects.') + '</span></li>';
+      }
+    })();
 
     function selectNode(id, el) {
       // Deselect previous
@@ -443,6 +274,29 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
 
       document.getElementById('detailPath').textContent = path.join(' › ');
       document.getElementById('detailName').value = name;
+      document.getElementById('detailDesc').value = '';
+      document.getElementById('detailKeywords').value = '';
+
+      // Reset stats to loading state
+      document.getElementById('statChallenges').textContent = '—';
+      document.getElementById('statAttempts').textContent = '—';
+      document.getElementById('statAvgGrade').textContent = '—';
+
+      // Load node stats from API if courseId available
+      if (_courseId) {
+        loadNodeStats(name);
+      }
+    }
+
+    async function loadNodeStats(nodeName) {
+      try {
+        var stats = await API.get('/courses/' + _courseId + '/subjects/' + encodeURIComponent(nodeName) + '/stats');
+        document.getElementById('statChallenges').textContent = stats.challengeCount != null ? stats.challengeCount : '—';
+        document.getElementById('statAttempts').textContent = stats.attemptCount != null ? stats.attemptCount : '—';
+        document.getElementById('statAvgGrade').textContent = stats.avgGrade || '—';
+      } catch (err) {
+        // Stats endpoint may not exist yet; leave as dashes
+      }
     }
 
     function addChildNode(parentId) {
@@ -461,7 +315,7 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       li.innerHTML =
         '<div class="tree-edit-node" onclick="selectNode(\'' + newId + '\', this)">' +
           '<span class="drag-handle">⠿</span>' +
-          '<span class="node-label" contenteditable="true" spellcheck="false">New Topic</span>' +
+          '<span class="node-label" contenteditable="true" spellcheck="false">' + (t('newTopic') || 'New Topic') + '</span>' +
           '<div class="node-actions">' +
             '<button onclick="event.stopPropagation(); duplicateNode(\'' + newId + '\')">⧉</button>' +
             '<button class="danger" onclick="event.stopPropagation(); deleteNode(\'' + newId + '\')">✕</button>' +
@@ -473,12 +327,16 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       var newLabel = li.querySelector('.node-label');
       if (newLabel) { newLabel.focus(); document.execCommand('selectAll', false, null); }
 
-      logChange('➕', 'Added child under <strong>' + parentId + '</strong>');
+      logChange('➕', (t('addedChildUnder') || 'Added child under') + ' <strong>' + escapeHtml(parentId) + '</strong>');
       updateCounts();
     }
 
     function addRootNode() {
       var tree = document.getElementById('subjectTree');
+      // Clear placeholder if present
+      var placeholder = tree.querySelector('.text-muted');
+      if (placeholder) tree.innerHTML = '';
+
       var newId = 'root-new' + (++changeCount);
       var li = document.createElement('li');
       li.id = 'node-' + newId;
@@ -486,7 +344,7 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
         '<div class="tree-edit-node" onclick="selectNode(\'' + newId + '\', this)">' +
           '<span class="drag-handle">⠿</span>' +
           '<span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>' +
-          '<span class="node-label" contenteditable="true" spellcheck="false">New Root Topic</span>' +
+          '<span class="node-label" contenteditable="true" spellcheck="false">' + (t('newRootTopic') || 'New Root Topic') + '</span>' +
           '<div class="node-actions">' +
             '<button onclick="event.stopPropagation(); addChildNode(\'' + newId + '\')">+</button>' +
             '<button onclick="event.stopPropagation(); duplicateNode(\'' + newId + '\')">⧉</button>' +
@@ -494,13 +352,13 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
           '</div>' +
         '</div>' +
         '<ul class="tree-children"></ul>' +
-        '<button class="add-node-btn" onclick="addChildNode(\'' + newId + '\')">+ Add child</button>';
+        '<button class="add-node-btn" onclick="addChildNode(\'' + newId + '\')">+ ' + (t('addChild') || 'Add child') + '</button>';
       tree.appendChild(li);
 
       var newLabel = li.querySelector('.node-label');
       if (newLabel) { newLabel.focus(); document.execCommand('selectAll', false, null); }
 
-      logChange('➕', 'Added root node');
+      logChange('➕', t('addedRootNode') || 'Added root node');
       updateCounts();
     }
 
@@ -508,14 +366,14 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       var node = document.getElementById('node-' + id);
       if (!node) return;
       var name = node.querySelector(':scope > .tree-edit-node .node-label').textContent.trim();
-      if (!confirm('Delete "' + name + '" and all its children?')) return;
+      if (!confirm((t('confirmDeleteNode') || 'Delete "' + name + '" and all its children?'))) return;
       node.remove();
       if (selectedNodeId === id) {
         document.getElementById('noSelection').style.display = '';
         document.getElementById('selectedDetail').style.display = 'none';
         selectedNodeId = null;
       }
-      logChange('🗑️', 'Deleted <strong>' + name + '</strong>');
+      logChange('🗑️', (t('deleted') || 'Deleted') + ' <strong>' + escapeHtml(name) + '</strong>');
       updateCounts();
     }
 
@@ -526,9 +384,9 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       var newId = id + '-copy' + (++changeCount);
       clone.id = 'node-' + newId;
       var name = clone.querySelector(':scope > .tree-edit-node .node-label');
-      if (name) name.textContent = name.textContent.trim() + ' (copy)';
+      if (name) name.textContent = name.textContent.trim() + ' (' + (t('copy') || 'copy') + ')';
       node.parentElement.insertBefore(clone, node.nextSibling);
-      logChange('⧉', 'Duplicated <strong>' + node.querySelector(':scope > .tree-edit-node .node-label').textContent.trim() + '</strong>');
+      logChange('⧉', (t('duplicated') || 'Duplicated') + ' <strong>' + escapeHtml(node.querySelector(':scope > .tree-edit-node .node-label').textContent.trim()) + '</strong>');
       updateCounts();
     }
 
@@ -543,11 +401,13 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
 
     function updateCounts() {
       var nodes = document.querySelectorAll('#subjectTree li');
-      document.getElementById('nodeCount').textContent = nodes.length;
+      // Filter out placeholder items (no tree-edit-node)
+      var realNodes = Array.from(nodes).filter(function(n) { return n.querySelector('.tree-edit-node'); });
+      document.getElementById('nodeCount').textContent = realNodes.length;
 
       // Calculate max depth
       var maxDepth = 0;
-      nodes.forEach(function(n) {
+      realNodes.forEach(function(n) {
         var depth = 0;
         var el = n;
         while (el.parentElement && el.parentElement.closest('#subjectTree li')) {
@@ -608,25 +468,21 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       const btn = document.getElementById('aiGenerateBtn');
       const origText = btn.innerHTML;
 
-      // Get course ID from URL or use a default
-      const urlParams = new URLSearchParams(window.location.search);
-      const courseId = urlParams.get('courseId');
-
-      if (!courseId) {
+      if (!_courseId) {
         // If no courseId in URL, prompt for course name to generate from
-        const courseName = prompt('Enter the course name to generate a subject tree for:');
+        const courseName = prompt(t('enterCourseName') || 'Enter the course name to generate a subject tree for:');
         if (!courseName) return;
         await generateFromName(courseName, btn, origText);
         return;
       }
 
-      btn.innerHTML = '⏳ Generating...';
+      btn.innerHTML = '⏳ ' + (t('generating') || 'Generating...');
       btn.disabled = true;
 
       try {
         const lang = document.documentElement.lang || 'en';
         const langMap = { en: 'English', he: 'Hebrew', fr: 'French', de: 'German', es: 'Spanish' };
-        const data = await API.post('/courses/' + courseId + '/subjects/generate', {
+        const data = await API.post('/courses/' + _courseId + '/subjects/generate', {
           language: langMap[lang] || 'English',
         });
 
@@ -636,7 +492,7 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
           updateCounts();
         }
       } catch (err) {
-        alert('AI generation failed: ' + (err.message || 'Unknown error'));
+        alert((t('aiGenerationFailed') || 'AI generation failed') + ': ' + (err.message || t('unknownError') || 'Unknown error'));
       } finally {
         btn.innerHTML = origText;
         btn.disabled = false;
@@ -644,15 +500,13 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
     }
 
     async function generateFromName(courseName, btn, origText) {
-      btn.innerHTML = '⏳ Generating...';
+      btn.innerHTML = '⏳ ' + (t('generating') || 'Generating...');
       btn.disabled = true;
 
       try {
-        // Use the LLM preview endpoint as fallback when no courseId
         const lang = document.documentElement.lang || 'en';
         const langMap = { en: 'English', he: 'Hebrew', fr: 'French', de: 'German', es: 'Spanish' };
 
-        // Try all courses to find a matching one
         const courses = await API.get('/courses');
         const match = courses.find(c => c.name.toLowerCase().includes(courseName.toLowerCase()));
 
@@ -662,14 +516,14 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
           });
           if (data && data.tree) {
             renderGeneratedTree(data.tree);
-            logChange('🤖', 'AI generated subject tree for <strong>' + match.name + '</strong>');
+            logChange('🤖', 'AI generated subject tree for <strong>' + escapeHtml(match.name) + '</strong>');
             updateCounts();
           }
         } else {
-          alert('Course "' + courseName + '" not found. Please enter the exact course name.');
+          alert((t('courseNotFound') || 'Course not found') + ': "' + courseName + '"');
         }
       } catch (err) {
-        alert('AI generation failed: ' + (err.message || 'Unknown error'));
+        alert((t('aiGenerationFailed') || 'AI generation failed') + ': ' + (err.message || t('unknownError') || 'Unknown error'));
       } finally {
         btn.innerHTML = origText;
         btn.disabled = false;
@@ -715,7 +569,7 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
         li.appendChild(ul);
         var addBtn = document.createElement('button');
         addBtn.className = 'add-node-btn';
-        addBtn.textContent = '+ Add child';
+        addBtn.textContent = '+ ' + (t('addChild') || 'Add child');
         addBtn.onclick = function() { addChildNode(id); };
         li.appendChild(addBtn);
       }
@@ -737,34 +591,31 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
     // Save button — serialize tree from DOM and save via API
     document.getElementById('saveBtn').addEventListener('click', async function() {
       if (changes.length === 0) {
-        alert('No changes to save.');
+        alert(t('noChangesToSave') || 'No changes to save.');
         return;
       }
-
-      var urlParams = new URLSearchParams(window.location.search);
-      var courseId = urlParams.get('courseId');
 
       // Serialize tree from DOM
       var tree = serializeTree(document.getElementById('subjectTree'));
 
-      if (courseId) {
+      if (_courseId) {
         try {
           this.disabled = true;
-          this.textContent = 'Saving...';
-          await API.put('/courses/' + courseId + '/subjects', { tree: tree });
+          this.textContent = t('saving') || 'Saving...';
+          await API.put('/courses/' + _courseId + '/subjects', { tree: tree });
           changes = [];
-          document.getElementById('changeLog').innerHTML = '<div class="change-entry"><span class="change-icon">✅</span><span class="change-text">All changes saved</span></div>';
-          alert('Subject tree saved successfully!');
+          document.getElementById('changeLog').innerHTML = '<div class="change-entry"><span class="change-icon">✅</span><span class="change-text">' + (t('allChangesSaved') || 'All changes saved') + '</span></div>';
+          alert(t('subjectTreeSaved') || 'Subject tree saved successfully!');
         } catch (err) {
-          alert('Save failed: ' + (err.message || 'Unknown error'));
+          alert((t('saveFailed') || 'Save failed') + ': ' + (err.message || t('unknownError') || 'Unknown error'));
         } finally {
           this.disabled = false;
-          this.textContent = 'Save Changes';
+          this.textContent = t('saveChanges') || 'Save Changes';
         }
       } else {
-        alert('Subject tree saved successfully! (' + changes.length + ' changes applied)');
+        alert((t('subjectTreeSaved') || 'Subject tree saved successfully!') + ' (' + changes.length + ' ' + (t('changesApplied') || 'changes applied') + ')');
         changes = [];
-        document.getElementById('changeLog').innerHTML = '<div class="change-entry"><span class="change-icon">✅</span><span class="change-text">All changes saved</span></div>';
+        document.getElementById('changeLog').innerHTML = '<div class="change-entry"><span class="change-icon">✅</span><span class="change-text">' + (t('allChangesSaved') || 'All changes saved') + '</span></div>';
       }
     });
 
@@ -782,6 +633,98 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
         nodes.push(node);
       });
       return nodes;
+    }
+
+    // --- Import / Export / Copy ---
+    function importYaml() {
+      document.getElementById('yamlFileInput').click();
+    }
+
+    function handleYamlImport(event) {
+      var file = event.target.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          // Simple YAML-like parser for indented tree structure
+          var lines = e.target.result.split('\n').filter(function(l) { return l.trim() && !l.trim().startsWith('#'); });
+          var tree = parseSimpleYaml(lines);
+          if (tree.length > 0) {
+            renderGeneratedTree(tree);
+            logChange('📥', (t('imported') || 'Imported') + ' ' + countGeneratedNodes(tree) + ' ' + (t('nodes') || 'nodes'));
+            updateCounts();
+          } else {
+            alert(t('invalidYamlFormat') || 'Could not parse YAML. Expected indented list of topic names.');
+          }
+        } catch (err) {
+          alert((t('importFailed') || 'Import failed') + ': ' + err.message);
+        }
+        event.target.value = '';
+      };
+      reader.readAsText(file);
+    }
+
+    function parseSimpleYaml(lines) {
+      // Parse indented lines like:
+      //   - Neural Networks
+      //     - Backpropagation
+      //     - Activation Functions
+      var nodes = [];
+      var stack = [{ children: nodes, indent: -1 }];
+
+      lines.forEach(function(line) {
+        var match = line.match(/^(\s*)[-]?\s*(.+)/);
+        if (!match) return;
+        var indent = match[1].length;
+        var name = match[2].replace(/^["']|["']$/g, '').replace(/:\s*$/, '').trim();
+        if (!name) return;
+
+        var node = { name: name, children: [] };
+
+        while (stack.length > 1 && stack[stack.length - 1].indent >= indent) {
+          stack.pop();
+        }
+
+        stack[stack.length - 1].children.push(node);
+        stack.push({ children: node.children, indent: indent });
+      });
+
+      return nodes;
+    }
+
+    function exportYaml() {
+      var tree = serializeTree(document.getElementById('subjectTree'));
+      var yaml = treeToYaml(tree, 0);
+      var blob = new Blob([yaml], { type: 'text/yaml' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'subject-tree.yaml';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function treeToYaml(nodes, depth) {
+      var indent = '  '.repeat(depth);
+      var yaml = '';
+      nodes.forEach(function(n) {
+        yaml += indent + '- ' + n.name + '\n';
+        if (n.children && n.children.length > 0) {
+          yaml += indent + '  children:\n';
+          yaml += treeToYaml(n.children, depth + 2);
+        }
+      });
+      return yaml;
+    }
+
+    function copyAsJson() {
+      var tree = serializeTree(document.getElementById('subjectTree'));
+      var json = JSON.stringify(tree, null, 2);
+      navigator.clipboard.writeText(json).then(function() {
+        alert(t('copiedToClipboard') || 'Copied to clipboard!');
+      }).catch(function() {
+        // Fallback: show in prompt
+        prompt((t('copyJsonBelow') || 'Copy the JSON below:'), json);
+      });
     }
 
     // Sync detail name → tree label

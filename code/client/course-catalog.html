@@ -17,11 +17,13 @@
     .subscribed-badge { position: absolute; top: 12px; right: 12px; background: var(--success); color: #fff; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; }
     .subject-tree-preview { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
     .subject-tree-preview .tag { display: inline-block; background: #e8eaf6; color: var(--primary); font-size: 12px; padding: 2px 8px; border-radius: 4px; margin: 2px 4px 2px 0; }
+    .empty-state { text-align: center; padding: 48px; color: var(--text-secondary); }
   </style>
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
 </head>
 <body>
   <header class="topnav">
@@ -34,38 +36,32 @@
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
-      <span>Sarah Cohen</span>
-      <a href="profile.html"><div class="avatar">SC</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">—</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
     </div>
   </header>
 
   <main class="page">
     <div class="page-header">
       <h1 data-t="courseCatalog" data-tooltip="courseSubscription">Course Catalog</h1>
-      <p data-t="courseCatalogDesc">Browse and subscribe to courses <span class="help-icon" data-tooltip="Subscribe to a course to receive its public challenges. You can unsubscribe at any time — your existing results are preserved.">?</span></p>
+      <p data-t="courseCatalogDesc">Browse and subscribe to courses</p>
     </div>
 
-    <!-- Institution context alert -->
+    <!-- Institution context -->
     <div class="alert alert-info" style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
       <span>&#8505;&#65039;</span>
-      <span data-t="showingCoursesFrom">Showing courses from your institution: <strong>Tel Aviv University</strong></span>
+      <span data-t="showingCoursesFrom">Showing courses from your institution:</span> <strong id="institutionLabel"></strong>
     </div>
 
     <!-- Filter -->
     <div class="filter-bar">
-      <input type="search" class="form-control" data-t-placeholder="searchCourses" placeholder="Search courses...">
-      <select class="form-control" data-t-options="allDepartments">
-        <option value="">All Departments</option>
-        <option>Computer Science</option>
-        <option>Data Science</option>
-        <option>Digital Medical Technologies</option>
-        <option>Electrical Engineering</option>
-        <option>Instructional Technologies</option>
-        <option>Law</option>
-        <option>Mathematics</option>
+      <input type="search" id="filterSearch" class="form-control" data-t-placeholder="searchCourses" placeholder="Search courses...">
+      <select id="filterDept" class="form-control">
+        <option value="" data-t="allDepartments">All Departments</option>
       </select>
-      <select class="form-control" id="filterSubscription">
+      <select id="filterSubscription" class="form-control">
         <option value="" data-t="allSubscription">All</option>
         <option value="yes" data-t="subscribed">Subscribed</option>
         <option value="no" data-t="notSubscribed">Not Subscribed</option>
@@ -73,310 +69,161 @@
       <span id="course-count" style="font-size:13px;color:var(--text-secondary);white-space:nowrap;align-self:center;"></span>
     </div>
 
-    <div class="grid grid-3">
-      <!-- Subscribed course -->
-      <div class="card course-card" data-department="Computer Science" data-subscribed="yes">
-        <span class="subscribed-badge" data-t="subscribed">&#10003; Subscribed</span>
-        <div class="course-dept">Computer Science</div>
-        <h3>Deep Learning 101</h3>
-        <div class="course-meta">
-          <span>&#128100; 3 instructors</span>
-          <span>&#128203; 8 challenges</span>
-          <span>&#127979; 45 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">Neural Networks</span>
-          <span class="tag">CNNs</span>
-          <span class="tag">RNNs</span>
-          <span class="tag">Optimization</span>
-          <span class="tag">Regularization</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-outline btn-sm" style="color: var(--danger);" data-t="unsubscribe">Unsubscribe</button>
-          <a href="challenge-list.html" class="btn btn-outline btn-sm" data-t="viewChallenges">View Challenges</a>
-        </div>
-      </div>
-
-      <!-- Subscribed course -->
-      <div class="card course-card" data-department="Computer Science" data-subscribed="yes">
-        <span class="subscribed-badge" data-t="subscribed">&#10003; Subscribed</span>
-        <div class="course-dept">Computer Science</div>
-        <h3>Database Systems</h3>
-        <div class="course-meta">
-          <span>&#128100; 2 instructors</span>
-          <span>&#128203; 5 challenges</span>
-          <span>&#127979; 62 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">SQL</span>
-          <span class="tag">Query Optimization</span>
-          <span class="tag">Indexing</span>
-          <span class="tag">Normalization</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-outline btn-sm" style="color: var(--danger);" data-t="unsubscribe">Unsubscribe</button>
-          <a href="challenge-list.html" class="btn btn-outline btn-sm" data-t="viewChallenges">View Challenges</a>
-        </div>
-      </div>
-
-      <!-- Subscribed course -->
-      <div class="card course-card" data-department="Computer Science" data-subscribed="yes">
-        <span class="subscribed-badge" data-t="subscribed">&#10003; Subscribed</span>
-        <div class="course-dept">Computer Science</div>
-        <h3>Software Engineering</h3>
-        <div class="course-meta">
-          <span>&#128100; 2 instructors</span>
-          <span>&#128203; 12 challenges</span>
-          <span>&#127979; 78 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">Design Patterns</span>
-          <span class="tag">API Design</span>
-          <span class="tag">Testing</span>
-          <span class="tag">Refactoring</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-outline btn-sm" style="color: var(--danger);" data-t="unsubscribe">Unsubscribe</button>
-          <a href="challenge-list.html" class="btn btn-outline btn-sm" data-t="viewChallenges">View Challenges</a>
-        </div>
-      </div>
-
-      <div class="card course-card" data-department="Mathematics" data-subscribed="no">
-        <div class="course-dept">Mathematics</div>
-        <h3>Linear Algebra for ML</h3>
-        <div class="course-meta">
-          <span>&#128100; 1 instructor</span>
-          <span>&#128203; 4 challenges</span>
-          <span>&#127979; 33 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">Vectors</span>
-          <span class="tag">Matrices</span>
-          <span class="tag">Eigenvalues</span>
-          <span class="tag">SVD</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>
-        </div>
-      </div>
-
-      <div class="card course-card" data-department="Data Science" data-subscribed="no">
-        <div class="course-dept">Data Science</div>
-        <h3>Statistical Inference</h3>
-        <div class="course-meta">
-          <span>&#128100; 2 instructors</span>
-          <span>&#128203; 6 challenges</span>
-          <span>&#127979; 41 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">Hypothesis Testing</span>
-          <span class="tag">Regression</span>
-          <span class="tag">Bayesian Methods</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>
-        </div>
-      </div>
-
-      <div class="card course-card" data-department="Electrical Engineering" data-subscribed="no">
-        <div class="course-dept">Electrical Engineering</div>
-        <h3>Signal Processing</h3>
-        <div class="course-meta">
-          <span>&#128100; 1 instructor</span>
-          <span>&#128203; 3 challenges</span>
-          <span>&#127979; 28 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">Fourier Transform</span>
-          <span class="tag">Filters</span>
-          <span class="tag">Sampling</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>
-        </div>
-      </div>
-
-      <div class="card course-card" data-department="Law" data-subscribed="no">
-        <div class="course-dept">Law</div>
-        <h3>Constitutional Law</h3>
-        <div class="course-meta">
-          <span>&#128100; 2 instructors</span>
-          <span>&#128203; 4 challenges</span>
-          <span>&#127979; 52 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">Standards of Review</span>
-          <span class="tag">Equal Protection</span>
-          <span class="tag">Due Process</span>
-          <span class="tag">First Amendment</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>
-        </div>
-      </div>
-
-      <div class="card course-card" data-department="Instructional Technologies" data-subscribed="no">
-        <div class="course-dept">Instructional Technologies</div>
-        <h3>Learning Experience Design</h3>
-        <div class="course-meta">
-          <span>&#128100; 2 instructors</span>
-          <span>&#128203; 5 challenges</span>
-          <span>&#127979; 35 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">Curriculum Mapping</span>
-          <span class="tag">Assessment Design</span>
-          <span class="tag">Adaptive Learning</span>
-          <span class="tag">Multimedia Principles</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>
-        </div>
-      </div>
-
-      <div class="card course-card" data-department="Instructional Technologies" data-subscribed="no">
-        <div class="course-dept">Instructional Technologies</div>
-        <h3>Educational Data Mining</h3>
-        <div class="course-meta">
-          <span>&#128100; 1 instructor</span>
-          <span>&#128203; 4 challenges</span>
-          <span>&#127979; 28 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">Learning Analytics</span>
-          <span class="tag">Student Modeling</span>
-          <span class="tag">Knowledge Tracing</span>
-          <span class="tag">Predictive Models</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>
-        </div>
-      </div>
-
-      <div class="card course-card" data-department="Digital Medical Technologies" data-subscribed="no">
-        <div class="course-dept">Digital Medical Technologies</div>
-        <h3>Medical Imaging Systems</h3>
-        <div class="course-meta">
-          <span>&#128100; 2 instructors</span>
-          <span>&#128203; 6 challenges</span>
-          <span>&#127979; 40 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">CT Reconstruction</span>
-          <span class="tag">MRI Sequences</span>
-          <span class="tag">Ultrasound Processing</span>
-          <span class="tag">Image Segmentation</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>
-        </div>
-      </div>
-
-      <div class="card course-card" data-department="Digital Medical Technologies" data-subscribed="no">
-        <div class="course-dept">Digital Medical Technologies</div>
-        <h3>Clinical Decision Support Systems</h3>
-        <div class="course-meta">
-          <span>&#128100; 2 instructors</span>
-          <span>&#128203; 5 challenges</span>
-          <span>&#127979; 32 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">Diagnostic Algorithms</span>
-          <span class="tag">Evidence-Based Medicine</span>
-          <span class="tag">Risk Scoring</span>
-          <span class="tag">Clinical Pathways</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>
-        </div>
-      </div>
-
-      <div class="card course-card" data-department="Digital Medical Technologies" data-subscribed="no">
-        <div class="course-dept">Digital Medical Technologies</div>
-        <h3>eHealth Interoperability</h3>
-        <div class="course-meta">
-          <span>&#128100; 1 instructor</span>
-          <span>&#128203; 3 challenges</span>
-          <span>&#127979; 22 students</span>
-        </div>
-        <div class="subject-tree-preview">
-          <span class="tag">HL7 FHIR</span>
-          <span class="tag">DICOM Standards</span>
-          <span class="tag">EHR Integration</span>
-          <span class="tag">Health Data Privacy</span>
-        </div>
-        <div class="course-actions">
-          <button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>
-        </div>
-      </div>
+    <div class="grid grid-3" id="courseGrid">
+      <div class="empty-state">Loading courses...</div>
     </div>
   </main>
 
   <script>
-// Check auth
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-}).catch(() => window.location.href = '/login.html');
-
   (function() {
-    var deptSelect = document.querySelector('.filter-bar select[data-t-options="allDepartments"]');
-    var subSelect = document.getElementById('filterSubscription');
-    var searchInput = document.querySelector('.filter-bar input[type="search"]');
-    var cards = document.querySelectorAll('.course-card');
-    var countEl = document.getElementById('course-count');
+    'use strict';
 
-    function filterCourses() {
-      var dept = deptSelect.value;
-      var sub = subSelect.value;
-      var query = searchInput.value.toLowerCase().trim();
-      var visible = 0;
-      cards.forEach(function(card) {
-        var matchDept = !dept || card.getAttribute('data-department') === dept;
-        var matchSub = !sub || card.getAttribute('data-subscribed') === sub;
-        var matchSearch = !query || card.textContent.toLowerCase().indexOf(query) !== -1;
-        if (matchDept && matchSub && matchSearch) {
-          card.style.display = '';
-          visible++;
-        } else {
-          card.style.display = 'none';
+    var allCourses = [];
+    var grid = document.getElementById('courseGrid');
+    var currentUser = null;
+
+    // ── Wait for user-header.js to populate _currentUser ──
+    (function waitForUser() {
+      var check = setInterval(function() {
+        if (window._currentUser) {
+          clearInterval(check);
+          currentUser = window._currentUser;
+          var instName = currentUser.institution_name || currentUser.institutionName || '';
+          document.getElementById('institutionLabel').textContent = instName;
+          loadCourses();
         }
+      }, 100);
+      // Fallback timeout
+      setTimeout(function() { clearInterval(check); if (!currentUser) { loadCourses(); } }, 2000);
+    })();
+
+    // ── Load courses from API ──
+    function loadCourses() {
+      API.courses.list().then(function(data) {
+        allCourses = data.courses || data || [];
+
+        // Populate department filter
+        var depts = new Set();
+        allCourses.forEach(function(c) { if (c.department) depts.add(c.department); });
+        var deptSel = document.getElementById('filterDept');
+        depts.forEach(function(d) {
+          var opt = document.createElement('option');
+          opt.value = d;
+          opt.textContent = d;
+          deptSel.appendChild(opt);
+        });
+
+        renderCourses(allCourses);
+      }).catch(function(err) {
+        grid.innerHTML = '<div class="empty-state" style="color:var(--danger);">Failed to load courses: ' + escHtml(err.message) + '</div>';
       });
-      countEl.textContent = visible + ' / ' + cards.length;
     }
 
-    deptSelect.addEventListener('change', filterCourses);
-    subSelect.addEventListener('change', filterCourses);
-    searchInput.addEventListener('input', filterCourses);
-    filterCourses();
-
-    // Interactive subscribe/unsubscribe buttons
-    document.addEventListener('click', function(e) {
-      var btn = e.target.closest('[data-t="subscribe"], [data-t="unsubscribe"]');
-      if (!btn) return;
-      var card = btn.closest('.course-card');
-      if (!card) return;
-
-      if (btn.getAttribute('data-t') === 'subscribe') {
-        // Subscribe
-        card.setAttribute('data-subscribed', 'yes');
-        var badge = document.createElement('span');
-        badge.className = 'subscribed-badge';
-        badge.setAttribute('data-t', 'subscribed');
-        badge.innerHTML = '&#10003; Subscribed';
-        card.insertBefore(badge, card.firstChild);
-        var actions = card.querySelector('.course-actions');
-        actions.innerHTML = '<button class="btn btn-outline btn-sm" style="color:var(--danger);" data-t="unsubscribe">Unsubscribe</button>' +
-          '<a href="challenge-list.html" class="btn btn-outline btn-sm" data-t="viewChallenges">View Challenges</a>';
-      } else {
-        // Unsubscribe
-        card.setAttribute('data-subscribed', 'no');
-        var badge = card.querySelector('.subscribed-badge');
-        if (badge) badge.remove();
-        var actions = card.querySelector('.course-actions');
-        actions.innerHTML = '<button class="btn btn-teal btn-sm" data-t="subscribe">Subscribe</button>';
+    // ── Render course cards ──
+    function renderCourses(list) {
+      if (list.length === 0) {
+        grid.innerHTML = '<div class="empty-state"><p data-t="noCoursesFound">' + (t('noCoursesFound') || 'No courses found.') + '</p></div>';
+        updateCount(0);
+        return;
       }
-      filterCourses();
-    });
+
+      grid.innerHTML = '';
+      list.forEach(function(c) {
+        var id = c._id || c.id;
+        var isSub = c.is_subscribed || c.isSubscribed || false;
+        var card = document.createElement('div');
+        card.className = 'card course-card';
+        card.setAttribute('data-course-id', id);
+        card.setAttribute('data-subscribed', isSub ? 'yes' : 'no');
+
+        var html = '';
+        if (isSub) {
+          html += '<span class="subscribed-badge" data-t="subscribed">&#10003; Subscribed</span>';
+        }
+        html += '<div class="course-dept">' + escHtml(c.department || '') + '</div>';
+        html += '<h3>' + escHtml(c.name || 'Untitled') + '</h3>';
+        html += '<div class="course-meta">';
+        html += '<span>&#128100; ' + (c.instructor_count || c.instructorCount || 0) + ' <span data-t="instructors">instructors</span></span>';
+        html += '<span>&#128203; ' + (c.challenge_count || c.challengeCount || 0) + ' <span data-t="challenges">challenges</span></span>';
+        html += '<span>&#127979; ' + (c.student_count || c.studentCount || 0) + ' <span data-t="students">students</span></span>';
+        html += '</div>';
+
+        // Subject tags
+        var subjects = c.subjects || c.subject_tags || [];
+        if (subjects.length > 0) {
+          html += '<div class="subject-tree-preview">';
+          subjects.forEach(function(s) {
+            var name = typeof s === 'string' ? s : (s.name || s.label || '');
+            if (name) html += '<span class="tag">' + escHtml(name) + '</span>';
+          });
+          html += '</div>';
+        }
+
+        // Actions
+        html += '<div class="course-actions">';
+        if (isSub) {
+          html += '<button class="btn btn-outline btn-sm" style="color:var(--danger);" onclick="toggleSubscribe(\'' + id + '\', false)" data-t="unsubscribe">Unsubscribe</button>';
+          html += ' <a href="challenge-list.html?courseId=' + id + '" class="btn btn-outline btn-sm" data-t="viewChallenges">View Challenges</a>';
+        } else {
+          html += '<button class="btn btn-teal btn-sm" onclick="toggleSubscribe(\'' + id + '\', true)" data-t="subscribe">Subscribe</button>';
+        }
+        html += '</div>';
+
+        card.innerHTML = html;
+        grid.appendChild(card);
+      });
+
+      updateCount(list.length);
+      if (window.translatePage) translatePage();
+    }
+
+    // ── Subscribe / Unsubscribe ──
+    window.toggleSubscribe = function(courseId, subscribe) {
+      var promise = subscribe ? API.courses.subscribe(courseId) : API.courses.unsubscribe(courseId);
+      promise.then(function() {
+        // Update local data
+        allCourses.forEach(function(c) {
+          if ((c._id || c.id) === courseId) {
+            c.is_subscribed = subscribe;
+            c.isSubscribed = subscribe;
+          }
+        });
+        applyFilters();
+      }).catch(function(err) {
+        alert((subscribe ? 'Subscribe' : 'Unsubscribe') + ' failed: ' + err.message);
+      });
+    };
+
+    // ── Filtering ──
+    var filterSearch = document.getElementById('filterSearch');
+    var filterDept = document.getElementById('filterDept');
+    var filterSub = document.getElementById('filterSubscription');
+
+    function applyFilters() {
+      var query = filterSearch.value.toLowerCase().trim();
+      var dept = filterDept.value;
+      var sub = filterSub.value;
+
+      var filtered = allCourses.filter(function(c) {
+        if (query && (c.name || '').toLowerCase().indexOf(query) === -1 &&
+            (c.department || '').toLowerCase().indexOf(query) === -1) return false;
+        if (dept && c.department !== dept) return false;
+        if (sub === 'yes' && !(c.is_subscribed || c.isSubscribed)) return false;
+        if (sub === 'no' && (c.is_subscribed || c.isSubscribed)) return false;
+        return true;
+      });
+      renderCourses(filtered);
+    }
+
+    filterSearch.addEventListener('input', applyFilters);
+    filterDept.addEventListener('change', applyFilters);
+    filterSub.addEventListener('change', applyFilters);
+
+    function updateCount(visible) {
+      document.getElementById('course-count').textContent = visible + ' / ' + allCourses.length;
+    }
+
+    function escHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
   })();
   </script>
 </body>

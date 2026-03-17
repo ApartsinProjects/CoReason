@@ -97,6 +97,14 @@
     .step-indicator { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
     .step-indicator .step-num-small { width: 20px; height: 20px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
 
+    .loading-state { text-align: center; padding: 60px 20px; color: var(--text-secondary); font-size: 16px; }
+    .loading-state .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-state { text-align: center; padding: 60px 20px; color: #c62828; }
+    .error-state h2 { font-size: 20px; margin-bottom: 8px; }
+    .error-state p { font-size: 14px; color: var(--text-secondary); }
+
     @media (max-width: 768px) {
       .summary-grades { flex-direction: column; align-items: center; gap: 20px; }
       .final-grades { grid-template-columns: 1fr; }
@@ -109,6 +117,7 @@
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
 </head>
 <body>
   <header class="topnav">
@@ -121,408 +130,377 @@
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
-      <span>Sarah Cohen</span>
-      <a href="profile.html"><div class="avatar">SC</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">&mdash;</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
     </div>
   </header>
 
   <main class="page">
     <a href="student-analytics.html" class="back-link" data-t="backToMyResults">&#8592; Back to My Results</a>
 
-    <div class="page-header">
-      <h1 data-t="challengeRunReport" data-tooltip="coReasoningScore">Challenge Run Report</h1>
-      <div class="report-meta">
-        <span><strong>Sorting Algorithm Analysis</strong></span>
-        <span class="sep">|</span>
-        <span>Software Engineering</span>
-        <span class="sep">|</span>
-        <span>Mar 8, 2026</span>
-        <span class="sep">|</span>
-        <span class="badge badge-assessment" data-t="assessment">Assessment</span>
-      </div>
+    <div id="loadingState" class="loading-state">
+      <div class="spinner"></div>
+      <div data-t="loadingReport">Loading report...</div>
     </div>
 
-    <!-- Session Overview -->
-    <div class="card">
-      <div class="session-info">
-        <div class="session-stat">
-          <div class="stat-value">2</div>
-          <div class="stat-label" data-t="cyclesUsed">Cycles Used</div>
-        </div>
-        <div class="session-stat">
-          <div class="stat-value">3</div>
-          <div class="stat-label" data-t="maxCycles">Max Cycles</div>
-        </div>
-        <div class="session-stat">
-          <div class="stat-value">14<span style="font-size:14px;font-weight:400">min</span></div>
-          <div class="stat-label" data-t="duration">Duration</div>
-        </div>
-        <div class="session-stat">
-          <div class="stat-value">Mar 8</div>
-          <div class="stat-label" data-t="completed">Completed</div>
-        </div>
-      </div>
-      <div class="summary-grades">
-        <div class="summary-grade-item">
-          <div class="summary-grade-circle grade-A">A</div>
-          <div class="summary-grade-label" data-t="framing">Framing</div>
-        </div>
-        <div class="summary-grade-item">
-          <div class="summary-grade-circle grade-B">B</div>
-          <div class="summary-grade-label" data-t="judging">Judging</div>
-        </div>
-        <div class="summary-grade-item">
-          <div class="summary-grade-circle grade-A">A</div>
-          <div class="summary-grade-label" data-t="steering">Steering</div>
-        </div>
-      </div>
+    <div id="errorState" class="error-state" style="display:none;">
+      <h2 data-t="errorLoadingReport">Error Loading Report</h2>
+      <p id="errorMessage"></p>
     </div>
 
-    <!-- Section 1: Problem Statement (collapsed by default) -->
-    <div class="section collapsed" id="section-problem">
-      <div class="section-header" onclick="toggleSection('section-problem')">
-        <h3>&#128203; <span data-t="originalProblem">Original Problem</span></h3>
-        <span class="section-arrow">&#9660;</span>
+    <div id="reportContent" style="display:none;">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <h1 data-t="challengeRunReport" data-tooltip="coReasoningScore">Challenge Run Report</h1>
+        <div class="report-meta" id="reportMeta"></div>
       </div>
-      <div class="section-body">
-        <div class="problem-block">
-          <h4 data-t="problemStatement">Problem Statement</h4>
-          <p>Compare the time and space complexity of three sorting algorithms &#8212; QuickSort, MergeSort, and HeapSort &#8212; for varying input sizes. Analyze their behavior for best-case, average-case, and worst-case scenarios. Discuss practical trade-offs including cache locality, stability, and in-place requirements.</p>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div class="submission-block">
-            <h4 data-t="course">Course</h4>
-            <p>Software Engineering</p>
-          </div>
-          <div class="submission-block">
-            <h4 data-t="subject">Subject</h4>
-            <p>Algorithm Analysis</p>
-          </div>
-        </div>
+
+      <!-- Session Overview -->
+      <div class="card">
+        <div class="session-info" id="sessionInfo"></div>
+        <div class="summary-grades" id="summaryGrades"></div>
       </div>
+
+      <!-- Section 1: Problem Statement (collapsed by default) -->
+      <div class="section collapsed" id="section-problem">
+        <div class="section-header" onclick="toggleSection('section-problem')">
+          <h3>&#128203; <span data-t="originalProblem">Original Problem</span></h3>
+          <span class="section-arrow">&#9660;</span>
+        </div>
+        <div class="section-body" id="problemBody"></div>
+      </div>
+
+      <!-- Section 2: Phase 1 — Framing -->
+      <div class="section" id="section-framing">
+        <div class="section-header" onclick="toggleSection('section-framing')">
+          <h3><span class="phase-label phase-1">1</span> <span data-t="framing">Framing</span></h3>
+          <span class="section-arrow">&#9660;</span>
+        </div>
+        <div class="section-body" id="framingBody"></div>
+      </div>
+
+      <!-- Section 3: AI Initial Output -->
+      <div class="section" id="section-ai-initial">
+        <div class="section-header" onclick="toggleSection('section-ai-initial')">
+          <h3>&#129302; <span data-t="aiInitialOutput">AI Initial Output</span></h3>
+          <span class="section-arrow">&#9660;</span>
+        </div>
+        <div class="section-body" id="aiInitialBody"></div>
+      </div>
+
+      <!-- Section 4: Phase 2 — Judge + Steer Cycles -->
+      <div class="section" id="section-judge-steer">
+        <div class="section-header" onclick="toggleSection('section-judge-steer')">
+          <h3><span class="phase-label phase-2">2</span> <span data-t="judgeSteerCycles">Judge + Steer Cycles</span></h3>
+          <span class="section-arrow">&#9660;</span>
+        </div>
+        <div class="section-body" id="cyclesBody"></div>
+      </div>
+
+      <!-- Section 5: Final Grades & Summary -->
+      <div class="section" id="section-final">
+        <div class="section-header" onclick="toggleSection('section-final')">
+          <h3>&#127942; <span data-t="finalGrades">Final Grades</span></h3>
+          <span class="section-arrow">&#9660;</span>
+        </div>
+        <div class="section-body" id="finalGradesBody"></div>
+      </div>
+
+      <!-- Section 6: What Could Be Better -->
+      <div class="section" id="section-better">
+        <div class="section-header" onclick="toggleSection('section-better')">
+          <h3>&#128161; <span data-t="whatCouldBeBetter">What Could Be Better</span></h3>
+          <span class="section-arrow">&#9660;</span>
+        </div>
+        <div class="section-body" id="betterBody"></div>
+      </div>
+
     </div>
-
-    <!-- Section 2: Phase 1 — Framing -->
-    <div class="section" id="section-framing">
-      <div class="section-header" onclick="toggleSection('section-framing')">
-        <h3><span class="phase-label phase-1">1</span> <span data-t="framing">Framing</span></h3>
-        <span class="section-arrow">&#9660;</span>
-      </div>
-      <div class="section-body">
-        <div class="step-indicator">
-          <span class="step-num-small">1</span> <span data-t="studentIdentifiedAssumptions">Student identified missing assumptions</span>
-        </div>
-        <div class="submission-block">
-          <h4 data-t="yourSubmission">Your Submission</h4>
-          <p>The problem asks to analyze sorting algorithms but doesn&#39;t specify:</p>
-          <ul>
-            <li>Input size range (10 elements? 10 million?)</li>
-            <li>Whether stability matters for the use case</li>
-            <li>Memory constraints (can we use O(n) extra space?)</li>
-            <li>Whether input may be partially sorted</li>
-          </ul>
-          <p style="margin-top:12px;"><strong>My assumptions:</strong> Arrays of 1K&#8211;1M integers, stability not required, O(1) extra space preferred. Input is not assumed to be partially sorted.</p>
-        </div>
-
-        <div class="step-indicator">
-          <span class="step-num-small">2</span> <span data-t="aiEvaluatedFraming">AI evaluated framing quality</span>
-        </div>
-        <div class="feedback-block">
-          <h4 data-t="aiFeedback">AI Feedback</h4>
-          <p>Strong identification of missing constraints. The assumption about O(1) extra space is well-justified given the context. The addition of the &#8220;partially sorted&#8221; consideration shows excellent analytical depth.</p>
-        </div>
-        <div class="feedback-block better">
-          <h4 data-t="whatCouldBeBetter">What could be better</h4>
-          <p>Could have also questioned whether elements are comparable (e.g., numeric vs. string keys) and whether distribution-based sorting (Radix/Counting) should be considered for integer inputs.</p>
-        </div>
-
-        <div class="phase-grade">
-          <span class="phase-grade-label" data-t="grade">Grade:</span>
-          <span class="grade grade-A">A</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 3: AI Initial Output -->
-    <div class="section" id="section-ai-initial">
-      <div class="section-header" onclick="toggleSection('section-ai-initial')">
-        <h3>&#129302; <span data-t="aiInitialOutput">AI Initial Output</span></h3>
-        <span class="section-arrow">&#9660;</span>
-      </div>
-      <div class="section-body">
-        <div class="ai-block">
-          <h4 data-t="generatedSolution">Generated Solution</h4>
-          <p>The AI produced a comparative analysis of three sorting algorithms:</p>
-          <pre>Algorithm     | Best    | Average  | Worst    | Space  | Stable
-QuickSort     | O(n lg) | O(n lg)  | O(n²)    | O(lg n)| No
-MergeSort     | O(n lg) | O(n lg)  | O(n lg)  | O(n)   | Yes
-HeapSort      | O(n lg) | O(n lg)  | O(n lg)  | O(1)   | No</pre>
-          <p>The analysis included discussion of pivot selection for QuickSort, the merge process for MergeSort, and heapify operations for HeapSort. Cache locality was briefly mentioned but not analyzed in depth. No empty array handling was included.</p>
-        </div>
-        <p style="font-size:13px;color:var(--text-secondary);font-style:italic;">This output was presented to the student for evaluation in Phase 2.</p>
-      </div>
-    </div>
-
-    <!-- Section 4: Phase 2 — Judge + Steer Cycles -->
-    <div class="section" id="section-judge-steer">
-      <div class="section-header" onclick="toggleSection('section-judge-steer')">
-        <h3><span class="phase-label phase-2">2</span> Judge + Steer Cycles</h3>
-        <span class="section-arrow">&#9660;</span>
-      </div>
-      <div class="section-body">
-
-        <!-- Cycle 1 -->
-        <div class="cycle-card">
-          <div class="cycle-header">
-            <h4><span data-t="cycle">Cycle</span> 1 <span style="font-size:12px;color:var(--text-secondary);">&mdash; 6 min</span></h4>
-          </div>
-
-          <!-- Judging: what the student selected -->
-          <div class="step-indicator">
-            <span class="step-num-small">3</span> <span data-t="studentJudgedOutput">Student judged AI output</span>
-          </div>
-          <div class="cycle-row-label judging" data-t="judgingSelections" style="margin-bottom:8px;">Judging &#8212; Issues identified</div>
-          <div class="mc-selection was-selected">
-            <div class="mc-icon selected">&#10003;</div>
-            <div class="mc-text"><strong>Missing edge case:</strong> No handling for empty array input</div>
-          </div>
-          <div class="mc-selection was-selected">
-            <div class="mc-icon selected">&#10003;</div>
-            <div class="mc-text"><strong>Incomplete analysis:</strong> Worst-case complexity analysis for QuickSort lacks proof of O(n&#178;) bound</div>
-          </div>
-          <div class="mc-selection not-picked">
-            <div class="mc-icon not-selected">&#10007;</div>
-            <div class="mc-text"><span style="text-decoration:line-through;">Incorrect claim:</span> HeapSort space complexity is wrong</div>
-          </div>
-          <div class="mc-selection not-picked">
-            <div class="mc-icon not-selected">&#10007;</div>
-            <div class="mc-text"><span style="text-decoration:line-through;">Missing algorithm:</span> TimSort should be included</div>
-          </div>
-
-          <div class="feedback-block" style="margin-top:12px;">
-            <h4 data-t="judgingFeedback">Judging Feedback</h4>
-            <p>Correctly identified the empty array edge case and the incomplete worst-case analysis. However, did not flag the missing cache locality discussion which was a significant gap.</p>
-          </div>
-
-          <div class="phase-grade" style="margin-bottom:16px;">
-            <span class="phase-grade-label" data-t="judgingGrade">Judging grade:</span>
-            <span class="grade grade-B">B</span>
-          </div>
-
-          <!-- Steering: what the student directed -->
-          <div class="step-indicator">
-            <span class="step-num-small">4</span> <span data-t="studentSteeredAI">Student steered AI corrections</span>
-          </div>
-          <div class="cycle-row-label steering" data-t="steeringDirections" style="margin-bottom:8px;">Steering &#8212; Corrections directed</div>
-          <div class="mc-selection was-selected">
-            <div class="mc-icon selected">&#10003;</div>
-            <div class="mc-text"><strong>Add guard clause:</strong> &#8220;Add empty array guard clause at the entry point of each sorting function&#8221;</div>
-          </div>
-          <div class="mc-selection was-selected">
-            <div class="mc-icon selected">&#10003;</div>
-            <div class="mc-text"><strong>Expand analysis:</strong> &#8220;Include formal worst-case analysis for QuickSort with proof sketch&#8221;</div>
-          </div>
-          <div class="mc-selection not-picked">
-            <div class="mc-icon not-selected">&#10007;</div>
-            <div class="mc-text"><span style="text-decoration:line-through;">Rewrite completely:</span> Start the analysis from scratch</div>
-          </div>
-
-          <div class="feedback-block" style="margin-top:12px;">
-            <h4 data-t="steeringFeedback">Steering Feedback</h4>
-            <p>Excellent, specific corrections. The guard clause suggestion and formal analysis request directly address the identified issues without being overly broad.</p>
-          </div>
-
-          <div class="phase-grade" style="margin-bottom:16px;">
-            <span class="phase-grade-label" data-t="steeringGrade">Steering grade:</span>
-            <span class="grade grade-A">A</span>
-          </div>
-
-          <!-- AI Updated Output -->
-          <div class="ai-block" style="margin-top:12px;">
-            <h4 data-t="aiUpdatedOutput">AI Updated Output (after Cycle 1)</h4>
-            <p>The updated analysis now includes an empty array guard clause at the entry point of each sorting function. Worst-case time complexity for QuickSort has been revised to O(n&#178;) with a proof sketch showing the recurrence T(n) = T(n-1) + O(n) when the pivot is always the minimum or maximum element. Pivot selection strategies (random, median-of-three) are noted as mitigations.</p>
-            <pre>def quicksort(arr):
-    if len(arr) &lt;= 1:  # Guard clause added
-        return arr
-    pivot = arr[len(arr) // 2]
-    left = [x for x in arr if x &lt; pivot]
-    middle = [x for x in arr if x == pivot]
-    right = [x for x in arr if x &gt; pivot]
-    return quicksort(left) + middle + quicksort(right)
-# Worst case: O(n²) when pivot is always min/max
-# Mitigation: median-of-three pivot selection</pre>
-          </div>
-        </div>
-
-        <!-- Cycle 2 -->
-        <div class="cycle-card">
-          <div class="cycle-header">
-            <h4><span data-t="cycle">Cycle</span> 2 <span style="font-size:12px;color:var(--text-secondary);">&mdash; 5 min</span></h4>
-            <span class="cycle-badge-final" data-t="finalCycle">Final Cycle</span>
-          </div>
-
-          <!-- Judging -->
-          <div class="step-indicator">
-            <span class="step-num-small">5</span> <span data-t="studentJudgedOutput">Student judged AI output</span>
-          </div>
-          <div class="cycle-row-label judging" style="margin-bottom:8px;">Judging &#8212; Issues identified</div>
-          <div class="mc-selection was-selected">
-            <div class="mc-icon selected">&#10003;</div>
-            <div class="mc-text"><strong>Suboptimal approach:</strong> Partition strategy for QuickSort uses naive first-element pivot</div>
-          </div>
-          <div class="mc-selection was-selected">
-            <div class="mc-icon selected">&#10003;</div>
-            <div class="mc-text"><strong>Missing discussion:</strong> No mention of cache performance and memory access patterns</div>
-          </div>
-          <div class="mc-selection not-picked">
-            <div class="mc-icon not-selected">&#10007;</div>
-            <div class="mc-text"><span style="text-decoration:line-through;">Style issue:</span> Table formatting could be improved</div>
-          </div>
-
-          <div class="feedback-block" style="margin-top:12px;">
-            <h4 data-t="judgingFeedback">Judging Feedback</h4>
-            <p>Good catch on the partition strategy and cache locality gap. Both are substantive issues that affect the practical value of the analysis.</p>
-          </div>
-
-          <div class="phase-grade" style="margin-bottom:16px;">
-            <span class="phase-grade-label" data-t="judgingGrade">Judging grade:</span>
-            <span class="grade grade-B">B</span>
-          </div>
-
-          <!-- Steering -->
-          <div class="step-indicator">
-            <span class="step-num-small">6</span> <span data-t="studentSteeredAI">Student steered AI corrections</span>
-          </div>
-          <div class="cycle-row-label steering" style="margin-bottom:8px;">Steering &#8212; Corrections directed</div>
-          <div class="mc-selection was-selected">
-            <div class="mc-icon selected">&#10003;</div>
-            <div class="mc-text"><strong>Improve pivot:</strong> &#8220;Switch to median-of-three partitioning strategy&#8221;</div>
-          </div>
-          <div class="mc-selection was-selected">
-            <div class="mc-icon selected">&#10003;</div>
-            <div class="mc-text"><strong>Add section:</strong> &#8220;Add cache locality analysis comparing sequential access (MergeSort) vs. in-place but less predictable access (QuickSort/HeapSort)&#8221;</div>
-          </div>
-
-          <div class="feedback-block" style="margin-top:12px;">
-            <h4 data-t="steeringFeedback">Steering Feedback</h4>
-            <p>Specific, actionable corrections. The cache locality request is particularly well-framed, comparing the two access patterns directly.</p>
-          </div>
-
-          <div class="phase-grade" style="margin-bottom:16px;">
-            <span class="phase-grade-label" data-t="steeringGrade">Steering grade:</span>
-            <span class="grade grade-A">A</span>
-          </div>
-
-          <!-- AI Final Output -->
-          <div class="ai-block" style="margin-top:12px;">
-            <h4 data-t="aiFinalOutput">AI Final Output (after Cycle 2)</h4>
-            <p>Final revision adopts median-of-three pivot selection for QuickSort, reducing worst-case likelihood. A new section on cache locality compares MergeSort&#39;s sequential access pattern against QuickSort&#39;s in-place but less cache-friendly partitioning.</p>
-            <pre>Algorithm   | Best      | Average   | Worst     | Space   | Stable | Cache
-QuickSort   | O(n lg n) | O(n lg n) | O(n²)*    | O(lg n) | No     | Moderate
-MergeSort   | O(n lg n) | O(n lg n) | O(n lg n) | O(n)    | Yes    | Good
-HeapSort    | O(n lg n) | O(n lg n) | O(n lg n) | O(1)    | No     | Poor
-
-* With median-of-three pivot, worst case is rare in practice.
-
-Cache Locality Analysis:
-- MergeSort: Sequential access during merge → cache-friendly
-- QuickSort: In-place but random access during partition → moderate
-- HeapSort: Non-sequential heap traversal → poor cache utilization
-
-Recommendation: QuickSort with introsort fallback for general use;
-MergeSort when stability is required; HeapSort for O(1) space guarantee.</pre>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Section 5: Final Grades & Summary -->
-    <div class="section" id="section-final">
-      <div class="section-header" onclick="toggleSection('section-final')">
-        <h3>&#127942; <span data-t="finalGrades">Final Grades</span></h3>
-        <span class="section-arrow">&#9660;</span>
-      </div>
-      <div class="section-body">
-        <div class="final-grades">
-          <div class="final-grade-card" style="border-top: 3px solid var(--grade-a);">
-            <h4 data-t="framing">Framing</h4>
-            <span class="grade grade-A" style="width: 40px; height: 40px; font-size: 20px;">A</span>
-            <div class="summary-sentence">Strong identification of missing constraints and clear, well-justified assumptions about the problem scope. The addition of the &#8220;partially sorted&#8221; consideration demonstrates excellent analytical thinking.</div>
-          </div>
-          <div class="final-grade-card" style="border-top: 3px solid var(--grade-b);">
-            <h4 data-t="judging">Judging</h4>
-            <span class="grade grade-B" style="width: 40px; height: 40px; font-size: 20px;">B</span>
-            <div class="summary-sentence">Caught key issues like edge cases and partition strategy across both cycles. Missed the complexity proof gap in Cycle 1 but improved in Cycle 2 with the cache locality identification.</div>
-          </div>
-          <div class="final-grade-card" style="border-top: 3px solid var(--grade-a);">
-            <h4 data-t="steering">Steering</h4>
-            <span class="grade grade-A" style="width: 40px; height: 40px; font-size: 20px;">A</span>
-            <div class="summary-sentence">Consistently specific, actionable corrections across both cycles. Directions were well-scoped &#8212; neither too broad nor too narrow &#8212; leading to meaningful improvements.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 6: Rubric Reference (collapsed) -->
-    <div class="section collapsed" id="section-rubric">
-      <div class="section-header" onclick="toggleSection('section-rubric')">
-        <h3>&#128220; <span data-t="rubricReference">Rubric Reference</span></h3>
-        <span class="section-arrow">&#9660;</span>
-      </div>
-      <div class="section-body">
-        <table style="width:100%;font-size:13px;">
-          <thead>
-            <tr>
-              <th data-t="skill">Skill</th>
-              <th>A</th>
-              <th>B</th>
-              <th>C</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong data-t="framing">Framing</strong></td>
-              <td>Identifies all key missing constraints and provides well-justified assumptions</td>
-              <td>Identifies most constraints but assumptions need more justification</td>
-              <td>Misses critical constraints or makes unjustified assumptions</td>
-            </tr>
-            <tr>
-              <td><strong data-t="judging">Judging</strong></td>
-              <td>Catches all significant issues including subtle logical gaps</td>
-              <td>Catches major issues but misses nuanced problems</td>
-              <td>Misses critical issues or flags non-issues</td>
-            </tr>
-            <tr>
-              <td><strong data-t="steering">Steering</strong></td>
-              <td>Provides specific, actionable corrections that significantly improve the output</td>
-              <td>Corrections are directionally correct but could be more precise</td>
-              <td>Corrections are vague, overly broad, or do not lead to improvement</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </main>
 
   <script>
-// Check auth
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-}).catch(() => window.location.href = '/login.html');
-
     function toggleSection(id) {
       var section = document.getElementById(id);
       if (section) section.classList.toggle('collapsed');
     }
 
-    function toggleAiOutput(btn) {
-      btn.classList.toggle('open');
-      var preview = btn.nextElementSibling;
-      if (preview) preview.classList.toggle('open');
+    function escapeHtml(text) {
+      var div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      var d = new Date(dateStr);
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function formatShortDate(dateStr) {
+      if (!dateStr) return '';
+      var d = new Date(dateStr);
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    }
+
+    function computeDurationMinutes(startedAt, completedAt) {
+      if (!startedAt || !completedAt) return null;
+      var ms = new Date(completedAt) - new Date(startedAt);
+      return Math.round(ms / 60000);
+    }
+
+    function renderSelections(selections) {
+      if (!selections || !selections.length) return '';
+      return selections.map(function(sel) {
+        var picked = sel.selected || sel.chosen;
+        var cssClass = picked ? 'was-selected' : 'not-picked';
+        var iconClass = picked ? 'selected' : 'not-selected';
+        var iconChar = picked ? '&#10003;' : '&#10007;';
+        var textContent = picked
+          ? '<strong>' + escapeHtml(sel.label || '') + '</strong> ' + escapeHtml(sel.text || '')
+          : '<span style="text-decoration:line-through;">' + escapeHtml(sel.label || '') + '</span> ' + escapeHtml(sel.text || '');
+        return '<div class="mc-selection ' + cssClass + '">' +
+          '<div class="mc-icon ' + iconClass + '">' + iconChar + '</div>' +
+          '<div class="mc-text">' + textContent + '</div>' +
+          '</div>';
+      }).join('');
+    }
+
+    function renderGradeBadge(grade, extraStyle) {
+      if (!grade) return '';
+      var style = extraStyle || '';
+      return '<span class="grade grade-' + escapeHtml(grade) + '" ' + (style ? 'style="' + style + '"' : '') + '>' + escapeHtml(grade) + '</span>';
+    }
+
+    function renderTextOrHtml(content) {
+      // Always escape to prevent XSS; convert newlines to <br> for readability
+      var escaped = escapeHtml(content || '');
+      return '<p>' + escaped.replace(/\n/g, '<br>') + '</p>';
+    }
+
+    async function loadReport() {
+      var runId = new URLSearchParams(window.location.search).get('runId');
+      if (!runId) {
+        showError('No run ID provided. Please navigate from My Results.');
+        return;
+      }
+
+      try {
+        var data = await API.runs.report(runId);
+        renderReport(data);
+      } catch (err) {
+        showError(err.message || 'Failed to load report. Please try again.');
+      }
+    }
+
+    function showError(msg) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorState').style.display = 'block';
+      document.getElementById('errorMessage').textContent = msg;
+    }
+
+    function renderReport(data) {
+      var run = data.run || {};
+      var framing = data.framing || {};
+      var cycles = data.cycles || [];
+      var finalGrades = data.final_grades || {};
+
+      // --- Report Meta ---
+      var metaHtml = '';
+      metaHtml += '<span><strong>' + escapeHtml(run.challenge_title || '') + '</strong></span>';
+      if (run.course_name) {
+        metaHtml += '<span class="sep">|</span><span>' + escapeHtml(run.course_name) + '</span>';
+      }
+      if (run.started_at) {
+        metaHtml += '<span class="sep">|</span><span>' + formatDate(run.started_at) + '</span>';
+      }
+      if (run.challenge_type) {
+        var typeKey = run.challenge_type === 'assessment' ? 'assessment' : 'practice';
+        var badgeClass = run.challenge_type === 'assessment' ? 'badge-assessment' : 'badge-practice';
+        metaHtml += '<span class="sep">|</span><span class="badge ' + badgeClass + '" data-t="' + typeKey + '">' + escapeHtml(run.challenge_type) + '</span>';
+      }
+      document.getElementById('reportMeta').innerHTML = metaHtml;
+
+      // --- Session Info ---
+      var durationMin = computeDurationMinutes(run.started_at, run.completed_at);
+      var sessionHtml = '';
+      sessionHtml += '<div class="session-stat"><div class="stat-value">' + cycles.length + '</div><div class="stat-label" data-t="cyclesUsed">Cycles Used</div></div>';
+      sessionHtml += '<div class="session-stat"><div class="stat-value">' + (run.max_cycles || cycles.length) + '</div><div class="stat-label" data-t="maxCycles">Max Cycles</div></div>';
+      if (durationMin !== null) {
+        sessionHtml += '<div class="session-stat"><div class="stat-value">' + durationMin + '<span style="font-size:14px;font-weight:400">min</span></div><div class="stat-label" data-t="duration">Duration</div></div>';
+      }
+      if (run.completed_at) {
+        sessionHtml += '<div class="session-stat"><div class="stat-value">' + formatShortDate(run.completed_at) + '</div><div class="stat-label" data-t="completed">Completed</div></div>';
+      }
+      document.getElementById('sessionInfo').innerHTML = sessionHtml;
+
+      // --- Summary Grades ---
+      var summaryHtml = '';
+      ['framing', 'judging', 'steering'].forEach(function(skill) {
+        var g = finalGrades[skill] || '';
+        summaryHtml += '<div class="summary-grade-item">' +
+          '<div class="summary-grade-circle grade-' + escapeHtml(g) + '">' + escapeHtml(g) + '</div>' +
+          '<div class="summary-grade-label" data-t="' + skill + '">' + skill.charAt(0).toUpperCase() + skill.slice(1) + '</div>' +
+          '</div>';
+      });
+      document.getElementById('summaryGrades').innerHTML = summaryHtml;
+
+      // --- Problem Section ---
+      var problemHtml = '<div class="problem-block">' +
+        '<h4 data-t="problemStatement">Problem Statement</h4>' +
+        '<p>' + escapeHtml(data.problem || '') + '</p>' +
+        '</div>';
+      if (run.course_name) {
+        problemHtml += '<div class="submission-block"><h4 data-t="course">Course</h4><p>' + escapeHtml(run.course_name) + '</p></div>';
+      }
+      document.getElementById('problemBody').innerHTML = problemHtml;
+
+      // --- Framing Section ---
+      var framingHtml = '';
+      // Student submission
+      framingHtml += '<div class="step-indicator"><span class="step-num-small">1</span> <span data-t="studentIdentifiedAssumptions">Student identified missing assumptions</span></div>';
+      if (framing.response) {
+        framingHtml += '<div class="submission-block"><h4 data-t="yourSubmission">Your Submission</h4>';
+        if (framing.response.selections && framing.response.selections.length) {
+          framingHtml += renderSelections(framing.response.selections);
+        }
+        if (framing.response.text) {
+          framingHtml += '<p>' + escapeHtml(framing.response.text) + '</p>';
+        }
+        framingHtml += '</div>';
+      }
+      // AI feedback
+      framingHtml += '<div class="step-indicator"><span class="step-num-small">2</span> <span data-t="aiEvaluatedFraming">AI evaluated framing quality</span></div>';
+      if (framing.feedback) {
+        framingHtml += '<div class="feedback-block"><h4 data-t="aiFeedback">AI Feedback</h4>';
+        framingHtml += renderTextOrHtml(framing.feedback.html || framing.feedback.strengths || '');
+        framingHtml += '</div>';
+        if (framing.feedback.improvements) {
+          framingHtml += '<div class="feedback-block better"><h4 data-t="whatCouldBeBetter">What could be better</h4>';
+          framingHtml += '<p>' + escapeHtml(framing.feedback.improvements) + '</p></div>';
+        }
+      }
+      // Grade
+      if (framing.grade) {
+        framingHtml += '<div class="phase-grade"><span class="phase-grade-label" data-t="grade">Grade:</span>' + renderGradeBadge(framing.grade) + '</div>';
+      }
+      document.getElementById('framingBody').innerHTML = framingHtml;
+
+      // --- AI Initial Output ---
+      var aiInitHtml = '<div class="ai-block">' +
+        '<h4 data-t="generatedSolution">Generated Solution</h4>' +
+        '<p>' + escapeHtml(data.ai_solution || '') + '</p>' +
+        '</div>' +
+        '<p style="font-size:13px;color:var(--text-secondary);font-style:italic;" data-t="aiOutputNote">This output was presented to the student for evaluation in Phase 2.</p>';
+      document.getElementById('aiInitialBody').innerHTML = aiInitHtml;
+
+      // --- Cycles ---
+      var cyclesHtml = '';
+      var stepNum = 3;
+      cycles.forEach(function(cycle, idx) {
+        var isLast = (idx === cycles.length - 1);
+        cyclesHtml += '<div class="cycle-card">';
+        cyclesHtml += '<div class="cycle-header"><h4><span data-t="cycle">Cycle</span> ' + cycle.cycle_num + '</h4>';
+        if (isLast) {
+          cyclesHtml += '<span class="cycle-badge-final" data-t="finalCycle">Final Cycle</span>';
+        }
+        cyclesHtml += '</div>';
+
+        // Judging
+        if (cycle.judging) {
+          cyclesHtml += '<div class="step-indicator"><span class="step-num-small">' + stepNum + '</span> <span data-t="studentJudgedOutput">Student judged AI output</span></div>';
+          stepNum++;
+          cyclesHtml += '<div class="cycle-row-label judging" data-t="judgingSelections" style="margin-bottom:8px;">Judging &#8212; Issues identified</div>';
+          if (cycle.judging.response && cycle.judging.response.selections) {
+            cyclesHtml += renderSelections(cycle.judging.response.selections);
+          }
+          if (cycle.judging.response && cycle.judging.response.text) {
+            cyclesHtml += '<div class="submission-block"><p>' + escapeHtml(cycle.judging.response.text) + '</p></div>';
+          }
+          if (cycle.judging.feedback) {
+            cyclesHtml += '<div class="feedback-block" style="margin-top:12px;"><h4 data-t="judgingFeedback">Judging Feedback</h4>';
+            cyclesHtml += renderTextOrHtml(cycle.judging.feedback.html || '');
+            cyclesHtml += '</div>';
+          }
+          if (cycle.judging.grade) {
+            cyclesHtml += '<div class="phase-grade" style="margin-bottom:16px;"><span class="phase-grade-label" data-t="judgingGrade">Judging grade:</span>' + renderGradeBadge(cycle.judging.grade) + '</div>';
+          }
+        }
+
+        // Steering
+        if (cycle.steering) {
+          cyclesHtml += '<div class="step-indicator"><span class="step-num-small">' + stepNum + '</span> <span data-t="studentSteeredAI">Student steered AI corrections</span></div>';
+          stepNum++;
+          cyclesHtml += '<div class="cycle-row-label steering" data-t="steeringDirections" style="margin-bottom:8px;">Steering &#8212; Corrections directed</div>';
+          if (cycle.steering.response && cycle.steering.response.selections) {
+            cyclesHtml += renderSelections(cycle.steering.response.selections);
+          }
+          if (cycle.steering.response && cycle.steering.response.text) {
+            cyclesHtml += '<div class="submission-block"><p>' + escapeHtml(cycle.steering.response.text) + '</p></div>';
+          }
+          if (cycle.steering.feedback) {
+            cyclesHtml += '<div class="feedback-block" style="margin-top:12px;"><h4 data-t="steeringFeedback">Steering Feedback</h4>';
+            cyclesHtml += renderTextOrHtml(cycle.steering.feedback.html || '');
+            cyclesHtml += '</div>';
+          }
+          if (cycle.steering.grade) {
+            cyclesHtml += '<div class="phase-grade" style="margin-bottom:16px;"><span class="phase-grade-label" data-t="steeringGrade">Steering grade:</span>' + renderGradeBadge(cycle.steering.grade) + '</div>';
+          }
+        }
+
+        // AI Updated Output
+        if (cycle.ai_output) {
+          var outputLabel = isLast ? 'aiFinalOutput' : 'aiUpdatedOutput';
+          var outputText = isLast
+            ? 'AI Final Output (after Cycle ' + cycle.cycle_num + ')'
+            : 'AI Updated Output (after Cycle ' + cycle.cycle_num + ')';
+          cyclesHtml += '<div class="ai-block" style="margin-top:12px;">' +
+            '<h4 data-t="' + outputLabel + '">' + escapeHtml(outputText) + '</h4>' +
+            '<p>' + escapeHtml(cycle.ai_output) + '</p></div>';
+        }
+
+        cyclesHtml += '</div>';
+      });
+      document.getElementById('cyclesBody').innerHTML = cyclesHtml;
+
+      // --- Final Grades ---
+      var finalHtml = '<div class="final-grades">';
+      ['framing', 'judging', 'steering'].forEach(function(skill) {
+        var g = finalGrades[skill] || '';
+        var gradeColor = 'var(--grade-' + g.toLowerCase() + ')';
+        finalHtml += '<div class="final-grade-card" style="border-top: 3px solid ' + gradeColor + ';">' +
+          '<h4 data-t="' + skill + '">' + skill.charAt(0).toUpperCase() + skill.slice(1) + '</h4>' +
+          renderGradeBadge(g, 'width:40px;height:40px;font-size:20px;') +
+          '</div>';
+      });
+      finalHtml += '</div>';
+      document.getElementById('finalGradesBody').innerHTML = finalHtml;
+
+      // --- What Could Be Better ---
+      if (data.summary_feedback) {
+        var betterHtml = '<div class="feedback-block better">' +
+          '<h4 data-t="aiSuggestions">AI Suggestions</h4>' +
+          '<p>' + escapeHtml(data.summary_feedback) + '</p>' +
+          '</div>';
+        document.getElementById('betterBody').innerHTML = betterHtml;
+      } else {
+        document.getElementById('section-better').style.display = 'none';
+      }
+
+      // Show content, hide loading
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('reportContent').style.display = 'block';
+
+      // Re-apply i18n if available
+      if (typeof translatePage === 'function') {
+        translatePage();
+      }
+    }
+
+    // Load on DOM ready
+    document.addEventListener('DOMContentLoaded', loadReport);
   </script>
 </body>
 </html>

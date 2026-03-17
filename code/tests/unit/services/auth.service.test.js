@@ -14,9 +14,11 @@ describe('AuthService', () => {
       connection: { filename: ':memory:' },
       useNullAsDefault: true,
     });
-    // Run migration
-    const migration = require('../../../server/db/migrations/001_initial_schema');
-    await migration.up(db);
+    // Run migrations
+    const migration001 = require('../../../server/db/migrations/001_initial_schema');
+    const migration002 = require('../../../server/db/migrations/002_add_department_and_indexes');
+    await migration001.up(db);
+    await migration002.up(db);
     authService = new AuthService(db, silentLogger);
   });
 

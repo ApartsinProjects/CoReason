@@ -116,6 +116,7 @@ window.CONTENT["en"] = {
     "private": "Private",
     "createChallenge": "+ Create Challenge",
     "editChallenge": "Edit Challenge",
+    "saveAndPublish": "Save & Publish",
     "deleteChallenge": "Delete Challenge",
     "publish": "Publish",
     "archive": "Archive",
@@ -214,10 +215,141 @@ window.CONTENT["en"] = {
     "responseType": "Response Type",
     "maxCycles": "Max Cycles",
     "advancedSettings": "Advanced Settings",
-    "rubricPreview": "Rubric Preview",
-    "livePreview": "Live Preview",
+    "rubricPreview": "Evaluation Rubric",
+    "livePreview": "Example Raw Problem",
     "publishChallenge": "Publish Challenge",
-    "saveDraft": "Save as Draft"
+    "saveDraft": "Save as Draft",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "challengeRun": "Challenge Run",
+    "loadingReport": "Loading report...",
+    "errorLoadingReport": "Failed to load report",
+    "startChallenge": "Start Challenge",
+    "generatingProblem": "Generating raw problem from subject tree...",
+    "evaluatingFraming": "Evaluating framing & generating AI solution...",
+    "sectionTitle": "Section title",
+    "describeRefinement": "Describe your refinement...",
+    "pleaseProvideResponse": "Please provide at least one section with content.",
+    "pleaseSelectOption": "Please select at least one option.",
+    "recordingJudgement": "Recording judgement...",
+    "finalizing": "Finalizing — computing final grades...",
+    "issuesFound": "Issues Found",
+    "markedComplete": "Student marked solution as complete",
+    "issuesSubmitted": "Issues submitted for steering",
+    "correctionsSent": "Corrections Sent",
+    "steeringSubmitted": "Steering corrections submitted",
+    "processSteering": "Processing steering & evaluating cycle...",
+    "computingGrades": "Computing final grades...",
+    "issueTitle": "Issue title",
+    "describeIssue": "Describe the issue...",
+    "correctionTitle": "Correction title",
+    "describeCorrection": "Describe the correction...",
+    "addSection": "Add Section",
+    "noFramingOptions": "No framing options available.",
+    "noJudgingOptions": "No judging options available. Use the 'Solution is Complete' button if correct.",
+    "noSteeringOptions": "No steering options available.",
+    "runAgainQ": "Run Again?",
+    "profileDesc": "Manage your account settings",
+    "subjectTree": "Subject Tree",
+    "subjectTreeDesc": "Define the subject hierarchy for rubric generation",
+    "subjectTreeWarning": "Changing the subject tree may affect existing challenges",
+    "editSubjectTree": "Edit Subject Tree",
+    "clickNodeToEdit": "Click a node to edit its details",
+    "nodeDetails": "Node Details",
+    "nodeName": "Node Name",
+    "nodes": "Nodes",
+    "levelsDeep": "Levels Deep",
+    "loadingSubjects": "Loading subjects...",
+    "addChild": "+ Add Child",
+    "addedChildUnder": "Added child under",
+    "addedRootNode": "Added root node",
+    "newRootTopic": "New Root Topic",
+    "newTopic": "New Topic",
+    "confirmDeleteNode": "Are you sure you want to delete this node?",
+    "noSubjectsDefined": "No subjects defined yet",
+    "subjectTreeSaved": "Subject tree saved",
+    "selectCourseToLoadSubjects": "Select a course to load its subject tree",
+    "selectSubjectsToPreview": "Select subjects to preview the rubric",
+    "keywordsForRubric": "Keywords for Rubric",
+    "descriptionForRubric": "Brief description for rubric context...",
+    "commaSeparatedKeywords": "Comma-separated keywords...",
+    "addNewCourse": "+ Add New Course",
+    "createCourse": "Create Course",
+    "noCourses": "No courses available",
+    "noCoursesFound": "No courses found",
+    "department": "Department",
+    "description": "Description",
+    "descriptionOptional": "Description (optional)",
+    "institutionScopedNote": "Courses are scoped to your institution",
+    "selectDepartment": "Select Department",
+    "enterCourseName": "Enter course name...",
+    "pleaseEnterCourseName": "Please enter a course name",
+    "pleaseSelectDepartment": "Please select a department",
+    "courseCreatedSuccess": "Course created successfully",
+    "courseCreatedNext": "Course created. Next step: create a challenge.",
+    "courseNotFound": "Course not found",
+    "createCourseFailed": "Failed to create course",
+    "noCourseSelected": "No course selected",
+    "noCourseId": "No course ID provided",
+    "pleaseSelectCourse": "Please select a course",
+    "totalChallenges": "Total Challenges",
+    "createAndStart": "Create & Start",
+    "createPrivateChallenge": "Create Private Challenge",
+    "challengeDetails": "Challenge Details",
+    "challengeTitlePlaceholder": "Enter challenge title...",
+    "challengeDescPlaceholder": "Describe the challenge objectives and context...",
+    "pleaseEnterTitle": "Please enter a challenge title",
+    "pleaseSelectSubject": "Please select a subject",
+    "selectTemplate": "Select Template",
+    "defaultLlmModel": "Default LLM Model",
+    "systemDefault": "System Default",
+    "rubricWillGenerate": "Rubric will be generated from the selected subject",
+    "previewNotRecorded": "Preview — not recorded in analytics",
+    "instructorPreview": "Instructor Preview",
+    "confirmDeleteChallenge": "Are you sure you want to delete this challenge?",
+    "archiveFailed": "Failed to archive challenge",
+    "publishFailed": "Failed to publish challenge",
+    "publishing": "Publishing...",
+    "deleteFailed": "Failed to delete",
+    "deleted": "Deleted",
+    "duplicated": "Duplicated",
+    "copy": "Copy",
+    "judgeSteerCycles": "Judge + Steer Cycles",
+    "aiOutputNote": "AI-generated output based on your framing",
+    "aiSuggestions": "AI Suggestions",
+    "generating": "Generating...",
+    "review": "Review",
+    "skipAndComplete": "Skip & Complete",
+    "markedCompleteSteeringHint": "Marking solution as complete skips remaining cycles",
+    "selectAtLeastOne": "Please select at least one option",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "saveFailed": "Failed to save",
+    "saveAsDraft": "Save as Draft",
+    "createFailed": "Failed to create",
+    "creating": "Creating...",
+    "failedToSave": "Failed to save changes",
+    "noChangesToSave": "No changes to save",
+    "allChangesSaved": "All changes saved",
+    "changesApplied": "Changes applied",
+    "unsavedChanges": "You have unsaved changes",
+    "error": "Error",
+    "unknownError": "An unknown error occurred",
+    "unknownCourse": "Unknown Course",
+    "other": "Other",
+    "users": "Users",
+    "institutions": "Institutions",
+    "subscriptions": "Subscriptions",
+    "runs": "Runs",
+    "runsCompleted": "Runs Completed",
+    "attempts": "Attempts",
+    "lead": "Lead",
+    "leadInstructor": "Lead Instructor",
+    "coInstructor": "Co-Instructor",
+    "importExport": "Import / Export",
+    "aiGenerationFailed": "AI generation failed",
+    "failedLoadProfile": "Failed to load profile",
+    "failedLoadSubjects": "Failed to load subjects"
   },
   "institutions": [
     {
@@ -1299,15 +1431,15 @@ window.CONTENT["en"] = {
   "tooltips": {
     "challengeType": {
       "title": "Challenge Type",
-      "text": "Practice challenges are for learning — no grade is recorded. Assessment challenges count toward your course grade."
+      "text": "Practice challenges allow retries with feedback after each phase. Assessment challenges are graded with feedback only at the end."
     },
     "visibility": {
       "title": "Visibility",
-      "text": "Public challenges are visible to all enrolled students. Private challenges are only visible to you."
+      "text": "Public challenges are visible to all enrolled students. Private challenges are only visible to their creator."
     },
     "maxCycles": {
       "title": "Max Cycles",
-      "text": "The maximum number of Judge+Steer cycles allowed. More cycles give you more chances to improve the AI's output."
+      "text": "The maximum number of Judge+Steer cycles allowed per run."
     },
     "subjectPath": {
       "title": "Subject Path",
@@ -1315,27 +1447,27 @@ window.CONTENT["en"] = {
     },
     "responseType": {
       "title": "Response Type",
-      "text": "Multiple-choice gives you options to pick from. Open-ended lets you write your own reasoning."
+      "text": "Multiple-choice gives pre-generated options. Open-ended allows free-form written reasoning."
     },
     "framingPhase": {
       "title": "Framing Phase",
-      "text": "In this phase, you evaluate the AI's initial approach to the problem before any solution is generated."
+      "text": "The student evaluates the raw problem and translates it into a well-defined task by adding assumptions and constraints."
     },
     "judgingPhase": {
       "title": "Judging Phase",
-      "text": "Review the AI-generated solution and identify what's correct, what's wrong, and what could be improved."
+      "text": "The student reviews the AI-generated solution, identifying what's correct, wrong, or could be improved."
     },
     "steeringPhase": {
       "title": "Steering Phase",
-      "text": "Guide the AI to fix its mistakes by providing specific feedback and direction."
+      "text": "The student provides specific feedback to guide the AI toward a better solution."
     },
     "coReasoningScore": {
       "title": "Co-Reasoning Score",
-      "text": "Your overall performance score combining framing accuracy, judgment quality, and steering effectiveness."
+      "text": "Overall performance combining framing accuracy, judgment quality, and steering effectiveness."
     },
     "rubric": {
       "title": "Rubric",
-      "text": "The grading criteria used to evaluate your co-reasoning performance in each phase."
+      "text": "The grading criteria used to evaluate co-reasoning performance in each phase."
     },
     "subjectTree": {
       "title": "Subject Tree",
@@ -1346,8 +1478,84 @@ window.CONTENT["en"] = {
       "text": "Subscribe to a course to access its challenges and track your progress."
     },
     "analyticsOverview": {
-      "title": "Analytics Overview",
-      "text": "View your performance trends, score distributions, and detailed breakdowns across challenges."
+      "title": "Your Analytics",
+      "text": "View your performance trends, score distributions, and detailed breakdowns across your challenge runs."
+    },
+    "colChallenge": {
+      "title": "Challenge",
+      "text": "The name of the challenge. Click to view details or start a run."
+    },
+    "colCourse": {
+      "title": "Course",
+      "text": "The course this challenge belongs to."
+    },
+    "colType": {
+      "title": "Type",
+      "text": "Practice challenges allow retries with feedback. Assessment challenges are graded with feedback at the end only."
+    },
+    "colVisibility": {
+      "title": "Visibility",
+      "text": "Public challenges are from your subscribed courses. Private challenges are ones you created for yourself."
+    },
+    "colCreated": {
+      "title": "Created",
+      "text": "The date this challenge was published or created."
+    },
+    "colCreator": {
+      "title": "Creator",
+      "text": "The instructor or student who created this challenge."
+    },
+    "colLastAttempt": {
+      "title": "Last Attempt",
+      "text": "When you last attempted this challenge, if ever."
+    },
+    "colStatus": {
+      "title": "Status",
+      "text": "Your progress: Not Started, In Progress, or Completed."
+    },
+    "colActions": {
+      "title": "Actions",
+      "text": "Available actions: Start, Resume, View Results, or Run Again."
+    },
+    "instrAnalyticsOverview": {
+      "title": "Course Analytics",
+      "text": "Aggregated performance data across all students in this course. Only includes public challenge results."
+    },
+    "instrCourseSubscription": {
+      "title": "Course Management",
+      "text": "Manage your course settings, subject tree, and challenge assignments."
+    },
+    "instrColChallenge": {
+      "title": "Challenge",
+      "text": "The challenge title. Click to edit or view student submissions."
+    },
+    "instrColCourse": {
+      "title": "Course",
+      "text": "The course this challenge is assigned to."
+    },
+    "instrColType": {
+      "title": "Type",
+      "text": "Practice: students see feedback after each phase. Assessment: feedback withheld until completion."
+    },
+    "instrColVisibility": {
+      "title": "Visibility",
+      "text": "Public challenges are available to all course subscribers. Private challenges are visible only to their creator."
+    },
+    "instrColSubmissions": {
+      "title": "Submissions",
+      "text": "Total number of student runs for this challenge, including in-progress and completed attempts."
+    },
+    "instrColAvgGrade": {
+      "title": "Avg Grade",
+      "text": "Average grade across all completed student runs, combining Framing, Judging, and Steering scores."
+    },
+    "instrColStatus": {
+      "title": "Status",
+      "text": "Challenge lifecycle: Draft (not yet visible), Published (live), or Archived (hidden)."
+    },
+    "instrColActions": {
+      "title": "Actions",
+      "text": "Available actions: Edit, Preview, View Analytics, or Delete."
     }
   },
   "challenges": {

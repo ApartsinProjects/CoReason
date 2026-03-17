@@ -92,4 +92,10 @@ function requireRole(...roles) {
   };
 }
 
-module.exports = { configurePassport, requireAuth, requireRole };
+// Middleware: populate req.user if authenticated, but don't block if not
+function optionalAuth(req, res, next) {
+  // Passport already populates req.user from session if present
+  next();
+}
+
+module.exports = { configurePassport, requireAuth, requireRole, optionalAuth };

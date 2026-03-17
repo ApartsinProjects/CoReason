@@ -3,6 +3,7 @@
 const winston = require('winston');
 const path = require('path');
 const fs = require('fs');
+const { LOGGER_DEFAULTS } = require('./constants');
 
 function createLogger(config = {}) {
   const logDir = path.resolve(config.dir || './logs');
@@ -46,8 +47,8 @@ function createLogger(config = {}) {
       filename: path.join(logDir, 'combined.log'),
       level: 'info',
       format: structuredFormat,
-      maxsize: config.max_file_size || 10 * 1024 * 1024,
-      maxFiles: config.max_files || 5,
+      maxsize: config.max_file_size || LOGGER_DEFAULTS.MAX_FILE_SIZE,
+      maxFiles: config.max_files || LOGGER_DEFAULTS.MAX_FILES,
     }));
 
     // Error log
@@ -55,8 +56,8 @@ function createLogger(config = {}) {
       filename: path.join(logDir, 'error.log'),
       level: 'error',
       format: structuredFormat,
-      maxsize: config.max_file_size || 10 * 1024 * 1024,
-      maxFiles: config.max_files || 5,
+      maxsize: config.max_file_size || LOGGER_DEFAULTS.MAX_FILE_SIZE,
+      maxFiles: config.max_files || LOGGER_DEFAULTS.MAX_FILES,
     }));
 
     // Debug log
@@ -64,8 +65,8 @@ function createLogger(config = {}) {
       filename: path.join(logDir, 'debug.log'),
       level: 'debug',
       format: structuredFormat,
-      maxsize: config.max_file_size || 10 * 1024 * 1024,
-      maxFiles: config.max_files || 5,
+      maxsize: config.max_file_size || LOGGER_DEFAULTS.MAX_FILE_SIZE,
+      maxFiles: config.max_files || LOGGER_DEFAULTS.MAX_FILES,
     }));
   }
 
@@ -75,15 +76,15 @@ function createLogger(config = {}) {
       filename: path.join(logDir, 'trace.log'),
       level: 'verbose',
       format: structuredFormat,
-      maxsize: config.max_file_size || 10 * 1024 * 1024,
-      maxFiles: config.max_files || 5,
+      maxsize: config.max_file_size || LOGGER_DEFAULTS.MAX_FILE_SIZE,
+      maxFiles: config.max_files || LOGGER_DEFAULTS.MAX_FILES,
     }));
   }
 
   const logger = winston.createLogger({
     level: level === 'silent' ? 'error' : level,
     silent: level === 'silent',
-    defaultMeta: { service: 'coreason' },
+    defaultMeta: { service: LOGGER_DEFAULTS.SERVICE_NAME },
     transports,
   });
 

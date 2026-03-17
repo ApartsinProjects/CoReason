@@ -8,6 +8,10 @@ const HelpPopups = (() => {
   let modal = null;
   const cache = {};
 
+  // Configuration — override HelpPopups.helpBasePath to change
+  const HELP_BASE_PATH = 'help/';
+  const HELP_FILE_SUFFIX = '-help.html';
+
   function createModal() {
     if (modal) return;
     const style = document.createElement('style');
@@ -48,7 +52,7 @@ const HelpPopups = (() => {
   async function loadHelp(topic) {
     if (cache[topic]) return cache[topic];
     try {
-      const res = await fetch(`help/${topic}-help.html`);
+      const res = await fetch(`${HELP_BASE_PATH}${topic}${HELP_FILE_SUFFIX}`);
       if (!res.ok) throw new Error(`Help file not found: ${topic}`);
       const html = await res.text();
       cache[topic] = html;

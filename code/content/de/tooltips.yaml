@@ -1,40 +1,105 @@
 # German tooltip help texts
+#
+# ── Shared Tooltips (used on both student and instructor pages) ──
 challengeType:
   title: "Aufgabentyp"
-  text: "Uebungsaufgaben dienen dem Lernen — es wird keine Note erfasst. Pruefungsaufgaben fliessen in Ihre Kursnote ein."
+  text: "Uebungsaufgaben ermoeglichen Wiederholungsversuche mit Feedback nach jeder Phase. Pruefungsaufgaben werden benotet, mit Feedback erst am Ende."
 visibility:
   title: "Sichtbarkeit"
-  text: "Oeffentliche Aufgaben sind fuer alle eingeschriebenen Studierenden sichtbar. Private Aufgaben sind nur fuer Sie sichtbar."
+  text: "Oeffentliche Aufgaben sind fuer alle eingeschriebenen Studierenden sichtbar. Private Aufgaben sind nur fuer ihre Erstellerin oder ihren Ersteller sichtbar."
 maxCycles:
   title: "Maximale Zyklen"
-  text: "Die maximale Anzahl erlaubter Bewertungs- und Steuerungszyklen. Mehr Zyklen geben Ihnen mehr Moeglichkeiten, die KI-Ausgabe zu verbessern."
+  text: "Die maximale Anzahl erlaubter Bewertungs- und Steuerungszyklen. Mehr Zyklen bieten mehr Moeglichkeiten, die KI-Ausgabe zu verbessern."
 subjectPath:
   title: "Themenpfad"
   text: "Die thematische Hierarchie, zu der diese Aufgabe gehoert, innerhalb des Themenbaums des Kurses."
 responseType:
   title: "Antworttyp"
-  text: "Multiple-Choice bietet Ihnen Optionen zur Auswahl. Offene Antwort laesst Sie Ihre eigene Argumentation schreiben."
+  text: "Multiple-Choice bietet vordefinierte Optionen. Offene Antwort erlaubt freies schriftliches Argumentieren."
 framingPhase:
   title: "Rahmungsphase"
-  text: "In dieser Phase bewerten Sie den ersten Ansatz der KI zum Problem, bevor eine Loesung generiert wird."
+  text: "Die Studierenden bewerten das Rohproblem und uebersetzen es in eine klar definierte Aufgabe, indem sie Annahmen und Einschraenkungen hinzufuegen."
 judgingPhase:
   title: "Bewertungsphase"
-  text: "Ueberpruefen Sie die KI-generierte Loesung und identifizieren Sie, was richtig ist, was falsch ist und was verbessert werden koennte."
+  text: "Die Studierenden ueberpruefen die KI-generierte Loesung und identifizieren, was richtig, was falsch und was verbesserungswuerdig ist."
 steeringPhase:
   title: "Steuerungsphase"
-  text: "Leiten Sie die KI an, ihre Fehler zu beheben, indem Sie spezifisches Feedback und Richtung geben."
+  text: "Die Studierenden geben gezieltes Feedback, um die KI zu einer besseren Loesung zu fuehren."
 coReasoningScore:
   title: "Co-Reasoning-Bewertung"
-  text: "Ihre Gesamtleistungsbewertung, die Rahmungsgenauigkeit, Bewertungsqualitaet und Steuerungseffektivitaet kombiniert."
+  text: "Gesamtleistung, die Rahmungsgenauigkeit, Bewertungsqualitaet und Steuerungseffektivitaet kombiniert."
 rubric:
   title: "Bewertungsraster"
-  text: "Die Bewertungskriterien, die zur Beurteilung Ihrer Co-Reasoning-Leistung in jeder Phase verwendet werden."
+  text: "Die Bewertungskriterien, die zur Beurteilung der Co-Reasoning-Leistung in jeder Phase verwendet werden."
 subjectTree:
   title: "Themenbaum"
   text: "Eine hierarchische Organisation von Themen innerhalb eines Kurses. Aufgaben werden bestimmten Knoten zugeordnet."
+#
+# ── Student-Facing Tooltips ──
 courseSubscription:
   title: "Kursanmeldung"
   text: "Melden Sie sich fuer einen Kurs an, um auf dessen Aufgaben zuzugreifen und Ihren Fortschritt zu verfolgen."
 analyticsOverview:
-  title: "Analyseuebersicht"
-  text: "Sehen Sie Ihre Leistungstrends, Notenverteilungen und detaillierte Aufschluesselungen ueber alle Aufgaben."
+  title: "Ihre Auswertungen"
+  text: "Sehen Sie Ihre Leistungstrends, Notenverteilungen und detaillierte Aufschluesselungen ueber alle Ihre Aufgabendurchlaeufe."
+# Student challenge list columns
+colChallenge:
+  title: "Aufgabe"
+  text: "Der Name der Aufgabe. Klicken Sie, um Details anzuzeigen oder einen Durchlauf zu starten."
+colCourse:
+  title: "Kurs"
+  text: "Der Kurs, zu dem diese Aufgabe gehoert."
+colType:
+  title: "Typ"
+  text: "Uebungsaufgaben ermoeglichen Wiederholungen mit Feedback. Pruefungsaufgaben werden benotet, mit Feedback erst am Ende."
+colVisibility:
+  title: "Sichtbarkeit"
+  text: "Oeffentliche Aufgaben stammen aus Ihren abonnierten Kursen. Private Aufgaben sind solche, die Sie fuer sich selbst erstellt haben."
+colCreated:
+  title: "Erstellt"
+  text: "Das Datum, an dem diese Aufgabe veroeffentlicht oder erstellt wurde."
+colCreator:
+  title: "Ersteller"
+  text: "Der Dozent oder Student, der diese Aufgabe erstellt hat."
+colLastAttempt:
+  title: "Letzter Versuch"
+  text: "Wann Sie diese Aufgabe zuletzt versucht haben, falls ueberhaupt."
+colStatus:
+  title: "Status"
+  text: "Ihr Fortschritt: Nicht begonnen, In Bearbeitung oder Abgeschlossen."
+colActions:
+  title: "Aktionen"
+  text: "Verfuegbare Aktionen wie Starten, Fortsetzen, Ergebnisse anzeigen oder Erneut ausfuehren."
+#
+# ── Instructor-Facing Tooltips ──
+instrAnalyticsOverview:
+  title: "Kursauswertung"
+  text: "Zusammengefasste Leistungsdaten aller Studierenden in diesem Kurs. Enthaelt nur Ergebnisse oeffentlicher Aufgaben."
+instrCourseSubscription:
+  title: "Kursverwaltung"
+  text: "Verwalten Sie Ihre Kurseinstellungen, den Themenbaum und die Aufgabenzuweisungen."
+# Instructor challenge list columns
+instrColChallenge:
+  title: "Aufgabe"
+  text: "Der Titel der Aufgabe. Klicken Sie zum Bearbeiten oder zum Anzeigen von Studierendeneinreichungen."
+instrColCourse:
+  title: "Kurs"
+  text: "Der Kurs, dem diese Aufgabe zugewiesen ist."
+instrColType:
+  title: "Typ"
+  text: "Uebung: Studierende erhalten Feedback nach jeder Phase. Pruefung: Feedback wird bis zum Abschluss zurueckgehalten."
+instrColVisibility:
+  title: "Sichtbarkeit"
+  text: "Oeffentliche Aufgaben sind fuer alle Kursabonnenten verfuegbar. Private Aufgaben sind nur fuer ihre Erstellerin oder ihren Ersteller sichtbar."
+instrColSubmissions:
+  title: "Einreichungen"
+  text: "Gesamtanzahl der Studierendendurchlaeufe fuer diese Aufgabe, einschliesslich laufender und abgeschlossener Versuche."
+instrColAvgGrade:
+  title: "Durchschnittsnote"
+  text: "Durchschnittliche Note ueber alle abgeschlossenen Studierendendurchlaeufe, kombiniert aus Rahmungs-, Bewertungs- und Steuerungspunkten."
+instrColStatus:
+  title: "Status"
+  text: "Lebenszyklus der Aufgabe: Entwurf (noch nicht sichtbar), Veroeffentlicht (aktiv) oder Archiviert (ausgeblendet)."
+instrColActions:
+  title: "Aktionen"
+  text: "Verfuegbare Aktionen: Bearbeiten, Vorschau, Auswertung anzeigen oder Loeschen."

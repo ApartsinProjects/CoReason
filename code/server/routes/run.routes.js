@@ -2,13 +2,15 @@
 const { Router } = require('express');
 const { ChallengeRunService } = require('../services/challenge-run.service');
 const { requireAuth } = require('../middleware/auth');
+const { validate } = require('../middleware/validate');
+const { startRunBody } = require('../middleware/schemas');
 
 module.exports = function runRoutes(db, logger, llmService) {
   const router = Router();
   const runService = new ChallengeRunService(db, logger, llmService);
 
   // POST /api/v1/runs (start a new challenge run)
-  router.post('/', requireAuth, async (req, res, next) => {
+  router.post('/', requireAuth, validate({ body: startRunBody }), async (req, res, next) => {
     try {
       const run = await runService.startRun(req.body.challengeId, req.user.id);
       res.status(201).json(run);

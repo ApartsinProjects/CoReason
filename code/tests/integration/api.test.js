@@ -8,6 +8,7 @@ let app, server, db;
 beforeAll(async () => {
   process.env.NODE_ENV = 'test';
   process.env.LOG_LEVEL = 'silent';
+  process.env.PORT = '0'; // Use random available port
   const result = await startServer();
   app = result.app;
   server = result.server;

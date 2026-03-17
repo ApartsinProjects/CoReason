@@ -38,7 +38,7 @@ user_prompt: |
   **Subject path:** {{subject_path}}
   **Language:** {{language}}
 
-  Produce ONLY the problem statement text. Do not include metadata, labels, or hints about what is missing.
+  Produce ONLY the problem statement text. Write the entire problem in {{language}}. Do not include metadata, labels, or hints about what is missing.
 
 output_schema:
   type: object

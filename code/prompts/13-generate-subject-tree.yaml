@@ -50,7 +50,7 @@ user: |
   If an existing tree is provided and not empty, improve and expand it.
   If no existing tree, create one from scratch based on the course name and description.
 
-  Respond ONLY with the JSON array. Language: {{language}}
+  IMPORTANT: All topic names MUST be in {{language}}. Respond ONLY with the JSON array.
 
 temperature: 0.7
 max_tokens: 2000

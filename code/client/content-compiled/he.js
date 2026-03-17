@@ -214,10 +214,142 @@ window.CONTENT["he"] = {
     "responseType": "סוג מענה",
     "maxCycles": "מספר סבבים מרבי",
     "advancedSettings": "הגדרות מתקדמות",
-    "rubricPreview": "תצוגה מקדימה של המחוון",
-    "livePreview": "תצוגה מקדימה בזמן אמת",
+    "rubricPreview": "מחוון הערכה",
+    "livePreview": "דוגמה לבעיה גולמית",
     "publishChallenge": "פרסום אתגר",
-    "saveDraft": "שמירה כטיוטה"
+    "saveDraft": "שמירה כטיוטה",
+    "saveAndPublish": "שמירה ופרסום",
+    "loading": "טוען...",
+    "retry": "ניסיון חוזר",
+    "challengeRun": "הרצת אתגר",
+    "loadingReport": "טוען דו״ח...",
+    "errorLoadingReport": "טעינת הדו״ח נכשלה",
+    "startChallenge": "התחלת אתגר",
+    "generatingProblem": "מייצר בעיה גולמית מעץ הנושאים...",
+    "evaluatingFraming": "מעריך מסגור ומייצר פתרון AI...",
+    "sectionTitle": "כותרת סעיף",
+    "describeRefinement": "תארו את השיפור שלכם...",
+    "pleaseProvideResponse": "נא לספק לפחות סעיף אחד עם תוכן.",
+    "pleaseSelectOption": "נא לבחור לפחות אפשרות אחת.",
+    "recordingJudgement": "מתעד שיפוט...",
+    "finalizing": "מסכם — מחשב ציונים סופיים...",
+    "issuesFound": "בעיות שנמצאו",
+    "markedComplete": "הסטודנט/ית סימן/ה שהפתרון שלם",
+    "issuesSubmitted": "בעיות נשלחו להכוונה",
+    "correctionsSent": "תיקונים נשלחו",
+    "steeringSubmitted": "הנחיות הכוונה נשלחו",
+    "processSteering": "מעבד הכוונה ומעריך סבב...",
+    "computingGrades": "מחשב ציונים סופיים...",
+    "issueTitle": "כותרת בעיה",
+    "describeIssue": "תארו את הבעיה...",
+    "correctionTitle": "כותרת תיקון",
+    "describeCorrection": "תארו את התיקון...",
+    "addSection": "הוספת סעיף",
+    "noFramingOptions": "אין אפשרויות מסגור זמינות.",
+    "noJudgingOptions": "אין אפשרויות שיפוט זמינות. השתמשו בכפתור 'הפתרון שלם' אם הפלט נכון.",
+    "noSteeringOptions": "אין אפשרויות הכוונה זמינות.",
+    "runAgainQ": "להריץ שוב?",
+    "profileDesc": "ניהול הגדרות החשבון שלך",
+    "subjectTree": "עץ נושאים",
+    "subjectTreeDesc": "הגדרת היררכיית הנושאים לצורך יצירת מחוונים",
+    "subjectTreeWarning": "שינוי עץ הנושאים עלול להשפיע על אתגרים קיימים",
+    "editSubjectTree": "עריכת עץ נושאים",
+    "clickNodeToEdit": "לחצו על צומת כדי לערוך את פרטיו",
+    "nodeDetails": "פרטי צומת",
+    "nodeName": "שם הצומת",
+    "nodes": "צמתים",
+    "levelsDeep": "רמות עומק",
+    "loadingSubjects": "טוען נושאים...",
+    "addChild": "+ הוספת צומת בן",
+    "addedChildUnder": "צומת בן נוסף תחת",
+    "addedRootNode": "צומת שורש נוסף",
+    "newRootTopic": "נושא שורש חדש",
+    "newTopic": "נושא חדש",
+    "confirmDeleteNode": "האם אתם בטוחים שברצונכם למחוק צומת זה?",
+    "noSubjectsDefined": "טרם הוגדרו נושאים",
+    "subjectTreeSaved": "עץ הנושאים נשמר",
+    "selectCourseToLoadSubjects": "בחרו קורס כדי לטעון את עץ הנושאים שלו",
+    "selectSubjectsToPreview": "בחרו נושאים לתצוגה מקדימה של המחוון",
+    "keywordsForRubric": "מילות מפתח למחוון",
+    "descriptionForRubric": "תיאור קצר להקשר המחוון...",
+    "commaSeparatedKeywords": "מילות מפתח מופרדות בפסיקים...",
+    "addNewCourse": "+ הוספת קורס חדש",
+    "createCourse": "יצירת קורס",
+    "noCourses": "אין קורסים זמינים",
+    "noCoursesFound": "לא נמצאו קורסים",
+    "department": "מחלקה",
+    "description": "תיאור",
+    "descriptionOptional": "תיאור (אופציונלי)",
+    "institutionScopedNote": "הקורסים משויכים למוסד שלכם",
+    "selectDepartment": "בחירת מחלקה",
+    "enterCourseName": "הזינו שם קורס...",
+    "pleaseEnterCourseName": "נא להזין שם קורס",
+    "pleaseSelectDepartment": "נא לבחור מחלקה",
+    "courseCreatedSuccess": "הקורס נוצר בהצלחה",
+    "courseCreatedNext": "הקורס נוצר. שלב הבא: יצירת אתגר.",
+    "courseNotFound": "הקורס לא נמצא",
+    "createCourseFailed": "יצירת הקורס נכשלה",
+    "noCourseSelected": "לא נבחר קורס",
+    "noCourseId": "לא סופק מזהה קורס",
+    "pleaseSelectCourse": "נא לבחור קורס",
+    "totalChallenges": "סה״כ אתגרים",
+    "createAndStart": "יצירה והתחלה",
+    "createPrivateChallenge": "יצירת אתגר פרטי",
+    "challengeDetails": "פרטי האתגר",
+    "challengeTitlePlaceholder": "הזינו כותרת לאתגר...",
+    "challengeDescPlaceholder": "תארו את מטרות האתגר וההקשר שלו...",
+    "pleaseEnterTitle": "נא להזין כותרת לאתגר",
+    "pleaseSelectSubject": "נא לבחור נושא",
+    "selectTemplate": "בחירת תבנית",
+    "defaultLlmModel": "מודל LLM ברירת מחדל",
+    "systemDefault": "ברירת מחדל מערכתית",
+    "rubricWillGenerate": "המחוון ייווצר מהנושא שנבחר",
+    "previewNotRecorded": "תצוגה מקדימה — לא נרשם בניתוח",
+    "instructorPreview": "תצוגה מקדימה למרצה",
+    "confirmDeleteChallenge": "האם אתם בטוחים שברצונכם למחוק אתגר זה?",
+    "archiveFailed": "ארכוב האתגר נכשל",
+    "publishFailed": "פרסום האתגר נכשל",
+    "publishing": "מפרסם...",
+    "deleteFailed": "המחיקה נכשלה",
+    "deleted": "נמחק",
+    "duplicated": "שוכפל",
+    "copy": "העתקה",
+    "judgeSteerCycles": "סבבי שיפוט + הכוונה",
+    "aiOutputNote": "פלט שנוצר על ידי ה-AI על בסיס המסגור שלך",
+    "aiSuggestions": "הצעות ה-AI",
+    "generating": "מייצר...",
+    "review": "סקירה",
+    "skipAndComplete": "דילוג וסיום",
+    "markedCompleteSteeringHint": "סימון הפתרון כשלם מדלג על סבבים נותרים",
+    "selectAtLeastOne": "נא לבחור לפחות אפשרות אחת",
+    "saving": "שומר...",
+    "saved": "נשמר",
+    "saveFailed": "השמירה נכשלה",
+    "saveAsDraft": "שמירה כטיוטה",
+    "createFailed": "היצירה נכשלה",
+    "creating": "יוצר...",
+    "failedToSave": "שמירת השינויים נכשלה",
+    "noChangesToSave": "אין שינויים לשמירה",
+    "allChangesSaved": "כל השינויים נשמרו",
+    "changesApplied": "השינויים הוחלו",
+    "unsavedChanges": "יש שינויים שלא נשמרו",
+    "error": "שגיאה",
+    "unknownError": "אירעה שגיאה לא ידועה",
+    "unknownCourse": "קורס לא ידוע",
+    "other": "אחר",
+    "users": "משתמשים",
+    "institutions": "מוסדות",
+    "subscriptions": "הרשמות",
+    "runs": "הרצות",
+    "runsCompleted": "הרצות שהושלמו",
+    "attempts": "ניסיונות",
+    "lead": "מוביל/ה",
+    "leadInstructor": "מרצה ראשי/ת",
+    "coInstructor": "מרצה שותף/ה",
+    "importExport": "ייבוא / ייצוא",
+    "aiGenerationFailed": "יצירת ה-AI נכשלה",
+    "failedLoadProfile": "טעינת הפרופיל נכשלה",
+    "failedLoadSubjects": "טעינת הנושאים נכשלה"
   },
   "institutions": [
     {
@@ -1299,15 +1431,15 @@ window.CONTENT["he"] = {
   "tooltips": {
     "challengeType": {
       "title": "סוג האתגר",
-      "text": "אתגרי תרגול מיועדים ללמידה — לא נרשם ציון. אתגרי הערכה נספרים לציון הקורס שלך."
+      "text": "אתגרי תרגול מאפשרים ניסיונות חוזרים עם משוב לאחר כל שלב. אתגרי הערכה מדורגים עם משוב בסוף בלבד."
     },
     "visibility": {
       "title": "נראות",
-      "text": "אתגרים ציבוריים גלויים לכל הסטודנטים הרשומים. אתגרים פרטיים גלויים רק לך."
+      "text": "אתגרים ציבוריים גלויים לכל הסטודנטים הרשומים. אתגרים פרטיים גלויים רק ליוצרם."
     },
     "maxCycles": {
       "title": "מחזורים מרביים",
-      "text": "מספר מחזורי השיפוט+הכוונה המרבי המותר. יותר מחזורים נותנים לך יותר הזדמנויות לשפר את פלט הבינה המלאכותית."
+      "text": "מספר מחזורי השיפוט+הכוונה המרבי המותר. יותר מחזורים נותנים יותר הזדמנויות לשפר את פלט הבינה המלאכותית."
     },
     "subjectPath": {
       "title": "נתיב הנושא",
@@ -1315,27 +1447,27 @@ window.CONTENT["he"] = {
     },
     "responseType": {
       "title": "סוג תשובה",
-      "text": "רב-ברירה מציע לך אפשרויות לבחירה. פתוח מאפשר לך לכתוב את הנימוק שלך."
+      "text": "רב-ברירה מציע אפשרויות לבחירה. פתוח מאפשר כתיבת נימוק חופשי."
     },
     "framingPhase": {
       "title": "שלב המסגור",
-      "text": "בשלב זה, אתה מעריך את הגישה הראשונית של הבינה המלאכותית לבעיה לפני שנוצר פתרון כלשהו."
+      "text": "הסטודנט מעריך את הבעיה הגולמית ומתרגם אותה למשימה מוגדרת היטב על ידי הוספת הנחות ואילוצים."
     },
     "judgingPhase": {
       "title": "שלב השיפוט",
-      "text": "סקור את הפתרון שנוצר על ידי הבינה המלאכותית וזהה מה נכון, מה שגוי ומה ניתן לשפר."
+      "text": "הסטודנט סוקר את הפתרון שנוצר על ידי הבינה המלאכותית ומזהה מה נכון, מה שגוי ומה ניתן לשפר."
     },
     "steeringPhase": {
       "title": "שלב ההכוונה",
-      "text": "הנחה את הבינה המלאכותית לתקן את שגיאותיה על ידי מתן משוב וכיוון ספציפיים."
+      "text": "הסטודנט מספק משוב ספציפי כדי להנחות את הבינה המלאכותית לעבר פתרון טוב יותר."
     },
     "coReasoningScore": {
       "title": "ציון חשיבה משותפת",
-      "text": "ציון הביצועים הכולל שלך המשלב דיוק מסגור, איכות שיפוט ויעילות הכוונה."
+      "text": "ביצועים כוללים המשלבים דיוק מסגור, איכות שיפוט ויעילות הכוונה."
     },
     "rubric": {
       "title": "מחוון",
-      "text": "קריטריוני ההערכה המשמשים להערכת ביצועי החשיבה המשותפת שלך בכל שלב."
+      "text": "קריטריוני ההערכה המשמשים להערכת ביצועי החשיבה המשותפת בכל שלב."
     },
     "subjectTree": {
       "title": "עץ נושאים",
@@ -1346,8 +1478,84 @@ window.CONTENT["he"] = {
       "text": "הירשם לקורס כדי לגשת לאתגרים שלו ולעקוב אחר ההתקדמות שלך."
     },
     "analyticsOverview": {
-      "title": "סקירת ניתוח",
-      "text": "צפה במגמות הביצועים שלך, התפלגויות ציונים ופירוט מפורט לאורך האתגרים."
+      "title": "הניתוח שלך",
+      "text": "צפה במגמות הביצועים שלך, בהתפלגויות הציונים ובפירוט המפורט לאורך כל ריצות האתגר שלך."
+    },
+    "colChallenge": {
+      "title": "אתגר",
+      "text": "שם האתגר. לחץ כדי לצפות בפרטים או להתחיל ריצה."
+    },
+    "colCourse": {
+      "title": "קורס",
+      "text": "הקורס שאליו שייך אתגר זה."
+    },
+    "colType": {
+      "title": "סוג",
+      "text": "אתגרי תרגול מאפשרים ניסיונות חוזרים עם משוב. אתגרי הערכה מדורגים עם משוב בסוף בלבד."
+    },
+    "colVisibility": {
+      "title": "נראות",
+      "text": "אתגרים ציבוריים הם מהקורסים שנרשמת אליהם. אתגרים פרטיים הם כאלה שיצרת לעצמך."
+    },
+    "colCreated": {
+      "title": "תאריך יצירה",
+      "text": "התאריך שבו אתגר זה פורסם או נוצר."
+    },
+    "colCreator": {
+      "title": "יוצר",
+      "text": "המרצה או הסטודנט שיצרו את האתגר הזה."
+    },
+    "colLastAttempt": {
+      "title": "ניסיון אחרון",
+      "text": "מתי ניסית לאחרונה את האתגר הזה, אם בכלל."
+    },
+    "colStatus": {
+      "title": "סטטוס",
+      "text": "ההתקדמות שלך: טרם התחיל, בתהליך או הושלם."
+    },
+    "colActions": {
+      "title": "פעולות",
+      "text": "פעולות זמינות כגון התחלה, המשך, צפייה בתוצאות או הרצה מחדש."
+    },
+    "instrAnalyticsOverview": {
+      "title": "ניתוח קורס",
+      "text": "נתוני ביצועים מצטברים של כל הסטודנטים בקורס זה. כולל תוצאות אתגרים ציבוריים בלבד."
+    },
+    "instrCourseSubscription": {
+      "title": "ניהול קורס",
+      "text": "נהל את הגדרות הקורס, עץ הנושאים ומטלות האתגרים."
+    },
+    "instrColChallenge": {
+      "title": "אתגר",
+      "text": "כותרת האתגר. לחץ לעריכה או לצפייה בהגשות הסטודנטים."
+    },
+    "instrColCourse": {
+      "title": "קורס",
+      "text": "הקורס שאליו מוקצה האתגר."
+    },
+    "instrColType": {
+      "title": "סוג",
+      "text": "תרגול: הסטודנטים מקבלים משוב לאחר כל שלב. הערכה: המשוב נעצר עד לסיום."
+    },
+    "instrColVisibility": {
+      "title": "נראות",
+      "text": "אתגרים ציבוריים זמינים לכל המנויים לקורס. אתגרים פרטיים גלויים רק ליוצרם."
+    },
+    "instrColSubmissions": {
+      "title": "הגשות",
+      "text": "מספר ריצות הסטודנטים הכולל לאתגר זה, כולל ניסיונות בתהליך וניסיונות שהושלמו."
+    },
+    "instrColAvgGrade": {
+      "title": "ציון ממוצע",
+      "text": "ציון ממוצע בכל ריצות הסטודנטים שהושלמו, המשלב ציוני מסגור, שיפוט והכוונה."
+    },
+    "instrColStatus": {
+      "title": "סטטוס",
+      "text": "מחזור חיי האתגר: טיוטה (טרם גלוי), פורסם (פעיל) או בארכיון (מוסתר)."
+    },
+    "instrColActions": {
+      "title": "פעולות",
+      "text": "פעולות זמינות: עריכה, תצוגה מקדימה, צפייה בניתוח או מחיקה."
     }
   },
   "challenges": {

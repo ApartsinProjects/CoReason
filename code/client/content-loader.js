@@ -26,8 +26,13 @@
 /* ── Ensure CONTENT namespace ── */
 window.CONTENT = window.CONTENT || {};
 
+/* ── Constants ── */
+var DEFAULT_LANG = 'en';
+var RTL_LANGUAGES = ['he', 'ar'];
+var LANG_STORAGE_KEY = 'coreason-lang';
+
 /* ── State ── */
-var currentLang = 'en';
+var currentLang = DEFAULT_LANG;
 
 // ────────────────────────────────────────────────────────────────────
 // Core content access
@@ -46,9 +51,9 @@ function C(dotPath) {
   var parts = dotPath.split('.');
   var val = _resolve(window.CONTENT[currentLang], parts);
   if (val !== undefined) return val;
-  // Fallback to English
-  if (currentLang !== 'en') {
-    val = _resolve(window.CONTENT['en'], parts);
+  // Fallback to default language
+  if (currentLang !== DEFAULT_LANG) {
+    val = _resolve(window.CONTENT[DEFAULT_LANG], parts);
     if (val !== undefined) return val;
   }
   return undefined;
@@ -99,7 +104,7 @@ function switchLanguage(lang) {
   currentLang = lang;
 
   // Set document direction — RTL for Hebrew and Arabic, LTR otherwise
-  document.documentElement.dir = (lang === 'he' || lang === 'ar') ? 'rtl' : 'ltr';
+  document.documentElement.dir = (RTL_LANGUAGES.indexOf(lang) !== -1) ? 'rtl' : 'ltr';
   document.documentElement.lang = lang;
 
   // Update every lang selector on the page to reflect the current choice
@@ -114,7 +119,7 @@ function switchLanguage(lang) {
   });
 
   // Persist preference to localStorage
-  try { localStorage.setItem('coreason-lang', lang); } catch(e) {}
+  try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch(e) {}
 
   // Auto-translate the page
   translatePage();
@@ -246,7 +251,7 @@ function getActiveData() {
 /* Restore stored language preference */
 (function() {
   try {
-    var stored = localStorage.getItem('coreason-lang');
+    var stored = localStorage.getItem(LANG_STORAGE_KEY);
     if (stored) currentLang = stored;
   } catch(e) {}
 })();

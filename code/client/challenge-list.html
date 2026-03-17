@@ -9,16 +9,15 @@
   <style>
     .challenge-actions { display: flex; gap: 4px; }
     .challenge-actions .btn { padding: 4px 8px; font-size: 12px; }
-    .completion-bar { display: flex; align-items: center; gap: 8px; }
-    .completion-bar .progress { width: 60px; }
-    .view-toggle { display: flex; gap: 0; border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .view-toggle button { padding: 6px 14px; background: #fff; border: none; font-size: 13px; cursor: pointer; }
-    .view-toggle button.active { background: var(--primary); color: #fff; }
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--text-secondary); }
+    .empty-state p { margin-top: 8px; font-size: 14px; }
+    .loading-row td { text-align: center; padding: 32px; color: var(--text-secondary); }
   </style>
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
 </head>
 <body>
   <header class="topnav">
@@ -31,9 +30,10 @@
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
-      <span>Sarah Cohen</span>
-      <a href="profile.html"><div class="avatar">SC</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">—</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
     </div>
   </header>
 
@@ -46,134 +46,50 @@
       <a href="create-challenge-student.html" class="btn btn-primary" data-t="createChallenge">+ Create Challenge</a>
     </div>
 
-    <!-- Filter Bar (REQ-LIST-04) -->
+    <!-- Filter Bar -->
     <div class="filter-bar">
-      <input type="search" class="form-control" data-t-placeholder="searchChallenges" placeholder="Search challenges...">
-      <select class="form-control" data-t-options="allCourses">
-        <option value="">All Courses</option>
-        <option>Deep Learning 101</option>
-        <option>Database Systems</option>
-        <option>Software Engineering</option>
+      <input type="search" id="filterSearch" class="form-control" data-t-placeholder="searchChallenges" placeholder="Search challenges...">
+      <select id="filterCourse" class="form-control">
+        <option value="" data-t="allCourses">All Courses</option>
       </select>
-      <select class="form-control" data-t-options="allTypes,practice,assessment">
-        <option value="">All Types</option>
-        <option>Practice</option>
-        <option>Assessment</option>
+      <select id="filterType" class="form-control">
+        <option value="" data-t="allTypes">All Types</option>
+        <option value="practice" data-t="practice">Practice</option>
+        <option value="assessment" data-t="assessment">Assessment</option>
       </select>
-      <select class="form-control" data-t-options="allVisibility,public,private">
-        <option value="">All Visibility</option>
-        <option>Public</option>
-        <option>Private</option>
+      <select id="filterVisibility" class="form-control">
+        <option value="" data-t="allVisibility">All Visibility</option>
+        <option value="public" data-t="public">Public</option>
+        <option value="private" data-t="private">Private</option>
       </select>
-      <select class="form-control" data-t-options="allStatus,notStarted,inProgress,completed,archived">
-        <option value="">All Status</option>
-        <option>Not Started</option>
-        <option>In Progress</option>
-        <option>Completed</option>
-        <option>Archived</option>
+      <select id="filterStatus" class="form-control">
+        <option value="" data-t="allStatus">All Status</option>
+        <option value="not_started" data-t="notStarted">Not Started</option>
+        <option value="in_progress" data-t="inProgress">In Progress</option>
+        <option value="completed" data-t="completed">Completed</option>
       </select>
     </div>
 
-    <!-- Challenge Table (REQ-LIST-01, REQ-LIST-02) -->
+    <!-- Challenge Table -->
     <div class="card">
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
               <th></th>
-              <th data-t="challenge">Challenge</th>
-              <th data-t="course">Course</th>
-              <th data-t="type">Type</th>
-              <th data-t="visibility">Visibility</th>
-              <th data-t="created">Created</th>
-              <th data-t="creator">Creator</th>
-              <th data-t="lastAttempt">Last Attempt</th>
-              <th data-t="status">Status</th>
-              <th data-t="actions">Actions</th>
+              <th data-t="challenge" data-tooltip="colChallenge">Challenge</th>
+              <th data-t="course" data-tooltip="colCourse">Course</th>
+              <th data-t="type" data-tooltip="colType">Type</th>
+              <th data-t="visibility" data-tooltip="colVisibility">Visibility</th>
+              <th data-t="created" data-tooltip="colCreated">Created</th>
+              <th data-t="creator" data-tooltip="colCreator">Creator</th>
+              <th data-t="lastAttempt" data-tooltip="colLastAttempt">Last Attempt</th>
+              <th data-t="status" data-tooltip="colStatus">Status</th>
+              <th data-t="actions" data-tooltip="colActions">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            <!-- New published challenge with visual cue (REQ-COURSE-06, REQ-LIST-02) -->
-            <tr data-course="Deep Learning 101" data-type="Practice" data-visibility="Public" data-status="Not Started" data-tab="public">
-              <td><span class="badge badge-new" data-t="new">NEW</span></td>
-              <td><strong>Neural Network Debugging</strong></td>
-              <td>Deep Learning 101</td>
-              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
-              <td><span class="badge badge-public" data-t="public">Public</span></td>
-              <td>Mar 14</td>
-              <td>Dr. Levy</td>
-              <td>&mdash;</td>
-              <td><span class="status status-not-started" data-t="notStarted">Not Started</span></td>
-              <td><a href="challenge-run.html" class="btn btn-teal btn-sm" data-t="start">Start</a></td>
-            </tr>
-            <tr data-course="Database Systems" data-type="Practice" data-visibility="Public" data-status="Not Started" data-tab="public">
-              <td><span class="badge badge-new" data-t="new">NEW</span></td>
-              <td><strong>SQL Query Optimization</strong></td>
-              <td>Database Systems</td>
-              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
-              <td><span class="badge badge-public" data-t="public">Public</span></td>
-              <td>Mar 13</td>
-              <td>Prof. Kim</td>
-              <td>&mdash;</td>
-              <td><span class="status status-not-started" data-t="notStarted">Not Started</span></td>
-              <td><a href="challenge-run.html" class="btn btn-teal btn-sm" data-t="start">Start</a></td>
-            </tr>
-            <tr data-course="Software Engineering" data-type="Practice" data-visibility="Public" data-status="In Progress" data-tab="public">
-              <td></td>
-              <td><strong>API Design Review</strong></td>
-              <td>Software Engineering</td>
-              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
-              <td><span class="badge badge-public" data-t="public">Public</span></td>
-              <td>Mar 10</td>
-              <td>Dr. Patel</td>
-              <td>Mar 12</td>
-              <td><span class="status status-in-progress" data-t="inProgress">In Progress</span></td>
-              <td><a href="challenge-run.html" class="btn btn-outline btn-sm" data-t="resume">Resume</a></td>
-            </tr>
-            <tr data-course="Software Engineering" data-type="Assessment" data-visibility="Public" data-status="Completed" data-tab="public">
-              <td></td>
-              <td><strong>Sorting Algorithm Analysis</strong></td>
-              <td>Software Engineering</td>
-              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
-              <td><span class="badge badge-public" data-t="public">Public</span></td>
-              <td>Mar 5</td>
-              <td>Dr. Patel</td>
-              <td>Mar 8</td>
-              <td><span class="status status-completed" data-t="completed">Completed</span></td>
-              <td><a href="challenge-report.html?id=1" class="btn btn-outline btn-sm" data-t="results">Results</a></td>
-            </tr>
-            <!-- Private challenge (REQ-VIS-02) -->
-            <tr data-course="Deep Learning 101" data-type="Practice" data-visibility="Private" data-status="Completed" data-tab="private">
-              <td></td>
-              <td><strong>My Practice: Backpropagation</strong></td>
-              <td>Deep Learning 101</td>
-              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
-              <td><span class="badge badge-private" data-t="private">Private</span></td>
-              <td>Mar 7</td>
-              <td>Me</td>
-              <td>Mar 9</td>
-              <td><span class="status status-completed" data-t="completed">Completed</span></td>
-              <td>
-                <div class="challenge-actions">
-                  <a href="challenge-run.html" class="btn btn-outline btn-sm" data-t="runAgain">Run Again</a>
-                  <button class="btn btn-outline btn-sm" title="Rename">&#9998;</button>
-                  <button class="btn btn-outline btn-sm" title="Archive">&#128451;</button>
-                  <button class="btn btn-outline btn-sm" title="Delete" style="color:var(--danger);">&#128465;</button>
-                </div>
-              </td>
-            </tr>
-            <tr data-course="Software Engineering" data-type="Practice" data-visibility="Public" data-status="Completed" data-tab="public">
-              <td></td>
-              <td><strong style="color:var(--text-secondary);">Recursion Basics</strong></td>
-              <td>Software Engineering</td>
-              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
-              <td><span class="badge badge-public" data-t="public">Public</span></td>
-              <td>Feb 28</td>
-              <td>Dr. Patel</td>
-              <td>Mar 2</td>
-              <td><span class="status status-completed" data-t="completed">Completed</span></td>
-              <td><a href="challenge-report.html?id=1" class="btn btn-outline btn-sm" data-t="results">Results</a></td>
-            </tr>
+          <tbody id="challengeTableBody">
+            <tr class="loading-row"><td colspan="10">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -181,38 +97,264 @@
   </main>
 
   <script>
-// Check auth
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-}).catch(() => window.location.href = '/login.html');
-
   (function() {
-    var rows = document.querySelectorAll('tbody tr');
-    var selects = document.querySelectorAll('.filter-bar select');
-    var searchInput = document.querySelector('.filter-bar input[type="search"]');
+    'use strict';
 
-    function getSelectVal(idx) { return selects[idx] ? selects[idx].value : ''; }
+    var currentUser = null;
+    var allChallenges = [];
+    var tbody = document.getElementById('challengeTableBody');
 
-    function applyFilters() {
-      var query = searchInput.value.toLowerCase().trim();
-      var course = getSelectVal(0);
-      var type = getSelectVal(1);
-      var vis = getSelectVal(2);
-      var status = getSelectVal(3);
+    // ── Wait for user-header.js to populate _currentUser ──
+    (function waitForUser() {
+      var check = setInterval(function() {
+        if (window._currentUser) {
+          clearInterval(check);
+          currentUser = window._currentUser;
+          loadCourses();
+          loadChallenges();
+        }
+      }, 100);
+      // Fallback timeout
+      setTimeout(function() { clearInterval(check); if (!currentUser) { loadCourses(); loadChallenges(); } }, 2000);
+    })();
 
-      rows.forEach(function(row) {
-        var show = true;
-        if (course && row.getAttribute('data-course') !== course) show = false;
-        if (type && row.getAttribute('data-type') !== type) show = false;
-        if (vis && row.getAttribute('data-visibility') !== vis) show = false;
-        if (status && row.getAttribute('data-status') !== status) show = false;
-        if (query && row.textContent.toLowerCase().indexOf(query) === -1) show = false;
-        row.style.display = show ? '' : 'none';
+    // ── Load courses into filter dropdown ──
+    function loadCourses() {
+      API.courses.list({ subscribed: true }).then(function(data) {
+        var courses = data.courses || data || [];
+        var sel = document.getElementById('filterCourse');
+        courses.forEach(function(c) {
+          var opt = document.createElement('option');
+          opt.value = c._id || c.id || c.name;
+          opt.textContent = c.name;
+          sel.appendChild(opt);
+        });
+        // Pre-select from URL if present
+        var params = new URLSearchParams(window.location.search);
+        var preselect = params.get('courseId');
+        if (preselect) {
+          sel.value = preselect;
+        }
+      }).catch(function(err) {
+        console.warn('Could not load courses:', err.message);
       });
     }
 
-    selects.forEach(function(s) { s.addEventListener('change', applyFilters); });
-    searchInput.addEventListener('input', applyFilters);
+    // ── Load challenges from API ──
+    function loadChallenges() {
+      tbody.innerHTML = '<tr class="loading-row"><td colspan="10">Loading...</td></tr>';
+      API.challenges.list().then(function(data) {
+        allChallenges = data.challenges || data || [];
+        applyFilters();
+      }).catch(function(err) {
+        tbody.innerHTML = '<tr class="loading-row"><td colspan="10" style="color:var(--danger);">Failed to load challenges: ' + escHtml(err.message) + '</td></tr>';
+      });
+    }
+
+    // ── Render table rows ──
+    function renderChallenges(list) {
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" class="empty-state"><div>📋</div><p data-t="noMatchingResults">No challenge runs match the selected filters.</p></td></tr>';
+        if (window.translatePage) translatePage();
+        return;
+      }
+
+      tbody.innerHTML = '';
+      list.forEach(function(ch) {
+        var tr = document.createElement('tr');
+
+        // Badge column
+        var tdBadge = document.createElement('td');
+        var isNew = ch.is_new || isRecent(ch.created_at || ch.createdAt);
+        if (isNew && getStatus(ch) === 'not_started') {
+          tdBadge.innerHTML = '<span class="badge badge-new" data-t="new">NEW</span>';
+        }
+        tr.appendChild(tdBadge);
+
+        // Challenge name
+        var tdName = document.createElement('td');
+        tdName.innerHTML = '<strong>' + escHtml(ch.title || ch.name || 'Untitled') + '</strong>';
+        tr.appendChild(tdName);
+
+        // Course
+        var tdCourse = document.createElement('td');
+        tdCourse.textContent = ch.course_name || ch.courseName || '—';
+        tr.appendChild(tdCourse);
+
+        // Type
+        var tdType = document.createElement('td');
+        var cType = (ch.type || ch.challenge_type || 'practice').toLowerCase();
+        tdType.innerHTML = '<span class="badge badge-' + cType + '" data-t="' + cType + '">' + capitalize(cType) + '</span>';
+        tr.appendChild(tdType);
+
+        // Visibility
+        var tdVis = document.createElement('td');
+        var vis = (ch.visibility || 'public').toLowerCase();
+        tdVis.innerHTML = '<span class="badge badge-' + vis + '" data-t="' + vis + '">' + capitalize(vis) + '</span>';
+        tr.appendChild(tdVis);
+
+        // Created date
+        var tdCreated = document.createElement('td');
+        tdCreated.textContent = formatDate(ch.created_at || ch.createdAt);
+        tr.appendChild(tdCreated);
+
+        // Creator
+        var tdCreator = document.createElement('td');
+        var creatorName = ch.creator_name || ch.creatorName || '';
+        if (currentUser && (ch.creator_id === currentUser.id || ch.creatorId === currentUser.id)) {
+          creatorName = t('me') || 'Me';
+        }
+        tdCreator.textContent = creatorName || '—';
+        tr.appendChild(tdCreator);
+
+        // Last attempt
+        var tdAttempt = document.createElement('td');
+        tdAttempt.textContent = (ch.last_attempt_at || ch.last_attempt) ? formatDate(ch.last_attempt_at || ch.last_attempt) : '—';
+        tr.appendChild(tdAttempt);
+
+        // Status
+        var tdStatus = document.createElement('td');
+        var status = getStatus(ch);
+        var statusClass = 'status-' + status.replace('_', '-');
+        var statusKey = statusKeyMap[status] || 'notStarted';
+        tdStatus.innerHTML = '<span class="status ' + statusClass + '" data-t="' + statusKey + '">' + statusLabels[status] + '</span>';
+        tr.appendChild(tdStatus);
+
+        // Actions
+        var tdActions = document.createElement('td');
+        tdActions.innerHTML = buildActions(ch, status);
+        tr.appendChild(tdActions);
+
+        tbody.appendChild(tr);
+      });
+
+      if (window.translatePage) translatePage();
+    }
+
+    // ── Status helpers ──
+    var statusKeyMap = { not_started: 'notStarted', in_progress: 'inProgress', completed: 'completed' };
+    var statusLabels = { not_started: 'Not Started', in_progress: 'In Progress', completed: 'Completed' };
+
+    function getStatus(ch) {
+      // run_status is per-user run status (enriched by API); ch.status is challenge status
+      if (ch.run_status) return ch.run_status.toLowerCase().replace(/ /g, '_').replace('-', '_');
+      return 'not_started';
+    }
+
+    // ── Build action buttons ──
+    function buildActions(ch, status) {
+      var id = ch._id || ch.id;
+      var cType = (ch.type || ch.challenge_type || 'practice').toLowerCase();
+      var vis = (ch.visibility || 'public').toLowerCase();
+      var isOwner = currentUser && (ch.creator_id === currentUser.id || ch.creatorId === currentUser.id);
+      var html = '<div class="challenge-actions">';
+
+      if (status === 'not_started') {
+        html += '<a href="challenge-run.html?challengeId=' + id + '" class="btn btn-teal btn-sm" data-t="start">Start</a>';
+      } else if (status === 'in_progress') {
+        html += '<a href="challenge-run.html?runId=' + (ch.run_id || id) + '" class="btn btn-outline btn-sm" data-t="resume">Resume</a>';
+      } else if (status === 'completed') {
+        html += '<a href="challenge-report.html?runId=' + (ch.run_id || id) + '" class="btn btn-outline btn-sm" data-t="results">Results</a>';
+        // Practice challenges always allow running again
+        if (cType === 'practice') {
+          html += ' <a href="challenge-run.html?challengeId=' + id + '" class="btn btn-outline btn-sm" data-t="runAgain">Run Again</a>';
+        }
+      }
+
+      // Private challenges: owner gets edit & delete
+      if (vis === 'private' && isOwner) {
+        html += ' <a href="create-challenge-student.html?id=' + id + '" class="btn btn-outline btn-sm" title="Edit">&#9998;</a>';
+        html += ' <button class="btn btn-outline btn-sm" title="Delete" style="color:var(--danger);" onclick="deleteChallenge(\'' + id + '\')">&#128465;</button>';
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    // ── Delete challenge ──
+    window.deleteChallenge = function(id) {
+      if (!confirm(t('confirmDeleteChallenge') || 'Are you sure you want to delete this challenge?')) return;
+      API.challenges.delete(id).then(function() {
+        allChallenges = allChallenges.filter(function(c) { return (c._id || c.id) !== id; });
+        applyFilters();
+      }).catch(function(err) {
+        alert((t('deleteFailed') || 'Delete failed') + ': ' + err.message);
+      });
+    };
+
+    // ── Filtering ──
+    var filterSearch = document.getElementById('filterSearch');
+    var filterCourse = document.getElementById('filterCourse');
+    var filterType = document.getElementById('filterType');
+    var filterVisibility = document.getElementById('filterVisibility');
+    var filterStatus = document.getElementById('filterStatus');
+
+    function applyFilters() {
+      var query = filterSearch.value.toLowerCase().trim();
+      var course = filterCourse.value;
+      var type = filterType.value;
+      var vis = filterVisibility.value;
+      var status = filterStatus.value;
+
+      var filtered = allChallenges.filter(function(ch) {
+        if (query) {
+          var text = ((ch.title || '') + ' ' + (ch.course_name || '') + ' ' + (ch.creator_name || '')).toLowerCase();
+          if (text.indexOf(query) === -1) return false;
+        }
+        if (course) {
+          var chCourse = ch.course_id || ch.courseId || '';
+          var chCourseName = ch.course_name || ch.courseName || '';
+          if (chCourse !== course && chCourseName !== course) return false;
+        }
+        if (type) {
+          var chType = (ch.type || ch.challenge_type || '').toLowerCase();
+          if (chType !== type) return false;
+        }
+        if (vis) {
+          var chVis = (ch.visibility || '').toLowerCase();
+          if (chVis !== vis) return false;
+        }
+        if (status) {
+          var chStatus = getStatus(ch);
+          if (chStatus !== status) return false;
+        }
+        return true;
+      });
+
+      renderChallenges(filtered);
+    }
+
+    filterSearch.addEventListener('input', applyFilters);
+    filterCourse.addEventListener('change', applyFilters);
+    filterType.addEventListener('change', applyFilters);
+    filterVisibility.addEventListener('change', applyFilters);
+    filterStatus.addEventListener('change', applyFilters);
+
+    // ── Utilities ──
+    function escHtml(s) {
+      var d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    function capitalize(s) {
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    function formatDate(d) {
+      if (!d) return '—';
+      try {
+        var dt = new Date(d);
+        return dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      } catch (e) { return d; }
+    }
+
+    function isRecent(dateStr) {
+      if (!dateStr) return false;
+      var d = new Date(dateStr);
+      var now = new Date();
+      return (now - d) < 7 * 24 * 60 * 60 * 1000; // within last 7 days
+    }
   })();
   </script>
 </body>

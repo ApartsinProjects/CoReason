@@ -14,6 +14,7 @@
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
 </head>
 <body>
   <header class="topnav">
@@ -26,9 +27,10 @@
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
-      <span>Sarah Cohen</span>
-      <a href="profile.html"><div class="avatar">SC</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">&mdash;</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
     </div>
   </header>
 
@@ -44,16 +46,14 @@
       <!-- Title -->
       <div class="form-group">
         <label data-t="challengeTitle">Title</label>
-        <input type="text" class="form-control" placeholder="e.g. My Practice: Backpropagation">
+        <input type="text" class="form-control" id="challengeTitle" placeholder="e.g. My Practice: Backpropagation">
       </div>
 
       <!-- Course -->
       <div class="form-group">
         <label data-t="selectCourse">Course</label>
-        <select class="form-control">
-          <option>Deep Learning 101</option>
-          <option>Database Systems</option>
-          <option>Software Engineering</option>
+        <select class="form-control" id="courseSelect" onchange="onCourseChange(this.value)">
+          <option value="">Loading courses...</option>
         </select>
       </div>
 
@@ -72,127 +72,8 @@
               <input type="text" placeholder="Search subjects..." class="form-control" style="margin-bottom:0; font-size:13px; padding:6px 10px;">
             </div>
             <div class="subject-tree-body">
-              <ul class="tree-select">
-                <li>
-                  <label class="tree-node">
-                    <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                    <input type="checkbox" class="tree-checkbox" id="nn" onchange="toggleChildren(this)">
-                    <span class="tree-label">Neural Networks</span>
-                  </label>
-                  <ul class="tree-children">
-                    <li>
-                      <label class="tree-node">
-                        <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                        <input type="checkbox" class="tree-checkbox" id="nn-bp" onchange="toggleChildren(this)">
-                        <span class="tree-label">Backpropagation</span>
-                      </label>
-                      <ul class="tree-children">
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="bp-debug">
-                            <span class="tree-label">Debugging</span>
-                          </label>
-                        </li>
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="bp-vanish">
-                            <span class="tree-label">Vanishing Gradients</span>
-                          </label>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <label class="tree-node">
-                        <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                        <input type="checkbox" class="tree-checkbox" id="nn-arch" onchange="toggleChildren(this)">
-                        <span class="tree-label">Architectures</span>
-                      </label>
-                      <ul class="tree-children">
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="arch-cnn">
-                            <span class="tree-label">CNNs</span>
-                          </label>
-                        </li>
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="arch-rnn">
-                            <span class="tree-label">RNNs</span>
-                          </label>
-                        </li>
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="arch-transformer">
-                            <span class="tree-label">Transformers</span>
-                          </label>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <label class="tree-node">
-                        <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                        <input type="checkbox" class="tree-checkbox" id="nn-opt" onchange="toggleChildren(this)">
-                        <span class="tree-label">Optimization</span>
-                      </label>
-                      <ul class="tree-children">
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="opt-lr">
-                            <span class="tree-label">Learning Rate</span>
-                          </label>
-                        </li>
-                        <li>
-                          <label class="tree-node">
-                            <input type="checkbox" class="tree-checkbox" id="opt-reg">
-                            <span class="tree-label">Regularization</span>
-                          </label>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <label class="tree-node">
-                    <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                    <input type="checkbox" class="tree-checkbox" id="loss" onchange="toggleChildren(this)">
-                    <span class="tree-label">Loss Functions</span>
-                  </label>
-                  <ul class="tree-children">
-                    <li>
-                      <label class="tree-node">
-                        <input type="checkbox" class="tree-checkbox" id="loss-ce">
-                        <span class="tree-label">Cross-Entropy</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label class="tree-node">
-                        <input type="checkbox" class="tree-checkbox" id="loss-mse">
-                        <span class="tree-label">MSE</span>
-                      </label>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <label class="tree-node">
-                    <span class="tree-toggle" onclick="event.preventDefault(); toggleTreeBranch(this)">&#9660;</span>
-                    <input type="checkbox" class="tree-checkbox" id="eval" onchange="toggleChildren(this)">
-                    <span class="tree-label">Model Evaluation</span>
-                  </label>
-                  <ul class="tree-children">
-                    <li>
-                      <label class="tree-node">
-                        <input type="checkbox" class="tree-checkbox" id="eval-overfit">
-                        <span class="tree-label">Overfitting &amp; Underfitting</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label class="tree-node">
-                        <input type="checkbox" class="tree-checkbox" id="eval-cv">
-                        <span class="tree-label">Cross-Validation</span>
-                      </label>
-                    </li>
-                  </ul>
-                </li>
+              <ul class="tree-select" id="treeSelectRoot">
+                <li><span class="text-muted" style="padding:12px;display:block;font-size:13px;" data-t="selectCourseToLoadSubjects">Select a course to load subjects...</span></li>
               </ul>
             </div>
             <div class="subject-tree-footer">
@@ -206,7 +87,7 @@
       <!-- Description -->
       <div class="form-group">
         <label data-t="description">Description</label>
-        <textarea class="form-control" rows="3" placeholder="Optionally describe what you'd like to practice..."></textarea>
+        <textarea class="form-control" id="challengeDescription" rows="3" placeholder="Optionally describe what you'd like to practice..."></textarea>
       </div>
 
       <!-- Visibility (locked) -->
@@ -227,17 +108,12 @@
     </div>
 
     <div class="flex gap-12 mt-16">
-      <button class="btn btn-primary btn-lg" data-t="createAndStart">Create &amp; Start</button>
+      <button class="btn btn-primary btn-lg" id="btnCreateStart" onclick="createAndStart()" data-t="createAndStart">Create &amp; Start</button>
       <a href="challenge-list.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
     </div>
   </main>
 
   <script>
-// Check auth
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-}).catch(() => window.location.href = '/login.html');
-
     // Toggle the dropdown open/close
     function toggleSubjectTree() {
       document.getElementById('subjectTreeSelect').classList.toggle('open');
@@ -358,21 +234,162 @@ fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
       updateSelectedTags();
     }
 
-    // Attach change listeners to all leaf checkboxes
-    document.querySelectorAll('.tree-checkbox').forEach(function(cb) {
-      cb.addEventListener('change', function() {
-        if (!this.closest('li').querySelector('ul.tree-children')) {
-          updateParentState(this);
-          updateSelectedTags();
-        }
-      });
-    });
+    // Note: checkbox listeners are attached dynamically in onCourseChange()
+    // after the subject tree is loaded from the API.
 
-    // Initialize parent states on load
-    (function() {
-      var leaves = document.querySelectorAll('.tree-checkbox:not([onchange])');
-      leaves.forEach(function(cb) { updateParentState(cb); });
+    // --- Unique ID counter for tree nodes ---
+    var _treeNodeId = 0;
+    function nextTreeId() { return 'stn-' + (++_treeNodeId); }
+
+    // --- Load courses from API ---
+    (async function loadCourses() {
+      try {
+        var courses = await API.get('/courses');
+        var select = document.getElementById('courseSelect');
+        if (!courses || courses.length === 0) {
+          select.innerHTML = '<option value="">No courses available</option>';
+          return;
+        }
+        var html = '<option value="">Select a course...</option>';
+        courses.forEach(function(c) {
+          html += '<option value="' + c.id + '">' + c.name + '</option>';
+        });
+        select.innerHTML = html;
+      } catch (err) {
+        document.getElementById('courseSelect').innerHTML = '<option value="">Failed to load courses</option>';
+      }
     })();
+
+    // --- When course changes, load its subject tree ---
+    async function onCourseChange(courseId) {
+      clearAllSubjects();
+      var root = document.getElementById('treeSelectRoot');
+      if (!root) return;
+
+      if (!courseId) {
+        root.innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">Select a course to load subjects...</span></li>';
+        return;
+      }
+
+      root.innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">Loading subjects...</span></li>';
+
+      try {
+        var subjects = await API.get('/courses/' + courseId + '/subjects');
+        if (!subjects || subjects.length === 0) {
+          root.innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">No subjects defined for this course.</span></li>';
+          return;
+        }
+        root.innerHTML = '';
+        subjects.forEach(function(node) {
+          root.appendChild(buildSubjectTreeNode(node));
+        });
+        // Re-attach listeners to new checkboxes
+        document.querySelectorAll('.tree-checkbox').forEach(function(cb) {
+          if (!cb.closest('li').querySelector(':scope > ul.tree-children')) {
+            cb.addEventListener('change', function() {
+              updateParentState(this);
+              updateSelectedTags();
+            });
+          }
+        });
+      } catch (err) {
+        root.innerHTML = '<li><span class="text-muted" style="padding:12px;display:block;font-size:13px;">Failed to load subjects.</span></li>';
+      }
+    }
+
+    // --- Build a subject tree node recursively from JSON ---
+    function buildSubjectTreeNode(node) {
+      var li = document.createElement('li');
+      var label = document.createElement('label');
+      label.className = 'tree-node';
+
+      var hasChildren = node.children && node.children.length > 0;
+      var cbId = nextTreeId();
+
+      if (hasChildren) {
+        var toggle = document.createElement('span');
+        toggle.className = 'tree-toggle';
+        toggle.innerHTML = '&#9660;';
+        toggle.addEventListener('click', function(e) { e.preventDefault(); toggleTreeBranch(this); });
+        label.appendChild(toggle);
+      }
+
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.className = 'tree-checkbox';
+      cb.id = cbId;
+      if (hasChildren) {
+        cb.addEventListener('change', function() { toggleChildren(this); });
+      }
+      label.appendChild(cb);
+
+      var span = document.createElement('span');
+      span.className = 'tree-label';
+      span.textContent = node.name;
+      label.appendChild(span);
+
+      li.appendChild(label);
+
+      if (hasChildren) {
+        var ul = document.createElement('ul');
+        ul.className = 'tree-children';
+        node.children.forEach(function(child) {
+          ul.appendChild(buildSubjectTreeNode(child));
+        });
+        li.appendChild(ul);
+      }
+
+      return li;
+    }
+
+    // --- Get selected subject names (leaf nodes only) ---
+    function getSelectedSubjectNames() {
+      var names = [];
+      document.querySelectorAll('.tree-checkbox:checked').forEach(function(cb) {
+        var li = cb.closest('li');
+        if (li.querySelector(':scope > ul.tree-children')) return;
+        var label = li.querySelector(':scope > label .tree-label');
+        if (label) names.push(label.textContent);
+      });
+      return names;
+    }
+
+    // --- Collect form data ---
+    function collectFormData() {
+      return {
+        title: document.getElementById('challengeTitle').value.trim(),
+        courseId: document.getElementById('courseSelect').value,
+        description: (document.getElementById('challengeDescription').value || '').trim(),
+        subjectPath: getSelectedSubjectNames(),
+        challengeType: 'practice',
+        visibility: 'private',
+        maxCycles: 5,
+        instructions: {},
+      };
+    }
+
+    // --- Create & Start ---
+    async function createAndStart() {
+      var data = collectFormData();
+      if (!data.title) { alert(t('pleaseEnterTitle') || 'Please enter a challenge title.'); return; }
+      if (!data.courseId) { alert(t('pleaseSelectCourse') || 'Please select a course.'); return; }
+      if (data.subjectPath.length === 0) { alert(t('pleaseSelectSubject') || 'Please select at least one subject.'); return; }
+
+      var btn = document.getElementById('btnCreateStart');
+      btn.disabled = true;
+      btn.textContent = t('creating') || 'Creating...';
+
+      try {
+        var challenge = await API.challenges.create(data);
+        var run = await API.runs.start(challenge.id);
+        window.location.href = 'challenge-run.html?runId=' + run.id;
+      } catch (err) {
+        console.error('Create & Start failed:', err);
+        alert((t('createFailed') || 'Failed to create challenge') + ': ' + err.message);
+        btn.disabled = false;
+        btn.textContent = t('createAndStart') || 'Create & Start';
+      }
+    }
   </script>
 </body>
 </html>

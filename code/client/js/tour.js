@@ -11,22 +11,32 @@ const CoReasonTour = (() => {
   let overlay = null;
   let popup = null;
 
+  // Configuration constants
+  const TOUR_STORAGE_KEY = 'coreason_tour_completed';
+  const AUTO_START_DELAY_MS = 1000;
+  const POPUP_OFFSET_PX = 12;
+  const POPUP_MAX_WIDTH = 360;
+  const POPUP_VIEWPORT_MARGIN = 12;
+  const DEFAULT_ROLE = 'student';
+
+  // Tour step definitions — keyed by role, with translatable text.
+  // To localize, override CoReasonTour.tourData before starting.
   const TOURS = {
     student: [
-      { target: '.topnav', title: 'Welcome to AI CoReasoning Lab!', text: 'This is your learning platform for developing critical AI evaluation skills.', position: 'bottom' },
-      { target: '.topnav a[href*="challenge-list"]', title: 'Your Challenges', text: 'Browse available challenges, filter by course, type, or status.', position: 'bottom' },
-      { target: '.topnav a[href*="course-catalog"]', title: 'Course Catalog', text: 'Subscribe to courses to access their challenges and track progress.', position: 'bottom' },
-      { target: '.topnav a[href*="analytics"]', title: 'Your Analytics', text: 'View your grades and track improvement across Framing, Judging, and Steering skills.', position: 'bottom' },
-      { target: '.lang-select', title: 'Language', text: 'Switch the interface language. We support English, German, Spanish, French, and Hebrew.', position: 'bottom-end' },
-      { target: '.user-area', title: 'Your Profile', text: 'View and edit your profile, see your statistics, and manage settings.', position: 'bottom-end' },
+      { target: '.topnav', titleKey: 'tour_welcome', title: 'Welcome to AI CoReasoning Lab!', text: 'This is your learning platform for developing critical AI evaluation skills.', position: 'bottom' },
+      { target: '.topnav a[href*="challenge-list"]', titleKey: 'tour_challenges', title: 'Your Challenges', text: 'Browse available challenges, filter by course, type, or status.', position: 'bottom' },
+      { target: '.topnav a[href*="course-catalog"]', titleKey: 'tour_courses', title: 'Course Catalog', text: 'Subscribe to courses to access their challenges and track progress.', position: 'bottom' },
+      { target: '.topnav a[href*="analytics"]', titleKey: 'tour_analytics', title: 'Your Analytics', text: 'View your grades and track improvement across Framing, Judging, and Steering skills.', position: 'bottom' },
+      { target: '.lang-select', titleKey: 'tour_language', title: 'Language', text: 'Switch the interface language.', position: 'bottom-end' },
+      { target: '.user-area', titleKey: 'tour_profile', title: 'Your Profile', text: 'View and edit your profile, see your statistics, and manage settings.', position: 'bottom-end' },
     ],
     instructor: [
-      { target: '.topnav', title: 'Welcome, Instructor!', text: 'Create challenges, manage courses, and track student performance.', position: 'bottom' },
-      { target: '.topnav a[href*="challenge-list"]', title: 'Challenge Management', text: 'Create, publish, and manage challenges for your students.', position: 'bottom' },
-      { target: '.topnav a[href*="course-catalog"]', title: 'Course Management', text: 'Join courses as a steward and configure LLM settings.', position: 'bottom' },
-      { target: '.topnav a[href*="analytics"]', title: 'Analytics Dashboard', text: 'View student performance, grade distributions, and export reports.', position: 'bottom' },
-      { target: '.lang-select', title: 'Language', text: 'Switch the interface language anytime.', position: 'bottom-end' },
-      { target: '.user-area', title: 'Your Profile', text: 'View your profile and see challenge statistics.', position: 'bottom-end' },
+      { target: '.topnav', titleKey: 'tour_welcome_instructor', title: 'Welcome, Instructor!', text: 'Create challenges, manage courses, and track student performance.', position: 'bottom' },
+      { target: '.topnav a[href*="challenge-list"]', titleKey: 'tour_challenge_mgmt', title: 'Challenge Management', text: 'Create, publish, and manage challenges for your students.', position: 'bottom' },
+      { target: '.topnav a[href*="course-catalog"]', titleKey: 'tour_course_mgmt', title: 'Course Management', text: 'Join courses as a steward and configure LLM settings.', position: 'bottom' },
+      { target: '.topnav a[href*="analytics"]', titleKey: 'tour_analytics_dash', title: 'Analytics Dashboard', text: 'View student performance, grade distributions, and export reports.', position: 'bottom' },
+      { target: '.lang-select', titleKey: 'tour_language', title: 'Language', text: 'Switch the interface language.', position: 'bottom-end' },
+      { target: '.user-area', titleKey: 'tour_profile', title: 'Your Profile', text: 'View your profile and see challenge statistics.', position: 'bottom-end' },
     ],
   };
 
@@ -110,16 +120,20 @@ const CoReasonTour = (() => {
       document.body.appendChild(popup);
     }
 
+    // Resolve translatable title/text: check content loader if available
+    const resolvedTitle = (typeof t === 'function' && step.titleKey) ? (t(step.titleKey) !== step.titleKey ? t(step.titleKey) : step.title) : step.title;
+    const resolvedText = (typeof t === 'function' && step.textKey) ? (t(step.textKey) !== step.textKey ? t(step.textKey) : step.text) : step.text;
+
     popup.innerHTML = `
-      <h3>${step.title}</h3>
-      <p>${step.text}</p>
+      <h3>${resolvedTitle}</h3>
+      <p>${resolvedText}</p>
       <div class="tour-footer">
         <span class="tour-progress">${index + 1} / ${steps.length}</span>
         <div class="tour-buttons">
           <button class="tour-btn tour-btn-skip" onclick="CoReasonTour.end()">Skip</button>
           ${index > 0 ? '<button class="tour-btn tour-btn-back" onclick="CoReasonTour.prev()">Back</button>' : ''}
           <button class="tour-btn tour-btn-next" onclick="CoReasonTour.next()">
-            ${index === steps.length - 1 ? 'Done!' : 'Next →'}
+            ${index === steps.length - 1 ? (typeof t === 'function' ? t('completed') || 'Done!' : 'Done!') : 'Next →'}
           </button>
         </div>
       </div>
@@ -129,15 +143,15 @@ const CoReasonTour = (() => {
     if (target) {
       const rect = target.getBoundingClientRect();
       const popupRect = popup.getBoundingClientRect();
-      let top = rect.bottom + 12;
-      let left = Math.max(12, rect.left);
+      let top = rect.bottom + POPUP_OFFSET_PX;
+      let left = Math.max(POPUP_VIEWPORT_MARGIN, rect.left);
 
       // Keep within viewport
-      if (top + popupRect.height > window.innerHeight - 20) {
-        top = rect.top - popupRect.height - 12;
+      if (top + popupRect.height > window.innerHeight - POPUP_VIEWPORT_MARGIN * 2) {
+        top = rect.top - popupRect.height - POPUP_OFFSET_PX;
       }
-      if (left + 360 > window.innerWidth - 12) {
-        left = window.innerWidth - 372;
+      if (left + POPUP_MAX_WIDTH > window.innerWidth - POPUP_VIEWPORT_MARGIN) {
+        left = window.innerWidth - POPUP_MAX_WIDTH - POPUP_VIEWPORT_MARGIN;
       }
 
       popup.style.top = top + 'px';
@@ -150,8 +164,11 @@ const CoReasonTour = (() => {
   }
 
   return {
-    start(role = 'student') {
-      steps = TOURS[role] || TOURS.student;
+    // Allow external tour data override for localization
+    tourData: TOURS,
+
+    start(role = DEFAULT_ROLE) {
+      steps = this.tourData[role] || this.tourData[DEFAULT_ROLE];
       currentStep = 0;
       createStyles();
 
@@ -173,7 +190,7 @@ const CoReasonTour = (() => {
       if (popup) { popup.remove(); popup = null; }
 
       // Persist completion
-      localStorage.setItem('coreason_tour_completed', 'true');
+      localStorage.setItem(TOUR_STORAGE_KEY, 'true');
 
       // Also tell the server
       if (window.API) {
@@ -182,11 +199,11 @@ const CoReasonTour = (() => {
     },
 
     shouldShow() {
-      return !localStorage.getItem('coreason_tour_completed');
+      return !localStorage.getItem(TOUR_STORAGE_KEY);
     },
 
     restart(role) {
-      localStorage.removeItem('coreason_tour_completed');
+      localStorage.removeItem(TOUR_STORAGE_KEY);
       this.start(role);
     },
   };

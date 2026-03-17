@@ -7,14 +7,21 @@
   'use strict';
 
   var TOOLTIP_OFFSET = 8;
+  var FALLBACK_LANG = 'en';
+  var VIEWPORT_PADDING = 10;
+  var TOOLTIP_MAX_WIDTH = 280;
+  var TOOLTIP_Z_INDEX = 10000;
+
+  // Tags that should receive the icon as a child element
+  var INLINE_TAGS = ['LABEL', 'H1', 'H2', 'H3', 'SPAN', 'TH'];
 
   function getTooltips() {
-    var lang = document.documentElement.lang || 'en';
+    var lang = document.documentElement.lang || FALLBACK_LANG;
     if (window.CONTENT && window.CONTENT[lang] && window.CONTENT[lang].tooltips) {
       return window.CONTENT[lang].tooltips;
     }
-    if (window.CONTENT && window.CONTENT.en && window.CONTENT.en.tooltips) {
-      return window.CONTENT.en.tooltips;
+    if (window.CONTENT && window.CONTENT[FALLBACK_LANG] && window.CONTENT[FALLBACK_LANG].tooltips) {
+      return window.CONTENT[FALLBACK_LANG].tooltips;
     }
     return {};
   }
@@ -23,7 +30,7 @@
     var el = document.createElement('div');
     el.className = 'help-tooltip';
     el.innerHTML = '<div class="help-tooltip-title"></div><div class="help-tooltip-text"></div>';
-    el.style.cssText = 'position:fixed;z-index:10000;background:#1a237e;color:#fff;padding:10px 14px;border-radius:8px;font-size:13px;max-width:280px;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:none;opacity:0;transition:opacity .15s;line-height:1.4;';
+    el.style.cssText = 'position:fixed;z-index:' + TOOLTIP_Z_INDEX + ';background:var(--primary, #1a237e);color:#fff;padding:10px 14px;border-radius:var(--radius, 8px);font-size:13px;max-width:' + TOOLTIP_MAX_WIDTH + 'px;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:none;opacity:0;transition:opacity .15s;line-height:1.4;';
     document.body.appendChild(el);
     return el;
   }
@@ -43,7 +50,7 @@
         // This is an inline help icon with custom tooltip text — use it directly as the icon
         var icon = target;
         if (!icon.style.cssText) {
-          icon.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e8eaf6;color:#3949ab;font-size:10px;font-weight:700;cursor:help;margin-left:4px;vertical-align:middle;flex-shrink:0;';
+          icon.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--primary-bg, #e8eaf6);color:var(--primary-light, #3949ab);font-size:10px;font-weight:700;cursor:help;margin-left:4px;vertical-align:middle;flex-shrink:0;';
         }
         // Attach tooltip behavior for inline text (not from YAML key)
         icon.addEventListener('mouseenter', function(e) {
@@ -59,8 +66,8 @@
           tooltipEl.style.transform = 'translateX(-50%)';
           requestAnimationFrame(function() {
             var ttRect = tooltipEl.getBoundingClientRect();
-            if (ttRect.right > window.innerWidth - 10) { tooltipEl.style.left = (window.innerWidth - ttRect.width - 10) + 'px'; tooltipEl.style.transform = 'none'; }
-            if (ttRect.left < 10) { tooltipEl.style.left = '10px'; tooltipEl.style.transform = 'none'; }
+            if (ttRect.right > window.innerWidth - VIEWPORT_PADDING) { tooltipEl.style.left = (window.innerWidth - ttRect.width - VIEWPORT_PADDING) + 'px'; tooltipEl.style.transform = 'none'; }
+            if (ttRect.left < VIEWPORT_PADDING) { tooltipEl.style.left = VIEWPORT_PADDING + 'px'; tooltipEl.style.transform = 'none'; }
             if (ttRect.bottom > window.innerHeight) { tooltipEl.style.top = (rect.top - ttRect.height - TOOLTIP_OFFSET) + 'px'; }
           });
         });
@@ -75,11 +82,11 @@
       var icon = document.createElement('span');
       icon.className = 'help-icon';
       icon.textContent = '?';
-      icon.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e8eaf6;color:#3949ab;font-size:10px;font-weight:700;cursor:help;margin-left:4px;vertical-align:middle;flex-shrink:0;';
+      icon.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--primary-bg, #e8eaf6);color:var(--primary-light, #3949ab);font-size:10px;font-weight:700;cursor:help;margin-left:4px;vertical-align:middle;flex-shrink:0;';
 
       // Insert after the target element or inside it
       var tag = target.tagName;
-      if (tag === 'LABEL' || tag === 'H1' || tag === 'H2' || tag === 'H3' || tag === 'SPAN' || tag === 'TH') {
+      if (INLINE_TAGS.indexOf(tag) !== -1) {
         target.appendChild(icon);
       } else {
         target.parentNode.insertBefore(icon, target.nextSibling);
@@ -104,12 +111,12 @@
 
         requestAnimationFrame(function() {
           var ttRect = tooltipEl.getBoundingClientRect();
-          if (ttRect.right > window.innerWidth - 10) {
-            tooltipEl.style.left = (window.innerWidth - ttRect.width - 10) + 'px';
+          if (ttRect.right > window.innerWidth - VIEWPORT_PADDING) {
+            tooltipEl.style.left = (window.innerWidth - ttRect.width - VIEWPORT_PADDING) + 'px';
             tooltipEl.style.transform = 'none';
           }
-          if (ttRect.left < 10) {
-            tooltipEl.style.left = '10px';
+          if (ttRect.left < VIEWPORT_PADDING) {
+            tooltipEl.style.left = VIEWPORT_PADDING + 'px';
             tooltipEl.style.transform = 'none';
           }
           if (ttRect.bottom > window.innerHeight) {
@@ -132,8 +139,8 @@
     setTimeout(init, 100);
   }
 
-  // Re-initialize on language change
-  window.addEventListener('languageChanged', function() {
+  // Re-initialize on language change (content-loader dispatches 'langchange')
+  document.addEventListener('langchange', function() {
     document.querySelectorAll('.help-icon').forEach(function(i) { i.remove(); });
     setTimeout(init, 50);
   });

@@ -17,6 +17,6 @@ module.exports = {
       statements: 80,
     },
   },
-  setupFilesAfterSetup: ['<rootDir>/tests/setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
   verbose: true,
 };

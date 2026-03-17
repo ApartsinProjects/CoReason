@@ -168,26 +168,26 @@ window.CONTENT["es"] = {
     "aiFeedback": "Retroalimentación IA",
     "finalGrades": "Calificaciones finales",
     "finalCycle": "Ciclo final",
-    "whatCouldBeBetter": "Que se podria mejorar",
+    "whatCouldBeBetter": "Qué se podría mejorar",
     "originalProblem": "Problema original",
     "problemStatement": "Enunciado del problema",
     "aiInitialOutput": "Salida inicial de la IA",
-    "generatedSolution": "Solucion generada",
+    "generatedSolution": "Solución generada",
     "framingPhase": "Fase 1 — Encuadre",
-    "judgeSteerPhase": "Fase 2 — Evaluacion + Direccion",
-    "studentIdentifiedAssumptions": "El estudiante identifico supuestos faltantes",
-    "aiEvaluatedFraming": "La IA evaluo la calidad del encuadre",
-    "studentJudgedOutput": "El estudiante evaluo la salida de la IA",
-    "studentSteeredAI": "El estudiante dirigio las correcciones",
-    "judgingSelections": "Evaluacion — Problemas identificados",
-    "steeringDirections": "Direccion — Correcciones dirigidas",
-    "judgingGrade": "Nota de evaluacion:",
-    "steeringGrade": "Nota de direccion:",
+    "judgeSteerPhase": "Fase 2 — Evaluación + Dirección",
+    "studentIdentifiedAssumptions": "El estudiante identificó supuestos faltantes",
+    "aiEvaluatedFraming": "La IA evaluó la calidad del encuadre",
+    "studentJudgedOutput": "El estudiante evaluó la salida de la IA",
+    "studentSteeredAI": "El estudiante dirigió las correcciones",
+    "judgingSelections": "Evaluación — Problemas identificados",
+    "steeringDirections": "Dirección — Correcciones dirigidas",
+    "judgingGrade": "Nota de evaluación:",
+    "steeringGrade": "Nota de dirección:",
     "aiUpdatedOutput": "Salida actualizada de la IA",
     "aiFinalOutput": "Salida final de la IA",
-    "rubricReference": "Referencia de la rubrica",
+    "rubricReference": "Referencia de la rúbrica",
     "cyclesUsed": "Ciclos utilizados",
-    "duration": "Duracion",
+    "duration": "Duración",
     "courseAnalytics": "Analítica del curso",
     "courseAnalyticsDesc": "Resultados de desafíos públicos entre suscriptores",
     "exportPdf": "Exportar PDF",
@@ -214,10 +214,142 @@ window.CONTENT["es"] = {
     "responseType": "Tipo de respuesta",
     "maxCycles": "Ciclos máximos",
     "advancedSettings": "Configuración avanzada",
-    "rubricPreview": "Vista previa de la rúbrica",
-    "livePreview": "Vista previa en vivo",
+    "rubricPreview": "Rúbrica de evaluación",
+    "livePreview": "Ejemplo de problema sin procesar",
     "publishChallenge": "Publicar desafío",
-    "saveDraft": "Guardar como borrador"
+    "saveDraft": "Guardar como borrador",
+    "saveAndPublish": "Guardar y publicar",
+    "loading": "Cargando...",
+    "retry": "Reintentar",
+    "challengeRun": "Ejecución del desafío",
+    "loadingReport": "Cargando informe...",
+    "errorLoadingReport": "No se pudo cargar el informe",
+    "startChallenge": "Iniciar desafío",
+    "generatingProblem": "Generando problema bruto desde el árbol de temas...",
+    "evaluatingFraming": "Evaluando encuadre y generando solución IA...",
+    "sectionTitle": "Título de la sección",
+    "describeRefinement": "Describa su refinamiento...",
+    "pleaseProvideResponse": "Por favor, proporcione al menos una sección con contenido.",
+    "pleaseSelectOption": "Por favor, seleccione al menos una opción.",
+    "recordingJudgement": "Registrando juicio...",
+    "finalizing": "Finalizando — calculando calificaciones finales...",
+    "issuesFound": "Problemas encontrados",
+    "markedComplete": "El estudiante marcó la solución como completa",
+    "issuesSubmitted": "Problemas enviados para dirección",
+    "correctionsSent": "Correcciones enviadas",
+    "steeringSubmitted": "Correcciones de dirección enviadas",
+    "processSteering": "Procesando dirección y evaluando ciclo...",
+    "computingGrades": "Calculando calificaciones finales...",
+    "issueTitle": "Título del problema",
+    "describeIssue": "Describa el problema...",
+    "correctionTitle": "Título de la corrección",
+    "describeCorrection": "Describa la corrección...",
+    "addSection": "Agregar sección",
+    "noFramingOptions": "No hay opciones de encuadre disponibles.",
+    "noJudgingOptions": "No hay opciones de juicio disponibles. Use el botón «Solución completa» si la salida es correcta.",
+    "noSteeringOptions": "No hay opciones de dirección disponibles.",
+    "runAgainQ": "¿Ejecutar de nuevo?",
+    "profileDesc": "Administre la configuración de su cuenta",
+    "subjectTree": "Árbol de temas",
+    "subjectTreeDesc": "Defina la jerarquía de temas para la generación de rúbricas",
+    "subjectTreeWarning": "Cambiar el árbol de temas puede afectar desafíos existentes",
+    "editSubjectTree": "Editar árbol de temas",
+    "clickNodeToEdit": "Haga clic en un nodo para editar sus detalles",
+    "nodeDetails": "Detalles del nodo",
+    "nodeName": "Nombre del nodo",
+    "nodes": "Nodos",
+    "levelsDeep": "Niveles de profundidad",
+    "loadingSubjects": "Cargando temas...",
+    "addChild": "+ Agregar hijo",
+    "addedChildUnder": "Hijo agregado bajo",
+    "addedRootNode": "Nodo raíz agregado",
+    "newRootTopic": "Nuevo tema raíz",
+    "newTopic": "Nuevo tema",
+    "confirmDeleteNode": "¿Está seguro de que desea eliminar este nodo?",
+    "noSubjectsDefined": "Aún no se han definido temas",
+    "subjectTreeSaved": "Árbol de temas guardado",
+    "selectCourseToLoadSubjects": "Seleccione un curso para cargar su árbol de temas",
+    "selectSubjectsToPreview": "Seleccione temas para previsualizar la rúbrica",
+    "keywordsForRubric": "Palabras clave para la rúbrica",
+    "descriptionForRubric": "Breve descripción para contexto de la rúbrica...",
+    "commaSeparatedKeywords": "Palabras clave separadas por comas...",
+    "addNewCourse": "+ Agregar nuevo curso",
+    "createCourse": "Crear curso",
+    "noCourses": "No hay cursos disponibles",
+    "noCoursesFound": "No se encontraron cursos",
+    "department": "Departamento",
+    "description": "Descripción",
+    "descriptionOptional": "Descripción (opcional)",
+    "institutionScopedNote": "Los cursos están vinculados a su institución",
+    "selectDepartment": "Seleccionar departamento",
+    "enterCourseName": "Ingrese el nombre del curso...",
+    "pleaseEnterCourseName": "Por favor, ingrese un nombre de curso",
+    "pleaseSelectDepartment": "Por favor, seleccione un departamento",
+    "courseCreatedSuccess": "Curso creado exitosamente",
+    "courseCreatedNext": "Curso creado. Siguiente paso: crear un desafío.",
+    "courseNotFound": "Curso no encontrado",
+    "createCourseFailed": "No se pudo crear el curso",
+    "noCourseSelected": "Ningún curso seleccionado",
+    "noCourseId": "No se proporcionó ID de curso",
+    "pleaseSelectCourse": "Por favor, seleccione un curso",
+    "totalChallenges": "Total de desafíos",
+    "createAndStart": "Crear e iniciar",
+    "createPrivateChallenge": "Crear desafío privado",
+    "challengeDetails": "Detalles del desafío",
+    "challengeTitlePlaceholder": "Ingrese el título del desafío...",
+    "challengeDescPlaceholder": "Describa los objetivos y el contexto del desafío...",
+    "pleaseEnterTitle": "Por favor, ingrese un título de desafío",
+    "pleaseSelectSubject": "Por favor, seleccione un tema",
+    "selectTemplate": "Seleccionar plantilla",
+    "defaultLlmModel": "Modelo LLM predeterminado",
+    "systemDefault": "Predeterminado del sistema",
+    "rubricWillGenerate": "La rúbrica se generará a partir del tema seleccionado",
+    "previewNotRecorded": "Vista previa — no se registra en la analítica",
+    "instructorPreview": "Vista previa del instructor",
+    "confirmDeleteChallenge": "¿Está seguro de que desea eliminar este desafío?",
+    "archiveFailed": "No se pudo archivar el desafío",
+    "publishFailed": "No se pudo publicar el desafío",
+    "publishing": "Publicando...",
+    "deleteFailed": "No se pudo eliminar",
+    "deleted": "Eliminado",
+    "duplicated": "Duplicado",
+    "copy": "Copiar",
+    "judgeSteerCycles": "Ciclos de Juicio + Dirección",
+    "aiOutputNote": "Salida generada por la IA basada en su encuadre",
+    "aiSuggestions": "Sugerencias de la IA",
+    "generating": "Generando...",
+    "review": "Revisar",
+    "skipAndComplete": "Omitir y completar",
+    "markedCompleteSteeringHint": "Marcar la solución como completa omite los ciclos restantes",
+    "selectAtLeastOne": "Por favor, seleccione al menos una opción",
+    "saving": "Guardando...",
+    "saved": "Guardado",
+    "saveFailed": "No se pudo guardar",
+    "saveAsDraft": "Guardar como borrador",
+    "createFailed": "No se pudo crear",
+    "creating": "Creando...",
+    "failedToSave": "No se pudieron guardar los cambios",
+    "noChangesToSave": "No hay cambios para guardar",
+    "allChangesSaved": "Todos los cambios guardados",
+    "changesApplied": "Cambios aplicados",
+    "unsavedChanges": "Tiene cambios sin guardar",
+    "error": "Error",
+    "unknownError": "Se produjo un error desconocido",
+    "unknownCourse": "Curso desconocido",
+    "other": "Otro",
+    "users": "Usuarios",
+    "institutions": "Instituciones",
+    "subscriptions": "Suscripciones",
+    "runs": "Ejecuciones",
+    "runsCompleted": "Ejecuciones completadas",
+    "attempts": "Intentos",
+    "lead": "Responsable",
+    "leadInstructor": "Instructor principal",
+    "coInstructor": "Co-instructor",
+    "importExport": "Importar / Exportar",
+    "aiGenerationFailed": "La generación de IA falló",
+    "failedLoadProfile": "No se pudo cargar el perfil",
+    "failedLoadSubjects": "No se pudieron cargar los temas"
   },
   "institutions": {
     "institutions": [
@@ -1307,15 +1439,15 @@ window.CONTENT["es"] = {
   "tooltips": {
     "challengeType": {
       "title": "Tipo de desafio",
-      "text": "Los desafios de practica son para aprender — no se registra nota. Los desafios de evaluacion cuentan para tu nota del curso."
+      "text": "Los desafios de practica permiten reintentos con retroalimentacion tras cada fase. Los desafios de evaluacion se califican con retroalimentacion solo al final."
     },
     "visibility": {
       "title": "Visibilidad",
-      "text": "Los desafios publicos son visibles para todos los estudiantes inscritos. Los desafios privados solo son visibles para ti."
+      "text": "Los desafios publicos son visibles para todos los estudiantes inscritos. Los desafios privados solo son visibles para su creador."
     },
     "maxCycles": {
       "title": "Ciclos maximos",
-      "text": "El numero maximo de ciclos de Juicio+Direccion permitidos. Mas ciclos te dan mas oportunidades de mejorar la salida de la IA."
+      "text": "El numero maximo de ciclos de Juicio+Direccion permitidos. Mas ciclos ofrecen mas oportunidades de mejorar la salida de la IA."
     },
     "subjectPath": {
       "title": "Ruta del tema",
@@ -1323,27 +1455,27 @@ window.CONTENT["es"] = {
     },
     "responseType": {
       "title": "Tipo de respuesta",
-      "text": "La opcion multiple te ofrece opciones para elegir. La respuesta abierta te permite escribir tu propio razonamiento."
+      "text": "La opcion multiple ofrece opciones predefinidas. La respuesta abierta permite razonamiento escrito libre."
     },
     "framingPhase": {
       "title": "Fase de encuadre",
-      "text": "En esta fase, evaluas el enfoque inicial de la IA sobre el problema antes de que se genere cualquier solucion."
+      "text": "El estudiante evalua el problema en bruto y lo traduce en una tarea bien definida anadiendo supuestos y restricciones."
     },
     "judgingPhase": {
       "title": "Fase de juicio",
-      "text": "Revisa la solucion generada por la IA e identifica lo que es correcto, lo que esta mal y lo que podria mejorarse."
+      "text": "El estudiante revisa la solucion generada por la IA e identifica lo que es correcto, lo que esta mal y lo que podria mejorarse."
     },
     "steeringPhase": {
       "title": "Fase de direccion",
-      "text": "Guia a la IA para corregir sus errores proporcionando retroalimentacion y direccion especificas."
+      "text": "El estudiante proporciona retroalimentacion especifica para guiar a la IA hacia una mejor solucion."
     },
     "coReasoningScore": {
       "title": "Puntuacion de co-razonamiento",
-      "text": "Tu puntuacion de rendimiento general que combina precision de encuadre, calidad de juicio y efectividad de direccion."
+      "text": "Rendimiento general que combina la precision del encuadre, la calidad del juicio y la efectividad de la direccion."
     },
     "rubric": {
       "title": "Rubrica",
-      "text": "Los criterios de evaluacion utilizados para evaluar tu rendimiento de co-razonamiento en cada fase."
+      "text": "Los criterios de evaluacion utilizados para calificar el rendimiento de co-razonamiento en cada fase."
     },
     "subjectTree": {
       "title": "Arbol de temas",
@@ -1354,8 +1486,84 @@ window.CONTENT["es"] = {
       "text": "Suscribete a un curso para acceder a sus desafios y seguir tu progreso."
     },
     "analyticsOverview": {
-      "title": "Vista general de analiticas",
-      "text": "Consulta tus tendencias de rendimiento, distribuciones de notas y desgloses detallados en todos los desafios."
+      "title": "Tus estadisticas",
+      "text": "Consulta tus tendencias de rendimiento, distribuciones de notas y desgloses detallados en todas tus sesiones de desafio."
+    },
+    "colChallenge": {
+      "title": "Desafio",
+      "text": "El nombre del desafio. Haz clic para ver los detalles o iniciar una sesion."
+    },
+    "colCourse": {
+      "title": "Curso",
+      "text": "El curso al que pertenece este desafio."
+    },
+    "colType": {
+      "title": "Tipo",
+      "text": "Los desafios de practica permiten reintentos con retroalimentacion. Los desafios de evaluacion se califican con retroalimentacion solo al final."
+    },
+    "colVisibility": {
+      "title": "Visibilidad",
+      "text": "Los desafios publicos provienen de tus cursos suscritos. Los desafios privados son los que creaste para ti mismo."
+    },
+    "colCreated": {
+      "title": "Fecha de creacion",
+      "text": "La fecha en que este desafio fue publicado o creado."
+    },
+    "colCreator": {
+      "title": "Creador",
+      "text": "El instructor o estudiante que creo este desafio."
+    },
+    "colLastAttempt": {
+      "title": "Ultimo intento",
+      "text": "La ultima vez que intentaste este desafio, si alguna vez lo hiciste."
+    },
+    "colStatus": {
+      "title": "Estado",
+      "text": "Tu progreso: No iniciado, En progreso o Completado."
+    },
+    "colActions": {
+      "title": "Acciones",
+      "text": "Acciones disponibles como Iniciar, Reanudar, Ver resultados o Ejecutar de nuevo."
+    },
+    "instrAnalyticsOverview": {
+      "title": "Estadisticas del curso",
+      "text": "Datos de rendimiento agregados de todos los estudiantes de este curso. Solo incluye resultados de desafios publicos."
+    },
+    "instrCourseSubscription": {
+      "title": "Gestion del curso",
+      "text": "Administra la configuracion de tu curso, el arbol de temas y las asignaciones de desafios."
+    },
+    "instrColChallenge": {
+      "title": "Desafio",
+      "text": "El titulo del desafio. Haz clic para editar o ver las entregas de los estudiantes."
+    },
+    "instrColCourse": {
+      "title": "Curso",
+      "text": "El curso al que esta asignado este desafio."
+    },
+    "instrColType": {
+      "title": "Tipo",
+      "text": "Practica: los estudiantes reciben retroalimentacion tras cada fase. Evaluacion: la retroalimentacion se retiene hasta la finalizacion."
+    },
+    "instrColVisibility": {
+      "title": "Visibilidad",
+      "text": "Los desafios publicos estan disponibles para todos los suscritos al curso. Los desafios privados solo son visibles para su creador."
+    },
+    "instrColSubmissions": {
+      "title": "Entregas",
+      "text": "Numero total de sesiones de estudiantes para este desafio, incluyendo intentos en progreso y completados."
+    },
+    "instrColAvgGrade": {
+      "title": "Nota media",
+      "text": "Nota media en todas las sesiones completadas de estudiantes, combinando las puntuaciones de encuadre, juicio y direccion."
+    },
+    "instrColStatus": {
+      "title": "Estado",
+      "text": "Ciclo de vida del desafio: Borrador (aun no visible), Publicado (activo) o Archivado (oculto)."
+    },
+    "instrColActions": {
+      "title": "Acciones",
+      "text": "Acciones disponibles: Editar, Vista previa, Ver estadisticas o Eliminar."
     }
   },
   "challenges": {

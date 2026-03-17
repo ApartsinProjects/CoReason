@@ -1,6 +1,7 @@
 'use strict';
 
 const { NotFoundError, ValidationError } = require('../utils/errors');
+const { RUN_STATUS } = require('../utils/constants');
 
 class UserService {
   constructor(db, logger) {
@@ -26,7 +27,7 @@ class UserService {
   }
 
   async updateProfile(userId, updates) {
-    const allowed = ['name', 'profile_image', 'preferred_language', 'tour_completed', 'role', 'institution_id'];
+    const allowed = ['name', 'profile_image', 'preferred_language', 'tour_completed', 'institution_id'];
     const filtered = {};
     for (const key of allowed) {
       if (updates[key] !== undefined) filtered[key] = updates[key];
@@ -34,6 +35,12 @@ class UserService {
 
     if (Object.keys(filtered).length === 0) {
       throw new ValidationError('No valid fields to update');
+    }
+
+    // Validate institution_id exists if provided
+    if (filtered.institution_id) {
+      const inst = await this.db('institutions').where({ id: filtered.institution_id }).first();
+      if (!inst) throw new ValidationError('Institution not found');
     }
 
     filtered.updated_at = new Date().toISOString();
@@ -44,8 +51,8 @@ class UserService {
 
   async getStats(userId) {
     const [challengesCreated] = await this.db('challenges').where({ creator_id: userId }).count('id as count');
-    const [runsCompleted] = await this.db('challenge_runs').where({ user_id: userId, status: 'completed' }).count('id as count');
-    const [runsInProgress] = await this.db('challenge_runs').where({ user_id: userId, status: 'in_progress' }).count('id as count');
+    const [runsCompleted] = await this.db('challenge_runs').where({ user_id: userId, status: RUN_STATUS.COMPLETED }).count('id as count');
+    const [runsInProgress] = await this.db('challenge_runs').where({ user_id: userId, status: RUN_STATUS.IN_PROGRESS }).count('id as count');
     const [coursesSubscribed] = await this.db('course_subscriptions').where({ user_id: userId }).count('id as count');
 
     return {

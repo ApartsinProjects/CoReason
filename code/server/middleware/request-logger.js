@@ -1,6 +1,7 @@
 'use strict';
 
 const { v4: uuidv4 } = require('uuid');
+const asyncContext = require('../utils/async-context');
 
 function requestLogger(logger) {
   return (req, res, next) => {
@@ -33,7 +34,8 @@ function requestLogger(logger) {
       }
     });
 
-    next();
+    // Propagate traceId through async context so services can access it
+    asyncContext.run({ traceId, userId: req.user?.id }, next);
   };
 }
 

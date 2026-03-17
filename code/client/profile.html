@@ -19,124 +19,347 @@
     .profile-field .editable { display: flex; align-items: center; gap: 8px; }
     .profile-field .edit-btn { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 14px; }
     .course-chip { display: inline-flex; align-items: center; gap: 4px; background: #e8eaf6; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 13px; margin: 2px 4px 2px 0; }
+    .profile-loading { text-align: center; padding: 48px 20px; color: var(--text-secondary); }
+    .profile-error { text-align: center; padding: 48px 20px; color: #c62828; }
+    .profile-error .btn { margin-top: 12px; }
+    .name-edit-input { font-size: 14px; padding: 4px 8px; border: 1px solid var(--border); border-radius: var(--radius); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .save-status { font-size: 13px; margin-left: 8px; }
+    .save-status.success { color: #2e7d32; }
+    .save-status.error { color: #c62828; }
   </style>
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
 </head>
 <body>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
-    <nav>
+    <nav id="mainNav">
       <a href="challenge-list.html" data-t="challenges">Challenges</a>
       <a href="course-catalog.html" data-t="courses">Courses</a>
       <a href="student-analytics.html" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
-      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
-      <span>Sarah Cohen</span>
-      <a href="profile.html"><div class="avatar" style="outline:2px solid #fff;">SC</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userRoleBadge" style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">&mdash;</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar" style="outline:2px solid #fff;">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
     </div>
   </header>
 
   <main class="page" style="max-width:720px;">
     <div class="page-header">
       <h1 data-t="myProfile">My Profile</h1>
-      <p>View and edit your profile (FLOW-12, REQ-PROF-01, REQ-PROF-02, REQ-PROF-03)</p>
+      <p data-t="profileDesc">View and edit your profile</p>
     </div>
 
-    <div class="card">
-      <!-- Profile Header -->
-      <div class="profile-header">
-        <div class="profile-avatar">
-          SC
-          <div class="edit-overlay" title="Change profile image (REQ-PROF-03)">&#9998;</div>
-        </div>
-        <div class="profile-info">
-          <h2>Sarah Cohen</h2>
-          <span class="role-badge" data-t="student">&#127891; Student</span>
-          <p class="text-sm text-muted mt-8" data-t="memberSince">Member since January 15, 2026</p>
-        </div>
-      </div>
+    <!-- Loading State -->
+    <div id="profileLoading" class="card profile-loading">
+      <p data-t="loading">Loading...</p>
+    </div>
 
-      <!-- Profile Fields (REQ-PROF-01) -->
-      <div class="profile-field">
-        <div>
-          <div class="field-label" data-t="fullName">Full Name</div>
-          <div class="field-value editable">
-            Sarah Cohen
-            <button class="edit-btn" title="Edit name (REQ-PROF-03)">&#9998;</button>
+    <!-- Error State -->
+    <div id="profileError" class="card profile-error" style="display:none;">
+      <p id="profileErrorMsg">Failed to load profile.</p>
+      <button class="btn btn-primary" onclick="loadProfile()" data-t="retry">Retry</button>
+    </div>
+
+    <!-- Profile Content (hidden until loaded) -->
+    <div id="profileContent" style="display:none;">
+      <div class="card">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="profile-avatar" id="profileAvatar">
+            &mdash;
+            <div class="edit-overlay" title="Change profile image">&#9998;</div>
+          </div>
+          <div class="profile-info">
+            <h2 id="profileName">&mdash;</h2>
+            <span class="role-badge" id="profileRoleBadge">&#127891; &mdash;</span>
+            <p class="text-sm text-muted mt-8" id="profileMemberSince"></p>
+          </div>
+        </div>
+
+        <!-- Profile Fields -->
+        <div class="profile-field">
+          <div>
+            <div class="field-label" data-t="fullName">Full Name</div>
+            <div class="field-value editable" id="nameFieldDisplay">
+              <span id="nameValue">&mdash;</span>
+              <button class="edit-btn" title="Edit name" onclick="startEditName()">&#9998;</button>
+            </div>
+            <div class="field-value editable" id="nameFieldEdit" style="display:none;">
+              <input type="text" class="name-edit-input" id="nameInput" />
+              <button class="edit-btn" title="Confirm" onclick="confirmEditName()">&#10003;</button>
+              <button class="edit-btn" title="Cancel" onclick="cancelEditName()">&#10005;</button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-field">
+          <div>
+            <div class="field-label" data-t="email">Email</div>
+            <div class="field-value" id="profileEmail">&mdash;</div>
+          </div>
+          <span class="text-sm text-muted" data-t="readOnly">Read-only</span>
+        </div>
+        <div class="profile-field">
+          <div>
+            <div class="field-label" data-t="institution">Institution</div>
+            <div class="field-value" id="profileInstitution">&mdash;</div>
+          </div>
+          <span class="text-sm text-muted" data-t="readOnly">Read-only</span>
+        </div>
+        <div class="profile-field">
+          <div>
+            <div class="field-label" data-t="role">Role</div>
+            <div class="field-value"><span class="role-badge" id="profileRoleField">&mdash;</span></div>
+          </div>
+          <span class="text-sm text-muted" data-t-html="cannotBeChanged">Fixed &mdash; cannot be changed</span>
+        </div>
+        <div class="profile-field">
+          <div>
+            <div class="field-label" data-t="dateOfRegistration">Date of Registration</div>
+            <div class="field-value" id="profileRegistrationDate">&mdash;</div>
+          </div>
+        </div>
+        <div class="profile-field">
+          <div>
+            <div class="field-label" data-t="courseSubscriptions">Course Subscriptions</div>
+            <div class="field-value" id="profileCourses" style="margin-top:4px;">
+              <span class="text-sm text-muted" data-t="loading">Loading...</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="profile-field">
-        <div>
-          <div class="field-label" data-t="email">Email</div>
-          <div class="field-value">s.cohen@tau.ac.il</div>
-        </div>
-        <span class="text-sm text-muted" data-t="readOnly">Read-only</span>
-      </div>
-      <div class="profile-field">
-        <div>
-          <div class="field-label" data-t="institution">Institution (REQ-AUTH-03)</div>
-          <div class="field-value">Tel Aviv University</div>
-        </div>
-        <span class="text-sm text-muted" data-t="readOnly">Read-only</span>
-      </div>
-      <div class="profile-field">
-        <div>
-          <div class="field-label" data-t="role">Role (REQ-AUTH-02)</div>
-          <div class="field-value"><span class="role-badge" data-t="student">Student</span></div>
-        </div>
-        <span class="text-sm text-muted" data-t-html="cannotBeChanged">Fixed &mdash; cannot be changed</span>
-      </div>
-      <div class="profile-field">
-        <div>
-          <div class="field-label" data-t="dateOfRegistration">Date of Registration</div>
-          <div class="field-value">January 15, 2026</div>
-        </div>
-      </div>
-      <div class="profile-field">
-        <div>
-          <div class="field-label" data-t="courseSubscriptions">Course Subscriptions</div>
-          <div class="field-value" style="margin-top:4px;">
-            <span class="course-chip">Deep Learning 101</span>
-            <span class="course-chip">Database Systems</span>
-            <span class="course-chip">Software Engineering</span>
+
+      <!-- Statistics -->
+      <div class="card mt-24">
+        <h3 style="margin-bottom:16px;" data-t="statistics">Statistics</h3>
+        <div class="grid grid-2">
+          <div class="stat-card card">
+            <div class="stat-value" id="statChallengesCreated">&mdash;</div>
+            <div class="stat-label" data-t="challengesCreated">Challenges Created</div>
+          </div>
+          <div class="stat-card card">
+            <div class="stat-value" id="statChallengesExecuted">&mdash;</div>
+            <div class="stat-label" data-t="challengesExecuted">Challenges Executed (Runs Completed)</div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Statistics (REQ-PROF-02) -->
-    <div class="card mt-24">
-      <h3 style="margin-bottom:16px;" data-t="statistics">Statistics</h3>
-      <div class="grid grid-2">
-        <div class="stat-card card">
-          <div class="stat-value">4</div>
-          <div class="stat-label" data-t="challengesCreated">Challenges Created</div>
-        </div>
-        <div class="stat-card card">
-          <div class="stat-value">12</div>
-          <div class="stat-label" data-t="challengesExecuted">Challenges Executed (Runs Completed)</div>
-        </div>
+      <div class="flex gap-12 mt-24">
+        <button class="btn btn-primary" id="btnSave" onclick="saveProfile()" data-t="saveChanges">Save Changes</button>
+        <button class="btn btn-outline" id="btnCancel" onclick="cancelChanges()" data-t="cancel">Cancel</button>
+        <span class="save-status" id="saveStatus"></span>
       </div>
-    </div>
-
-    <div class="flex gap-12 mt-24">
-      <button class="btn btn-primary" data-t="saveChanges">Save Changes</button>
-      <button class="btn btn-outline" data-t="cancel">Cancel</button>
     </div>
   </main>
-<script>
-// Check auth
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-}).catch(() => window.location.href = '/login.html');
 
+<script>
+  let originalProfile = null;
+  let currentProfile = null;
+
+  function getInitials(name) {
+    if (!name) return '?';
+    return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+  }
+
+  function formatDate(isoStr) {
+    if (!isoStr) return '\u2014';
+    try {
+      const d = new Date(isoStr);
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    } catch (e) {
+      return isoStr;
+    }
+  }
+
+  function capitalize(s) {
+    return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
+  }
+
+  function showLoading() {
+    document.getElementById('profileLoading').style.display = '';
+    document.getElementById('profileError').style.display = 'none';
+    document.getElementById('profileContent').style.display = 'none';
+  }
+
+  function showError(msg) {
+    document.getElementById('profileLoading').style.display = 'none';
+    document.getElementById('profileError').style.display = '';
+    document.getElementById('profileErrorMsg').textContent = msg || (t('failedLoadProfile') || 'Failed to load profile.');
+    document.getElementById('profileContent').style.display = 'none';
+  }
+
+  function showContent() {
+    document.getElementById('profileLoading').style.display = 'none';
+    document.getElementById('profileError').style.display = 'none';
+    document.getElementById('profileContent').style.display = '';
+  }
+
+  function renderProfile(profile) {
+    const initials = getInitials(profile.name);
+    const formattedDate = formatDate(profile.created_at);
+    const roleCap = capitalize(profile.role);
+    const roleEmoji = profile.role === 'instructor' ? '\uD83D\uDCDA' : '\uD83C\uDF93';
+
+    // Header — update avatar text node (first child text node)
+    var avatarEl = document.getElementById('profileAvatar');
+    if (avatarEl && avatarEl.childNodes.length > 0) {
+      avatarEl.childNodes[0].textContent = initials;
+    }
+    document.getElementById('profileName').textContent = profile.name;
+    document.getElementById('profileRoleBadge').innerHTML = roleEmoji + ' ' + roleCap;
+    document.getElementById('profileRoleBadge').setAttribute('data-t', profile.role);
+    document.getElementById('profileMemberSince').textContent = (t('memberSince') || 'Member since') + ' ' + formattedDate;
+
+    // Fields
+    document.getElementById('nameValue').textContent = profile.name;
+    document.getElementById('profileEmail').textContent = profile.email;
+    document.getElementById('profileInstitution').textContent = profile.institution_name || '\u2014';
+    document.getElementById('profileRoleField').textContent = roleCap;
+    document.getElementById('profileRoleField').setAttribute('data-t', profile.role);
+    document.getElementById('profileRegistrationDate').textContent = formattedDate;
+
+    // Update nav for role
+    updateNavForRole(profile.role);
+
+    // Update header role badge
+    const headerBadge = document.getElementById('userRoleBadge');
+    if (headerBadge) {
+      headerBadge.setAttribute('data-t', profile.role);
+      headerBadge.textContent = roleCap;
+    }
+  }
+
+  function updateNavForRole(role) {
+    const nav = document.getElementById('mainNav');
+    if (!nav) return;
+    if (role === 'instructor') {
+      nav.innerHTML =
+        '<a href="challenge-list-instructor.html" data-t="challenges">Challenges</a>' +
+        '<a href="course-catalog-instructor.html" data-t="courses">Courses</a>' +
+        '<a href="instructor-analytics.html" data-t="analytics">Analytics</a>';
+    } else {
+      nav.innerHTML =
+        '<a href="challenge-list.html" data-t="challenges">Challenges</a>' +
+        '<a href="course-catalog.html" data-t="courses">Courses</a>' +
+        '<a href="student-analytics.html" data-t="myResults">My Results</a>';
+    }
+  }
+
+  function renderStats(stats) {
+    document.getElementById('statChallengesCreated').textContent = stats.challenges_created != null ? stats.challenges_created : '\u2014';
+    document.getElementById('statChallengesExecuted').textContent = stats.challenges_executed != null ? stats.challenges_executed : '\u2014';
+
+    const coursesEl = document.getElementById('profileCourses');
+    if (stats.courses_subscribed && stats.courses_subscribed.length > 0) {
+      coursesEl.innerHTML = stats.courses_subscribed
+        .map(function(c) { return '<span class="course-chip">' + escapeHtml(c) + '</span>'; })
+        .join('');
+    } else {
+      coursesEl.innerHTML = '<span class="text-sm text-muted" data-t="noCourses">No courses subscribed</span>';
+    }
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Name editing
+  function startEditName() {
+    document.getElementById('nameFieldDisplay').style.display = 'none';
+    document.getElementById('nameFieldEdit').style.display = '';
+    document.getElementById('nameInput').value = currentProfile.name;
+    document.getElementById('nameInput').focus();
+  }
+
+  function confirmEditName() {
+    var newName = document.getElementById('nameInput').value.trim();
+    if (newName) {
+      currentProfile.name = newName;
+      document.getElementById('nameValue').textContent = newName;
+    }
+    document.getElementById('nameFieldDisplay').style.display = '';
+    document.getElementById('nameFieldEdit').style.display = 'none';
+  }
+
+  function cancelEditName() {
+    document.getElementById('nameInput').value = currentProfile.name;
+    document.getElementById('nameFieldDisplay').style.display = '';
+    document.getElementById('nameFieldEdit').style.display = 'none';
+  }
+
+  function cancelChanges() {
+    if (originalProfile) {
+      currentProfile = Object.assign({}, originalProfile);
+      renderProfile(currentProfile);
+    }
+    clearSaveStatus();
+  }
+
+  function clearSaveStatus() {
+    var el = document.getElementById('saveStatus');
+    el.textContent = '';
+    el.className = 'save-status';
+  }
+
+  async function saveProfile() {
+    var btn = document.getElementById('btnSave');
+    var statusEl = document.getElementById('saveStatus');
+    btn.disabled = true;
+    statusEl.textContent = t('saving') || 'Saving...';
+    statusEl.className = 'save-status';
+
+    try {
+      var updated = await API.users.update({ name: currentProfile.name });
+      // Merge response into profile
+      if (updated && updated.name) {
+        currentProfile.name = updated.name;
+      }
+      originalProfile = Object.assign({}, currentProfile);
+      renderProfile(currentProfile);
+      statusEl.textContent = t('saved') || 'Saved!';
+      statusEl.className = 'save-status success';
+    } catch (err) {
+      statusEl.textContent = (t('failedToSave') || 'Failed to save') + ': ' + (err.message || t('unknownError') || 'Unknown error');
+      statusEl.className = 'save-status error';
+    } finally {
+      btn.disabled = false;
+      setTimeout(function() { clearSaveStatus(); }, 4000);
+    }
+  }
+
+  async function loadProfile() {
+    showLoading();
+    try {
+      var [profile, stats] = await Promise.all([
+        API.users.profile(),
+        API.users.stats().then(function(s) { return s || { challenges_created: 0, runs_completed: 0, courses_subscribed: [] }; }).catch(function() { return { challenges_created: 0, runs_completed: 0, courses_subscribed: [] }; })
+      ]);
+
+      originalProfile = Object.assign({}, profile);
+      currentProfile = Object.assign({}, profile);
+
+      renderProfile(profile);
+      renderStats(stats);
+      showContent();
+    } catch (err) {
+      showError((t('failedLoadProfile') || 'Failed to load profile') + ': ' + (err.message || t('unknownError') || 'Unknown error'));
+    }
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    loadProfile();
+  });
 </script>
 </body>
 </html>

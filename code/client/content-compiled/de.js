@@ -105,7 +105,7 @@ window.CONTENT["de"] = {
     "allCourses": "Alle Kurse",
     "allTypes": "Alle Typen",
     "allGrades": "Alle Noten",
-    "noMatchingResults": "Keine Ergebnisse entsprechen den ausgewaehlten Filtern.",
+    "noMatchingResults": "Keine Ergebnisse entsprechen den ausgewählten Filtern.",
     "allStatus": "Alle Status",
     "allVisibility": "Alle Sichtbarkeiten",
     "notStarted": "Nicht begonnen",
@@ -168,15 +168,15 @@ window.CONTENT["de"] = {
     "aiFeedback": "KI-Rückmeldung",
     "finalGrades": "Endnoten",
     "finalCycle": "Letzter Zyklus",
-    "whatCouldBeBetter": "Was verbessert werden koennte",
+    "whatCouldBeBetter": "Was verbessert werden könnte",
     "originalProblem": "Originalaufgabe",
     "problemStatement": "Aufgabenstellung",
     "aiInitialOutput": "Erste KI-Ausgabe",
-    "generatedSolution": "Generierte Loesung",
+    "generatedSolution": "Generierte Lösung",
     "framingPhase": "Phase 1 — Rahmung",
     "judgeSteerPhase": "Phase 2 — Beurteilung + Steuerung",
     "studentIdentifiedAssumptions": "Studierende identifizierten fehlende Annahmen",
-    "aiEvaluatedFraming": "KI bewertete Rahmungsqualitaet",
+    "aiEvaluatedFraming": "KI bewertete Rahmungsqualität",
     "studentJudgedOutput": "Studierende bewerteten KI-Ausgabe",
     "studentSteeredAI": "Studierende steuerten KI-Korrekturen",
     "judgingSelections": "Beurteilung — Identifizierte Probleme",
@@ -184,7 +184,7 @@ window.CONTENT["de"] = {
     "judgingGrade": "Beurteilungsnote:",
     "steeringGrade": "Steuerungsnote:",
     "aiUpdatedOutput": "Aktualisierte KI-Ausgabe",
-    "aiFinalOutput": "Endgueltige KI-Ausgabe",
+    "aiFinalOutput": "Endgültige KI-Ausgabe",
     "rubricReference": "Bewertungsraster",
     "cyclesUsed": "Verwendete Zyklen",
     "duration": "Dauer",
@@ -214,10 +214,142 @@ window.CONTENT["de"] = {
     "responseType": "Antworttyp",
     "maxCycles": "Maximale Zyklen",
     "advancedSettings": "Erweiterte Einstellungen",
-    "rubricPreview": "Rubrik-Vorschau",
-    "livePreview": "Live-Vorschau",
+    "rubricPreview": "Bewertungsrubrik",
+    "livePreview": "Beispiel-Rohproblem",
     "publishChallenge": "Aufgabe veröffentlichen",
-    "saveDraft": "Als Entwurf speichern"
+    "saveDraft": "Als Entwurf speichern",
+    "saveAndPublish": "Speichern und veröffentlichen",
+    "loading": "Wird geladen...",
+    "retry": "Erneut versuchen",
+    "challengeRun": "Aufgabendurchlauf",
+    "loadingReport": "Bericht wird geladen...",
+    "errorLoadingReport": "Bericht konnte nicht geladen werden",
+    "startChallenge": "Aufgabe starten",
+    "generatingProblem": "Rohproblem wird aus dem Themenbaum generiert...",
+    "evaluatingFraming": "Rahmung wird bewertet und KI-Lösung generiert...",
+    "sectionTitle": "Abschnittstitel",
+    "describeRefinement": "Beschreiben Sie Ihre Verfeinerung...",
+    "pleaseProvideResponse": "Bitte geben Sie mindestens einen Abschnitt mit Inhalt an.",
+    "pleaseSelectOption": "Bitte wählen Sie mindestens eine Option.",
+    "recordingJudgement": "Beurteilung wird aufgezeichnet...",
+    "finalizing": "Abschluss — Endnoten werden berechnet...",
+    "issuesFound": "Gefundene Probleme",
+    "markedComplete": "Student hat die Lösung als vollständig markiert",
+    "issuesSubmitted": "Probleme zur Steuerung eingereicht",
+    "correctionsSent": "Korrekturen gesendet",
+    "steeringSubmitted": "Steuerungskorrekturen eingereicht",
+    "processSteering": "Steuerung wird verarbeitet und Zyklus bewertet...",
+    "computingGrades": "Endnoten werden berechnet...",
+    "issueTitle": "Problemtitel",
+    "describeIssue": "Beschreiben Sie das Problem...",
+    "correctionTitle": "Korrekturtitel",
+    "describeCorrection": "Beschreiben Sie die Korrektur...",
+    "addSection": "Abschnitt hinzufügen",
+    "noFramingOptions": "Keine Rahmungsoptionen verfügbar.",
+    "noJudgingOptions": "Keine Beurteilungsoptionen verfügbar. Verwenden Sie \"Lösung vollständig\", wenn die Ausgabe korrekt ist.",
+    "noSteeringOptions": "Keine Steuerungsoptionen verfügbar.",
+    "runAgainQ": "Erneut starten?",
+    "profileDesc": "Verwalten Sie Ihre Kontoeinstellungen",
+    "subjectTree": "Themenbaum",
+    "subjectTreeDesc": "Definieren Sie die Themenhierarchie für die Rubrikgenerierung",
+    "subjectTreeWarning": "Änderungen am Themenbaum können bestehende Aufgaben beeinflussen",
+    "editSubjectTree": "Themenbaum bearbeiten",
+    "clickNodeToEdit": "Klicken Sie auf einen Knoten, um seine Details zu bearbeiten",
+    "nodeDetails": "Knotendetails",
+    "nodeName": "Knotenname",
+    "nodes": "Knoten",
+    "levelsDeep": "Tiefenebenen",
+    "loadingSubjects": "Themen werden geladen...",
+    "addChild": "+ Unterknoten hinzufügen",
+    "addedChildUnder": "Unterknoten hinzugefügt unter",
+    "addedRootNode": "Stammknoten hinzugefügt",
+    "newRootTopic": "Neues Stammthema",
+    "newTopic": "Neues Thema",
+    "confirmDeleteNode": "Sind Sie sicher, dass Sie diesen Knoten löschen möchten?",
+    "noSubjectsDefined": "Noch keine Themen definiert",
+    "subjectTreeSaved": "Themenbaum gespeichert",
+    "selectCourseToLoadSubjects": "Wählen Sie einen Kurs, um seinen Themenbaum zu laden",
+    "selectSubjectsToPreview": "Wählen Sie Themen für die Rubrikvorschau",
+    "keywordsForRubric": "Schlüsselwörter für die Rubrik",
+    "descriptionForRubric": "Kurze Beschreibung für den Rubrikkontext...",
+    "commaSeparatedKeywords": "Durch Kommas getrennte Schlüsselwörter...",
+    "addNewCourse": "+ Neuen Kurs hinzufügen",
+    "createCourse": "Kurs erstellen",
+    "noCourses": "Keine Kurse verfügbar",
+    "noCoursesFound": "Keine Kurse gefunden",
+    "department": "Abteilung",
+    "description": "Beschreibung",
+    "descriptionOptional": "Beschreibung (optional)",
+    "institutionScopedNote": "Kurse sind Ihrer Einrichtung zugeordnet",
+    "selectDepartment": "Abteilung auswählen",
+    "enterCourseName": "Kursname eingeben...",
+    "pleaseEnterCourseName": "Bitte geben Sie einen Kursnamen ein",
+    "pleaseSelectDepartment": "Bitte wählen Sie eine Abteilung",
+    "courseCreatedSuccess": "Kurs erfolgreich erstellt",
+    "courseCreatedNext": "Kurs erstellt. Nächster Schritt: Aufgabe erstellen.",
+    "courseNotFound": "Kurs nicht gefunden",
+    "createCourseFailed": "Kurs konnte nicht erstellt werden",
+    "noCourseSelected": "Kein Kurs ausgewählt",
+    "noCourseId": "Keine Kurs-ID angegeben",
+    "pleaseSelectCourse": "Bitte wählen Sie einen Kurs",
+    "totalChallenges": "Aufgaben gesamt",
+    "createAndStart": "Erstellen und starten",
+    "createPrivateChallenge": "Private Aufgabe erstellen",
+    "challengeDetails": "Aufgabendetails",
+    "challengeTitlePlaceholder": "Aufgabentitel eingeben...",
+    "challengeDescPlaceholder": "Beschreiben Sie Ziele und Kontext der Aufgabe...",
+    "pleaseEnterTitle": "Bitte geben Sie einen Aufgabentitel ein",
+    "pleaseSelectSubject": "Bitte wählen Sie ein Thema",
+    "selectTemplate": "Vorlage auswählen",
+    "defaultLlmModel": "Standard-LLM-Modell",
+    "systemDefault": "Systemstandard",
+    "rubricWillGenerate": "Rubrik wird aus dem gewählten Thema generiert",
+    "previewNotRecorded": "Vorschau — wird nicht in der Analytik erfasst",
+    "instructorPreview": "Dozenten-Vorschau",
+    "confirmDeleteChallenge": "Sind Sie sicher, dass Sie diese Aufgabe löschen möchten?",
+    "archiveFailed": "Archivierung der Aufgabe fehlgeschlagen",
+    "publishFailed": "Veröffentlichung der Aufgabe fehlgeschlagen",
+    "publishing": "Wird veröffentlicht...",
+    "deleteFailed": "Löschung fehlgeschlagen",
+    "deleted": "Gelöscht",
+    "duplicated": "Dupliziert",
+    "copy": "Kopieren",
+    "judgeSteerCycles": "Beurteilungs- + Steuerungszyklen",
+    "aiOutputNote": "Von der KI generierte Ausgabe basierend auf Ihrer Rahmung",
+    "aiSuggestions": "KI-Vorschläge",
+    "generating": "Wird generiert...",
+    "review": "Überprüfen",
+    "skipAndComplete": "Überspringen und abschließen",
+    "markedCompleteSteeringHint": "Lösung als vollständig markieren überspringt verbleibende Zyklen",
+    "selectAtLeastOne": "Bitte wählen Sie mindestens eine Option",
+    "saving": "Wird gespeichert...",
+    "saved": "Gespeichert",
+    "saveFailed": "Speichern fehlgeschlagen",
+    "saveAsDraft": "Als Entwurf speichern",
+    "createFailed": "Erstellung fehlgeschlagen",
+    "creating": "Wird erstellt...",
+    "failedToSave": "Änderungen konnten nicht gespeichert werden",
+    "noChangesToSave": "Keine Änderungen zum Speichern",
+    "allChangesSaved": "Alle Änderungen gespeichert",
+    "changesApplied": "Änderungen angewendet",
+    "unsavedChanges": "Sie haben nicht gespeicherte Änderungen",
+    "error": "Fehler",
+    "unknownError": "Ein unbekannter Fehler ist aufgetreten",
+    "unknownCourse": "Unbekannter Kurs",
+    "other": "Sonstige",
+    "users": "Benutzer",
+    "institutions": "Einrichtungen",
+    "subscriptions": "Abonnements",
+    "runs": "Durchläufe",
+    "runsCompleted": "Abgeschlossene Durchläufe",
+    "attempts": "Versuche",
+    "lead": "Leitung",
+    "leadInstructor": "Hauptdozent",
+    "coInstructor": "Co-Dozent",
+    "importExport": "Importieren / Exportieren",
+    "aiGenerationFailed": "KI-Generierung fehlgeschlagen",
+    "failedLoadProfile": "Profil konnte nicht geladen werden",
+    "failedLoadSubjects": "Themen konnten nicht geladen werden"
   },
   "institutions": {
     "institutions": [
@@ -1307,15 +1439,15 @@ window.CONTENT["de"] = {
   "tooltips": {
     "challengeType": {
       "title": "Aufgabentyp",
-      "text": "Uebungsaufgaben dienen dem Lernen — es wird keine Note erfasst. Pruefungsaufgaben fliessen in Ihre Kursnote ein."
+      "text": "Uebungsaufgaben ermoeglichen Wiederholungsversuche mit Feedback nach jeder Phase. Pruefungsaufgaben werden benotet, mit Feedback erst am Ende."
     },
     "visibility": {
       "title": "Sichtbarkeit",
-      "text": "Oeffentliche Aufgaben sind fuer alle eingeschriebenen Studierenden sichtbar. Private Aufgaben sind nur fuer Sie sichtbar."
+      "text": "Oeffentliche Aufgaben sind fuer alle eingeschriebenen Studierenden sichtbar. Private Aufgaben sind nur fuer ihre Erstellerin oder ihren Ersteller sichtbar."
     },
     "maxCycles": {
       "title": "Maximale Zyklen",
-      "text": "Die maximale Anzahl erlaubter Bewertungs- und Steuerungszyklen. Mehr Zyklen geben Ihnen mehr Moeglichkeiten, die KI-Ausgabe zu verbessern."
+      "text": "Die maximale Anzahl erlaubter Bewertungs- und Steuerungszyklen. Mehr Zyklen bieten mehr Moeglichkeiten, die KI-Ausgabe zu verbessern."
     },
     "subjectPath": {
       "title": "Themenpfad",
@@ -1323,27 +1455,27 @@ window.CONTENT["de"] = {
     },
     "responseType": {
       "title": "Antworttyp",
-      "text": "Multiple-Choice bietet Ihnen Optionen zur Auswahl. Offene Antwort laesst Sie Ihre eigene Argumentation schreiben."
+      "text": "Multiple-Choice bietet vordefinierte Optionen. Offene Antwort erlaubt freies schriftliches Argumentieren."
     },
     "framingPhase": {
       "title": "Rahmungsphase",
-      "text": "In dieser Phase bewerten Sie den ersten Ansatz der KI zum Problem, bevor eine Loesung generiert wird."
+      "text": "Die Studierenden bewerten das Rohproblem und uebersetzen es in eine klar definierte Aufgabe, indem sie Annahmen und Einschraenkungen hinzufuegen."
     },
     "judgingPhase": {
       "title": "Bewertungsphase",
-      "text": "Ueberpruefen Sie die KI-generierte Loesung und identifizieren Sie, was richtig ist, was falsch ist und was verbessert werden koennte."
+      "text": "Die Studierenden ueberpruefen die KI-generierte Loesung und identifizieren, was richtig, was falsch und was verbesserungswuerdig ist."
     },
     "steeringPhase": {
       "title": "Steuerungsphase",
-      "text": "Leiten Sie die KI an, ihre Fehler zu beheben, indem Sie spezifisches Feedback und Richtung geben."
+      "text": "Die Studierenden geben gezieltes Feedback, um die KI zu einer besseren Loesung zu fuehren."
     },
     "coReasoningScore": {
       "title": "Co-Reasoning-Bewertung",
-      "text": "Ihre Gesamtleistungsbewertung, die Rahmungsgenauigkeit, Bewertungsqualitaet und Steuerungseffektivitaet kombiniert."
+      "text": "Gesamtleistung, die Rahmungsgenauigkeit, Bewertungsqualitaet und Steuerungseffektivitaet kombiniert."
     },
     "rubric": {
       "title": "Bewertungsraster",
-      "text": "Die Bewertungskriterien, die zur Beurteilung Ihrer Co-Reasoning-Leistung in jeder Phase verwendet werden."
+      "text": "Die Bewertungskriterien, die zur Beurteilung der Co-Reasoning-Leistung in jeder Phase verwendet werden."
     },
     "subjectTree": {
       "title": "Themenbaum",
@@ -1354,8 +1486,84 @@ window.CONTENT["de"] = {
       "text": "Melden Sie sich fuer einen Kurs an, um auf dessen Aufgaben zuzugreifen und Ihren Fortschritt zu verfolgen."
     },
     "analyticsOverview": {
-      "title": "Analyseuebersicht",
-      "text": "Sehen Sie Ihre Leistungstrends, Notenverteilungen und detaillierte Aufschluesselungen ueber alle Aufgaben."
+      "title": "Ihre Auswertungen",
+      "text": "Sehen Sie Ihre Leistungstrends, Notenverteilungen und detaillierte Aufschluesselungen ueber alle Ihre Aufgabendurchlaeufe."
+    },
+    "colChallenge": {
+      "title": "Aufgabe",
+      "text": "Der Name der Aufgabe. Klicken Sie, um Details anzuzeigen oder einen Durchlauf zu starten."
+    },
+    "colCourse": {
+      "title": "Kurs",
+      "text": "Der Kurs, zu dem diese Aufgabe gehoert."
+    },
+    "colType": {
+      "title": "Typ",
+      "text": "Uebungsaufgaben ermoeglichen Wiederholungen mit Feedback. Pruefungsaufgaben werden benotet, mit Feedback erst am Ende."
+    },
+    "colVisibility": {
+      "title": "Sichtbarkeit",
+      "text": "Oeffentliche Aufgaben stammen aus Ihren abonnierten Kursen. Private Aufgaben sind solche, die Sie fuer sich selbst erstellt haben."
+    },
+    "colCreated": {
+      "title": "Erstellt",
+      "text": "Das Datum, an dem diese Aufgabe veroeffentlicht oder erstellt wurde."
+    },
+    "colCreator": {
+      "title": "Ersteller",
+      "text": "Der Dozent oder Student, der diese Aufgabe erstellt hat."
+    },
+    "colLastAttempt": {
+      "title": "Letzter Versuch",
+      "text": "Wann Sie diese Aufgabe zuletzt versucht haben, falls ueberhaupt."
+    },
+    "colStatus": {
+      "title": "Status",
+      "text": "Ihr Fortschritt: Nicht begonnen, In Bearbeitung oder Abgeschlossen."
+    },
+    "colActions": {
+      "title": "Aktionen",
+      "text": "Verfuegbare Aktionen wie Starten, Fortsetzen, Ergebnisse anzeigen oder Erneut ausfuehren."
+    },
+    "instrAnalyticsOverview": {
+      "title": "Kursauswertung",
+      "text": "Zusammengefasste Leistungsdaten aller Studierenden in diesem Kurs. Enthaelt nur Ergebnisse oeffentlicher Aufgaben."
+    },
+    "instrCourseSubscription": {
+      "title": "Kursverwaltung",
+      "text": "Verwalten Sie Ihre Kurseinstellungen, den Themenbaum und die Aufgabenzuweisungen."
+    },
+    "instrColChallenge": {
+      "title": "Aufgabe",
+      "text": "Der Titel der Aufgabe. Klicken Sie zum Bearbeiten oder zum Anzeigen von Studierendeneinreichungen."
+    },
+    "instrColCourse": {
+      "title": "Kurs",
+      "text": "Der Kurs, dem diese Aufgabe zugewiesen ist."
+    },
+    "instrColType": {
+      "title": "Typ",
+      "text": "Uebung: Studierende erhalten Feedback nach jeder Phase. Pruefung: Feedback wird bis zum Abschluss zurueckgehalten."
+    },
+    "instrColVisibility": {
+      "title": "Sichtbarkeit",
+      "text": "Oeffentliche Aufgaben sind fuer alle Kursabonnenten verfuegbar. Private Aufgaben sind nur fuer ihre Erstellerin oder ihren Ersteller sichtbar."
+    },
+    "instrColSubmissions": {
+      "title": "Einreichungen",
+      "text": "Gesamtanzahl der Studierendendurchlaeufe fuer diese Aufgabe, einschliesslich laufender und abgeschlossener Versuche."
+    },
+    "instrColAvgGrade": {
+      "title": "Durchschnittsnote",
+      "text": "Durchschnittliche Note ueber alle abgeschlossenen Studierendendurchlaeufe, kombiniert aus Rahmungs-, Bewertungs- und Steuerungspunkten."
+    },
+    "instrColStatus": {
+      "title": "Status",
+      "text": "Lebenszyklus der Aufgabe: Entwurf (noch nicht sichtbar), Veroeffentlicht (aktiv) oder Archiviert (ausgeblendet)."
+    },
+    "instrColActions": {
+      "title": "Aktionen",
+      "text": "Verfuegbare Aktionen: Bearbeiten, Vorschau, Auswertung anzeigen oder Loeschen."
     }
   },
   "challenges": {

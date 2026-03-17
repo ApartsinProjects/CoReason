@@ -9,82 +9,27 @@
   <style>
     .challenge-actions { display: flex; gap: 4px; }
     .challenge-actions .btn { padding: 4px 8px; font-size: 12px; }
-    .completion-bar { display: flex; align-items: center; gap: 8px; }
-    .completion-bar .progress { width: 60px; }
-    .view-toggle { display: flex; gap: 0; border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .view-toggle button { padding: 6px 14px; background: #fff; border: none; font-size: 13px; cursor: pointer; }
-    .view-toggle button.active { background: var(--primary); color: #fff; }
-
-    /* Instructor-specific styles */
     .bulk-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 16px;
-      background: #f5f5f5;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 12px;
-      font-size: 13px;
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 16px; background: #f5f5f5;
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 12px; font-size: 13px;
     }
-    .bulk-actions label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .bulk-actions .btn {
-      padding: 4px 14px;
-      font-size: 12px;
-    }
-    .status-published {
-      color: #2e7d32;
-      background: #e8f5e9;
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .status-draft {
-      color: #e65100;
-      background: #fff3e0;
-      padding: 2px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .submissions-cell {
-      font-variant-numeric: tabular-nums;
-    }
-    .more-menu {
-      position: relative;
-      display: inline-block;
-    }
-    .more-menu button {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2px 8px;
-      font-size: 16px;
-      cursor: pointer;
-      line-height: 1;
-    }
-    .more-menu button:hover {
-      background: #f5f5f5;
-    }
-    .grade-cell {
-      font-weight: 600;
-      font-size: 14px;
-    }
-    tr.draft-row {
-      background: #fffde7;
-    }
+    .bulk-actions label { display: flex; align-items: center; gap: 6px; font-weight: 600; cursor: pointer; }
+    .bulk-actions .btn { padding: 4px 14px; font-size: 12px; }
+    .status-published { color: #2e7d32; background: #e8f5e9; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+    .status-draft { color: #e65100; background: #fff3e0; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+    .submissions-cell { font-variant-numeric: tabular-nums; }
+    .grade-cell { font-weight: 600; font-size: 14px; }
+    tr.draft-row { background: #fffde7; }
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--text-secondary); }
+    .loading-row td { text-align: center; padding: 32px; color: var(--text-secondary); }
   </style>
   <script src="content-compiled/all.js"></script>
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
 </head>
 <body>
   <header class="topnav">
@@ -97,9 +42,10 @@
     <div class="user-area">
       <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
-      <span>Dr. Levy</span>
-      <a href="profile.html"><div class="avatar" style="background:#e3f2fd;color:var(--primary);">DL</div></a>
-      <a href="#" class="btn-logout" onclick="fetch(&apos;/api/v1/auth/logout&apos;,{method:&apos;POST&apos;,credentials:&apos;include&apos;}).then(()=>window.location.href=&apos;/login.html&apos;);return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;">Logout</a>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">—</span>
+      <a href="profile.html"><div class="avatar" id="userAvatar" style="background:#e3f2fd;color:var(--primary);">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
     </div>
   </header>
 
@@ -114,36 +60,33 @@
 
     <!-- Filter Bar -->
     <div class="filter-bar">
-      <input type="search" class="form-control" data-t-placeholder="searchChallenges" placeholder="Search challenges...">
-      <select class="form-control" data-t-options="allCourses">
-        <option value="">All Courses</option>
-        <option>Deep Learning 101</option>
-        <option>Database Systems</option>
-        <option>Software Engineering</option>
+      <input type="search" id="filterSearch" class="form-control" data-t-placeholder="searchChallenges" placeholder="Search challenges...">
+      <select id="filterCourse" class="form-control">
+        <option value="" data-t="allCourses">All Courses</option>
       </select>
-      <select class="form-control" data-t-options="allTypes,practice,assessment">
-        <option value="">All Types</option>
-        <option>Practice</option>
-        <option>Assessment</option>
+      <select id="filterType" class="form-control">
+        <option value="" data-t="allTypes">All Types</option>
+        <option value="practice" data-t="practice">Practice</option>
+        <option value="assessment" data-t="assessment">Assessment</option>
       </select>
-      <select class="form-control" data-t-options="allVisibility,public,private">
-        <option value="">All Visibility</option>
-        <option>Public</option>
-        <option>Private</option>
+      <select id="filterVisibility" class="form-control">
+        <option value="" data-t="allVisibility">All Visibility</option>
+        <option value="public" data-t="public">Public</option>
+        <option value="private" data-t="private">Private</option>
       </select>
-      <select class="form-control" data-t-options="allStatus,published,draft,archived">
-        <option value="">All Status</option>
-        <option>Published</option>
-        <option>Draft</option>
-        <option>Archived</option>
+      <select id="filterStatus" class="form-control">
+        <option value="" data-t="allStatus">All Status</option>
+        <option value="published" data-t="published">Published</option>
+        <option value="draft" data-t="draft">Draft</option>
+        <option value="archived" data-t="archived">Archived</option>
       </select>
     </div>
 
     <!-- Bulk Actions Bar -->
     <div class="bulk-actions">
-      <label><input type="checkbox"> <span data-t="selectAll">Select All</span></label>
-      <button class="btn btn-outline" data-t="publish">Publish Selected</button>
-      <button class="btn btn-outline" data-t="archive">Archive Selected</button>
+      <label><input type="checkbox" id="selectAllCheckbox"> <span data-t="selectAll">Select All</span></label>
+      <button class="btn btn-outline" data-t="publish" onclick="bulkPublish()">Publish Selected</button>
+      <button class="btn btn-outline" data-t="archive" onclick="bulkArchive()">Archive Selected</button>
     </div>
 
     <!-- Challenge Table -->
@@ -152,112 +95,19 @@
         <table>
           <thead>
             <tr>
-              <th style="width:32px"><input type="checkbox"></th>
-              <th data-t="challenge">Challenge</th>
-              <th data-t="course">Course</th>
-              <th data-t="type">Type</th>
-              <th data-t="visibility">Visibility</th>
-              <th data-t="submissions">Submissions</th>
-              <th data-t="avgGrade">Avg Grade</th>
-              <th data-t="status">Status</th>
-              <th data-t="actions">Actions</th>
+              <th style="width:32px"><input type="checkbox" id="headerCheckbox"></th>
+              <th data-t="challenge" data-tooltip="instrColChallenge">Challenge</th>
+              <th data-t="course" data-tooltip="instrColCourse">Course</th>
+              <th data-t="type" data-tooltip="instrColType">Type</th>
+              <th data-t="visibility" data-tooltip="instrColVisibility">Visibility</th>
+              <th data-t="submissions" data-tooltip="instrColSubmissions">Submissions</th>
+              <th data-t="avgGrade" data-tooltip="instrColAvgGrade">Avg Grade</th>
+              <th data-t="status" data-tooltip="instrColStatus">Status</th>
+              <th data-t="actions" data-tooltip="instrColActions">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            <!-- 1. Sorting Algorithm Analysis -->
-            <tr data-course="Software Engineering" data-type="Assessment" data-visibility="Public" data-status="Published" data-tab="mine">
-              <td><input type="checkbox"></td>
-              <td><strong>Sorting Algorithm Analysis</strong></td>
-              <td>Software Engineering</td>
-              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
-              <td><span class="badge badge-public" data-t="public">Public</span></td>
-              <td class="submissions-cell">38/45</td>
-              <td class="grade-cell"><span class="grade grade-B">B</span></td>
-              <td><span class="status-published" data-t="published">Published</span></td>
-              <td>
-                <div class="challenge-actions">
-                  <a href="create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
-                  <a href="instructor-analytics.html" class="btn btn-outline btn-sm" title="Analytics" data-t="analytics">Analytics</a>
-                  <a href="challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
-                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
-                </div>
-              </td>
-            </tr>
-            <!-- 2. Neural Network Debugging -->
-            <tr data-course="Deep Learning 101" data-type="Practice" data-visibility="Public" data-status="Published" data-tab="mine">
-              <td><input type="checkbox"></td>
-              <td><strong>Neural Network Debugging</strong></td>
-              <td>Deep Learning 101</td>
-              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
-              <td><span class="badge badge-public" data-t="public">Public</span></td>
-              <td class="submissions-cell">22/45</td>
-              <td class="grade-cell"><span class="grade grade-B">B</span></td>
-              <td><span class="status-published" data-t="published">Published</span></td>
-              <td>
-                <div class="challenge-actions">
-                  <a href="create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
-                  <a href="instructor-analytics.html" class="btn btn-outline btn-sm" title="Analytics" data-t="analytics">Analytics</a>
-                  <a href="challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
-                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
-                </div>
-              </td>
-            </tr>
-            <!-- 3. SQL Query Optimization -->
-            <tr data-course="Database Systems" data-type="Assessment" data-visibility="Public" data-status="Published" data-tab="mine">
-              <td><input type="checkbox"></td>
-              <td><strong>SQL Query Optimization</strong></td>
-              <td>Database Systems</td>
-              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
-              <td><span class="badge badge-public" data-t="public">Public</span></td>
-              <td class="submissions-cell">41/42</td>
-              <td class="grade-cell"><span class="grade grade-A">A</span></td>
-              <td><span class="status-published" data-t="published">Published</span></td>
-              <td>
-                <div class="challenge-actions">
-                  <a href="create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
-                  <a href="instructor-analytics.html" class="btn btn-outline btn-sm" title="Analytics" data-t="analytics">Analytics</a>
-                  <a href="challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
-                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
-                </div>
-              </td>
-            </tr>
-            <!-- 4. Rate Limiter Design (Draft) -->
-            <tr class="draft-row" data-course="Software Engineering" data-type="Practice" data-visibility="Private" data-status="Draft" data-tab="mine">
-              <td><input type="checkbox"></td>
-              <td><strong>Rate Limiter Design</strong></td>
-              <td>Software Engineering</td>
-              <td><span class="badge badge-practice" data-t="practice">Practice</span></td>
-              <td><span class="badge badge-private" data-t="private">Private</span></td>
-              <td class="submissions-cell">&mdash;</td>
-              <td class="grade-cell">&mdash;</td>
-              <td><span class="status-draft" data-t="draft">Draft</span></td>
-              <td>
-                <div class="challenge-actions">
-                  <a href="create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
-                  <a href="challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
-                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
-                </div>
-              </td>
-            </tr>
-            <!-- 5. CNN Architecture Review -->
-            <tr data-course="Deep Learning 101" data-type="Assessment" data-visibility="Public" data-status="Published" data-tab="course">
-              <td><input type="checkbox"></td>
-              <td><strong>CNN Architecture Review</strong></td>
-              <td>Deep Learning 101</td>
-              <td><span class="badge badge-assessment" data-t="assessment">Assessment</span></td>
-              <td><span class="badge badge-public" data-t="public">Public</span></td>
-              <td class="submissions-cell">30/45</td>
-              <td class="grade-cell"><span class="grade grade-B">B</span></td>
-              <td><span class="status-published" data-t="published">Published</span></td>
-              <td>
-                <div class="challenge-actions">
-                  <a href="create-challenge.html" class="btn btn-outline btn-sm" title="Edit" data-t="edit">Edit</a>
-                  <a href="instructor-analytics.html" class="btn btn-outline btn-sm" title="Analytics" data-t="analytics">Analytics</a>
-                  <a href="challenge-run-instructor.html" class="btn btn-outline btn-sm" title="Preview" data-t="preview">Preview</a>
-                  <span class="more-menu"><button title="More actions">&#8942;</button></span>
-                </div>
-              </td>
-            </tr>
+          <tbody id="challengeTableBody">
+            <tr class="loading-row"><td colspan="9">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -265,38 +115,223 @@
   </main>
 
   <script>
-// Check auth
-fetch('/api/v1/auth/me', {credentials:'include'}).then(r => {
-  if (!r.ok) window.location.href = '/login.html';
-}).catch(() => window.location.href = '/login.html');
-
   (function() {
-    var rows = document.querySelectorAll('tbody tr');
-    var selects = document.querySelectorAll('.filter-bar select');
-    var searchInput = document.querySelector('.filter-bar input[type="search"]');
+    'use strict';
 
-    function getSelectVal(idx) { return selects[idx] ? selects[idx].value : ''; }
+    var currentUser = null;
+    var allChallenges = [];
+    var selectedIds = new Set();
+    var tbody = document.getElementById('challengeTableBody');
 
-    function applyFilters() {
-      var query = searchInput.value.toLowerCase().trim();
-      var course = getSelectVal(0);
-      var type = getSelectVal(1);
-      var vis = getSelectVal(2);
-      var status = getSelectVal(3);
+    // ── Wait for user-header.js to populate _currentUser ──
+    (function waitForUser() {
+      var check = setInterval(function() {
+        if (window._currentUser) {
+          clearInterval(check);
+          currentUser = window._currentUser;
+          loadCourses();
+          loadChallenges();
+        }
+      }, 100);
+      // Fallback timeout
+      setTimeout(function() { clearInterval(check); if (!currentUser) { loadCourses(); loadChallenges(); } }, 2000);
+    })();
 
-      rows.forEach(function(row) {
-        var show = true;
-        if (course && row.getAttribute('data-course') !== course) show = false;
-        if (type && row.getAttribute('data-type') !== type) show = false;
-        if (vis && row.getAttribute('data-visibility') !== vis) show = false;
-        if (status && row.getAttribute('data-status') !== status) show = false;
-        if (query && row.textContent.toLowerCase().indexOf(query) === -1) show = false;
-        row.style.display = show ? '' : 'none';
+    // ── Load courses into filter ──
+    function loadCourses() {
+      API.courses.list({ instructor: true }).then(function(data) {
+        var courses = data.courses || data || [];
+        var sel = document.getElementById('filterCourse');
+        courses.forEach(function(c) {
+          var opt = document.createElement('option');
+          opt.value = c._id || c.id || c.name;
+          opt.textContent = c.name;
+          sel.appendChild(opt);
+        });
+        var params = new URLSearchParams(window.location.search);
+        var preselect = params.get('courseId');
+        if (preselect) sel.value = preselect;
+      }).catch(function(err) { console.warn('Could not load courses:', err.message); });
+    }
+
+    // ── Load challenges ──
+    function loadChallenges() {
+      tbody.innerHTML = '<tr class="loading-row"><td colspan="9">Loading...</td></tr>';
+      API.challenges.list({ mine: true }).then(function(data) {
+        allChallenges = data.challenges || data || [];
+        applyFilters();
+      }).catch(function(err) {
+        tbody.innerHTML = '<tr class="loading-row"><td colspan="9" style="color:var(--danger);">Failed to load: ' + escHtml(err.message) + '</td></tr>';
       });
     }
 
-    selects.forEach(function(s) { s.addEventListener('change', applyFilters); });
-    searchInput.addEventListener('input', applyFilters);
+    // ── Render ──
+    function renderChallenges(list) {
+      if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="empty-state"><p data-t="noMatchingResults">No challenges match the selected filters.</p></td></tr>';
+        if (window.translatePage) translatePage();
+        return;
+      }
+      tbody.innerHTML = '';
+      list.forEach(function(ch) {
+        var id = ch._id || ch.id;
+        var tr = document.createElement('tr');
+        var chStatus = (ch.status || 'draft').toLowerCase();
+        if (chStatus === 'draft') tr.className = 'draft-row';
+
+        // Checkbox
+        var tdCheck = document.createElement('td');
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = selectedIds.has(id);
+        cb.onchange = function() { if (cb.checked) selectedIds.add(id); else selectedIds.delete(id); };
+        tdCheck.appendChild(cb);
+        tr.appendChild(tdCheck);
+
+        // Name
+        var tdName = document.createElement('td');
+        tdName.innerHTML = '<strong>' + escHtml(ch.title || ch.name || 'Untitled') + '</strong>';
+        tr.appendChild(tdName);
+
+        // Course
+        var tdCourse = document.createElement('td');
+        tdCourse.textContent = ch.course_name || ch.courseName || '—';
+        tr.appendChild(tdCourse);
+
+        // Type
+        var tdType = document.createElement('td');
+        var cType = (ch.type || ch.challenge_type || 'practice').toLowerCase();
+        tdType.innerHTML = '<span class="badge badge-' + cType + '" data-t="' + cType + '">' + capitalize(cType) + '</span>';
+        tr.appendChild(tdType);
+
+        // Visibility
+        var tdVis = document.createElement('td');
+        var vis = (ch.visibility || 'public').toLowerCase();
+        tdVis.innerHTML = '<span class="badge badge-' + vis + '" data-t="' + vis + '">' + capitalize(vis) + '</span>';
+        tr.appendChild(tdVis);
+
+        // Submissions
+        var tdSub = document.createElement('td');
+        tdSub.className = 'submissions-cell';
+        var completed = ch.completed_runs || ch.completedRuns || 0;
+        var total = ch.total_students || ch.totalStudents || 0;
+        tdSub.textContent = chStatus === 'draft' ? '—' : (completed + '/' + total);
+        tr.appendChild(tdSub);
+
+        // Avg Grade
+        var tdGrade = document.createElement('td');
+        tdGrade.className = 'grade-cell';
+        var avg = ch.avg_grade || ch.avgGrade || '';
+        if (avg) {
+          tdGrade.innerHTML = '<span class="grade grade-' + avg + '">' + avg + '</span>';
+        } else {
+          tdGrade.textContent = '—';
+        }
+        tr.appendChild(tdGrade);
+
+        // Status
+        var tdStatus = document.createElement('td');
+        var statusCls = chStatus === 'published' ? 'status-published' : (chStatus === 'draft' ? 'status-draft' : 'status status-' + chStatus);
+        tdStatus.innerHTML = '<span class="' + statusCls + '" data-t="' + chStatus + '">' + capitalize(chStatus) + '</span>';
+        tr.appendChild(tdStatus);
+
+        // Actions
+        var tdActions = document.createElement('td');
+        var actHtml = '<div class="challenge-actions">';
+        actHtml += '<a href="create-challenge.html?id=' + id + '" class="btn btn-outline btn-sm" data-t="edit">Edit</a>';
+        if (chStatus === 'published') {
+          actHtml += ' <a href="instructor-analytics.html?courseId=' + (ch.course_id || ch.courseId || '') + '" class="btn btn-outline btn-sm" data-t="analytics">Analytics</a>';
+        }
+        actHtml += ' <a href="challenge-run.html?challengeId=' + id + '&preview=1" class="btn btn-outline btn-sm" data-t="preview">Preview</a>';
+        actHtml += ' <button class="btn btn-outline btn-sm" style="color:var(--danger);" onclick="deleteChallenge(\'' + id + '\')" title="Delete">&#128465;</button>';
+        actHtml += '</div>';
+        tdActions.innerHTML = actHtml;
+        tr.appendChild(tdActions);
+
+        tbody.appendChild(tr);
+      });
+      if (window.translatePage) translatePage();
+    }
+
+    // ── Delete ──
+    window.deleteChallenge = function(id) {
+      if (!confirm(t('confirmDeleteChallenge') || 'Are you sure you want to delete this challenge?')) return;
+      API.challenges.delete(id).then(function() {
+        allChallenges = allChallenges.filter(function(c) { return (c._id || c.id) !== id; });
+        applyFilters();
+      }).catch(function(err) { alert((t('deleteFailed') || 'Delete failed') + ': ' + err.message); });
+    };
+
+    // ── Bulk actions ──
+    window.bulkPublish = function() {
+      if (selectedIds.size === 0) return alert(t('selectAtLeastOne') || 'Select at least one challenge.');
+      var promises = [];
+      selectedIds.forEach(function(id) { promises.push(API.challenges.publish(id)); });
+      Promise.all(promises).then(function() { selectedIds.clear(); loadChallenges(); })
+        .catch(function(err) { alert((t('publishFailed') || 'Publish failed') + ': ' + err.message); });
+    };
+    window.bulkArchive = function() {
+      if (selectedIds.size === 0) return alert(t('selectAtLeastOne') || 'Select at least one challenge.');
+      var promises = [];
+      selectedIds.forEach(function(id) { promises.push(API.challenges.archive(id)); });
+      Promise.all(promises).then(function() { selectedIds.clear(); loadChallenges(); })
+        .catch(function(err) { alert((t('archiveFailed') || 'Archive failed') + ': ' + err.message); });
+    };
+
+    // ── Select All ──
+    document.getElementById('headerCheckbox').onchange = function() {
+      var checked = this.checked;
+      document.getElementById('selectAllCheckbox').checked = checked;
+      selectedIds.clear();
+      if (checked) allChallenges.forEach(function(c) { selectedIds.add(c._id || c.id); });
+      tbody.querySelectorAll('input[type="checkbox"]').forEach(function(cb) { cb.checked = checked; });
+    };
+    document.getElementById('selectAllCheckbox').onchange = function() {
+      document.getElementById('headerCheckbox').checked = this.checked;
+      document.getElementById('headerCheckbox').onchange();
+    };
+
+    // ── Filters ──
+    var filterSearch = document.getElementById('filterSearch');
+    var filterCourse = document.getElementById('filterCourse');
+    var filterType = document.getElementById('filterType');
+    var filterVisibility = document.getElementById('filterVisibility');
+    var filterStatus = document.getElementById('filterStatus');
+
+    function applyFilters() {
+      var query = filterSearch.value.toLowerCase().trim();
+      var course = filterCourse.value;
+      var type = filterType.value;
+      var vis = filterVisibility.value;
+      var status = filterStatus.value;
+
+      var filtered = allChallenges.filter(function(ch) {
+        if (query) {
+          var text = ((ch.title || '') + ' ' + (ch.course_name || '')).toLowerCase();
+          if (text.indexOf(query) === -1) return false;
+        }
+        if (course) {
+          var cId = ch.course_id || ch.courseId || '';
+          var cName = ch.course_name || ch.courseName || '';
+          if (cId !== course && cName !== course) return false;
+        }
+        if (type && (ch.type || ch.challenge_type || '').toLowerCase() !== type) return false;
+        if (vis && (ch.visibility || '').toLowerCase() !== vis) return false;
+        if (status && (ch.status || '').toLowerCase() !== status) return false;
+        return true;
+      });
+      renderChallenges(filtered);
+    }
+
+    filterSearch.addEventListener('input', applyFilters);
+    filterCourse.addEventListener('change', applyFilters);
+    filterType.addEventListener('change', applyFilters);
+    filterVisibility.addEventListener('change', applyFilters);
+    filterStatus.addEventListener('change', applyFilters);
+
+    // ── Utilities ──
+    function escHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
   })();
   </script>
 </body>

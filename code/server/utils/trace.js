@@ -1,16 +1,24 @@
 'use strict';
 
 const { v4: uuidv4 } = require('uuid');
+const asyncContext = require('./async-context');
 
 class TraceRecorder {
   constructor(logger) {
     this.logger = logger;
   }
 
+  /**
+   * Get current request traceId from async context, or generate a standalone one.
+   */
+  _getTraceId() {
+    return asyncContext.getTraceId() || uuidv4().slice(0, 8);
+  }
+
   // Record an LLM routing/execution decision
   llmCall(promptId, model, variables, response) {
     this.logger.trace('llm-call', {
-      traceId: uuidv4(),
+      traceId: this._getTraceId(),
       promptId,
       model,
       variables: Object.keys(variables),
@@ -22,7 +30,7 @@ class TraceRecorder {
   // Record a model selection decision
   modelSelection(challengeId, selectedModel, reason) {
     this.logger.trace('model-selection', {
-      traceId: uuidv4(),
+      traceId: this._getTraceId(),
       challengeId,
       selectedModel,
       reason,
@@ -32,7 +40,7 @@ class TraceRecorder {
   // Record a grading decision
   grading(runId, cycleNum, skill, grade, reasoning) {
     this.logger.trace('grading', {
-      traceId: uuidv4(),
+      traceId: this._getTraceId(),
       runId,
       cycleNum,
       skill,
@@ -44,7 +52,7 @@ class TraceRecorder {
   // Record an import operation
   import(type, count, status, errors) {
     this.logger.trace('import', {
-      traceId: uuidv4(),
+      traceId: this._getTraceId(),
       type,
       count,
       status,
@@ -55,7 +63,7 @@ class TraceRecorder {
   // Generic trace
   record(type, data) {
     this.logger.trace(type, {
-      traceId: uuidv4(),
+      traceId: this._getTraceId(),
       ...data,
     });
   }

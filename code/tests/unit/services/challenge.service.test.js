@@ -15,8 +15,10 @@ describe('ChallengeService', () => {
       connection: { filename: ':memory:' },
       useNullAsDefault: true,
     });
-    const migration = require('../../../server/db/migrations/001_initial_schema');
-    await migration.up(db);
+    const migration001 = require('../../../server/db/migrations/001_initial_schema');
+    const migration002 = require('../../../server/db/migrations/002_add_department_and_indexes');
+    await migration001.up(db);
+    await migration002.up(db);
     challengeService = new ChallengeService(db, silentLogger);
 
     // Create test users

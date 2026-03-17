@@ -1,40 +1,105 @@
 # French tooltip help texts
+#
+# ── Shared Tooltips (used on both student and instructor pages) ──
 challengeType:
   title: "Type de defi"
-  text: "Les defis d'entrainement sont destines a l'apprentissage — aucune note n'est enregistree. Les defis d'evaluation comptent pour votre note de cours."
+  text: "Les defis d'entrainement permettent de reessayer avec un retour apres chaque phase. Les defis d'evaluation sont notes avec un retour uniquement a la fin."
 visibility:
   title: "Visibilite"
-  text: "Les defis publics sont visibles par tous les etudiants inscrits. Les defis prives ne sont visibles que par vous."
+  text: "Les defis publics sont visibles par tous les etudiants inscrits. Les defis prives ne sont visibles que par leur createur."
 maxCycles:
   title: "Cycles maximum"
-  text: "Le nombre maximum de cycles Jugement+Pilotage autorises. Plus de cycles vous donnent plus de chances d'ameliorer la sortie de l'IA."
+  text: "Le nombre maximum de cycles Jugement+Pilotage autorises. Plus de cycles offrent plus d'occasions d'ameliorer la sortie de l'IA."
 subjectPath:
   title: "Chemin du sujet"
   text: "La hierarchie thematique a laquelle appartient ce defi, au sein de l'arbre des sujets du cours."
 responseType:
   title: "Type de reponse"
-  text: "Le choix multiple vous propose des options. La reponse ouverte vous permet d'ecrire votre propre raisonnement."
+  text: "Le choix multiple propose des options predefinies. La reponse ouverte permet un raisonnement ecrit libre."
 framingPhase:
   title: "Phase de cadrage"
-  text: "Dans cette phase, vous evaluez l'approche initiale de l'IA au probleme avant qu'une solution ne soit generee."
+  text: "L'etudiant evalue le probleme brut et le traduit en une tache bien definie en ajoutant des hypotheses et des contraintes."
 judgingPhase:
   title: "Phase de jugement"
-  text: "Examinez la solution generee par l'IA et identifiez ce qui est correct, ce qui est errone et ce qui pourrait etre ameliore."
+  text: "L'etudiant examine la solution generee par l'IA et identifie ce qui est correct, ce qui est errone et ce qui pourrait etre ameliore."
 steeringPhase:
   title: "Phase de pilotage"
-  text: "Guidez l'IA pour corriger ses erreurs en fournissant un retour et une direction specifiques."
+  text: "L'etudiant fournit un retour specifique pour guider l'IA vers une meilleure solution."
 coReasoningScore:
   title: "Score de co-raisonnement"
-  text: "Votre score de performance global combinant la precision du cadrage, la qualite du jugement et l'efficacite du pilotage."
+  text: "Performance globale combinant la precision du cadrage, la qualite du jugement et l'efficacite du pilotage."
 rubric:
   title: "Grille d'evaluation"
-  text: "Les criteres d'evaluation utilises pour evaluer votre performance de co-raisonnement a chaque phase."
+  text: "Les criteres d'evaluation utilises pour noter la performance de co-raisonnement a chaque phase."
 subjectTree:
   title: "Arbre des sujets"
   text: "Une organisation hierarchique des sujets au sein d'un cours. Les defis sont associes a des noeuds specifiques."
+#
+# ── Student-Facing Tooltips ──
 courseSubscription:
   title: "Inscription au cours"
   text: "Inscrivez-vous a un cours pour acceder a ses defis et suivre votre progression."
 analyticsOverview:
-  title: "Vue d'ensemble analytique"
-  text: "Consultez vos tendances de performance, distributions de notes et analyses detaillees a travers les defis."
+  title: "Vos statistiques"
+  text: "Consultez vos tendances de performance, vos distributions de notes et vos analyses detaillees sur l'ensemble de vos sessions."
+# Student challenge list columns
+colChallenge:
+  title: "Defi"
+  text: "Le nom du defi. Cliquez pour voir les details ou lancer une session."
+colCourse:
+  title: "Cours"
+  text: "Le cours auquel appartient ce defi."
+colType:
+  title: "Type"
+  text: "Les defis d'entrainement permettent de reessayer avec du retour. Les defis d'evaluation sont notes avec un retour uniquement a la fin."
+colVisibility:
+  title: "Visibilite"
+  text: "Les defis publics proviennent de vos cours auxquels vous etes inscrit. Les defis prives sont ceux que vous avez crees pour vous-meme."
+colCreated:
+  title: "Date de creation"
+  text: "La date a laquelle ce defi a ete publie ou cree."
+colCreator:
+  title: "Createur"
+  text: "L'instructeur ou l'etudiant qui a cree ce defi."
+colLastAttempt:
+  title: "Derniere tentative"
+  text: "La derniere fois que vous avez tente ce defi, le cas echeant."
+colStatus:
+  title: "Statut"
+  text: "Votre progression : Non commence, En cours ou Termine."
+colActions:
+  title: "Actions"
+  text: "Actions disponibles telles que Commencer, Reprendre, Voir les resultats ou Relancer."
+#
+# ── Instructor-Facing Tooltips ──
+instrAnalyticsOverview:
+  title: "Statistiques du cours"
+  text: "Donnees de performance agregees pour tous les etudiants de ce cours. Inclut uniquement les resultats des defis publics."
+instrCourseSubscription:
+  title: "Gestion du cours"
+  text: "Gerez les parametres de votre cours, l'arbre des sujets et les affectations de defis."
+# Instructor challenge list columns
+instrColChallenge:
+  title: "Defi"
+  text: "Le titre du defi. Cliquez pour modifier ou consulter les soumissions des etudiants."
+instrColCourse:
+  title: "Cours"
+  text: "Le cours auquel ce defi est affecte."
+instrColType:
+  title: "Type"
+  text: "Entrainement : les etudiants recoivent un retour apres chaque phase. Evaluation : le retour est retenu jusqu'a la fin."
+instrColVisibility:
+  title: "Visibilite"
+  text: "Les defis publics sont accessibles a tous les inscrits au cours. Les defis prives ne sont visibles que par leur createur."
+instrColSubmissions:
+  title: "Soumissions"
+  text: "Nombre total de sessions etudiantes pour ce defi, y compris les tentatives en cours et terminees."
+instrColAvgGrade:
+  title: "Note moyenne"
+  text: "Note moyenne sur l'ensemble des sessions etudiantes terminees, combinant les scores de cadrage, jugement et pilotage."
+instrColStatus:
+  title: "Statut"
+  text: "Cycle de vie du defi : Brouillon (non visible), Publie (actif) ou Archive (masque)."
+instrColActions:
+  title: "Actions"
+  text: "Actions disponibles : Modifier, Apercu, Voir les statistiques ou Supprimer."

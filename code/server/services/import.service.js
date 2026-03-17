@@ -6,6 +6,11 @@ const yaml = require('js-yaml');
 const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
 const { ValidationError } = require('../utils/errors');
+const {
+  ROLES, DEFAULTS, IMPORT_STATUS, CHALLENGE_TYPE, VISIBILITY,
+  RESPONSE_TYPE, CHALLENGE_STATUS, COURSE_STATUS, PATHS,
+} = require('../utils/constants');
+const { safeParse } = require('../utils/helpers');
 
 class ImportService {
   constructor(db, logger) {
@@ -17,7 +22,7 @@ class ImportService {
     const jobId = uuidv4();
     await this.db('import_jobs').insert({
       id: jobId,
-      status: 'running',
+      status: IMPORT_STATUS.RUNNING,
       filename: options.filename || 'inline',
       started_at: new Date().toISOString(),
     });
@@ -26,7 +31,13 @@ class ImportService {
     const errors = [];
 
     try {
-      const data = typeof content === 'string' ? yaml.load(content) : content;
+      let data;
+      try {
+        data = typeof content === 'string' ? yaml.load(content) : content;
+      } catch (parseErr) {
+        this.logger.error('Import: YAML parse failed', { error: parseErr.message });
+        return { summary: { institutions: 0, users: 0, courses: 0, challenges: 0, prompts: 0 }, errors: [`YAML parse error: ${parseErr.message}`] };
+      }
       const importData = data.import || data;
 
       // Import institutions
@@ -44,6 +55,7 @@ class ImportService {
               summary.institutions++;
             }
           } catch (err) {
+            this.logger.error('Import: institution failed', { name: inst.name, error: err.message });
             errors.push(`Institution "${inst.name}": ${err.message}`);
           }
         }
@@ -64,15 +76,16 @@ class ImportService {
                 id: uuidv4(),
                 email: userData.email,
                 name: userData.name,
-                role: userData.role || 'student',
+                role: userData.role || ROLES.STUDENT,
                 institution_id: institutionId,
-                password_hash: userData.password ? await bcrypt.hash(userData.password, 12) : null,
-                preferred_language: userData.language || 'en',
+                password_hash: userData.password ? await bcrypt.hash(userData.password, DEFAULTS.BCRYPT_ROUNDS) : null,
+                preferred_language: userData.language || DEFAULTS.PREFERRED_LANGUAGE,
                 tour_completed: false,
               });
               summary.users++;
             }
           } catch (err) {
+            this.logger.error('Import: user failed', { email: userData.email, error: err.message });
             errors.push(`User "${userData.email}": ${err.message}`);
           }
         }
@@ -95,14 +108,16 @@ class ImportService {
                 name: courseData.name,
                 description: courseData.description || null,
                 institution_id: institutionId,
+                department: courseData.department || null,
                 subject_tree: JSON.stringify(courseData.subject_tree || []),
                 steward_config: JSON.stringify(courseData.steward_config || {}),
-                status: 'active',
+                status: COURSE_STATUS.ACTIVE,
               });
 
               // Link instructors
               if (courseData.instructors) {
-                for (const email of courseData.instructors) {
+                for (const rawEmail of courseData.instructors) {
+                  const email = (rawEmail || '').toLowerCase().trim();
                   const user = await this.db('users').where({ email }).first();
                   if (user) {
                     await this.db('course_instructors').insert({
@@ -110,12 +125,16 @@ class ImportService {
                       user_id: user.id,
                       course_id: courseId,
                     });
+                  } else {
+                    this.logger.warn('Import: instructor not found, skipping link', { email, course: courseData.name });
+                    errors.push(`Course "${courseData.name}": instructor "${email}" not found — skipped`);
                   }
                 }
               }
               summary.courses++;
             }
           } catch (err) {
+            this.logger.error('Import: course failed', { name: courseData.name, error: err.message });
             errors.push(`Course "${courseData.name}": ${err.message}`);
           }
         }
@@ -125,7 +144,8 @@ class ImportService {
       if (importData.challenges) {
         for (const chData of importData.challenges) {
           try {
-            const creator = await this.db('users').where({ email: chData.creator }).first();
+            const creatorEmail = (chData.creator || '').toLowerCase().trim();
+            const creator = await this.db('users').where({ email: creatorEmail }).first();
             const course = chData.course
               ? await this.db('courses').where({ name: chData.course }).first()
               : null;
@@ -137,18 +157,19 @@ class ImportService {
               creator_id: creator.id,
               course_id: course?.id || null,
               subject_path: JSON.stringify(chData.subject_path || []),
-              challenge_type: chData.type || 'practice',
-              visibility: chData.visibility || 'public',
+              challenge_type: chData.type || CHALLENGE_TYPE.PRACTICE,
+              visibility: chData.visibility || VISIBILITY.PUBLIC,
               response_config: JSON.stringify({
-                phase1: chData.phase1_response || 'mc',
-                phase2: chData.phase2_response || 'mc',
+                phase1: chData.phase1_response || DEFAULTS.RESPONSE_TYPE_PHASE1,
+                phase2: chData.phase2_response || DEFAULTS.RESPONSE_TYPE_PHASE2,
               }),
-              max_cycles: chData.max_cycles || 5,
+              max_cycles: chData.max_cycles || DEFAULTS.MAX_CYCLES,
               instructions: JSON.stringify(chData.instructions || {}),
-              status: chData.status || 'published',
+              status: chData.status || CHALLENGE_STATUS.PUBLISHED,
             });
             summary.challenges++;
           } catch (err) {
+            this.logger.error('Import: challenge failed', { title: chData.title, error: err.message });
             errors.push(`Challenge "${chData.title}": ${err.message}`);
           }
         }
@@ -156,7 +177,7 @@ class ImportService {
 
       // Import prompt templates from files
       if (options.importPrompts) {
-        const promptsDir = path.resolve(__dirname, '../../prompts');
+        const promptsDir = path.resolve(__dirname, PATHS.PROMPTS_DIR_FROM_SERVICES);
         if (fs.existsSync(promptsDir)) {
           const files = fs.readdirSync(promptsDir).filter(f => f.endsWith('.yaml'));
           for (const file of files) {
@@ -180,7 +201,7 @@ class ImportService {
       }
 
       await this.db('import_jobs').where({ id: jobId }).update({
-        status: 'completed',
+        status: IMPORT_STATUS.COMPLETED,
         summary: JSON.stringify(summary),
         errors: JSON.stringify(errors),
         completed_at: new Date().toISOString(),
@@ -191,7 +212,7 @@ class ImportService {
 
     } catch (err) {
       await this.db('import_jobs').where({ id: jobId }).update({
-        status: 'failed',
+        status: IMPORT_STATUS.FAILED,
         errors: JSON.stringify([err.message]),
         completed_at: new Date().toISOString(),
       });
@@ -212,16 +233,16 @@ class ImportService {
 
   async getJobStatus(jobId) {
     const job = await this.db('import_jobs').where({ id: jobId }).first();
-    if (!job) return { id: jobId, status: 'not_found' };
+    if (!job) return { id: jobId, status: IMPORT_STATUS.NOT_FOUND };
     return {
       ...job,
-      summary: job.summary ? JSON.parse(job.summary) : null,
-      errors: job.errors ? JSON.parse(job.errors) : [],
+      summary: safeParse(job.summary, null),
+      errors: safeParse(job.errors, []),
     };
   }
 
   async seedFromContent() {
-    const contentDir = path.resolve(__dirname, '../../content/en');
+    const contentDir = path.resolve(__dirname, PATHS.CONTENT_DIR_FROM_SERVICES);
     if (!fs.existsSync(contentDir)) {
       this.logger.warn('Content directory not found, skipping seed');
       return { summary: {}, errors: ['Content directory not found'] };

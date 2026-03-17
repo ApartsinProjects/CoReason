@@ -3,6 +3,7 @@
 const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
 const { ValidationError, AuthError, ConflictError, NotFoundError } = require('../utils/errors');
+const { ROLES, VALID_REGISTRATION_ROLES, DEFAULTS } = require('../utils/constants');
 
 class AuthService {
   constructor(db, logger) {
@@ -11,8 +12,19 @@ class AuthService {
   }
 
   async register({ email, password, name, role, institutionId }) {
+    // Validate required fields
+    if (!email || typeof email !== 'string' || !email.trim()) {
+      throw new ValidationError('Email is required');
+    }
+    if (!password || typeof password !== 'string' || !password.trim()) {
+      throw new ValidationError('Password is required');
+    }
+    if (!name || typeof name !== 'string' || !name.trim()) {
+      throw new ValidationError('Name is required');
+    }
+
     // Validate role
-    if (!['student', 'instructor'].includes(role)) {
+    if (!VALID_REGISTRATION_ROLES.includes(role)) {
       throw new ValidationError('Invalid role', { role });
     }
 
@@ -29,7 +41,7 @@ class AuthService {
     }
 
     // Hash password
-    const passwordHash = await bcrypt.hash(password, 12);
+    const passwordHash = await bcrypt.hash(password, DEFAULTS.BCRYPT_ROUNDS);
 
     const user = {
       id: uuidv4(),
@@ -38,7 +50,7 @@ class AuthService {
       name: name.trim(),
       role,
       institution_id: institutionId || null,
-      preferred_language: 'en',
+      preferred_language: DEFAULTS.PREFERRED_LANGUAGE,
       tour_completed: false,
     };
 
@@ -51,6 +63,12 @@ class AuthService {
   }
 
   async login(email, password) {
+    if (!email || typeof email !== 'string' || !email.trim()) {
+      throw new ValidationError('Email is required');
+    }
+    if (!password || typeof password !== 'string' || !password.trim()) {
+      throw new ValidationError('Password is required');
+    }
     const user = await this.db('users').where({ email: email.toLowerCase().trim() }).first();
     if (!user) {
       throw new AuthError('Invalid email or password');
@@ -98,10 +116,10 @@ class AuthService {
       id: uuidv4(),
       email,
       name: profile.displayName || email.split('@')[0],
-      role: 'student',
+      role: ROLES.STUDENT,
       google_id: profile.id,
       profile_image: profile.photos?.[0]?.value || null,
-      preferred_language: 'en',
+      preferred_language: DEFAULTS.PREFERRED_LANGUAGE,
       tour_completed: false,
     };
 
@@ -111,7 +129,11 @@ class AuthService {
   }
 
   async findById(id) {
-    const user = await this.db('users').where({ id }).first();
+    const user = await this.db('users')
+      .leftJoin('institutions', 'users.institution_id', 'institutions.id')
+      .select('users.*', 'institutions.name as institution_name')
+      .where('users.id', id)
+      .first();
     if (!user) return null;
     const { password_hash, ...safeUser } = user;
     return safeUser;
