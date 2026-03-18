@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3000:3000"
+    env_file: ../.env.all
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://coreason:coreason@db:5432/coreason
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: coreason
+      POSTGRES_USER: coreason
+      POSTGRES_PASSWORD: coreason
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coreason"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

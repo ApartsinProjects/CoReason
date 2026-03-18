@@ -1,0 +1,89 @@
+# ============================================================
+# 07 — Generate Steering Multiple-Choice Options
+# REQ-RESP-04: MC steering wordings based on current AI output
+#   and previous interactions.
+# Used in: FLOW-03, step 10 (steering sub-step, each cycle)
+# ============================================================
+
+id: generate-steering-mc
+version: "1.0"
+description: >
+  Generates MC options for the Steering sub-step. Each option is a
+  possible steering command/correction the student could send to the AI.
+  Options vary in quality, specificity, and effectiveness.
+
+system_prompt: |
+  You are generating multiple-choice steering options for a co-reasoning challenge.
+  The student has just judged the AI's output (identified issues) and now must choose
+  a steering command to send to the AI to improve its output.
+
+  SELECTION MODE: Multi-select (select all that apply) — the student selects ALL corrections they want to send to the AI in this cycle.
+
+  Each option is a single correction directive the student could send to the AI. The student selects all that apply.
+
+  OPTION COMPOSITION (out of {{num_options}} total options):
+  - {{num_correct}} correct correction(s): effective, specific directives that address
+    real issues in the current AI output
+  - {{num_incorrect}} incorrect correction(s): plausible but ineffective, misguided,
+    or counterproductive directives
+
+  OPTION DESIGN RULES:
+  1. Each option is a single correction directive. Do NOT bundle multiple corrections
+     into one option.
+  2. Correct options address real, critical issues in the AI output with specific,
+     actionable instructions
+  3. Incorrect options (distractors) should be plausible-sounding but fall into categories such as:
+     - Vague/unhelpful: too generic to produce meaningful improvement
+     - Misguided: based on a misunderstanding of the problem or the AI's output
+     - Irrelevant: addressing something that is not actually an issue
+     - Counterproductive: would make the output worse if followed
+     - Redundant: addressing something already correct in the output
+  4. Steering commands should be phrased as INSTRUCTIONS TO THE AI (imperative voice):
+     "Address X by doing Y" or "You haven't considered Z — analyze its impact"
+  5. Each option has an internal explanation (shown AFTER submission)
+  6. Consider the student's judging response when generating options — good steering
+     should follow from good judging
+
+  Every option MUST be plausible to a student with domain knowledge — do NOT include
+  absurdly obvious wrong answers or filler options. Even the weakest steering option should
+  require genuine thought to dismiss. Avoid options that any student could rule out without
+  domain expertise (e.g., irrelevant corrections or comically inappropriate commands).
+
+  Options should be grounded in the ACTUAL current AI output and conversation history.
+
+user_prompt: |
+  Generate {{num_options}} steering command options.
+
+  **Original problem:** {{raw_problem}}
+  **Student's framing:** {{student_framing}}
+  **Current AI output:** {{current_ai_output}}
+  **Student's judging response this cycle:** {{student_judgement}}
+  **Conversation history (previous cycles):** {{steering_history}}
+  **Cycle number:** {{cycle_number}} of {{max_cycles}}
+  **Steering rubric criteria:** {{steering_rubric}}
+  **Known issues in AI output:** {{internal_issues}}
+  **Language:** {{language}}
+
+  Generate steering commands the student might select.
+
+output_schema:
+  type: object
+  properties:
+    options:
+      type: array
+      items:
+        type: object
+        properties:
+          id: { type: string }
+          text: { type: string, description: "Steering command shown to student" }
+          quality: { type: string, enum: ["excellent", "good", "fair", "poor"] }
+          explanation: { type: string, description: "Why effective/ineffective — shown AFTER submission" }
+          addresses_issue: { type: string, description: "Which issue this command targets (or 'none')" }
+          rubric_criteria_targeted: { type: string }
+
+parameters:
+  temperature: 0.7
+  max_tokens: 1500
+  num_options_default: 5
+  num_correct_default: 2
+  num_incorrect_default: 3
