@@ -17,6 +17,7 @@ module.exports = function courseRoutes(db, logger, llmService) {
         institutionId: req.query.institutionId,
         search: req.query.search,
         userId: req.user?.id,
+        userInstitutionId: req.user?.institution_id,
       };
       const courses = await courseService.list(filters);
       res.json(courses);

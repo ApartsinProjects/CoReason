@@ -151,6 +151,15 @@ class ImportService {
               : null;
             if (!creator) throw new Error(`Creator not found: ${chData.creator}`);
 
+            // Skip if challenge with same title+course already exists
+            const existingChallenge = await this.db('challenges')
+              .where({ title: chData.title, course_id: course?.id || null })
+              .first();
+            if (existingChallenge) {
+              this.logger.info('Import: challenge already exists, skipping', { title: chData.title });
+              continue;
+            }
+
             await this.db('challenges').insert({
               id: uuidv4(),
               title: chData.title,

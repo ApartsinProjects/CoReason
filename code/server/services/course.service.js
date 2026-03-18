@@ -22,6 +22,9 @@ class CourseService {
 
     if (filters.institutionId) {
       query = query.where('courses.institution_id', filters.institutionId);
+    } else if (filters.userInstitutionId) {
+      // Auto-filter by user's institution when no explicit filter
+      query = query.where('courses.institution_id', filters.userInstitutionId);
     }
     if (filters.search) {
       query = query.where('courses.name', 'like', `%${filters.search}%`);

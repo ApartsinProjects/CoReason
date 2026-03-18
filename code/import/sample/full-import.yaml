@@ -28,6 +28,12 @@ import:
     - name: "Hebrew University"
       country: "Israel"
       departments: ["Computer Science", "Mathematics", "Philosophy", "Law", "Education", "Instructional Technologies", "Digital Medicine Technologies"]
+    - name: "אוניברסיטת תל אביב"
+      country: "ישראל"
+      departments: ["מדעי המחשב", "מתמטיקה", "פיזיקה", "פילוסופיה", "כלכלה", "טכנולוגיות הוראה", "טכנולוגיות רפואה דיגיטלית"]
+    - name: "האוניברסיטה העברית"
+      country: "ישראל"
+      departments: ["מדעי המחשב", "מתמטיקה", "פיזיקה", "פילוסופיה", "כלכלה", "חינוך"]
 
   users:
     # ─── English-speaking users ───
@@ -77,31 +83,31 @@ import:
     - email: "noa.cohen.he@tau.ac.il"
       name: "נועה כהן"
       role: student
-      institution: "Tel Aviv University"
+      institution: "אוניברסיטת תל אביב"
       password: "demo123"
       language: he
     - email: "yael.katz@tau.ac.il"
       name: "יעל כץ"
       role: student
-      institution: "Tel Aviv University"
+      institution: "אוניברסיטת תל אביב"
       password: "demo123"
       language: he
     - email: "dan.mor@technion.ac.il"
       name: "דן מור"
       role: student
-      institution: "Technion"
+      institution: "אוניברסיטת תל אביב"
       password: "demo123"
       language: he
     - email: "dr.levy.he@tau.ac.il"
       name: "ד״ר שרה לוי"
       role: instructor
-      institution: "Tel Aviv University"
+      institution: "אוניברסיטת תל אביב"
       password: "demo123"
       language: he
     - email: "prof.ben-david@huji.ac.il"
       name: "פרופ׳ אבי בן-דוד"
       role: instructor
-      institution: "Hebrew University"
+      institution: "האוניברסיטה העברית"
       password: "demo123"
       language: he
     # ─── Additional instructors for new departments ───
@@ -114,7 +120,7 @@ import:
     - email: "dr.shapira.he@tau.ac.il"
       name: "ד״ר ברכה שפירא"
       role: instructor
-      institution: "Tel Aviv University"
+      institution: "אוניברסיטת תל אביב"
       password: "demo123"
       language: he
     - email: "prof.greenspan@tau.ac.il"
@@ -126,7 +132,7 @@ import:
     - email: "prof.greenspan.he@tau.ac.il"
       name: "פרופ׳ חיית גרינשפן"
       role: instructor
-      institution: "Tel Aviv University"
+      institution: "אוניברסיטת תל אביב"
       password: "demo123"
       language: he
 
@@ -422,8 +428,8 @@ import:
             - name: "Sleep Stage Classification"
     # ─── Hebrew courses (קורסים בעברית) ───
     - name: "מבוא לאלגוריתמים"
-      institution: "Tel Aviv University"
-      department: "Computer Science"
+      institution: "אוניברסיטת תל אביב"
+      department: "מדעי המחשב"
       instructors: ["dr.levy.he@tau.ac.il"]
       description: "טכניקות אלגוריתמיות בסיסיות ומבני נתונים"
       subject_tree:
@@ -442,8 +448,8 @@ import:
             - name: "שינון (Memoization)"
             - name: "טבלאות (Tabulation)"
     - name: "אלגברה לינארית"
-      institution: "Tel Aviv University"
-      department: "Mathematics"
+      institution: "אוניברסיטת תל אביב"
+      department: "מתמטיקה"
       instructors: ["dr.levy.he@tau.ac.il"]
       description: "מרחבים וקטוריים, מטריצות והתמרות לינאריות"
       subject_tree:
@@ -451,8 +457,8 @@ import:
         - name: "פעולות מטריצות"
         - name: "ערכים עצמיים ווקטורים עצמיים"
     - name: "מכניקה קלאסית"
-      institution: "Hebrew University"
-      department: "Computer Science"
+      institution: "האוניברסיטה העברית"
+      department: "פיזיקה"
       instructors: ["prof.ben-david@huji.ac.il"]
       description: "מכניקת ניוטון, פורמולציות לגראנז׳ והמילטון"
       subject_tree:
@@ -467,8 +473,8 @@ import:
             - name: "חיכוך וגרירה"
             - name: "תנודות"
     - name: "אתיקה וטכנולוגיה"
-      institution: "Hebrew University"
-      department: "Computer Science"
+      institution: "האוניברסיטה העברית"
+      department: "פילוסופיה"
       instructors: ["prof.ben-david@huji.ac.il"]
       description: "פילוסופיה מוסרית וחשיבה אתית בעידן הטכנולוגי"
       subject_tree:
@@ -482,8 +488,8 @@ import:
             - name: "אתיקה של בינה מלאכותית"
             - name: "ביואתיקה"
     - name: "מיקרו-כלכלה"
-      institution: "Tel Aviv University"
-      department: "Economics"
+      institution: "אוניברסיטת תל אביב"
+      department: "כלכלה"
       instructors: ["dr.levy.he@tau.ac.il"]
       description: "תורת הצרכן, תורת היצרן ומבני שוק"
       subject_tree:
@@ -492,8 +498,8 @@ import:
         - name: "מבני שוק"
     # ─── Hebrew: Computer Science (שנה א׳/ב׳) ───
     - name: "מבוא למדעי המחשב"
-      institution: "Tel Aviv University"
-      department: "Computer Science"
+      institution: "אוניברסיטת תל אביב"
+      department: "מדעי המחשב"
       instructors: ["dr.levy.he@tau.ac.il"]
       description: "יסודות התכנות, חשיבה חישובית ופתרון בעיות"
       subject_tree:
@@ -513,8 +519,8 @@ import:
             - name: "פירוק"
             - name: "עיצוב אלגוריתמים"
     - name: "מבני נתונים"
-      institution: "Tel Aviv University"
-      department: "Computer Science"
+      institution: "אוניברסיטת תל אביב"
+      department: "מדעי המחשב"
       instructors: ["dr.levy.he@tau.ac.il"]
       description: "מבני נתונים בסיסיים ויישומיהם באלגוריתמים"
       subject_tree:
@@ -532,8 +538,8 @@ import:
             - name: "פונקציות גיבוב"
             - name: "טיפול בהתנגשויות"
     - name: "מתמטיקה בדידה"
-      institution: "Tel Aviv University"
-      department: "Computer Science"
+      institution: "אוניברסיטת תל אביב"
+      department: "מדעי המחשב"
       instructors: ["dr.levy.he@tau.ac.il"]
       description: "יסודות מתמטיים למדעי המחשב: לוגיקה, קבוצות, קומבינטוריקה ותורת הגרפים"
       subject_tree:
@@ -553,8 +559,8 @@ import:
             - name: "עצים ומישוריות"
             - name: "צביעה והתאמה"
     - name: "מערכות הפעלה"
-      institution: "Tel Aviv University"
-      department: "Computer Science"
+      institution: "אוניברסיטת תל אביב"
+      department: "מדעי המחשב"
       instructors: ["dr.levy.he@tau.ac.il"]
       description: "ניהול תהליכים, ניהול זיכרון, מערכות קבצים ומקביליות"
       subject_tree:
@@ -572,8 +578,8 @@ import:
             - name: "ארגון קבצים"
             - name: "תזמון דיסק"
     - name: "מסדי נתונים"
-      institution: "Tel Aviv University"
-      department: "Computer Science"
+      institution: "אוניברסיטת תל אביב"
+      department: "מדעי המחשב"
       instructors: ["dr.levy.he@tau.ac.il"]
       description: "מסדי נתונים רלציוניים, SQL, נורמליזציה וניהול עסקאות"
       subject_tree:
@@ -593,8 +599,8 @@ import:
             - name: "בקרת מקביליות"
     # ─── Hebrew: Instructional Technologies (טכנולוגיות הוראה) ───
     - name: "מבוא לעיצוב הוראה"
-      institution: "Tel Aviv University"
-      department: "Instructional Technologies"
+      institution: "אוניברסיטת תל אביב"
+      department: "טכנולוגיות הוראה"
       instructors: ["dr.shapira.he@tau.ac.il"]
       description: "עקרונות ומודלים לעיצוב חוויות למידה אפקטיביות"
       subject_tree:
@@ -614,8 +620,8 @@ import:
             - name: "הערכה מסכמת"
             - name: "בניית מחוונים"
     - name: "סביבות למידה דיגיטליות"
-      institution: "Tel Aviv University"
-      department: "Instructional Technologies"
+      institution: "אוניברסיטת תל אביב"
+      department: "טכנולוגיות הוראה"
       instructors: ["dr.shapira.he@tau.ac.il"]
       description: "מערכות ניהול למידה, מולטימדיה ופדגוגיה מקוונת"
       subject_tree:
@@ -633,8 +639,8 @@ import:
             - name: "תיקי עבודות אלקטרוניים"
             - name: "משוב אוטומטי"
     - name: "בינה מלאכותית בחינוך"
-      institution: "Tel Aviv University"
-      department: "Instructional Technologies"
+      institution: "אוניברסיטת תל אביב"
+      department: "טכנולוגיות הוראה"
       instructors: ["dr.shapira.he@tau.ac.il"]
       description: "יישומי בינה מלאכותית בהוראה, למידה והערכה חינוכית"
       subject_tree:
@@ -652,8 +658,8 @@ import:
             - name: "לוחות מחוונים והדמיה"
     # ─── Hebrew: Digital Medicine Technologies (טכנולוגיות רפואה דיגיטלית) ───
     - name: "מבוא לבריאות דיגיטלית"
-      institution: "Tel Aviv University"
-      department: "Digital Medicine Technologies"
+      institution: "אוניברסיטת תל אביב"
+      department: "טכנולוגיות רפואה דיגיטלית"
       instructors: ["prof.greenspan.he@tau.ac.il"]
       description: "יסודות הבריאות הדיגיטלית, טלרפואה, רשומות רפואיות אלקטרוניות ואינפורמטיקה רפואית"
       subject_tree:
@@ -671,8 +677,8 @@ import:
             - name: "חיישנים לבישים"
             - name: "אפליקציות בריאות"
     - name: "הדמיה רפואית"
-      institution: "Tel Aviv University"
-      department: "Digital Medicine Technologies"
+      institution: "אוניברסיטת תל אביב"
+      department: "טכנולוגיות רפואה דיגיטלית"
       instructors: ["prof.greenspan.he@tau.ac.il"]
       description: "עקרונות של רכישה, עיבוד וניתוח תמונות רפואיות באמצעות AI"
       subject_tree:
@@ -691,8 +697,8 @@ import:
             - name: "רשתות CNN לזיהוי"
             - name: "סיווג פתולוגיות"
     - name: "עיבוד אותות ביו-רפואיים"
-      institution: "Tel Aviv University"
-      department: "Digital Medicine Technologies"
+      institution: "אוניברסיטת תל אביב"
+      department: "טכנולוגיות רפואה דיגיטלית"
       instructors: ["prof.greenspan.he@tau.ac.il"]
       description: "ניתוח אותות ECG, EEG ואותות ביולוגיים נוספים לאבחון וניטור קליני"
       subject_tree:
@@ -748,6 +754,24 @@ import:
       phase2_response: open-ended
       max_cycles: 4
       subject_path: ["Applied Ethics", "AI Ethics"]
+    - title: "Eigenvalue Decomposition in Data Science"
+      course: "Linear Algebra"
+      creator: "dr.levy@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Eigenvalues & Eigenvectors"]
+    - title: "Market Equilibrium Under Perfect Competition"
+      course: "Microeconomics"
+      creator: "prof.chen@mit.edu"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Supply & Demand"]
     # ─── Hebrew challenges (אתגרים בעברית) ───
     - title: "צינור מיון לנתוני חיישנים"
       course: "מבוא לאלגוריתמים"
