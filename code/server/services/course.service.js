@@ -27,7 +27,58 @@ class CourseService {
       query = query.where('courses.name', 'like', `%${filters.search}%`);
     }
 
-    return query.orderBy('courses.name');
+    const courses = await query.orderBy('courses.name');
+
+    // Enrich with aggregate counts
+    if (courses.length > 0) {
+      const courseIds = courses.map(c => c.id);
+
+      const challengeCounts = await this.db('challenges')
+        .whereIn('course_id', courseIds)
+        .where('status', 'published')
+        .groupBy('course_id')
+        .select('course_id')
+        .count('* as cnt');
+      const challengeMap = {};
+      challengeCounts.forEach(r => { challengeMap[r.course_id] = r.cnt; });
+
+      const instructorCounts = await this.db('course_instructors')
+        .whereIn('course_id', courseIds)
+        .groupBy('course_id')
+        .select('course_id')
+        .count('* as cnt');
+      const instructorMap = {};
+      instructorCounts.forEach(r => { instructorMap[r.course_id] = r.cnt; });
+
+      const studentCounts = await this.db('course_subscriptions')
+        .whereIn('course_id', courseIds)
+        .groupBy('course_id')
+        .select('course_id')
+        .count('* as cnt');
+      const studentMap = {};
+      studentCounts.forEach(r => { studentMap[r.course_id] = r.cnt; });
+
+      // Add subscription status if userId provided
+      let subSet = new Set();
+      if (filters.userId) {
+        const subs = await this.db('course_subscriptions')
+          .where('user_id', filters.userId)
+          .whereIn('course_id', courseIds)
+          .select('course_id');
+        subs.forEach(s => subSet.add(s.course_id));
+      }
+
+      courses.forEach(c => {
+        c.challenge_count = challengeMap[c.id] || 0;
+        c.instructor_count = instructorMap[c.id] || 0;
+        c.student_count = studentMap[c.id] || 0;
+        if (filters.userId) {
+          c.is_subscribed = subSet.has(c.id);
+        }
+      });
+    }
+
+    return courses;
   }
 
   async getById(id) {
