@@ -20,6 +20,13 @@ class CourseService {
       )
       .where('courses.status', COURSE_STATUS.ACTIVE);
 
+    // When instructor=true, only show courses the user is assigned to
+    if (filters.instructorOnly && filters.userId) {
+      query = query
+        .join('course_instructors', 'courses.id', 'course_instructors.course_id')
+        .where('course_instructors.user_id', filters.userId);
+    }
+
     if (filters.institutionId) {
       query = query.where('courses.institution_id', filters.institutionId);
     } else if (filters.userInstitutionId) {

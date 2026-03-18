@@ -157,7 +157,11 @@
     // ── Load challenges ──
     function loadChallenges() {
       tbody.innerHTML = '<tr class="loading-row"><td colspan="9">Loading...</td></tr>';
-      API.challenges.list({ mine: true }).then(function(data) {
+      // When viewing a specific course, show all its challenges (not just mine)
+      var params = new URLSearchParams(window.location.search);
+      var courseIdParam = params.get('courseId');
+      var listOpts = courseIdParam ? { courseId: courseIdParam } : { mine: true };
+      API.challenges.list(listOpts).then(function(data) {
         allChallenges = data.challenges || data || [];
         applyFilters();
       }).catch(function(err) {
@@ -242,7 +246,7 @@
         if (chStatus === 'published') {
           actHtml += ' <a href="instructor-analytics.html?courseId=' + (ch.course_id || ch.courseId || '') + '" class="btn btn-outline btn-sm" data-t="analytics">Analytics</a>';
         }
-        actHtml += ' <a href="challenge-run.html?challengeId=' + id + '&preview=1" class="btn btn-outline btn-sm" data-t="preview">Preview</a>';
+        actHtml += ' <a href="challenge-run.html?challengeId=' + id + '&preview=instructor" class="btn btn-outline btn-sm" data-t="preview">Preview</a>';
         actHtml += ' <button class="btn btn-outline btn-sm" style="color:var(--danger);" onclick="deleteChallenge(\'' + id + '\')" title="Delete" aria-label="Delete">&#128465;</button>';
         actHtml += '</div>';
         tdActions.innerHTML = actHtml;

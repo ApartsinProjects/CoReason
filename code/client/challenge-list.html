@@ -43,7 +43,7 @@
         <h1 data-t="challenges">Challenges</h1>
         <p data-t="challengeListDesc">Browse, filter, and run challenges from your courses</p>
       </div>
-      <a href="create-challenge-student.html" class="btn btn-primary" data-t="createChallenge">+ Create Challenge</a>
+      <a href="create-challenge.html" class="btn btn-primary" data-t="createChallenge">+ Create Challenge</a>
     </div>
 
     <!-- Filter Bar -->
@@ -263,7 +263,7 @@
 
       // Private challenges: owner gets edit & delete
       if (vis === 'private' && isOwner) {
-        html += ' <a href="create-challenge-student.html?id=' + id + '" class="btn btn-outline btn-sm" title="Edit" aria-label="Edit">&#9998;</a>';
+        html += ' <a href="create-challenge.html?id=' + id + '" class="btn btn-outline btn-sm" title="Edit" aria-label="Edit">&#9998;</a>';
         html += ' <button class="btn btn-outline btn-sm" title="Delete" style="color:var(--danger);" onclick="deleteChallenge(\'' + id + '\')" aria-label="Delete">&#128465;</button>';
       }
 
