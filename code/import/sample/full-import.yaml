@@ -3,7 +3,7 @@ import:
   institutions:
     - name: "Tel Aviv University"
       country: "Israel"
-      departments: ["Computer Science", "Mathematics", "Physics", "Philosophy", "Economics"]
+      departments: ["Computer Science", "Mathematics", "Physics", "Philosophy", "Economics", "Instructional Technologies", "Digital Medicine Technologies"]
     - name: "MIT"
       country: "USA"
       departments: ["EECS", "Mathematics", "Physics", "Management", "Linguistics"]
@@ -27,46 +27,111 @@ import:
       departments: ["Computer Science", "Engineering", "Mathematics", "Economics"]
     - name: "Hebrew University"
       country: "Israel"
-      departments: ["Computer Science", "Mathematics", "Philosophy", "Law", "Education"]
+      departments: ["Computer Science", "Mathematics", "Philosophy", "Law", "Education", "Instructional Technologies", "Digital Medicine Technologies"]
 
   users:
+    # ─── English-speaking users ───
     - email: "noa.cohen@tau.ac.il"
       name: "Noa Cohen"
       role: student
       institution: "Tel Aviv University"
       password: "demo123"
+      language: en
     - email: "ahmed.hassan@tau.ac.il"
       name: "Ahmed Hassan"
       role: student
       institution: "Tel Aviv University"
       password: "demo123"
+      language: en
     - email: "maria.garcia@mit.edu"
       name: "Maria Garcia"
       role: student
       institution: "MIT"
       password: "demo123"
+      language: en
     - email: "dr.levy@tau.ac.il"
       name: "Dr. Sarah Levy"
       role: instructor
       institution: "Tel Aviv University"
       password: "demo123"
+      language: en
     - email: "prof.chen@mit.edu"
       name: "Prof. Wei Chen"
       role: instructor
       institution: "MIT"
       password: "demo123"
+      language: en
     - email: "li.wei@tsinghua.edu.cn"
       name: "Li Wei"
       role: student
       institution: "Tsinghua University"
       password: "demo123"
+      language: en
     - email: "sarah.miller@oxford.ac.uk"
       name: "Sarah Miller"
       role: student
       institution: "University of Oxford"
       password: "demo123"
+      language: en
+    # ─── Hebrew-speaking users (שפת ממשק: עברית) ───
+    - email: "noa.cohen.he@tau.ac.il"
+      name: "נועה כהן"
+      role: student
+      institution: "Tel Aviv University"
+      password: "demo123"
+      language: he
+    - email: "yael.katz@tau.ac.il"
+      name: "יעל כץ"
+      role: student
+      institution: "Tel Aviv University"
+      password: "demo123"
+      language: he
+    - email: "dan.mor@technion.ac.il"
+      name: "דן מור"
+      role: student
+      institution: "Technion"
+      password: "demo123"
+      language: he
+    - email: "dr.levy.he@tau.ac.il"
+      name: "ד״ר שרה לוי"
+      role: instructor
+      institution: "Tel Aviv University"
+      password: "demo123"
+      language: he
+    - email: "prof.ben-david@huji.ac.il"
+      name: "פרופ׳ אבי בן-דוד"
+      role: instructor
+      institution: "Hebrew University"
+      password: "demo123"
+      language: he
+    # ─── Additional instructors for new departments ───
+    - email: "dr.shapira@tau.ac.il"
+      name: "Dr. Bracha Shapira"
+      role: instructor
+      institution: "Tel Aviv University"
+      password: "demo123"
+      language: en
+    - email: "dr.shapira.he@tau.ac.il"
+      name: "ד״ר ברכה שפירא"
+      role: instructor
+      institution: "Tel Aviv University"
+      password: "demo123"
+      language: he
+    - email: "prof.greenspan@tau.ac.il"
+      name: "Prof. Hayit Greenspan"
+      role: instructor
+      institution: "Tel Aviv University"
+      password: "demo123"
+      language: en
+    - email: "prof.greenspan.he@tau.ac.il"
+      name: "פרופ׳ חיית גרינשפן"
+      role: instructor
+      institution: "Tel Aviv University"
+      password: "demo123"
+      language: he
 
   courses:
+    # ─── English courses ───
     - name: "Introduction to Algorithms"
       institution: "Tel Aviv University"
       department: "Computer Science"
@@ -136,8 +201,517 @@ import:
         - name: "Supply & Demand"
         - name: "Consumer Choice"
         - name: "Market Structures"
+    # ─── English: Computer Science (1st/2nd year) ───
+    - name: "Introduction to Computer Science"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy@tau.ac.il"]
+      description: "Foundations of programming, computational thinking, and problem solving"
+      subject_tree:
+        - name: "Programming Fundamentals"
+          children:
+            - name: "Variables & Data Types"
+            - name: "Control Flow"
+            - name: "Functions & Recursion"
+        - name: "Object-Oriented Programming"
+          children:
+            - name: "Classes & Objects"
+            - name: "Inheritance & Polymorphism"
+            - name: "Design Patterns"
+        - name: "Computational Thinking"
+          children:
+            - name: "Abstraction"
+            - name: "Decomposition"
+            - name: "Algorithm Design"
+    - name: "Data Structures"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy@tau.ac.il"]
+      description: "Fundamental data structures and their applications in algorithms"
+      subject_tree:
+        - name: "Linear Structures"
+          children:
+            - name: "Arrays & Linked Lists"
+            - name: "Stacks & Queues"
+        - name: "Trees & Graphs"
+          children:
+            - name: "Binary Trees & BST"
+            - name: "Heaps & Priority Queues"
+            - name: "Graph Representations"
+        - name: "Hash Tables"
+          children:
+            - name: "Hash Functions"
+            - name: "Collision Resolution"
+    - name: "Discrete Mathematics"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy@tau.ac.il"]
+      description: "Mathematical foundations for computer science: logic, sets, combinatorics, and graph theory"
+      subject_tree:
+        - name: "Logic & Proofs"
+          children:
+            - name: "Propositional Logic"
+            - name: "Predicate Logic"
+            - name: "Proof Techniques"
+        - name: "Combinatorics"
+          children:
+            - name: "Counting Principles"
+            - name: "Permutations & Combinations"
+            - name: "Pigeonhole Principle"
+        - name: "Graph Theory"
+          children:
+            - name: "Graph Properties"
+            - name: "Trees & Planarity"
+            - name: "Coloring & Matching"
+    - name: "Operating Systems"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy@tau.ac.il"]
+      description: "Process management, memory management, file systems, and concurrency"
+      subject_tree:
+        - name: "Process Management"
+          children:
+            - name: "Scheduling Algorithms"
+            - name: "Interprocess Communication"
+            - name: "Threads & Concurrency"
+        - name: "Memory Management"
+          children:
+            - name: "Virtual Memory"
+            - name: "Paging & Segmentation"
+        - name: "File Systems"
+          children:
+            - name: "File Organization"
+            - name: "Disk Scheduling"
+    - name: "Database Systems"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy@tau.ac.il"]
+      description: "Relational databases, SQL, normalization, and transaction management"
+      subject_tree:
+        - name: "Relational Model"
+          children:
+            - name: "ER Diagrams"
+            - name: "Normalization"
+            - name: "Relational Algebra"
+        - name: "SQL"
+          children:
+            - name: "Queries & Joins"
+            - name: "Aggregation & Subqueries"
+            - name: "Indexing & Optimization"
+        - name: "Transaction Management"
+          children:
+            - name: "ACID Properties"
+            - name: "Concurrency Control"
+    # ─── English: Instructional Technologies ───
+    - name: "Introduction to Instructional Design"
+      institution: "Tel Aviv University"
+      department: "Instructional Technologies"
+      instructors: ["dr.shapira@tau.ac.il"]
+      description: "Principles and models for designing effective learning experiences"
+      subject_tree:
+        - name: "Learning Theories"
+          children:
+            - name: "Behaviorism"
+            - name: "Constructivism"
+            - name: "Connectivism"
+        - name: "Instructional Models"
+          children:
+            - name: "ADDIE Model"
+            - name: "Backward Design"
+            - name: "Universal Design for Learning"
+        - name: "Assessment Design"
+          children:
+            - name: "Formative Assessment"
+            - name: "Summative Assessment"
+            - name: "Rubric Construction"
+    - name: "Digital Learning Environments"
+      institution: "Tel Aviv University"
+      department: "Instructional Technologies"
+      instructors: ["dr.shapira@tau.ac.il"]
+      description: "Learning management systems, multimedia, and online pedagogy"
+      subject_tree:
+        - name: "LMS & Platforms"
+          children:
+            - name: "Moodle & Canvas"
+            - name: "Adaptive Learning Systems"
+        - name: "Multimedia Learning"
+          children:
+            - name: "Cognitive Load Theory"
+            - name: "Mayer's Principles"
+            - name: "Video-based Learning"
+        - name: "Online Assessment"
+          children:
+            - name: "E-Portfolios"
+            - name: "Automated Feedback"
+    - name: "AI in Education"
+      institution: "Tel Aviv University"
+      department: "Instructional Technologies"
+      instructors: ["dr.shapira@tau.ac.il"]
+      description: "Artificial intelligence applications in teaching, learning, and educational assessment"
+      subject_tree:
+        - name: "Intelligent Tutoring Systems"
+          children:
+            - name: "Student Modeling"
+            - name: "Knowledge Tracing"
+        - name: "Natural Language Processing in Education"
+          children:
+            - name: "Automated Essay Scoring"
+            - name: "Chatbots for Learning"
+        - name: "Learning Analytics"
+          children:
+            - name: "Predictive Modeling"
+            - name: "Dashboards & Visualization"
+    # ─── English: Digital Medicine Technologies ───
+    - name: "Introduction to Digital Health"
+      institution: "Tel Aviv University"
+      department: "Digital Medicine Technologies"
+      instructors: ["prof.greenspan@tau.ac.il"]
+      description: "Foundations of digital health, telemedicine, electronic health records, and health informatics"
+      subject_tree:
+        - name: "Health Information Systems"
+          children:
+            - name: "Electronic Health Records"
+            - name: "HL7 & FHIR Standards"
+            - name: "Health Data Privacy"
+        - name: "Telemedicine"
+          children:
+            - name: "Remote Patient Monitoring"
+            - name: "Teleconsultation"
+        - name: "Mobile Health"
+          children:
+            - name: "Wearable Sensors"
+            - name: "Health Apps"
+    - name: "Medical Imaging"
+      institution: "Tel Aviv University"
+      department: "Digital Medicine Technologies"
+      instructors: ["prof.greenspan@tau.ac.il"]
+      description: "Principles of medical image acquisition, processing, and analysis using AI"
+      subject_tree:
+        - name: "Image Acquisition"
+          children:
+            - name: "X-ray & CT"
+            - name: "MRI Fundamentals"
+            - name: "Ultrasound"
+        - name: "Image Processing"
+          children:
+            - name: "Segmentation"
+            - name: "Registration"
+            - name: "Enhancement"
+        - name: "AI in Imaging"
+          children:
+            - name: "CNNs for Detection"
+            - name: "Classification of Pathology"
+    - name: "Biomedical Signal Processing"
+      institution: "Tel Aviv University"
+      department: "Digital Medicine Technologies"
+      instructors: ["prof.greenspan@tau.ac.il"]
+      description: "Analysis of ECG, EEG, and other biosignals for clinical diagnosis and monitoring"
+      subject_tree:
+        - name: "Biosignal Types"
+          children:
+            - name: "ECG & Cardiac Signals"
+            - name: "EEG & Brain Signals"
+            - name: "EMG & Muscle Signals"
+        - name: "Signal Analysis"
+          children:
+            - name: "Filtering & Noise Reduction"
+            - name: "Fourier & Wavelet Transforms"
+        - name: "Clinical Applications"
+          children:
+            - name: "Arrhythmia Detection"
+            - name: "Sleep Stage Classification"
+    # ─── Hebrew courses (קורסים בעברית) ───
+    - name: "מבוא לאלגוריתמים"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy.he@tau.ac.il"]
+      description: "טכניקות אלגוריתמיות בסיסיות ומבני נתונים"
+      subject_tree:
+        - name: "מיון וחיפוש"
+          children:
+            - name: "מיון מבוסס השוואות"
+            - name: "חיפוש מבוסס גיבוב"
+            - name: "גרסאות חיפוש בינארי"
+        - name: "אלגוריתמי גרפים"
+          children:
+            - name: "מסלולים קצרים ביותר"
+            - name: "עצי פרישה מינימליים"
+            - name: "זרימה ברשת"
+        - name: "תכנות דינמי"
+          children:
+            - name: "שינון (Memoization)"
+            - name: "טבלאות (Tabulation)"
+    - name: "אלגברה לינארית"
+      institution: "Tel Aviv University"
+      department: "Mathematics"
+      instructors: ["dr.levy.he@tau.ac.il"]
+      description: "מרחבים וקטוריים, מטריצות והתמרות לינאריות"
+      subject_tree:
+        - name: "מרחבים וקטוריים"
+        - name: "פעולות מטריצות"
+        - name: "ערכים עצמיים ווקטורים עצמיים"
+    - name: "מכניקה קלאסית"
+      institution: "Hebrew University"
+      department: "Computer Science"
+      instructors: ["prof.ben-david@huji.ac.il"]
+      description: "מכניקת ניוטון, פורמולציות לגראנז׳ והמילטון"
+      subject_tree:
+        - name: "קינמטיקה"
+          children:
+            - name: "תנועה ליניארית"
+            - name: "תנועת קליעה"
+            - name: "תנועה מעגלית"
+        - name: "דינמיקה"
+          children:
+            - name: "חוקי ניוטון"
+            - name: "חיכוך וגרירה"
+            - name: "תנודות"
+    - name: "אתיקה וטכנולוגיה"
+      institution: "Hebrew University"
+      department: "Computer Science"
+      instructors: ["prof.ben-david@huji.ac.il"]
+      description: "פילוסופיה מוסרית וחשיבה אתית בעידן הטכנולוגי"
+      subject_tree:
+        - name: "אתיקה נורמטיבית"
+          children:
+            - name: "תועלתנות"
+            - name: "דאונטולוגיה"
+            - name: "אתיקת מידות"
+        - name: "אתיקה יישומית"
+          children:
+            - name: "אתיקה של בינה מלאכותית"
+            - name: "ביואתיקה"
+    - name: "מיקרו-כלכלה"
+      institution: "Tel Aviv University"
+      department: "Economics"
+      instructors: ["dr.levy.he@tau.ac.il"]
+      description: "תורת הצרכן, תורת היצרן ומבני שוק"
+      subject_tree:
+        - name: "היצע וביקוש"
+        - name: "בחירת צרכן"
+        - name: "מבני שוק"
+    # ─── Hebrew: Computer Science (שנה א׳/ב׳) ───
+    - name: "מבוא למדעי המחשב"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy.he@tau.ac.il"]
+      description: "יסודות התכנות, חשיבה חישובית ופתרון בעיות"
+      subject_tree:
+        - name: "יסודות תכנות"
+          children:
+            - name: "משתנים וטיפוסי נתונים"
+            - name: "זרימת בקרה"
+            - name: "פונקציות ורקורסיה"
+        - name: "תכנות מונחה עצמים"
+          children:
+            - name: "מחלקות ואובייקטים"
+            - name: "ירושה ופולימורפיזם"
+            - name: "דפוסי עיצוב"
+        - name: "חשיבה חישובית"
+          children:
+            - name: "הפשטה"
+            - name: "פירוק"
+            - name: "עיצוב אלגוריתמים"
+    - name: "מבני נתונים"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy.he@tau.ac.il"]
+      description: "מבני נתונים בסיסיים ויישומיהם באלגוריתמים"
+      subject_tree:
+        - name: "מבנים ליניאריים"
+          children:
+            - name: "מערכים ורשימות מקושרות"
+            - name: "מחסניות ותורים"
+        - name: "עצים וגרפים"
+          children:
+            - name: "עצים בינאריים ו-BST"
+            - name: "ערימות ותורי עדיפויות"
+            - name: "ייצוגי גרפים"
+        - name: "טבלאות גיבוב"
+          children:
+            - name: "פונקציות גיבוב"
+            - name: "טיפול בהתנגשויות"
+    - name: "מתמטיקה בדידה"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy.he@tau.ac.il"]
+      description: "יסודות מתמטיים למדעי המחשב: לוגיקה, קבוצות, קומבינטוריקה ותורת הגרפים"
+      subject_tree:
+        - name: "לוגיקה והוכחות"
+          children:
+            - name: "לוגיקת פסוקים"
+            - name: "לוגיקת פרדיקטים"
+            - name: "טכניקות הוכחה"
+        - name: "קומבינטוריקה"
+          children:
+            - name: "עקרונות ספירה"
+            - name: "תמורות וצירופים"
+            - name: "עקרון שובך היונים"
+        - name: "תורת הגרפים"
+          children:
+            - name: "תכונות גרפים"
+            - name: "עצים ומישוריות"
+            - name: "צביעה והתאמה"
+    - name: "מערכות הפעלה"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy.he@tau.ac.il"]
+      description: "ניהול תהליכים, ניהול זיכרון, מערכות קבצים ומקביליות"
+      subject_tree:
+        - name: "ניהול תהליכים"
+          children:
+            - name: "אלגוריתמי תזמון"
+            - name: "תקשורת בין-תהליכית"
+            - name: "חוטים ומקביליות"
+        - name: "ניהול זיכרון"
+          children:
+            - name: "זיכרון וירטואלי"
+            - name: "דפדוף וסגמנטציה"
+        - name: "מערכות קבצים"
+          children:
+            - name: "ארגון קבצים"
+            - name: "תזמון דיסק"
+    - name: "מסדי נתונים"
+      institution: "Tel Aviv University"
+      department: "Computer Science"
+      instructors: ["dr.levy.he@tau.ac.il"]
+      description: "מסדי נתונים רלציוניים, SQL, נורמליזציה וניהול עסקאות"
+      subject_tree:
+        - name: "המודל הרלציוני"
+          children:
+            - name: "דיאגרמות ER"
+            - name: "נורמליזציה"
+            - name: "אלגברה רלציונית"
+        - name: "SQL"
+          children:
+            - name: "שאילתות וצירופים"
+            - name: "צבירה ותת-שאילתות"
+            - name: "אינדקסים ואופטימיזציה"
+        - name: "ניהול עסקאות"
+          children:
+            - name: "תכונות ACID"
+            - name: "בקרת מקביליות"
+    # ─── Hebrew: Instructional Technologies (טכנולוגיות הוראה) ───
+    - name: "מבוא לעיצוב הוראה"
+      institution: "Tel Aviv University"
+      department: "Instructional Technologies"
+      instructors: ["dr.shapira.he@tau.ac.il"]
+      description: "עקרונות ומודלים לעיצוב חוויות למידה אפקטיביות"
+      subject_tree:
+        - name: "תיאוריות למידה"
+          children:
+            - name: "ביהביוריזם"
+            - name: "קונסטרוקטיביזם"
+            - name: "קונקטיביזם"
+        - name: "מודלים הוראתיים"
+          children:
+            - name: "מודל ADDIE"
+            - name: "עיצוב לאחור"
+            - name: "עיצוב אוניברסלי ללמידה"
+        - name: "עיצוב הערכה"
+          children:
+            - name: "הערכה מעצבת"
+            - name: "הערכה מסכמת"
+            - name: "בניית מחוונים"
+    - name: "סביבות למידה דיגיטליות"
+      institution: "Tel Aviv University"
+      department: "Instructional Technologies"
+      instructors: ["dr.shapira.he@tau.ac.il"]
+      description: "מערכות ניהול למידה, מולטימדיה ופדגוגיה מקוונת"
+      subject_tree:
+        - name: "פלטפורמות למידה"
+          children:
+            - name: "Moodle ו-Canvas"
+            - name: "מערכות למידה מסתגלות"
+        - name: "למידה מולטימדית"
+          children:
+            - name: "תיאוריית עומס קוגניטיבי"
+            - name: "עקרונות מאייר"
+            - name: "למידה מבוססת וידאו"
+        - name: "הערכה מקוונת"
+          children:
+            - name: "תיקי עבודות אלקטרוניים"
+            - name: "משוב אוטומטי"
+    - name: "בינה מלאכותית בחינוך"
+      institution: "Tel Aviv University"
+      department: "Instructional Technologies"
+      instructors: ["dr.shapira.he@tau.ac.il"]
+      description: "יישומי בינה מלאכותית בהוראה, למידה והערכה חינוכית"
+      subject_tree:
+        - name: "מערכות הדרכה חכמות"
+          children:
+            - name: "מודל תלמיד"
+            - name: "מעקב ידע"
+        - name: "עיבוד שפה טבעית בחינוך"
+          children:
+            - name: "בדיקת חיבורים אוטומטית"
+            - name: "צ׳אטבוטים ללמידה"
+        - name: "אנליטיקת למידה"
+          children:
+            - name: "מודלים חיזויים"
+            - name: "לוחות מחוונים והדמיה"
+    # ─── Hebrew: Digital Medicine Technologies (טכנולוגיות רפואה דיגיטלית) ───
+    - name: "מבוא לבריאות דיגיטלית"
+      institution: "Tel Aviv University"
+      department: "Digital Medicine Technologies"
+      instructors: ["prof.greenspan.he@tau.ac.il"]
+      description: "יסודות הבריאות הדיגיטלית, טלרפואה, רשומות רפואיות אלקטרוניות ואינפורמטיקה רפואית"
+      subject_tree:
+        - name: "מערכות מידע רפואיות"
+          children:
+            - name: "רשומה רפואית אלקטרונית"
+            - name: "תקני HL7 ו-FHIR"
+            - name: "פרטיות מידע רפואי"
+        - name: "טלרפואה"
+          children:
+            - name: "ניטור מטופלים מרחוק"
+            - name: "ייעוץ מרחוק"
+        - name: "בריאות ניידת"
+          children:
+            - name: "חיישנים לבישים"
+            - name: "אפליקציות בריאות"
+    - name: "הדמיה רפואית"
+      institution: "Tel Aviv University"
+      department: "Digital Medicine Technologies"
+      instructors: ["prof.greenspan.he@tau.ac.il"]
+      description: "עקרונות של רכישה, עיבוד וניתוח תמונות רפואיות באמצעות AI"
+      subject_tree:
+        - name: "רכישת תמונות"
+          children:
+            - name: "רנטגן ו-CT"
+            - name: "יסודות MRI"
+            - name: "אולטרסאונד"
+        - name: "עיבוד תמונה"
+          children:
+            - name: "סגמנטציה"
+            - name: "רגיסטרציה"
+            - name: "שיפור תמונה"
+        - name: "AI בהדמיה"
+          children:
+            - name: "רשתות CNN לזיהוי"
+            - name: "סיווג פתולוגיות"
+    - name: "עיבוד אותות ביו-רפואיים"
+      institution: "Tel Aviv University"
+      department: "Digital Medicine Technologies"
+      instructors: ["prof.greenspan.he@tau.ac.il"]
+      description: "ניתוח אותות ECG, EEG ואותות ביולוגיים נוספים לאבחון וניטור קליני"
+      subject_tree:
+        - name: "סוגי אותות ביולוגיים"
+          children:
+            - name: "ECG ואותות לב"
+            - name: "EEG ואותות מוח"
+            - name: "EMG ואותות שריר"
+        - name: "ניתוח אותות"
+          children:
+            - name: "סינון והפחתת רעש"
+            - name: "התמרות פורייה וגליונים"
+        - name: "יישומים קליניים"
+          children:
+            - name: "זיהוי הפרעות קצב"
+            - name: "סיווג שלבי שינה"
 
   challenges:
+    # ─── English challenges ───
     - title: "Sorting Pipeline for Sensor Data"
       course: "Introduction to Algorithms"
       creator: "dr.levy@tau.ac.il"
@@ -174,3 +748,325 @@ import:
       phase2_response: open-ended
       max_cycles: 4
       subject_path: ["Applied Ethics", "AI Ethics"]
+    # ─── Hebrew challenges (אתגרים בעברית) ───
+    - title: "צינור מיון לנתוני חיישנים"
+      course: "מבוא לאלגוריתמים"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 5
+      subject_path: ["מיון וחיפוש", "מיון מבוסס השוואות"]
+    - title: "אופטימיזציה של סריקת גרפים"
+      course: "מבוא לאלגוריתמים"
+      creator: "dr.levy.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["אלגוריתמי גרפים", "מסלולים קצרים ביותר"]
+    - title: "תכנות דינמי — בעיית התרמיל"
+      course: "מבוא לאלגוריתמים"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["תכנות דינמי", "שינון (Memoization)"]
+    - title: "ניתוח תנועת קליעה"
+      course: "מכניקה קלאסית"
+      creator: "prof.ben-david@huji.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 5
+      subject_path: ["קינמטיקה", "תנועת קליעה"]
+    - title: "בעיית הקרונית — גרסה מעודכנת"
+      course: "אתיקה וטכנולוגיה"
+      creator: "prof.ben-david@huji.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["אתיקה יישומית", "אתיקה של בינה מלאכותית"]
+    - title: "ערכים עצמיים — יישומים במדעי הנתונים"
+      course: "אלגברה לינארית"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["ערכים עצמיים ווקטורים עצמיים"]
+    - title: "שיווי משקל בשוק תחרותי"
+      course: "מיקרו-כלכלה"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["היצע וביקוש"]
+    # ─── English: CS challenges ───
+    - title: "Designing a Recursive Solution"
+      course: "Introduction to Computer Science"
+      creator: "dr.levy@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Programming Fundamentals", "Functions & Recursion"]
+    - title: "Class Hierarchy for a Library System"
+      course: "Introduction to Computer Science"
+      creator: "dr.levy@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Object-Oriented Programming", "Inheritance & Polymorphism"]
+    - title: "Implementing a Hash Table"
+      course: "Data Structures"
+      creator: "dr.levy@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["Hash Tables", "Collision Resolution"]
+    - title: "BST Balancing and AVL Trees"
+      course: "Data Structures"
+      creator: "dr.levy@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Trees & Graphs", "Binary Trees & BST"]
+    - title: "Combinatorial Proof by Induction"
+      course: "Discrete Mathematics"
+      creator: "dr.levy@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 3
+      subject_path: ["Logic & Proofs", "Proof Techniques"]
+    - title: "Process Scheduling Simulation"
+      course: "Operating Systems"
+      creator: "dr.levy@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["Process Management", "Scheduling Algorithms"]
+    - title: "SQL Query Optimization"
+      course: "Database Systems"
+      creator: "dr.levy@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 5
+      subject_path: ["SQL", "Indexing & Optimization"]
+    # ─── English: Instructional Technologies challenges ───
+    - title: "Designing a Backward Design Unit Plan"
+      course: "Introduction to Instructional Design"
+      creator: "dr.shapira@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Instructional Models", "Backward Design"]
+    - title: "Constructing an Assessment Rubric"
+      course: "Introduction to Instructional Design"
+      creator: "dr.shapira@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 3
+      subject_path: ["Assessment Design", "Rubric Construction"]
+    - title: "Applying Mayer's Multimedia Principles"
+      course: "Digital Learning Environments"
+      creator: "dr.shapira@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Multimedia Learning", "Mayer's Principles"]
+    - title: "Evaluating an AI Tutoring System"
+      course: "AI in Education"
+      creator: "dr.shapira@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Intelligent Tutoring Systems", "Student Modeling"]
+    # ─── English: Digital Medicine challenges ───
+    - title: "Designing an EHR Data Pipeline"
+      course: "Introduction to Digital Health"
+      creator: "prof.greenspan@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["Health Information Systems", "Electronic Health Records"]
+    - title: "CT Scan Segmentation for Lung Nodules"
+      course: "Medical Imaging"
+      creator: "prof.greenspan@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 5
+      subject_path: ["AI in Imaging", "CNNs for Detection"]
+    - title: "ECG Arrhythmia Classification"
+      course: "Biomedical Signal Processing"
+      creator: "prof.greenspan@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["Clinical Applications", "Arrhythmia Detection"]
+    # ─── Hebrew: CS challenges (מדעי המחשב) ───
+    - title: "תכנון פתרון רקורסיבי"
+      course: "מבוא למדעי המחשב"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["יסודות תכנות", "פונקציות ורקורסיה"]
+    - title: "היררכיית מחלקות למערכת ספריה"
+      course: "מבוא למדעי המחשב"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["תכנות מונחה עצמים", "ירושה ופולימורפיזם"]
+    - title: "מימוש טבלת גיבוב"
+      course: "מבני נתונים"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["טבלאות גיבוב", "טיפול בהתנגשויות"]
+    - title: "איזון BST ועצי AVL"
+      course: "מבני נתונים"
+      creator: "dr.levy.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["עצים וגרפים", "עצים בינאריים ו-BST"]
+    - title: "הוכחה קומבינטורית באינדוקציה"
+      course: "מתמטיקה בדידה"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 3
+      subject_path: ["לוגיקה והוכחות", "טכניקות הוכחה"]
+    - title: "סימולציית תזמון תהליכים"
+      course: "מערכות הפעלה"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["ניהול תהליכים", "אלגוריתמי תזמון"]
+    - title: "אופטימיזציה של שאילתות SQL"
+      course: "מסדי נתונים"
+      creator: "dr.levy.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 5
+      subject_path: ["SQL", "אינדקסים ואופטימיזציה"]
+    # ─── Hebrew: Instructional Technologies challenges (טכנולוגיות הוראה) ───
+    - title: "תכנון יחידת לימוד בעיצוב לאחור"
+      course: "מבוא לעיצוב הוראה"
+      creator: "dr.shapira.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["מודלים הוראתיים", "עיצוב לאחור"]
+    - title: "בניית מחוון הערכה"
+      course: "מבוא לעיצוב הוראה"
+      creator: "dr.shapira.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 3
+      subject_path: ["עיצוב הערכה", "בניית מחוונים"]
+    - title: "יישום עקרונות מולטימדיה של מאייר"
+      course: "סביבות למידה דיגיטליות"
+      creator: "dr.shapira.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["למידה מולטימדית", "עקרונות מאייר"]
+    - title: "הערכת מערכת הדרכה חכמה"
+      course: "בינה מלאכותית בחינוך"
+      creator: "dr.shapira.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["מערכות הדרכה חכמות", "מודל תלמיד"]
+    # ─── Hebrew: Digital Medicine challenges (טכנולוגיות רפואה דיגיטלית) ───
+    - title: "תכנון צינור נתונים לרשומה רפואית אלקטרונית"
+      course: "מבוא לבריאות דיגיטלית"
+      creator: "prof.greenspan.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["מערכות מידע רפואיות", "רשומה רפואית אלקטרונית"]
+    - title: "סגמנטציית סריקת CT לגושי ריאה"
+      course: "הדמיה רפואית"
+      creator: "prof.greenspan.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 5
+      subject_path: ["AI בהדמיה", "רשתות CNN לזיהוי"]
+    - title: "סיווג הפרעות קצב לב מ-ECG"
+      course: "עיבוד אותות ביו-רפואיים"
+      creator: "prof.greenspan.he@tau.ac.il"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["יישומים קליניים", "זיהוי הפרעות קצב"]

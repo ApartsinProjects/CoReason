@@ -121,6 +121,13 @@ function switchLanguage(lang) {
   // Persist preference to localStorage
   try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch(e) {}
 
+  // Sync preferred_language to server (fire-and-forget; won't block UI)
+  if (typeof API !== 'undefined' && API.put) {
+    API.put('/users/me', { preferred_language: lang }).catch(function() {
+      // Ignore — user may not be logged in yet
+    });
+  }
+
   // Auto-translate the page
   translatePage();
 

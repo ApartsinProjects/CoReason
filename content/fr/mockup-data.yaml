@@ -1,0 +1,643 @@
+# Donnees d'affichage canoniques pour tous les ecrans de maquette
+# Ceci est la SOURCE UNIQUE DE VERITE pour tout le contenu code en dur
+
+# ─── Utilisateurs actuels (les personas connectes) ───
+studentUser:
+  name: "Sarah Cohen"
+  email: "s.cohen@tau.ac.il"
+  avatar: "SC"
+  institution: "Universite de Tel Aviv"
+  role: "student"
+  memberSince: "15 janvier 2026"
+  challengesCreated: 4
+  challengesExecuted: 12
+  subscribedCourses:
+    - id: "deep-learning-101"
+      name: "Apprentissage profond 101"
+    - id: "database-systems"
+      name: "Systemes de bases de donnees"
+    - id: "software-engineering"
+      name: "Genie logiciel"
+
+instructorUser:
+  name: "Dr. Dana Levy"
+  email: "d.levy@tau.ac.il"
+  avatar: "DL"
+  institution: "Universite de Tel Aviv"
+  role: "instructor"
+  memberSince: "1er septembre 2024"
+
+# ─── All Demo Users (for mockup mode switcher) ───
+allUsers:
+  - id: "sarah"
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    avatar: "SC"
+    institution: "Tel Aviv University"
+    role: "student"
+  - id: "levy"
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    avatar: "DL"
+    institution: "Tel Aviv University"
+    role: "instructor"
+  - id: "alex"
+    name: "Alex Mueller"
+    email: "a.mueller@tum.de"
+    avatar: "AM"
+    institution: "TU Munich"
+    role: "student"
+  - id: "weber"
+    name: "Prof. Klaus Weber"
+    email: "k.weber@tum.de"
+    avatar: "KW"
+    institution: "TU Munich"
+    role: "instructor"
+  - id: "maria"
+    name: "María García"
+    email: "m.garcia@ub.edu"
+    avatar: "MG"
+    institution: "Universidad de Barcelona"
+    role: "student"
+  - id: "dupont"
+    name: "Prof. Claire Dupont"
+    email: "c.dupont@sorbonne.fr"
+    avatar: "CD"
+    institution: "Sorbonne Université"
+    role: "instructor"
+
+# ─── Liste des defis (vue etudiant) ───
+studentChallenges:
+  - id: "neural-network-debugging"
+    name: "Debogage de reseau de neurones"
+    course: "Apprentissage profond 101"
+    type: "practice"
+    visibility: "public"
+    created: "14 mars"
+    creator: "Dr. Levy"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "sql-query-optimization"
+    name: "Optimisation de requetes SQL"
+    course: "Systemes de bases de donnees"
+    type: "assessment"
+    visibility: "public"
+    created: "13 mars"
+    creator: "Dr. Levy"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "api-design-review"
+    name: "Revue de conception d'API"
+    course: "Genie logiciel"
+    type: "practice"
+    visibility: "public"
+    created: "10 mars"
+    creator: "Dr. Patel"
+    lastAttempt: "12 mars"
+    status: "in-progress"
+    isNew: false
+  - id: "sorting-algorithm-analysis"
+    name: "Analyse d'algorithmes de tri"
+    course: "Genie logiciel"
+    type: "assessment"
+    visibility: "public"
+    created: "5 mars"
+    creator: "Dr. Patel"
+    lastAttempt: "8 mars"
+    status: "completed"
+    isNew: false
+  - id: "my-practice-backpropagation"
+    name: "Mon exercice : Retropropagation"
+    course: "Apprentissage profond 101"
+    type: "practice"
+    visibility: "private"
+    created: "7 mars"
+    creator: "Moi"
+    lastAttempt: "9 mars"
+    status: "completed"
+    isNew: false
+  - id: "recursion-basics"
+    name: "Bases de la recursivite"
+    course: "Genie logiciel"
+    type: "practice"
+    visibility: "public"
+    created: "28 fev."
+    creator: "Dr. Patel"
+    lastAttempt: "2 mars"
+    status: "completed"
+    isNew: false
+
+# ─── Liste des defis (vue instructeur) ───
+instructorChallenges:
+  - id: "sorting-algorithm-analysis"
+    name: "Analyse d'algorithmes de tri"
+    course: "Genie logiciel"
+    type: "assessment"
+    visibility: "public"
+    submissions: "38/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "neural-network-debugging"
+    name: "Debogage de reseau de neurones"
+    course: "Apprentissage profond 101"
+    type: "practice"
+    visibility: "public"
+    submissions: "22/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "sql-query-optimization"
+    name: "Optimisation de requetes SQL"
+    course: "Systemes de bases de donnees"
+    type: "assessment"
+    visibility: "public"
+    submissions: "41/42"
+    avgGrade: "A"
+    status: "published"
+  - id: "rate-limiter-design"
+    name: "Conception de limiteur de debit"
+    course: "Genie logiciel"
+    type: "practice"
+    visibility: "private"
+    submissions: null
+    avgGrade: null
+    status: "draft"
+  - id: "cnn-architecture-review"
+    name: "Revue d'architecture CNN"
+    course: "Apprentissage profond 101"
+    type: "assessment"
+    visibility: "public"
+    submissions: "30/45"
+    avgGrade: "B"
+    status: "published"
+
+# ─── Catalogue de cours ───
+courseCatalog:
+  - id: "deep-learning-101"
+    name: "Apprentissage profond 101"
+    department: "Informatique"
+    instructorCount: 3
+    challengeCount: 8
+    studentCount: 45
+    subscribed: true
+    subjects: ["Reseaux de neurones", "CNN", "RNN", "Optimisation", "Regularisation"]
+  - id: "database-systems"
+    name: "Systemes de bases de donnees"
+    department: "Informatique"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 62
+    subscribed: true
+    subjects: ["SQL", "Optimisation de requetes", "Indexation", "Normalisation"]
+  - id: "software-engineering"
+    name: "Genie logiciel"
+    department: "Informatique"
+    instructorCount: 2
+    challengeCount: 12
+    studentCount: 78
+    subscribed: true
+    subjects: ["Patrons de conception", "Conception d'API", "Tests", "Refactorisation"]
+  - id: "linear-algebra-ml"
+    name: "Algebre lineaire pour le ML"
+    department: "Mathematiques"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 33
+    subscribed: false
+    subjects: ["Vecteurs", "Matrices", "Valeurs propres", "SVD"]
+  - id: "statistical-inference"
+    name: "Inference statistique"
+    department: "Science des donnees"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 41
+    subscribed: false
+    subjects: ["Tests d'hypotheses", "Regression", "Methodes bayesiennes"]
+  - id: "signal-processing"
+    name: "Traitement du signal"
+    department: "Genie electrique"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 28
+    subscribed: false
+    subjects: ["Transformee de Fourier", "Filtres", "Echantillonnage"]
+  - id: "constitutional-law"
+    name: "Droit constitutionnel"
+    department: "Droit"
+    instructorCount: 2
+    challengeCount: 4
+    studentCount: 52
+    subscribed: false
+    subjects: ["Standards de controle", "Protection egale", "Proces equitable", "Premier amendement"]
+  - id: "learning-experience-design"
+    name: "Conception d'expériences d'apprentissage"
+    department: "Technologies éducatives"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 35
+    subscribed: false
+    subjects: ["Cartographie curriculaire", "Conception d'évaluation", "Apprentissage adaptatif", "Principes multimédias"]
+  - id: "educational-data-mining"
+    name: "Fouille de données éducatives"
+    department: "Technologies éducatives"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 28
+    subscribed: false
+    subjects: ["Analytique d'apprentissage", "Modélisation de l'apprenant", "Traçage des connaissances", "Modèles prédictifs"]
+  - id: "medical-imaging"
+    name: "Systèmes d'imagerie médicale"
+    department: "Technologies médicales numériques"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 40
+    subscribed: false
+    subjects: ["Reconstruction CT", "Séquences IRM", "Traitement ultrasonore", "Segmentation d'images"]
+  - id: "clinical-decision-support"
+    name: "Systèmes d'aide à la décision clinique"
+    department: "Technologies médicales numériques"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 32
+    subscribed: false
+    subjects: ["Algorithmes diagnostiques", "Médecine factuelle", "Scores de risque", "Parcours cliniques"]
+  - id: "ehealth-interoperability"
+    name: "Interopérabilité en santé numérique"
+    department: "Technologies médicales numériques"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 22
+    subscribed: false
+    subjects: ["HL7 FHIR", "Standards DICOM", "Intégration DSE", "Confidentialité des données de santé"]
+
+# ─── Analytique etudiant ───
+studentAnalytics:
+  gradeDistribution:
+    framing:
+      a: 4
+      b: 6
+      c: 2
+      mostCommon: "B"
+    judging:
+      a: 2
+      b: 7
+      c: 3
+      mostCommon: "B"
+    steering:
+      a: 5
+      b: 5
+      c: 2
+      mostCommon: "A"
+  trend:
+    - label: "Bases recursivite"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+    - label: "Diagramme ER"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+    - label: "Optim. requetes"
+      framing: "B"
+      judging: "C"
+      steering: "C"
+    - label: "Retropropagation"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+    - label: "Algo de tri"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+    - label: "Arch. CNN"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+  completedRuns:
+    - id: 1
+      name: "Analyse d'algorithmes de tri"
+      course: "Genie logiciel"
+      type: "assessment"
+      responseMode: "mc"
+      date: "8 mars 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 4
+      issuesAvailable: 6
+      framingFeedback: "Identification solide des contraintes manquantes et formulation claire de la tache."
+      judgingFeedback: "A detecte les cas limites mais a manque la lacune de preuve de complexite dans la sortie de l'IA."
+      steeringFeedback: "Corrections specifiques et exploitables qui ont ameliore la solution de maniere significative."
+    - id: 2
+      name: "Mon exercice : Retropropagation"
+      course: "Apprentissage profond 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "9 mars 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Hypotheses adequates mais a omis de specifier le contexte de la fonction de perte."
+      judgingFeedback: "N'a pas detecte le probleme du gradient evanescent dans l'architecture proposee par l'IA."
+      steeringFeedback: "Les corrections etaient dans la bonne direction mais manquaient de precision mathematique."
+    - id: 3
+      name: "Bases de la recursivite"
+      course: "Genie logiciel"
+      type: "practice"
+      responseMode: "oe"
+      date: "2 mars 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 4
+      issuesAvailable: 4
+      framingFeedback: "Excellente decomposition du probleme et identification des contraintes."
+      judgingFeedback: "A correctement identifie le risque de debordement de pile et les erreurs de cas de base."
+      steeringFeedback: "Bonnes corrections mais aurait pu pousser vers l'optimisation de la recursivite terminale."
+    - id: 4
+      name: "Conception de diagramme ER"
+      course: "Systemes de bases de donnees"
+      type: "assessment"
+      responseMode: "mc"
+      date: "25 fev. 2026"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Hypotheses de cardinalite manquantes ayant conduit a une tache sous-specifiee."
+      judgingFeedback: "A repere les problemes de normalisation mais a manque la relation redondante."
+      steeringFeedback: "Les corrections etaient vagues et n'ont pas conduit a une amelioration significative."
+    - id: 5
+      name: "Optimisation de requetes"
+      course: "Systemes de bases de donnees"
+      type: "practice"
+      responseMode: "mc"
+      date: "20 fev. 2026"
+      framing: "B"
+      judging: "C"
+      steering: "C"
+      cyclesUsed: 5
+      maxCycles: 5
+      issuesFound: 1
+      issuesAvailable: 4
+      framingFeedback: "A identifie les contraintes d'echelle mais a manque les hypotheses d'indexation."
+      judgingFeedback: "S'est concentre sur les problemes de syntaxe, a manque l'inefficacite de l'ordre de jointure."
+      steeringFeedback: "Corrections vagues — 'optimiser la requete' sans preciser comment."
+    - id: 6
+      name: "Revue d'architecture CNN"
+      course: "Apprentissage profond 101"
+      type: "assessment"
+      responseMode: "oe"
+      date: "15 fev. 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 5
+      issuesAvailable: 5
+      framingFeedback: "Analyse complete couvrant toutes les contraintes architecturales."
+      judgingFeedback: "A identifie tous les problemes majeurs, y compris l'erreur subtile de dimension de pooling."
+      steeringFeedback: "Corrections precises et priorisees qui ont resolu tous les problemes identifies."
+    - id: 7
+      name: "Operations sur les listes chainees"
+      course: "Genie logiciel"
+      type: "practice"
+      responseMode: "mc"
+      date: "10 fev. 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Bonne identification des contraintes memoire mais a manque la securite des threads."
+      judgingFeedback: "A detecte le probleme du pointeur nul mais a manque la lacune de detection de cycle."
+      steeringFeedback: "Instructions claires et specifiques qui ont traite le probleme principal."
+    - id: 8
+      name: "Selection d'index"
+      course: "Systemes de bases de donnees"
+      type: "practice"
+      responseMode: "oe"
+      date: "5 fev. 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 5
+      framingFeedback: "Forte caracterisation de la charge de travail et estimation de la cardinalite."
+      judgingFeedback: "A identifie le probleme d'index couvrant mais a manque le probleme d'ordre de cle composite."
+      steeringFeedback: "Principalement specifique mais a envoye deux corrections simultanement, diluant la concentration."
+    - id: 9
+      name: "Descente de gradient"
+      course: "Apprentissage profond 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "30 janv. 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Hypotheses raisonnables sur le taux d'apprentissage mais a manque les considerations de taille de lot."
+      judgingFeedback: "A detecte le probleme de convergence mais pas la preoccupation du point selle."
+      steeringFeedback: "Correction ciblee qui a directement traite le calendrier du taux d'apprentissage."
+    - id: 10
+      name: "Variantes de recherche binaire"
+      course: "Genie logiciel"
+      type: "assessment"
+      responseMode: "mc"
+      date: "25 janv. 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Analyse claire des conditions limites et hypothese d'entree triee."
+      judgingFeedback: "A trouve l'erreur off-by-one mais a manque le risque de depassement d'entier."
+      steeringFeedback: "Bonne direction mais aurait pu etre plus specifique sur la correction."
+    - id: 11
+      name: "Formes de normalisation"
+      course: "Systemes de bases de donnees"
+      type: "practice"
+      responseMode: "oe"
+      date: "20 janv. 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "A identifie les dependances fonctionnelles mais a manque l'analyse de dependance transitive."
+      judgingFeedback: "S'est concentre sur les problemes 1NF/2NF mais a manque entierement la violation 3NF."
+      steeringFeedback: "Les corrections etaient pertinentes mais manquaient les etapes formelles de decomposition."
+    - id: 12
+      name: "Selection de fonction de perte"
+      course: "Apprentissage profond 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "15 janv. 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 1
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 3
+      framingFeedback: "Excellente classification du type de probleme et des exigences de la fonction de perte."
+      judgingFeedback: "A detecte tous les problemes, y compris l'omission du lissage d'etiquettes."
+      steeringFeedback: "Correction unique et precise qui a resolu le probleme principal en un seul cycle."
+
+# ─── Rapport de defi (detail 07b pour le defi 1) ───
+challengeReport:
+  challengeName: "Analyse d'algorithmes de tri"
+  course: "Genie logiciel"
+  date: "8 mars 2026"
+  type: "assessment"
+  responseMode: "mc"
+  cyclesUsed: 2
+  maxCycles: 5
+  framing:
+    grade: "A"
+    submission: "Le probleme demande d'analyser des algorithmes de tri mais ne precise pas : la plage de taille d'entree, si la stabilite est importante, les contraintes memoire. Je suppose : tableaux de 1K a 1M entiers, stabilite non requise, espace supplementaire O(1) prefere."
+    feedback: "Identification solide des contraintes manquantes. L'hypothese d'espace supplementaire O(1) est bien justifiee dans le contexte. Aurait aussi pu questionner si l'entree est partiellement triee."
+    summary: "Identification solide des contraintes manquantes et hypotheses claires et bien justifiees sur la portee du probleme."
+  judging:
+    grade: "B"
+    summary: "A detecte des problemes cles comme les cas limites et la strategie de partition, mais a manque la lacune de preuve de complexite dans la sortie de l'IA."
+  steering:
+    grade: "A"
+    summary: "Corrections specifiques et exploitables qui ont conduit a des ameliorations significatives tant en profondeur d'analyse qu'en qualite de code."
+  cycles:
+    - num: 1
+      judgingText: "Problemes selectionnes : 'Cas limite manquant pour tableau vide', 'Analyse de complexite incomplete pour le pire cas'"
+      judgingGrade: "B"
+      steeringText: "Corrections selectionnees : 'Ajouter une clause de garde pour tableau vide', 'Inclure l'analyse du pire cas pour quicksort'"
+      steeringGrade: "A"
+      aiOutput: "L'analyse mise a jour inclut desormais une clause de garde pour tableau vide au point d'entree de chaque fonction de tri. La complexite temporelle du pire cas pour quicksort a ete revisee a O(n²) avec une note sur les strategies de selection de pivot pour attenuer ce scenario..."
+    - num: 2
+      isFinal: true
+      judgingText: "Identifie : 'Strategie de partition non optimale', 'Aucune mention de la performance du cache'"
+      judgingGrade: "B"
+      steeringText: "Dirige : 'Passer au partitionnement median-de-trois', 'Ajouter une analyse de localite de cache'"
+      steeringGrade: "A"
+      aiOutput: "La revision finale adopte la selection de pivot median-de-trois pour quicksort, reduisant la probabilite du pire cas. Une nouvelle section sur la localite de cache compare le schema d'acces sequentiel du tri par fusion contre le partitionnement en place mais moins favorable au cache du quicksort..."
+
+# ─── Analytique instructeur ───
+instructorAnalytics:
+  selectedCourse: "Apprentissage profond 101"
+  selectedChallenge: "Debogage de reseau de neurones"
+  stats:
+    totalSubscribers: 45
+    completed: "38/45"
+    avgGrade: "B"
+    pendingStudents: 7
+  gradeDistribution:
+    framing:
+      a: 12
+      b: 18
+      c: 8
+    judging:
+      a: 8
+      b: 16
+      c: 14
+    steering:
+      a: 10
+      b: 18
+      c: 10
+  perStudentResults:
+    - name: "Sarah Cohen"
+      completed: "14 mars 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      overall: "A"
+    - name: "James Park"
+      completed: "13 mars 2026"
+      framing: "B"
+      judging: "B"
+      steering: "C"
+      overall: "B"
+    - name: "Maria Santos"
+      completed: "13 mars 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      overall: "A"
+    - name: "Ahmed Hassan"
+      completed: "12 mars 2026"
+      framing: "C"
+      judging: "C"
+      steering: "C"
+      overall: "C"
+    - name: "Li Wei"
+      completed: "12 mars 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      overall: "B"
+    - name: "Emma Johnson"
+      completed: null
+      framing: null
+      judging: null
+      steering: null
+      overall: null
+
+# ─── Donnees de profil ───
+profileData:
+  student:
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    institution: "Universite de Tel Aviv"
+    role: "student"
+    registrationDate: "15 janvier 2026"
+    challengesCreated: 4
+    challengesExecuted: 12
+    subscribedCourses: ["Apprentissage profond 101", "Systemes de bases de donnees", "Genie logiciel"]
+  instructor:
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    institution: "Universite de Tel Aviv"
+    role: "instructor"
+    registrationDate: "1er septembre 2024"
+    challengesCreated: 12
+    coursesManaged: 2
+
+# ─── Catalogue de cours de l'instructeur ───
+instructorCourses:
+  - id: "deep-learning-101"
+    name: "Apprentissage profond 101"
+    department: "Informatique"
+    role: "Instructeur principal"
+    studentCount: 45
+    challengeCount: 8
+    instructorCount: 3
+    subjects: ["Reseaux de neurones", "CNN", "RNN", "Optimisation", "Regularisation"]
+  - id: "database-systems"
+    name: "Systemes de bases de donnees"
+    department: "Informatique"
+    role: "Co-instructeur"
+    studentCount: 62
+    challengeCount: 5
+    instructorCount: 2
+    subjects: ["SQL", "Optimisation de requetes", "Indexation", "Normalisation"]

@@ -14,13 +14,18 @@ class PDFService {
    * @returns {Buffer} PDF file as buffer
    */
   async generateInstructorReport(data) {
+    this.logger.info('PDF generation started', { course: data.course?.name });
     return new Promise((resolve, reject) => {
       try {
         const doc = new PDFDocument({ size: 'A4', margin: PDF_LAYOUT.MARGIN, bufferPages: true });
         const chunks = [];
 
         doc.on('data', (chunk) => chunks.push(chunk));
-        doc.on('end', () => resolve(Buffer.concat(chunks)));
+        doc.on('end', () => {
+          const buffer = Buffer.concat(chunks);
+          this.logger.info('PDF generation complete', { course: data.course?.name, bytes: buffer.length });
+          resolve(buffer);
+        });
         doc.on('error', reject);
 
         // --- Title page ---

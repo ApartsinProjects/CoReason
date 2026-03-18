@@ -48,7 +48,7 @@
     <div class="signup-card">
       <h2 data-t="createYourAccount">Create Your Account</h2>
 
-      <div id="errorMsg" class="error-message"></div>
+      <div id="errorMsg" class="error-message" role="alert"></div>
 
       <!-- SSO Buttons -->
       <div class="sso-buttons">
@@ -63,21 +63,21 @@
       <!-- Registration Form -->
       <form id="signupForm">
         <div class="form-group">
-          <label data-t="fullName">Full Name</label>
+          <label for="signupName" data-t="fullName">Full Name</label>
           <input type="text" id="signupName" class="form-control" data-t-placeholder="enterFullName" placeholder="Enter your full name" required>
         </div>
         <div class="form-group">
-          <label data-t="email">Email</label>
+          <label for="signupEmail" data-t="email">Email</label>
           <input type="email" id="signupEmail" class="form-control" placeholder="you@university.edu" required>
         </div>
         <div class="form-group">
-          <label data-t="password">Password</label>
+          <label for="signupPassword" data-t="password">Password</label>
           <input type="password" id="signupPassword" class="form-control" data-t-placeholder="createPassword" placeholder="Create a password" required minlength="8">
         </div>
 
         <!-- Institution Selection -->
         <div class="form-group">
-          <label data-t="institution">Institution</label>
+          <label for="signupInstitution" data-t="institution">Institution</label>
           <select id="signupInstitution" class="form-control" required>
             <option value="" data-t="selectInstitution">Select your institution...</option>
           </select>

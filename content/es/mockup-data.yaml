@@ -1,0 +1,643 @@
+# Datos de visualizacion canonicos para todas las pantallas de maqueta
+# Esta es la FUENTE UNICA DE VERDAD para todo el contenido codificado
+
+# ─── Usuarios actuales (las personas conectadas) ───
+studentUser:
+  name: "Sarah Cohen"
+  email: "s.cohen@tau.ac.il"
+  avatar: "SC"
+  institution: "Universidad de Tel Aviv"
+  role: "student"
+  memberSince: "15 de enero de 2026"
+  challengesCreated: 4
+  challengesExecuted: 12
+  subscribedCourses:
+    - id: "deep-learning-101"
+      name: "Aprendizaje profundo 101"
+    - id: "database-systems"
+      name: "Sistemas de bases de datos"
+    - id: "software-engineering"
+      name: "Ingenieria de software"
+
+instructorUser:
+  name: "Dr. Dana Levy"
+  email: "d.levy@tau.ac.il"
+  avatar: "DL"
+  institution: "Universidad de Tel Aviv"
+  role: "instructor"
+  memberSince: "1 de septiembre de 2024"
+
+# ─── All Demo Users (for mockup mode switcher) ───
+allUsers:
+  - id: "sarah"
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    avatar: "SC"
+    institution: "Tel Aviv University"
+    role: "student"
+  - id: "levy"
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    avatar: "DL"
+    institution: "Tel Aviv University"
+    role: "instructor"
+  - id: "alex"
+    name: "Alex Mueller"
+    email: "a.mueller@tum.de"
+    avatar: "AM"
+    institution: "TU Munich"
+    role: "student"
+  - id: "weber"
+    name: "Prof. Klaus Weber"
+    email: "k.weber@tum.de"
+    avatar: "KW"
+    institution: "TU Munich"
+    role: "instructor"
+  - id: "maria"
+    name: "María García"
+    email: "m.garcia@ub.edu"
+    avatar: "MG"
+    institution: "Universidad de Barcelona"
+    role: "student"
+  - id: "dupont"
+    name: "Prof. Claire Dupont"
+    email: "c.dupont@sorbonne.fr"
+    avatar: "CD"
+    institution: "Sorbonne Université"
+    role: "instructor"
+
+# ─── Lista de desafios (vista del estudiante) ───
+studentChallenges:
+  - id: "neural-network-debugging"
+    name: "Depuracion de redes neuronales"
+    course: "Aprendizaje profundo 101"
+    type: "practice"
+    visibility: "public"
+    created: "14 de marzo"
+    creator: "Dr. Levy"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "sql-query-optimization"
+    name: "Optimizacion de consultas SQL"
+    course: "Sistemas de bases de datos"
+    type: "assessment"
+    visibility: "public"
+    created: "13 de marzo"
+    creator: "Dr. Levy"
+    lastAttempt: null
+    status: "not-started"
+    isNew: true
+  - id: "api-design-review"
+    name: "Revision de diseno de API"
+    course: "Ingenieria de software"
+    type: "practice"
+    visibility: "public"
+    created: "10 de marzo"
+    creator: "Dr. Patel"
+    lastAttempt: "12 de marzo"
+    status: "in-progress"
+    isNew: false
+  - id: "sorting-algorithm-analysis"
+    name: "Analisis de algoritmos de ordenamiento"
+    course: "Ingenieria de software"
+    type: "assessment"
+    visibility: "public"
+    created: "5 de marzo"
+    creator: "Dr. Patel"
+    lastAttempt: "8 de marzo"
+    status: "completed"
+    isNew: false
+  - id: "my-practice-backpropagation"
+    name: "Mi practica: Retropropagacion"
+    course: "Aprendizaje profundo 101"
+    type: "practice"
+    visibility: "private"
+    created: "7 de marzo"
+    creator: "Yo"
+    lastAttempt: "9 de marzo"
+    status: "completed"
+    isNew: false
+  - id: "recursion-basics"
+    name: "Fundamentos de recursion"
+    course: "Ingenieria de software"
+    type: "practice"
+    visibility: "public"
+    created: "28 de feb."
+    creator: "Dr. Patel"
+    lastAttempt: "2 de marzo"
+    status: "completed"
+    isNew: false
+
+# ─── Lista de desafios (vista del instructor) ───
+instructorChallenges:
+  - id: "sorting-algorithm-analysis"
+    name: "Analisis de algoritmos de ordenamiento"
+    course: "Ingenieria de software"
+    type: "assessment"
+    visibility: "public"
+    submissions: "38/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "neural-network-debugging"
+    name: "Depuracion de redes neuronales"
+    course: "Aprendizaje profundo 101"
+    type: "practice"
+    visibility: "public"
+    submissions: "22/45"
+    avgGrade: "B"
+    status: "published"
+  - id: "sql-query-optimization"
+    name: "Optimizacion de consultas SQL"
+    course: "Sistemas de bases de datos"
+    type: "assessment"
+    visibility: "public"
+    submissions: "41/42"
+    avgGrade: "A"
+    status: "published"
+  - id: "rate-limiter-design"
+    name: "Diseno de limitador de tasa"
+    course: "Ingenieria de software"
+    type: "practice"
+    visibility: "private"
+    submissions: null
+    avgGrade: null
+    status: "draft"
+  - id: "cnn-architecture-review"
+    name: "Revision de arquitectura CNN"
+    course: "Aprendizaje profundo 101"
+    type: "assessment"
+    visibility: "public"
+    submissions: "30/45"
+    avgGrade: "B"
+    status: "published"
+
+# ─── Catalogo de cursos ───
+courseCatalog:
+  - id: "deep-learning-101"
+    name: "Aprendizaje profundo 101"
+    department: "Informatica"
+    instructorCount: 3
+    challengeCount: 8
+    studentCount: 45
+    subscribed: true
+    subjects: ["Redes neuronales", "CNNs", "RNNs", "Optimizacion", "Regularizacion"]
+  - id: "database-systems"
+    name: "Sistemas de bases de datos"
+    department: "Informatica"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 62
+    subscribed: true
+    subjects: ["SQL", "Optimizacion de consultas", "Indexacion", "Normalizacion"]
+  - id: "software-engineering"
+    name: "Ingenieria de software"
+    department: "Informatica"
+    instructorCount: 2
+    challengeCount: 12
+    studentCount: 78
+    subscribed: true
+    subjects: ["Patrones de diseno", "Diseno de API", "Pruebas", "Refactorizacion"]
+  - id: "linear-algebra-ml"
+    name: "Algebra lineal para ML"
+    department: "Matematicas"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 33
+    subscribed: false
+    subjects: ["Vectores", "Matrices", "Valores propios", "SVD"]
+  - id: "statistical-inference"
+    name: "Inferencia estadistica"
+    department: "Ciencia de datos"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 41
+    subscribed: false
+    subjects: ["Pruebas de hipotesis", "Regresion", "Metodos bayesianos"]
+  - id: "signal-processing"
+    name: "Procesamiento de senales"
+    department: "Ingenieria electrica"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 28
+    subscribed: false
+    subjects: ["Transformada de Fourier", "Filtros", "Muestreo"]
+  - id: "constitutional-law"
+    name: "Derecho Constitucional"
+    department: "Derecho"
+    instructorCount: 2
+    challengeCount: 4
+    studentCount: 52
+    subscribed: false
+    subjects: ["Estandares de revision", "Proteccion igualitaria", "Debido proceso", "Primera enmienda"]
+  - id: "learning-experience-design"
+    name: "Diseño de experiencias de aprendizaje"
+    department: "Tecnologías educativas"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 35
+    subscribed: false
+    subjects: ["Mapeo curricular", "Diseño de evaluación", "Aprendizaje adaptativo", "Principios multimedia"]
+  - id: "educational-data-mining"
+    name: "Minería de datos educativos"
+    department: "Tecnologías educativas"
+    instructorCount: 1
+    challengeCount: 4
+    studentCount: 28
+    subscribed: false
+    subjects: ["Analítica de aprendizaje", "Modelado del estudiante", "Rastreo de conocimiento", "Modelos predictivos"]
+  - id: "medical-imaging"
+    name: "Sistemas de imagenología médica"
+    department: "Tecnologías médicas digitales"
+    instructorCount: 2
+    challengeCount: 6
+    studentCount: 40
+    subscribed: false
+    subjects: ["Reconstrucción CT", "Secuencias de RMN", "Procesamiento de ultrasonido", "Segmentación de imágenes"]
+  - id: "clinical-decision-support"
+    name: "Sistemas de apoyo a decisiones clínicas"
+    department: "Tecnologías médicas digitales"
+    instructorCount: 2
+    challengeCount: 5
+    studentCount: 32
+    subscribed: false
+    subjects: ["Algoritmos diagnósticos", "Medicina basada en evidencia", "Puntuación de riesgo", "Vías clínicas"]
+  - id: "ehealth-interoperability"
+    name: "Interoperabilidad en salud digital"
+    department: "Tecnologías médicas digitales"
+    instructorCount: 1
+    challengeCount: 3
+    studentCount: 22
+    subscribed: false
+    subjects: ["HL7 FHIR", "Estándares DICOM", "Integración de HCE", "Privacidad de datos de salud"]
+
+# ─── Analitica del estudiante ───
+studentAnalytics:
+  gradeDistribution:
+    framing:
+      a: 4
+      b: 6
+      c: 2
+      mostCommon: "B"
+    judging:
+      a: 2
+      b: 7
+      c: 3
+      mostCommon: "B"
+    steering:
+      a: 5
+      b: 5
+      c: 2
+      mostCommon: "A"
+  trend:
+    - label: "Fund. recursion"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+    - label: "Diagrama ER"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+    - label: "Optim. consultas"
+      framing: "B"
+      judging: "C"
+      steering: "C"
+    - label: "Retropropagacion"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+    - label: "Algo. ordenam."
+      framing: "A"
+      judging: "B"
+      steering: "A"
+    - label: "Arq. CNN"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+  completedRuns:
+    - id: 1
+      name: "Analisis de algoritmos de ordenamiento"
+      course: "Ingenieria de software"
+      type: "assessment"
+      responseMode: "mc"
+      date: "8 de marzo de 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 4
+      issuesAvailable: 6
+      framingFeedback: "Fuerte identificacion de restricciones faltantes y formulacion clara de la tarea."
+      judgingFeedback: "Detecto casos limite pero no la brecha en la prueba de complejidad en la salida de la IA."
+      steeringFeedback: "Correcciones especificas y aplicables que mejoraron la solucion significativamente."
+    - id: 2
+      name: "Mi practica: Retropropagacion"
+      course: "Aprendizaje profundo 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "9 de marzo de 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Suposiciones adecuadas pero omitio especificar el contexto de la funcion de perdida."
+      judgingFeedback: "No detecto el problema del gradiente evanescente en la arquitectura propuesta por la IA."
+      steeringFeedback: "Las correcciones iban en la direccion correcta pero carecian de precision matematica."
+    - id: 3
+      name: "Fundamentos de recursion"
+      course: "Ingenieria de software"
+      type: "practice"
+      responseMode: "oe"
+      date: "2 de marzo de 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 4
+      issuesAvailable: 4
+      framingFeedback: "Excelente descomposicion del problema e identificacion de restricciones."
+      judgingFeedback: "Identifico correctamente el riesgo de desbordamiento de pila y los errores de caso base."
+      steeringFeedback: "Buenas correcciones pero podria haber impulsado la optimizacion de recursion de cola."
+    - id: 4
+      name: "Diseno de diagrama ER"
+      course: "Sistemas de bases de datos"
+      type: "assessment"
+      responseMode: "mc"
+      date: "25 de febrero de 2026"
+      framing: "C"
+      judging: "B"
+      steering: "C"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Suposiciones de cardinalidad faltantes que llevaron a una tarea subespecificada."
+      judgingFeedback: "Detecto problemas de normalizacion pero no la relacion redundante."
+      steeringFeedback: "Las correcciones fueron vagas y no condujeron a una mejora significativa."
+    - id: 5
+      name: "Optimizacion de consultas"
+      course: "Sistemas de bases de datos"
+      type: "practice"
+      responseMode: "mc"
+      date: "20 de febrero de 2026"
+      framing: "B"
+      judging: "C"
+      steering: "C"
+      cyclesUsed: 5
+      maxCycles: 5
+      issuesFound: 1
+      issuesAvailable: 4
+      framingFeedback: "Identifico restricciones de escala pero omitio las suposiciones de indexacion."
+      judgingFeedback: "Se concentro en problemas de sintaxis, omitio la ineficiencia del orden de union."
+      steeringFeedback: "Correcciones vagas — 'optimizar la consulta' sin especificar como."
+    - id: 6
+      name: "Revision de arquitectura CNN"
+      course: "Aprendizaje profundo 101"
+      type: "assessment"
+      responseMode: "oe"
+      date: "15 de febrero de 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 5
+      issuesAvailable: 5
+      framingFeedback: "Analisis completo que cubre todas las restricciones arquitectonicas."
+      judgingFeedback: "Identifico todos los problemas principales, incluido el sutil error de dimension de pooling."
+      steeringFeedback: "Correcciones precisas y priorizadas que resolvieron todos los problemas identificados."
+    - id: 7
+      name: "Operaciones con listas enlazadas"
+      course: "Ingenieria de software"
+      type: "practice"
+      responseMode: "mc"
+      date: "10 de febrero de 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Buena identificacion de restricciones de memoria pero omitio la seguridad de hilos."
+      judgingFeedback: "Detecto el problema del puntero nulo pero omitio la brecha en la deteccion de ciclos."
+      steeringFeedback: "Instrucciones claras y especificas que abordaron el problema central."
+    - id: 8
+      name: "Seleccion de indices"
+      course: "Sistemas de bases de datos"
+      type: "practice"
+      responseMode: "oe"
+      date: "5 de febrero de 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 5
+      framingFeedback: "Fuerte caracterizacion de la carga de trabajo y estimacion de cardinalidad."
+      judgingFeedback: "Identifico el problema del indice de cobertura pero omitio el problema del orden de clave compuesta."
+      steeringFeedback: "Mayormente especifico pero envio dos correcciones simultaneamente, diluyendo el enfoque."
+    - id: 9
+      name: "Descenso de gradiente"
+      course: "Aprendizaje profundo 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "30 de enero de 2026"
+      framing: "B"
+      judging: "B"
+      steering: "A"
+      cyclesUsed: 2
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Suposiciones razonables sobre la tasa de aprendizaje pero omitio consideraciones del tamano del lote."
+      judgingFeedback: "Detecto el problema de convergencia pero no la preocupacion del punto de silla."
+      steeringFeedback: "Correccion dirigida que abordo directamente el calendario de la tasa de aprendizaje."
+    - id: 10
+      name: "Variantes de busqueda binaria"
+      course: "Ingenieria de software"
+      type: "assessment"
+      responseMode: "mc"
+      date: "25 de enero de 2026"
+      framing: "A"
+      judging: "B"
+      steering: "B"
+      cyclesUsed: 3
+      maxCycles: 5
+      issuesFound: 3
+      issuesAvailable: 4
+      framingFeedback: "Analisis claro de condiciones limite y suposicion de entrada ordenada."
+      judgingFeedback: "Encontro el error off-by-one pero omitio el riesgo de desbordamiento de enteros."
+      steeringFeedback: "Buena direccion pero podria haber sido mas especifico con la correccion."
+    - id: 11
+      name: "Formas de normalizacion"
+      course: "Sistemas de bases de datos"
+      type: "practice"
+      responseMode: "oe"
+      date: "20 de enero de 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      cyclesUsed: 4
+      maxCycles: 5
+      issuesFound: 2
+      issuesAvailable: 5
+      framingFeedback: "Identifico dependencias funcionales pero omitio el analisis de dependencias transitivas."
+      judgingFeedback: "Se concentro en problemas de 1NF/2NF pero omitio completamente la violacion de 3NF."
+      steeringFeedback: "Las correcciones fueron relevantes pero carecian de los pasos formales de descomposicion."
+    - id: 12
+      name: "Seleccion de funcion de perdida"
+      course: "Aprendizaje profundo 101"
+      type: "practice"
+      responseMode: "mc"
+      date: "15 de enero de 2026"
+      framing: "A"
+      judging: "A"
+      steering: "A"
+      cyclesUsed: 1
+      maxCycles: 3
+      issuesFound: 3
+      issuesAvailable: 3
+      framingFeedback: "Excelente clasificacion del tipo de problema y los requisitos de la funcion de perdida."
+      judgingFeedback: "Detecto todos los problemas, incluida la omision del suavizado de etiquetas."
+      steeringFeedback: "Correccion unica y precisa que resolvio el problema central en un solo ciclo."
+
+# ─── Informe de desafio (detalle 07b para el desafio 1) ───
+challengeReport:
+  challengeName: "Analisis de algoritmos de ordenamiento"
+  course: "Ingenieria de software"
+  date: "8 de marzo de 2026"
+  type: "assessment"
+  responseMode: "mc"
+  cyclesUsed: 2
+  maxCycles: 5
+  framing:
+    grade: "A"
+    submission: "El problema pide analizar algoritmos de ordenamiento pero no especifica: rango de tamano de entrada, si la estabilidad importa, restricciones de memoria. Supongo: arreglos de 1K-1M enteros, estabilidad no requerida, espacio adicional O(1) preferido."
+    feedback: "Fuerte identificacion de restricciones faltantes. La suposicion sobre espacio adicional O(1) esta bien justificada en el contexto. Tambien podria haber cuestionado si la entrada esta parcialmente ordenada."
+    summary: "Fuerte identificacion de restricciones faltantes y suposiciones claras y bien justificadas sobre el alcance del problema."
+  judging:
+    grade: "B"
+    summary: "Detecto problemas clave como casos limite y estrategia de particion, pero omitio la brecha en la prueba de complejidad en la salida de la IA."
+  steering:
+    grade: "A"
+    summary: "Correcciones especificas y aplicables que condujeron a mejoras significativas tanto en la profundidad del analisis como en la calidad del codigo."
+  cycles:
+    - num: 1
+      judgingText: "Problemas seleccionados: 'Caso limite faltante para arreglo vacio', 'Analisis de complejidad incompleto para el peor caso'"
+      judgingGrade: "B"
+      steeringText: "Correcciones seleccionadas: 'Agregar clausula de proteccion para arreglo vacio', 'Incluir analisis del peor caso para quicksort'"
+      steeringGrade: "A"
+      aiOutput: "El analisis actualizado ahora incluye una clausula de proteccion para arreglos vacios en el punto de entrada de cada funcion de ordenamiento. La complejidad temporal del peor caso para quicksort ha sido revisada a O(n²) con una nota sobre estrategias de seleccion de pivote para mitigar este escenario..."
+    - num: 2
+      isFinal: true
+      judgingText: "Identificado: 'Estrategia de particion no optima', 'Sin mencion del rendimiento de cache'"
+      judgingGrade: "B"
+      steeringText: "Dirigido: 'Cambiar a particionamiento de mediana de tres', 'Agregar analisis de localidad de cache'"
+      steeringGrade: "A"
+      aiOutput: "La revision final adopta la seleccion de pivote de mediana de tres para quicksort, reduciendo la probabilidad del peor caso. Una nueva seccion sobre localidad de cache compara el patron de acceso secuencial de merge sort contra el particionamiento en sitio pero menos amigable con el cache de quicksort..."
+
+# ─── Analitica del instructor ───
+instructorAnalytics:
+  selectedCourse: "Aprendizaje profundo 101"
+  selectedChallenge: "Depuracion de redes neuronales"
+  stats:
+    totalSubscribers: 45
+    completed: "38/45"
+    avgGrade: "B"
+    pendingStudents: 7
+  gradeDistribution:
+    framing:
+      a: 12
+      b: 18
+      c: 8
+    judging:
+      a: 8
+      b: 16
+      c: 14
+    steering:
+      a: 10
+      b: 18
+      c: 10
+  perStudentResults:
+    - name: "Sarah Cohen"
+      completed: "14 de marzo de 2026"
+      framing: "A"
+      judging: "B"
+      steering: "A"
+      overall: "A"
+    - name: "James Park"
+      completed: "13 de marzo de 2026"
+      framing: "B"
+      judging: "B"
+      steering: "C"
+      overall: "B"
+    - name: "Maria Santos"
+      completed: "13 de marzo de 2026"
+      framing: "A"
+      judging: "A"
+      steering: "B"
+      overall: "A"
+    - name: "Ahmed Hassan"
+      completed: "12 de marzo de 2026"
+      framing: "C"
+      judging: "C"
+      steering: "C"
+      overall: "C"
+    - name: "Li Wei"
+      completed: "12 de marzo de 2026"
+      framing: "B"
+      judging: "C"
+      steering: "B"
+      overall: "B"
+    - name: "Emma Johnson"
+      completed: null
+      framing: null
+      judging: null
+      steering: null
+      overall: null
+
+# ─── Datos de perfil ───
+profileData:
+  student:
+    name: "Sarah Cohen"
+    email: "s.cohen@tau.ac.il"
+    institution: "Universidad de Tel Aviv"
+    role: "student"
+    registrationDate: "15 de enero de 2026"
+    challengesCreated: 4
+    challengesExecuted: 12
+    subscribedCourses: ["Aprendizaje profundo 101", "Sistemas de bases de datos", "Ingenieria de software"]
+  instructor:
+    name: "Dr. Dana Levy"
+    email: "d.levy@tau.ac.il"
+    institution: "Universidad de Tel Aviv"
+    role: "instructor"
+    registrationDate: "1 de septiembre de 2024"
+    challengesCreated: 12
+    coursesManaged: 2
+
+# ─── Catalogo de cursos del instructor ───
+instructorCourses:
+  - id: "deep-learning-101"
+    name: "Aprendizaje profundo 101"
+    department: "Informatica"
+    role: "Instructor principal"
+    studentCount: 45
+    challengeCount: 8
+    instructorCount: 3
+    subjects: ["Redes neuronales", "CNNs", "RNNs", "Optimizacion", "Regularizacion"]
+  - id: "database-systems"
+    name: "Sistemas de bases de datos"
+    department: "Informatica"
+    role: "Co-instructor"
+    studentCount: 62
+    challengeCount: 5
+    instructorCount: 2
+    subjects: ["SQL", "Optimizacion de consultas", "Indexacion", "Normalizacion"]

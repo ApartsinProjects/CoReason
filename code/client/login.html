@@ -45,7 +45,7 @@
     <div class="login-card">
       <h2 data-t="welcomeBack">Welcome Back</h2>
 
-      <div id="errorMsg" class="error-message"></div>
+      <div id="errorMsg" class="error-message" role="alert"></div>
 
       <!-- SSO Buttons -->
       <div class="sso-buttons">
@@ -60,11 +60,11 @@
       <!-- Email/Password Form -->
       <form id="loginForm">
         <div class="form-group">
-          <label data-t="email">Email</label>
+          <label for="loginEmail" data-t="email">Email</label>
           <input type="email" id="loginEmail" class="form-control" placeholder="you@university.edu" required>
         </div>
         <div class="form-group">
-          <label data-t="password">Password</label>
+          <label for="loginPassword" data-t="password">Password</label>
           <input type="password" id="loginPassword" class="form-control" data-t-placeholder="enterPassword" placeholder="Enter your password" required>
         </div>
 
@@ -107,12 +107,12 @@
         let html = '<option value="">Select a test user...</option>';
         if (instructors.length) {
           html += '<optgroup label="Instructors">';
-          instructors.forEach(u => { html += `<option value="${u.email}" data-role="${u.role}">${u.name} — ${u.institution || 'N/A'}</option>`; });
+          instructors.forEach(u => { html += `<option value="${u.email}" data-role="${u.role}" data-lang="${u.preferred_language || 'en'}">${u.name} — ${u.institution || 'N/A'}</option>`; });
           html += '</optgroup>';
         }
         if (students.length) {
           html += '<optgroup label="Students">';
-          students.forEach(u => { html += `<option value="${u.email}" data-role="${u.role}">${u.name} — ${u.institution || 'N/A'}</option>`; });
+          students.forEach(u => { html += `<option value="${u.email}" data-role="${u.role}" data-lang="${u.preferred_language || 'en'}">${u.name} — ${u.institution || 'N/A'}</option>`; });
           html += '</optgroup>';
         }
         select.innerHTML = html;
@@ -124,7 +124,10 @@
           btn.textContent = 'Signing in...';
           errorMsg.style.display = 'none';
           try {
-            await API.post('/auth/test-login', { email: select.value });
+            const loginData = await API.post('/auth/test-login', { email: select.value });
+            // Auto-switch UI language to match user's preferred language
+            const userLang = loginData.user?.preferred_language || select.selectedOptions[0].dataset.lang || 'en';
+            if (typeof switchLanguage === 'function') switchLanguage(userLang);
             window.location.href = role === 'instructor' ? '/challenge-list-instructor.html' : '/challenge-list.html';
           } catch (err) {
             errorMsg.textContent = err.message || 'Test login failed.';
@@ -158,6 +161,9 @@
 
       try {
         const data = await API.post('/auth/login', { email, password });
+        // Auto-switch UI language to match user's preferred language
+        const userLang = data.user?.preferred_language || 'en';
+        if (typeof switchLanguage === 'function') switchLanguage(userLang);
         const role = data.user && data.user.role;
         if (role === 'instructor') {
           window.location.href = '/challenge-list-instructor.html';

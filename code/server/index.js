@@ -14,7 +14,7 @@ const { errorHandler } = require('./middleware/error-handler');
 const { SERVER, LLM_FALLBACK, LLM_FALLBACK_FRAMING_OPTIONS, LLM_FALLBACK_JUDGING_OPTIONS, LLM_FALLBACK_STEERING_OPTIONS, LLM_STUB_SUBJECT_TREE, GRADES } = require('./utils/constants');
 
 // Load environment variables
-require('dotenv').config({ path: path.resolve(__dirname, '../.env.all') });
+require('dotenv').config({ path: path.resolve(__dirname, '../.env.all'), override: true });
 
 async function startServer() {
   const config = loadConfig();

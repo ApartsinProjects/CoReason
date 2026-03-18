@@ -89,11 +89,75 @@ module.exports = function authRoutes(db, passport, config, logger) {
     try {
       const users = await db('users')
         .leftJoin('institutions', 'users.institution_id', 'institutions.id')
-        .select('users.id', 'users.email', 'users.name', 'users.role', 'institutions.name as institution')
+        .select('users.id', 'users.email', 'users.name', 'users.role',
+                'users.preferred_language', 'institutions.name as institution')
+        .whereNotNull('users.institution_id')        // Only show real demo users (with institution)
+        .where('users.email', 'not like', 'e2e-%')   // Exclude Playwright test artifacts
+        .orderBy('users.preferred_language')
         .orderBy('users.role')
-        .orderBy('institutions.name')
         .orderBy('users.name');
       res.json(users);
+    } catch (err) { next(err); }
+  });
+
+  // POST /api/v1/auth/test-cleanup — delete test-generated data (dev/test only)
+  router.post('/test-cleanup', (req, res, next) => {
+    if (process.env.NODE_ENV === 'production') {
+      return res.status(403).json({ error: { code: 'FORBIDDEN', message: 'Test cleanup disabled in production' } });
+    }
+    next();
+  }, async (req, res, next) => {
+    try {
+      const { prefix } = req.body;
+      if (!prefix) {
+        return res.status(400).json({ error: { code: 'MISSING_PREFIX', message: 'Timestamp prefix is required' } });
+      }
+
+      // Delete test users, courses, challenges, and runs matching the timestamp prefix
+      const testUserEmails = [`e2e-stu-${prefix}@test.com`, `e2e-ins-${prefix}@test.com`];
+      const testUserIds = (await db('users').whereIn('email', testUserEmails).select('id')).map(r => r.id);
+
+      const testCoursePatterns = [`E2E Course ${prefix}`, `Run Course ${prefix}`, `Click Course ${prefix}`, `Anl Course ${prefix}`, `Analytics Course ${prefix}`];
+      const testCourseIds = (await db('courses').where(function() {
+        for (const name of testCoursePatterns) this.orWhere('name', name);
+      }).select('id')).map(r => r.id);
+
+      const testChallengeIds = (await db('challenges').where('title', 'like', `%${prefix}%`).select('id')).map(r => r.id);
+
+      // Delete in FK-safe order
+      const allChallengeIds = [...testChallengeIds];
+      if (testCourseIds.length > 0) {
+        const courseChals = (await db('challenges').whereIn('course_id', testCourseIds).select('id')).map(r => r.id);
+        allChallengeIds.push(...courseChals);
+      }
+
+      if (allChallengeIds.length > 0) {
+        const runIds = (await db('challenge_runs').whereIn('challenge_id', allChallengeIds).select('id')).map(r => r.id);
+        if (runIds.length > 0) await db('challenge_run_cycles').whereIn('run_id', runIds).del();
+        await db('challenge_runs').whereIn('challenge_id', allChallengeIds).del();
+        await db('challenges').whereIn('id', allChallengeIds).del();
+      }
+
+      if (testUserIds.length > 0) {
+        const userRunIds = (await db('challenge_runs').whereIn('user_id', testUserIds).select('id')).map(r => r.id);
+        if (userRunIds.length > 0) await db('challenge_run_cycles').whereIn('run_id', userRunIds).del();
+        await db('challenge_runs').whereIn('user_id', testUserIds).del();
+        await db('course_subscriptions').whereIn('user_id', testUserIds).del();
+        await db('course_instructors').whereIn('user_id', testUserIds).del();
+      }
+
+      if (testCourseIds.length > 0) {
+        await db('course_subscriptions').whereIn('course_id', testCourseIds).del();
+        await db('course_instructors').whereIn('course_id', testCourseIds).del();
+        await db('courses').whereIn('id', testCourseIds).del();
+      }
+
+      if (testUserIds.length > 0) {
+        await db('users').whereIn('id', testUserIds).del();
+      }
+
+      logger.info('Test cleanup completed', { prefix, users: testUserIds.length, courses: testCourseIds.length, challenges: allChallengeIds.length });
+      res.json({ cleaned: { users: testUserIds.length, courses: testCourseIds.length, challenges: allChallengeIds.length } });
     } catch (err) { next(err); }
   });
 

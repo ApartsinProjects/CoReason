@@ -14,14 +14,14 @@ let instructorCookie, studentCookie;
 let instructorUser, studentUser;
 let testInstitution, testCourse, testChallenge;
 
+// Real LLM calls require more time
+jest.setTimeout(120_000);
+
 beforeAll(async () => {
   process.env.NODE_ENV = 'test';
   process.env.LOG_LEVEL = 'silent';
   process.env.PORT = '0';
-  // Disable real LLM calls — force fallback/stub responses
-  // Must set to empty BEFORE dotenv loads from .env.all inside startServer
-  process.env.OPENAI_API_KEY = '';
-  process.env.GROQ_API_KEY = '';
+  // API keys are loaded from .env.all inside startServer — real LLM calls are made
   const result = await startServer();
   app = result.app;
   server = result.server;
@@ -282,7 +282,7 @@ describe('Course Flows', () => {
     expect(res.body).toHaveLength(3);
   });
 
-  it('POST /courses/generate-subject-tree generates tree via LLM stub', async () => {
+  it('POST /courses/generate-subject-tree generates tree via LLM', async () => {
     const res = await request(app)
       .post('/api/v1/courses/generate-subject-tree')
       .set('Cookie', instructorCookie)
@@ -427,6 +427,9 @@ describe('Challenge Run — Full Lifecycle', () => {
     expect(res.body.runId).toBeDefined();
     expect(res.body.rawProblem).toBeDefined();
     expect(res.body.rawProblem.length).toBeGreaterThan(0);
+    // Verify real LLM content — must NOT be fallback placeholder
+    expect(res.body.rawProblem).not.toMatch(/LLM not configured/i);
+    expect(res.body.rawProblem).not.toMatch(/placeholder/i);
     // Because responseConfig has framing: 'mc', framingOptions MUST be present
     expect(res.body.framingOptions).toBeDefined();
     expect(Array.isArray(res.body.framingOptions)).toBe(true);
@@ -434,6 +437,8 @@ describe('Challenge Run — Full Lifecycle', () => {
     // Each option should have letter + text
     expect(res.body.framingOptions[0]).toHaveProperty('letter');
     expect(res.body.framingOptions[0]).toHaveProperty('text');
+    // Verify framing options are real LLM content (not fallback stubs)
+    expect(res.body.framingOptions[0].text).not.toMatch(/Fallback|placeholder/i);
     runId = res.body.runId;
     maxCycles = res.body.maxCycles;
   });
@@ -458,12 +463,17 @@ describe('Challenge Run — Full Lifecycle', () => {
     expect(res.status).toBe(200);
     expect(res.body.aiSolution).toBeDefined();
     expect(res.body.aiSolution.length).toBeGreaterThan(0);
+    // Verify real LLM content — must NOT be fallback
+    expect(res.body.aiSolution).not.toMatch(/LLM not configured/i);
+    expect(res.body.aiSolution).not.toMatch(/placeholder/i);
     // Practice mode should include feedback
     expect(res.body.framingGrade).toBeDefined();
     expect(['A', 'B', 'C']).toContain(res.body.framingGrade);
     // Should provide judging options since phase2 is MC
     expect(res.body.judgingOptions).toBeDefined();
     expect(Array.isArray(res.body.judgingOptions)).toBe(true);
+    // Verify judging options are real LLM content
+    expect(res.body.judgingOptions[0]?.text).not.toMatch(/Fallback|placeholder/i);
     expect(res.body.currentCycle).toBe(1);
   });
 
@@ -493,6 +503,8 @@ describe('Challenge Run — Full Lifecycle', () => {
       .send({ selectedOptions: ['B'], command: 'Fix the algorithm efficiency' });
     expect(res.status).toBe(200);
     expect(res.body.updatedSolution).toBeDefined();
+    // Verify real LLM content — must NOT be fallback
+    expect(res.body.updatedSolution).not.toMatch(/LLM not configured/i);
     // Practice mode returns grades
     expect(res.body.judgingGrade).toBeDefined();
     expect(res.body.steeringGrade).toBeDefined();
@@ -582,6 +594,9 @@ describe('Challenge Run — Open-Ended Config', () => {
       .set('Cookie', studentCookie);
     expect(res.status).toBe(201);
     expect(res.body.rawProblem).toBeDefined();
+    // Verify real LLM content
+    expect(res.body.rawProblem).not.toMatch(/LLM not configured/i);
+    expect(res.body.rawProblem).not.toMatch(/placeholder/i);
     // Open-ended: no framing MC options
     expect(res.body.framingOptions).toBeNull();
     openRunId = res.body.runId;
@@ -594,6 +609,8 @@ describe('Challenge Run — Open-Ended Config', () => {
       .send({ text: 'I frame this problem by considering graph traversal...' });
     expect(res.status).toBe(200);
     expect(res.body.aiSolution).toBeDefined();
+    // Verify real LLM content
+    expect(res.body.aiSolution).not.toMatch(/LLM not configured/i);
     // Open-ended: no judging MC options
     expect(res.body.judgingOptions).toBeNull();
   });

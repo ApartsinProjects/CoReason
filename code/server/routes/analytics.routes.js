@@ -13,17 +13,25 @@ module.exports = function analyticsRoutes(db, logger) {
   // GET /api/v1/analytics/student
   router.get('/student', requireAuth, async (req, res, next) => {
     try {
+      logger.info('Student analytics retrieved', { userId: req.user.id });
       const overview = await analyticsService.getStudentOverview(req.user.id);
       res.json(overview);
-    } catch (err) { next(err); }
+    } catch (err) {
+      logger.error('Student analytics retrieval failed', { userId: req.user.id, error: err.message });
+      next(err);
+    }
   });
 
   // GET /api/v1/analytics/student/challenge/:id
   router.get('/student/challenge/:id', requireAuth, async (req, res, next) => {
     try {
+      logger.info('Student challenge analytics retrieved', { userId: req.user.id, challengeId: req.params.id });
       const analytics = await analyticsService.getStudentChallengeAnalytics(req.user.id, req.params.id);
       res.json(analytics);
-    } catch (err) { next(err); }
+    } catch (err) {
+      logger.error('Student challenge analytics failed', { userId: req.user.id, challengeId: req.params.id, error: err.message });
+      next(err);
+    }
   });
 
   // Helper: verify user is an instructor of the requested course
@@ -41,22 +49,31 @@ module.exports = function analyticsRoutes(db, logger) {
   // GET /api/v1/analytics/instructor/:courseId
   router.get('/instructor/:courseId', requireAuth, requireRole(ROLES.INSTRUCTOR), requireCourseInstructor, async (req, res, next) => {
     try {
+      logger.info('Instructor analytics retrieved', { userId: req.user.id, courseId: req.params.courseId });
       const analytics = await analyticsService.getInstructorAnalytics(req.params.courseId);
       res.json(analytics);
-    } catch (err) { next(err); }
+    } catch (err) {
+      logger.error('Instructor analytics failed', { userId: req.user.id, courseId: req.params.courseId, error: err.message });
+      next(err);
+    }
   });
 
   // GET /api/v1/analytics/instructor/:courseId/export
   router.get('/instructor/:courseId/export', requireAuth, requireRole(ROLES.INSTRUCTOR), requireCourseInstructor, async (req, res, next) => {
     try {
+      logger.info('Instructor data export requested', { userId: req.user.id, courseId: req.params.courseId });
       const data = await analyticsService.exportInstructorData(req.params.courseId);
       res.json(data);
-    } catch (err) { next(err); }
+    } catch (err) {
+      logger.error('Instructor data export failed', { userId: req.user.id, courseId: req.params.courseId, error: err.message });
+      next(err);
+    }
   });
 
   // GET /api/v1/analytics/instructor/:courseId/export/pdf
   router.get('/instructor/:courseId/export/pdf', requireAuth, requireRole(ROLES.INSTRUCTOR), requireCourseInstructor, async (req, res, next) => {
     try {
+      logger.info('PDF export requested', { userId: req.user.id, courseId: req.params.courseId });
       const data = await analyticsService.exportInstructorData(req.params.courseId);
       const pdfBuffer = await pdfService.generateInstructorReport(data);
 
@@ -66,7 +83,10 @@ module.exports = function analyticsRoutes(db, logger) {
         'Content-Length': pdfBuffer.length,
       });
       res.send(pdfBuffer);
-    } catch (err) { next(err); }
+    } catch (err) {
+      logger.error('PDF export failed', { userId: req.user.id, courseId: req.params.courseId, error: err.message });
+      next(err);
+    }
   });
 
   return router;

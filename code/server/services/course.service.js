@@ -80,6 +80,7 @@ class CourseService {
     filtered.updated_at = new Date().toISOString();
 
     await this.db('courses').where({ id }).update(filtered);
+    this.logger.info('Course updated', { courseId: id, userId, fields: Object.keys(filtered) });
     return this.getById(id);
   }
 
@@ -122,6 +123,7 @@ class CourseService {
     const deleted = await this.db('course_instructors')
       .where({ user_id: userId, course_id: courseId }).del();
     if (!deleted) throw new NotFoundError('Instructor membership', `${userId}/${courseId}`);
+    this.logger.info('Instructor left course', { courseId, userId });
   }
 
   async getSubjectTree(courseId) {

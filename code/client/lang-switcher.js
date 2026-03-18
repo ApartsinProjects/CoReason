@@ -1,7 +1,7 @@
 /**
  * AI CoReasoning Lab — Language Switcher Utility
  * ============================================
- * Shared script that manages language switching across all mockup screens.
+ * Shared script that manages language switching across all screens.
  *
  * Usage:
  *   1. Include this script in any HTML page:
