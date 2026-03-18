@@ -23,20 +23,20 @@ const CoReasonTour = (() => {
   // To localize, override CoReasonTour.tourData before starting.
   const TOURS = {
     student: [
-      { target: '.topnav', titleKey: 'tour_welcome', title: 'Welcome to AI CoReasoning Lab!', text: 'This is your learning platform for developing critical AI evaluation skills.', position: 'bottom' },
-      { target: '.topnav a[href*="challenge-list"]', titleKey: 'tour_challenges', title: 'Your Challenges', text: 'Browse available challenges, filter by course, type, or status.', position: 'bottom' },
-      { target: '.topnav a[href*="course-catalog"]', titleKey: 'tour_courses', title: 'Course Catalog', text: 'Subscribe to courses to access their challenges and track progress.', position: 'bottom' },
-      { target: '.topnav a[href*="analytics"]', titleKey: 'tour_analytics', title: 'Your Analytics', text: 'View your grades and track improvement across Framing, Judging, and Steering skills.', position: 'bottom' },
-      { target: '.lang-select', titleKey: 'tour_language', title: 'Language', text: 'Switch the interface language.', position: 'bottom-end' },
-      { target: '.user-area', titleKey: 'tour_profile', title: 'Your Profile', text: 'View and edit your profile, see your statistics, and manage settings.', position: 'bottom-end' },
+      { target: '.topnav', titleKey: 'tour_welcome', title: 'Welcome to AI CoReasoning Lab!', textKey: 'tour_welcome_text', text: 'This is your learning platform for developing critical AI evaluation skills.', position: 'bottom' },
+      { target: '.topnav a[href*="challenge-list"]', titleKey: 'tour_challenges', title: 'Your Challenges', textKey: 'tour_challenges_text', text: 'Browse available challenges, filter by course, type, or status.', position: 'bottom' },
+      { target: '.topnav a[href*="course-catalog"]', titleKey: 'tour_courses', title: 'Course Catalog', textKey: 'tour_courses_text', text: 'Subscribe to courses to access their challenges and track progress.', position: 'bottom' },
+      { target: '.topnav a[href*="analytics"]', titleKey: 'tour_analytics', title: 'Your Analytics', textKey: 'tour_analytics_text', text: 'View your grades and track improvement across Framing, Judging, and Steering skills.', position: 'bottom' },
+      { target: '.lang-select', titleKey: 'tour_language', title: 'Language', textKey: 'tour_language_text', text: 'Switch the interface language.', position: 'bottom-end' },
+      { target: '.user-area', titleKey: 'tour_profile', title: 'Your Profile', textKey: 'tour_profile_text', text: 'View and edit your profile, see your statistics, and manage settings.', position: 'bottom-end' },
     ],
     instructor: [
-      { target: '.topnav', titleKey: 'tour_welcome_instructor', title: 'Welcome, Instructor!', text: 'Create challenges, manage courses, and track student performance.', position: 'bottom' },
-      { target: '.topnav a[href*="challenge-list"]', titleKey: 'tour_challenge_mgmt', title: 'Challenge Management', text: 'Create, publish, and manage challenges for your students.', position: 'bottom' },
-      { target: '.topnav a[href*="course-catalog"]', titleKey: 'tour_course_mgmt', title: 'Course Management', text: 'Join courses as a steward and configure LLM settings.', position: 'bottom' },
-      { target: '.topnav a[href*="analytics"]', titleKey: 'tour_analytics_dash', title: 'Analytics Dashboard', text: 'View student performance, grade distributions, and export reports.', position: 'bottom' },
-      { target: '.lang-select', titleKey: 'tour_language', title: 'Language', text: 'Switch the interface language.', position: 'bottom-end' },
-      { target: '.user-area', titleKey: 'tour_profile', title: 'Your Profile', text: 'View your profile and see challenge statistics.', position: 'bottom-end' },
+      { target: '.topnav', titleKey: 'tour_welcome_instructor', title: 'Welcome, Instructor!', textKey: 'tour_welcome_instructor_text', text: 'Create challenges, manage courses, and track student performance.', position: 'bottom' },
+      { target: '.topnav a[href*="challenge-list"]', titleKey: 'tour_challenge_mgmt', title: 'Challenge Management', textKey: 'tour_challenge_mgmt_text', text: 'Create, publish, and manage challenges for your students.', position: 'bottom' },
+      { target: '.topnav a[href*="course-catalog"]', titleKey: 'tour_course_mgmt', title: 'Course Management', textKey: 'tour_course_mgmt_text', text: 'Join courses as a steward and configure LLM settings.', position: 'bottom' },
+      { target: '.topnav a[href*="analytics"]', titleKey: 'tour_analytics_dash', title: 'Analytics Dashboard', textKey: 'tour_analytics_dash_text', text: 'View student performance, grade distributions, and export reports.', position: 'bottom' },
+      { target: '.lang-select', titleKey: 'tour_language', title: 'Language', textKey: 'tour_language_text', text: 'Switch the interface language.', position: 'bottom-end' },
+      { target: '.user-area', titleKey: 'tour_profile', title: 'Your Profile', textKey: 'tour_profile_text', text: 'View your profile and see challenge statistics.', position: 'bottom-end' },
     ],
   };
 
@@ -124,16 +124,22 @@ const CoReasonTour = (() => {
     const resolvedTitle = (typeof t === 'function' && step.titleKey) ? (t(step.titleKey) !== step.titleKey ? t(step.titleKey) : step.title) : step.title;
     const resolvedText = (typeof t === 'function' && step.textKey) ? (t(step.textKey) !== step.textKey ? t(step.textKey) : step.text) : step.text;
 
+    // Resolve button labels
+    const skipLabel = (typeof t === 'function' && t('tour_skip') !== 'tour_skip') ? t('tour_skip') : 'Skip';
+    const backLabel = (typeof t === 'function' && t('tour_back') !== 'tour_back') ? t('tour_back') : 'Back';
+    const nextLabel = (typeof t === 'function' && t('tour_next') !== 'tour_next') ? t('tour_next') : 'Next →';
+    const doneLabel = (typeof t === 'function' && t('tour_done') !== 'tour_done') ? t('tour_done') : 'Done!';
+
     popup.innerHTML = `
       <h3>${resolvedTitle}</h3>
       <p>${resolvedText}</p>
       <div class="tour-footer">
         <span class="tour-progress">${index + 1} / ${steps.length}</span>
         <div class="tour-buttons">
-          <button class="tour-btn tour-btn-skip" onclick="CoReasonTour.end()">Skip</button>
-          ${index > 0 ? '<button class="tour-btn tour-btn-back" onclick="CoReasonTour.prev()">Back</button>' : ''}
+          <button class="tour-btn tour-btn-skip" onclick="CoReasonTour.end()">${skipLabel}</button>
+          ${index > 0 ? '<button class="tour-btn tour-btn-back" onclick="CoReasonTour.prev()">' + backLabel + '</button>' : ''}
           <button class="tour-btn tour-btn-next" onclick="CoReasonTour.next()">
-            ${index === steps.length - 1 ? (typeof t === 'function' ? t('completed') || 'Done!' : 'Done!') : 'Next →'}
+            ${index === steps.length - 1 ? doneLabel : nextLabel}
           </button>
         </div>
       </div>

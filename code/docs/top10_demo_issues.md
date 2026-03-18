@@ -1,110 +1,136 @@
-# Top 10 Demo Issues & Improvements
+# Top 10 Demo Issues & Improvements (Audit #4)
 
-> Audit date: 2026-03-18 | Status: NOT FIXED — review list only
-
----
-
-### 1. 🔴 Broken Links — Missing Client Pages
-**Severity:** Critical (404 during demo)
-**Details:** Two buttons link to pages that don't exist in `code/client/`:
-- Student challenge list → `create-challenge-student.html` (the "+ Create Challenge" button)
-- Instructor course catalog → `add-course.html` (the "+ Add New Course" button)
-
-**Fix:** Either create these pages or hide/disable the buttons until the pages are implemented.
+> Audit date: 2026-03-18 | Method: Playwright exploration (52 tests) + API verification
+> Results: **52 passed, 0 failed** | Runtime: ~1.5 minutes
+> Previous audits: #1 (10 issues), #2 (10 issues), #3 (10 issues) -- all critical/medium fixed
 
 ---
 
-### 2. 🔴 Instructor Preview Mode Broken
-**Severity:** Critical (instructor demo flow)
-**Details:** In `challenge-list-instructor.html`, the "Preview" action links to `challenge-run.html?challengeId=...&preview=1`, but `challenge-run.html` checks for `preview=instructor` (not `preview=1`). The preview banner and instructor nav swap never activate.
+## Status: All Critical & Medium Issues Resolved
 
-**Fix:** Change the link to use `preview=instructor` or update the run page to accept `preview=1`.
-
----
-
-### 3. 🟡 Tour & Help Systems Are Dead Code
-**Severity:** Medium (missed demo opportunity)
-**Details:** `js/tour.js` defines a step-by-step onboarding tour for both student and instructor roles. `js/help-popups.js` defines modal help for framing/judging/steering. Neither is loaded via `<script>` on any page, and no HTML elements use the `data-help` attribute. These could significantly improve the demo experience.
-
-**Fix:** Add `<script src="js/tour.js"></script>` to the main pages and wire up `data-help` attributes on key elements.
+Issues #1-#3 from Audit #3 were **Critical** and are now **Fixed**:
+- Hebrew accounts `preferred_language` corrected in DB + prevented overwrite race condition in content-loader.js
+- Instructor analytics page now loads only assigned courses (`?instructor=true`)
+- Cross-institution course leakage fixed (instructor sees only their assigned courses at their institution)
 
 ---
 
-### 4. 🟡 ~40 Missing Translation Keys
-**Severity:** Medium (untranslated strings in Hebrew demo)
-**Details:** Multiple `data-t` keys referenced in code don't exist in `ui-labels.yaml`:
-`profileDesc`, `loading`, `retry`, `noCourses`, `saving`, `saved`, `confirmDeleteChallenge`, `noCoursesFound`, `totalChallenges`, `runsCompleted`, `review`, `startChallenge`, `generatingProblem`, `instructorPreview`, `leadInstructor`, `coInstructor`, `addNewCourse`, `editSubjectTree`, `unsavedChanges`, `importExport`, `newTopic`, `addChild`, and ~15 more.
+## Remaining Issues (Low Severity)
 
-The fallback behavior shows the raw key as English text, so it doesn't break — but Hebrew users see mixed English/Hebrew UI.
-
-**Fix:** Add all missing keys to both `en/ui-labels.yaml` and `he/ui-labels.yaml`.
-
----
-
-### 5. 🟡 No Client-Side Role Guards
-**Severity:** Medium (security/UX)
-**Details:** Students can manually navigate to `challenge-list-instructor.html`, `instructor-analytics.html`, etc. — the pages load (with no data or errors). Similarly, instructors can visit student pages. API endpoints enforce authorization, but the client doesn't redirect.
-
-**Fix:** Add a role check in `user-header.js` that redirects if the current page doesn't match the user's role (e.g., student on an instructor page → redirect to student equivalent).
+### 1. :yellow_circle: No Fresh "Start Challenge" for Demo Students
+**Severity:** Medium-Low (demo flow limitation)
+**Demo Message Impact:** #15 (core experience), #17 (unique problem generation), #18 (Phase 1 framing)
+**Details:** All demo students have 6/6 completed runs. The challenge list shows "Results" for every challenge. No "Start" button is available to demonstrate the fresh challenge run flow.
+**Suggested Fix:** Add 2-3 new published challenges to each institution's courses that demo students haven't attempted.
 
 ---
 
-### 6. 🟡 Student Analytics Trend Legend Is Misleading
-**Severity:** Medium (confusing visualization)
-**Details:** The trend timeline legend uses grade colors (grade-a = green, grade-b = blue, grade-c = orange) as labels for skills (Framing, Judging, Steering). This implies Framing is always "A", which is wrong. The dots inside use the correct per-grade colors, but the legend confuses the viewer.
-
-**Fix:** Change the legend to show skill names with neutral colors, and use the dot colors only for grade values.
-
----
-
-### 7. 🟡 Hardcoded English Strings Bypass i18n
-**Severity:** Medium (Hebrew demo polish)
-**Details:** Several UI strings are hardcoded and not wrapped in `data-t`:
-- Login page: "Quick Login — Test Users", "Sign In as Test User"
-- Challenge run page: "Logout" button text
-- Instructor analytics: "All Challenges" filter option
-- Create challenge: multiple inline `data-tooltip` strings
-- Various `placeholder` attributes without `data-t-placeholder`
-
-**Fix:** Wrap all user-facing strings in `data-t` attributes and add corresponding YAML entries.
+### 2. :yellow_circle: Student Challenge List Shows Only 1 Row
+**Severity:** Medium-Low (sparse demo content)
+**Demo Message Impact:** #6 (challenge list), #14 (view challenges)
+**Details:** Both EN and HE students see only 1 challenge row despite 41 challenges existing. The list may filter to only subscribed courses with uncompleted challenges.
+**Suggested Fix:** Ensure demo students are subscribed to more courses, or adjust filtering to show completed challenges too.
 
 ---
 
-### 8. 🟢 No Demo Data Pre-Population (Completed Runs)
-**Severity:** Low-Medium (analytics pages are empty)
-**Details:** The analytics pages (student + instructor) require completed challenge runs to display meaningful data. Currently, the demo database has only 2 runs (from integration tests with specific test challenges). When logging in as a demo student, the analytics pages show empty or minimal data.
-
-**Fix:** Create a seed script that generates 5–10 completed runs per demo student with realistic grade distributions, so analytics pages show rich data during demos.
-
----
-
-### 9. 🟢 Subject Tree Drag-and-Drop Is Visual-Only
-**Severity:** Low (misleading UX)
-**Details:** The subject tree editor (`edit-subject-tree.html`) shows drag handles (`.drag-handle` with `cursor: grab`) on every node, but no drag event listeners are attached. Users will try to drag nodes and nothing will happen.
-
-**Fix:** Either implement drag-and-drop reordering or remove the drag handle icons.
+### 3. :yellow_circle: Student Analytics Shows 0 Chart Canvases
+**Severity:** Medium-Low (analytics visualization)
+**Demo Message Impact:** #28 (visual analytics), #29 (grade distribution cards), #30 (trend timeline)
+**Details:** The student analytics page loads without errors and the API returns valid data (6 completed runs), but Chart.js canvases don't render. May be a timing issue or missing Chart.js CDN load.
+**Suggested Fix:** Investigate Chart.js initialization timing. Charts may need a `requestAnimationFrame` delay or explicit resize trigger.
 
 ---
 
-### 10. 🟢 Create Challenge: Save as Draft Button Missing
-**Severity:** Low (instructor flow gap)
-**Details:** `create-challenge.html` has a `saveDraft()` JavaScript function but no corresponding button in the HTML. The only action is "Save & Publish". Instructors cannot save work-in-progress challenges.
-
-**Fix:** Add a "Save as Draft" button next to "Save & Publish" that calls the existing `saveDraft()` function.
+### 4. :green_circle: Tour/Guide Not Auto-Starting for Demo Users
+**Severity:** Low
+**Demo Message Impact:** Onboarding experience
+**Details:** The tour auto-starts only if `localStorage` key `coreason_tour_completed` is absent. Since demo sessions may have existing localStorage, the tour won't start. The "Guide" menu link provides a manual workaround.
+**Suggested Fix:** Already mitigated by the "Guide" link in the nav bar. Could also reset tour state on first login.
 
 ---
 
-## Summary
+### 5. :green_circle: Course Catalog Labels Not Fully Translated
+**Severity:** Low (polish)
+**Demo Message Impact:** #2 (bilingual experience)
+**Details:** When Hebrew language is active, some dynamically-generated labels in course cards (like "Challenges", "Students", "Pending Students") remain in English. These are generated by JavaScript after `translatePage()` runs.
+**Suggested Fix:** Use `t()` function when building course card HTML, or re-run `translatePage()` after cards are rendered.
 
-| # | Issue | Severity | Category |
-|---|-------|----------|----------|
-| 1 | Broken links (missing pages) | 🔴 Critical | Navigation |
-| 2 | Preview mode param mismatch | 🔴 Critical | Instructor flow |
-| 3 | Tour & help are dead code | 🟡 Medium | Onboarding |
-| 4 | ~40 missing translation keys | 🟡 Medium | i18n |
-| 5 | No client-side role guards | 🟡 Medium | Security/UX |
-| 6 | Trend legend misleading | 🟡 Medium | Analytics |
-| 7 | Hardcoded English strings | 🟡 Medium | i18n |
-| 8 | No pre-populated demo runs | 🟢 Low-Med | Demo readiness |
-| 9 | Drag handles non-functional | 🟢 Low | UX polish |
-| 10 | Save as Draft button missing | 🟢 Low | Instructor flow |
+---
+
+### 6. :green_circle: 401 Console Errors on Public Pages
+**Severity:** Low (cosmetic)
+**Demo Message Impact:** #3 (demo login flow)
+**Details:** Login, home, and sign-up pages trigger 401 errors from `user-header.js` trying to fetch `/auth/me`. Not visible to users but noisy in DevTools.
+**Suggested Fix:** Guard `/auth/me` call to skip on public pages.
+
+---
+
+### 7. :green_circle: Instructor Badge Always Shows "Co-Instructor"
+**Severity:** Low (cosmetic)
+**Demo Message Impact:** #34 (instructor courses)
+**Details:** All course cards for instructors show "Co-Instructor" badge regardless of actual assignment role. The `course_instructors` table has no role column (only `id, user_id, course_id, joined_at`).
+**Suggested Fix:** Either remove the badge or add a `role` column to `course_instructors` to distinguish lead vs co-instructor.
+
+---
+
+### 8. :green_circle: Department Filter Shows Duplicates
+**Severity:** Low (cosmetic)
+**Details:** The department dropdown on instructor course catalog shows "טכנולוגיות הוראה" twice (once per course). The JavaScript deduplication uses a Set on department names which should handle this -- possibly a whitespace difference.
+**Suggested Fix:** Trim department names before adding to Set.
+
+---
+
+### 9. :green_circle: Subject Tree AI Generation Requires LLM Key
+**Severity:** Low (demo dependency)
+**Demo Message Impact:** #37-38 (AI generation features)
+**Details:** The "Generate with AI" button on the subject tree editor requires a configured LLM API key. Without it, the button may error silently or show a generic error.
+**Suggested Fix:** Pre-populate subject trees in seed data so the feature can be shown as "already generated" during demos.
+
+---
+
+### 10. :green_circle: PDF Export Not Functional
+**Severity:** Low (demo gap)
+**Demo Message Impact:** #48 (PDF export)
+**Details:** The instructor analytics "Export PDF" feature was not tested and may not be implemented. This is a nice-to-have for demos.
+**Suggested Fix:** Implement using html2pdf.js or similar client-side PDF generation.
+
+---
+
+## Summary Table
+
+| # | Issue | Severity | Status |
+|---|-------|----------|--------|
+| 1 | No fresh "Start Challenge" for demo students | :yellow_circle: Medium-Low | Open |
+| 2 | Student challenge list shows only 1 row | :yellow_circle: Medium-Low | Open |
+| 3 | Student analytics charts don't render | :yellow_circle: Medium-Low | Open |
+| 4 | Tour not auto-starting | :green_circle: Low | Mitigated (Guide link) |
+| 5 | Course card labels not fully translated | :green_circle: Low | Open |
+| 6 | 401 console errors on public pages | :green_circle: Low | Open |
+| 7 | Badge always shows "Co-Instructor" | :green_circle: Low | Open |
+| 8 | Department filter shows duplicates | :green_circle: Low | Open |
+| 9 | AI generation needs LLM key | :green_circle: Low | Open |
+| 10 | PDF export not functional | :green_circle: Low | Open |
+
+---
+
+## All Previously Fixed Issues (Audits #1-#3)
+
+| Issue | Fixed In |
+|-------|----------|
+| Broken links (create-challenge-student.html) | Audit #1 |
+| Preview mode param mismatch (preview=1) | Audit #1 |
+| Tour & help dead code (not loaded) | Audit #2 |
+| ~40 missing translation keys | Audit #1 |
+| No client-side role guards | Audit #2 |
+| Trend legend misleading colors | Audit #1 |
+| Hardcoded English strings bypass i18n | Audit #1 |
+| No pre-populated demo runs | Audit #2 |
+| Drag handles non-functional | Audit #2 |
+| Save as Draft button missing | Audit #1 |
+| Hebrew accounts wrong preferred_language | Audit #4 |
+| Instructor analytics 403 error | Audit #4 |
+| Cross-institution course leakage | Audit #4 |
+| Language overwrite race condition | Audit #4 |
+| Language not auto-set from profile | Audit #4 |
+| Tour not i18n-aware | Audit #4 |
+| No guide activation link in menu | Audit #4 |

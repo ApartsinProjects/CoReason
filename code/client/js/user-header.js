@@ -76,6 +76,15 @@
     var user = data.user || data;
     window._currentUser = user;
 
+    // Auto-set language from user profile preference (avoids infinite reload
+    // by only switching when the language actually differs)
+    if (user.preferred_language && typeof switchLanguage === 'function' && typeof getLang === 'function') {
+      var currentLangVal = getLang();
+      if (user.preferred_language !== currentLangVal) {
+        switchLanguage(user.preferred_language);
+      }
+    }
+
     // Enforce role-based page access before page-specific JS loads data
     enforceRoleGuard(user);
 

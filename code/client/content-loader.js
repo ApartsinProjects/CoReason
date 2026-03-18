@@ -121,13 +121,6 @@ function switchLanguage(lang) {
   // Persist preference to localStorage
   try { localStorage.setItem(LANG_STORAGE_KEY, lang); } catch(e) {}
 
-  // Sync preferred_language to server (fire-and-forget; won't block UI)
-  if (typeof API !== 'undefined' && API.put) {
-    API.put('/users/me', { preferred_language: lang }).catch(function() {
-      // Ignore — user may not be logged in yet
-    });
-  }
-
   // Auto-translate the page
   translatePage();
 
@@ -323,7 +316,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Listen for user selection changes
     sel.addEventListener('change', function() {
-      switchLanguage(this.value.toLowerCase());
+      var newLang = this.value.toLowerCase();
+      switchLanguage(newLang);
+      // Sync preferred_language to server only on explicit user action
+      if (typeof API !== 'undefined' && API.put) {
+        API.put('/users/me', { preferred_language: newLang }).catch(function() {});
+      }
     });
   });
 
