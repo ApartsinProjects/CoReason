@@ -38,9 +38,46 @@
     return user.institution_name || user.institutionName || '';
   }
 
+  // Role-based page mappings: student page <-> instructor page
+  var ROLE_PAGE_MAP = {
+    // student page : instructor equivalent
+    'challenge-list.html':       'challenge-list-instructor.html',
+    'course-catalog.html':       'course-catalog-instructor.html',
+    'student-analytics.html':    'instructor-analytics.html'
+  };
+
+  // Build reverse map: instructor page -> student equivalent
+  var REVERSE_ROLE_PAGE_MAP = {};
+  Object.keys(ROLE_PAGE_MAP).forEach(function(studentPage) {
+    REVERSE_ROLE_PAGE_MAP[ROLE_PAGE_MAP[studentPage]] = studentPage;
+  });
+
+  function enforceRoleGuard(user) {
+    var path = window.location.pathname;
+    var filename = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
+    var role = user.role;
+
+    if (!role) return; // no role info, skip guard
+
+    if (role === 'student' && REVERSE_ROLE_PAGE_MAP[filename]) {
+      // Student on an instructor page — redirect to student equivalent
+      window.location.replace(REVERSE_ROLE_PAGE_MAP[filename]);
+      return;
+    }
+
+    if (role === 'instructor' && ROLE_PAGE_MAP[filename]) {
+      // Instructor on a student-only page — redirect to instructor equivalent
+      window.location.replace(ROLE_PAGE_MAP[filename]);
+      return;
+    }
+  }
+
   API.auth.me().then(function(data) {
     var user = data.user || data;
     window._currentUser = user;
+
+    // Enforce role-based page access before page-specific JS loads data
+    enforceRoleGuard(user);
 
     // Update user name
     var nameEl = document.getElementById('userName');

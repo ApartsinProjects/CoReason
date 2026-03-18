@@ -26,8 +26,6 @@
     .tree-edit-node .node-actions button { padding: 2px 6px; font-size: 12px; background: none; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; color: var(--text-secondary); }
     .tree-edit-node .node-actions button:hover { background: #f0f0f0; }
     .tree-edit-node .node-actions button.danger:hover { background: #fbe9e7; color: var(--danger); border-color: var(--danger); }
-    .tree-edit-node .drag-handle { cursor: grab; color: #ccc; font-size: 14px; }
-    .tree-edit-node .drag-handle:active { cursor: grabbing; }
     .tree-edit-node.selected { background: #ede7f6; outline: 2px solid var(--primary); }
 
     /* Add node inline */
@@ -314,7 +312,6 @@
       li.id = 'node-' + newId;
       li.innerHTML =
         '<div class="tree-edit-node" onclick="selectNode(\'' + newId + '\', this)">' +
-          '<span class="drag-handle">⠿</span>' +
           '<span class="node-label" contenteditable="true" spellcheck="false">' + (t('newTopic') || 'New Topic') + '</span>' +
           '<div class="node-actions">' +
             '<button onclick="event.stopPropagation(); duplicateNode(\'' + newId + '\')">⧉</button>' +
@@ -342,7 +339,6 @@
       li.id = 'node-' + newId;
       li.innerHTML =
         '<div class="tree-edit-node" onclick="selectNode(\'' + newId + '\', this)">' +
-          '<span class="drag-handle">⠿</span>' +
           '<span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>' +
           '<span class="node-label" contenteditable="true" spellcheck="false">' + (t('newRootTopic') || 'New Root Topic') + '</span>' +
           '<div class="node-actions">' +
@@ -545,8 +541,7 @@
       li.id = 'node-' + id;
 
       var hasChildren = node.children && node.children.length > 0;
-      var html = '<div class="tree-edit-node" onclick="selectNode(\'' + id + '\', this)">' +
-        '<span class="drag-handle">⠿</span>';
+      var html = '<div class="tree-edit-node" onclick="selectNode(\'' + id + '\', this)">';
       if (hasChildren) {
         html += '<span class="tree-toggle" onclick="event.stopPropagation(); toggleTreeBranch(this)">&#9660;</span>';
       }
