@@ -64,6 +64,7 @@ const HelpPopups = (() => {
   }
 
   async function show(topic) {
+    const previouslyFocused = document.activeElement;
     createModal();
     const content = await loadHelp(topic);
 
@@ -76,17 +77,35 @@ const HelpPopups = (() => {
       </div>
     `;
 
-    overlay.querySelector('.help-modal-close').onclick = () => overlay.remove();
-    overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+    overlay.querySelector('.help-modal-close').onclick = () => { overlay.remove(); if (previouslyFocused) previouslyFocused.focus(); };
+    overlay.onclick = (e) => { if (e.target === overlay) { overlay.remove(); if (previouslyFocused) previouslyFocused.focus(); } };
 
     document.body.appendChild(overlay);
+
+    // Translate help content for the current language
+    if (typeof translatePage === 'function') {
+      translatePage();
+    }
+
+    overlay.querySelector('.help-modal-close').focus();
     modal = overlay;
 
     // Close on Escape
     const escHandler = (e) => {
-      if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', escHandler); }
+      if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', escHandler); if (previouslyFocused) previouslyFocused.focus(); }
     };
     document.addEventListener('keydown', escHandler);
+
+    // Focus trap
+    overlay.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = overlay.querySelectorAll('button, a, input, [tabindex]:not([tabindex="-1"])');
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
   }
 
   // Auto-attach to all [data-help] elements

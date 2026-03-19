@@ -7,9 +7,10 @@ const {
 } = require('../utils/constants');
 
 class ChallengeService {
-  constructor(db, logger) {
+  constructor(db, logger, llmService) {
     this.db = db;
     this.logger = logger;
+    this.llm = llmService || null;
   }
 
   async list(filters = {}, userId = null) {
@@ -167,13 +168,114 @@ class ChallengeService {
     if (challenge.creator_id !== userId) throw new ForbiddenError('Only the creator can publish');
     if (!challenge.course_id) throw new ValidationError('Challenge must be assigned to a course before publishing');
 
-    await this.db('challenges').where({ id }).update({
+    const updates = {
       status: CHALLENGE_STATUS.PUBLISHED,
       visibility: VISIBILITY.PUBLIC,
       updated_at: new Date().toISOString(),
-    });
+    };
+
+    // Resolve creator's preferred language for LLM content generation
+    const creator = await this.db('users').where({ id: userId }).select('preferred_language').first();
+    const language = creator?.preferred_language || 'en';
+
+    const course = await this.db('courses').where({ id: challenge.course_id }).first();
+    const subjectPath = challenge.subject_path ? JSON.parse(challenge.subject_path) : [];
+
+    // Generate rubrics if not already set (REQ-EVAL-01: rubrics must be populated before runs)
+    const existingRubrics = challenge.rubrics ? JSON.parse(challenge.rubrics) : null;
+    if (!existingRubrics && this.llm) {
+      try {
+        const rubrics = await this.llm.generateRubrics({
+          courseName: course?.name || 'General',
+          subjectPath: subjectPath.join(' > ') || 'General',
+          language,
+        });
+        if (rubrics) {
+          updates.rubrics = JSON.stringify(rubrics);
+          this.logger.info('Rubrics generated during publish', { challengeId: id });
+        }
+      } catch (err) {
+        this.logger.warn('Failed to generate rubrics during publish, continuing without', {
+          challengeId: id, error: err.message,
+        });
+      }
+    }
+
+    // Generate rawProblem + framingOptions if not already cached
+    const existingContent = challenge.generated_content ? JSON.parse(challenge.generated_content) : null;
+    if (!existingContent?.rawProblem && this.llm) {
+      try {
+        const rawProblem = await this.llm.generateProblem({
+          course: course?.name || 'General',
+          subject: subjectPath.join(' > ') || 'General',
+          instructions: challenge.instructions,
+          language,
+        });
+
+        if (rawProblem) {
+          const generatedContent = { rawProblem };
+
+          // Generate framing MC options if the challenge uses MC for phase1
+          const responseConfig = challenge.response_config ? JSON.parse(challenge.response_config) : {};
+          const phase1Type = responseConfig.phase1 || responseConfig.framing || RESPONSE_TYPE.MC;
+          if (phase1Type === RESPONSE_TYPE.MC) {
+            try {
+              const rubrics = updates.rubrics
+                ? JSON.parse(updates.rubrics)
+                : (existingRubrics || null);
+              const framingOptions = await this.llm.generateFramingMC({
+                rawProblem,
+                framingRubric: rubrics?.framing ? JSON.stringify(rubrics.framing) : '',
+                language,
+              });
+              if (framingOptions) {
+                generatedContent.framingOptions = framingOptions;
+              }
+            } catch (err) {
+              this.logger.warn('Failed to generate framing options during publish, continuing without', {
+                challengeId: id, error: err.message,
+              });
+            }
+          }
+
+          updates.generated_content = JSON.stringify(generatedContent);
+          this.logger.info('Generated content created during publish', { challengeId: id, language });
+        }
+      } catch (err) {
+        this.logger.warn('Failed to generate problem during publish, continuing without', {
+          challengeId: id, error: err.message,
+        });
+      }
+    }
+
+    await this.db('challenges').where({ id }).update(updates);
     this.logger.info('Challenge published', { challengeId: id, userId });
     return this.getById(id);
+  }
+
+  async clone(id, userId) {
+    const original = await this.getById(id);
+
+    const cloned = {
+      id: uuidv4(),
+      title: (original.title || 'Untitled') + ' (Copy)',
+      creator_id: userId,
+      course_id: original.course_id,
+      subject_path: original.subject_path,  // Already JSON string from DB
+      challenge_type: original.challenge_type,
+      visibility: VISIBILITY.PRIVATE,  // Clones start as private
+      response_config: original.response_config,  // Already JSON string from DB
+      max_cycles: original.max_cycles,
+      model_override: original.model_override,
+      instructions: original.instructions,  // Already JSON string from DB
+      rubrics: original.rubrics,  // Already JSON string from DB
+      generated_content: null,  // Don't clone generated content - will regenerate
+      status: CHALLENGE_STATUS.DRAFT,
+    };
+
+    await this.db('challenges').insert(cloned);
+    this.logger.info('Challenge cloned', { originalId: id, clonedId: cloned.id, userId });
+    return this.getById(cloned.id);
   }
 
   /**

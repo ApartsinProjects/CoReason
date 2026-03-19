@@ -28,6 +28,69 @@
     .rubric-summary h5 { font-size: 12px; color: var(--primary); margin-bottom: 4px; margin-top: 8px; }
     .rubric-summary .grade-labels { color: var(--text-secondary); font-size: 12px; }
 
+    /* Collapsible rubric sections */
+    .rubric-section { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; }
+    .rubric-section-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px; cursor: pointer; background: #f8f9ff; font-weight: 600; font-size: 13px; color: var(--primary); transition: background .15s; }
+    .rubric-section-header:hover { background: #e8eaf6; }
+    .rubric-section-header .rubric-arrow { font-size: 10px; transition: transform .2s; margin-left: auto; }
+    .rubric-section-header .rubric-arrow.collapsed { transform: rotate(-90deg); }
+    .rubric-section-body { padding: 10px 14px 14px; border-top: 1px solid var(--border); }
+    .rubric-section-body.collapsed { display: none; }
+    .rubric-section-body ul { list-style: none; padding: 0; margin: 0; }
+    .rubric-section-body li { padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; display: flex; gap: 8px; align-items: flex-start; }
+    .rubric-section-body li:last-child { border-bottom: none; }
+    .rubric-section-body li::before { content: '•'; color: var(--primary); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .rubric-section-icon { font-size: 15px; flex-shrink: 0; }
+
+    /* Rubric edit mode */
+    .rubric-edit-btn { font-size: 12px; margin-left: auto; padding: 3px 10px; border: 1px solid var(--primary); background: none; color: var(--primary); border-radius: var(--radius); cursor: pointer; font-weight: 600; }
+    .rubric-edit-btn:hover { background: var(--primary); color: #fff; }
+    .rubric-edit-btn.active { background: var(--primary); color: #fff; }
+    .rubric-edit-textarea { width: 100%; min-height: 32px; font-size: 12.5px; line-height: 1.5; border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; resize: vertical; font-family: inherit; box-sizing: border-box; margin-bottom: 4px; }
+    .rubric-edit-textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(26,35,126,.1); }
+    .rubric-edit-actions { display: flex; gap: 6px; margin-top: 6px; }
+    .rubric-edit-actions .btn { font-size: 11px; padding: 3px 10px; }
+    .rubric-add-criterion { font-size: 11px; color: var(--teal); cursor: pointer; border: none; background: none; padding: 4px 0; text-decoration: underline; }
+    .rubric-remove-criterion { font-size: 11px; color: var(--danger); cursor: pointer; border: none; background: none; padding: 2px 4px; margin-left: auto; flex-shrink: 0; }
+
+    /* Student Preview Modal */
+    .student-preview-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,.5); z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .student-preview-modal {
+      background: #fff; border-radius: var(--radius); max-width: 800px; width: 100%;
+      max-height: 85vh; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,.2);
+    }
+    .student-preview-modal .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: #fff; z-index: 1;
+    }
+    .student-preview-modal .modal-header h2 { margin: 0; font-size: 18px; color: var(--primary); }
+    .student-preview-modal .modal-body { padding: 24px; }
+    .student-preview-modal .modal-close {
+      background: none; border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 6px 16px; cursor: pointer; font-size: 14px; color: var(--text-secondary);
+    }
+    .student-preview-modal .modal-close:hover { background: #f5f5f5; }
+    .preview-block { margin-bottom: 20px; }
+    .preview-block h4 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: .5px;
+      color: var(--teal); margin-bottom: 8px; font-weight: 700;
+    }
+    .preview-block-content {
+      background: #f8f9ff; border-radius: var(--radius); padding: 16px;
+      font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-break: break-word;
+    }
+    .preview-block-content ul { padding-left: 18px; margin: 8px 0; }
+    .preview-block-content li { margin-bottom: 4px; }
+    .preview-loading { text-align: center; padding: 48px 24px; color: var(--text-secondary); }
+    .preview-loading .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid #e0e0e0; border-top-color: var(--primary); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     /* Responsive: create-challenge */
     @media (max-width: 768px) {
       .create-layout { grid-template-columns: 1fr !important; }
@@ -46,6 +109,7 @@
   <script src="js/user-header.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content sr-only sr-only-focusable" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;" onfocus="this.style.position='static';this.style.width='auto';this.style.height='auto';this.style.overflow='visible';" onblur="this.style.position='absolute';this.style.left='-9999px';this.style.width='1px';this.style.height='1px';this.style.overflow='hidden';">Skip to content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
@@ -54,7 +118,8 @@
       <a href="instructor-analytics.html" data-t="analytics">Analytics</a>
     </nav>
     <div class="user-area">
-      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <a href="interactive-guide.html" class="guide-link" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
       <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
       <span id="userName">&mdash;</span>
@@ -63,7 +128,7 @@
     </div>
   </header>
 
-  <main class="page">
+  <main class="page" id="main-content">
     <div class="page-header">
       <h1 data-t="createChallengeTitle">Create a Public Challenge</h1>
       <p>Define a new co-reasoning challenge for your course</p>
@@ -74,7 +139,7 @@
       <div>
         <!-- Metadata -->
         <div class="card">
-          <h3 style="margin-bottom:16px;" data-t="createChallengeTitle">Challenge Details</h3>
+          <h3 style="margin-bottom:16px;" data-t="challengeDetails">Challenge Details</h3>
           <div class="form-group">
             <label for="challengeTitle" data-t="challengeTitle">Title</label>
             <input type="text" class="form-control" id="challengeTitle" data-t-placeholder="challengeTitlePlaceholder" placeholder="Enter challenge title...">
@@ -86,7 +151,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label data-t="subjectArea">Subject Tree Nodes <span class="help-icon" data-tooltip="Select one or more topics within the course. Rubrics and problems will be generated based on the selected subjects. Check parent nodes to include all children.">?</span></label>
+            <label data-t="subjectArea">Subject Tree Nodes <span class="help-icon" data-tooltip="WHY: The subject selection determines the scope and content of generated problems — more specific subjects produce more focused, domain-relevant challenges. WHAT: A hierarchical tree of topics within the course. Select the specific areas you want the challenge to cover. Problems, rubrics, and evaluation criteria are all generated from these subjects. HOW: Check one or more leaf nodes. Selecting a parent node includes all its children. More subjects produce broader problems; fewer subjects produce deeper, more focused ones.">?</span></label>
             <div class="subject-tree-select" id="subjectTreeSelect">
               <div class="subject-tree-trigger" onclick="toggleSubjectTree()">
                 <span class="subject-tree-tags" id="selectedTags"></span>
@@ -123,7 +188,7 @@
 
           <!-- Challenge Type -->
           <div class="form-group">
-            <label>Challenge Type <span class="help-icon" data-tooltip="Practice: students see feedback after each phase and can retry. Assessment: feedback is withheld until the end, no retries allowed.">?</span></label>
+            <label>Challenge Type <span class="help-icon" data-tooltip="WHY: The challenge type determines the pedagogical mode — whether students learn through immediate feedback or demonstrate mastery under controlled conditions. WHAT: Practice mode shows AI-generated feedback after each phase (framing, judging, steering), helping students learn iteratively. Assessment mode withholds all feedback until completion, testing independent skill without guidance. HOW: Use Practice for learning exercises and formative assessment. Use Assessment for graded evaluations, exams, or when you want to measure unassisted performance.">?</span></label>
             <div class="inline-radio">
               <label><input type="radio" name="type" value="practice" checked> <span data-t="practice">Practice</span></label>
               <label><input type="radio" name="type" value="assessment"> <span data-t="assessment">Assessment</span></label>
@@ -144,34 +209,34 @@
 
             <!-- Phase 1: Framing -->
             <div class="phase-config">
-              <h4><span class="phase-badge" data-t="phase1">Phase 1</span> <span data-t="framing">Framing</span> <span class="help-icon" data-tooltip="The student sees a raw, intentionally incomplete problem and must translate it into a well-defined task by adding assumptions, constraints, and clarifications.">?</span></h4>
+              <h4><span class="phase-badge" data-t="phase1">Phase 1</span> <span data-t="framing">Framing</span> <span class="help-icon" data-tooltip="WHY: Real-world problems are never pre-formatted for AI. Framing teaches students to transform vague requirements into precise, actionable tasks — the foundational skill of AI collaboration. WHAT: Students receive a raw, intentionally incomplete problem and must refine it by adding assumptions, constraints, context, and clarifications before the AI generates a solution. HOW: The system generates an ill-defined problem from your selected subjects. Students either select refinements (MC) or write their own (OE). The AI then solves the refined problem.">?</span></h4>
               <p class="text-sm text-muted mb-16">System presents a raw problem. Student translates it into a well-defined task and sends it to the AI.</p>
               <div class="form-group">
-                <label data-t="responseType">Framing Response Type <span class="help-icon" data-tooltip="Multiple Choice: LLM generates options representing different framings. Open-Ended: student writes structured refinement sections around the raw problem.">?</span></label>
+                <label data-t="responseType">Framing Response Type <span class="help-icon" data-tooltip="WHY: The response format shapes the learning experience — MC scaffolds decision-making while OE develops independent problem definition skills. WHAT: Multiple Choice generates refinement options (correct + distractors) that test the student's ability to evaluate which refinements matter. Open-Ended lets students write their own refinement sections, developing the skill of articulating missing requirements. HOW: Use MC for introductory or lower-level challenges where students need structured guidance. Use Open-Ended for advanced challenges that require independent critical thinking.">?</span></label>
                 <div class="inline-radio">
                   <label><input type="radio" name="frame-type" value="mc" checked> <span data-t="multipleChoice">Multiple Choice</span></label>
                   <label><input type="radio" name="frame-type" value="open"> <span data-t="openEnded">Open-Ended</span> (structured sections)</label>
                 </div>
               </div>
               <div class="form-group">
-                <label data-t="instructions">Instructions for Students</label>
+                <label data-t="instructions">Instructions for Students <span class="help-icon" data-tooltip="WHY: Clear instructions help students understand what is expected and how to approach the task — reducing confusion and improving learning outcomes. WHAT: Custom text shown to students at the start of each phase. You can guide their thinking, set expectations, or provide domain-specific hints. HOW: Write concise, actionable instructions. Tell students what to focus on, what the AI expects, and how their response will be evaluated.">?</span></label>
                 <textarea class="form-control" id="framingInstructions" rows="3">Read the problem statement carefully. Identify missing information, ambiguous requirements, and unstated assumptions. Formulate a clear, well-defined task by specifying your assumptions.</textarea>
               </div>
             </div>
 
             <!-- Phase 2: Judge+Steer Cycles -->
             <div class="phase-config">
-              <h4><span class="phase-badge" data-t="phase2">Phase 2</span> Judge+Steer Cycles <span class="help-icon" data-tooltip="Iterative cycles where the student first identifies issues in the AI output (judging), then sends corrections (steering). The AI updates its output after each cycle.">?</span></h4>
+              <h4><span class="phase-badge" data-t="phase2">Phase 2</span> Judge+Steer Cycles <span class="help-icon" data-tooltip="WHY: A single review is rarely enough to perfect AI output. Iterative judging and steering cycles develop the skill of progressive refinement — each round sharpens both the student's critical eye and their ability to guide AI. WHAT: Each cycle has two sub-steps: Judging (identify issues in the AI output) and Steering (send corrections). The AI regenerates after each steering command, allowing students to track improvement. HOW: Students first evaluate the AI solution (judging — recorded but not sent to AI), then provide corrections (steering — sent to AI). The AI updates its output, and a new cycle begins.">?</span></h4>
               <p class="text-sm text-muted mb-16">Iterative cycles. Each cycle: student judges the AI output (identifies issues — not sent to AI), then steers the AI (sends correction request).</p>
 
               <div class="form-group">
-                <label data-t="maxCycles" data-tooltip="maxCycles">Max Cycles</label>
+                <label data-t="maxCycles">Max Steering Cycles <span class="help-icon" data-tooltip="WHY: More cycles give students more opportunities to practice iterative correction, but too many can reduce engagement. WHAT: The maximum number of judge+steer cycles allowed per challenge run. After the last cycle, the run completes and all grades are calculated. HOW: 3-5 cycles is typical. Use fewer for quicker assessments, more for deep practice exercises.">?</span></label>
                 <input type="number" class="form-control" id="maxCycles" value="5" min="1" max="10" style="width:80px;">
               </div>
 
               <!-- Judging sub-step config -->
               <div class="substep-block">
-                <h5><span data-t="judgingSubstep">Sub-step A — Judging</span> <span class="help-icon" data-tooltip="The student analyzes the AI's output and identifies gaps or errors. Judgments are recorded but NOT sent to the AI.">?</span></h5>
+                <h5><span data-t="judgingSubstep">Sub-step A — Judging</span> <span class="help-icon" data-tooltip="WHY: Critical evaluation of AI output is a skill that must be practiced independently from correction. Separating judging from steering forces students to fully analyze before acting. WHAT: Students review the AI's solution and identify specific errors, gaps, or incorrect assumptions. Their judgments are recorded for grading but are NOT sent to the AI. HOW: Students either select from AI-generated issue options (MC) or write their own issue descriptions (OE). This step builds domain expertise and analytical thinking.">?</span></h5>
                 <div class="form-group">
                   <label data-t="responseType">Judging Response Type</label>
                   <div class="inline-radio">
@@ -180,14 +245,14 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label data-t="instructions">Instructions for Students</label>
+                  <label data-t="instructions">Instructions for Students <span class="help-icon" data-tooltip="WHY: Clear instructions help students understand what is expected and how to approach the task — reducing confusion and improving learning outcomes. WHAT: Custom text shown to students at the start of each phase. You can guide their thinking, set expectations, or provide domain-specific hints. HOW: Write concise, actionable instructions. Tell students what to focus on, what the AI expects, and how their response will be evaluated.">?</span></label>
                   <textarea class="form-control" id="judgingInstructions" rows="3">Review the AI's output carefully. Identify any gaps, errors, or issues. Select ALL issues you find — your analysis is recorded but NOT sent to the AI.</textarea>
                 </div>
               </div>
 
               <!-- Steering sub-step config -->
               <div class="substep-block">
-                <h5><span data-t="steeringSubstep">Sub-step B — Steering</span> <span class="help-icon" data-tooltip="The student sends a correction or update request to the AI. The AI processes it and produces updated output for the next cycle.">?</span></h5>
+                <h5><span data-t="steeringSubstep">Sub-step B — Steering</span> <span class="help-icon" data-tooltip="WHY: Knowing how to give precise, actionable feedback to AI is the core competency of effective human-AI collaboration. Steering develops this skill through practice. WHAT: Students write specific corrections or instructions to fix the issues they identified in judging. The AI processes the steering command and regenerates an improved solution. HOW: Students either select from correction options (MC) or write their own corrections (OE). Clear, specific corrections produce better AI revisions — vague feedback produces vague improvements.">?</span></h5>
                 <div class="form-group">
                   <label data-t="responseType">Steering Response Type</label>
                   <div class="inline-radio">
@@ -196,7 +261,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label data-t="instructions">Instructions for Students</label>
+                  <label data-t="instructions">Instructions for Students <span class="help-icon" data-tooltip="WHY: Clear instructions help students understand what is expected and how to approach the task — reducing confusion and improving learning outcomes. WHAT: Custom text shown to students at the start of each phase. You can guide their thinking, set expectations, or provide domain-specific hints. HOW: Write concise, actionable instructions. Tell students what to focus on, what the AI expects, and how their response will be evaluated.">?</span></label>
                   <textarea class="form-control" id="steeringInstructions" rows="3">Based on your analysis, select ALL corrections to send to the AI. Be specific — tell the AI exactly what to fix or improve.</textarea>
                 </div>
               </div>
@@ -224,6 +289,7 @@
         <div class="flex gap-12 mt-16">
           <button class="btn btn-outline btn-lg" id="btnDraft" onclick="saveDraft()" data-t="saveAsDraft">Save as Draft</button>
           <button class="btn btn-primary btn-lg" id="btnPublish" onclick="publishChallenge()" data-t="publishChallenge">Save &amp; Publish</button>
+          <button class="btn btn-outline btn-lg" id="btnPreviewStudent" onclick="previewAsStudent()" style="border-color:var(--teal);color:var(--teal);" data-t="previewAsStudent">Preview as Student</button>
           <a href="challenge-list-instructor.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
         </div>
       </div>
@@ -231,16 +297,26 @@
       <!-- Right: Preview Panel -->
       <div class="preview-section">
         <div class="card">
-          <h3 style="margin-bottom:16px;" data-t="livePreview">Example Raw Problem <span class="help-icon" data-tooltip="A sample problem generated from your selected subject. Shows the kind of problems students will see, with annotated gaps visible only to you.">?</span></h3>
-          <div style="background:#f8f9ff; padding:12px; border-radius:var(--radius); font-size:13px;" id="problemPreviewContent">
-            <p class="text-muted" data-t="selectSubjectsToPreview">Select course and subjects to see a sample problem preview.</p>
+          <div class="advanced-header" onclick="togglePreviewSection()">
+            <h3 style="margin-bottom:0;"><span data-t="livePreview">Example Raw Problem</span> <span class="help-icon" data-tooltip="WHY: Previewing a sample problem helps you verify that your subject selection produces meaningful, appropriately scoped challenges for students. WHAT: This is a sample AI-generated problem based on your selected subjects. It is intentionally incomplete — containing gaps, ambiguities, and unstated assumptions that students must identify and refine. HOW: Review the problem to ensure it covers the right topics and is neither too easy nor too complex for your students. The actual problems generated for each student will vary.">?</span></h3>
+            <span class="arrow" id="preview-arrow">&#9660;</span>
+          </div>
+          <div id="preview-body">
+            <div style="background:#f8f9ff; padding:12px; border-radius:var(--radius); font-size:13px; margin-top:16px;" id="problemPreviewContent">
+              <p class="text-muted" data-t="selectSubjectsToPreview">Select course and subjects to see a sample problem preview.</p>
+            </div>
           </div>
         </div>
 
         <div class="card">
-          <h3 style="margin-bottom:12px;" data-t="rubricPreview">Evaluation Rubric</h3>
-          <div class="rubric-summary" id="rubricSummaryContent">
-            <p class="text-muted text-sm" data-t="rubricWillGenerate">Rubric criteria will be generated based on selected subjects.</p>
+          <div class="advanced-header" onclick="toggleRubricSection()">
+            <h3 style="margin-bottom:0; display:flex; align-items:center;"><span data-t="rubricPreview">Evaluation Rubric</span> <span class="help-icon" data-tooltip="WHY: The rubric defines how students are evaluated — ensuring consistent, objective grading across framing, judging, and steering skills. WHAT: AI-generated evaluation criteria for each phase, tailored to your selected subjects. The rubric is used internally by the AI grader and is never shown to students. HOW: Review the criteria to ensure they match your pedagogical goals. The rubric is auto-generated when you select subjects and can be customized after publishing.">?</span> <button class="rubric-edit-btn" id="rubricEditBtn" onclick="toggleRubricEditMode(); event.stopPropagation();" style="display:none" title="Edit rubric criteria">Edit Rubric</button></h3>
+            <span class="arrow" id="rubric-arrow">&#9660;</span>
+          </div>
+          <div id="rubric-body">
+            <div class="rubric-summary" id="rubricSummaryContent" style="margin-top:12px;">
+              <p class="text-muted text-sm" data-t="rubricWillGenerate">Rubric criteria will be generated based on selected subjects.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -277,7 +353,7 @@ function nextTreeId() { return 'tn-' + (++_treeNodeId); }
 // --- Load courses from API (returns a promise so edit mode can await it) ---
 var _coursesLoaded = (async function loadCourses() {
   try {
-    const courses = await API.get('/courses');
+    const courses = await API.get('/courses?instructor=true');
     const select = document.getElementById('courseSelect');
     if (!courses || courses.length === 0) {
       select.innerHTML = '<option value="">No courses available</option>';
@@ -385,6 +461,32 @@ function attachTreeListeners() {
 function toggleAdvanced() {
   const body = document.getElementById('advanced-body');
   const arrow = document.getElementById('adv-arrow');
+  if (body.style.display === 'none') {
+    body.style.display = '';
+    arrow.textContent = '\u25BC';
+  } else {
+    body.style.display = 'none';
+    arrow.textContent = '\u25B6';
+  }
+}
+
+// --- Toggle preview section panel ---
+function togglePreviewSection() {
+  const body = document.getElementById('preview-body');
+  const arrow = document.getElementById('preview-arrow');
+  if (body.style.display === 'none') {
+    body.style.display = '';
+    arrow.textContent = '\u25BC';
+  } else {
+    body.style.display = 'none';
+    arrow.textContent = '\u25B6';
+  }
+}
+
+// --- Toggle rubric section panel ---
+function toggleRubricSection() {
+  const body = document.getElementById('rubric-body');
+  const arrow = document.getElementById('rubric-arrow');
   if (body.style.display === 'none') {
     body.style.display = '';
     arrow.textContent = '\u25BC';
@@ -517,6 +619,10 @@ function clearAllSubjects() {
   updateSelectedTags();
 }
 
+// --- Rubric state ---
+var _currentRubrics = null; // Stores { framing: [...], judging: [...], steering: [...] }
+var _rubricEditMode = false;
+
 // --- Async rubric update (non-blocking) ---
 let _rubricTimer = null;
 function scheduleRubricUpdate() {
@@ -544,7 +650,7 @@ async function updateProblemPreview() {
       subjects: selected,
     });
     if (result && result.problem) {
-      previewEl.innerHTML = '<div style="white-space:pre-wrap;">' + result.problem + '</div>';
+      previewEl.innerHTML = '<div dir="auto" style="white-space:pre-wrap;">' + result.problem + '</div>';
     } else {
       previewEl.innerHTML = '<p class="text-muted">Problem preview will be generated when the challenge runs.</p>';
     }
@@ -583,18 +689,16 @@ async function updateRubricsAsync() {
       subjects: selected,
     });
     if (result && result.rubrics) {
-      // Rebuild rubric summary with LLM-generated content
-      var html = '';
-      if (result.rubrics.framing) {
-        html += '<h5>Framing <span class="help-icon" data-tooltip="How well students identify the core problem and frame their approach before seeing the AI solution.">?</span></h5><div class="grade-labels">' + result.rubrics.framing.join(' · ') + '</div>';
-      }
-      if (result.rubrics.judging) {
-        html += '<h5>Judging <span class="help-icon" data-tooltip="How accurately students evaluate the AI-generated solution, identifying strengths, weaknesses, and errors.">?</span></h5><div class="grade-labels">' + result.rubrics.judging.join(' · ') + '</div>';
-      }
-      if (result.rubrics.steering) {
-        html += '<h5>Steering <span class="help-icon" data-tooltip="How effectively students guide the AI to improve its solution through targeted feedback and corrections.">?</span></h5><div class="grade-labels">' + result.rubrics.steering.join(' · ') + '</div>';
-      }
-      rubricSummary.innerHTML = html;
+      // Store rubric data for editing
+      _currentRubrics = {};
+      ['framing', 'judging', 'steering'].forEach(function(k) {
+        if (result.rubrics[k]) _currentRubrics[k] = result.rubrics[k].slice();
+      });
+      // Show edit button
+      var editBtn = document.getElementById('rubricEditBtn');
+      if (editBtn) editBtn.style.display = '';
+      // Render rubric (view or edit mode)
+      renderRubricSummary(rubricSummary);
       statusEl.innerHTML = '<em>Rubrics updated for: ' + selected.slice(0, 3).join(', ') + (selected.length > 3 ? '...' : '') + '</em>';
     } else {
       statusEl.innerHTML = '<em>Rubrics will be generated when you publish.</em>';
@@ -603,6 +707,88 @@ async function updateRubricsAsync() {
     statusEl.innerHTML = '<em>Rubric preview not available — will generate on publish.</em>';
   }
   rubricSummary.style.opacity = '1';
+}
+
+// --- Rubric section metadata ---
+var _rubricSections = [
+  { key: 'framing', icon: '🎯', label: 'Framing', tooltip: 'WHY: Framing is the foundational skill — defining a well-structured task determines the quality of everything that follows. WHAT: Evaluates how well the student refined the raw problem by adding constraints, assumptions, and clarifications. HOW: Higher grades require identifying genuine gaps, reducing ambiguity, and providing precise task specifications.' },
+  { key: 'judging', icon: '🔍', label: 'Judging', tooltip: 'WHY: Critical evaluation of AI output is essential — subtle errors require domain expertise to detect. WHAT: Evaluates how accurately the student identified mistakes, logical gaps, and incorrect assumptions in the AI solution. HOW: Higher grades require spotting specific issues and distinguishing real errors from acceptable simplifications.' },
+  { key: 'steering', icon: '🧭', label: 'Steering', tooltip: 'WHY: Guiding AI toward better outputs through precise corrections is the core skill of human-AI collaboration. WHAT: Evaluates how effectively the student\'s corrections led the AI to improve its solution. HOW: Higher grades come from precise, constructive corrections that explain what should change and why.' }
+];
+
+// --- Render rubric summary (view or edit mode) ---
+function renderRubricSummary(container) {
+  if (!container) container = document.getElementById('rubricSummaryContent');
+  if (!container || !_currentRubrics) return;
+
+  var html = '';
+  _rubricSections.forEach(function(sec) {
+    if (!_currentRubrics[sec.key]) return;
+    var items = _currentRubrics[sec.key];
+    html += '<div class="rubric-section">';
+    html += '<div class="rubric-section-header" onclick="this.querySelector(\'.rubric-arrow\').classList.toggle(\'collapsed\');this.nextElementSibling.classList.toggle(\'collapsed\')">';
+    html += '<span class="rubric-section-icon">' + sec.icon + '</span> ' + sec.label + ' <span class="help-icon" data-tooltip="' + sec.tooltip + '">?</span>';
+    html += '<span class="rubric-arrow">▼</span>';
+    html += '</div>';
+    html += '<div class="rubric-section-body">';
+    if (_rubricEditMode) {
+      html += '<div class="rubric-edit-list" data-phase="' + sec.key + '">';
+      items.forEach(function(criterion, idx) {
+        html += '<div style="display:flex;align-items:flex-start;gap:4px;margin-bottom:4px;">';
+        html += '<textarea class="rubric-edit-textarea" data-phase="' + sec.key + '" data-idx="' + idx + '" onchange="updateRubricCriterion(this)">' + escapeHtml(criterion) + '</textarea>';
+        html += '<button class="rubric-remove-criterion" onclick="removeRubricCriterion(\'' + sec.key + '\',' + idx + ')" title="Remove">&times;</button>';
+        html += '</div>';
+      });
+      html += '<button class="rubric-add-criterion" onclick="addRubricCriterion(\'' + sec.key + '\')">+ Add criterion</button>';
+      html += '</div>';
+    } else {
+      html += '<ul>';
+      items.forEach(function(criterion) { html += '<li><span>' + criterion + '</span></li>'; });
+      html += '</ul>';
+    }
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+// --- Toggle rubric edit mode ---
+function toggleRubricEditMode() {
+  _rubricEditMode = !_rubricEditMode;
+  var btn = document.getElementById('rubricEditBtn');
+  if (btn) {
+    btn.textContent = _rubricEditMode ? 'Done Editing' : 'Edit Rubric';
+    btn.classList.toggle('active', _rubricEditMode);
+  }
+  renderRubricSummary();
+}
+
+// --- Rubric edit handlers ---
+function updateRubricCriterion(textarea) {
+  var phase = textarea.getAttribute('data-phase');
+  var idx = parseInt(textarea.getAttribute('data-idx'));
+  if (_currentRubrics && _currentRubrics[phase]) {
+    _currentRubrics[phase][idx] = textarea.value;
+    _formDirty = true;
+  }
+}
+
+function removeRubricCriterion(phase, idx) {
+  if (_currentRubrics && _currentRubrics[phase]) {
+    _currentRubrics[phase].splice(idx, 1);
+    _formDirty = true;
+    renderRubricSummary();
+  }
+}
+
+function addRubricCriterion(phase) {
+  if (_currentRubrics && _currentRubrics[phase]) {
+    _currentRubrics[phase].push('');
+    _formDirty = true;
+    renderRubricSummary();
+    // Focus the new textarea
+    var textareas = document.querySelectorAll('.rubric-edit-textarea[data-phase="' + phase + '"]');
+    if (textareas.length > 0) textareas[textareas.length - 1].focus();
+  }
 }
 
 // --- Get selected subject names (leaf nodes only) ---
@@ -638,6 +824,7 @@ function collectFormData() {
       judging: (document.querySelector('input[name="judge-type"]:checked') || {}).value || 'mc',
       steering: (document.querySelector('input[name="steer-type"]:checked') || {}).value || 'mc',
     },
+    rubrics: _currentRubrics || undefined,
   };
 }
 
@@ -713,8 +900,24 @@ var _pendingSubjectPath = null; // subjects to pre-select after tree loads
       if (instructions.steering) document.getElementById('steeringInstructions').value = instructions.steering;
     }
 
+    // Load existing rubrics if present
+    var rubrics = ch.rubrics;
+    if (typeof rubrics === 'string') {
+      try { rubrics = JSON.parse(rubrics); } catch(e) { rubrics = null; }
+    }
+    if (rubrics && (rubrics.framing || rubrics.judging || rubrics.steering)) {
+      _currentRubrics = {};
+      ['framing', 'judging', 'steering'].forEach(function(k) {
+        if (rubrics[k]) _currentRubrics[k] = rubrics[k].slice();
+      });
+      var editBtn = document.getElementById('rubricEditBtn');
+      if (editBtn) editBtn.style.display = '';
+      renderRubricSummary();
+    }
+
     // Update page title and buttons for editing
     document.querySelector('.page-header h1').textContent = t('editChallenge') || 'Edit Challenge';
+    document.querySelector('.page-header p').textContent = t('editChallengeSubtitle') || 'Edit this co-reasoning challenge';
     var publishBtn = document.getElementById('btnPublish');
     if (publishBtn) publishBtn.textContent = t('saveAndPublish') || 'Save & Publish';
 
@@ -745,8 +948,17 @@ function preselectSubjects(subjectNames) {
   scheduleRubricUpdate();
 }
 
+// MAJ-1: Warn on unsaved changes
+var _formDirty = false;
+document.addEventListener('input', function() { _formDirty = true; });
+document.addEventListener('change', function() { _formDirty = true; });
+window.addEventListener('beforeunload', function(e) {
+  if (_formDirty) { e.preventDefault(); e.returnValue = ''; }
+});
+
 // --- Publish challenge ---
 async function publishChallenge() {
+  _formDirty = false;
   var data = collectFormData();
   if (!data.title) { alert(t('pleaseEnterTitle') || 'Please enter a challenge title.'); return; }
   if (!data.courseId) { alert(t('pleaseSelectCourse') || 'Please select a course.'); return; }
@@ -775,11 +987,100 @@ async function publishChallenge() {
 }
 
 // --- Save as draft ---
+// --- Preview as Student ---
+async function previewAsStudent() {
+  if (!_editingChallengeId) {
+    alert(t('saveFirstToPreview') || 'Save the challenge first to preview it as a student.');
+    return;
+  }
+
+  // Create modal overlay
+  var overlay = document.createElement('div');
+  overlay.className = 'student-preview-overlay';
+  overlay.innerHTML =
+    '<div class="student-preview-modal">' +
+      '<div class="modal-header">' +
+        '<h2>' + (t('studentPreview') || 'Student Preview') + '</h2>' +
+        '<button class="modal-close" id="previewCloseBtn">' + (t('close') || 'Close') + '</button>' +
+      '</div>' +
+      '<div class="modal-body">' +
+        '<div class="preview-loading">' +
+          '<div class="spinner"></div>' +
+          '<p>' + (t('generatingPreview') || 'Generating student preview...') + '</p>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+
+  // Close handlers
+  function closeModal() { overlay.remove(); }
+  overlay.querySelector('#previewCloseBtn').onclick = closeModal;
+  overlay.onclick = function(e) { if (e.target === overlay) closeModal(); };
+  document.addEventListener('keydown', function handler(e) {
+    if (e.key === 'Escape') { closeModal(); document.removeEventListener('keydown', handler); }
+  });
+
+  try {
+    var data = await API.challenges.previewAsStudent(_editingChallengeId);
+    var body = overlay.querySelector('.modal-body');
+    var html = '';
+
+    // Raw Problem
+    html += '<div class="preview-block">';
+    html += '<h4>' + (t('rawProblem') || 'Raw Problem') + '</h4>';
+    html += '<div class="preview-block-content">' + escapeHtml(data.rawProblem || 'No problem generated.') + '</div>';
+    html += '</div>';
+
+    // Framing Options (if MC)
+    if (data.framingOptions && Array.isArray(data.framingOptions) && data.framingOptions.length > 0) {
+      html += '<div class="preview-block">';
+      html += '<h4>' + (t('framingOptions') || 'Framing Options (Multiple Choice)') + '</h4>';
+      html += '<div class="preview-block-content"><ul>';
+      data.framingOptions.forEach(function(opt) {
+        html += '<li><strong>' + escapeHtml(opt.letter || '') + '.</strong> ' + escapeHtml(opt.text || '') + '</li>';
+      });
+      html += '</ul></div></div>';
+    }
+
+    // AI Solution
+    html += '<div class="preview-block">';
+    html += '<h4>' + (t('aiSolution') || 'AI Solution (shown after framing)') + '</h4>';
+    html += '<div class="preview-block-content">' + escapeHtml(data.aiSolution || 'No AI solution generated.') + '</div>';
+    html += '</div>';
+
+    // Metadata
+    html += '<div class="preview-block">';
+    html += '<h4>' + (t('challengeSettings') || 'Challenge Settings') + '</h4>';
+    html += '<div class="preview-block-content">';
+    html += '<strong>' + (t('responseType') || 'Response Type') + ':</strong> ' + escapeHtml(data.responseType || 'open_ended') + '<br>';
+    html += '<strong>' + (t('maxCycles') || 'Max Cycles') + ':</strong> ' + (data.maxCycles || 3) + '<br>';
+    html += '<strong>' + (t('challengeType') || 'Challenge Type') + ':</strong> ' + escapeHtml(data.challengeType || 'practice');
+    html += '</div></div>';
+
+    body.innerHTML = html;
+  } catch (err) {
+    var body = overlay.querySelector('.modal-body');
+    body.innerHTML = '<div style="color:var(--danger);padding:24px;text-align:center;">' +
+      '<p><strong>' + (t('previewFailed') || 'Preview failed') + '</strong></p>' +
+      '<p>' + escapeHtml(err.message) + '</p></div>';
+  }
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  var div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// --- Save as draft ---
 async function saveDraft() {
+  _formDirty = false;
   var data = collectFormData();
   data.status = 'draft';
   if (!data.title) { alert(t('pleaseEnterTitle') || 'Please enter a challenge title.'); return; }
   if (!data.courseId) { alert(t('pleaseSelectCourse') || 'Please select a course.'); return; }
+  if (data.subjectPath.length === 0) { alert(t('pleaseSelectSubject') || 'Please select at least one subject.'); return; }
 
   var btn = document.getElementById('btnDraft');
   btn.disabled = true;

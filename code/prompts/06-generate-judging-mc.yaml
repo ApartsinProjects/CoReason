@@ -13,6 +13,8 @@ description: >
   Student selects the issues they identify. Responses are NOT sent to AI.
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are generating multiple-choice options for the Judging sub-step of a co-reasoning challenge.
   The student is reviewing the AI's current output and must identify issues, gaps, or errors.
 
@@ -60,6 +62,20 @@ user_prompt: |
 
   Generate options that describe specific issues the student might identify.
   Write all option text and explanations in {{language}}.
+
+  You MUST return a JSON object with this exact structure (no markdown, no code fences):
+  {
+    "options": [
+      {
+        "id": "A",
+        "text": "Description of the issue",
+        "is_real_issue": true,
+        "explanation": "Why this is/isn't a real issue — shown after submission",
+        "severity": "critical"
+      }
+    ]
+  }
+  Use letter IDs (A, B, C, ...). The "is_real_issue" field is MANDATORY — set true for real issues in the AI output, false for distractor issues. Exactly {{num_correct}} must be true, exactly {{num_incorrect}} must be false. Severity must be "critical", "moderate", "minor", or "not_an_issue".
 
 output_schema:
   type: object

@@ -80,11 +80,57 @@ module.exports = function runRoutes(db, logger, llmService) {
     }
   });
 
+  // POST /api/v1/runs/:runId/suggest
+  router.post('/:runId/suggest', requireAuth, async (req, res, next) => {
+    try {
+      const { phase, cycleNumber } = req.body;
+      logger.info('Suggest requested', { userId: req.user.id, runId: req.params.runId, phase });
+      const result = await runService.suggest(req.params.runId, req.user.id, { phase, cycleNumber });
+      res.json(result);
+    } catch (err) {
+      logger.error('Suggest failed', { userId: req.user.id, runId: req.params.runId, error: err.message });
+      next(err);
+    }
+  });
+
+  // POST /api/v1/runs/:runId/regenerate-judging
+  router.post('/:runId/regenerate-judging', requireAuth, async (req, res, next) => {
+    try {
+      const { cycleNumber } = req.body;
+      logger.info('Regenerate judging options requested', { userId: req.user.id, runId: req.params.runId, cycleNumber });
+      const result = await runService.regenerateJudgingOptions(req.params.runId, req.user.id, cycleNumber);
+      res.json(result);
+    } catch (err) {
+      logger.error('Regenerate judging failed', { userId: req.user.id, runId: req.params.runId, error: err.message });
+      next(err);
+    }
+  });
+
+  // PUT /api/v1/runs/:runId/grade-override — Instructor grade override
+  router.put('/:runId/grade-override', requireAuth, async (req, res, next) => {
+    try {
+      if (req.user.role !== 'instructor') {
+        const { ForbiddenError } = require('../utils/errors');
+        return next(new ForbiddenError('Only instructors can override grades'));
+      }
+      logger.info('Grade override requested', { userId: req.user.id, runId: req.params.runId, phase: req.body.phase });
+      const result = await runService.overrideGrade(req.params.runId, req.user.id, {
+        phase: req.body.phase,
+        grade: req.body.grade,
+        reason: req.body.reason || '',
+      });
+      res.json(result);
+    } catch (err) {
+      logger.error('Grade override failed', { userId: req.user.id, runId: req.params.runId, error: err.message });
+      next(err);
+    }
+  });
+
   // GET /api/v1/runs/:runId/report
   router.get('/:runId/report', requireAuth, async (req, res, next) => {
     try {
       logger.info('Report retrieved', { userId: req.user.id, runId: req.params.runId });
-      const report = await runService.getReport(req.params.runId, req.user.id);
+      const report = await runService.getReport(req.params.runId, req.user.id, { role: req.user.role });
       res.json(report);
     } catch (err) {
       logger.error('Report retrieval failed', { userId: req.user.id, runId: req.params.runId, error: err.message });

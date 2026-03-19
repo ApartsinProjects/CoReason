@@ -61,7 +61,10 @@ const API = (() => {
     } catch (err) {
       if (err instanceof ApiError) throw err;
       console.error(`[API] ${method} ${path} failed:`, err);
-      throw new ApiError('NETWORK_ERROR', 'Network error: ' + err.message, 0);
+      var userMsg = (err.message && err.message.indexOf('Failed to fetch') !== -1)
+        ? 'Unable to connect to the server. Please check your internet connection and try again.'
+        : 'Network error: ' + err.message;
+      throw new ApiError('NETWORK_ERROR', userMsg, 0);
     }
   }
 
@@ -86,6 +89,24 @@ const API = (() => {
       profile: () => request('GET', '/users/me'),
       update: (data) => request('PUT', '/users/me', data),
       stats: () => request('GET', '/users/me/stats'),
+      uploadAvatar: async (file) => {
+        const formData = new FormData();
+        formData.append('avatar', file);
+        const res = await fetch(baseUrl + '/users/me/avatar', {
+          method: 'POST',
+          credentials: 'include',
+          body: formData,
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new ApiError(
+            (data.error && data.error.code) || 'UPLOAD_ERROR',
+            (data.error && data.error.message) || 'Upload failed',
+            res.status
+          );
+        }
+        return res.json();
+      },
     },
 
     // --- Institutions ---
@@ -116,6 +137,8 @@ const API = (() => {
       archive: (id) => request('PUT', `/challenges/${id}/archive`),
       delete: (id) => request('DELETE', `/challenges/${id}`),
       publish: (id) => request('POST', `/challenges/${id}/publish`),
+      previewAsStudent: (id) => request('POST', `/challenges/${id}/preview`),
+      clone: (id) => request('POST', `/challenges/${id}/clone`),
     },
 
     // --- Challenge Runs ---
@@ -127,6 +150,7 @@ const API = (() => {
       submitSteering: (runId, cycle, response) => request('PUT', `/runs/${runId}/cycles/${cycle}/steering`, response),
       complete: (runId) => request('PUT', `/runs/${runId}/complete`),
       report: (runId) => request('GET', `/runs/${runId}/report`),
+      overrideGrade: (runId, phase, grade, reason) => request('PUT', `/runs/${runId}/grade-override`, { phase, grade, reason }),
     },
 
     // --- Analytics ---

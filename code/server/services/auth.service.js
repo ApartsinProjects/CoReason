@@ -40,6 +40,15 @@ class AuthService {
       if (!inst) throw new NotFoundError('Institution', institutionId);
     }
 
+    // Validate name length and sanitize HTML
+    if (name.length > 100) {
+      throw new ValidationError('Name must be 100 characters or fewer');
+    }
+    const sanitizedName = name.replace(/<[^>]*>/g, '').trim();
+    if (!sanitizedName) {
+      throw new ValidationError('Name cannot contain only HTML tags');
+    }
+
     // Hash password
     const passwordHash = await bcrypt.hash(password, DEFAULTS.BCRYPT_ROUNDS);
 
@@ -47,7 +56,7 @@ class AuthService {
       id: uuidv4(),
       email: email.toLowerCase().trim(),
       password_hash: passwordHash,
-      name: name.trim(),
+      name: sanitizedName,
       role,
       institution_id: institutionId || null,
       preferred_language: DEFAULTS.PREFERRED_LANGUAGE,

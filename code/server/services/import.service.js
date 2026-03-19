@@ -184,6 +184,38 @@ class ImportService {
         }
       }
 
+      // Import subscriptions (student -> course)
+      if (importData.subscriptions) {
+        for (const sub of importData.subscriptions) {
+          try {
+            const userEmail = (sub.user || '').toLowerCase().trim();
+            const user = await this.db('users').where({ email: userEmail }).first();
+            const course = await this.db('courses').where({ name: sub.course }).first();
+            if (!user) {
+              errors.push(`Subscription: user "${sub.user}" not found — skipped`);
+              continue;
+            }
+            if (!course) {
+              errors.push(`Subscription: course "${sub.course}" not found — skipped`);
+              continue;
+            }
+            const existing = await this.db('course_subscriptions')
+              .where({ user_id: user.id, course_id: course.id }).first();
+            if (!existing) {
+              await this.db('course_subscriptions').insert({
+                id: uuidv4(),
+                user_id: user.id,
+                course_id: course.id,
+              });
+              this.logger.info('Import: subscription created', { user: sub.user, course: sub.course });
+            }
+          } catch (err) {
+            this.logger.error('Import: subscription failed', { user: sub.user, course: sub.course, error: err.message });
+            errors.push(`Subscription "${sub.user}" -> "${sub.course}": ${err.message}`);
+          }
+        }
+      }
+
       // Import prompt templates from files
       if (options.importPrompts) {
         const promptsDir = path.resolve(__dirname, PATHS.PROMPTS_DIR_FROM_SERVICES);

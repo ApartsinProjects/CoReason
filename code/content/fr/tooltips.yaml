@@ -2,104 +2,143 @@
 #
 # ── Shared Tooltips (used on both student and instructor pages) ──
 challengeType:
-  title: "Type de defi"
-  text: "Les defis d'entrainement permettent de reessayer avec un retour apres chaque phase. Les defis d'evaluation sont notes avec un retour uniquement a la fin."
+  title: "Type de défi"
+  text: "WHY: Différents objectifs d'apprentissage nécessitent différentes approches de rétroaction — l'entraînement développe les compétences par l'itération, tandis que l'évaluation mesure la capacité autonome. WHAT: Le mode entraînement affiche un retour généré par l'IA après chaque phase, vous aidant à apprendre de vos erreurs en temps réel. Le mode évaluation retient le retour jusqu'à la fin, testant vos compétences de co-raisonnement sans assistance. HOW: Choisissez Entraînement pour l'apprentissage et l'exploration. Choisissez Évaluation pour les examens notés ou pour mesurer le niveau réel de compétence."
 visibility:
-  title: "Visibilite"
-  text: "Les defis publics sont visibles par tous les etudiants inscrits. Les defis prives ne sont visibles que par leur createur."
+  title: "Visibilité"
+  text: "WHY: Contrôler qui peut voir un défi permet aux instructeurs de gérer le contenu du cours et aux étudiants de créer du matériel de pratique personnel. WHAT: Les défis publics sont visibles par tous les étudiants inscrits au cours. Les défis privés ne sont visibles que par leur créateur. HOW: Les défis publics apparaissent dans la liste des défis du cours pour tous les abonnés. Les défis privés n'apparaissent que dans votre liste personnelle."
 maxCycles:
   title: "Cycles maximum"
-  text: "Le nombre maximum de cycles Jugement+Pilotage autorises. Plus de cycles offrent plus d'occasions d'ameliorer la sortie de l'IA."
+  text: "WHY: Plus de cycles offrent davantage d'occasions de pratiquer la correction itérative, mais un nombre excessif peut réduire l'engagement et la concentration. WHAT: Le nombre maximum de cycles Jugement+Pilotage autorisés par session de défi. Après le dernier cycle, la session se termine et toutes les notes sont calculées. HOW: 3 à 5 cycles est la norme. Utilisez moins de cycles pour des évaluations rapides, davantage pour des exercices de pratique approfondie."
 subjectPath:
   title: "Chemin du sujet"
-  text: "La hierarchie thematique a laquelle appartient ce defi, au sein de l'arbre des sujets du cours."
+  text: "WHY: Associer les défis à des sujets spécifiques permet d'organiser le contenu et d'effectuer des analyses ciblées sur les domaines de compétence. WHAT: La hiérarchie thématique à laquelle appartient ce défi, au sein de l'arbre des sujets du cours. Les problèmes et les grilles d'évaluation sont générés en fonction de ces domaines. HOW: Sélectionnez des nœuds feuilles spécifiques pour des défis ciblés, ou des nœuds parents plus larges pour des problèmes plus variés."
 responseType:
-  title: "Type de reponse"
-  text: "Le choix multiple propose des options predefinies. La reponse ouverte permet un raisonnement ecrit libre."
+  title: "Type de réponse"
+  text: "WHY: Le format de réponse façonne l'expérience d'apprentissage — le choix multiple structure la prise de décision tandis que la réponse ouverte développe le raisonnement autonome. WHAT: Le choix multiple présente des options prégénérées à sélectionner. La réponse ouverte permet un raisonnement écrit libre et des raffinements personnalisés. HOW: Utilisez le choix multiple pour les défis d'introduction. Utilisez la réponse ouverte pour les défis avancés nécessitant une réflexion critique autonome."
 framingPhase:
   title: "Phase de cadrage"
-  text: "L'etudiant evalue le probleme brut et le traduit en une tache bien definie en ajoutant des hypotheses et des contraintes."
+  text: "WHY: Les problèmes du monde réel ne sont jamais préformatés pour l'IA. Le cadrage vous apprend à transformer des exigences vagues en tâches précises et exploitables. WHAT: Vous recevez un problème brut, intentionnellement incomplet, et devez le raffiner en ajoutant des hypothèses, des contraintes et des clarifications avant que l'IA ne génère une solution. Il s'agit de la Phase 1 du processus de co-raisonnement (voir le diagramme de processus pour le flux complet). HOW: Lisez attentivement le problème. Identifiez ce qui est manquant, ambigu ou supposé. Ajoutez des précisions qui rendent la tâche bien définie."
 judgingPhase:
   title: "Phase de jugement"
-  text: "L'etudiant examine la solution generee par l'IA et identifie ce qui est correct, ce qui est errone et ce qui pourrait etre ameliore."
+  text: "WHY: Les résultats de l'IA contiennent souvent des erreurs subtiles qui nécessitent une expertise approfondie pour être détectées. Le jugement développe vos compétences d'évaluation analytique. WHAT: Vous examinez la solution générée par l'IA et identifiez les erreurs spécifiques, les lacunes ou les hypothèses incorrectes. Il s'agit de la Phase 2A du processus de co-raisonnement (voir le diagramme de processus pour le flux complet). Vos jugements sont enregistrés pour la notation mais ne sont PAS envoyés à l'IA. HOW: Lisez la solution de manière critique. Recherchez les erreurs logiques, les éléments manquants, les faits incorrects et les hypothèses non exprimées."
 steeringPhase:
   title: "Phase de pilotage"
-  text: "L'etudiant fournit un retour specifique pour guider l'IA vers une meilleure solution."
+  text: "WHY: Savoir donner un retour précis et exploitable à l'IA est la compétence centrale d'une collaboration humain-IA efficace. WHAT: Vous rédigez des corrections ou des instructions spécifiques pour corriger les problèmes identifiés. Il s'agit de la Phase 2B du processus de co-raisonnement (voir le diagramme de processus pour le flux complet). L'IA traite votre pilotage et régénère une solution améliorée. HOW: Soyez spécifique et concret. Indiquez exactement à l'IA ce qu'il faut corriger. Des corrections claires produisent de meilleures révisions — un retour vague produit des améliorations vagues."
 coReasoningScore:
   title: "Score de co-raisonnement"
-  text: "Performance globale combinant la precision du cadrage, la qualite du jugement et l'efficacite du pilotage."
+  text: "WHY: Un score combiné vous aide à comprendre votre efficacité globale en tant que collaborateur avec l'IA à travers les trois compétences de co-raisonnement. WHAT: Votre note de performance globale combinant la précision du cadrage, la qualité du jugement et l'efficacité du pilotage. Chaque compétence est notée indépendamment (A/B/C). HOW: Concentrez-vous d'abord sur l'amélioration de votre compétence la plus faible. Consultez le retour de chaque phase pour comprendre où vous pouvez progresser."
 rubric:
-  title: "Grille d'evaluation"
-  text: "Les criteres d'evaluation utilises pour noter la performance de co-raisonnement a chaque phase."
+  title: "Grille d'évaluation"
+  text: "WHY: Des critères d'évaluation cohérents garantissent une notation juste et objective pour tous les étudiants et toutes les tentatives. WHAT: Critères de notation générés par l'IA, utilisés pour évaluer votre performance de co-raisonnement dans chaque phase (cadrage, jugement, pilotage). La grille est adaptée au domaine du défi. HOW: Les grilles sont invisibles pendant le défi. Après la fin, vos notes reflètent la manière dont vous avez satisfait aux critères de la grille."
 subjectTree:
   title: "Arbre des sujets"
-  text: "Une organisation hierarchique des sujets au sein d'un cours. Les defis sont associes a des noeuds specifiques."
+  text: "WHY: Organiser les sujets de manière hiérarchique permet de structurer le contenu du cours et d'évaluer les compétences de manière ciblée dans les différents domaines. WHAT: Une organisation arborescente des sujets au sein d'un cours. Les défis sont associés à des nœuds spécifiques, et les problèmes sont générés à partir des sujets sélectionnés. HOW: Les instructeurs construisent l'arbre via les paramètres du cours. Les étudiants voient les défis organisés par domaine."
+coReasoningProcess:
+  title: "Le processus de co-raisonnement"
+  text: "WHY: Comprendre le flux complet du co-raisonnement vous aide à voir comment chaque phase s'appuie sur la précédente et pourquoi chaque compétence compte. WHAT: Le processus comporte trois phases : (1) Cadrage — transformer un problème vague en une tâche bien définie, (2A) Jugement — identifier les problèmes dans la solution de l'IA, (2B) Pilotage — rédiger des corrections pour améliorer le résultat de l'IA. Jugement et Pilotage se répètent en cycles. HOW: Cliquez sur le lien du diagramme de processus ou cherchez l'icône de diagramme pour voir le schéma visuel complet du processus de co-raisonnement."
 #
 # ── Student-Facing Tooltips ──
 courseSubscription:
   title: "Inscription au cours"
-  text: "Inscrivez-vous a un cours pour acceder a ses defis et suivre votre progression."
+  text: "WHY: L'inscription vous connecte à la bibliothèque de défis d'un cours et permet à votre instructeur de suivre votre progression. WHAT: Lorsque vous vous inscrivez, les défis publics du cours apparaissent dans votre liste de défis et vos résultats sont inclus dans les analyses du cours. HOW: Cliquez sur S'inscrire sur n'importe quelle carte de cours disponible. Vous pouvez vous désinscrire à tout moment depuis le catalogue des cours."
 analyticsOverview:
   title: "Vos statistiques"
-  text: "Consultez vos tendances de performance, vos distributions de notes et vos analyses detaillees sur l'ensemble de vos sessions."
+  text: "WHY: Suivre votre performance au fil du temps révèle des tendances, des points forts et des domaines nécessitant de l'attention. WHAT: Un résumé visuel de vos notes sur l'ensemble de vos sessions terminées, incluant les distributions par compétence et les tendances dans le temps. HOW: Utilisez les filtres pour vous concentrer sur des cours ou types de défis spécifiques. Cliquez sur n'importe quel défi dans le tableau pour voir son rapport détaillé."
 # Student challenge list columns
 colChallenge:
-  title: "Defi"
-  text: "Le nom du defi. Cliquez pour voir les details ou lancer une session."
+  title: "Défi"
+  text: "Le nom du défi. Cliquez pour voir les détails ou lancer une session."
 colCourse:
   title: "Cours"
-  text: "Le cours auquel appartient ce defi."
+  text: "Le cours auquel appartient ce défi."
 colType:
   title: "Type"
-  text: "Les defis d'entrainement permettent de reessayer avec du retour. Les defis d'evaluation sont notes avec un retour uniquement a la fin."
+  text: "Les défis d'entraînement permettent de réessayer avec un retour. Les défis d'évaluation sont notés avec un retour uniquement à la fin."
 colVisibility:
-  title: "Visibilite"
-  text: "Les defis publics proviennent de vos cours auxquels vous etes inscrit. Les defis prives sont ceux que vous avez crees pour vous-meme."
+  title: "Visibilité"
+  text: "Les défis publics proviennent de vos cours auxquels vous êtes inscrit. Les défis privés sont ceux que vous avez créés pour vous-même."
 colCreated:
-  title: "Date de creation"
-  text: "La date a laquelle ce defi a ete publie ou cree."
+  title: "Date de création"
+  text: "La date à laquelle ce défi a été publié ou créé."
 colCreator:
-  title: "Createur"
-  text: "L'instructeur ou l'etudiant qui a cree ce defi."
+  title: "Créateur"
+  text: "L'instructeur ou l'étudiant qui a créé ce défi."
 colLastAttempt:
-  title: "Derniere tentative"
-  text: "La derniere fois que vous avez tente ce defi, le cas echeant."
+  title: "Dernière tentative"
+  text: "La dernière fois que vous avez tenté ce défi, le cas échéant."
 colStatus:
   title: "Statut"
-  text: "Votre progression : Non commence, En cours ou Termine."
+  text: "Votre progression : Non commencé, En cours ou Terminé."
 colActions:
   title: "Actions"
-  text: "Actions disponibles telles que Commencer, Reprendre, Voir les resultats ou Relancer."
+  text: "Actions disponibles : Commencer, Reprendre, Voir les résultats ou Relancer."
 #
 # ── Instructor-Facing Tooltips ──
 instrAnalyticsOverview:
   title: "Statistiques du cours"
-  text: "Donnees de performance agregees pour tous les etudiants de ce cours. Inclut uniquement les resultats des defis publics."
+  text: "WHY: Comprendre la performance agrégée des étudiants vous aide à identifier les domaines difficiles et à ajuster votre approche pédagogique. WHAT: Données de performance agrégées pour tous les étudiants de ce cours, incluant les distributions de notes et les détails par étudiant. Inclut uniquement les résultats des défis publics. HOW: Utilisez les filtres de cours et de défi pour affiner l'analyse. Exportez en PDF pour les rapports institutionnels."
 instrCourseSubscription:
   title: "Gestion du cours"
-  text: "Gerez les parametres de votre cours, l'arbre des sujets et les affectations de defis."
+  text: "Gérez les paramètres de votre cours, l'arbre des sujets et les affectations de défis."
 # Instructor challenge list columns
 instrColChallenge:
-  title: "Defi"
-  text: "Le titre du defi. Cliquez pour modifier ou consulter les soumissions des etudiants."
+  title: "Défi"
+  text: "Le titre du défi. Cliquez pour modifier ou consulter les soumissions des étudiants."
 instrColCourse:
   title: "Cours"
-  text: "Le cours auquel ce defi est affecte."
+  text: "Le cours auquel ce défi est affecté."
 instrColType:
   title: "Type"
-  text: "Entrainement : les etudiants recoivent un retour apres chaque phase. Evaluation : le retour est retenu jusqu'a la fin."
+  text: "Entraînement : les étudiants reçoivent un retour après chaque phase. Évaluation : le retour est retenu jusqu'à la fin."
 instrColVisibility:
-  title: "Visibilite"
-  text: "Les defis publics sont accessibles a tous les inscrits au cours. Les defis prives ne sont visibles que par leur createur."
+  title: "Visibilité"
+  text: "Les défis publics sont accessibles à tous les inscrits au cours. Les défis privés ne sont visibles que par leur créateur."
 instrColSubmissions:
   title: "Soumissions"
-  text: "Nombre total de sessions etudiantes pour ce defi, y compris les tentatives en cours et terminees."
+  text: "Nombre total de sessions étudiantes pour ce défi, y compris les tentatives en cours et terminées."
 instrColAvgGrade:
   title: "Note moyenne"
-  text: "Note moyenne sur l'ensemble des sessions etudiantes terminees, combinant les scores de cadrage, jugement et pilotage."
+  text: "Note moyenne sur l'ensemble des sessions étudiantes terminées, combinant les scores de cadrage, jugement et pilotage."
 instrColStatus:
   title: "Statut"
-  text: "Cycle de vie du defi : Brouillon (non visible), Publie (actif) ou Archive (masque)."
+  text: "Cycle de vie du défi : Brouillon (non visible), Publié (actif) ou Archivé (masqué)."
 instrColActions:
   title: "Actions"
-  text: "Actions disponibles : Modifier, Apercu, Voir les statistiques ou Supprimer."
+  text: "Actions disponibles : Modifier, Aperçu, Voir les statistiques ou Supprimer."
+#
+# ── Profile Page Tooltips ──
+profileRole:
+  title: "Votre rôle"
+  text: "WHY: Votre rôle détermine les fonctionnalités et les pages auxquelles vous avez accès. WHAT: Les étudiants réalisent des défis et développent leurs compétences de co-raisonnement. Les instructeurs créent des défis, gèrent les cours et examinent la performance des étudiants. HOW: Votre rôle est attribué lors de l'inscription et ne peut pas être modifié. Contactez votre administrateur si vous avez besoin d'un changement de rôle."
+profileStats:
+  title: "Vos statistiques"
+  text: "WHY: Suivre votre activité vous aide à comprendre votre niveau d'engagement avec la plateforme. WHAT: Défis créés indique le nombre de défis que vous avez rédigés. Défis exécutés indique le nombre de sessions que vous avez terminées. HOW: Pour augmenter vos statistiques, créez de nouveaux défis ou terminez davantage de sessions à partir de vos cours."
+profileCourses:
+  title: "Inscriptions aux cours"
+  text: "WHY: Vos inscriptions aux cours déterminent les défis qui vous sont accessibles et les données analytiques qui sont suivies. WHAT: La liste de tous les cours auxquels vous êtes actuellement inscrit. Chaque cours donne accès à ses défis publics. HOW: Inscrivez-vous à de nouveaux cours depuis la page Catalogue des cours. Vous pouvez vous désinscrire à tout moment."
+#
+# ── Instructor Analytics Per-Student Table Tooltips ──
+instrAnalyticsStudent:
+  title: "Student"
+  text: "The student's display name as registered on the platform."
+instrAnalyticsEmail:
+  title: "Email"
+  text: "The student's email address for identification."
+instrAnalyticsRuns:
+  title: "Runs Completed"
+  text: "WHY: Tracking completed vs total runs shows student engagement and progress. WHAT: The number of completed challenge runs out of total runs attempted by this student. HOW: A low completion ratio may indicate a student is struggling or disengaged."
+instrAnalyticsActions:
+  title: "Actions"
+  text: "Available actions for this student. Click Review to see the detailed report of a completed challenge run."
+#
+# ── Grade Badge Tooltips ──
+gradeA:
+  title: "Note A — Excellent"
+  text: "WHY: Les notes vous aident à suivre votre maîtrise du co-raisonnement. WHAT: La note A signifie que vous avez démontré une excellente compréhension — vous avez identifié les problèmes clés, fourni des raffinements solides et fait preuve d'une réflexion critique approfondie. HOW: Continuez à appliquer ces compétences de manière constante à travers différents défis."
+gradeB:
+  title: "Note B — Bien"
+  text: "WHY: Les notes vous aident à suivre votre maîtrise du co-raisonnement. WHAT: La note B signifie que vous avez montré une bonne compréhension avec une marge de progression — vous avez saisi les points principaux mais avez peut-être manqué des nuances ou inclus des éléments superflus. HOW: Examinez attentivement le retour et concentrez-vous sur les lacunes spécifiques mentionnées."
+gradeC:
+  title: "Note C — À améliorer"
+  text: "WHY: Les notes vous aident à suivre votre maîtrise du co-raisonnement. WHAT: La note C signifie qu'une amélioration significative est nécessaire — des problèmes importants ont été manqués ou la réponse n'a pas suffisamment traité les exigences de la tâche. HOW: Relisez attentivement le problème, étudiez le retour et essayez des défis similaires pour développer vos compétences."

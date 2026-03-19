@@ -26,9 +26,11 @@
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/utils.js"></script>
   <script src="js/user-header.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
@@ -47,7 +49,7 @@
     </div>
   </header>
 
-  <main class="page">
+  <main class="page" id="main-content">
     <div class="page-header flex-between">
       <div>
         <h1 data-t="courseAnalytics" data-tooltip="instrAnalyticsOverview">Course Analytics</h1>
@@ -105,13 +107,13 @@
         <table>
           <thead>
             <tr>
-              <th data-t="student">Student</th>
-              <th data-t="email">Email</th>
-              <th data-t="runsCompleted">Runs</th>
-              <th><span class="phase-label phase-1" data-t="phase1">P1</span> <span data-t="framing">Framing</span></th>
-              <th><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="judging">Judging</span></th>
-              <th><span class="phase-label phase-2" data-t="phase2">P2</span> <span data-t="steering">Steering</span></th>
-              <th data-t="actions">Actions</th>
+              <th data-t="student" data-tooltip="instrAnalyticsStudent">Student</th>
+              <th data-t="email" data-tooltip="instrAnalyticsEmail">Email</th>
+              <th data-t="runsCompleted" data-tooltip="instrAnalyticsRuns">Runs</th>
+              <th data-t="framing" data-tooltip="analyticsFramingGrade">Framing</th>
+              <th data-t="judging" data-tooltip="analyticsJudgingGrade">Judging</th>
+              <th data-t="steering" data-tooltip="analyticsSteeringGrade">Steering</th>
+              <th data-t="actions" data-tooltip="instrAnalyticsActions">Actions</th>
             </tr>
           </thead>
           <tbody id="studentTableBody">
@@ -136,7 +138,7 @@ function escHtml(s) {
   return d.innerHTML;
 }
 
-function fmt(d) { return d ? new Date(d).toLocaleDateString() : '—'; }
+function fmt(d) { return d ? new Date(d).toLocaleDateString(getLang() || undefined) : '—'; }
 
 // Load courses dynamically
 (async function loadCourses() {
@@ -213,6 +215,20 @@ async function loadAnalytics(courseId) {
   }
 }
 
+// Extract grade for a given phase from a run object.
+// The export endpoint provides flat fields: framing_grade, judging_grade, steering_grade.
+function extractGrade(r, phase) {
+  var gradeField = phase + '_grade';
+  if (r[gradeField]) return String(r[gradeField]).charAt(0).toUpperCase();
+  // Fallback: try cycles array for judging/steering
+  if (phase !== 'framing' && r.cycles && r.cycles.length > 0) {
+    for (var i = r.cycles.length - 1; i >= 0; i--) {
+      if (r.cycles[i][gradeField]) return String(r.cycles[i][gradeField]).charAt(0).toUpperCase();
+    }
+  }
+  return null;
+}
+
 // Render grade distribution charts
 function renderGradeDistribution(runs) {
   var completed = runs.filter(function(r) { return r.status === 'completed'; });
@@ -225,28 +241,21 @@ function renderGradeDistribution(runs) {
   phases.forEach(function(phase) {
     var dist = { A: 0, B: 0, C: 0 };
     completed.forEach(function(r) {
-      var grades = typeof r.phases === 'string' ? JSON.parse(r.phases || '{}') : (r.phases || {});
-      // Try different grade locations
-      var grade = null;
-      if (grades && grades[phase] && grades[phase].evaluation) grade = grades[phase].evaluation.grade;
-      if (!grade && r['framing_grade'] && phase === 'framing') grade = r['framing_grade'];
-      if (grade) {
-        var letter = String(grade).charAt(0).toUpperCase();
-        if (dist[letter] !== undefined) dist[letter]++;
-      }
+      var letter = extractGrade(r, phase);
+      if (letter && dist[letter] !== undefined) dist[letter]++;
     });
     var total = dist.A + dist.B + dist.C;
     var maxH = 100;
 
     html += '<div>';
-    html += '<h4 class="text-sm text-center mb-8"><span class="phase-label ' + phaseClasses[phase] + '">' + (phase === 'framing' ? 'P1' : 'P2') + '</span> ' + escHtml(phaseLabels[phase]) + '</h4>';
+    html += '<h4 class="text-sm text-center mb-8">' + escHtml(t(phase) || phaseLabels[phase]) + '</h4>';
     html += '<div class="chart-placeholder"><div class="bar-chart">';
     ['A', 'B', 'C'].forEach(function(g) {
       var h = total > 0 ? Math.max(8, (dist[g] / total) * maxH) : 8;
       html += '<div class="bar-item"><div class="bar" style="width:40px;height:' + h + 'px;background:' + colors[g] + ';"></div><div class="bar-label">' + g + ' (' + dist[g] + ')</div></div>';
     });
     html += '</div>';
-    if (total === 0) html += '<p class="text-muted" style="margin-top:8px;font-size:12px;">No data yet</p>';
+    if (total === 0) html += '<p class="text-muted" style="margin-top:8px;font-size:12px;">' + (t('noDataYet') || 'No data yet') + '</p>';
     html += '</div></div>';
   });
 
@@ -289,14 +298,15 @@ function renderStudentTable(runs) {
     var completedRuns = s.runs.filter(function(r) { return r.status === 'completed'; });
     var totalRuns = s.runs.length;
 
-    // Aggregate grades
+    // Aggregate grades using flat grade fields from export endpoint
     var fg = [], jg = [], sg = [];
     completedRuns.forEach(function(r) {
-      var grades = typeof r.phases === 'string' ? JSON.parse(r.phases || '{}') : (r.phases || {});
-      if (r.framing_grade) fg.push(r.framing_grade);
-      else if (grades.framing && grades.framing.evaluation) fg.push(grades.framing.evaluation.grade);
-      if (grades.judging && grades.judging.evaluation) jg.push(grades.judging.evaluation.grade);
-      if (grades.steering && grades.steering.evaluation) sg.push(grades.steering.evaluation.grade);
+      var f = extractGrade(r, 'framing');
+      var j = extractGrade(r, 'judging');
+      var st = extractGrade(r, 'steering');
+      if (f) fg.push(f);
+      if (j) jg.push(j);
+      if (st) sg.push(st);
     });
 
     function avgGrade(arr) {
@@ -314,15 +324,15 @@ function renderStudentTable(runs) {
 
     function gradeSpan(g) {
       if (g === '—') return '<span style="color:var(--text-secondary);">&mdash;</span>';
-      return '<span class="grade grade-' + g + '">' + escHtml(g) + '</span>';
+      return '<span class="grade grade-' + g + '" data-tooltip="grade' + escHtml(g) + '">' + escHtml(g) + '</span>';
     }
 
     // Store challenge IDs for filtering
     var challengeIds = Object.keys(s.challenges).join(',');
 
     html += '<tr class="student-row" data-challenges="' + escHtml(challengeIds) + '">';
-    html += '<td><strong>' + escHtml(s.name) + '</strong></td>';
-    html += '<td style="font-size:12px;color:var(--text-secondary);">' + escHtml(s.email) + '</td>';
+    html += '<td dir="auto"><strong>' + escHtml(s.name) + '</strong></td>';
+    html += '<td dir="auto" style="font-size:12px;color:var(--text-secondary);">' + escHtml(s.email) + '</td>';
     html += '<td>' + completedRuns.length + '/' + totalRuns + '</td>';
     html += '<td>' + gradeSpan(fGrade) + '</td>';
     html += '<td>' + gradeSpan(jGrade) + '</td>';
@@ -340,25 +350,20 @@ function renderStudentTable(runs) {
 
   tbody.innerHTML = html;
   if (window.translatePage) translatePage();
+  if (window.reinitTooltips) reinitTooltips();
 
-  // Update avg grade stat
+  // Update avg grade stat using extractGrade for consistent grade extraction
   var allCompleted = runs.filter(function(r) { return r.status === 'completed'; });
   if (allCompleted.length > 0) {
     var gradeScores = { A: 3, B: 2, C: 1 };
     var totalScore = 0;
     var gradeCount = 0;
     allCompleted.forEach(function(r) {
-      var grades = typeof r.phases === 'string' ? JSON.parse(r.phases || '{}') : (r.phases || {});
       ['framing', 'judging', 'steering'].forEach(function(phase) {
-        var grade = null;
-        if (grades && grades[phase] && grades[phase].evaluation) grade = grades[phase].evaluation.grade;
-        if (!grade && phase === 'framing' && r.framing_grade) grade = r.framing_grade;
-        if (grade) {
-          var letter = String(grade).charAt(0).toUpperCase();
-          if (gradeScores[letter] !== undefined) {
-            totalScore += gradeScores[letter];
-            gradeCount++;
-          }
+        var letter = extractGrade(r, phase);
+        if (letter && gradeScores[letter] !== undefined) {
+          totalScore += gradeScores[letter];
+          gradeCount++;
         }
       });
     });
@@ -367,6 +372,8 @@ function renderStudentTable(runs) {
       var avgGrade = avgScore >= 2.5 ? 'A' : (avgScore >= 1.5 ? 'B' : 'C');
       document.getElementById('statAvgGrade').textContent = avgGrade;
     }
+  } else {
+    document.getElementById('statAvgGrade').textContent = '\u2014';
   }
 }
 
@@ -386,7 +393,7 @@ function filterStudentTable() {
 // Export PDF
 function exportPdf() {
   if (!currentCourseId) {
-    alert('Please select a course first.');
+    showToast(t('selectCourseFirst') || 'Please select a course first.', 'warning');
     return;
   }
   API.analytics.exportPdf(currentCourseId);

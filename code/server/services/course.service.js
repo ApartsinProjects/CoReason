@@ -21,13 +21,17 @@ class CourseService {
       .where('courses.status', COURSE_STATUS.ACTIVE);
 
     // When instructor=true, only show courses the user is assigned to
+    // (skip institution filter — instructors may teach cross-institution courses)
     if (filters.instructorOnly && filters.userId) {
       query = query
         .join('course_instructors', 'courses.id', 'course_instructors.course_id')
         .where('course_instructors.user_id', filters.userId);
-    }
-
-    if (filters.institutionId) {
+    } else if (filters.subscribedOnly && filters.userId) {
+      // Show courses the user is subscribed to (cross-institution for mixed-language users)
+      query = query
+        .join('course_subscriptions as cs', 'courses.id', 'cs.course_id')
+        .where('cs.user_id', filters.userId);
+    } else if (filters.institutionId) {
       query = query.where('courses.institution_id', filters.institutionId);
     } else if (filters.userInstitutionId) {
       // Auto-filter by user's institution when no explicit filter
@@ -102,10 +106,24 @@ class CourseService {
   }
 
   async create({ name, description, institutionId, department, subjectTree, stewardConfig }, userId) {
+    // Validate and sanitize name
+    if (!name || typeof name !== 'string' || !name.trim()) {
+      throw new ValidationError('Course name is required');
+    }
+    if (name.length > 200) {
+      throw new ValidationError('Course name must be 200 characters or fewer');
+    }
+    const sanitizedName = name.replace(/<[^>]*>/g, '').trim();
+    if (!sanitizedName) {
+      throw new ValidationError('Course name cannot contain only HTML tags');
+    }
+    // Sanitize description too
+    const sanitizedDesc = description ? description.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '').trim() : null;
+
     const course = {
       id: uuidv4(),
-      name,
-      description: description || null,
+      name: sanitizedName,
+      description: sanitizedDesc,
       institution_id: institutionId || null,
       department: department || null,
       subject_tree: JSON.stringify(subjectTree || []),

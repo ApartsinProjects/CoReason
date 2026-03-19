@@ -8,8 +8,12 @@
   <link rel="icon" href="assets/logo.png">
   <style>
     .profile-header { display: flex; align-items: center; gap: 24px; margin-bottom: 32px; }
-    .profile-avatar { width: 96px; height: 96px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; color: var(--primary); position: relative; }
-    .profile-avatar .edit-overlay { position: absolute; bottom: 0; right: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; border: 2px solid #fff; }
+    .profile-avatar { width: 96px; height: 96px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; color: var(--primary); position: relative; overflow: hidden; }
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .profile-avatar .edit-overlay { position: absolute; bottom: 0; right: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; border: 2px solid #fff; z-index: 2; }
+    .avatar-upload-status { font-size: 12px; margin-top: 4px; text-align: center; }
+    .avatar-upload-status.success { color: #2e7d32; }
+    .avatar-upload-status.error { color: #c62828; }
     .profile-info h2 { font-size: 24px; margin-bottom: 4px; }
     .profile-info .role-badge { display: inline-flex; align-items: center; gap: 4px; background: #e8eaf6; color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
     .profile-field { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); }
@@ -35,6 +39,7 @@
   <script src="js/user-header.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav id="mainNav">
@@ -43,7 +48,8 @@
       <a href="student-analytics.html" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
-      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <a href="interactive-guide.html" class="guide-link" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span id="userRoleBadge" style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
       <span id="userName">&mdash;</span>
@@ -52,9 +58,9 @@
     </div>
   </header>
 
-  <main class="page" style="max-width:720px;">
+  <main class="page" id="main-content" style="max-width:720px;">
     <div class="page-header">
-      <h1 data-t="myProfile">My Profile</h1>
+      <h1 data-t="myProfile" data-tooltip="profileOverview">My Profile</h1>
       <p data-t="profileDesc">View and edit your profile</p>
     </div>
 
@@ -76,12 +82,14 @@
         <div class="profile-header">
           <div class="profile-avatar" id="profileAvatar">
             &mdash;
-            <div class="edit-overlay" title="Change profile image" aria-label="Change profile image">&#9998;</div>
+            <div class="edit-overlay" title="Change profile image" aria-label="Change profile image" onclick="document.getElementById('avatarFileInput').click()">&#9998;</div>
           </div>
+          <input type="file" id="avatarFileInput" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none;" onchange="handleAvatarUpload(this)">
+          <div class="avatar-upload-status" id="avatarUploadStatus"></div>
           <div class="profile-info">
             <h2 id="profileName">&mdash;</h2>
             <span class="role-badge" id="profileRoleBadge">&#127891; &mdash;</span>
-            <p class="text-sm text-muted mt-8" id="profileMemberSince"></p>
+            <p class="text-sm text-muted mt-8" id="profileMemberSince" data-t="memberSince"></p>
           </div>
         </div>
 
@@ -116,7 +124,7 @@
         </div>
         <div class="profile-field">
           <div>
-            <div class="field-label" data-t="role">Role</div>
+            <div class="field-label"><span data-t="role" data-tooltip="profileRole">Role</span></div>
             <div class="field-value"><span class="role-badge" id="profileRoleField">&mdash;</span></div>
           </div>
           <span class="text-sm text-muted" data-t-html="cannotBeChanged">Fixed &mdash; cannot be changed</span>
@@ -129,7 +137,7 @@
         </div>
         <div class="profile-field">
           <div>
-            <div class="field-label" data-t="courseSubscriptions">Course Subscriptions</div>
+            <div class="field-label"><span data-t="courseSubscriptions" data-tooltip="profileCourses">Course Subscriptions</span></div>
             <div class="field-value" id="profileCourses" style="margin-top:4px;">
               <span class="text-sm text-muted" data-t="loading">Loading...</span>
             </div>
@@ -139,7 +147,7 @@
 
       <!-- Statistics -->
       <div class="card mt-24">
-        <h3 style="margin-bottom:16px;" data-t="statistics">Statistics</h3>
+        <h3 style="margin-bottom:16px;" data-t="statistics" data-tooltip="profileStats">Statistics</h3>
         <div class="grid grid-2">
           <div class="stat-card card">
             <div class="stat-value" id="statChallengesCreated">&mdash;</div>
@@ -152,7 +160,7 @@
         </div>
       </div>
 
-      <div class="flex gap-12 mt-24">
+      <div class="flex gap-12 mt-24" id="profileActions" style="display:none;">
         <button class="btn btn-primary" id="btnSave" onclick="saveProfile()" data-t="saveChanges">Save Changes</button>
         <button class="btn btn-outline" id="btnCancel" onclick="cancelChanges()" data-t="cancel">Cancel</button>
         <span class="save-status" id="saveStatus"></span>
@@ -163,6 +171,19 @@
 <script>
   let originalProfile = null;
   let currentProfile = null;
+  let profileDirty = false;
+
+  function markDirty() {
+    profileDirty = true;
+    var actions = document.getElementById('profileActions');
+    if (actions) actions.style.display = '';
+  }
+
+  function markClean() {
+    profileDirty = false;
+    var actions = document.getElementById('profileActions');
+    if (actions) actions.style.display = 'none';
+  }
 
   function getInitials(name) {
     if (!name) return '?';
@@ -173,7 +194,7 @@
     if (!isoStr) return '\u2014';
     try {
       const d = new Date(isoStr);
-      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+      return d.toLocaleDateString(getLang() || undefined, { year: 'numeric', month: 'long', day: 'numeric' });
     } catch (e) {
       return isoStr;
     }
@@ -204,19 +225,34 @@
 
   function renderProfile(profile) {
     const initials = getInitials(profile.name);
-    const formattedDate = formatDate(profile.created_at);
-    const roleCap = capitalize(profile.role);
+    const formattedDate = formatDate(profile.created_at || profile.createdAt);
+    const roleCap = t(profile.role) !== profile.role ? t(profile.role) : capitalize(profile.role);
     const roleEmoji = profile.role === 'instructor' ? '\uD83D\uDCDA' : '\uD83C\uDF93';
 
-    // Header — update avatar text node (first child text node)
+    // Header — update avatar with image or initials
     var avatarEl = document.getElementById('profileAvatar');
-    if (avatarEl && avatarEl.childNodes.length > 0) {
-      avatarEl.childNodes[0].textContent = initials;
+    if (avatarEl) {
+      // Remove any existing img element
+      var existingImg = avatarEl.querySelector('img');
+      if (existingImg) existingImg.remove();
+
+      if (profile.profile_image) {
+        // Show profile image
+        avatarEl.childNodes[0].textContent = '';
+        var img = document.createElement('img');
+        img.src = profile.profile_image;
+        img.alt = profile.name || 'Profile';
+        avatarEl.insertBefore(img, avatarEl.firstChild);
+      } else {
+        avatarEl.childNodes[0].textContent = initials;
+      }
     }
     document.getElementById('profileName').textContent = profile.name;
     document.getElementById('profileRoleBadge').innerHTML = roleEmoji + ' ' + roleCap;
     document.getElementById('profileRoleBadge').setAttribute('data-t', profile.role);
-    document.getElementById('profileMemberSince').textContent = (t('memberSince') || 'Member since') + ' ' + formattedDate;
+    var memberSinceLabel = t('memberSince');
+    memberSinceLabel = (memberSinceLabel && memberSinceLabel !== 'memberSince') ? memberSinceLabel : 'Member since';
+    document.getElementById('profileMemberSince').textContent = memberSinceLabel + ' ' + formattedDate;
 
     // Fields
     document.getElementById('nameValue').textContent = profile.name;
@@ -255,7 +291,7 @@
 
   function renderStats(stats) {
     document.getElementById('statChallengesCreated').textContent = stats.challenges_created != null ? stats.challenges_created : '\u2014';
-    document.getElementById('statChallengesExecuted').textContent = stats.challenges_executed != null ? stats.challenges_executed : '\u2014';
+    document.getElementById('statChallengesExecuted').textContent = (stats.runs_completed != null ? stats.runs_completed : (stats.challenges_executed != null ? stats.challenges_executed : '\u2014'));
 
     const coursesEl = document.getElementById('profileCourses');
     if (stats.courses_subscribed && stats.courses_subscribed.length > 0) {
@@ -263,7 +299,7 @@
         .map(function(c) { return '<span class="course-chip">' + escapeHtml(c) + '</span>'; })
         .join('');
     } else {
-      coursesEl.innerHTML = '<span class="text-sm text-muted" data-t="noCourses">No courses subscribed</span>';
+      coursesEl.innerHTML = '<span class="text-sm text-muted" data-t="noCourses">' + (t('noCourses') !== 'noCourses' ? t('noCourses') : 'No courses subscribed') + '</span>';
     }
   }
 
@@ -286,6 +322,11 @@
     if (newName) {
       currentProfile.name = newName;
       document.getElementById('nameValue').textContent = newName;
+      if (originalProfile && newName !== originalProfile.name) {
+        markDirty();
+      } else {
+        markClean();
+      }
     }
     document.getElementById('nameFieldDisplay').style.display = '';
     document.getElementById('nameFieldEdit').style.display = 'none';
@@ -302,6 +343,7 @@
       currentProfile = Object.assign({}, originalProfile);
       renderProfile(currentProfile);
     }
+    markClean();
     clearSaveStatus();
   }
 
@@ -309,9 +351,16 @@
     var el = document.getElementById('saveStatus');
     el.textContent = '';
     el.className = 'save-status';
+    if (!profileDirty) {
+      var actions = document.getElementById('profileActions');
+      if (actions) actions.style.display = 'none';
+    }
   }
 
   async function saveProfile() {
+    var name = currentProfile.name;
+    if (!name || !name.trim()) { showError(t('nameCannotBeEmpty') || 'Name cannot be empty'); return; }
+
     var btn = document.getElementById('btnSave');
     var statusEl = document.getElementById('saveStatus');
     btn.disabled = true;
@@ -326,6 +375,7 @@
       }
       originalProfile = Object.assign({}, currentProfile);
       renderProfile(currentProfile);
+      profileDirty = false;
       statusEl.textContent = t('saved') || 'Saved!';
       statusEl.className = 'save-status success';
     } catch (err) {
@@ -334,6 +384,48 @@
     } finally {
       btn.disabled = false;
       setTimeout(function() { clearSaveStatus(); }, 4000);
+    }
+  }
+
+  async function handleAvatarUpload(input) {
+    var file = input.files && input.files[0];
+    if (!file) return;
+
+    var statusEl = document.getElementById('avatarUploadStatus');
+    statusEl.textContent = t('uploading') || 'Uploading...';
+    statusEl.className = 'avatar-upload-status';
+
+    // Validate file size client-side
+    if (file.size > 2 * 1024 * 1024) {
+      statusEl.textContent = t('fileTooLarge') || 'Image must be 2MB or smaller';
+      statusEl.className = 'avatar-upload-status error';
+      input.value = '';
+      return;
+    }
+
+    try {
+      var result = await API.users.uploadAvatar(file);
+      if (result && result.profile_image) {
+        currentProfile.profile_image = result.profile_image;
+        originalProfile.profile_image = result.profile_image;
+        renderProfile(currentProfile);
+
+        // Also update navbar avatar
+        var navAvatar = document.getElementById('userAvatar');
+        if (navAvatar) {
+          navAvatar.textContent = '';
+          navAvatar.innerHTML = '<img src="' + result.profile_image + '" alt="' + (currentProfile.name || 'Avatar') + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+        }
+
+        statusEl.textContent = t('avatarUpdated') || 'Profile image updated!';
+        statusEl.className = 'avatar-upload-status success';
+      }
+    } catch (err) {
+      statusEl.textContent = (t('uploadFailed') || 'Upload failed') + ': ' + (err.message || t('unknownError') || 'Unknown error');
+      statusEl.className = 'avatar-upload-status error';
+    } finally {
+      input.value = '';
+      setTimeout(function() { statusEl.textContent = ''; statusEl.className = 'avatar-upload-status'; }, 4000);
     }
   }
 
@@ -351,6 +443,7 @@
       renderProfile(profile);
       renderStats(stats);
       showContent();
+      if (window.translatePage) translatePage();
     } catch (err) {
       showError((t('failedLoadProfile') || 'Failed to load profile') + ': ' + (err.message || t('unknownError') || 'Unknown error'));
     }

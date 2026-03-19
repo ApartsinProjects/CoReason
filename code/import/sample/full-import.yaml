@@ -98,6 +98,13 @@ import:
       institution: "אוניברסיטת תל אביב"
       password: "demo123"
       language: he
+    # ─── Mixed-language user (English + Hebrew courses) ───
+    - email: "tomer.bar@tau.ac.il"
+      name: "Tomer Bar"
+      role: student
+      institution: "Tel Aviv University"
+      password: "demo123"
+      language: en
     - email: "dr.levy.he@tau.ac.il"
       name: "ד״ר שרה לוי"
       role: instructor
@@ -110,6 +117,106 @@ import:
       institution: "האוניברסיטה העברית"
       password: "demo123"
       language: he
+    - email: "dr.williams@oxford.ac.uk"
+      name: "Dr. James Williams"
+      role: instructor
+      institution: "University of Oxford"
+      password: "demo123"
+      language: en
+    # ─── ETH Zurich users ───
+    - email: "prof.mueller@ethz.ch"
+      name: "Prof. Anna Mueller"
+      role: instructor
+      institution: "ETH Zurich"
+      password: "demo123"
+      language: en
+    - email: "lukas.weber@ethz.ch"
+      name: "Lukas Weber"
+      role: student
+      institution: "ETH Zurich"
+      password: "demo123"
+      language: en
+    - email: "elena.fischer@ethz.ch"
+      name: "Elena Fischer"
+      role: student
+      institution: "ETH Zurich"
+      password: "demo123"
+      language: en
+    # ─── Stanford University users ───
+    - email: "prof.johnson@stanford.edu"
+      name: "Prof. Emily Johnson"
+      role: instructor
+      institution: "Stanford University"
+      password: "demo123"
+      language: en
+    - email: "kevin.park@stanford.edu"
+      name: "Kevin Park"
+      role: student
+      institution: "Stanford University"
+      password: "demo123"
+      language: en
+    - email: "maya.patel@stanford.edu"
+      name: "Maya Patel"
+      role: student
+      institution: "Stanford University"
+      password: "demo123"
+      language: en
+    # ─── University of Tokyo users ───
+    - email: "prof.tanaka@u-tokyo.ac.jp"
+      name: "Prof. Kenji Tanaka"
+      role: instructor
+      institution: "University of Tokyo"
+      password: "demo123"
+      language: en
+    - email: "yuki.sato@u-tokyo.ac.jp"
+      name: "Yuki Sato"
+      role: student
+      institution: "University of Tokyo"
+      password: "demo123"
+      language: en
+    - email: "haruto.nakamura@u-tokyo.ac.jp"
+      name: "Haruto Nakamura"
+      role: student
+      institution: "University of Tokyo"
+      password: "demo123"
+      language: en
+    # ─── Additional students for MIT, Oxford, Tsinghua ───
+    - email: "james.taylor@mit.edu"
+      name: "James Taylor"
+      role: student
+      institution: "MIT"
+      password: "demo123"
+      language: en
+    - email: "priya.sharma@mit.edu"
+      name: "Priya Sharma"
+      role: student
+      institution: "MIT"
+      password: "demo123"
+      language: en
+    - email: "oliver.brown@oxford.ac.uk"
+      name: "Oliver Brown"
+      role: student
+      institution: "University of Oxford"
+      password: "demo123"
+      language: en
+    - email: "emma.davies@oxford.ac.uk"
+      name: "Emma Davies"
+      role: student
+      institution: "University of Oxford"
+      password: "demo123"
+      language: en
+    - email: "zhang.ming@tsinghua.edu.cn"
+      name: "Zhang Ming"
+      role: student
+      institution: "Tsinghua University"
+      password: "demo123"
+      language: en
+    - email: "chen.yue@tsinghua.edu.cn"
+      name: "Chen Yue"
+      role: student
+      institution: "Tsinghua University"
+      password: "demo123"
+      language: en
     # ─── Additional instructors for new departments ───
     - email: "dr.shapira@tau.ac.il"
       name: "Dr. Bracha Shapira"
@@ -177,7 +284,7 @@ import:
     - name: "Ethics"
       institution: "University of Oxford"
       department: "Philosophy"
-      instructors: []
+      instructors: ["dr.williams@oxford.ac.uk"]
       description: "Moral philosophy and ethical reasoning"
       subject_tree:
         - name: "Normative Ethics"
@@ -196,8 +303,20 @@ import:
       description: "Vector spaces, matrices, and linear transformations"
       subject_tree:
         - name: "Vector Spaces"
+          children:
+            - name: "Bases & Dimension"
+            - name: "Subspaces"
+            - name: "Linear Independence"
         - name: "Matrix Operations"
+          children:
+            - name: "Matrix Multiplication"
+            - name: "Inverse & Determinants"
+            - name: "Row Reduction"
         - name: "Eigenvalues & Eigenvectors"
+          children:
+            - name: "Characteristic Polynomial"
+            - name: "Diagonalization"
+            - name: "Spectral Theorem"
     - name: "Microeconomics"
       institution: "MIT"
       department: "Economics"
@@ -205,8 +324,20 @@ import:
       description: "Consumer theory, producer theory, and market structures"
       subject_tree:
         - name: "Supply & Demand"
+          children:
+            - name: "Price Elasticity"
+            - name: "Market Equilibrium"
+            - name: "Government Intervention"
         - name: "Consumer Choice"
+          children:
+            - name: "Utility Maximization"
+            - name: "Budget Constraints"
+            - name: "Indifference Curves"
         - name: "Market Structures"
+          children:
+            - name: "Perfect Competition"
+            - name: "Monopoly & Oligopoly"
+            - name: "Game Theory Basics"
     # ─── English: Computer Science (1st/2nd year) ───
     - name: "Introduction to Computer Science"
       institution: "Tel Aviv University"
@@ -426,6 +557,132 @@ import:
           children:
             - name: "Arrhythmia Detection"
             - name: "Sleep Stage Classification"
+    # ─── ETH Zurich courses ───
+    - name: "Machine Learning"
+      institution: "ETH Zurich"
+      department: "Computer Science"
+      instructors: ["prof.mueller@ethz.ch"]
+      description: "Foundations of supervised and unsupervised learning, model evaluation, and neural networks"
+      subject_tree:
+        - name: "Supervised Learning"
+          children:
+            - name: "Linear Regression"
+            - name: "Classification"
+            - name: "Support Vector Machines"
+        - name: "Unsupervised Learning"
+          children:
+            - name: "Clustering"
+            - name: "Dimensionality Reduction"
+            - name: "Autoencoders"
+        - name: "Neural Networks"
+          children:
+            - name: "Backpropagation"
+            - name: "Convolutional Networks"
+            - name: "Regularization"
+    - name: "Numerical Methods"
+      institution: "ETH Zurich"
+      department: "Mathematics"
+      instructors: ["prof.mueller@ethz.ch"]
+      description: "Numerical algorithms for solving mathematical problems in science and engineering"
+      subject_tree:
+        - name: "Root Finding"
+          children:
+            - name: "Bisection Method"
+            - name: "Newton's Method"
+        - name: "Numerical Linear Algebra"
+          children:
+            - name: "LU Decomposition"
+            - name: "QR Factorization"
+            - name: "Iterative Solvers"
+        - name: "Numerical Integration"
+          children:
+            - name: "Trapezoidal Rule"
+            - name: "Simpson's Rule"
+            - name: "Gaussian Quadrature"
+    # ─── Stanford University courses ───
+    - name: "Artificial Intelligence"
+      institution: "Stanford University"
+      department: "Computer Science"
+      instructors: ["prof.johnson@stanford.edu"]
+      description: "Core AI concepts: search, knowledge representation, planning, and probabilistic reasoning"
+      subject_tree:
+        - name: "Search Algorithms"
+          children:
+            - name: "Uninformed Search"
+            - name: "Heuristic Search"
+            - name: "Adversarial Search"
+        - name: "Knowledge Representation"
+          children:
+            - name: "Propositional Logic"
+            - name: "First-Order Logic"
+            - name: "Bayesian Networks"
+        - name: "Planning & Decision Making"
+          children:
+            - name: "Classical Planning"
+            - name: "Markov Decision Processes"
+            - name: "Reinforcement Learning"
+    - name: "Logic and Reasoning"
+      institution: "Stanford University"
+      department: "Philosophy"
+      instructors: ["prof.johnson@stanford.edu"]
+      description: "Formal and informal logic, argumentation theory, and critical thinking"
+      subject_tree:
+        - name: "Formal Logic"
+          children:
+            - name: "Propositional Calculus"
+            - name: "Predicate Calculus"
+            - name: "Modal Logic"
+        - name: "Argumentation"
+          children:
+            - name: "Deductive Arguments"
+            - name: "Inductive Arguments"
+            - name: "Logical Fallacies"
+        - name: "Critical Thinking"
+          children:
+            - name: "Evaluating Evidence"
+            - name: "Causal Reasoning"
+    # ─── University of Tokyo courses ───
+    - name: "Information Theory"
+      institution: "University of Tokyo"
+      department: "Information Science"
+      instructors: ["prof.tanaka@u-tokyo.ac.jp"]
+      description: "Entropy, coding theory, channel capacity, and data compression"
+      subject_tree:
+        - name: "Entropy & Information"
+          children:
+            - name: "Shannon Entropy"
+            - name: "Mutual Information"
+            - name: "KL Divergence"
+        - name: "Source Coding"
+          children:
+            - name: "Huffman Coding"
+            - name: "Arithmetic Coding"
+            - name: "Lempel-Ziv"
+        - name: "Channel Coding"
+          children:
+            - name: "Channel Capacity"
+            - name: "Error-Correcting Codes"
+            - name: "Noisy Channel Theorem"
+    - name: "Computational Biology"
+      institution: "University of Tokyo"
+      department: "Information Science"
+      instructors: ["prof.tanaka@u-tokyo.ac.jp"]
+      description: "Algorithmic and statistical methods for analyzing biological sequences and structures"
+      subject_tree:
+        - name: "Sequence Analysis"
+          children:
+            - name: "Sequence Alignment"
+            - name: "BLAST & FASTA"
+            - name: "Hidden Markov Models"
+        - name: "Genomics"
+          children:
+            - name: "Genome Assembly"
+            - name: "Gene Prediction"
+            - name: "Phylogenetics"
+        - name: "Structural Biology"
+          children:
+            - name: "Protein Folding"
+            - name: "Molecular Docking"
     # ─── Hebrew courses (קורסים בעברית) ───
     - name: "מבוא לאלגוריתמים"
       institution: "אוניברסיטת תל אביב"
@@ -454,8 +711,20 @@ import:
       description: "מרחבים וקטוריים, מטריצות והתמרות לינאריות"
       subject_tree:
         - name: "מרחבים וקטוריים"
+          children:
+            - name: "בסיסים ומימד"
+            - name: "תת-מרחבים"
+            - name: "אי-תלות לינארית"
         - name: "פעולות מטריצות"
+          children:
+            - name: "כפל מטריצות"
+            - name: "הפיכות ודטרמיננטות"
+            - name: "דירוג שורות"
         - name: "ערכים עצמיים ווקטורים עצמיים"
+          children:
+            - name: "פולינום אופייני"
+            - name: "לכסון"
+            - name: "משפט הספקטרום"
     - name: "מכניקה קלאסית"
       institution: "האוניברסיטה העברית"
       department: "פיזיקה"
@@ -494,8 +763,20 @@ import:
       description: "תורת הצרכן, תורת היצרן ומבני שוק"
       subject_tree:
         - name: "היצע וביקוש"
+          children:
+            - name: "גמישות מחיר"
+            - name: "שיווי משקל שוק"
+            - name: "התערבות ממשלתית"
         - name: "בחירת צרכן"
+          children:
+            - name: "מיקסום תועלת"
+            - name: "אילוצי תקציב"
+            - name: "עקומות אדישות"
         - name: "מבני שוק"
+          children:
+            - name: "תחרות משוכללת"
+            - name: "מונופול ואוליגופול"
+            - name: "יסודות תורת המשחקים"
     # ─── Hebrew: Computer Science (שנה א׳/ב׳) ───
     - name: "מבוא למדעי המחשב"
       institution: "אוניברסיטת תל אביב"
@@ -747,7 +1028,7 @@ import:
       subject_path: ["Kinematics", "Projectile Motion"]
     - title: "The Trolley Problem Revisited"
       course: "Ethics"
-      creator: "dr.levy@tau.ac.il"
+      creator: "dr.williams@oxford.ac.uk"
       type: practice
       visibility: public
       phase1_response: open-ended
@@ -772,6 +1053,226 @@ import:
       phase2_response: mc
       max_cycles: 3
       subject_path: ["Supply & Demand"]
+    # ─── Additional English challenges (filling gaps) ───
+    - title: "Analyzing Friction on an Inclined Plane"
+      course: "Classical Mechanics"
+      creator: "prof.chen@mit.edu"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Dynamics", "Friction & Drag"]
+    - title: "Autonomous Vehicles and the Ethics of Algorithmic Decision-Making"
+      course: "Ethics"
+      creator: "dr.williams@oxford.ac.uk"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 5
+      subject_path: ["Applied Ethics", "AI Ethics"]
+    - title: "Diagonalizing a Symmetric Matrix"
+      course: "Linear Algebra"
+      creator: "dr.levy@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Eigenvalues & Eigenvectors", "Diagonalization"]
+    - title: "Monopoly Pricing and Deadweight Loss"
+      course: "Microeconomics"
+      creator: "prof.chen@mit.edu"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Market Structures", "Monopoly & Oligopoly"]
+    - title: "Graph Coloring and Scheduling"
+      course: "Discrete Mathematics"
+      creator: "dr.levy@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Graph Theory", "Coloring & Matching"]
+    - title: "Virtual Memory Page Replacement"
+      course: "Operating Systems"
+      creator: "dr.levy@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Memory Management", "Virtual Memory"]
+    - title: "Designing a Normalized Database Schema"
+      course: "Database Systems"
+      creator: "dr.levy@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Relational Model", "Normalization"]
+    - title: "Adaptive Learning System Evaluation"
+      course: "Digital Learning Environments"
+      creator: "dr.shapira@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["LMS & Platforms", "Adaptive Learning Systems"]
+    - title: "Bias Detection in AI-Graded Essays"
+      course: "AI in Education"
+      creator: "dr.shapira@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Natural Language Processing in Education", "Automated Essay Scoring"]
+    - title: "FHIR API Design for Patient Data Exchange"
+      course: "Introduction to Digital Health"
+      creator: "prof.greenspan@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Health Information Systems", "HL7 & FHIR Standards"]
+    - title: "MRI Artifact Identification and Correction"
+      course: "Medical Imaging"
+      creator: "prof.greenspan@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Image Acquisition", "MRI Fundamentals"]
+    - title: "EEG-Based Sleep Stage Analysis"
+      course: "Biomedical Signal Processing"
+      creator: "prof.greenspan@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 3
+      subject_path: ["Clinical Applications", "Sleep Stage Classification"]
+    # ─── ETH Zurich challenges ───
+    - title: "Bias-Variance Tradeoff in Model Selection"
+      course: "Machine Learning"
+      creator: "prof.mueller@ethz.ch"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["Supervised Learning", "Classification"]
+    - title: "Training a Convolutional Neural Network"
+      course: "Machine Learning"
+      creator: "prof.mueller@ethz.ch"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 5
+      subject_path: ["Neural Networks", "Convolutional Networks"]
+    - title: "Convergence of Newton's Method"
+      course: "Numerical Methods"
+      creator: "prof.mueller@ethz.ch"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Root Finding", "Newton's Method"]
+    - title: "LU Decomposition for Sparse Systems"
+      course: "Numerical Methods"
+      creator: "prof.mueller@ethz.ch"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Numerical Linear Algebra", "LU Decomposition"]
+    # ─── Stanford University challenges ───
+    - title: "A* Search for Path Planning"
+      course: "Artificial Intelligence"
+      creator: "prof.johnson@stanford.edu"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["Search Algorithms", "Heuristic Search"]
+    - title: "Modeling Uncertainty with Bayesian Networks"
+      course: "Artificial Intelligence"
+      creator: "prof.johnson@stanford.edu"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 5
+      subject_path: ["Knowledge Representation", "Bayesian Networks"]
+    - title: "Identifying Logical Fallacies in Arguments"
+      course: "Logic and Reasoning"
+      creator: "prof.johnson@stanford.edu"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["Argumentation", "Logical Fallacies"]
+    - title: "Modal Logic and Possible Worlds"
+      course: "Logic and Reasoning"
+      creator: "prof.johnson@stanford.edu"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["Formal Logic", "Modal Logic"]
+    # ─── University of Tokyo challenges ───
+    - title: "Calculating Channel Capacity"
+      course: "Information Theory"
+      creator: "prof.tanaka@u-tokyo.ac.jp"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["Channel Coding", "Channel Capacity"]
+    - title: "Huffman Coding for Data Compression"
+      course: "Information Theory"
+      creator: "prof.tanaka@u-tokyo.ac.jp"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 3
+      subject_path: ["Source Coding", "Huffman Coding"]
+    - title: "Sequence Alignment with Dynamic Programming"
+      course: "Computational Biology"
+      creator: "prof.tanaka@u-tokyo.ac.jp"
+      type: practice
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 4
+      subject_path: ["Sequence Analysis", "Sequence Alignment"]
+    - title: "Phylogenetic Tree Construction"
+      course: "Computational Biology"
+      creator: "prof.tanaka@u-tokyo.ac.jp"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 5
+      subject_path: ["Genomics", "Phylogenetics"]
     # ─── Hebrew challenges (אתגרים בעברית) ───
     - title: "צינור מיון לנתוני חיישנים"
       course: "מבוא לאלגוריתמים"
@@ -965,6 +1466,115 @@ import:
       phase2_response: mc
       max_cycles: 4
       subject_path: ["Clinical Applications", "Arrhythmia Detection"]
+    # ─── Additional Hebrew challenges (filling gaps) ───
+    - title: "ניתוח חיכוך במישור משופע"
+      course: "מכניקה קלאסית"
+      creator: "prof.ben-david@huji.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["דינמיקה", "חיכוך וגרירה"]
+    - title: "רכבים אוטונומיים ואתיקה של קבלת החלטות אלגוריתמית"
+      course: "אתיקה וטכנולוגיה"
+      creator: "prof.ben-david@huji.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 5
+      subject_path: ["אתיקה יישומית", "אתיקה של בינה מלאכותית"]
+    - title: "לכסון מטריצה סימטרית"
+      course: "אלגברה לינארית"
+      creator: "dr.levy.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["ערכים עצמיים ווקטורים עצמיים", "לכסון"]
+    - title: "תמחור מונופול ועלות רווחה מתה"
+      course: "מיקרו-כלכלה"
+      creator: "dr.levy.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["מבני שוק", "מונופול ואוליגופול"]
+    - title: "צביעת גרפים ותזמון"
+      course: "מתמטיקה בדידה"
+      creator: "dr.levy.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["תורת הגרפים", "צביעה והתאמה"]
+    - title: "החלפת דפים בזיכרון וירטואלי"
+      course: "מערכות הפעלה"
+      creator: "dr.levy.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["ניהול זיכרון", "זיכרון וירטואלי"]
+    - title: "עיצוב סכמת מסד נתונים מנורמלת"
+      course: "מסדי נתונים"
+      creator: "dr.levy.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["המודל הרלציוני", "נורמליזציה"]
+    - title: "הערכת מערכת למידה מסתגלת"
+      course: "סביבות למידה דיגיטליות"
+      creator: "dr.shapira.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["פלטפורמות למידה", "מערכות למידה מסתגלות"]
+    - title: "זיהוי הטיה בחיבורים המדורגים על-ידי AI"
+      course: "בינה מלאכותית בחינוך"
+      creator: "dr.shapira.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: mc
+      phase2_response: mc
+      max_cycles: 3
+      subject_path: ["עיבוד שפה טבעית בחינוך", "בדיקת חיבורים אוטומטית"]
+    - title: "תכנון ממשק FHIR להחלפת נתוני מטופלים"
+      course: "מבוא לבריאות דיגיטלית"
+      creator: "prof.greenspan.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["מערכות מידע רפואיות", "תקני HL7 ו-FHIR"]
+    - title: "זיהוי ותיקון ארטיפקטים ב-MRI"
+      course: "הדמיה רפואית"
+      creator: "prof.greenspan.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 4
+      subject_path: ["רכישת תמונות", "יסודות MRI"]
+    - title: "ניתוח שלבי שינה מבוסס EEG"
+      course: "עיבוד אותות ביו-רפואיים"
+      creator: "prof.greenspan.he@tau.ac.il"
+      type: assessment
+      visibility: public
+      phase1_response: open-ended
+      phase2_response: open-ended
+      max_cycles: 3
+      subject_path: ["יישומים קליניים", "סיווג שלבי שינה"]
     # ─── Hebrew: CS challenges (מדעי המחשב) ───
     - title: "תכנון פתרון רקורסיבי"
       course: "מבוא למדעי המחשב"
@@ -1094,3 +1704,112 @@ import:
       phase2_response: mc
       max_cycles: 4
       subject_path: ["יישומים קליניים", "זיהוי הפרעות קצב"]
+
+  # ─── Course Subscriptions ───
+  # Maps students to courses they are enrolled in.
+  # Purely English students:
+  subscriptions:
+    - user: "noa.cohen@tau.ac.il"
+      course: "Introduction to Algorithms"
+    - user: "noa.cohen@tau.ac.il"
+      course: "Linear Algebra"
+    - user: "noa.cohen@tau.ac.il"
+      course: "Introduction to Computer Science"
+    - user: "ahmed.hassan@tau.ac.il"
+      course: "Introduction to Algorithms"
+    - user: "ahmed.hassan@tau.ac.il"
+      course: "Data Structures"
+    - user: "ahmed.hassan@tau.ac.il"
+      course: "Database Systems"
+    - user: "maria.garcia@mit.edu"
+      course: "Classical Mechanics"
+    - user: "maria.garcia@mit.edu"
+      course: "Microeconomics"
+    - user: "li.wei@tsinghua.edu.cn"
+      course: "Introduction to Algorithms"
+    - user: "li.wei@tsinghua.edu.cn"
+      course: "Data Structures"
+    - user: "sarah.miller@oxford.ac.uk"
+      course: "Ethics"
+    # Additional MIT students:
+    - user: "james.taylor@mit.edu"
+      course: "Classical Mechanics"
+    - user: "james.taylor@mit.edu"
+      course: "Microeconomics"
+    - user: "priya.sharma@mit.edu"
+      course: "Classical Mechanics"
+    - user: "priya.sharma@mit.edu"
+      course: "Microeconomics"
+    # Additional Oxford students:
+    - user: "oliver.brown@oxford.ac.uk"
+      course: "Ethics"
+    - user: "emma.davies@oxford.ac.uk"
+      course: "Ethics"
+    # Additional Tsinghua students:
+    - user: "zhang.ming@tsinghua.edu.cn"
+      course: "Introduction to Algorithms"
+    - user: "zhang.ming@tsinghua.edu.cn"
+      course: "Data Structures"
+    - user: "chen.yue@tsinghua.edu.cn"
+      course: "Introduction to Algorithms"
+    - user: "chen.yue@tsinghua.edu.cn"
+      course: "Data Structures"
+    # ETH Zurich students:
+    - user: "lukas.weber@ethz.ch"
+      course: "Machine Learning"
+    - user: "lukas.weber@ethz.ch"
+      course: "Numerical Methods"
+    - user: "elena.fischer@ethz.ch"
+      course: "Machine Learning"
+    - user: "elena.fischer@ethz.ch"
+      course: "Numerical Methods"
+    # Stanford students:
+    - user: "kevin.park@stanford.edu"
+      course: "Artificial Intelligence"
+    - user: "kevin.park@stanford.edu"
+      course: "Logic and Reasoning"
+    - user: "maya.patel@stanford.edu"
+      course: "Artificial Intelligence"
+    - user: "maya.patel@stanford.edu"
+      course: "Logic and Reasoning"
+    # University of Tokyo students:
+    - user: "yuki.sato@u-tokyo.ac.jp"
+      course: "Information Theory"
+    - user: "yuki.sato@u-tokyo.ac.jp"
+      course: "Computational Biology"
+    - user: "haruto.nakamura@u-tokyo.ac.jp"
+      course: "Information Theory"
+    - user: "haruto.nakamura@u-tokyo.ac.jp"
+      course: "Computational Biology"
+    # Purely Hebrew students:
+    - user: "noa.cohen.he@tau.ac.il"
+      course: "מבוא לאלגוריתמים"
+    - user: "noa.cohen.he@tau.ac.il"
+      course: "אלגברה לינארית"
+    - user: "noa.cohen.he@tau.ac.il"
+      course: "מבוא למדעי המחשב"
+    - user: "yael.katz@tau.ac.il"
+      course: "מבוא לאלגוריתמים"
+    - user: "yael.katz@tau.ac.il"
+      course: "מבני נתונים"
+    - user: "yael.katz@tau.ac.il"
+      course: "מבוא לעיצוב הוראה"
+    - user: "dan.mor@technion.ac.il"
+      course: "מבוא לאלגוריתמים"
+    - user: "dan.mor@technion.ac.il"
+      course: "מערכות הפעלה"
+    - user: "dan.mor@technion.ac.il"
+      course: "מסדי נתונים"
+    # Mixed-language student (English user enrolled in BOTH English AND Hebrew courses):
+    - user: "tomer.bar@tau.ac.il"
+      course: "Introduction to Algorithms"
+    - user: "tomer.bar@tau.ac.il"
+      course: "Data Structures"
+    - user: "tomer.bar@tau.ac.il"
+      course: "Linear Algebra"
+    - user: "tomer.bar@tau.ac.il"
+      course: "מבוא לאלגוריתמים"
+    - user: "tomer.bar@tau.ac.il"
+      course: "אלגברה לינארית"
+    - user: "tomer.bar@tau.ac.il"
+      course: "מבני נתונים"

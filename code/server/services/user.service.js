@@ -37,6 +37,21 @@ class UserService {
       throw new ValidationError('No valid fields to update');
     }
 
+    // Validate name: required, max length, no HTML/script tags
+    if (filtered.name !== undefined) {
+      if (typeof filtered.name !== 'string' || filtered.name.trim().length === 0) {
+        throw new ValidationError('Name cannot be empty');
+      }
+      if (filtered.name.length > 100) {
+        throw new ValidationError('Name must be 100 characters or fewer');
+      }
+      // Strip HTML tags to prevent stored XSS
+      filtered.name = filtered.name.replace(/<[^>]*>/g, '').trim();
+      if (filtered.name.length === 0) {
+        throw new ValidationError('Name cannot contain only HTML tags');
+      }
+    }
+
     // Validate institution_id exists if provided
     if (filtered.institution_id) {
       const inst = await this.db('institutions').where({ id: filtered.institution_id }).first();

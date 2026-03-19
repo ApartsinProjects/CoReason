@@ -10,6 +10,13 @@ const configs = {
       filename: path.resolve(__dirname, '../../data/coreason-dev.sqlite3'),
     },
     useNullAsDefault: true,
+    pool: {
+      afterCreate: function(conn, cb) {
+        conn.pragma('journal_mode = WAL');
+        conn.pragma('busy_timeout = 5000');
+        cb(null, conn);
+      },
+    },
     migrations: {
       directory: path.resolve(__dirname, 'migrations'),
       tableName: 'knex_migrations',
@@ -25,6 +32,13 @@ const configs = {
       filename: ':memory:',
     },
     useNullAsDefault: true,
+    pool: {
+      afterCreate: function(conn, cb) {
+        conn.pragma('journal_mode = WAL');
+        conn.pragma('busy_timeout = 5000');
+        cb(null, conn);
+      },
+    },
     migrations: {
       directory: path.resolve(__dirname, 'migrations'),
       tableName: 'knex_migrations',

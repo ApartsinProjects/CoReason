@@ -3,45 +3,48 @@
 # ── Shared Tooltips (used on both student and instructor pages) ──
 challengeType:
   title: "Challenge Type"
-  text: "Practice challenges allow retries with feedback after each phase. Assessment challenges are graded with feedback only at the end."
+  text: "WHY: Different learning goals require different feedback approaches — practice builds skills through iteration, while assessment measures independent ability. WHAT: Practice mode shows AI-generated feedback after each phase, helping you learn from mistakes in real time. Assessment mode withholds feedback until completion, testing your unassisted co-reasoning skills. HOW: Choose Practice for learning and exploration. Choose Assessment for graded evaluations or when measuring true skill level."
 visibility:
   title: "Visibility"
-  text: "Public challenges are visible to all enrolled students. Private challenges are only visible to their creator."
+  text: "WHY: Controlling who can see a challenge lets instructors manage course content and lets students create personal practice material. WHAT: Public challenges are visible to all enrolled students in the course. Private challenges are visible only to their creator. HOW: Public challenges appear in the course challenge list for all subscribers. Private challenges appear only in your personal challenge list."
 maxCycles:
   title: "Max Cycles"
-  text: "The maximum number of Judge+Steer cycles allowed per run."
+  text: "WHY: More cycles give students more opportunities to practice iterative correction, but too many can reduce engagement and focus. WHAT: The maximum number of Judge+Steer cycles allowed per challenge run. After the last cycle, the run completes and all grades are calculated. HOW: 3-5 cycles is typical. Use fewer for quicker assessments, more for deep practice exercises."
 subjectPath:
   title: "Subject Path"
-  text: "The topic hierarchy this challenge belongs to, within the course's subject tree."
+  text: "WHY: Mapping challenges to specific topics helps organize content and enables targeted analytics on skill areas. WHAT: The topic hierarchy this challenge belongs to, within the course's subject tree. Problems and rubrics are generated based on these subject areas. HOW: Select specific leaf nodes for focused challenges, or broader parent nodes for wider-ranging problems."
 responseType:
   title: "Response Type"
-  text: "Multiple-choice gives pre-generated options. Open-ended allows free-form written reasoning."
+  text: "WHY: The response format shapes the learning experience — multiple choice scaffolds decision-making while open-ended develops independent reasoning skills. WHAT: Multiple-choice presents pre-generated options to select from. Open-ended allows free-form written reasoning and custom refinements. HOW: Use multiple choice for introductory challenges. Use open-ended for advanced challenges requiring independent critical thinking."
 framingPhase:
   title: "Framing Phase"
-  text: "The student evaluates the raw problem and translates it into a well-defined task by adding assumptions and constraints."
+  text: "WHY: Real-world problems are never pre-formatted for AI. Framing teaches you to transform vague requirements into precise, actionable tasks. WHAT: You receive a raw, intentionally incomplete problem and must refine it by adding assumptions, constraints, and clarifications before the AI generates a solution. This is Phase 1 of the co-reasoning process (see the process diagram for the full flow). HOW: Read the problem carefully. Identify what is missing, ambiguous, or assumed. Add refinements that make the task well-defined."
 judgingPhase:
   title: "Judging Phase"
-  text: "The student reviews the AI-generated solution, identifying what's correct, wrong, or could be improved."
+  text: "WHY: AI outputs often contain subtle errors that require careful domain expertise to detect. Judging builds your analytical evaluation skills. WHAT: You review the AI-generated solution and identify specific errors, gaps, or incorrect assumptions. This is Phase 2A of the co-reasoning process (see the process diagram for the full flow). Your judgments are recorded for grading but are NOT sent to the AI. HOW: Read the solution critically. Look for logical errors, missing elements, incorrect facts, and unstated assumptions."
 steeringPhase:
   title: "Steering Phase"
-  text: "The student provides specific feedback to guide the AI toward a better solution."
+  text: "WHY: Knowing how to give precise, actionable feedback to AI is the core competency of effective human-AI collaboration. WHAT: You write specific corrections or instructions to fix the issues you identified. This is Phase 2B of the co-reasoning process (see the process diagram for the full flow). The AI processes your steering and regenerates an improved solution. HOW: Be specific and concrete. Tell the AI exactly what to fix. Clear corrections produce better revisions — vague feedback produces vague improvements."
 coReasoningScore:
   title: "Co-Reasoning Score"
-  text: "Overall performance combining framing accuracy, judgment quality, and steering effectiveness."
+  text: "WHY: A combined score helps you understand your overall effectiveness as an AI collaborator across all three co-reasoning skills. WHAT: Your overall performance grade combining framing accuracy, judgment quality, and steering effectiveness. Each skill is graded independently (A/B/C). HOW: Focus on improving your weakest skill area first. Review the feedback from each phase to understand where you can improve."
 rubric:
   title: "Rubric"
-  text: "The grading criteria used to evaluate co-reasoning performance in each phase."
+  text: "WHY: Consistent evaluation criteria ensure fair, objective grading across all students and challenge attempts. WHAT: AI-generated grading criteria used to evaluate your co-reasoning performance in each phase (framing, judging, steering). The rubric is tailored to the challenge's subject area. HOW: Rubrics are invisible during the challenge. After completion, your grades reflect how well you met the rubric criteria."
 subjectTree:
   title: "Subject Tree"
-  text: "A hierarchical organization of topics within a course. Challenges are mapped to specific nodes."
+  text: "WHY: Organizing topics hierarchically enables structured course content and targeted skill assessment across subject areas. WHAT: A tree-structured organization of topics within a course. Challenges are mapped to specific nodes, and problems are generated from the selected subjects. HOW: Instructors build the tree through the course settings. Students see challenges organized by their subject areas."
+coReasoningProcess:
+  title: "The CoReasoning Process"
+  text: "WHY: Understanding the full co-reasoning workflow helps you see how each phase builds on the previous one and why each skill matters. WHAT: The process has three phases: (1) Framing — refine a vague problem into a well-defined task, (2A) Judging — identify issues in the AI solution, (2B) Steering — write corrections to improve the AI output. Judging and Steering repeat in cycles. HOW: Click the process diagram link or look for the flow chart icon to see the full visual diagram of the co-reasoning process."
 #
 # ── Student-Facing Tooltips ──
 courseSubscription:
   title: "Course Subscription"
-  text: "Subscribe to a course to access its challenges and track your progress."
+  text: "WHY: Subscribing connects you to a course's challenge library and enables your instructor to track your progress. WHAT: When you subscribe, the course's public challenges appear in your challenge list and your results are included in course analytics. HOW: Click Subscribe on any available course card. You can unsubscribe at any time from the course catalog."
 analyticsOverview:
   title: "Your Analytics"
-  text: "View your performance trends, score distributions, and detailed breakdowns across your challenge runs."
+  text: "WHY: Tracking your performance over time reveals patterns, strengths, and areas that need attention. WHAT: A visual summary of your grades across all completed challenge runs, including distributions by skill and trends over time. HOW: Use the filters to focus on specific courses or challenge types. Click any challenge in the table to see its detailed report."
 # Student challenge list columns
 colChallenge:
   title: "Challenge"
@@ -74,7 +77,7 @@ colActions:
 # ── Instructor-Facing Tooltips ──
 instrAnalyticsOverview:
   title: "Course Analytics"
-  text: "Aggregated performance data across all students in this course. Only includes public challenge results."
+  text: "WHY: Understanding aggregate student performance helps you identify challenging areas and adjust your teaching approach. WHAT: Aggregated performance data across all students in this course, including grade distributions and per-student breakdowns. Only includes public challenge results. HOW: Use the course and challenge filters to drill down. Export to PDF for institutional reporting."
 instrCourseSubscription:
   title: "Course Management"
   text: "Manage your course settings, subject tree, and challenge assignments."
@@ -103,3 +106,53 @@ instrColStatus:
 instrColActions:
   title: "Actions"
   text: "Available actions: Edit, Preview, View Analytics, or Delete."
+#
+# ── Profile Page Tooltips ──
+profileRole:
+  title: "Your Role"
+  text: "WHY: Your role determines which features and pages are available to you. WHAT: Students complete challenges and build co-reasoning skills. Instructors create challenges, manage courses, and review student performance. HOW: Your role is assigned during registration and cannot be changed. Contact your administrator if you need a role change."
+profileStats:
+  title: "Your Statistics"
+  text: "WHY: Tracking your activity helps you understand how actively you are engaging with the platform. WHAT: Challenges Created shows how many challenges you have authored. Challenges Executed shows how many challenge runs you have completed. HOW: To increase your statistics, create new challenges or complete more challenge runs from your subscribed courses."
+profileCourses:
+  title: "Course Subscriptions"
+  text: "WHY: Your course subscriptions determine which challenges are available to you and which analytics data is tracked. WHAT: A list of all courses you are currently subscribed to. Each course provides access to its public challenges. HOW: Subscribe to new courses from the Course Catalog page. You can unsubscribe at any time."
+profileOverview:
+  title: "My Profile"
+  text: "WHY: Your profile centralizes your identity, role, and activity on the platform. WHAT: View your account details, course subscriptions, and challenge statistics. Only your display name can be edited. HOW: Click the pencil icon next to your name to edit it, then click Save Changes."
+#
+# ── Analytics Grade Column Tooltips ──
+analyticsFramingGrade:
+  title: "Framing Grade"
+  text: "WHY: Framing is the foundation of effective AI collaboration — a well-defined task leads to better AI output. WHAT: Your grade reflects how well you refined the raw problem by adding constraints, assumptions, and clarifications before the AI attempted a solution. HOW: Higher grades come from identifying genuine gaps, reducing ambiguity, and providing precise task specifications."
+analyticsJudgingGrade:
+  title: "Judging Grade"
+  text: "WHY: Critical evaluation of AI output is essential — AI solutions often contain subtle errors that require domain expertise to detect. WHAT: Your grade reflects how accurately you identified mistakes, logical gaps, and incorrect assumptions in the AI-generated solution. HOW: Higher grades come from spotting specific issues, distinguishing real errors from acceptable simplifications, and providing clear descriptions."
+analyticsSteeringGrade:
+  title: "Steering Grade"
+  text: "WHY: Guiding AI toward better outputs through precise corrections is the core skill of human-AI collaboration. WHAT: Your grade reflects how effectively your corrections led the AI to improve its solution — addressing real issues with actionable guidance. HOW: Higher grades come from precise, constructive corrections that explain what should change and why, rather than vague complaints."
+#
+# ── Instructor Analytics Per-Student Table Tooltips ──
+instrAnalyticsStudent:
+  title: "Student"
+  text: "The student's display name as registered on the platform."
+instrAnalyticsEmail:
+  title: "Email"
+  text: "The student's email address for identification."
+instrAnalyticsRuns:
+  title: "Runs Completed"
+  text: "WHY: Tracking completed vs total runs shows student engagement and progress. WHAT: The number of completed challenge runs out of total runs attempted by this student. HOW: A low completion ratio may indicate a student is struggling or disengaged."
+instrAnalyticsActions:
+  title: "Actions"
+  text: "Available actions for this student. Click Review to see the detailed report of a completed challenge run."
+#
+# ── Grade Badge Tooltips ──
+gradeA:
+  title: "Grade A — Excellent"
+  text: "WHY: Grades help you track your co-reasoning mastery. WHAT: Grade A means you demonstrated excellent understanding — you identified the key issues, provided strong refinements, and showed deep critical thinking. HOW: Keep applying these skills consistently across different challenges."
+gradeB:
+  title: "Grade B — Good"
+  text: "WHY: Grades help you track your co-reasoning mastery. WHAT: Grade B means you showed good understanding with some room for improvement — you caught the main points but may have missed nuances or included unnecessary elements. HOW: Review the feedback carefully and focus on the specific gaps mentioned."
+gradeC:
+  title: "Grade C — Needs Improvement"
+  text: "WHY: Grades help you track your co-reasoning mastery. WHAT: Grade C means significant improvement is needed — important issues were missed or the response didn't adequately address the task requirements. HOW: Re-read the problem carefully, study the feedback, and try similar challenges to build your skills."

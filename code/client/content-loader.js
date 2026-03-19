@@ -145,12 +145,28 @@ function switchLanguage(lang) {
  *   <h1 data-t="myResults">My Results</h1>
  */
 function translatePage() {
-  // Translate text content
+  // Translate text content — preserve child elements (e.g. tooltip spans)
   document.querySelectorAll('[data-t]').forEach(function(el) {
     var key = el.getAttribute('data-t');
     var val = t(key);
     if (val && val !== key) {
-      el.textContent = val;
+      // Find the first text node directly under this element
+      var textNode = null;
+      for (var i = 0; i < el.childNodes.length; i++) {
+        if (el.childNodes[i].nodeType === Node.TEXT_NODE) {
+          textNode = el.childNodes[i];
+          break;
+        }
+      }
+      if (textNode) {
+        textNode.textContent = val;
+      } else if (el.children.length === 0) {
+        // No children at all — safe to set textContent directly
+        el.textContent = val;
+      } else {
+        // Has child elements but no leading text node — prepend one
+        el.insertBefore(document.createTextNode(val), el.firstChild);
+      }
     }
   });
 

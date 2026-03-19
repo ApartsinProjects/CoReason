@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI CoReasoning Lab — What is Co-Reasoning?</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    .onboarding-hero {
+      text-align: center;
+      padding: 48px 24px 32px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--teal) 100%);
+      border-radius: var(--radius);
+      color: #fff;
+      margin-bottom: 32px;
+    }
+    .onboarding-hero h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .onboarding-hero p {
+      font-size: 1.15rem;
+      opacity: 0.9;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .onboarding-section {
+      margin-bottom: 40px;
+    }
+
+    /* Problem section */
+    .problem-box {
+      background: #fff3e0;
+      border-left: 4px solid var(--warning);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #4e342e;
+    }
+
+    /* Skills cards */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .skill-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 24px;
+      text-align: center;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .skill-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .skill-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .skill-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .skill-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Framing / Judging / Steering accents */
+    .skill-card.framing  { border-top: 4px solid var(--teal); }
+    .skill-card.judging  { border-top: 4px solid var(--primary-light); }
+    .skill-card.steering { border-top: 4px solid var(--accent); }
+
+    /* Steps flow */
+    .steps-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 40px;
+    }
+    .step-item {
+      position: relative;
+      padding: 16px 20px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .step-item::before {
+      content: attr(data-step);
+      position: absolute;
+      left: -40px;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .step-item::after {
+      content: '';
+      position: absolute;
+      left: -26px;
+      top: 44px;
+      bottom: -16px;
+      width: 2px;
+      background: var(--border);
+    }
+    .step-item:last-child::after {
+      display: none;
+    }
+    .step-item strong {
+      color: var(--primary);
+    }
+    .step-item .step-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .step-badge.graded {
+      background: #e8f5e9;
+      color: var(--success);
+    }
+
+    /* Grades explanation */
+    .grades-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .grade-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 12px 20px;
+      flex: 1;
+      min-width: 200px;
+    }
+    .grade-letter {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .grade-letter.a { background: var(--grade-a); }
+    .grade-letter.b { background: var(--grade-b); }
+    .grade-letter.c { background: var(--grade-c); }
+
+    /* Modes */
+    .modes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .mode-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+    .mode-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .mode-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .mode-card.practice { border-left: 4px solid var(--success); }
+    .mode-card.practice h3 { color: var(--success); }
+    .mode-card.assessment { border-left: 4px solid var(--primary-light); }
+    .mode-card.assessment h3 { color: var(--primary-light); }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 40px 24px;
+      background: var(--primary-bg);
+      border-radius: var(--radius);
+      margin-top: 16px;
+    }
+    .cta-section p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    .btn-cta {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: var(--radius);
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .btn-cta:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 700px) {
+      .onboarding-hero h1 { font-size: 1.5rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .modes-grid { grid-template-columns: 1fr; }
+      .grades-row { flex-direction: column; }
+    }
+  </style>
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+  <script src="js/tooltips.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
+    <nav>
+      <a href="challenge-list.html" data-t="challenges">Challenges</a>
+      <a href="course-catalog.html" data-t="courses">Courses</a>
+      <a href="student-analytics.html" data-t="myResults">My Results</a>
+    </nav>
+    <div class="user-area">
+      <a href="interactive-guide.html" class="guide-link" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">—</span>
+      <a href="profile.html" aria-label="User profile"><div class="avatar" id="userAvatar">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
+    </div>
+  </header>
+
+  <main class="page" id="main-content">
+
+    <!-- Hero -->
+    <div class="onboarding-hero">
+      <h1 data-t="whatIsCoReasoning">What is Co-Reasoning?</h1>
+      <p data-t="whatIsCoReasoningSubtitle">Learn to think critically with AI — not just use it</p>
+    </div>
+
+    <!-- Section 1: The Problem -->
+    <div class="onboarding-section">
+      <h2 class="section-title" data-t="theProblem">The Problem</h2>
+      <div class="problem-box">
+        <p data-t="theProblemText">Most people use AI passively: paste a question, copy the answer. But AI outputs often contain subtle errors, missing assumptions, and logical gaps. If you can't spot these issues, you're not using AI — you're being used by it. Co-Reasoning teaches you to work <em>with</em> AI as a critical partner, not a crutch.</p>
+      </div>
+    </div>
+
+    <!-- Section 2: The Three Skills -->
+    <div class="onboarding-section">
+      <h2 class="section-title" data-t="theThreeSkills">The Three Skills</h2>
+      <p class="section-subtitle" data-t="theThreeSkillsDesc">Co-Reasoning develops three independent critical thinking skills:</p>
+      <div class="skills-grid">
+        <div class="skill-card framing">
+          <span class="skill-icon">&#127919;</span>
+          <h3 data-t="framingSkillTitle">Framing</h3>
+          <p data-t="framingSkillDesc">Turn vague problems into well-defined tasks. Real problems are messy — you must identify what's missing, add assumptions, and clarify requirements before AI can help.</p>
+        </div>
+        <div class="skill-card judging">
+          <span class="skill-icon">&#128269;</span>
+          <h3 data-t="judgingSkillTitle">Judging</h3>
+          <p data-t="judgingSkillDesc">Find what's wrong with AI's answer. AI solutions look good but contain subtle errors. Your job is to identify incorrect assumptions, missing edge cases, and logical flaws.</p>
+        </div>
+        <div class="skill-card steering">
+          <span class="skill-icon">&#127918;</span>
+          <h3 data-t="steeringSkillTitle">Steering</h3>
+          <p data-t="steeringSkillDesc">Guide AI toward a better answer. Once you've found issues, give the AI specific, actionable corrections — not vague complaints.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: How a Challenge Works -->
+    <div class="onboarding-section">
+      <h2 class="section-title" data-t="howChallengeWorks">How a Challenge Works</h2>
+      <p class="section-subtitle" data-t="howChallengeWorksDesc">Each challenge walks you through the three skills in sequence:</p>
+      <div class="steps-flow">
+        <div class="step-item" data-step="1">
+          <span data-t="step1Text"><strong>Read</strong> an intentionally ill-defined problem statement</span>
+        </div>
+        <div class="step-item" data-step="2">
+          <span data-t="step2Text"><strong>Frame</strong> it by selecting or writing refinements to clarify the problem</span>
+          <span class="step-badge graded" data-t="graded">Graded (A/B/C)</span>
+        </div>
+        <div class="step-item" data-step="3">
+          <span data-t="step3Text"><strong>See</strong> an AI-generated solution that is deliberately imperfect</span>
+        </div>
+        <div class="step-item" data-step="4">
+          <span data-t="step4Text"><strong>Judge</strong> the issues — identify flaws, incorrect assumptions, and missing cases</span>
+          <span class="step-badge graded" data-t="graded">Graded (A/B/C)</span>
+        </div>
+        <div class="step-item" data-step="5">
+          <span data-t="step5Text"><strong>Steer</strong> with specific, actionable corrections to improve the solution</span>
+          <span class="step-badge graded" data-t="graded">Graded (A/B/C)</span>
+        </div>
+        <div class="step-item" data-step="6">
+          <span data-t="step6Text"><strong>Review</strong> your three independent grades and detailed feedback</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Why Three Grades? -->
+    <div class="onboarding-section">
+      <h2 class="section-title" data-t="whyThreeGrades">Why Three Grades?</h2>
+      <p class="section-subtitle" data-t="whyThreeGradesDesc">Each skill is graded independently because they are distinct competencies. You might frame a problem brilliantly but miss obvious flaws in the AI's answer, or judge well but give vague steering feedback. Three separate grades give you a clear picture of where to improve.</p>
+      <div class="grades-row">
+        <div class="grade-pill">
+          <div class="grade-letter a">A</div>
+          <div>
+            <strong data-t="gradeExcellent">Excellent</strong>
+            <div style="font-size:0.85rem;color:var(--text-secondary);" data-t="gradeExcellentDesc">Thorough, precise, and insightful</div>
+          </div>
+        </div>
+        <div class="grade-pill">
+          <div class="grade-letter b">B</div>
+          <div>
+            <strong data-t="gradeGood">Good</strong>
+            <div style="font-size:0.85rem;color:var(--text-secondary);" data-t="gradeGoodDesc">Solid understanding with minor gaps</div>
+          </div>
+        </div>
+        <div class="grade-pill">
+          <div class="grade-letter c">C</div>
+          <div>
+            <strong data-t="gradeNeedsWork">Needs Work</strong>
+            <div style="font-size:0.85rem;color:var(--text-secondary);" data-t="gradeNeedsWorkDesc">Significant issues to address</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5: Practice vs Assessment -->
+    <div class="onboarding-section">
+      <h2 class="section-title" data-t="practiceVsAssessment">Practice vs Assessment</h2>
+      <p class="section-subtitle" data-t="practiceVsAssessmentDesc">Challenges come in two modes:</p>
+      <div class="modes-grid">
+        <div class="mode-card practice">
+          <h3 data-t="practiceMode">Practice Mode</h3>
+          <p data-t="practiceModeDesc">Run as many times as you want. See detailed feedback and rubric explanations after each phase. Great for learning and experimentation — your best attempt counts.</p>
+        </div>
+        <div class="mode-card assessment">
+          <h3 data-t="assessmentMode">Assessment Mode</h3>
+          <p data-t="assessmentModeDesc">One attempt only. Grades are final and reported to your instructor. Designed for evaluating your skills under realistic conditions. Treat it like an exam.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <p data-t="readyToStart">Ready to develop your critical AI skills?</p>
+      <a href="challenge-list.html" class="btn-cta" data-t="startFirstChallenge">Start Your First Challenge &rarr;</a>
+    </div>
+
+  </main>
+
+  <script src="js/tour.js"></script>
+  <script src="js/help-popups.js"></script>
+</body>
+</html>

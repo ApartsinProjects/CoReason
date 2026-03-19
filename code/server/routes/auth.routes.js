@@ -50,9 +50,21 @@ module.exports = function authRoutes(db, passport, config, logger) {
   router.post('/logout', (req, res) => {
     const userId = req.user?.id || null;
     const email = req.user?.email || null;
-    req.logout(() => {
-      logger.info('User logged out', { userId, email });
-      res.json({ message: 'Logged out' });
+    req.logout(function(err) {
+      if (err) logger.warn('Logout error', { error: err.message });
+      // Destroy the session to ensure clean logout
+      if (req.session) {
+        req.session.destroy(function(sessionErr) {
+          if (sessionErr) logger.warn('Session destroy error', { error: sessionErr.message });
+          res.clearCookie('connect.sid');
+          logger.info('User logged out', { userId, email });
+          res.json({ message: 'Logged out' });
+        });
+      } else {
+        res.clearCookie('connect.sid');
+        logger.info('User logged out', { userId, email });
+        res.json({ message: 'Logged out' });
+      }
     });
   });
 

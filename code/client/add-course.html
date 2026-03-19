@@ -52,6 +52,7 @@
   <script src="js/user-header.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content sr-only sr-only-focusable" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:9999;" onfocus="this.style.position='static';this.style.width='auto';this.style.height='auto';this.style.overflow='visible';" onblur="this.style.position='absolute';this.style.left='-9999px';this.style.width='1px';this.style.height='1px';this.style.overflow='hidden';">Skip to content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
@@ -60,7 +61,8 @@
       <a href="instructor-analytics.html" data-t="analytics">Analytics</a>
     </nav>
     <div class="user-area">
-      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <a href="interactive-guide.html" class="guide-link" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e0f2f1;color:#00695c;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="instructor">Instructor</span>
       <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
       <span id="userName">&mdash;</span>
@@ -69,10 +71,10 @@
     </div>
   </header>
 
-  <main class="page">
+  <main class="page" id="main-content">
     <div class="page-header">
-      <h1>Add New Course</h1>
-      <p>Create a new course within your institution and configure its subject tree</p>
+      <h1 data-t="addNewCourse">Add New Course</h1>
+      <p data-t="addCourseSubtitle">Create a new course within your institution and configure its subject tree</p>
     </div>
 
     <div class="create-course-layout">
@@ -80,15 +82,15 @@
       <div>
         <!-- Step 1: Course Details -->
         <div class="card" id="formStep1">
-          <h3 style="margin-bottom:16px;">Course Details</h3>
+          <h3 style="margin-bottom:16px;" data-t="courseDetails">Course Details</h3>
 
           <div class="form-group">
-            <label for="courseName">Course Name <span style="color:var(--danger);">*</span></label>
+            <label for="courseName" data-t="courseName">Course Name <span style="color:var(--danger);">*</span></label>
             <input type="text" class="form-control" id="courseName" placeholder="e.g., Introduction to Machine Learning" oninput="updatePreview()">
           </div>
 
           <div class="form-group">
-            <label for="courseCode">Course Code</label>
+            <label for="courseCode" data-t="courseCode">Course Code</label>
             <input type="text" class="form-control" id="courseCode" placeholder="e.g., CS-401" oninput="updatePreview()">
           </div>
 
@@ -106,12 +108,12 @@
           </div>
 
           <div class="form-group">
-            <label for="courseDesc">Description</label>
+            <label for="courseDesc" data-t="description">Description</label>
             <textarea class="form-control" rows="3" id="courseDesc" placeholder="Brief description of the course content and objectives..." oninput="updatePreview()"></textarea>
           </div>
 
           <div class="form-group">
-            <label>Semester / Term</label>
+            <label data-t="semesterTerm">Semester / Term</label>
             <div style="display:flex; gap:8px;">
               <select class="form-control" style="flex:1;">
                 <option>Spring</option>
@@ -125,7 +127,7 @@
 
           <!-- Instructors -->
           <div class="form-group">
-            <label>Instructors</label>
+            <label data-t="instructors">Instructors</label>
             <ul class="instructor-list" id="instructorList">
               <!-- Lead instructor populated dynamically from current user -->
             </ul>
@@ -138,11 +140,11 @@
 
         <!-- Step 2: Initial Subject Tree -->
         <div class="card" id="formStep2">
-          <h3 style="margin-bottom:16px;">Initial Subject Tree</h3>
+          <h3 style="margin-bottom:16px;" data-t="initialSubjectTree">Initial Subject Tree</h3>
           <p class="text-sm text-muted mb-16">Define the initial topic hierarchy. You can refine it later from the Subject Tree Editor.</p>
 
           <div class="form-group">
-            <label>Setup Method</label>
+            <label data-t="setupMethod">Setup Method</label>
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;" id="methodButtons">
               <button class="btn btn-teal btn-sm" onclick="showTreeMethod('ai')" id="btnMethodAI" style="background:linear-gradient(135deg,#5c6bc0,#7c4dff);border:none;color:#fff;">🤖 AI Generate</button>
               <button class="btn btn-outline btn-sm" onclick="showTreeMethod('manual')" id="btnMethodManual">✏️ Build Manually</button>
@@ -236,7 +238,7 @@
 
         <!-- Step 3: Settings -->
         <div class="card" id="formStep3">
-          <h3 style="margin-bottom:16px;">Course Settings</h3>
+          <h3 style="margin-bottom:16px;" data-t="courseSettings">Course Settings</h3>
 
           <div class="form-group">
             <label data-t="defaultLlmModel">Default LLM Model</label>
@@ -247,7 +249,7 @@
           </div>
 
           <div class="form-group">
-            <label>Default Max Cycles</label>
+            <label data-t="defaultMaxCycles">Default Max Cycles</label>
             <input type="number" class="form-control" value="3" min="1" max="10" style="width:80px;">
             <p class="text-sm text-muted mt-4">Default maximum judge+steer cycles per challenge.</p>
           </div>
@@ -260,7 +262,7 @@
 
         <!-- Action buttons -->
         <div class="flex gap-12 mt-16">
-          <button class="btn btn-primary btn-lg" onclick="createCourse()">Create Course</button>
+          <button class="btn btn-primary btn-lg" onclick="createCourse()" data-t="createCourse">Create Course</button>
           <a href="course-catalog-instructor.html" class="btn btn-outline btn-lg" data-t="cancel">Cancel</a>
         </div>
       </div>
@@ -268,7 +270,7 @@
       <!-- Right: Live Preview -->
       <div class="preview-panel">
         <div class="card">
-          <h3 style="margin-bottom:16px;">Course Preview</h3>
+          <h3 style="margin-bottom:16px;" data-t="coursePreview">Course Preview</h3>
           <div class="preview-card">
             <div style="font-size:12px; color:var(--teal); font-weight:600; text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px;" id="previewDept">Department</div>
             <h4 id="previewName" style="color:var(--text-secondary); font-style:italic;">Course name...</h4>
@@ -286,7 +288,7 @@
         </div>
 
         <div class="card">
-          <h3 style="margin-bottom:12px;">Checklist</h3>
+          <h3 style="margin-bottom:12px;" data-t="checklist">Checklist</h3>
           <div style="font-size:13px;">
             <div style="padding:6px 0; display:flex; gap:8px; align-items:center;" id="checkName">
               <span style="color:#ccc;">○</span> Course name
@@ -304,7 +306,7 @@
         </div>
 
         <div class="card">
-          <h3 style="margin-bottom:12px;">What Happens Next?</h3>
+          <h3 style="margin-bottom:12px;" data-t="whatHappensNext">What Happens Next?</h3>
           <ol style="font-size:13px; padding-left:18px; color:var(--text-secondary); line-height:1.8;">
             <li>Course is created and visible in your course list</li>
             <li>Students from your institution can discover and subscribe</li>
@@ -820,6 +822,14 @@
       list.appendChild(li);
       emailInput.value = '';
     }
+
+    // MAJ-1: Warn on unsaved changes
+    var _formDirty = false;
+    document.addEventListener('input', function() { _formDirty = true; });
+    document.addEventListener('change', function() { _formDirty = true; });
+    window.addEventListener('beforeunload', function(e) {
+      if (_formDirty) { e.preventDefault(); e.returnValue = ''; }
+    });
 
     async function createCourse() {
       var name = document.getElementById('courseName').value.trim();

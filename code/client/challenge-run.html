@@ -12,7 +12,7 @@
   <script src="js/api-client.js"></script>
   <style>
     .run-layout { display: grid; grid-template-columns: 1fr 360px; gap: 24px; min-width: 0; }
-    .run-layout > div { min-width: 0; overflow: hidden; }
+    .run-layout > div { min-width: 0; overflow: visible; }
     .problem-panel { background: #f8f9ff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--primary); }
     .problem-panel h4 { color: var(--primary); font-size: 14px; margin-bottom: 8px; }
     .instructions-bar { background: #e0f2f1; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: var(--teal); display: flex; align-items: flex-start; gap: 8px; }
@@ -54,6 +54,18 @@
     .section-body textarea { width: 100%; border: none; padding: 10px 12px; font-size: 14px; resize: vertical; min-height: 60px; outline: none; font-family: inherit; }
     .add-section-btn { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1.5px dashed var(--border); border-radius: var(--radius); background: transparent; font-size: 13px; color: var(--primary); cursor: pointer; width: 100%; justify-content: center; }
     .add-section-btn:hover { border-color: var(--primary); background: #f8f9ff; }
+
+    /* Refinement type selector */
+    .section-type-select { border: none; background: transparent; font-weight: 600; font-size: 13px; flex: 1; outline: none; cursor: pointer; color: var(--primary); padding: 2px 4px; border-radius: 4px; }
+    .section-type-select:hover { background: #e8eaf6; }
+    .section-type-select option { font-size: 13px; }
+
+    /* AI Suggest button */
+    .btn-suggest { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border: none; border-radius: var(--radius); background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .25s; margin: 8px 0; box-shadow: 0 2px 8px rgba(102,126,234,.3); letter-spacing: .3px; }
+    .btn-suggest:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,.4); background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); }
+    .btn-suggest:active { transform: translateY(0); box-shadow: 0 2px 4px rgba(102,126,234,.2); }
+    .btn-suggest:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; background: #9e9e9e; }
+    .btn-suggest svg { filter: drop-shadow(0 1px 2px rgba(0,0,0,.2)); }
 
     /* "Solution is complete" button */
     .btn-done-judging { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border: 2px solid var(--success); border-radius: var(--radius); background: #fff; color: var(--success); font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s; margin-top: 8px; width: 100%; justify-content: center; }
@@ -103,7 +115,7 @@
     @keyframes simFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Error toast */
-    .error-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #c62828; color: #fff; padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 500; display: none; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.25); z-index: 301; cursor: pointer; }
+    .error-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--danger); color: #fff; padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 500; display: none; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.25); z-index: 301; cursor: pointer; }
     .error-toast.visible { display: inline-flex; }
 
     /* Assessment deferred feedback at completion */
@@ -130,6 +142,7 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
@@ -138,7 +151,8 @@
       <a href="student-analytics.html" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
-      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <a href="interactive-guide.html" class="guide-link" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span id="userName">&mdash;</span>
       <a href="profile.html" aria-label="User profile"><div class="avatar" id="userAvatar">?</div></a>
@@ -146,7 +160,7 @@
     </div>
   </header>
 
-  <main class="page">
+  <main class="page" id="main-content">
     <div id="scenario-content" aria-live="polite">
       <div class="card" style="text-align:center;padding:40px">
         <div class="llm-spinner" style="width:32px;height:32px;border-width:3px;margin:0 auto 16px;border-color:rgba(26,35,126,.2);border-top-color:var(--primary)"></div>
@@ -157,7 +171,7 @@
 
   <!-- LLM Status -->
   <div class="llm-status" id="llm-status" aria-live="polite">
-    <div class="llm-spinner"></div>
+    <div class="llm-spinner" role="status" aria-label="Loading"></div>
     <span id="llm-status-text" data-t="generating">Generating...</span>
   </div>
 
@@ -297,15 +311,82 @@ function formatSolution(text) {
   if (text.includes('\n')) {
     return '<div class="code-block">' + escHtml(text) + '</div>';
   }
-  return '<p>' + escHtml(text) + '</p>';
+  return '<p dir="auto">' + escHtml(text) + '</p>';
 }
 
 function formatFeedback(fb) {
   if (!fb) return '';
-  if (typeof fb === 'string') return '<p>' + escHtml(fb) + '</p>';
-  if (fb.message) return '<p>' + escHtml(fb.message) + '</p>';
+  // If string, try to parse as JSON; if that fails, return as plain text
+  if (typeof fb === 'string') {
+    try { fb = JSON.parse(fb); } catch(e) {
+      return '<p dir="auto">' + escHtml(fb) + '</p>';
+    }
+  }
+  // If it's still a string after parsing (e.g. a JSON string literal), return it
+  if (typeof fb !== 'object' || fb === null) return '<p dir="auto">' + escHtml(String(fb)) + '</p>';
+  // If the object has pre-rendered HTML, use it directly
   if (fb.html) return fb.html;
-  return '<p>' + escHtml(JSON.stringify(fb)) + '</p>';
+  // Build formatted output from known fields
+  var parts = [];
+  if (fb.grade) {
+    parts.push('<div style="margin-bottom:8px"><span class="grade grade-' + escHtml(fb.grade) + '" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;font-size:12px;font-weight:700;border-radius:50%">' + escHtml(fb.grade) + '</span></div>');
+  }
+  if (fb.message) {
+    parts.push('<p dir="auto">' + escHtml(fb.message) + '</p>');
+  }
+  if (fb.criticism) {
+    parts.push('<div class="criticism" dir="auto"><strong>' + escHtml(t('feedbackCriticism') || 'Criticism') + ':</strong> ' + escHtml(fb.criticism) + '</div>');
+  }
+  if (fb.better_alternative) {
+    parts.push('<div class="better-alt" dir="auto"><strong>' + escHtml(t('feedbackBetterAlternative') || 'Better Alternative') + ':</strong> ' + escHtml(fb.better_alternative) + '</div>');
+  }
+  if (fb.strengths) {
+    var s = fb.strengths;
+    if (Array.isArray(s)) {
+      parts.push('<div dir="auto"><strong>' + escHtml(t('feedbackStrengths') || 'Strengths') + ':</strong><ul style="margin:4px 0 8px 16px">' + s.map(function(item) { return '<li>' + escHtml(item) + '</li>'; }).join('') + '</ul></div>');
+    } else {
+      parts.push('<div dir="auto"><strong>' + escHtml(t('feedbackStrengths') || 'Strengths') + ':</strong> ' + escHtml(String(s)) + '</div>');
+    }
+  }
+  if (fb.improvements) {
+    var imp = fb.improvements;
+    if (Array.isArray(imp)) {
+      parts.push('<div dir="auto"><strong>' + escHtml(t('feedbackImprovements') || 'Improvements') + ':</strong><ul style="margin:4px 0 8px 16px">' + imp.map(function(item) { return '<li>' + escHtml(item) + '</li>'; }).join('') + '</ul></div>');
+    } else {
+      parts.push('<div dir="auto"><strong>' + escHtml(t('feedbackImprovements') || 'Improvements') + ':</strong> ' + escHtml(String(imp)) + '</div>');
+    }
+  }
+  // If no known fields matched, render remaining keys (avoid raw JSON dump)
+  if (parts.length === 0) {
+    var keys = Object.keys(fb);
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i], v = fb[k];
+      if (v !== null && v !== undefined && v !== '') {
+        var label = k.replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        parts.push('<div dir="auto"><strong>' + escHtml(label) + ':</strong> ' + escHtml(typeof v === 'object' ? JSON.stringify(v) : String(v)) + '</div>');
+      }
+    }
+  }
+  return parts.join('');
+}
+
+// Brief text-only version for summary table cells
+function formatFeedbackBrief(fb) {
+  if (!fb) return '';
+  if (typeof fb === 'string') {
+    try { fb = JSON.parse(fb); } catch(e) { return escHtml(fb); }
+  }
+  if (typeof fb !== 'object' || fb === null) return escHtml(String(fb));
+  if (fb.message) return escHtml(fb.message);
+  if (fb.criticism) return escHtml(fb.criticism);
+  // Fallback: join all string values
+  var texts = [];
+  var keys = Object.keys(fb);
+  for (var i = 0; i < keys.length; i++) {
+    var v = fb[keys[i]];
+    if (typeof v === 'string' && v && keys[i] !== 'grade' && keys[i] !== 'html') texts.push(v);
+  }
+  return escHtml(texts.join(' '));
 }
 
 function setStepper(phase, state) {
@@ -363,22 +444,131 @@ function getOESections(containerId) {
   if (!container) return [];
   const sections = [];
   container.querySelectorAll('.section-item').forEach(item => {
-    const nameInput = item.querySelector('.section-header input');
+    const typeSelect = item.querySelector('.section-header select');
     const textarea = item.querySelector('.section-body textarea');
-    if (nameInput && textarea) {
-      sections.push({ name: nameInput.value, text: textarea.value });
+    if (typeSelect && textarea) {
+      sections.push({ type: typeSelect.value, name: typeSelect.options[typeSelect.selectedIndex].text, text: textarea.value });
+    } else {
+      // Fallback for judging/steering sections (still use text input)
+      const nameInput = item.querySelector('.section-header input');
+      if (nameInput && textarea) {
+        sections.push({ name: nameInput.value, text: textarea.value });
+      }
     }
   });
   return sections;
 }
 
-function addSection(listId) {
+function sectionItemHtml(mode, placeholderText) {
+  // mode: 'framing' → type dropdown, 'judging'/'steering' → text input
+  var header;
+  if (mode === 'framing') {
+    var problemLabel = t('problemRefinement') || 'Problem Definition';
+    var aiTaskLabel = t('aiTaskRefinement') || 'AI Task Instruction';
+    var problemTip = t('tooltip_problemRefinement') || 'Defines the problem itself: inputs, outputs, constraints, assumptions, context, or evaluation criteria.';
+    var aiTaskTip = t('tooltip_aiTaskRefinement') || 'A direct instruction to the AI: list edge cases, compare alternatives, explain trade-offs, or structure the answer.';
+    header = '<select class="section-type-select">'
+      + '<option value="problem" title="' + problemTip + '">📐 ' + problemLabel + '</option>'
+      + '<option value="ai-task" title="' + aiTaskTip + '">🤖 ' + aiTaskLabel + '</option>'
+      + '</select>';
+  } else {
+    var ph = mode === 'judging' ? (t('issueTitle') || 'Issue title') : (t('correctionTitle') || 'Correction title');
+    header = '<input type="text" placeholder="' + ph + '">';
+  }
+  var textPh = placeholderText || (t('describeRefinement') || 'Describe your refinement...');
+  return '<div class="section-item"><div class="section-header">' + header
+    + '<button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div>'
+    + '<div class="section-body"><textarea placeholder="' + textPh + '"></textarea></div></div>';
+}
+
+function addSection(listId, mode) {
   const list = el(listId);
   if (!list) return;
   const item = document.createElement('div');
   item.className = 'section-item';
-  item.innerHTML = '<div class="section-header"><input type="text" placeholder="Section title"><button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div><div class="section-body"><textarea placeholder="Describe your refinement..."></textarea></div>';
-  list.appendChild(item);
+  var m = mode || (listId.indexOf('framing') >= 0 ? 'framing' : listId.indexOf('judging') >= 0 ? 'judging' : 'steering');
+  item.innerHTML = sectionItemHtml(m).replace('<div class="section-item">', '').replace(/<\/div>$/, '');
+  // Fix: innerHTML of the div already has the content, just set it directly
+  var temp = document.createElement('div');
+  temp.innerHTML = sectionItemHtml(m);
+  var newItem = temp.firstElementChild;
+  list.appendChild(newItem);
+}
+
+// ── AI Suggest button HTML (sparkle icon) ──
+function suggestBtnHtml(phase, listId, cycleNum) {
+  const label = t('suggestWithAI') || 'Suggest';
+  const tip = t('suggestTooltip') || 'Let AI suggest a response to help you get started.';
+  const args = cycleNum !== undefined ? "'" + phase + "','" + listId + "'," + cycleNum : "'" + phase + "','" + listId + "'";
+  return '<button class="btn-suggest" onclick="suggestAI(' + args + ')" data-tooltip="' + tip + '">'
+    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px">'
+    + '<polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>'
+    + '</svg>'
+    + ' ' + label + '</button>';
+}
+
+// ── AI Suggest handler ──
+async function suggestAI(phase, listId, cycleNum) {
+  const btn = event.currentTarget;
+  const origHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-sm"></span> ' + (t('aiSuggesting') || 'AI is thinking...');
+
+  try {
+    const res = await API.post('/runs/' + runState.runId + '/suggest', {
+      phase: phase,
+      cycleNumber: cycleNum || 0,
+    });
+
+    const suggestions = res.suggestions || [];
+    if (suggestions.length === 0) {
+      btn.innerHTML = origHtml;
+      btn.disabled = false;
+      return;
+    }
+
+    // Populate the section list with suggestions
+    const list = el(listId);
+    if (list) {
+      // Clear empty sections first
+      list.querySelectorAll('.section-item').forEach(function(item) {
+        const txt = item.querySelector('textarea');
+        const title = item.querySelector('input');
+        if (txt && !txt.value.trim() && title && !title.value.trim()) {
+          item.remove();
+        }
+      });
+      // Add suggested sections
+      suggestions.forEach(function(s) {
+        const item = document.createElement('div');
+        item.className = 'section-item';
+        // For framing phase, use type dropdown; for others, use text input
+        if (phase === 'framing') {
+          var problemLabel = t('problemRefinement') || 'Problem Definition';
+          var aiTaskLabel = t('aiTaskRefinement') || 'AI Task Instruction';
+          var problemTip = t('tooltip_problemRefinement') || '';
+          var aiTaskTip = t('tooltip_aiTaskRefinement') || '';
+          var selectedType = (s.type === 'ai-task') ? 'ai-task' : 'problem';
+          item.innerHTML = '<div class="section-header">'
+            + '<select class="section-type-select">'
+            + '<option value="problem" title="' + escHtml(problemTip) + '"' + (selectedType === 'problem' ? ' selected' : '') + '>&#x1F4D0; ' + escHtml(problemLabel) + '</option>'
+            + '<option value="ai-task" title="' + escHtml(aiTaskTip) + '"' + (selectedType === 'ai-task' ? ' selected' : '') + '>&#x1F916; ' + escHtml(aiTaskLabel) + '</option>'
+            + '</select>'
+            + '<button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div>'
+            + '<div class="section-body"><textarea>' + escHtml(s.text || s.content || '') + '</textarea></div>';
+        } else {
+          item.innerHTML = '<div class="section-header"><input type="text" value="' + escHtml(s.title || s.name || '') + '"><button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div>'
+            + '<div class="section-body"><textarea>' + escHtml(s.text || s.content || '') + '</textarea></div>';
+        }
+        list.appendChild(item);
+      });
+    }
+  } catch (err) {
+    console.warn('AI suggest failed:', err);
+  }
+
+  btn.innerHTML = origHtml;
+  btn.disabled = false;
 }
 
 function updateSummary(opts) {
@@ -399,7 +589,7 @@ function updateSummary(opts) {
     if (log) {
       const d = document.createElement('div');
       d.className = 'cycle-log-entry sim-reveal';
-      d.innerHTML = '<div class="cycle-log-label">' + escHtml(opts.entry.label) + '</div><div>' + escHtml(opts.entry.text) + '</div>';
+      d.innerHTML = '<div class="cycle-log-label">' + escHtml(opts.entry.label) + '</div><div dir="auto">' + escHtml(opts.entry.text) + '</div>';
       log.appendChild(d);
     }
   }
@@ -591,25 +781,31 @@ function renderFramingPhase() {
   h += '<h3 style="margin-bottom:12px"><span style="color:var(--primary)">' + t('phase1') + ' (' + (isOE ? t('openEnded') : t('multipleChoice')) + ')</span></h3>';
 
   // Raw problem
-  h += '<div class="problem-panel"><h4>' + t('rawProblemStatement') + ' <span class="help-icon" data-tooltip="This is the AI-generated problem statement. Read it carefully to understand the context before framing your approach.">?</span></h4><p>' + escHtml(runState.rawProblem) + '</p></div>';
+  h += '<div class="problem-panel"><h4>' + t('rawProblemStatement') + ' <span class="help-icon" data-tooltip="' + (t('tooltip_rawProblem') || 'WHY: Real-world problems are rarely presented in a clean, solvable form. Learning to recognize what is missing or ambiguous is the first step in effective AI collaboration. WHAT: This is a raw, intentionally incomplete problem generated from your course material. It contains gaps, unstated assumptions, and ambiguities that you must address before the AI can produce a useful solution. HOW: Read the problem carefully. Ask yourself: What information is missing? What terms are vague? What assumptions are being made?') + '">?</span></h4><p dir="auto">' + escHtml(runState.rawProblem) + '</p></div>';
+
+  // Framing task instruction
+  h += '<div class="alert alert-info" style="background:#e3f2fd;border:1px solid #90caf9;border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;font-size:14px;line-height:1.6;color:#1565c0;">';
+  h += '<span data-t="framingTaskInstruction">' + (t('framingTaskInstruction') || '\uD83C\uDFAF <strong>Your task:</strong> Read the problem carefully. It\u2019s intentionally vague \u2014 identify what\u2019s missing, unclear, or assumed. Select the refinements that would make this problem well-defined.') + '</span>';
+  h += '</div>';
 
   // Framing input area
   h += '<div id="framing-input">';
 
   if (isOE) {
-    h += '<h4 style="font-size:14px;margin-bottom:8px;color:var(--teal)">' + t('refinementSections') + ' <span class="help-icon" data-tooltip="Add sections to refine and restructure the problem. Each section should address a specific aspect — constraints, variables, sub-problems, or assumptions.">?</span></h4>';
+    h += '<h4 style="font-size:14px;margin-bottom:8px;color:var(--teal)">' + t('refinementSections') + ' <span class="help-icon" data-tooltip="' + (t('tooltip_refinement') || 'WHY: Initial problem statements are often incomplete or ambiguous. Refinements reduce uncertainty and help the AI produce accurate, testable outputs. WHAT: Refinements make the task more precise — defining inputs, constraints, assumptions, or adding explicit requests to the AI such as listing edge cases or comparing alternatives. HOW: Look for what is missing or underspecified. Add details that reduce ambiguity, guide the solution process, or improve the output.') + '">?</span></h4>';
     h += '<div class="section-list" id="framing-sections">';
-    h += '<div class="section-item"><div class="section-header"><input type="text" placeholder="' + (t('sectionTitle') || 'Section title') + '"><button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div><div class="section-body"><textarea placeholder="' + (t('describeRefinement') || 'Describe your refinement...') + '"></textarea></div></div>';
+    h += sectionItemHtml('framing');
     h += '</div>';
-    h += '<button class="add-section-btn" onclick="addSection(\'framing-sections\')">+ ' + t('addRefinementSection') + '</button>';
+    h += '<button class="add-section-btn" onclick="addSection(\'framing-sections\',\'framing\')">+ ' + t('addRefinementSection') + '</button>';
+    h += suggestBtnHtml('framing', 'framing-sections');
   } else {
     // MC options
     if (runState.framingOptions && runState.framingOptions.length > 0) {
-      h += '<p class="text-sm text-muted mb-8"><strong>' + t('selectRefinements') + '</strong></p>';
+      h += '<p class="text-sm text-muted mb-8"><strong>' + t('selectRefinements') + '</strong> <span class="help-icon" data-tooltip="' + (t('tooltip_selectRefinements') || 'WHY: Selecting the right refinements reduces uncertainty and helps the AI produce accurate outputs. WHAT: Each option is a single refinement — defining the problem (inputs, constraints, assumptions) or requesting something from the AI (list edge cases, compare alternatives). Select all that should be applied. HOW: Does it address a genuine gap? Does it add useful guidance? Avoid over-specification or irrelevant constraints.') + '">?</span></p>';
       runState.framingOptions.forEach(function(opt) {
         h += '<div class="mc-option" onclick="toggleMC(this)" data-letter="' + escHtml(opt.letter) + '">';
         h += '<div class="mc-check">&#10003;</div>';
-        h += '<div><div class="mc-label"><strong>(' + escHtml(opt.letter) + ')</strong> ' + escHtml(opt.text) + '</div></div>';
+        h += '<div><div class="mc-label" dir="auto"><strong>(' + escHtml(opt.letter) + ')</strong> ' + escHtml(opt.text) + '</div></div>';
         h += '</div>';
       });
     } else {
@@ -629,6 +825,7 @@ function renderFramingPhase() {
   h += '<div id="framing-feedback" style="display:none"></div>';
 
   el('scenario-content').innerHTML = h;
+  if (typeof reinitTooltips === 'function') reinitTooltips();
 }
 
 // ================================================================
@@ -751,14 +948,15 @@ function renderPhase2Initial() {
   // Right: Summary panel
   h += '<div class="summary-panel"><div class="card">';
   h += '<h3 style="margin-bottom:12px;font-size:15px">' + t('sessionSummary') + '</h3>';
-  h += '<div class="summary-section"><h5>' + t('rawProblem') + '</h5><div class="summary-raw" id="summary-raw">' + escHtml(runState.rawProblem).slice(0, 200) + '</div></div>';
-  h += '<div class="summary-section" id="summary-sol-section"><h5>' + t('currentAiSolution') + '</h5><div class="summary-solution" id="summary-solution">' + escHtml(typeof runState.aiSolution === 'string' ? runState.aiSolution.slice(0, 200) : '') + '</div></div>';
+  h += '<div class="summary-section"><h5>' + t('rawProblem') + '</h5><div class="summary-raw" id="summary-raw" dir="auto">' + escHtml(runState.rawProblem).slice(0, 200) + '</div></div>';
+  h += '<div class="summary-section" id="summary-sol-section"><h5>' + t('currentAiSolution') + '</h5><div class="summary-solution" id="summary-solution" dir="auto">' + escHtml(typeof runState.aiSolution === 'string' ? runState.aiSolution.slice(0, 200) : '') + '</div></div>';
   h += '<div class="summary-section" id="summary-log-section" style="display:none"><h5>' + t('steeringHistory') + '</h5><div class="cycle-log" id="summary-log"></div></div>';
   h += '</div></div>';
 
   h += '</div>'; // end run-layout
 
   el('scenario-content').innerHTML = h;
+  if (typeof reinitTooltips === 'function') reinitTooltips();
 
   // Render the first judging cycle
   renderJudgingCycle(runState.currentCycle);
@@ -800,7 +998,12 @@ function renderJudgingCycle(cycleNum) {
   h += '<div class="cycle-body">';
 
   // Judging substep
-  h += '<span class="substep-label substep-judge">' + t('judgingSubstep') + ': ' + (isOE ? t('describeIssues') : t('selectIssues')) + '</span>';
+  h += '<span class="substep-label substep-judge">' + t('judgingSubstep') + ': ' + (isOE ? t('describeIssues') : t('selectIssues')) + ' <span class="help-icon" data-tooltip="' + (t('tooltip_judging') || 'WHY: AI solutions often appear correct but contain subtle errors or oversimplifications. Judging builds your ability to critically evaluate AI output. WHAT: Review the AI solution to identify mistakes, logical gaps, missing edge cases, or incorrect assumptions. Flag specific issues that need correction. HOW: Compare against problem requirements and your domain knowledge. Check for calculation errors, flawed reasoning, or incomplete coverage. Be specific — describe each issue clearly.') + '">?</span></span>';
+
+  // Judging task instruction
+  h += '<div class="alert alert-info" style="background:#e3f2fd;border:1px solid #90caf9;border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;font-size:14px;line-height:1.6;color:#1565c0;">';
+  h += '<span data-t="judgingTaskInstruction">' + (t('judgingTaskInstruction') || '\uD83D\uDD0D <strong>Your task:</strong> The AI\u2019s solution looks reasonable but contains subtle errors. Look for incorrect assumptions, missing edge cases, logical flaws, and oversimplifications. Select ALL issues you can find.') + '</span>';
+  h += '</div>';
 
   h += '<div id="judging-area-' + cycleNum + '">';
 
@@ -810,17 +1013,21 @@ function renderJudgingCycle(cycleNum) {
     h += '<div class="section-item"><div class="section-header"><input type="text" placeholder="' + (t('issueTitle') || 'Issue title') + '"><button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div><div class="section-body"><textarea placeholder="' + (t('describeIssue') || 'Describe the issue...') + '"></textarea></div></div>';
     h += '</div>';
     h += '<button class="add-section-btn" onclick="addSection(\'judging-sections-' + cycleNum + '\')">+ ' + (t('addSection') || 'Add Section') + '</button>';
+    h += suggestBtnHtml('judging', 'judging-sections-' + cycleNum, cycleNum);
   } else {
     h += '<div class="instructions-bar" style="background:#fff8e1;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>' + t('hint') + ':</strong> ' + t('selectIssues') + '</div>';
     if (runState.judgingOptions && runState.judgingOptions.length > 0) {
       runState.judgingOptions.forEach(function(opt) {
         h += '<div class="mc-option" onclick="toggleMC(this)" data-letter="' + escHtml(opt.letter) + '">';
         h += '<div class="mc-check">&#10003;</div>';
-        h += '<div><div class="mc-label"><strong>(' + escHtml(opt.letter) + ')</strong> ' + escHtml(opt.text) + '</div></div>';
+        h += '<div><div class="mc-label" dir="auto"><strong>(' + escHtml(opt.letter) + ')</strong> ' + escHtml(opt.text) + '</div></div>';
         h += '</div>';
       });
     } else {
-      h += '<p class="text-muted">' + (t('noJudgingOptions') || 'No judging options available. Use the "Solution is Complete" button if the solution looks correct.') + '</p>';
+      h += '<div class="instructions-bar" style="background:#fff3e0;color:#e65100;font-size:12px;padding:8px 12px;margin-bottom:12px">';
+      h += '<strong>&#x26A0;&#xFE0F;</strong> ' + (t('noJudgingOptions') || 'No judging options were generated. Try regenerating or mark the solution as complete.');
+      h += ' <button class="btn btn-sm" style="margin-left:8px;padding:4px 12px;font-size:12px" onclick="regenerateJudgingOptions(' + cycleNum + ')">' + (t('retry') || '&#x1F504; Retry') + '</button>';
+      h += '</div>';
     }
   }
 
@@ -844,7 +1051,25 @@ function renderJudgingCycle(cycleNum) {
   h += '</div>'; // end cycle
 
   el('active-cycle').innerHTML = h;
+  if (typeof reinitTooltips === 'function') reinitTooltips();
   el('active-cycle').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+async function regenerateJudgingOptions(cycleNum) {
+  showLLM(t('generateJudging') || 'Generating judging options...');
+  try {
+    const data = await API.post('/runs/' + runState.runId + '/regenerate-judging', { cycleNumber: cycleNum });
+    hideLLM();
+    if (data.judgingOptions && data.judgingOptions.length > 0) {
+      runState.judgingOptions = data.judgingOptions;
+      renderJudgingCycle(cycleNum);
+    } else {
+      showError(t('noJudgingOptions') || 'Failed to generate judging options. Please try again.');
+    }
+  } catch (err) {
+    hideLLM();
+    showError(err.message || 'Failed to regenerate judging options');
+  }
 }
 
 // ================================================================
@@ -892,10 +1117,9 @@ async function submitJudging(cycleNum) {
     });
 
     if (isDone) {
-      // User marked solution as complete — still allow optional steering before finalizing
-      runState.steeringOptions = data.steeringOptions;
-      runState.markedComplete = true;
-      renderSteeringStep(cycleNum, true);
+      // User marked solution as complete — skip steering and finalize
+      await completeRun();
+      return;
     } else {
       // Show steering
       runState.steeringOptions = data.steeringOptions;
@@ -918,11 +1142,16 @@ function renderSteeringStep(cycleNum, showCompleteOption) {
 
   let h = '';
   h += '<hr class="divider-line">';
-  h += '<span class="substep-label substep-steer">' + t('steeringSubstep') + ': ' + (isOE ? t('writeCorrections') : t('selectCorrections')) + '</span>';
+  h += '<span class="substep-label substep-steer">' + t('steeringSubstep') + ': ' + (isOE ? t('writeCorrections') : t('selectCorrections')) + ' <span class="help-icon" data-tooltip="' + (t('tooltip_steering') || 'WHY: Identifying errors is only half the skill. Steering teaches you to guide AI toward better outputs with precise, actionable corrections. WHAT: Write specific corrections that address the issues you identified. The AI will regenerate an improved solution based on your guidance. HOW: Be precise and constructive. Instead of saying this is wrong, explain the correct approach and why. Provide concrete directions: correct a formula, add a constraint, or request a different method.') + '">?</span></span>';
 
   if (showCompleteOption) {
     h += '<div class="instructions-bar" style="background:#e8f5e9;color:#2e7d32;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>' + (t('hint') || 'Hint') + ':</strong> ' + (t('markedCompleteSteeringHint') || 'You marked the solution as complete. You may still submit optional steering corrections, or skip to finalize.') + '</div>';
   }
+
+  // Steering task instruction
+  h += '<div class="alert alert-info" style="background:#e3f2fd;border:1px solid #90caf9;border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;font-size:14px;line-height:1.6;color:#1565c0;">';
+  h += '<span data-t="steeringTaskInstruction">' + (t('steeringTaskInstruction') || '\uD83C\uDFAE <strong>Your task:</strong> Now guide the AI to fix the issues you found. Choose specific, actionable corrections \u2014 not vague instructions like \u201Cmake it better.\u201D') + '</span>';
+  h += '</div>';
 
   h += '<div id="steering-input-' + cycleNum + '">';
 
@@ -932,13 +1161,14 @@ function renderSteeringStep(cycleNum, showCompleteOption) {
     h += '<div class="section-item"><div class="section-header"><input type="text" placeholder="' + (t('correctionTitle') || 'Correction title') + '"><button class="remove-btn" onclick="this.closest(\'.section-item\').remove()">&times;</button></div><div class="section-body"><textarea placeholder="' + (t('describeCorrection') || 'Describe the correction...') + '"></textarea></div></div>';
     h += '</div>';
     h += '<button class="add-section-btn" onclick="addSection(\'steering-sections-' + cycleNum + '\')">+ ' + (t('addSection') || 'Add Section') + '</button>';
+    h += suggestBtnHtml('steering', 'steering-sections-' + cycleNum, cycleNum);
   } else {
     h += '<div class="instructions-bar" style="background:#e3f2fd;color:#0d47a1;font-size:12px;padding:8px 12px;margin-bottom:12px"><strong>' + t('hint') + ':</strong> ' + t('selectCorrections') + '</div>';
     if (runState.steeringOptions && runState.steeringOptions.length > 0) {
       runState.steeringOptions.forEach(function(opt) {
         h += '<div class="mc-option" onclick="toggleMC(this)" data-letter="' + escHtml(opt.letter) + '">';
         h += '<div class="mc-check">&#10003;</div>';
-        h += '<div><div class="mc-label"><strong>(' + escHtml(opt.letter) + ')</strong> ' + escHtml(opt.text) + '</div></div>';
+        h += '<div><div class="mc-label" dir="auto"><strong>(' + escHtml(opt.letter) + ')</strong> ' + escHtml(opt.text) + '</div></div>';
         h += '</div>';
       });
     } else {
@@ -957,6 +1187,7 @@ function renderSteeringStep(cycleNum, showCompleteOption) {
 
   const area = el('steering-area-' + cycleNum);
   area.innerHTML = h;
+  if (typeof reinitTooltips === 'function') reinitTooltips();
   reveal('steering-area-' + cycleNum);
 }
 
@@ -1095,10 +1326,11 @@ function renderCompletion(grades) {
   let h = '';
   h += '<div class="card" style="border-left:4px solid var(--success);margin-top:24px">';
   h += '<h3 style="color:var(--success);margin-bottom:16px">&#10003; ' + t('challengeComplete') + '</h3>';
-  h += '<table style="font-size:14px;margin-bottom:16px"><thead><tr><th>' + t('skill') + '</th><th>' + t('grade') + '</th></tr></thead><tbody>';
-  h += '<tr><td>' + t('framing') + '</td><td><span class="grade grade-' + g.framing + '">' + escHtml(g.framing) + '</span></td></tr>';
-  h += '<tr><td>' + t('judging') + '</td><td><span class="grade grade-' + g.judging + '">' + escHtml(g.judging) + '</span></td></tr>';
-  h += '<tr><td>' + t('steering') + '</td><td><span class="grade grade-' + g.steering + '">' + escHtml(g.steering) + '</span></td></tr>';
+  var fb = g.feedback || {};
+  h += '<table style="font-size:14px;margin-bottom:16px;width:100%"><thead><tr><th>' + t('skill') + '</th><th>' + t('grade') + '</th><th>' + (t('feedback') || 'Feedback') + '</th></tr></thead><tbody>';
+  h += '<tr><td>' + t('framing') + '</td><td><span class="grade grade-' + g.framing + '">' + escHtml(g.framing) + '</span></td><td dir="auto" style="font-size:12px;color:var(--text-secondary);max-width:300px">' + formatFeedbackBrief(fb.framing) + '</td></tr>';
+  h += '<tr><td>' + t('judging') + '</td><td><span class="grade grade-' + g.judging + '">' + escHtml(g.judging) + '</span></td><td dir="auto" style="font-size:12px;color:var(--text-secondary);max-width:300px">' + formatFeedbackBrief(fb.judging) + '</td></tr>';
+  h += '<tr><td>' + t('steering') + '</td><td><span class="grade grade-' + g.steering + '">' + escHtml(g.steering) + '</span></td><td dir="auto" style="font-size:12px;color:var(--text-secondary);max-width:300px">' + formatFeedbackBrief(fb.steering) + '</td></tr>';
   h += '</tbody></table>';
 
   // Assessment mode: show deferred feedback from all phases

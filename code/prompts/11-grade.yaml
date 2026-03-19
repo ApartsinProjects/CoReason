@@ -13,6 +13,8 @@ description: >
   of any specific rubric — it defines the grading scale universally.
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are a grading system that assigns qualitative grades on a 3-point scale.
   You receive per-criterion evaluation scores and must produce a final grade.
 

@@ -26,9 +26,11 @@
     .divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--text-secondary); font-size: 13px; }
     .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     .role-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-    .role-option { padding: 16px; border: 2px solid var(--border); border-radius: var(--radius); text-align: center; cursor: pointer; transition: all .15s; }
+    .role-option { padding: 16px; border: 2px solid var(--border); border-radius: var(--radius); text-align: center; cursor: pointer; transition: all .15s; display: block; }
     .role-option:hover { border-color: var(--primary-light); }
+    .role-option:focus-within { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(26,35,126,.2); }
     .role-option.selected { border-color: var(--primary); background: #e8eaf6; }
+    .role-option input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
     .role-option .role-icon { font-size: 28px; margin-bottom: 6px; }
     .role-option .role-name { font-weight: 600; font-size: 14px; }
     .role-option .role-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
@@ -38,7 +40,11 @@
   </style>
 </head>
 <body>
-  <div class="signup-container">
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <div class="signup-container" id="main-content">
+    <div style="text-align:right; margin-bottom:8px;">
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+    </div>
     <div class="signup-logo">
       <img src="assets/logo.png" alt="AI CoReasoning Lab">
       <h1>AI CoReasoning Lab</h1>
@@ -68,11 +74,11 @@
         </div>
         <div class="form-group">
           <label for="signupEmail" data-t="email">Email</label>
-          <input type="email" id="signupEmail" class="form-control" placeholder="you@university.edu" required>
+          <input type="email" id="signupEmail" class="form-control" placeholder="you@university.edu" required autocomplete="email">
         </div>
         <div class="form-group">
           <label for="signupPassword" data-t="password">Password</label>
-          <input type="password" id="signupPassword" class="form-control" data-t-placeholder="createPassword" placeholder="Create a password" required minlength="8">
+          <input type="password" id="signupPassword" class="form-control" data-t-placeholder="createPassword" placeholder="Create a password" required minlength="8" autocomplete="new-password">
         </div>
 
         <!-- Institution Selection -->
@@ -86,17 +92,19 @@
         <!-- Role Selection -->
         <div class="form-group">
           <label data-t="role">I am a...</label>
-          <div class="role-selector">
-            <div class="role-option selected" data-role="student" onclick="selectRole(this)">
+          <div class="role-selector" role="radiogroup" aria-label="Select your role">
+            <label class="role-option selected" data-role="student">
+              <input type="radio" name="role" value="student" checked>
               <div class="role-icon">&#127891;</div>
               <div class="role-name" data-t="student">Student</div>
               <div class="role-desc">Take challenges &amp; practice</div>
-            </div>
-            <div class="role-option" data-role="instructor" onclick="selectRole(this)">
+            </label>
+            <label class="role-option" data-role="instructor">
+              <input type="radio" name="role" value="instructor">
               <div class="role-icon">&#128218;</div>
               <div class="role-name" data-t="instructor">Instructor</div>
               <div class="role-desc">Create &amp; publish challenges</div>
-            </div>
+            </label>
           </div>
           <div class="text-sm text-muted" style="text-align:center;" data-t="cannotBeChanged">Role cannot be changed after registration</div>
         </div>
@@ -113,13 +121,18 @@
   <script>
     let selectedRole = 'student';
 
-    function selectRole(el) {
-      document.querySelectorAll('.role-option').forEach(function(opt) {
-        opt.classList.remove('selected');
+    // Role selection via radio buttons styled as cards
+    document.querySelectorAll('input[name="role"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        document.querySelectorAll('.role-option').forEach(function(opt) {
+          opt.classList.remove('selected');
+        });
+        if (radio.checked) {
+          radio.closest('.role-option').classList.add('selected');
+          selectedRole = radio.value;
+        }
       });
-      el.classList.add('selected');
-      selectedRole = el.getAttribute('data-role');
-    }
+    });
 
     // Load institutions from API
     async function loadInstitutions() {
@@ -156,26 +169,31 @@
       const institutionId = document.getElementById('signupInstitution').value;
 
       if (!name || !email || !password) {
-        errorMsg.textContent = 'Please fill in all required fields.';
+        errorMsg.textContent = t('fillAllFields') || 'Please fill in all required fields.';
         errorMsg.style.display = 'block';
+        // Focus first empty field for accessibility
+        if (!name) document.getElementById('signupName').focus();
+        else if (!email) document.getElementById('signupEmail').focus();
+        else document.getElementById('signupPassword').focus();
         return;
       }
 
       if (!institutionId) {
-        errorMsg.textContent = 'Please select your institution.';
+        errorMsg.textContent = t('selectInstitution') || 'Please select your institution.';
         errorMsg.style.display = 'block';
+        document.getElementById('signupInstitution').focus();
         return;
       }
 
       signupBtn.disabled = true;
-      signupBtn.textContent = 'Creating account...';
+      signupBtn.textContent = t('creatingAccount') || 'Creating account...';
 
       try {
         const data = await API.post('/auth/register', {
           email,
           password,
           name,
-          role: selectedRole,
+          role: document.querySelector('input[name="role"]:checked')?.value || selectedRole,
           institutionId
         });
 
@@ -188,8 +206,9 @@
       } catch (err) {
         errorMsg.textContent = err.message || 'Registration failed. Please try again.';
         errorMsg.style.display = 'block';
+      } finally {
         signupBtn.disabled = false;
-        signupBtn.textContent = 'Create Account';
+        signupBtn.textContent = t('signUp') || 'Create Account';
       }
     });
   </script>

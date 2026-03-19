@@ -61,6 +61,16 @@
     .detail-mini-card .mini-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
     .detail-mini-card .mini-feedback { font-size: 13px; color: var(--text); margin-top: 8px; text-align: left; }
 
+    /* Improvement Recommendations */
+    .reco-card { padding: 24px; }
+    .reco-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+    .reco-item { padding: 14px 16px; border-radius: var(--radius); margin-bottom: 10px; font-size: 14px; line-height: 1.6; }
+    .reco-item.reco-warning { background: #fff3e0; border-left: 4px solid var(--warning); color: #6d4c00; }
+    .reco-item.reco-info { background: #e8eaf6; border-left: 4px solid var(--primary); color: #1a237e; }
+    .reco-item.reco-success { background: #e8f5e9; border-left: 4px solid var(--success); color: #1b5e20; }
+    .reco-item strong { display: block; margin-bottom: 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .3px; }
+    .reco-empty { text-align: center; padding: 20px; color: var(--text-secondary); font-size: 14px; }
+
     .loading-state { text-align: center; padding: 48px 20px; color: var(--text-secondary); }
     .loading-state p { margin-top: 8px; font-size: 14px; }
     .error-state { text-align: center; padding: 48px 20px; color: var(--danger); }
@@ -80,6 +90,7 @@
   <script src="js/user-header.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
@@ -88,8 +99,8 @@
       <a href="student-analytics.html" class="active" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
-      <a href="#" onclick="CoReasonTour.restart(document.body.dataset.role||'student');return false;" data-t="startGuide" style="font-size:12px;color:var(--primary);text-decoration:none;opacity:.7;margin-right:4px;" title="Start Guide">Guide</a>
-      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <a href="interactive-guide.html" class="guide-link" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
       <span id="userName">&mdash;</span>
@@ -98,7 +109,7 @@
     </div>
   </header>
 
-  <main class="page">
+  <main class="page" id="main-content">
     <div class="page-header">
       <h1 data-t="myResults" data-tooltip="analyticsOverview">My Results</h1>
       <p data-t="myResultsDesc">Visual summary of your performance across all challenge runs</p>
@@ -164,6 +175,12 @@
       </div>
     </div>
 
+    <!-- Improvement Recommendations -->
+    <div class="card reco-card" id="recoSection" style="display:none;">
+      <h3>&#128161; <span data-t="improvementRecommendations">Improvement Recommendations</span></h3>
+      <div id="recoContent"></div>
+    </div>
+
     <!-- Completed Challenge Runs Table -->
     <div class="card">
       <h3 style="margin-bottom:16px;" data-t="completedChallengeRuns" data-tooltip="coReasoningScore">Completed Challenge Runs</h3>
@@ -173,11 +190,11 @@
             <tr>
               <th data-t="challenge">Challenge <span class="help-icon" data-tooltip="The name of the challenge you completed.">?</span></th>
               <th data-t="course">Course <span class="help-icon" data-tooltip="The course this challenge belongs to.">?</span></th>
-              <th data-t="type">Type <span class="help-icon" data-tooltip="Practice mode shows feedback after each phase. Assessment mode defers feedback until the end.">?</span></th>
-              <th data-t="date">Date <span class="help-icon" data-tooltip="When you completed this challenge run.">?</span></th>
-              <th><span data-t="framing">Framing</span> <span class="help-icon" data-tooltip="Your grade for problem framing — how well you defined the problem scope and approach before seeing the AI solution.">?</span></th>
-              <th><span data-t="judging">Judging</span> <span class="help-icon" data-tooltip="Your grade for judging — how accurately you evaluated the AI solution, identifying strengths, weaknesses, and errors.">?</span></th>
-              <th><span data-t="steering">Steering</span> <span class="help-icon" data-tooltip="Your grade for steering — how effectively you guided the AI to improve its solution through targeted corrections.">?</span></th>
+              <th class="hide-mobile" data-t="type">Type <span class="help-icon" data-tooltip="Practice mode shows feedback after each phase. Assessment mode defers feedback until the end.">?</span></th>
+              <th class="hide-mobile" data-t="date">Date <span class="help-icon" data-tooltip="When you completed this challenge run.">?</span></th>
+              <th><span data-t="framing">Framing</span> <span class="help-icon" data-tooltip="analyticsFramingGrade">?</span></th>
+              <th><span data-t="judging">Judging</span> <span class="help-icon" data-tooltip="analyticsJudgingGrade">?</span></th>
+              <th><span data-t="steering">Steering</span> <span class="help-icon" data-tooltip="analyticsSteeringGrade">?</span></th>
               <th></th>
             </tr>
           </thead>
@@ -261,9 +278,11 @@
       renderTable(filtered);
       renderDistributions(filtered, course, type, grade);
       renderTimeline(filtered);
+      renderRecommendations(filtered);
       updateFilterCount(filtered.length, allRuns.length, course, type, grade);
 
       if (window.translatePage) translatePage();
+      if (window.reinitTooltips) reinitTooltips();
     };
 
     // ── Render table rows ──
@@ -301,10 +320,10 @@
         var cType = (run.challenge_type || 'practice').toLowerCase();
 
         tr.innerHTML =
-          '<td><strong>' + escHtml(run.challenge_title || 'Untitled') + '</strong></td>' +
-          '<td>' + escHtml(run.course_name || '-') + '</td>' +
-          '<td><span class="badge badge-' + cType + '" data-t="' + cType + '">' + capitalize(cType) + '</span></td>' +
-          '<td>' + formatDate(run.completed_at) + '</td>' +
+          '<td dir="auto"><strong>' + escHtml(run.challenge_title || 'Untitled') + '</strong></td>' +
+          '<td dir="auto">' + escHtml(run.course_name || '-') + '</td>' +
+          '<td class="hide-mobile"><span class="badge badge-' + cType + '" data-t="' + cType + '">' + capitalize(cType) + '</span></td>' +
+          '<td class="hide-mobile">' + formatDate(run.completed_at) + '</td>' +
           '<td>' + gradeSpan(f) + '</td>' +
           '<td>' + gradeSpan(j) + '</td>' +
           '<td>' + gradeSpan(s) + '</td>' +
@@ -362,9 +381,13 @@
     function updateDistCard(card, counts, total) {
       if (!card) return;
 
+      // Use the sum of counts as denominator (more accurate than filteredRuns.length
+      // because not every run may have a grade for every skill)
+      var countTotal = (counts.A || 0) + (counts.B || 0) + (counts.C || 0);
+
       // Find most common grade
       var most = '-';
-      if (total > 0) {
+      if (countTotal > 0) {
         most = 'A';
         if (counts.B >= counts.A && counts.B >= counts.C) most = 'B';
         if (counts.C > counts.A && counts.C > counts.B) most = 'C';
@@ -374,17 +397,34 @@
       var circle = card.querySelector('.overall-grade');
       circle.textContent = most;
       circle.className = 'overall-grade' + (most !== '-' ? ' grade-' + most : '');
+      if (most !== '-') {
+        circle.setAttribute('data-tooltip', 'grade' + most);
+      } else {
+        circle.removeAttribute('data-tooltip');
+      }
 
       // Update stacked bar
       var bar = card.querySelector('.stacked-bar');
-      if (total > 0) {
-        var pA = Math.round(counts.A / total * 100);
-        var pB = Math.round(counts.B / total * 100);
-        var pC = Math.round(counts.C / total * 100);
+      if (countTotal > 0) {
+        var cA = counts.A || 0, cB = counts.B || 0, cC = counts.C || 0;
+        var pA = Math.round(cA / countTotal * 100);
+        var pB = Math.round(cB / countTotal * 100);
+        var pC = Math.round(cC / countTotal * 100);
+        // Adjust for rounding so segments always sum to exactly 100%
+        var diff = 100 - pA - pB - pC;
+        if (diff !== 0) {
+          // Apply correction to the largest segment to minimise relative error
+          if (pA >= pB && pA >= pC) pA += diff;
+          else if (pB >= pA && pB >= pC) pB += diff;
+          else pC += diff;
+        }
         bar.innerHTML = '';
         if (pA > 0) bar.innerHTML += '<div class="seg seg-a" style="width:' + pA + '%">' + pA + '%</div>';
         if (pB > 0) bar.innerHTML += '<div class="seg seg-b" style="width:' + pB + '%">' + pB + '%</div>';
         if (pC > 0) bar.innerHTML += '<div class="seg seg-c" style="width:' + pC + '%">' + pC + '%</div>';
+      } else if (countTotal === 0 && total > 0) {
+        // Runs exist but no grades for this skill
+        bar.innerHTML = '<div class="seg" style="width:100%;background:#e0e0e0;color:#999;">&mdash;</div>';
       } else {
         bar.innerHTML = '<div class="seg" style="width:100%;background:#e0e0e0;color:#999;">&mdash;</div>';
       }
@@ -455,10 +495,120 @@
       if (row) row.classList.toggle('open');
     };
 
+    // ── Improvement Recommendations ──
+    function generateRecommendations(runs) {
+      var recommendations = [];
+      if (runs.length < 2) return recommendations;
+
+      // Compute distributions
+      var dist = { framing: {A:0,B:0,C:0}, judging: {A:0,B:0,C:0}, steering: {A:0,B:0,C:0} };
+      runs.forEach(function(run) {
+        var g = run.grades || {};
+        if (g.framing && dist.framing[g.framing] !== undefined) dist.framing[g.framing]++;
+        if (g.judging && dist.judging[g.judging] !== undefined) dist.judging[g.judging]++;
+        if (g.steering && dist.steering[g.steering] !== undefined) dist.steering[g.steering]++;
+      });
+
+      // Identify weakest dimension by a weakness score (most C grades + fewest A grades)
+      var dims = ['framing', 'judging', 'steering'];
+      var weakest = null;
+      var worstScore = -Infinity;
+      dims.forEach(function(dim) {
+        var score = dist[dim].C - dist[dim].A; // higher = weaker
+        if (score > worstScore) { worstScore = score; weakest = dim; }
+      });
+
+      var dimLabel = function(dim) { return t(dim) || capitalize(dim); };
+      var advice = {
+        framing: t('recoFramingAdvice') || "Focus on identifying what's missing in problems. Before submitting, ask yourself: What assumptions am I making? What information is ambiguous? What constraints should I specify?",
+        judging: t('recoJudgingAdvice') || "Practice critical evaluation. When reviewing AI solutions, look for: incorrect assumptions, missing edge cases, logical errors, and oversimplifications. Don't accept the first answer at face value.",
+        steering: t('recoSteeringAdvice') || "Work on giving specific feedback. Instead of 'make it better', try 'fix the edge case where X happens' or 'recalculate Y using Z approach'. Be precise and actionable."
+      };
+
+      // Only show weakness advice if there's a meaningful gap
+      if (worstScore > 0) {
+        recommendations.push({
+          type: 'warning',
+          title: (t('recoNeedsAttention') || '{dim} needs attention').replace('{dim}', dimLabel(weakest)),
+          text: advice[weakest]
+        });
+      }
+
+      // Detect trends over last 5 runs
+      var sorted = runs.slice().sort(function(a, b) {
+        return new Date(a.completed_at || 0) - new Date(b.completed_at || 0);
+      });
+      var recent = sorted.slice(-5);
+      if (recent.length >= 3) {
+        var gradeVal = { A: 3, B: 2, C: 1 };
+        dims.forEach(function(dim) {
+          var grades = [];
+          recent.forEach(function(r) {
+            var g = (r.grades || {})[dim];
+            if (g && gradeVal[g]) grades.push({ letter: g, val: gradeVal[g] });
+          });
+          if (grades.length >= 3) {
+            var first = grades[0];
+            var last = grades[grades.length - 1];
+            if (last.val > first.val) {
+              recommendations.push({
+                type: 'success',
+                title: (t('recoIsImproving') || '{dim} is improving').replace('{dim}', dimLabel(dim)),
+                text: (t('recoImprovingText') || 'Your {dim} has improved from {from} to {to} over your last {count} runs \u2014 keep it up!').replace('{dim}', dimLabel(dim)).replace('{from}', first.letter).replace('{to}', last.letter).replace('{count}', grades.length)
+              });
+            } else if (last.val < first.val && last.val <= 1) {
+              recommendations.push({
+                type: 'info',
+                title: (t('recoTrend') || '{dim} trend').replace('{dim}', dimLabel(dim)),
+                text: (t('recoDippedText') || 'Your {dim} grades have dipped from {from} to {to} recently. Review the feedback on your last few runs to identify patterns.').replace('{dim}', dimLabel(dim)).replace('{from}', first.letter).replace('{to}', last.letter)
+              });
+            }
+          }
+        });
+      }
+
+      // Highlight strongest dimension for encouragement
+      var strongest = null;
+      var bestScore = Infinity;
+      dims.forEach(function(dim) {
+        var score = dist[dim].C - dist[dim].A;
+        if (score < bestScore) { bestScore = score; strongest = dim; }
+      });
+      if (strongest && bestScore < 0 && strongest !== weakest) {
+        recommendations.push({
+          type: 'success',
+          title: (t('recoIsStrength') || '{dim} is your strength').replace('{dim}', dimLabel(strongest)),
+          text: (t('recoStrengthText') || 'You consistently score well on {dim}. Great work \u2014 keep applying the same rigor to your other dimensions!').replace('{dim}', dimLabel(strongest))
+        });
+      }
+
+      return recommendations;
+    }
+
+    function renderRecommendations(runs) {
+      var section = document.getElementById('recoSection');
+      var content = document.getElementById('recoContent');
+      var recos = generateRecommendations(runs);
+
+      if (recos.length === 0) {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = '';
+      content.innerHTML = '';
+      recos.forEach(function(r) {
+        var div = document.createElement('div');
+        div.className = 'reco-item reco-' + r.type;
+        div.innerHTML = '<strong>' + escHtml(r.title) + '</strong>' + escHtml(r.text);
+        content.appendChild(div);
+      });
+    }
+
     // ── Helpers ──
     function gradeSpan(g) {
       if (!g || g === '-') return '<span class="grade">-</span>';
-      return '<span class="grade grade-' + g + '">' + g + '</span>';
+      return '<span class="grade grade-' + g + '" data-tooltip="grade' + g + '">' + g + '</span>';
     }
 
     function detailMiniCard(skill, grade, feedback) {
@@ -486,7 +636,7 @@
       if (!d) return '-';
       try {
         var dt = new Date(d);
-        return dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        return dt.toLocaleDateString(getLang() || undefined, { month: 'short', day: 'numeric', year: 'numeric' });
       } catch (e) { return d; }
     }
   })();

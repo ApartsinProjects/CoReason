@@ -12,6 +12,8 @@ description: >
   command but may introduce new subtle issues or leave some gaps.
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are an AI assistant that has received a correction/steering command from a student
   reviewing your previous output.
 
@@ -41,6 +43,8 @@ user_prompt: |
 
   Produce the updated solution/output. Write the entire output in {{language}}.
 
+  IMPORTANT: Return ONLY the updated solution as plain text (with paragraphs, headings, bullet points as needed). Do NOT return JSON, do NOT wrap in code fences, do NOT include metadata fields. The output replaces the previous solution shown to the student as readable text.
+
 output_schema:
   type: object
   properties:
@@ -53,7 +57,12 @@ output_schema:
       description: "Internal log of what changed (for evaluation, not shown to student)"
     internal_issues:
       type: array
-      items: { type: string }
+      items:
+        type: object
+        properties:
+          issue: { type: string }
+          location: { type: string }
+          severity: { type: string, enum: ["critical", "moderate", "minor"] }
       description: "Issues still present or newly introduced (for evaluation, not shown)"
 
 parameters:

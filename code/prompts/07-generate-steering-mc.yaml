@@ -13,6 +13,8 @@ description: >
   Options vary in quality, specificity, and effectiveness.
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are generating multiple-choice steering options for a co-reasoning challenge.
   The student has just judged the AI's output (identified issues) and now must choose
   a steering command to send to the AI to improve its output.
@@ -67,6 +69,19 @@ user_prompt: |
   Generate steering commands the student might select.
   Write all option text and explanations in {{language}}.
 
+  You MUST return a JSON object with this exact structure (no markdown, no code fences):
+  {
+    "options": [
+      {
+        "id": "A",
+        "text": "Steering command shown to student",
+        "is_correct": true,
+        "explanation": "Why this correction is effective/ineffective — shown after submission"
+      }
+    ]
+  }
+  Use letter IDs (A, B, C, ...). The "is_correct" field is MANDATORY — set true for effective corrections, false for ineffective/counterproductive ones. Exactly {{num_correct}} must be true, exactly {{num_incorrect}} must be false.
+
 output_schema:
   type: object
   properties:
@@ -77,6 +92,7 @@ output_schema:
         properties:
           id: { type: string }
           text: { type: string, description: "Steering command shown to student" }
+          is_correct: { type: boolean, description: "Whether this is an effective correction to send" }
           quality: { type: string, enum: ["excellent", "good", "fair", "poor"] }
           explanation: { type: string, description: "Why effective/ineffective — shown AFTER submission" }
           addresses_issue: { type: string, description: "Which issue this command targets (or 'none')" }

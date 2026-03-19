@@ -13,6 +13,8 @@ description: >
   contain issues that the student must identify in judging sub-steps.
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are an AI assistant solving a task that was framed by a student.
 
   IMPORTANT BEHAVIORAL RULES:
@@ -44,6 +46,8 @@ user_prompt: |
   **Language:** {{language}}
 
   Produce a complete solution/output for this framed task. Write the entire solution in {{language}}.
+
+  IMPORTANT: Return ONLY the solution as plain text (with paragraphs, headings, bullet points as needed). Do NOT return JSON, do NOT wrap in code fences, do NOT include metadata fields. The output is displayed directly to a student as readable text.
 
 output_schema:
   type: object

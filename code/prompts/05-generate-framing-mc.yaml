@@ -13,6 +13,8 @@ description: >
   Includes challenging distractors that probe specific rubric criteria.
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are generating multiple-choice options for a co-reasoning challenge's Framing phase.
   The student is presented with an ill-defined problem and must choose the best way to
   frame it into a well-defined task (by specifying assumptions, filling gaps, etc.).
@@ -54,6 +56,19 @@ user_prompt: |
   Each option should represent a single refinement (assumption, constraint, clarification, or metric) the student might add to the raw problem.
   Write all option text and explanations in {{language}}.
 
+  You MUST return a JSON object with this exact structure (no markdown, no code fences):
+  {
+    "options": [
+      {
+        "id": "A",
+        "text": "Refinement text shown to student",
+        "is_correct": true,
+        "explanation": "Why correct/incorrect — shown after submission"
+      }
+    ]
+  }
+  Use letter IDs (A, B, C, D, E, ...). The "is_correct" field is MANDATORY for every option — set true for correct refinements, false for distractors. Exactly {{num_correct}} must be true, exactly {{num_incorrect}} must be false.
+
 output_schema:
   type: object
   properties:
@@ -64,7 +79,7 @@ output_schema:
         properties:
           id: { type: string }
           text: { type: string, description: "The framing option shown to the student" }
-          is_relevant: { type: boolean, description: "Whether this refinement is appropriate and necessary" }
+          is_correct: { type: boolean, description: "Whether this refinement is appropriate and necessary" }
           quality: { type: string, enum: ["excellent", "good", "fair", "poor"] }
           explanation: { type: string, description: "Why correct/incorrect — shown AFTER submission only" }
           rubric_criteria_targeted: { type: string, description: "Which rubric criterion this tests" }

@@ -23,7 +23,8 @@ const CoReasonTour = (() => {
   // To localize, override CoReasonTour.tourData before starting.
   const TOURS = {
     student: [
-      { target: '.topnav', titleKey: 'tour_welcome', title: 'Welcome to AI CoReasoning Lab!', textKey: 'tour_welcome_text', text: 'This is your learning platform for developing critical AI evaluation skills.', position: 'bottom' },
+      { target: '.topnav', titleKey: 'tour_welcome', title: 'Welcome to AI CoReasoning Lab!', textKey: 'tour_welcome_text', text: 'This is your learning platform for developing critical AI evaluation skills. <a href="what-is-coreasoning.html" style="color:var(--accent,#f9a825);font-weight:600;">Learn more about co-reasoning</a>', position: 'bottom' },
+      { target: '.topnav', titleKey: 'tour_process', title: 'The 3-Phase CoReasoning Process', textKey: 'tour_process_text', text: 'Every challenge follows three phases: <strong>Framing</strong> (refine the problem), <strong>Judging</strong> (find AI errors), and <strong>Steering</strong> (correct the AI). <br><img src="images/coreasoning-flow-mini.svg" alt="Process flow" style="width:100%;margin-top:8px;border-radius:6px;background:#fff;padding:4px;">', position: 'bottom' },
       { target: '.topnav a[href*="challenge-list"]', titleKey: 'tour_challenges', title: 'Your Challenges', textKey: 'tour_challenges_text', text: 'Browse available challenges, filter by course, type, or status.', position: 'bottom' },
       { target: '.topnav a[href*="course-catalog"]', titleKey: 'tour_courses', title: 'Course Catalog', textKey: 'tour_courses_text', text: 'Subscribe to courses to access their challenges and track progress.', position: 'bottom' },
       { target: '.topnav a[href*="analytics"]', titleKey: 'tour_analytics', title: 'Your Analytics', textKey: 'tour_analytics_text', text: 'View your grades and track improvement across Framing, Judging, and Steering skills.', position: 'bottom' },
@@ -32,6 +33,7 @@ const CoReasonTour = (() => {
     ],
     instructor: [
       { target: '.topnav', titleKey: 'tour_welcome_instructor', title: 'Welcome, Instructor!', textKey: 'tour_welcome_instructor_text', text: 'Create challenges, manage courses, and track student performance.', position: 'bottom' },
+      { target: '.topnav', titleKey: 'tour_process', title: 'The 3-Phase CoReasoning Process', textKey: 'tour_process_text', text: 'Students follow three phases per challenge: <strong>Framing</strong> (refine the problem), <strong>Judging</strong> (find AI errors), and <strong>Steering</strong> (correct the AI). Each phase is graded A/B/C. <br><img src="images/coreasoning-flow-mini.svg" alt="Process flow" style="width:100%;margin-top:8px;border-radius:6px;background:#fff;padding:4px;">', position: 'bottom' },
       { target: '.topnav a[href*="challenge-list"]', titleKey: 'tour_challenge_mgmt', title: 'Challenge Management', textKey: 'tour_challenge_mgmt_text', text: 'Create, publish, and manage challenges for your students.', position: 'bottom' },
       { target: '.topnav a[href*="course-catalog"]', titleKey: 'tour_course_mgmt', title: 'Course Management', textKey: 'tour_course_mgmt_text', text: 'Join courses as a steward and configure LLM settings.', position: 'bottom' },
       { target: '.topnav a[href*="analytics"]', titleKey: 'tour_analytics_dash', title: 'Analytics Dashboard', textKey: 'tour_analytics_dash_text', text: 'View student performance, grade distributions, and export reports.', position: 'bottom' },

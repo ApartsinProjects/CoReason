@@ -68,6 +68,8 @@ window.CONTENT["es"] = {
     "login": "Iniciar sesión",
     "signUp": "Registrarse",
     "signIn": "Ingresar",
+    "signingIn": "Iniciando sesión...",
+    "creatingAccount": "Creando cuenta...",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "fullName": "Nombre completo",
@@ -106,6 +108,10 @@ window.CONTENT["es"] = {
     "allTypes": "Todos los tipos",
     "allGrades": "Todas las calificaciones",
     "noMatchingResults": "No se encontraron resultados que coincidan con los filtros seleccionados.",
+    "noMatchingChallenges": "No se encontraron desafíos que coincidan con los filtros seleccionados.",
+    "guide": "Guía",
+    "interactiveGuide": "Guía interactiva",
+    "interactiveGuideDesc": "Recorra una simulación de desafío para aprender cómo funciona el co-razonamiento con IA",
     "allStatus": "Todos los estados",
     "allVisibility": "Todas las visibilidades",
     "notStarted": "No iniciado",
@@ -349,7 +355,193 @@ window.CONTENT["es"] = {
     "importExport": "Importar / Exportar",
     "aiGenerationFailed": "La generación de IA falló",
     "failedLoadProfile": "No se pudo cargar el perfil",
-    "failedLoadSubjects": "No se pudieron cargar los temas"
+    "failedLoadSubjects": "No se pudieron cargar los temas",
+    "quickTestLogin": "Inicio rápido — Usuarios demo",
+    "signInAsTestUser": "Iniciar sesión como usuario demo",
+    "framingTaskInstruction": "🎯 <strong>Su tarea:</strong> Lea el problema con atención. Es intencionalmente vago — identifique lo que falta, es confuso o se asume. Seleccione los refinamientos que harían que este problema esté bien definido.",
+    "judgingTaskInstruction": "🔍 <strong>Su tarea:</strong> La solución de la IA parece razonable pero contiene errores sutiles. Busque suposiciones incorrectas, casos límite faltantes, fallas lógicas y simplificaciones excesivas. Seleccione TODOS los problemas que encuentre.",
+    "steeringTaskInstruction": "🎮 <strong>Su tarea:</strong> Ahora guíe a la IA para corregir los problemas encontrados. Elija correcciones específicas y prácticas — no instrucciones vagas como «hágalo mejor».",
+    "howYouWereEvaluated": "Cómo fue evaluado",
+    "framingRubric": "Rúbrica de encuadre",
+    "judgingRubric": "Rúbrica de juicio",
+    "steeringRubric": "Rúbrica de dirección",
+    "tour_welcome": "¡Bienvenido a AI CoReasoning Lab!",
+    "tour_welcome_text": "Esta es su plataforma de aprendizaje para desarrollar habilidades críticas de evaluación de IA.",
+    "tour_challenges": "Sus desafíos",
+    "tour_challenges_text": "Explore los desafíos disponibles, filtre por curso, tipo o estado.",
+    "tour_courses": "Catálogo de cursos",
+    "tour_courses_text": "Suscríbase a cursos para acceder a sus desafíos y seguir su progreso.",
+    "tour_analytics": "Su analítica",
+    "tour_analytics_text": "Vea sus calificaciones y siga su progreso en encuadre, juicio y dirección.",
+    "tour_language": "Idioma",
+    "tour_language_text": "Cambie el idioma de la interfaz.",
+    "tour_profile": "Su perfil",
+    "tour_profile_text": "Vea y edite su perfil, sus estadísticas y su configuración.",
+    "tour_welcome_instructor": "¡Bienvenido, instructor!",
+    "tour_welcome_instructor_text": "Cree desafíos, gestione cursos y haga seguimiento del rendimiento estudiantil.",
+    "tour_challenge_mgmt": "Gestión de desafíos",
+    "tour_challenge_mgmt_text": "Cree, publique y gestione desafíos para sus estudiantes.",
+    "tour_course_mgmt": "Gestión de cursos",
+    "tour_course_mgmt_text": "Únase a cursos como responsable y configure los ajustes de LLM.",
+    "tour_analytics_dash": "Panel de analítica",
+    "tour_analytics_dash_text": "Vea el rendimiento estudiantil, distribuciones de calificaciones y exporte informes.",
+    "tour_skip": "Omitir",
+    "tour_back": "Atrás",
+    "tour_next": "Siguiente →",
+    "tour_done": "¡Listo!",
+    "startGuide": "Guía",
+    "tooltip_rawProblem": "POR QUÉ: Los problemas del mundo real rara vez se presentan de forma clara y resoluble. Aprender a reconocer lo que falta o es ambiguo es el primer paso en una colaboración efectiva con la IA. QUÉ: Este es un problema bruto, intencionalmente incompleto, generado a partir del contenido de su curso. Contiene vacíos, suposiciones no declaradas y ambigüedades que usted debe abordar antes de que la IA pueda producir una solución útil. CÓMO: Lea el problema con atención. Pregúntese: ¿Qué información falta? ¿Qué términos son vagos? ¿Qué suposiciones se están haciendo? Su objetivo es identificar qué necesita aclararse o agregarse en el siguiente paso.",
+    "tooltip_refinement": "POR QUÉ: Los enunciados iniciales suelen estar incompletos o ser ambiguos. Los refinamientos reducen la incertidumbre, alinean expectativas y ayudan a la IA a producir resultados más precisos, relevantes y verificables. QUÉ: Los refinamientos son adiciones que hacen la tarea más precisa. Pueden definir el problema en sí (entradas, salidas, restricciones, suposiciones, contexto y criterios de evaluación) o agregar solicitudes explícitas a la IA (listar casos límite importantes, comparar alternativas o explicar compromisos). CÓMO: Busque lo que falta, es confuso o está subespecificado. Algunos refinamientos son especificaciones de tarea proporcionadas manualmente, mientras que otros son instrucciones directas a la IA sobre cómo abordar la tarea o estructurar la respuesta. Agregue detalles que reduzcan la ambigüedad, guíen el proceso de solución o mejoren la utilidad del resultado.",
+    "tooltip_selectRefinements": "POR QUÉ: Los enunciados iniciales suelen estar incompletos o ser ambiguos. Seleccionar los refinamientos correctos reduce la incertidumbre y ayuda a la IA a producir resultados precisos y relevantes. QUÉ: Cada opción representa un refinamiento individual — puede definir el problema (entradas, restricciones, suposiciones) o agregar una solicitud explícita a la IA (listar casos límite, comparar alternativas). Seleccione todos los refinamientos que considere necesarios. CÓMO: Evalúe cada opción: ¿Aborda un vacío real en el problema? ¿Agrega orientación útil para la IA? Evite refinamientos que sobreespecifiquen, contradigan el problema o agreguen restricciones irrelevantes.",
+    "tooltip_judging": "POR QUÉ: Las soluciones generadas por IA suelen parecer correctas a primera vista pero contienen errores sutiles, simplificaciones excesivas o elementos faltantes. El juicio desarrolla su capacidad para evaluar críticamente los resultados de la IA — una habilidad esencial para cualquier profesional que trabaje con IA. QUÉ: Juzgar significa revisar la solución de la IA para identificar errores, vacíos lógicos, casos límite faltantes o suposiciones incorrectas. Usted evalúa si el resultado aborda completa y correctamente el problema refinado, y señala los problemas específicos que necesitan corrección. CÓMO: Compare la solución con los requisitos del problema y su conocimiento del dominio. Verifique errores de cálculo, razonamiento defectuoso, cobertura incompleta o conclusiones que no se derivan de las premisas. Sea específico — describa cada problema claramente para que pueda ser tratado en el siguiente paso.",
+    "tooltip_steering": "POR QUÉ: Identificar errores es solo la mitad de la habilidad. La dirección le enseña a guiar a la IA hacia mejores resultados proporcionando correcciones precisas y prácticas — la competencia central de la colaboración humano-IA efectiva. QUÉ: Dirigir significa escribir correcciones o instrucciones específicas que aborden los problemas identificados durante el juicio. La IA usará su orientación para regenerar una solución mejorada. Sus correcciones definen qué debe cambiar y cómo. CÓMO: Sea preciso y constructivo. En lugar de decir «esto está mal», explique cuál debería ser el enfoque correcto y por qué. Proporcione instrucciones concretas: corrija una fórmula, agregue una restricción faltante, reestructure un argumento o solicite un método diferente. Cuanto más clara sea su orientación, mejor será el resultado revisado de la IA.",
+    "problemRefinement": "Definición del problema",
+    "aiTaskRefinement": "Instrucción para la IA",
+    "tooltip_problemRefinement": "Define el problema en sí: agrega entradas, salidas, restricciones, suposiciones, contexto o criterios de evaluación para reducir la ambigüedad.",
+    "tooltip_aiTaskRefinement": "Una instrucción directa a la IA: pídale que liste casos límite, compare alternativas, explique compromisos o estructure la respuesta de una manera específica.",
+    "suggestWithAI": "✨ Sugerencia IA",
+    "suggestTooltip": "Permita que la IA sugiera una respuesta para ayudarle a comenzar. Puede editar la sugerencia antes de enviarla.",
+    "aiSuggesting": "La IA está pensando...",
+    "override": "Modificar",
+    "selectGrade": "Por favor, seleccione una calificación",
+    "overrideReason": "Motivo de la modificación (opcional):",
+    "gradeOverridden": "Calificación modificada exitosamente",
+    "overrideFailed": "La modificación falló",
+    "overriddenFrom": "Modificada desde",
+    "clone": "Clonar",
+    "cloneFailed": "No se pudo clonar",
+    "cloneSuccess": "Desafío clonado exitosamente",
+    "editRubric": "Editar rúbrica",
+    "saveRubric": "Guardar rúbrica",
+    "rubricSaved": "Rúbrica guardada",
+    "rubricSaveFailed": "No se pudo guardar la rúbrica",
+    "addCriterion": "Agregar criterio",
+    "removeCriterion": "Eliminar",
+    "criterionName": "Nombre del criterio",
+    "criterionDescription": "Descripción",
+    "whatIsCoReasoning": "¿Qué es el co-razonamiento?",
+    "whatIsCoReasoningSubtitle": "Aprenda a pensar críticamente con la IA — no solo a usarla",
+    "theProblem": "El problema",
+    "theProblemText": "La mayoría de las personas usan la IA de forma pasiva: pegan una pregunta, copian la respuesta. Pero las salidas de la IA a menudo contienen errores sutiles, suposiciones faltantes y vacíos lógicos. Si no puede detectar estos problemas, no está usando la IA — ella lo está usando a usted. El co-razonamiento le enseña a trabajar <em>con</em> la IA como un socio crítico, no como una muleta.",
+    "theThreeSkills": "Las tres competencias",
+    "theThreeSkillsDesc": "El co-razonamiento desarrolla tres competencias independientes de pensamiento crítico:",
+    "framingSkillTitle": "Encuadre",
+    "framingSkillDesc": "Transforme problemas vagos en tareas bien definidas. Los problemas reales son desordenados — debe identificar lo que falta, agregar suposiciones y clarificar requisitos antes de que la IA pueda ayudar.",
+    "judgingSkillTitle": "Juicio",
+    "judgingSkillDesc": "Encuentre lo que está mal en la respuesta de la IA. Las soluciones de la IA parecen correctas pero contienen errores sutiles. Su tarea es identificar suposiciones incorrectas, casos límite faltantes y fallas lógicas.",
+    "steeringSkillTitle": "Dirección",
+    "steeringSkillDesc": "Guíe a la IA hacia una mejor respuesta. Una vez que ha encontrado problemas, dele a la IA correcciones específicas y prácticas — no quejas vagas.",
+    "howChallengeWorks": "Cómo funciona un desafío",
+    "howChallengeWorksDesc": "Cada desafío lo guía a través de las tres competencias en secuencia:",
+    "step1Text": "<strong>Lea</strong> un enunciado de problema intencionalmente mal definido",
+    "step2Text": "<strong>Encuadre</strong> seleccionando o escribiendo refinamientos para clarificar el problema",
+    "step3Text": "<strong>Observe</strong> una solución generada por IA que es deliberadamente imperfecta",
+    "step4Text": "<strong>Juzgue</strong> los problemas — identifique defectos, suposiciones incorrectas y casos faltantes",
+    "step5Text": "<strong>Dirija</strong> con correcciones específicas y prácticas para mejorar la solución",
+    "step6Text": "<strong>Revise</strong> sus tres calificaciones independientes y retroalimentación detallada",
+    "graded": "Calificado (A/B/C)",
+    "whyThreeGrades": "¿Por qué tres calificaciones?",
+    "whyThreeGradesDesc": "Cada competencia se califica de forma independiente porque son habilidades distintas. Podría encuadrar un problema brillantemente pero pasar por alto defectos obvios en la respuesta de la IA, o juzgar bien pero dar retroalimentación de dirección vaga. Tres calificaciones separadas le dan una imagen clara de dónde mejorar.",
+    "gradeExcellent": "Excelente",
+    "gradeExcellentDesc": "Exhaustivo, preciso y perspicaz",
+    "gradeGood": "Bueno",
+    "gradeGoodDesc": "Comprensión sólida con vacíos menores",
+    "gradeNeedsWork": "Necesita mejorar",
+    "gradeNeedsWorkDesc": "Problemas significativos a abordar",
+    "practiceVsAssessment": "Práctica vs. Evaluación",
+    "practiceVsAssessmentDesc": "Los desafíos se presentan en dos modos:",
+    "readyToStart": "¿Listo para desarrollar sus competencias críticas de IA?",
+    "startFirstChallenge": "Comience su primer desafío",
+    "guideStepProblem": "Problema",
+    "guideStepGaps": "Vacíos",
+    "guideStepFrame": "Encuadre",
+    "guideStepSolution": "Solución",
+    "guideStepJudge": "Juicio",
+    "guideStepSteer": "Dirección",
+    "guideStepGrades": "Notas",
+    "guideStepGo": "¡Adelante!",
+    "guideStep1Title": "Aquí tiene un problema sin procesar",
+    "guideStep1Subtitle": "Esto es lo que le da un instructor. Léalo con atención — su tarea es pensar críticamente antes de que la IA comience a trabajar.",
+    "guideRawProblemLabel": "Enunciado del problema bruto",
+    "guideRawProblemText": "Diseñe un módulo de ordenamiento en tiempo real para una red de sensores IoT. El sistema recibe lecturas de unos cientos de sensores de temperatura. Debe ordenar las lecturas recientes por marca de tiempo, manejar picos de datos durante las horas punta y soportar una API de consulta que devuelva la última ventana ordenada. Optimice el uso de memoria.",
+    "guideStep1AnnotationLabel": "Lo que está sucediendo:",
+    "guideStep1AnnotationText": "En un desafío real, esto es lo primero que ve. El problema suena razonable, pero ¿es lo suficientemente completo para que la IA lo resuelva bien? Eso es lo que descubrirá a continuación.",
+    "guideStep2Title": "¿Nota lo que falta?",
+    "guideStep2Subtitle": "Los problemas del mundo real suelen ser ambiguos. Una competencia clave del co-razonamiento es detectar los vacíos antes de que la IA comience a resolver.",
+    "guideProblemAgainLabel": "El problema otra vez",
+    "guideGap1": "<strong>La clave de ordenamiento es confusa:</strong> \"Ordenar por marca de tiempo\" — pero ¿qué pasa con lecturas con marcas de tiempo idénticas? No hay estrategia de desempate.",
+    "guideGap2": "<strong>\"Unos cientos\" es vago:</strong> ¿Son 200? ¿500? ¿900? La elección de estructura de datos y algoritmo depende en gran medida de la escala real.",
+    "guideGap3": "<strong>\"Picos de datos\" no está definido:</strong> ¿Significa 2x la tasa normal? ¿100x? ¿El sistema debe descartar lecturas, almacenarlas en búfer o procesarlas todas?",
+    "guideGap4": "<strong>No se especifica el tamaño de la ventana:</strong> \"Última ventana ordenada\" — ¿qué tan grande? ¿Los últimos 10 segundos? ¿Las últimas 1000 lecturas? Esto cambia el modelo de memoria por completo.",
+    "guideStep2AnnotationLabel": "Esto es el encuadre:",
+    "guideStep2AnnotationText": "Antes de que la IA escriba una sola línea de código, usted refina el problema identificando lo que falta, es ambiguo o está subespecificado. Un mejor encuadre lleva a una mejor salida de la IA.",
+    "guideStep3Title": "Encuádrelo",
+    "guideStep3Subtitle": "Seleccione las afirmaciones que identifican correctamente vacíos o agregan restricciones útiles. En un desafío real, elige entre opciones de selección múltiple.",
+    "guideFrame1": "La clave de ordenamiento necesita un desempate — cuando las marcas de tiempo coinciden, usar el ID del sensor como ordenamiento secundario.",
+    "guideFrame1Exp": "Correcto: Identifica una ambigüedad genuina y propone una resolución concreta.",
+    "guideFrame2": "Definir \"unos cientos\" como exactamente 500 sensores, cada uno enviando una lectura por segundo.",
+    "guideFrame2Exp": "Correcto: Precisa una cantidad vaga con un número específico y verificable.",
+    "guideFrame3": "Usar Python porque es el lenguaje más popular para IoT.",
+    "guideFrame3Exp": "Incorrecto: Es una decisión de implementación, no una clarificación del problema. El encuadre trata sobre el problema, no sobre la solución.",
+    "guideFrame4": "Definir \"pico de datos\" como hasta 5x el rendimiento normal y especificar que no se deben descartar lecturas.",
+    "guideFrame4Exp": "Correcto: Clarifica un término ambiguo con parámetros concretos y un requisito claro.",
+    "guideFrame5": "El problema es suficientemente claro — no se necesitan restricciones adicionales.",
+    "guideFrame5Exp": "Incorrecto: El problema tiene varias ambigüedades que llevarían a una solución incompleta.",
+    "guideStep3AnnotationLabel": "Puntuación:",
+    "guideStep3AnnotationText": "Obtiene una mejor calificación de encuadre al identificar correctamente vacíos reales y evitar opciones que saltan a soluciones o desestiman la necesidad de clarificación.",
+    "guideStep4Title": "La IA genera una solución",
+    "guideStep4Subtitle": "Basándose en su encuadre, la IA produce una solución. Pero las soluciones de IA suelen ser plausibles pero defectuosas — su tarea es evaluarla críticamente.",
+    "guideAiSolutionLabel": "Solución generada por IA",
+    "guideApproachLabel": "Enfoque:",
+    "guideApproachText": "Usar un búfer circular de tamaño fijo de 1000 entradas, ordenado mediante inserción en cada nueva lectura.",
+    "guideComplexityLabel": "Complejidad:",
+    "guideComplexityText": "O(n) por inserción debido al desplazamiento de la lista. La memoria está acotada en O(tamaño_ventana).",
+    "guideStep4AnnotationLabel": "Observe con atención:",
+    "guideStep4AnnotationText": "Esta solución compila y suena razonable, pero tiene problemas reales. ¿Puede detectarlos? Ese es el siguiente paso.",
+    "guideStep5Title": "Juzgue la solución",
+    "guideStep5Subtitle": "Identifique lo que está mal en la solución de la IA. Seleccione las afirmaciones que señalan correctamente problemas reales.",
+    "guideJudge1": "La comprensión de lista <code>[r.timestamp for r in self.buffer]</code> reconstruye la lista completa de claves en cada inserción — esto es una sobrecarga O(n) sobre la inserción O(n).",
+    "guideJudge1Exp": "Correcto: Es un error de rendimiento genuino. La extracción de claves debería usar una estructura ordenada separada o SortedList.",
+    "guideJudge2": "El concepto de búfer circular es fundamentalmente incorrecto para este caso de uso.",
+    "guideJudge2Exp": "Incorrecto: Un búfer acotado es un enfoque razonable para una ventana deslizante — los detalles de implementación son el problema, no el concepto.",
+    "guideJudge3": "No hay desempate cuando las marcas de tiempo son idénticas — el ID del sensor debería usarse como clave de ordenamiento secundaria.",
+    "guideJudge3Exp": "Correcto: Esto se identificó durante el encuadre pero la IA lo ignoró en la implementación.",
+    "guideJudge4": "Durante los picos de datos (5x rendimiento), la inserción O(n) causará acumulación de latencia con 500 sensores enviando simultáneamente.",
+    "guideJudge4Exp": "Correcto: A 2500 lecturas/seg durante picos, una inserción O(n) en una lista de 1000 elementos crea un verdadero cuello de botella.",
+    "guideJudge5": "Python es demasiado lento para sistemas en tiempo real; debería reescribirse en C++.",
+    "guideJudge5Exp": "Incorrecto: La elección del lenguaje importa, pero el juicio se trata de evaluar la lógica y corrección de la solución, no de tomar decisiones de implementación.",
+    "guideStep5AnnotationLabel": "Puntuación:",
+    "guideStep5AnnotationText": "Obtiene una mejor calificación de juicio al encontrar problemas reales de lógica y corrección. Evite quejas vagas u opiniones sobre elecciones tecnológicas.",
+    "guideStep6Title": "Dirija a la IA",
+    "guideStep6Subtitle": "Ahora guíe a la IA para corregir sus errores. Seleccione las correcciones que son específicas y prácticas.",
+    "guideSteer1": "Reemplazar el enfoque de lista + bisect por un SortedList de la biblioteca sortedcontainers, que ofrece inserción O(log n) y evita reconstruir la lista de claves.",
+    "guideSteer1Exp": "Correcto: Corrección específica, nombra la biblioteca exacta y explica por qué resuelve el problema de rendimiento.",
+    "guideSteer2": "Hacer el ordenamiento más rápido.",
+    "guideSteer2Exp": "Incorrecto: Demasiado vago — la IA necesita saber qué cambiar y cómo. \"Más rápido\" no guía nada.",
+    "guideSteer3": "Modificar la clave de ordenamiento a una tupla (marca_tiempo, id_sensor) para que las lecturas con marcas de tiempo idénticas se ordenen de forma determinista.",
+    "guideSteer3Exp": "Correcto: Instrucción precisa — especifica el cambio exacto de estructura de datos y la razón.",
+    "guideSteer4": "Agregar un mecanismo de detección de picos: cuando la tasa de ingesta supere 2500/seg, cambiar a inserción por lotes (recopilar durante 200ms, luego ordenar en masa) para amortizar la sobrecarga.",
+    "guideSteer4Exp": "Correcto: Aborda el escenario de picos con umbrales específicos y una estrategia concreta.",
+    "guideSteer5": "La solución tiene demasiados errores, por favor comience de cero.",
+    "guideSteer5Exp": "Incorrecto: Descartar el trabajo no es dirección — las buenas correcciones se basan en lo existente y corrigen problemas específicos.",
+    "guideStep6AnnotationLabel": "Puntuación:",
+    "guideStep6AnnotationText": "Obtiene una mejor calificación de dirección al dar correcciones precisas y constructivas. Dígale a la IA exactamente qué cambiar y por qué — no solo \"arréglelo\".",
+    "guideStep7Title": "Vea sus calificaciones",
+    "guideStep7Subtitle": "Después de completar todas las fases, recibe calificaciones para cada dimensión del co-razonamiento con retroalimentación personalizada.",
+    "guideGradeFramingFeedback": "Excelente refinamiento del problema. Identificó todas las ambigüedades principales y agregó restricciones precisas que mejoraron la especificación de la tarea para la IA.",
+    "guideGradeJudgingFeedback": "Buena evaluación crítica. Detectó el error de rendimiento y el desempate faltante, pero podría haber sido más preciso en el análisis del impacto de los picos.",
+    "guideGradeSteeringFeedback": "Correcciones sólidas con alternativas específicas. La estrategia de inserción por lotes fue creativa. Considere también abordar casos límite como llegadas fuera de orden.",
+    "guideStep7AnnotationLabel": "Cómo funciona la calificación:",
+    "guideStep7AnnotationText": "Cada dimensión se califica A/B/C según la calidad de sus decisiones. En modo práctica ve retroalimentación después de cada fase; en modo evaluación, la retroalimentación se difiere hasta el final.",
+    "guideStep8Title": "¿Listo para probar un desafío real?",
+    "guideStep8Subtitle": "Ha visto cómo el encuadre, el juicio y la dirección funcionan juntos. Ahora aplique estas competencias a un desafío real con calificación en vivo.",
+    "guideStartRealChallenge": "Comenzar un desafío real",
+    "guideStep8AnnotationLabel": "Qué sigue:",
+    "guideStep8AnnotationText": "Explore la lista de desafíos, elija un desafío de uno de sus cursos y ejecútelo en modo práctica para obtener retroalimentación inmediata en cada fase. A medida que mejore, pruebe el modo evaluación para una experiencia cronometrada y sin guía.",
+    "guidePrevious": "&#8592; Anterior",
+    "guideNext": "Siguiente &#8594;",
+    "guideStepCounter": "Paso 1 de 8",
+    "guideStepXofY": "Paso {0} de {1}"
   },
   "institutions": {
     "institutions": [
@@ -1438,84 +1630,88 @@ window.CONTENT["es"] = {
   },
   "tooltips": {
     "challengeType": {
-      "title": "Tipo de desafio",
-      "text": "Los desafios de practica permiten reintentos con retroalimentacion tras cada fase. Los desafios de evaluacion se califican con retroalimentacion solo al final."
+      "title": "Tipo de desafío",
+      "text": "WHY: Diferentes objetivos de aprendizaje requieren diferentes enfoques de retroalimentación — la práctica desarrolla habilidades mediante la iteración, mientras que la evaluación mide la capacidad independiente. WHAT: El modo de práctica muestra retroalimentación generada por IA después de cada fase, ayudándote a aprender de tus errores en tiempo real. El modo de evaluación retiene la retroalimentación hasta el final, poniendo a prueba tus habilidades de co-razonamiento sin asistencia. HOW: Elige Práctica para aprender y explorar. Elige Evaluación para exámenes calificados o para medir el nivel real de competencia."
     },
     "visibility": {
       "title": "Visibilidad",
-      "text": "Los desafios publicos son visibles para todos los estudiantes inscritos. Los desafios privados solo son visibles para su creador."
+      "text": "WHY: Controlar quién puede ver un desafío permite a los instructores gestionar el contenido del curso y a los estudiantes crear material de práctica personal. WHAT: Los desafíos públicos son visibles para todos los estudiantes inscritos en el curso. Los desafíos privados solo son visibles para su creador. HOW: Los desafíos públicos aparecen en la lista de desafíos del curso para todos los suscriptores. Los desafíos privados solo aparecen en tu lista personal."
     },
     "maxCycles": {
-      "title": "Ciclos maximos",
-      "text": "El numero maximo de ciclos de Juicio+Direccion permitidos. Mas ciclos ofrecen mas oportunidades de mejorar la salida de la IA."
+      "title": "Ciclos máximos",
+      "text": "WHY: Más ciclos brindan más oportunidades para practicar la corrección iterativa, pero demasiados pueden reducir el compromiso y la concentración. WHAT: El número máximo de ciclos de Juicio+Dirección permitidos por sesión de desafío. Después del último ciclo, la sesión finaliza y se calculan todas las calificaciones. HOW: De 3 a 5 ciclos es lo habitual. Usa menos ciclos para evaluaciones rápidas, más para ejercicios de práctica profunda."
     },
     "subjectPath": {
       "title": "Ruta del tema",
-      "text": "La jerarquia tematica a la que pertenece este desafio, dentro del arbol de temas del curso."
+      "text": "WHY: Asociar los desafíos a temas específicos ayuda a organizar el contenido y permite análisis enfocados en áreas de competencia. WHAT: La jerarquía temática a la que pertenece este desafío, dentro del árbol de temas del curso. Los problemas y las rúbricas se generan en función de estas áreas temáticas. HOW: Selecciona nodos hoja específicos para desafíos enfocados, o nodos padre más amplios para problemas más variados."
     },
     "responseType": {
       "title": "Tipo de respuesta",
-      "text": "La opcion multiple ofrece opciones predefinidas. La respuesta abierta permite razonamiento escrito libre."
+      "text": "WHY: El formato de respuesta moldea la experiencia de aprendizaje — la opción múltiple estructura la toma de decisiones mientras que la respuesta abierta desarrolla el razonamiento independiente. WHAT: La opción múltiple presenta opciones pregeneradas para seleccionar. La respuesta abierta permite razonamiento escrito libre y refinamientos personalizados. HOW: Usa opción múltiple para desafíos introductorios. Usa respuesta abierta para desafíos avanzados que requieran pensamiento crítico independiente."
     },
     "framingPhase": {
       "title": "Fase de encuadre",
-      "text": "El estudiante evalua el problema en bruto y lo traduce en una tarea bien definida anadiendo supuestos y restricciones."
+      "text": "WHY: Los problemas del mundo real nunca están preformateados para la IA. El encuadre te enseña a transformar requisitos vagos en tareas precisas y ejecutables. WHAT: Recibes un problema en bruto, intencionalmente incompleto, y debes refinarlo añadiendo supuestos, restricciones y aclaraciones antes de que la IA genere una solución. Esta es la Fase 1 del proceso de co-razonamiento (consulta el diagrama de proceso para ver el flujo completo). HOW: Lee el problema con atención. Identifica qué falta, qué es ambiguo o qué se asume. Añade precisiones que hagan la tarea bien definida."
     },
     "judgingPhase": {
       "title": "Fase de juicio",
-      "text": "El estudiante revisa la solucion generada por la IA e identifica lo que es correcto, lo que esta mal y lo que podria mejorarse."
+      "text": "WHY: Los resultados de la IA a menudo contienen errores sutiles que requieren experiencia cuidadosa para ser detectados. El juicio desarrolla tus habilidades de evaluación analítica. WHAT: Revisas la solución generada por la IA e identificas errores específicos, lagunas o suposiciones incorrectas. Esta es la Fase 2A del proceso de co-razonamiento (consulta el diagrama de proceso para ver el flujo completo). Tus juicios se registran para la calificación pero NO se envían a la IA. HOW: Lee la solución de forma crítica. Busca errores lógicos, elementos faltantes, hechos incorrectos y suposiciones implícitas."
     },
     "steeringPhase": {
-      "title": "Fase de direccion",
-      "text": "El estudiante proporciona retroalimentacion especifica para guiar a la IA hacia una mejor solucion."
+      "title": "Fase de dirección",
+      "text": "WHY: Saber dar retroalimentación precisa y ejecutable a la IA es la competencia central de una colaboración humano-IA eficaz. WHAT: Redactas correcciones o instrucciones específicas para corregir los problemas identificados. Esta es la Fase 2B del proceso de co-razonamiento (consulta el diagrama de proceso para ver el flujo completo). La IA procesa tu dirección y regenera una solución mejorada. HOW: Sé específico y concreto. Indica a la IA exactamente qué corregir. Las correcciones claras producen mejores revisiones — la retroalimentación vaga produce mejoras vagas."
     },
     "coReasoningScore": {
-      "title": "Puntuacion de co-razonamiento",
-      "text": "Rendimiento general que combina la precision del encuadre, la calidad del juicio y la efectividad de la direccion."
+      "title": "Puntuación de co-razonamiento",
+      "text": "WHY: Una puntuación combinada te ayuda a comprender tu efectividad general como colaborador con la IA en las tres habilidades de co-razonamiento. WHAT: Tu calificación de rendimiento general que combina la precisión del encuadre, la calidad del juicio y la efectividad de la dirección. Cada habilidad se califica de forma independiente (A/B/C). HOW: Concéntrate primero en mejorar tu área de competencia más débil. Revisa la retroalimentación de cada fase para entender dónde puedes mejorar."
     },
     "rubric": {
-      "title": "Rubrica",
-      "text": "Los criterios de evaluacion utilizados para calificar el rendimiento de co-razonamiento en cada fase."
+      "title": "Rúbrica",
+      "text": "WHY: Criterios de evaluación consistentes garantizan una calificación justa y objetiva para todos los estudiantes y todos los intentos. WHAT: Criterios de calificación generados por IA que se utilizan para evaluar tu rendimiento de co-razonamiento en cada fase (encuadre, juicio, dirección). La rúbrica se adapta al área temática del desafío. HOW: Las rúbricas son invisibles durante el desafío. Después de completarlo, tus calificaciones reflejan qué tan bien cumpliste los criterios de la rúbrica."
     },
     "subjectTree": {
-      "title": "Arbol de temas",
-      "text": "Una organizacion jerarquica de temas dentro de un curso. Los desafios se asignan a nodos especificos."
+      "title": "Árbol de temas",
+      "text": "WHY: Organizar los temas jerárquicamente permite contenido de curso estructurado y evaluación de competencias dirigida a través de áreas temáticas. WHAT: Una organización en forma de árbol de los temas dentro de un curso. Los desafíos se asignan a nodos específicos, y los problemas se generan a partir de los temas seleccionados. HOW: Los instructores construyen el árbol a través de la configuración del curso. Los estudiantes ven los desafíos organizados por área temática."
+    },
+    "coReasoningProcess": {
+      "title": "El proceso de co-razonamiento",
+      "text": "WHY: Comprender el flujo completo del co-razonamiento te ayuda a ver cómo cada fase se apoya en la anterior y por qué cada habilidad es importante. WHAT: El proceso tiene tres fases: (1) Encuadre — transformar un problema vago en una tarea bien definida, (2A) Juicio — identificar problemas en la solución de la IA, (2B) Dirección — escribir correcciones para mejorar la salida de la IA. Juicio y Dirección se repiten en ciclos. HOW: Haz clic en el enlace del diagrama de proceso o busca el icono de diagrama de flujo para ver el diagrama visual completo del proceso de co-razonamiento."
     },
     "courseSubscription": {
-      "title": "Suscripcion al curso",
-      "text": "Suscribete a un curso para acceder a sus desafios y seguir tu progreso."
+      "title": "Suscripción al curso",
+      "text": "WHY: Suscribirte te conecta con la biblioteca de desafíos de un curso y permite a tu instructor hacer seguimiento de tu progreso. WHAT: Cuando te suscribes, los desafíos públicos del curso aparecen en tu lista de desafíos y tus resultados se incluyen en las analíticas del curso. HOW: Haz clic en Suscribirse en cualquier tarjeta de curso disponible. Puedes cancelar la suscripción en cualquier momento desde el catálogo de cursos."
     },
     "analyticsOverview": {
-      "title": "Tus estadisticas",
-      "text": "Consulta tus tendencias de rendimiento, distribuciones de notas y desgloses detallados en todas tus sesiones de desafio."
+      "title": "Tus estadísticas",
+      "text": "WHY: Hacer seguimiento de tu rendimiento a lo largo del tiempo revela patrones, fortalezas y áreas que necesitan atención. WHAT: Un resumen visual de tus calificaciones en todas las sesiones completadas, incluyendo distribuciones por habilidad y tendencias a lo largo del tiempo. HOW: Usa los filtros para enfocarte en cursos o tipos de desafíos específicos. Haz clic en cualquier desafío de la tabla para ver su informe detallado."
     },
     "colChallenge": {
-      "title": "Desafio",
-      "text": "El nombre del desafio. Haz clic para ver los detalles o iniciar una sesion."
+      "title": "Desafío",
+      "text": "El nombre del desafío. Haz clic para ver los detalles o iniciar una sesión."
     },
     "colCourse": {
       "title": "Curso",
-      "text": "El curso al que pertenece este desafio."
+      "text": "El curso al que pertenece este desafío."
     },
     "colType": {
       "title": "Tipo",
-      "text": "Los desafios de practica permiten reintentos con retroalimentacion. Los desafios de evaluacion se califican con retroalimentacion solo al final."
+      "text": "Los desafíos de práctica permiten reintentos con retroalimentación. Los desafíos de evaluación se califican con retroalimentación solo al final."
     },
     "colVisibility": {
       "title": "Visibilidad",
-      "text": "Los desafios publicos provienen de tus cursos suscritos. Los desafios privados son los que creaste para ti mismo."
+      "text": "Los desafíos públicos provienen de tus cursos suscritos. Los desafíos privados son los que creaste para ti mismo."
     },
     "colCreated": {
-      "title": "Fecha de creacion",
-      "text": "La fecha en que este desafio fue publicado o creado."
+      "title": "Fecha de creación",
+      "text": "La fecha en que este desafío fue publicado o creado."
     },
     "colCreator": {
       "title": "Creador",
-      "text": "El instructor o estudiante que creo este desafio."
+      "text": "El instructor o estudiante que creó este desafío."
     },
     "colLastAttempt": {
-      "title": "Ultimo intento",
-      "text": "La ultima vez que intentaste este desafio, si alguna vez lo hiciste."
+      "title": "Último intento",
+      "text": "La última vez que intentaste este desafío, si alguna vez lo hiciste."
     },
     "colStatus": {
       "title": "Estado",
@@ -1523,47 +1719,87 @@ window.CONTENT["es"] = {
     },
     "colActions": {
       "title": "Acciones",
-      "text": "Acciones disponibles como Iniciar, Reanudar, Ver resultados o Ejecutar de nuevo."
+      "text": "Acciones disponibles: Iniciar, Reanudar, Ver resultados o Ejecutar de nuevo."
     },
     "instrAnalyticsOverview": {
-      "title": "Estadisticas del curso",
-      "text": "Datos de rendimiento agregados de todos los estudiantes de este curso. Solo incluye resultados de desafios publicos."
+      "title": "Estadísticas del curso",
+      "text": "WHY: Comprender el rendimiento agregado de los estudiantes te ayuda a identificar áreas difíciles y ajustar tu enfoque pedagógico. WHAT: Datos de rendimiento agregados de todos los estudiantes de este curso, incluyendo distribuciones de calificaciones y desgloses por estudiante. Solo incluye resultados de desafíos públicos. HOW: Usa los filtros de curso y desafío para profundizar en el análisis. Exporta a PDF para informes institucionales."
     },
     "instrCourseSubscription": {
-      "title": "Gestion del curso",
-      "text": "Administra la configuracion de tu curso, el arbol de temas y las asignaciones de desafios."
+      "title": "Gestión del curso",
+      "text": "Administra la configuración de tu curso, el árbol de temas y las asignaciones de desafíos."
     },
     "instrColChallenge": {
-      "title": "Desafio",
-      "text": "El titulo del desafio. Haz clic para editar o ver las entregas de los estudiantes."
+      "title": "Desafío",
+      "text": "El título del desafío. Haz clic para editar o ver las entregas de los estudiantes."
     },
     "instrColCourse": {
       "title": "Curso",
-      "text": "El curso al que esta asignado este desafio."
+      "text": "El curso al que está asignado este desafío."
     },
     "instrColType": {
       "title": "Tipo",
-      "text": "Practica: los estudiantes reciben retroalimentacion tras cada fase. Evaluacion: la retroalimentacion se retiene hasta la finalizacion."
+      "text": "Práctica: los estudiantes reciben retroalimentación tras cada fase. Evaluación: la retroalimentación se retiene hasta la finalización."
     },
     "instrColVisibility": {
       "title": "Visibilidad",
-      "text": "Los desafios publicos estan disponibles para todos los suscritos al curso. Los desafios privados solo son visibles para su creador."
+      "text": "Los desafíos públicos están disponibles para todos los suscriptores del curso. Los desafíos privados solo son visibles para su creador."
     },
     "instrColSubmissions": {
       "title": "Entregas",
-      "text": "Numero total de sesiones de estudiantes para este desafio, incluyendo intentos en progreso y completados."
+      "text": "Número total de sesiones de estudiantes para este desafío, incluyendo intentos en progreso y completados."
     },
     "instrColAvgGrade": {
       "title": "Nota media",
-      "text": "Nota media en todas las sesiones completadas de estudiantes, combinando las puntuaciones de encuadre, juicio y direccion."
+      "text": "Nota media en todas las sesiones completadas de estudiantes, combinando las puntuaciones de encuadre, juicio y dirección."
     },
     "instrColStatus": {
       "title": "Estado",
-      "text": "Ciclo de vida del desafio: Borrador (aun no visible), Publicado (activo) o Archivado (oculto)."
+      "text": "Ciclo de vida del desafío: Borrador (aún no visible), Publicado (activo) o Archivado (oculto)."
     },
     "instrColActions": {
       "title": "Acciones",
-      "text": "Acciones disponibles: Editar, Vista previa, Ver estadisticas o Eliminar."
+      "text": "Acciones disponibles: Editar, Vista previa, Ver estadísticas o Eliminar."
+    },
+    "profileRole": {
+      "title": "Tu rol",
+      "text": "WHY: Tu rol determina qué funcionalidades y páginas tienes disponibles. WHAT: Los estudiantes completan desafíos y desarrollan habilidades de co-razonamiento. Los instructores crean desafíos, gestionan cursos y revisan el rendimiento de los estudiantes. HOW: Tu rol se asigna durante el registro y no se puede cambiar. Contacta con tu administrador si necesitas un cambio de rol."
+    },
+    "profileStats": {
+      "title": "Tus estadísticas",
+      "text": "WHY: Hacer seguimiento de tu actividad te ayuda a comprender tu nivel de participación en la plataforma. WHAT: Desafíos creados muestra cuántos desafíos has redactado. Desafíos ejecutados muestra cuántas sesiones has completado. HOW: Para aumentar tus estadísticas, crea nuevos desafíos o completa más sesiones de tus cursos suscritos."
+    },
+    "profileCourses": {
+      "title": "Suscripciones a cursos",
+      "text": "WHY: Tus suscripciones a cursos determinan qué desafíos tienes disponibles y qué datos analíticos se registran. WHAT: Una lista de todos los cursos a los que estás suscrito actualmente. Cada curso da acceso a sus desafíos públicos. HOW: Suscríbete a nuevos cursos desde la página Catálogo de cursos. Puedes cancelar la suscripción en cualquier momento."
+    },
+    "instrAnalyticsStudent": {
+      "title": "Student",
+      "text": "The student's display name as registered on the platform."
+    },
+    "instrAnalyticsEmail": {
+      "title": "Email",
+      "text": "The student's email address for identification."
+    },
+    "instrAnalyticsRuns": {
+      "title": "Runs Completed",
+      "text": "WHY: Tracking completed vs total runs shows student engagement and progress. WHAT: The number of completed challenge runs out of total runs attempted by this student. HOW: A low completion ratio may indicate a student is struggling or disengaged."
+    },
+    "instrAnalyticsActions": {
+      "title": "Actions",
+      "text": "Available actions for this student. Click Review to see the detailed report of a completed challenge run."
+    },
+    "gradeA": {
+      "title": "Nota A — Excelente",
+      "text": "WHY: Las calificaciones te ayudan a seguir tu dominio del co-razonamiento. WHAT: La nota A significa que demostraste una comprensión excelente — identificaste los problemas clave, proporcionaste refinamientos sólidos y mostraste un pensamiento crítico profundo. HOW: Sigue aplicando estas habilidades de forma consistente en diferentes desafíos."
+    },
+    "gradeB": {
+      "title": "Nota B — Bien",
+      "text": "WHY: Las calificaciones te ayudan a seguir tu dominio del co-razonamiento. WHAT: La nota B significa que mostraste buena comprensión con margen de mejora — captaste los puntos principales pero quizás omitiste matices o incluiste elementos innecesarios. HOW: Revisa la retroalimentación cuidadosamente y concéntrate en las lagunas específicas mencionadas."
+    },
+    "gradeC": {
+      "title": "Nota C — Necesita mejora",
+      "text": "WHY: Las calificaciones te ayudan a seguir tu dominio del co-razonamiento. WHAT: La nota C significa que se necesita una mejora significativa — se omitieron problemas importantes o la respuesta no abordó adecuadamente los requisitos de la tarea. HOW: Relee el problema con atención, estudia la retroalimentación e intenta desafíos similares para desarrollar tus habilidades."
     }
   },
   "challenges": {

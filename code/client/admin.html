@@ -59,6 +59,7 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav><span style="color:var(--primary);font-weight:700;font-size:14px;">ADMIN PANEL</span></nav>
@@ -67,7 +68,7 @@
     </div>
   </header>
 
-  <div class="admin-layout">
+  <div class="admin-layout" id="main-content">
     <div class="admin-header">
       <h1>System Administration</h1>
       <span id="envBadge" class="env-badge dev">DEV</span>
@@ -87,14 +88,14 @@
 
     <!-- Tabs -->
     <div class="admin-tabs">
-      <button class="active" onclick="showTab('config', this)">Config</button>
-      <button onclick="showTab('db', this)">Database</button>
-      <button onclick="showTab('users', this)">Users</button>
-      <button onclick="showTab('institutions', this)">Institutions</button>
-      <button onclick="showTab('courses', this)">Courses</button>
-      <button onclick="showTab('challenges', this)">Challenges</button>
-      <button onclick="showTab('runs', this)">Runs</button>
-      <button onclick="showTab('prompts', this)">Prompt Templates</button>
+      <button class="active" onclick="showTab('config', this)" data-t="config">Config</button>
+      <button onclick="showTab('db', this)" data-t="database">Database</button>
+      <button onclick="showTab('users', this)" data-t="users">Users</button>
+      <button onclick="showTab('institutions', this)" data-t="institutions">Institutions</button>
+      <button onclick="showTab('courses', this)" data-t="courses">Courses</button>
+      <button onclick="showTab('challenges', this)" data-t="challenges">Challenges</button>
+      <button onclick="showTab('runs', this)" data-t="runs">Runs</button>
+      <button onclick="showTab('prompts', this)" data-t="promptTemplates">Prompt Templates</button>
     </div>
 
     <!-- Config Tab -->
@@ -145,6 +146,7 @@
   </div>
 
   <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
   <script>
     var BASE = '/api/v1/admin';
 
@@ -163,28 +165,33 @@
 
     var loaded = { config: false, db: false, users: false, institutions: false, courses: false, challenges: false, runs: false, prompts: false };
 
-    function fmt(d) { return d ? new Date(d).toLocaleDateString() : '—'; }
+    function fmt(d) { return d ? new Date(d).toLocaleDateString(getLang() || undefined) : '—'; }
     function badge(val, type) { return '<span class="badge badge-' + (val || '').replace(/\s/g,'_') + '">' + (val || '—') + '</span>'; }
 
     var loaders = {
       config: function() {
-        adminFetch(BASE + '/config').then(function(r) { return r.json(); }).then(function(c) {
+        adminFetch(BASE + '/config').then(function(r) {
+          if (!r.ok) throw new Error(r.status === 403 ? 'Access denied — admin role required' : 'HTTP ' + r.status);
+          return r.json();
+        }).then(function(c) {
+          if (c.error) throw new Error(c.error.message || 'Unknown error');
           var envBadge = document.getElementById('envBadge');
           envBadge.textContent = (c.node_env || 'dev').toUpperCase();
           envBadge.className = 'env-badge ' + (c.node_env === 'production' ? 'prod' : 'dev');
+          var providers = Array.isArray(c.llm_providers) ? c.llm_providers.join(', ') : 'None';
           var items = [
             ['Environment', c.node_env],
             ['Database', c.database_client],
             ['Port', c.port],
-            ['Uptime', Math.floor(c.uptime_seconds / 60) + ' min'],
-            ['Memory', c.memory_mb + ' MB'],
+            ['Uptime', Math.floor((c.uptime_seconds || 0) / 60) + ' min'],
+            ['Memory', (c.memory_mb || '?') + ' MB'],
             ['OpenAI', c.has_openai ? 'Configured' : 'Missing', c.has_openai],
             ['Groq', c.has_groq ? 'Configured' : 'Missing', c.has_groq],
             ['Gemini', c.has_gemini ? 'Key present' : 'Missing', c.has_gemini],
             ['Google OAuth', c.has_google_oauth ? 'Configured' : 'Missing', c.has_google_oauth],
             ['Database URL', c.has_database_url ? 'Set (PG)' : 'Not set (SQLite)', null],
             ['Session Secret', c.session_secret_set ? 'Custom' : 'Default', c.session_secret_set],
-            ['LLM Providers', c.llm_providers.join(', ') || 'None'],
+            ['LLM Providers', providers || 'None'],
           ];
           var html = '';
           items.forEach(function(item) {
@@ -197,7 +204,7 @@
         }).catch(function(err) { document.getElementById('configGrid').innerHTML = '<div class="loading-msg" style="color:var(--danger);">Failed to load config: ' + escHtml(err.message || 'Unknown error') + '</div>'; });
       },
       db: function() {
-        adminFetch(BASE + '/db-tables').then(function(r) { return r.json(); }).then(function(data) {
+        adminFetch(BASE + '/db-tables').then(function(r) { if (!r.ok) throw new Error(r.status === 403 ? 'Access denied — admin role required' : 'HTTP ' + r.status); return r.json(); }).then(function(data) {
           var html = '';
           Object.keys(data.tables).forEach(function(t) {
             html += '<div class="db-table-item"><span class="table-name">' + t + '</span><span class="table-count">' + data.tables[t] + '</span></div>';
@@ -206,56 +213,56 @@
         }).catch(function(err) { document.getElementById('dbTableGrid').innerHTML = '<div class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</div>'; });
       },
       users: function() {
-        adminFetch(BASE + '/users').then(function(r) { return r.json(); }).then(function(data) {
+        adminFetch(BASE + '/users').then(function(r) { if (!r.ok) throw new Error(r.status === 403 ? 'Access denied — admin role required' : 'HTTP ' + r.status); return r.json(); }).then(function(data) {
           var html = '';
           (data.users || []).forEach(function(u) {
-            html += '<tr><td>' + escHtml(u.name || '') + '</td><td>' + escHtml(u.email || '') + '</td><td>' + badge(u.role) + '</td><td>' + escHtml(u.institution_name || '—') + '</td><td>' + (u.preferred_language || 'en') + '</td><td>' + fmt(u.created_at) + '</td></tr>';
+            html += '<tr><td dir="auto">' + escHtml(u.name || '') + '</td><td>' + escHtml(u.email || '') + '</td><td>' + badge(u.role) + '</td><td dir="auto">' + escHtml(u.institution_name || '—') + '</td><td>' + (u.preferred_language || 'en') + '</td><td>' + fmt(u.created_at) + '</td></tr>';
           });
           document.getElementById('usersBody').innerHTML = html || '<tr><td colspan="6">No users</td></tr>';
         }).catch(function(err) { document.getElementById('usersBody').innerHTML = '<tr><td colspan="6" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
       },
       institutions: function() {
-        adminFetch(BASE + '/institutions').then(function(r) { return r.json(); }).then(function(data) {
+        adminFetch(BASE + '/institutions').then(function(r) { if (!r.ok) throw new Error(r.status === 403 ? 'Access denied — admin role required' : 'HTTP ' + r.status); return r.json(); }).then(function(data) {
           var html = '';
           (data.institutions || []).forEach(function(inst) {
             var deps = '';
             try { deps = JSON.parse(inst.departments || '[]').join(', '); } catch(e) { deps = inst.departments || ''; }
-            html += '<tr><td>' + escHtml(inst.name || '') + '</td><td>' + escHtml(inst.country || '—') + '</td><td>' + escHtml(deps || '—') + '</td><td>' + fmt(inst.created_at) + '</td></tr>';
+            html += '<tr><td dir="auto">' + escHtml(inst.name || '') + '</td><td dir="auto">' + escHtml(inst.country || '—') + '</td><td dir="auto">' + escHtml(deps || '—') + '</td><td>' + fmt(inst.created_at) + '</td></tr>';
           });
           document.getElementById('institutionsBody').innerHTML = html || '<tr><td colspan="4">No institutions</td></tr>';
         }).catch(function(err) { document.getElementById('institutionsBody').innerHTML = '<tr><td colspan="4" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
       },
       courses: function() {
-        adminFetch(BASE + '/courses').then(function(r) { return r.json(); }).then(function(data) {
+        adminFetch(BASE + '/courses').then(function(r) { if (!r.ok) throw new Error(r.status === 403 ? 'Access denied — admin role required' : 'HTTP ' + r.status); return r.json(); }).then(function(data) {
           var html = '';
           (data.courses || []).forEach(function(c) {
-            html += '<tr><td>' + escHtml(c.name || '') + '</td><td>' + escHtml(c.institution_name || '—') + '</td><td>' + badge(c.status) + '</td><td>' + c.subscribers + '</td><td>' + c.challenges_count + '</td><td>' + fmt(c.created_at) + '</td></tr>';
+            html += '<tr><td dir="auto">' + escHtml(c.name || '') + '</td><td dir="auto">' + escHtml(c.institution_name || '—') + '</td><td>' + badge(c.status) + '</td><td>' + c.subscribers + '</td><td>' + c.challenges_count + '</td><td>' + fmt(c.created_at) + '</td></tr>';
           });
           document.getElementById('coursesBody').innerHTML = html || '<tr><td colspan="6">No courses</td></tr>';
         }).catch(function(err) { document.getElementById('coursesBody').innerHTML = '<tr><td colspan="6" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
       },
       challenges: function() {
-        adminFetch(BASE + '/challenges').then(function(r) { return r.json(); }).then(function(data) {
+        adminFetch(BASE + '/challenges').then(function(r) { if (!r.ok) throw new Error(r.status === 403 ? 'Access denied — admin role required' : 'HTTP ' + r.status); return r.json(); }).then(function(data) {
           var html = '';
           (data.challenges || []).forEach(function(c) {
-            html += '<tr><td>' + escHtml(c.title || '') + '</td><td>' + escHtml(c.creator_name || '—') + '</td><td>' + escHtml(c.course_name || '—') + '</td><td>' + badge(c.challenge_type) + '</td><td>' + badge(c.visibility) + '</td><td>' + badge(c.status) + '</td><td>' + c.runs_count + '</td><td>' + fmt(c.created_at) + '</td></tr>';
+            html += '<tr><td dir="auto">' + escHtml(c.title || '') + '</td><td dir="auto">' + escHtml(c.creator_name || '—') + '</td><td dir="auto">' + escHtml(c.course_name || '—') + '</td><td>' + badge(c.challenge_type) + '</td><td>' + badge(c.visibility) + '</td><td>' + badge(c.status) + '</td><td>' + c.runs_count + '</td><td>' + fmt(c.created_at) + '</td></tr>';
           });
           document.getElementById('challengesBody').innerHTML = html || '<tr><td colspan="8">No challenges</td></tr>';
         }).catch(function(err) { document.getElementById('challengesBody').innerHTML = '<tr><td colspan="8" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
       },
       runs: function() {
-        adminFetch(BASE + '/runs').then(function(r) { return r.json(); }).then(function(data) {
+        adminFetch(BASE + '/runs').then(function(r) { if (!r.ok) throw new Error(r.status === 403 ? 'Access denied — admin role required' : 'HTTP ' + r.status); return r.json(); }).then(function(data) {
           var html = '';
           (data.runs || []).forEach(function(r) {
             var grades = '';
             try { var g = typeof r.grades === 'string' ? JSON.parse(r.grades) : (r.grades || {}); grades = [g.framing, g.judging, g.steering].filter(Boolean).join('/') || (r.framing_grade || '—'); } catch(e) { grades = r.framing_grade || '—'; }
-            html += '<tr><td>' + escHtml(r.user_name || '—') + '</td><td>' + escHtml(r.challenge_title || '—') + '</td><td>' + badge(r.status) + '</td><td>' + (r.current_cycle || 0) + '</td><td>' + grades + '</td><td>' + fmt(r.started_at || r.created_at) + '</td><td>' + fmt(r.completed_at) + '</td></tr>';
+            html += '<tr><td dir="auto">' + escHtml(r.user_name || '—') + '</td><td dir="auto">' + escHtml(r.challenge_title || '—') + '</td><td>' + badge(r.status) + '</td><td>' + (r.current_cycle || 0) + '</td><td>' + grades + '</td><td>' + fmt(r.started_at || r.created_at) + '</td><td>' + fmt(r.completed_at) + '</td></tr>';
           });
           document.getElementById('runsBody').innerHTML = html || '<tr><td colspan="7">No runs</td></tr>';
         }).catch(function(err) { document.getElementById('runsBody').innerHTML = '<tr><td colspan="7" class="loading-msg" style="color:var(--danger);">Failed to load: ' + escHtml(err.message || 'Unknown error') + '</td></tr>'; });
       },
       prompts: function() {
-        adminFetch(BASE + '/prompt-templates').then(function(r) { return r.json(); }).then(function(data) {
+        adminFetch(BASE + '/prompt-templates').then(function(r) { if (!r.ok) throw new Error(r.status === 403 ? 'Access denied — admin role required' : 'HTTP ' + r.status); return r.json(); }).then(function(data) {
           var html = '<h3 style="margin-bottom:12px;">File-based Templates (' + (data.file_templates || []).length + ')</h3>';
           (data.file_templates || []).forEach(function(t) {
             var id = 'prompt-' + t.filename.replace(/[^a-z0-9]/gi, '-');
@@ -285,7 +292,7 @@
     }
 
     // Load overview KPIs
-    adminFetch(BASE + '/overview').then(function(r) { return r.json(); }).then(function(d) {
+    adminFetch(BASE + '/overview').then(function(r) { if (!r.ok) throw new Error(r.status === 403 ? 'Access denied — admin role required' : 'HTTP ' + r.status); return r.json(); }).then(function(d) {
       document.getElementById('kpiUsers').textContent = d.users;
       document.getElementById('kpiInstitutions').textContent = d.institutions;
       document.getElementById('kpiCourses').textContent = d.courses;

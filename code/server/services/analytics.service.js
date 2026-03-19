@@ -198,14 +198,21 @@ class AnalyticsService {
       exported_at: new Date().toISOString(),
       runs: runs.map(r => {
         const runCycles = cyclesByRun[r.id] || [];
+        // Derive judging/steering from the last cycle (best representation)
+        const lastJudging = runCycles.reduce((g, c) => c.judging_grade || g, null);
+        const lastSteering = runCycles.reduce((g, c) => c.steering_grade || g, null);
         return {
+          id: r.id,
           run_id: r.id,
+          challenge_id: r.challenge_id,
           student_name: r.student_name,
           student_email: r.student_email,
           challenge_title: r.challenge_title,
           status: r.status,
           created_at: r.created_at,
           framing_grade: r.framing_grade || null,
+          judging_grade: lastJudging,
+          steering_grade: lastSteering,
           cycles: runCycles.map(c => ({
             cycle_num: c.cycle_num,
             judging_grade: c.judging_grade || null,

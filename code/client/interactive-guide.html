@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI CoReasoning Lab — Interactive Guide</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/logo.png">
+  <script src="content-compiled/all.js"></script>
+  <script src="content-loader.js"></script>
+  <script src="js/tooltips.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/user-header.js"></script>
+  <style>
+    .guide-container { max-width: 800px; margin: 0 auto; }
+
+    /* Progress bar */
+    .guide-progress { display: flex; align-items: center; gap: 0; margin-bottom: 32px; padding: 0 8px; }
+    .guide-progress .gp-step {
+      flex: 1; text-align: center; position: relative; padding: 12px 4px;
+      font-size: 11px; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: color .2s;
+    }
+    .guide-progress .gp-step::after {
+      content: ''; position: absolute; top: 50%; right: -8px; width: 16px; height: 2px; background: var(--border); transition: background .3s;
+    }
+    .guide-progress .gp-step:last-child::after { display: none; }
+    .guide-progress .gp-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%; background: var(--border); color: var(--text-secondary);
+      font-weight: 700; margin-bottom: 4px; transition: all .3s;
+    }
+    .guide-progress .gp-step.active .gp-num { background: var(--primary); color: #fff; }
+    .guide-progress .gp-step.done .gp-num { background: var(--success); color: #fff; }
+    .guide-progress .gp-step.done::after { background: var(--success); }
+    .guide-progress .gp-step.active { color: var(--primary); }
+    .guide-progress .gp-step.done { color: var(--success); }
+    .gp-label { display: block; margin-top: 2px; }
+
+    /* Step card */
+    .guide-step { display: none; animation: guideFadeIn .4s ease-out; }
+    .guide-step.active { display: block; }
+    @keyframes guideFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    .step-card { padding: 28px 32px; }
+    .step-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+    .step-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; }
+
+    /* Annotation callout */
+    .annotation {
+      background: #fff3e0; border-left: 4px solid var(--warning); border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 14px 18px; margin: 16px 0; font-size: 14px; line-height: 1.6; color: #6d4c00;
+    }
+    .annotation strong { color: #e65100; }
+
+    /* Problem panel (reusing challenge-run style) */
+    .guide-problem {
+      background: #f8f9ff; border-radius: var(--radius); padding: 20px; margin: 16px 0;
+      border-left: 4px solid var(--primary); font-size: 14px; line-height: 1.7; color: var(--text);
+    }
+    .guide-problem h4 { color: var(--primary); font-size: 13px; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+
+    /* Gap highlight */
+    .gap-list { list-style: none; padding: 0; margin: 12px 0; }
+    .gap-list li {
+      padding: 10px 14px; margin-bottom: 8px; border-radius: var(--radius);
+      background: #fce4ec; border-left: 3px solid var(--danger); font-size: 14px; color: #b71c1c;
+    }
+    .gap-list li strong { color: #c62828; }
+
+    /* MC options (guide version) */
+    .guide-mc { margin: 16px 0; }
+    .guide-mc-option {
+      display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px;
+      border: 1.5px solid var(--border); border-radius: var(--radius); margin-bottom: 8px;
+      font-size: 14px; line-height: 1.5; transition: all .15s;
+    }
+    .guide-mc-option.correct { border-color: var(--success); background: #e8f5e9; }
+    .guide-mc-option.incorrect { border-color: var(--danger); background: #fce4ec; }
+    .mc-icon {
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff;
+    }
+    .mc-icon.correct-icon { background: var(--success); }
+    .mc-icon.incorrect-icon { background: var(--danger); }
+    .mc-explanation { font-size: 12px; color: var(--text-secondary); margin-top: 4px; font-style: italic; }
+
+    /* AI output block */
+    .guide-ai-output {
+      background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 16px; margin: 16px 0; overflow: hidden;
+    }
+    .guide-ai-output .ai-label {
+      font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 8px;
+      text-transform: uppercase; letter-spacing: .5px;
+    }
+    .guide-ai-output pre {
+      background: #263238; color: #eeffff; padding: 16px; border-radius: var(--radius);
+      font-family: 'Consolas', 'Fira Code', monospace; font-size: 13px; line-height: 1.6;
+      overflow-x: auto; white-space: pre; margin: 8px 0;
+    }
+    .guide-ai-output p { font-size: 14px; line-height: 1.6; margin: 8px 0; }
+
+    /* Grade display */
+    .guide-grades { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+    .guide-grade-card {
+      text-align: center; padding: 20px; border-radius: var(--radius); border: 1.5px solid var(--border);
+    }
+    .guide-grade-card .grade-circle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px; border-radius: 50%; font-weight: 800; font-size: 24px; color: #fff; margin-bottom: 8px;
+    }
+    .guide-grade-card .grade-circle.grade-A { background: var(--grade-a); }
+    .guide-grade-card .grade-circle.grade-B { background: var(--grade-b); }
+    .guide-grade-card .grade-dim { font-size: 13px; font-weight: 600; color: var(--text); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+    .guide-grade-card .grade-feedback { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* CTA */
+    .guide-cta { text-align: center; padding: 20px 0; }
+    .guide-cta .btn { font-size: 16px; padding: 14px 36px; }
+
+    /* Navigation */
+    .guide-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
+    .guide-nav .btn { min-width: 120px; }
+    .step-counter { font-size: 13px; color: var(--text-secondary); font-weight: 600; }
+
+    @media (max-width: 768px) {
+      .guide-grades { grid-template-columns: 1fr; }
+      .guide-progress .gp-label { display: none; }
+      .guide-progress .gp-step { padding: 8px 2px; }
+      .step-card { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+  <header class="topnav">
+    <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
+    <nav>
+      <a href="challenge-list.html" data-t="challenges">Challenges</a>
+      <a href="course-catalog.html" data-t="courses">Courses</a>
+      <a href="student-analytics.html" data-t="myResults">My Results</a>
+    </nav>
+    <div class="user-area">
+      <a href="interactive-guide.html" class="guide-link active" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
+      <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
+      <span id="userName">&mdash;</span>
+      <a href="profile.html" aria-label="User profile"><div class="avatar" id="userAvatar">?</div></a>
+      <a href="#" class="btn-logout" onclick="API.auth.logout().then(()=>window.location.href='/login.html').catch(()=>window.location.href='/login.html');return false;" style="margin-left:8px;background:var(--primary);border:none;border-radius:var(--radius);padding:5px 14px;font-size:12px;color:#fff;cursor:pointer;text-decoration:none;font-weight:600;" data-t="logout">Logout</a>
+    </div>
+  </header>
+
+  <main class="page" id="main-content">
+    <div class="page-header">
+      <h1 data-t="interactiveGuide">Interactive Guide</h1>
+      <p data-t="interactiveGuideDesc">Walk through a simulated challenge run to learn how AI CoReasoning works</p>
+    </div>
+
+    <div class="guide-container" dir="auto">
+      <!-- Progress indicator -->
+      <div class="guide-progress" id="guideProgress">
+        <div class="gp-step active" onclick="goToStep(0)"><div class="gp-num">1</div><span class="gp-label" data-t="guideStepProblem">Problem</span></div>
+        <div class="gp-step" onclick="goToStep(1)"><div class="gp-num">2</div><span class="gp-label" data-t="guideStepGaps">Gaps</span></div>
+        <div class="gp-step" onclick="goToStep(2)"><div class="gp-num">3</div><span class="gp-label" data-t="guideStepFrame">Frame</span></div>
+        <div class="gp-step" onclick="goToStep(3)"><div class="gp-num">4</div><span class="gp-label" data-t="guideStepSolution">Solution</span></div>
+        <div class="gp-step" onclick="goToStep(4)"><div class="gp-num">5</div><span class="gp-label" data-t="guideStepJudge">Judge</span></div>
+        <div class="gp-step" onclick="goToStep(5)"><div class="gp-num">6</div><span class="gp-label" data-t="guideStepSteer">Steer</span></div>
+        <div class="gp-step" onclick="goToStep(6)"><div class="gp-num">7</div><span class="gp-label" data-t="guideStepGrades">Grades</span></div>
+        <div class="gp-step" onclick="goToStep(7)"><div class="gp-num">8</div><span class="gp-label" data-t="guideStepGo">Go!</span></div>
+      </div>
+
+      <!-- Step 1: Raw Problem -->
+      <div class="guide-step active" id="step-0">
+        <div class="card step-card">
+          <h2 data-t="guideStep1Title">Here's a raw problem</h2>
+          <p class="step-subtitle" data-t="guideStep1Subtitle">This is what an instructor gives you. Read it carefully — your job is to think critically about it before the AI starts working.</p>
+          <div class="guide-problem">
+            <h4 data-t="guideRawProblemLabel">Raw Problem Statement</h4>
+            <span data-t="guideRawProblemText">Design a real-time sorting module for an IoT sensor network. The system receives readings from a few hundred temperature sensors. It must sort recent readings by timestamp, handle data spikes during peak hours, and support a polling API that returns the latest sorted window. Optimize for low memory overhead.</span>
+          </div>
+          <div class="annotation">
+            <strong data-t="guideStep1AnnotationLabel">What's happening:</strong> <span data-t="guideStep1AnnotationText">In a real challenge, this is the first thing you see. The problem sounds reasonable, but is it complete enough for an AI to solve well? That's what you'll figure out next.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Notice gaps -->
+      <div class="guide-step" id="step-1">
+        <div class="card step-card">
+          <h2 data-t="guideStep2Title">Notice what's missing?</h2>
+          <p class="step-subtitle" data-t="guideStep2Subtitle">Real-world problems are often ambiguous. A key co-reasoning skill is spotting the gaps before the AI starts solving.</p>
+          <div class="guide-problem">
+            <h4 data-t="guideProblemAgainLabel">The problem again</h4>
+            <span data-t="guideRawProblemText">Design a real-time sorting module for an IoT sensor network. The system receives readings from a few hundred temperature sensors. It must sort recent readings by timestamp, handle data spikes during peak hours, and support a polling API that returns the latest sorted window. Optimize for low memory overhead.</span>
+          </div>
+          <ul class="gap-list">
+            <li data-t-html="guideGap1"><strong>Sort key is unclear:</strong> "Sort by timestamp" — but what about readings with identical timestamps? There is no tiebreaker strategy.</li>
+            <li data-t-html="guideGap2"><strong>"Few hundred" is vague:</strong> Is it 200? 500? 900? The data structure and algorithm choice depends heavily on actual scale.</li>
+            <li data-t-html="guideGap3"><strong>"Data spikes" is undefined:</strong> Does this mean 2x the normal rate? 100x? Should the system drop readings, buffer them, or handle all of them?</li>
+            <li data-t-html="guideGap4"><strong>No window size specified:</strong> "Latest sorted window" — how large? Last 10 seconds? Last 1000 readings? This changes the memory model entirely.</li>
+          </ul>
+          <div class="annotation">
+            <strong data-t="guideStep2AnnotationLabel">This is Framing:</strong> <span data-t="guideStep2AnnotationText">Before the AI writes a single line of code, you refine the problem by identifying what's missing, ambiguous, or under-specified. Better framing leads to better AI output.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Frame it -->
+      <div class="guide-step" id="step-2">
+        <div class="card step-card">
+          <h2 data-t="guideStep3Title">Frame it</h2>
+          <p class="step-subtitle" data-t="guideStep3Subtitle">Select the statements that correctly identify gaps or add useful constraints. In a real challenge, you pick from multiple-choice options.</p>
+          <div class="guide-mc">
+            <div class="guide-mc-option correct">
+              <div class="mc-icon correct-icon">&#10003;</div>
+              <div>
+                <div data-t="guideFrame1">The sort key needs a tiebreaker — when timestamps match, use sensor ID as secondary sort.</div>
+                <div class="mc-explanation" data-t="guideFrame1Exp">Correct: Identifies a genuine ambiguity and proposes a concrete resolution.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option correct">
+              <div class="mc-icon correct-icon">&#10003;</div>
+              <div>
+                <div data-t="guideFrame2">Define "few hundred" as exactly 500 sensors, each sending one reading per second.</div>
+                <div class="mc-explanation" data-t="guideFrame2Exp">Correct: Pins down a vague quantity with a specific, testable number.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option incorrect">
+              <div class="mc-icon incorrect-icon">&#10007;</div>
+              <div>
+                <div data-t="guideFrame3">Use Python because it's the most popular language for IoT.</div>
+                <div class="mc-explanation" data-t="guideFrame3Exp">Incorrect: This is an implementation choice, not a problem clarification. Framing is about the problem, not the solution.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option correct">
+              <div class="mc-icon correct-icon">&#10003;</div>
+              <div>
+                <div data-t="guideFrame4">Define "data spike" as up to 5x normal throughput and specify that no readings should be dropped.</div>
+                <div class="mc-explanation" data-t="guideFrame4Exp">Correct: Clarifies an ambiguous term with concrete parameters and a clear requirement.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option incorrect">
+              <div class="mc-icon incorrect-icon">&#10007;</div>
+              <div>
+                <div data-t="guideFrame5">The problem is clear enough — no additional constraints are needed.</div>
+                <div class="mc-explanation" data-t="guideFrame5Exp">Incorrect: The problem has several ambiguities that would lead to an incomplete solution.</div>
+              </div>
+            </div>
+          </div>
+          <div class="annotation">
+            <strong data-t="guideStep3AnnotationLabel">Scoring:</strong> <span data-t="guideStep3AnnotationText">You earn a higher Framing grade by correctly identifying real gaps and avoiding options that jump ahead to solutions or dismiss the need for clarification.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: AI solution -->
+      <div class="guide-step" id="step-3">
+        <div class="card step-card">
+          <h2 data-t="guideStep4Title">AI generates a solution</h2>
+          <p class="step-subtitle" data-t="guideStep4Subtitle">Based on your framing, the AI produces a solution. But AI solutions are often plausible yet flawed — your job is to evaluate it critically.</p>
+          <div class="guide-ai-output">
+            <div class="ai-label" data-t="guideAiSolutionLabel">AI-Generated Solution</div>
+            <p><strong data-t="guideApproachLabel">Approach:</strong> <span data-t="guideApproachText">Use a fixed-size circular buffer of 1000 entries, sorted via insertion sort on each new reading.</span></p>
+<pre>class SensorSorter:
+    def __init__(self, window=1000):
+        self.buffer = []
+        self.window = window
+
+    def ingest(self, reading):
+        # Insert in sorted position by timestamp
+        pos = bisect.bisect_left(
+            [r.timestamp for r in self.buffer],
+            reading.timestamp
+        )
+        self.buffer.insert(pos, reading)
+        # Trim to window size
+        if len(self.buffer) > self.window:
+            self.buffer.pop(0)
+
+    def get_sorted_window(self):
+        return self.buffer[:self.window]</pre>
+            <p><strong data-t="guideComplexityLabel">Complexity:</strong> <span data-t="guideComplexityText">O(n) per insertion due to list shift. Memory is bounded at O(window_size).</span></p>
+          </div>
+          <div class="annotation">
+            <strong data-t="guideStep4AnnotationLabel">Look carefully:</strong> <span data-t="guideStep4AnnotationText">This solution compiles and sounds reasonable, but it has real problems. Can you spot them? That's the next step.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: Judge -->
+      <div class="guide-step" id="step-4">
+        <div class="card step-card">
+          <h2 data-t="guideStep5Title">Judge the solution</h2>
+          <p class="step-subtitle" data-t="guideStep5Subtitle">Identify what's wrong with the AI's solution. Select the statements that correctly point out real issues.</p>
+          <div class="guide-mc">
+            <div class="guide-mc-option correct">
+              <div class="mc-icon correct-icon">&#10003;</div>
+              <div>
+                <div data-t-html="guideJudge1">The list comprehension <code>[r.timestamp for r in self.buffer]</code> rebuilds the entire key list on every insertion — this is O(n) overhead on top of the O(n) insert.</div>
+                <div class="mc-explanation" data-t="guideJudge1Exp">Correct: This is a genuine performance bug. The key extraction should use a separate sorted structure or SortedList.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option incorrect">
+              <div class="mc-icon incorrect-icon">&#10007;</div>
+              <div>
+                <div data-t="guideJudge2">The circular buffer concept is fundamentally wrong for this use case.</div>
+                <div class="mc-explanation" data-t="guideJudge2Exp">Incorrect: A bounded buffer is a reasonable approach for a sliding window — the implementation details are the problem, not the concept.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option correct">
+              <div class="mc-icon correct-icon">&#10003;</div>
+              <div>
+                <div data-t="guideJudge3">There is no tiebreaker when timestamps are identical — sensor ID should be used as a secondary sort key.</div>
+                <div class="mc-explanation" data-t="guideJudge3Exp">Correct: This was identified during framing but the AI ignored it in the implementation.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option correct">
+              <div class="mc-icon correct-icon">&#10003;</div>
+              <div>
+                <div data-t="guideJudge4">During data spikes (5x throughput), the O(n) insertion will cause latency buildup with 500 sensors sending simultaneously.</div>
+                <div class="mc-explanation" data-t="guideJudge4Exp">Correct: At 2500 readings/sec during spikes, O(n) per insert on a 1000-element list creates a real bottleneck.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option incorrect">
+              <div class="mc-icon incorrect-icon">&#10007;</div>
+              <div>
+                <div data-t="guideJudge5">Python is too slow for real-time systems; this should be rewritten in C++.</div>
+                <div class="mc-explanation" data-t="guideJudge5Exp">Incorrect: While language choice matters, judging is about evaluating the solution's logic and correctness, not making implementation decisions.</div>
+              </div>
+            </div>
+          </div>
+          <div class="annotation">
+            <strong data-t="guideStep5AnnotationLabel">Scoring:</strong> <span data-t="guideStep5AnnotationText">You earn a higher Judging grade by finding real logical and correctness issues. Avoid vague complaints or opinions about technology choices.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6: Steer -->
+      <div class="guide-step" id="step-5">
+        <div class="card step-card">
+          <h2 data-t="guideStep6Title">Steer the AI</h2>
+          <p class="step-subtitle" data-t="guideStep6Subtitle">Now guide the AI to fix its mistakes. Select the corrections that are specific and actionable.</p>
+          <div class="guide-mc">
+            <div class="guide-mc-option correct">
+              <div class="mc-icon correct-icon">&#10003;</div>
+              <div>
+                <div data-t="guideSteer1">Replace the list + bisect approach with a SortedList from the sortedcontainers library, which gives O(log n) insertion and avoids rebuilding the key list.</div>
+                <div class="mc-explanation" data-t="guideSteer1Exp">Correct: Specific fix, names the exact library, and explains why it solves the performance issue.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option incorrect">
+              <div class="mc-icon incorrect-icon">&#10007;</div>
+              <div>
+                <div data-t="guideSteer2">Make the sorting faster.</div>
+                <div class="mc-explanation" data-t="guideSteer2Exp">Incorrect: Too vague — the AI needs to know what to change and how. "Faster" doesn't guide anything.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option correct">
+              <div class="mc-icon correct-icon">&#10003;</div>
+              <div>
+                <div data-t="guideSteer3">Modify the sort key to be a tuple (timestamp, sensor_id) so that readings with identical timestamps are ordered deterministically.</div>
+                <div class="mc-explanation" data-t="guideSteer3Exp">Correct: Precise instruction — specifies the exact data structure change and the reason for it.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option correct">
+              <div class="mc-icon correct-icon">&#10003;</div>
+              <div>
+                <div data-t="guideSteer4">Add a spike detection mechanism: when ingest rate exceeds 2500/sec, switch to batch insertion (collect for 200ms, then bulk-sort) to amortize overhead.</div>
+                <div class="mc-explanation" data-t="guideSteer4Exp">Correct: Addresses the spike scenario with specific thresholds and a concrete strategy.</div>
+              </div>
+            </div>
+            <div class="guide-mc-option incorrect">
+              <div class="mc-icon incorrect-icon">&#10007;</div>
+              <div>
+                <div data-t="guideSteer5">The solution has too many bugs, please start over from scratch.</div>
+                <div class="mc-explanation" data-t="guideSteer5Exp">Incorrect: Throwing away work isn't steering — good corrections build on what exists and fix specific issues.</div>
+              </div>
+            </div>
+          </div>
+          <div class="annotation">
+            <strong data-t="guideStep6AnnotationLabel">Scoring:</strong> <span data-t="guideStep6AnnotationText">You earn a higher Steering grade by giving precise, constructive corrections. Tell the AI exactly what to change and why — not just "fix it."</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 7: Grades -->
+      <div class="guide-step" id="step-6">
+        <div class="card step-card">
+          <h2 data-t="guideStep7Title">See your grades</h2>
+          <p class="step-subtitle" data-t="guideStep7Subtitle">After completing all phases, you receive grades for each co-reasoning dimension with personalized feedback.</p>
+          <div class="guide-grades">
+            <div class="guide-grade-card">
+              <div class="grade-circle grade-A">A</div>
+              <div class="grade-dim" data-t="framing">Framing</div>
+              <div class="grade-feedback" data-t="guideGradeFramingFeedback">Excellent problem refinement. You identified all major ambiguities and added precise constraints that improved the AI's task specification.</div>
+            </div>
+            <div class="guide-grade-card">
+              <div class="grade-circle grade-B">B</div>
+              <div class="grade-dim" data-t="judging">Judging</div>
+              <div class="grade-feedback" data-t="guideGradeJudgingFeedback">Good critical evaluation. You caught the performance bug and the missing tiebreaker, but could have been more precise about the spike impact analysis.</div>
+            </div>
+            <div class="guide-grade-card">
+              <div class="grade-circle grade-B">B</div>
+              <div class="grade-dim" data-t="steering">Steering</div>
+              <div class="grade-feedback" data-t="guideGradeSteeringFeedback">Strong corrections with specific alternatives. The batch insertion strategy was creative. Consider also addressing edge cases like out-of-order arrivals.</div>
+            </div>
+          </div>
+          <div class="annotation">
+            <strong data-t="guideStep7AnnotationLabel">How grading works:</strong> <span data-t="guideStep7AnnotationText">Each dimension is graded A/B/C based on the quality of your choices. In practice mode you see feedback after each phase; in assessment mode, feedback is deferred until the end.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 8: CTA -->
+      <div class="guide-step" id="step-7">
+        <div class="card step-card" style="text-align:center; padding: 48px 32px;">
+          <h2 data-t="guideStep8Title">Ready to try a real challenge?</h2>
+          <p class="step-subtitle" style="max-width:500px;margin:0 auto 24px;" data-t="guideStep8Subtitle">You've seen how framing, judging, and steering work together. Now apply these skills to a real AI-generated challenge with live grading.</p>
+          <div class="guide-cta">
+            <a href="challenge-list.html" class="btn btn-primary btn-lg" data-t="guideStartRealChallenge">Start a Real Challenge</a>
+          </div>
+          <div class="annotation" style="text-align:left; margin-top:24px;">
+            <strong data-t="guideStep8AnnotationLabel">What's next:</strong> <span data-t="guideStep8AnnotationText">Browse the challenge list, pick a challenge from one of your courses, and run it in practice mode to get immediate feedback on each phase. As you improve, try assessment mode for a timed, unguided experience.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="guide-nav">
+        <button class="btn" id="btnPrev" onclick="prevStep()" disabled data-t-html="guidePrevious">&#8592; Previous</button>
+        <span class="step-counter" id="stepCounter" data-t="guideStepCounter">Step 1 of 8</span>
+        <button class="btn btn-primary" id="btnNext" onclick="nextStep()" data-t-html="guideNext">Next &#8594;</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/tour.js"></script>
+  <script src="js/help-popups.js"></script>
+  <script>
+  (function() {
+    'use strict';
+
+    var currentStep = 0;
+    var totalSteps = 8;
+    var steps = [];
+    var progressItems = [];
+
+    // Initialize
+    for (var i = 0; i < totalSteps; i++) {
+      steps.push(document.getElementById('step-' + i));
+    }
+    var progressEl = document.getElementById('guideProgress');
+    progressItems = progressEl.querySelectorAll('.gp-step');
+
+    window.goToStep = function(idx) {
+      if (idx < 0 || idx >= totalSteps) return;
+      // Only allow going to completed or current steps
+      if (idx > currentStep) return;
+      showStep(idx);
+    };
+
+    window.nextStep = function() {
+      if (currentStep < totalSteps - 1) {
+        showStep(currentStep + 1);
+      }
+    };
+
+    window.prevStep = function() {
+      if (currentStep > 0) {
+        showStep(currentStep - 1);
+      }
+    };
+
+    function showStep(idx) {
+      // Hide all steps
+      for (var i = 0; i < totalSteps; i++) {
+        steps[i].classList.remove('active');
+        if (i < idx) {
+          progressItems[i].className = 'gp-step done';
+        } else if (i === idx) {
+          progressItems[i].className = 'gp-step active';
+        } else {
+          progressItems[i].className = 'gp-step';
+        }
+      }
+      steps[idx].classList.add('active');
+      currentStep = idx;
+
+      // Update nav buttons
+      document.getElementById('btnPrev').disabled = (idx === 0);
+      var btnNext = document.getElementById('btnNext');
+      if (idx === totalSteps - 1) {
+        btnNext.style.display = 'none';
+      } else {
+        btnNext.style.display = '';
+      }
+
+      // Update counter
+      var stepLabel = (typeof t === 'function') ? t('guideStepXofY') : '';
+      if (!stepLabel || stepLabel === 'guideStepXofY') stepLabel = 'Step {0} of {1}';
+      document.getElementById('stepCounter').textContent = stepLabel.replace('{0}', idx + 1).replace('{1}', totalSteps);
+
+      // Scroll to top of step
+      window.scrollTo({ top: document.querySelector('.guide-progress').offsetTop - 20, behavior: 'smooth' });
+    }
+  })();
+  </script>
+</body>
+</html>

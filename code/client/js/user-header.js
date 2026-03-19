@@ -52,12 +52,27 @@
     REVERSE_ROLE_PAGE_MAP[ROLE_PAGE_MAP[studentPage]] = studentPage;
   });
 
+  // Instructor-only pages that students should be redirected away from
+  REVERSE_ROLE_PAGE_MAP['create-challenge.html'] = 'challenge-list.html';
+  REVERSE_ROLE_PAGE_MAP['edit-subject-tree.html'] = 'challenge-list.html';
+  REVERSE_ROLE_PAGE_MAP['add-course.html'] = 'course-catalog.html';
+
+  // Pages that require admin role
+  var ADMIN_PAGES = ['admin.html'];
+
   function enforceRoleGuard(user) {
     var path = window.location.pathname;
     var filename = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
     var role = user.role;
 
     if (!role) return; // no role info, skip guard
+
+    // Block non-admin users from admin pages
+    if (ADMIN_PAGES.indexOf(filename) !== -1 && role !== 'admin') {
+      var fallback = role === 'instructor' ? 'challenge-list-instructor.html' : 'challenge-list.html';
+      window.location.replace(fallback);
+      return;
+    }
 
     if (role === 'student' && REVERSE_ROLE_PAGE_MAP[filename]) {
       // Student on an instructor page — redirect to student equivalent
@@ -75,6 +90,12 @@
   API.auth.me().then(function(data) {
     var user = data.user || data;
     window._currentUser = user;
+
+    // MAJ-9: Hide admin link for non-admin users
+    var adminLink = document.querySelector('a[href*="admin"]');
+    if (adminLink && user.role !== 'admin') {
+      adminLink.style.display = 'none';
+    }
 
     // Auto-set language from user profile preference (avoids infinite reload
     // by only switching when the language actually differs)
@@ -117,8 +138,13 @@
     if (!avatarEl) {
       avatarEl = document.querySelector('.user-area .avatar');
     }
-    if (avatarEl && user.name) {
-      avatarEl.textContent = getInitials(user.name);
+    if (avatarEl) {
+      if (user.profile_image) {
+        avatarEl.textContent = '';
+        avatarEl.innerHTML = '<img src="' + user.profile_image + '" alt="' + (user.name || 'Avatar') + '" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+      } else if (user.name) {
+        avatarEl.textContent = getInitials(user.name);
+      }
     }
 
     // Update institution

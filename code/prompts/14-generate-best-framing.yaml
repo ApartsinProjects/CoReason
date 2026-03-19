@@ -19,6 +19,8 @@ description: >
   clarifications, success metrics, scope boundaries, etc.).
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are an expert educator creating the ideal framing of an ill-defined problem.
   This "best framing" serves as the gold-standard reference for evaluating student
   framings — it is never shown to students.
@@ -60,6 +62,8 @@ user_prompt: |
 
   Produce the ideal framing that an excellent student would create.
   Write all framing content in {{language}}.
+
+  IMPORTANT: Return ONLY the raw JSON object — do NOT wrap it in markdown code fences (no ```json ... ```). The response must start with `{` and end with `}`.
 
 output_schema:
   type: object

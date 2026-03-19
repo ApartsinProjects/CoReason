@@ -9,7 +9,7 @@ const { ForbiddenError, AuthError } = require('../utils/errors');
 
 module.exports = function challengeRoutes(db, logger, llmService) {
   const router = Router();
-  const challengeService = new ChallengeService(db, logger);
+  const challengeService = new ChallengeService(db, logger, llmService);
 
   // GET /api/v1/challenges
   router.get('/', optionalAuth, async (req, res, next) => {
@@ -40,6 +40,7 @@ module.exports = function challengeRoutes(db, logger, llmService) {
         course: course || 'General',
         subject: subjects.join(', '),
         instructions: '',
+        language: req.body.language,
       });
       res.json({ problem });
     } catch (err) {
@@ -130,6 +131,27 @@ module.exports = function challengeRoutes(db, logger, llmService) {
     try {
       const challenge = await challengeService.publish(req.params.id, req.user.id);
       res.json(challenge);
+    } catch (err) { next(err); }
+  });
+
+  // POST /api/v1/challenges/:id/preview — Preview as Student (instructor-only)
+  router.post('/:id/preview', requireAuth, async (req, res, next) => {
+    try {
+      if (req.user.role !== 'instructor') {
+        return next(new ForbiddenError('Only instructors can preview challenges'));
+      }
+      const { ChallengeRunService } = require('../services/challenge-run.service');
+      const runService = new ChallengeRunService(db, logger, llmService);
+      const preview = await runService.previewAsStudent(req.params.id, req.user.id);
+      res.json(preview);
+    } catch (err) { next(err); }
+  });
+
+  // POST /api/v1/challenges/:id/clone — Clone a challenge
+  router.post('/:id/clone', requireAuth, async (req, res, next) => {
+    try {
+      const cloned = await challengeService.clone(req.params.id, req.user.id);
+      res.status(201).json(cloned);
     } catch (err) { next(err); }
   });
 

@@ -97,6 +97,11 @@
     .step-indicator { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
     .step-indicator .step-num-small { width: 20px; height: 20px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
 
+    .grade-override { margin-top: 12px; }
+    .grade-override select { padding: 4px 8px; border-radius: var(--radius); border: 1px solid var(--border); font-size: 13px; }
+    .grade-override .btn-sm { padding: 4px 10px; font-size: 12px; }
+    .grade-override-info { font-size: 11px; color: var(--text-secondary); margin-top: 4px; font-style: italic; }
+
     .loading-state { text-align: center; padding: 60px 20px; color: var(--text-secondary); font-size: 16px; }
     .loading-state .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -120,6 +125,7 @@
   <script src="js/user-header.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
@@ -128,7 +134,8 @@
       <a href="student-analytics.html" class="active" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
-      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <a href="interactive-guide.html" class="guide-link" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
       <span id="userName">&mdash;</span>
@@ -137,7 +144,7 @@
     </div>
   </header>
 
-  <main class="page">
+  <main class="page" id="main-content">
     <a href="student-analytics.html" class="back-link" data-t="backToMyResults">&#8592; Back to My Results</a>
 
     <div id="loadingState" class="loading-state">
@@ -209,7 +216,16 @@
         <div class="section-body" id="finalGradesBody"></div>
       </div>
 
-      <!-- Section 6: What Could Be Better -->
+      <!-- Section 6: How You Were Evaluated (Rubric) -->
+      <div class="section collapsed" id="section-rubric" style="display:none">
+        <div class="section-header" onclick="toggleSection('section-rubric')">
+          <h3>&#128202; <span data-t="howYouWereEvaluated">How You Were Evaluated</span></h3>
+          <span class="section-arrow">&#9660;</span>
+        </div>
+        <div class="section-body" id="rubricBody"></div>
+      </div>
+
+      <!-- Section 7: What Could Be Better -->
       <div class="section" id="section-better">
         <div class="section-header" onclick="toggleSection('section-better')">
           <h3>&#128161; <span data-t="whatCouldBeBetter">What Could Be Better</span></h3>
@@ -236,13 +252,13 @@
     function formatDate(dateStr) {
       if (!dateStr) return '';
       var d = new Date(dateStr);
-      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      return d.toLocaleDateString(getLang() || undefined, { month: 'short', day: 'numeric', year: 'numeric' });
     }
 
     function formatShortDate(dateStr) {
       if (!dateStr) return '';
       var d = new Date(dateStr);
-      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      return d.toLocaleDateString(getLang() || undefined, { month: 'short', day: 'numeric' });
     }
 
     function computeDurationMinutes(startedAt, completedAt) {
@@ -263,7 +279,7 @@
           : '<span style="text-decoration:line-through;">' + escapeHtml(sel.label || '') + '</span> ' + escapeHtml(sel.text || '');
         return '<div class="mc-selection ' + cssClass + '">' +
           '<div class="mc-icon ' + iconClass + '">' + iconChar + '</div>' +
-          '<div class="mc-text">' + textContent + '</div>' +
+          '<div class="mc-text" dir="auto">' + textContent + '</div>' +
           '</div>';
       }).join('');
     }
@@ -271,13 +287,28 @@
     function renderGradeBadge(grade, extraStyle) {
       if (!grade) return '';
       var style = extraStyle || '';
-      return '<span class="grade grade-' + escapeHtml(grade) + '" ' + (style ? 'style="' + style + '"' : '') + '>' + escapeHtml(grade) + '</span>';
+      return '<span class="grade grade-' + escapeHtml(grade) + '" data-tooltip="grade' + escapeHtml(grade) + '" aria-label="Grade ' + escapeHtml(grade) + '" ' + (style ? 'style="' + style + '"' : '') + '>' + escapeHtml(grade) + '</span>';
     }
 
     function renderTextOrHtml(content) {
       // Always escape to prevent XSS; convert newlines to <br> for readability
       var escaped = escapeHtml(content || '');
-      return '<p>' + escaped.replace(/\n/g, '<br>') + '</p>';
+      return '<p dir="auto">' + escaped.replace(/\n/g, '<br>') + '</p>';
+    }
+
+    async function overrideGrade(phase) {
+      var sel = document.getElementById('override-' + phase);
+      var grade = sel ? sel.value : '';
+      if (!grade) { alert(t('selectGrade') || 'Please select a grade'); return; }
+      var runId = new URLSearchParams(window.location.search).get('runId');
+      var reason = prompt(t('overrideReason') || 'Reason for override (optional):', '');
+      try {
+        await API.runs.overrideGrade(runId, phase, grade, reason || '');
+        alert(t('gradeOverridden') || 'Grade overridden successfully');
+        loadReport(); // Reload to show updated grades
+      } catch (err) {
+        alert((t('overrideFailed') || 'Override failed') + ': ' + err.message);
+      }
     }
 
     async function loadReport() {
@@ -301,11 +332,65 @@
       document.getElementById('errorMessage').textContent = msg;
     }
 
+    // Normalize a phase response into { selections:[], text:'' } shape
+    function normalizeResponse(resp, mcOptions) {
+      if (!resp) return null;
+      // Already structured with selections
+      if (typeof resp === 'object' && resp.selections) return resp;
+      // Open-ended with sections array
+      if (typeof resp === 'object' && resp.sections) {
+        var textParts = resp.sections.map(function(s) { return s.text || ''; }).filter(Boolean);
+        return { selections: [], text: textParts.join('\n') || '' };
+      }
+      // Plain string — could be MC letter(s) like "A" or open-ended text
+      if (typeof resp === 'string') {
+        // If MC options available, match letters to show what was selected
+        if (mcOptions && mcOptions.length && resp.length <= 3) {
+          var selections = mcOptions.map(function(o) {
+            return { label: o.letter || o.label || '', text: o.text || o.option || '', selected: resp.indexOf(o.letter || o.label || '') >= 0, chosen: resp.indexOf(o.letter || o.label || '') >= 0 };
+          });
+          return { selections: selections, text: '' };
+        }
+        return { selections: [], text: resp };
+      }
+      // Object without known keys — show as text
+      return { selections: [], text: JSON.stringify(resp) };
+    }
+
     function renderReport(data) {
       var run = data.run || {};
+
+      // Map flat run fields to structured framing object the renderer expects
       var framing = data.framing || {};
-      var cycles = data.cycles || [];
-      var finalGrades = data.final_grades || {};
+      if (!data.framing && run.framing_response != null) {
+        framing = {
+          response: normalizeResponse(run.framing_response, data.framingOptions),
+          feedback: run.framing_feedback || {},
+          grade: run.framing_grade || (run.grades ? (typeof run.grades === 'object' ? run.grades.framing : '') : '')
+        };
+      }
+
+      // Map cycles to structured objects the renderer expects
+      var rawCycles = data.cycles || [];
+      var cycles = rawCycles.map(function(c) {
+        var jOpts = c.mc_options && c.mc_options.judging ? c.mc_options.judging : (c.mc_options || null);
+        var sOpts = c.mc_options && c.mc_options.steering ? c.mc_options.steering : (c.mc_options || null);
+        return {
+          cycle_num: c.cycle_num,
+          judging: { response: normalizeResponse(c.judging_response, jOpts), feedback: c.judging_feedback || {}, grade: c.judging_grade || '' },
+          steering: { response: normalizeResponse(c.steering_response, sOpts), feedback: c.steering_feedback || {}, grade: c.steering_grade || '' },
+          ai_output: c.updated_output || c.ai_output || '',
+          updated_output: c.updated_output || ''
+        };
+      });
+
+      var finalGrades = data.final_grades || (run.grades ? (typeof run.grades === 'string' ? JSON.parse(run.grades) : run.grades) : {});
+
+      // Map challenge info onto run for convenience
+      var challenge = data.challenge || {};
+      if (!run.challenge_title && challenge.title) run.challenge_title = challenge.title;
+      if (!run.challenge_type && challenge.challengeType) run.challenge_type = challenge.challengeType;
+      if (!run.max_cycles && challenge.maxCycles) run.max_cycles = challenge.maxCycles;
 
       // --- Report Meta ---
       var metaHtml = '';
@@ -341,19 +426,30 @@
       ['framing', 'judging', 'steering'].forEach(function(skill) {
         var g = finalGrades[skill] || '';
         summaryHtml += '<div class="summary-grade-item">' +
-          '<div class="summary-grade-circle grade-' + escapeHtml(g) + '">' + escapeHtml(g) + '</div>' +
+          '<div class="summary-grade-circle grade-' + escapeHtml(g) + '" data-tooltip="grade' + escapeHtml(g) + '" aria-label="Grade ' + escapeHtml(g) + '">' + escapeHtml(g) + '</div>' +
           '<div class="summary-grade-label" data-t="' + skill + '">' + skill.charAt(0).toUpperCase() + skill.slice(1) + '</div>' +
           '</div>';
       });
       document.getElementById('summaryGrades').innerHTML = summaryHtml;
 
       // --- Problem Section ---
-      var problemHtml = '<div class="problem-block">' +
-        '<h4 data-t="problemStatement">Problem Statement</h4>' +
-        '<p>' + escapeHtml(data.problem || '') + '</p>' +
-        '</div>';
+      var rawProblem = data.rawProblem || data.problem || run.raw_problem || '';
+      var problemHtml = '';
+      if (rawProblem) {
+        problemHtml += '<div class="problem-block">' +
+          '<h4 data-t="problemStatement">Problem Statement</h4>' +
+          '<p dir="auto">' + escapeHtml(rawProblem) + '</p>' +
+          '</div>';
+        // Expand the section if there's content
+        document.getElementById('section-problem').classList.remove('collapsed');
+      } else {
+        problemHtml += '<div class="problem-block" style="opacity:.6;">' +
+          '<h4 data-t="problemStatement">Problem Statement</h4>' +
+          '<p dir="auto" style="font-style:italic;color:var(--text-secondary);">' + (t('problemNotAvailable') || 'Problem text not available for this challenge.') + '</p>' +
+          '</div>';
+      }
       if (run.course_name) {
-        problemHtml += '<div class="submission-block"><h4 data-t="course">Course</h4><p>' + escapeHtml(run.course_name) + '</p></div>';
+        problemHtml += '<div class="submission-block"><h4 data-t="course">Course</h4><p dir="auto">' + escapeHtml(run.course_name) + '</p></div>';
       }
       document.getElementById('problemBody').innerHTML = problemHtml;
 
@@ -367,7 +463,15 @@
           framingHtml += renderSelections(framing.response.selections);
         }
         if (framing.response.text) {
-          framingHtml += '<p>' + escapeHtml(framing.response.text) + '</p>';
+          framingHtml += '<p dir="auto">' + escapeHtml(framing.response.text) + '</p>';
+        }
+        // Fallback: if response exists but both selections and text are empty, show raw
+        if ((!framing.response.selections || !framing.response.selections.length) && !framing.response.text) {
+          var rawResp = run.framing_response;
+          if (rawResp) {
+            var respStr = typeof rawResp === 'string' ? rawResp : JSON.stringify(rawResp);
+            framingHtml += '<p dir="auto">' + escapeHtml(respStr) + '</p>';
+          }
         }
         framingHtml += '</div>';
       }
@@ -375,11 +479,11 @@
       framingHtml += '<div class="step-indicator"><span class="step-num-small">2</span> <span data-t="aiEvaluatedFraming">AI evaluated framing quality</span></div>';
       if (framing.feedback) {
         framingHtml += '<div class="feedback-block"><h4 data-t="aiFeedback">AI Feedback</h4>';
-        framingHtml += renderTextOrHtml(framing.feedback.html || framing.feedback.strengths || '');
+        framingHtml += renderTextOrHtml(framing.feedback.html || framing.feedback.message || framing.feedback.strengths || '');
         framingHtml += '</div>';
         if (framing.feedback.improvements) {
           framingHtml += '<div class="feedback-block better"><h4 data-t="whatCouldBeBetter">What could be better</h4>';
-          framingHtml += '<p>' + escapeHtml(framing.feedback.improvements) + '</p></div>';
+          framingHtml += '<p dir="auto">' + escapeHtml(framing.feedback.improvements) + '</p></div>';
         }
       }
       // Grade
@@ -391,7 +495,7 @@
       // --- AI Initial Output ---
       var aiInitHtml = '<div class="ai-block">' +
         '<h4 data-t="generatedSolution">Generated Solution</h4>' +
-        '<p>' + escapeHtml(data.ai_solution || '') + '</p>' +
+        '<p dir="auto">' + escapeHtml(run.ai_solution || data.ai_solution || '') + '</p>' +
         '</div>' +
         '<p style="font-size:13px;color:var(--text-secondary);font-style:italic;" data-t="aiOutputNote">This output was presented to the student for evaluation in Phase 2.</p>';
       document.getElementById('aiInitialBody').innerHTML = aiInitHtml;
@@ -413,15 +517,17 @@
           cyclesHtml += '<div class="step-indicator"><span class="step-num-small">' + stepNum + '</span> <span data-t="studentJudgedOutput">Student judged AI output</span></div>';
           stepNum++;
           cyclesHtml += '<div class="cycle-row-label judging" data-t="judgingSelections" style="margin-bottom:8px;">Judging &#8212; Issues identified</div>';
-          if (cycle.judging.response && cycle.judging.response.selections) {
-            cyclesHtml += renderSelections(cycle.judging.response.selections);
-          }
-          if (cycle.judging.response && cycle.judging.response.text) {
-            cyclesHtml += '<div class="submission-block"><p>' + escapeHtml(cycle.judging.response.text) + '</p></div>';
+          if (cycle.judging.response) {
+            if (cycle.judging.response.selections && cycle.judging.response.selections.length) {
+              cyclesHtml += renderSelections(cycle.judging.response.selections);
+            }
+            if (cycle.judging.response.text) {
+              cyclesHtml += '<div class="submission-block"><p dir="auto">' + escapeHtml(cycle.judging.response.text) + '</p></div>';
+            }
           }
           if (cycle.judging.feedback) {
             cyclesHtml += '<div class="feedback-block" style="margin-top:12px;"><h4 data-t="judgingFeedback">Judging Feedback</h4>';
-            cyclesHtml += renderTextOrHtml(cycle.judging.feedback.html || '');
+            cyclesHtml += renderTextOrHtml(cycle.judging.feedback.html || cycle.judging.feedback.message || '');
             cyclesHtml += '</div>';
           }
           if (cycle.judging.grade) {
@@ -434,15 +540,17 @@
           cyclesHtml += '<div class="step-indicator"><span class="step-num-small">' + stepNum + '</span> <span data-t="studentSteeredAI">Student steered AI corrections</span></div>';
           stepNum++;
           cyclesHtml += '<div class="cycle-row-label steering" data-t="steeringDirections" style="margin-bottom:8px;">Steering &#8212; Corrections directed</div>';
-          if (cycle.steering.response && cycle.steering.response.selections) {
-            cyclesHtml += renderSelections(cycle.steering.response.selections);
-          }
-          if (cycle.steering.response && cycle.steering.response.text) {
-            cyclesHtml += '<div class="submission-block"><p>' + escapeHtml(cycle.steering.response.text) + '</p></div>';
+          if (cycle.steering.response) {
+            if (cycle.steering.response.selections && cycle.steering.response.selections.length) {
+              cyclesHtml += renderSelections(cycle.steering.response.selections);
+            }
+            if (cycle.steering.response.text) {
+              cyclesHtml += '<div class="submission-block"><p dir="auto">' + escapeHtml(cycle.steering.response.text) + '</p></div>';
+            }
           }
           if (cycle.steering.feedback) {
             cyclesHtml += '<div class="feedback-block" style="margin-top:12px;"><h4 data-t="steeringFeedback">Steering Feedback</h4>';
-            cyclesHtml += renderTextOrHtml(cycle.steering.feedback.html || '');
+            cyclesHtml += renderTextOrHtml(cycle.steering.feedback.html || cycle.steering.feedback.message || '');
             cyclesHtml += '</div>';
           }
           if (cycle.steering.grade) {
@@ -458,7 +566,7 @@
             : 'AI Updated Output (after Cycle ' + cycle.cycle_num + ')';
           cyclesHtml += '<div class="ai-block" style="margin-top:12px;">' +
             '<h4 data-t="' + outputLabel + '">' + escapeHtml(outputText) + '</h4>' +
-            '<p>' + escapeHtml(cycle.ai_output) + '</p></div>';
+            '<p dir="auto">' + escapeHtml(cycle.ai_output) + '</p></div>';
         }
 
         cyclesHtml += '</div>';
@@ -466,14 +574,25 @@
       document.getElementById('cyclesBody').innerHTML = cyclesHtml;
 
       // --- Final Grades ---
+      var isInstructor = window._currentUser && window._currentUser.role === 'instructor';
       var finalHtml = '<div class="final-grades">';
       ['framing', 'judging', 'steering'].forEach(function(skill) {
         var g = finalGrades[skill] || '';
         var gradeColor = 'var(--grade-' + g.toLowerCase() + ')';
+        var overrideInfo = finalGrades[skill + '_override'];
         finalHtml += '<div class="final-grade-card" style="border-top: 3px solid ' + gradeColor + ';">' +
           '<h4 data-t="' + skill + '">' + skill.charAt(0).toUpperCase() + skill.slice(1) + '</h4>' +
-          renderGradeBadge(g, 'width:40px;height:40px;font-size:20px;') +
-          '</div>';
+          renderGradeBadge(g, 'width:40px;height:40px;font-size:20px;');
+        if (overrideInfo) {
+          finalHtml += '<div class="grade-override-info">' + (t('overriddenFrom') || 'Overridden from') + ' ' + escapeHtml(overrideInfo.original || '?') + '</div>';
+        }
+        if (isInstructor) {
+          finalHtml += '<div class="grade-override">' +
+            '<select id="override-' + skill + '"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option></select>' +
+            ' <button class="btn btn-outline btn-sm" onclick="overrideGrade(\'' + skill + '\')" data-t="override">Override</button>' +
+            '</div>';
+        }
+        finalHtml += '</div>';
       });
       finalHtml += '</div>';
       document.getElementById('finalGradesBody').innerHTML = finalHtml;
@@ -489,6 +608,36 @@
         document.getElementById('section-better').style.display = 'none';
       }
 
+      // --- Rubric Section ---
+      var rubrics = challenge.rubrics || null;
+      if (rubrics) {
+        var rubricHtml = '';
+        ['framing', 'judging', 'steering'].forEach(function(dimension) {
+          var rubricData = rubrics[dimension];
+          if (!rubricData) return;
+          var criteria = Array.isArray(rubricData) ? rubricData : (rubricData.criteria || []);
+          if (criteria.length === 0) return;
+          var dimLabel = dimension.charAt(0).toUpperCase() + dimension.slice(1);
+          rubricHtml += '<div class="submission-block" style="margin-bottom:16px;">';
+          rubricHtml += '<h4 data-t="' + dimension + 'Rubric">' + escapeHtml(dimLabel) + ' Rubric</h4>';
+          rubricHtml += '<ul style="margin:8px 0 0 16px;">';
+          criteria.forEach(function(c) {
+            var name = c.name || c.criterion || c.title || '';
+            var desc = c.description || c.desc || c.text || '';
+            if (name || desc) {
+              rubricHtml += '<li style="margin-bottom:6px;"><strong>' + escapeHtml(name) + '</strong>';
+              if (desc) rubricHtml += ' &mdash; ' + escapeHtml(desc);
+              rubricHtml += '</li>';
+            }
+          });
+          rubricHtml += '</ul></div>';
+        });
+        if (rubricHtml) {
+          document.getElementById('rubricBody').innerHTML = rubricHtml;
+          document.getElementById('section-rubric').style.display = '';
+        }
+      }
+
       // Show content, hide loading
       document.getElementById('loadingState').style.display = 'none';
       document.getElementById('reportContent').style.display = 'block';
@@ -496,6 +645,9 @@
       // Re-apply i18n if available
       if (typeof translatePage === 'function') {
         translatePage();
+      }
+      if (typeof reinitTooltips === 'function') {
+        reinitTooltips();
       }
     }
 

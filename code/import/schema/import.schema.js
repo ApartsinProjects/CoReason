@@ -31,6 +31,11 @@ const CourseSchema = z.object({
   steward_config: z.record(z.any()).optional(),
 });
 
+const SubscriptionSchema = z.object({
+  user: z.string().email(),
+  course: z.string().min(1),
+});
+
 const ChallengeSchema = z.object({
   title: z.string().min(1),
   course: z.string().optional(),
@@ -51,7 +56,8 @@ const ImportSchema = z.object({
     users: z.array(UserSchema).optional(),
     courses: z.array(CourseSchema).optional(),
     challenges: z.array(ChallengeSchema).optional(),
+    subscriptions: z.array(SubscriptionSchema).optional(),
   }),
 });
 
-module.exports = { ImportSchema, InstitutionSchema, UserSchema, CourseSchema, ChallengeSchema, SubjectNodeSchema };
+module.exports = { ImportSchema, InstitutionSchema, UserSchema, CourseSchema, ChallengeSchema, SubjectNodeSchema, SubscriptionSchema };

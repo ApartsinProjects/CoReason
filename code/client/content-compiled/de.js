@@ -68,6 +68,8 @@ window.CONTENT["de"] = {
     "login": "Anmelden",
     "signUp": "Registrieren",
     "signIn": "Einloggen",
+    "signingIn": "Anmeldung läuft...",
+    "creatingAccount": "Konto wird erstellt...",
     "email": "E-Mail-Adresse",
     "password": "Passwort",
     "fullName": "Vollständiger Name",
@@ -106,6 +108,10 @@ window.CONTENT["de"] = {
     "allTypes": "Alle Typen",
     "allGrades": "Alle Noten",
     "noMatchingResults": "Keine Ergebnisse entsprechen den ausgewählten Filtern.",
+    "noMatchingChallenges": "Keine Aufgaben entsprechen den ausgewählten Filtern.",
+    "guide": "Leitfaden",
+    "interactiveGuide": "Interaktiver Leitfaden",
+    "interactiveGuideDesc": "Durchlaufen Sie eine simulierte Aufgabe, um die Funktionsweise des KI-Co-Reasonings kennenzulernen",
     "allStatus": "Alle Status",
     "allVisibility": "Alle Sichtbarkeiten",
     "notStarted": "Nicht begonnen",
@@ -349,7 +355,193 @@ window.CONTENT["de"] = {
     "importExport": "Importieren / Exportieren",
     "aiGenerationFailed": "KI-Generierung fehlgeschlagen",
     "failedLoadProfile": "Profil konnte nicht geladen werden",
-    "failedLoadSubjects": "Themen konnten nicht geladen werden"
+    "failedLoadSubjects": "Themen konnten nicht geladen werden",
+    "quickTestLogin": "Schnellanmeldung — Demo-Benutzer",
+    "signInAsTestUser": "Als Demo-Benutzer anmelden",
+    "framingTaskInstruction": "🎯 <strong>Ihre Aufgabe:</strong> Lesen Sie das Problem sorgfältig. Es ist absichtlich vage formuliert — identifizieren Sie, was fehlt, unklar oder vorausgesetzt wird. Wählen Sie die Verfeinerungen aus, die dieses Problem klar definieren würden.",
+    "judgingTaskInstruction": "🔍 <strong>Ihre Aufgabe:</strong> Die Lösung der KI sieht auf den ersten Blick korrekt aus, enthält aber subtile Fehler. Suchen Sie nach falschen Annahmen, fehlenden Grenzfällen, logischen Fehlern und übermäßigen Vereinfachungen. Wählen Sie ALLE Probleme aus, die Sie finden.",
+    "steeringTaskInstruction": "🎮 <strong>Ihre Aufgabe:</strong> Leiten Sie nun die KI an, die gefundenen Probleme zu beheben. Wählen Sie spezifische, umsetzbare Korrekturen — keine vagen Anweisungen wie „machen Sie es besser“.",
+    "howYouWereEvaluated": "Wie Sie bewertet wurden",
+    "framingRubric": "Rahmungsrubrik",
+    "judgingRubric": "Beurteilungsrubrik",
+    "steeringRubric": "Steuerungsrubrik",
+    "tour_welcome": "Willkommen im AI CoReasoning Lab!",
+    "tour_welcome_text": "Dies ist Ihre Lernplattform zur Entwicklung kritischer KI-Bewertungskompetenzen.",
+    "tour_challenges": "Ihre Aufgaben",
+    "tour_challenges_text": "Durchsuchen Sie verfügbare Aufgaben, filtern Sie nach Kurs, Typ oder Status.",
+    "tour_courses": "Kurskatalog",
+    "tour_courses_text": "Abonnieren Sie Kurse, um auf deren Aufgaben zuzugreifen und Ihren Fortschritt zu verfolgen.",
+    "tour_analytics": "Ihre Analytik",
+    "tour_analytics_text": "Sehen Sie Ihre Noten ein und verfolgen Sie Ihre Verbesserung in Rahmung, Beurteilung und Steuerung.",
+    "tour_language": "Sprache",
+    "tour_language_text": "Wechseln Sie die Sprache der Benutzeroberfläche.",
+    "tour_profile": "Ihr Profil",
+    "tour_profile_text": "Sehen und bearbeiten Sie Ihr Profil, Ihre Statistiken und Einstellungen.",
+    "tour_welcome_instructor": "Willkommen, Dozent!",
+    "tour_welcome_instructor_text": "Erstellen Sie Aufgaben, verwalten Sie Kurse und verfolgen Sie die Leistung Ihrer Studierenden.",
+    "tour_challenge_mgmt": "Aufgabenverwaltung",
+    "tour_challenge_mgmt_text": "Erstellen, veröffentlichen und verwalten Sie Aufgaben für Ihre Studierenden.",
+    "tour_course_mgmt": "Kursverwaltung",
+    "tour_course_mgmt_text": "Treten Sie Kursen als Betreuer bei und konfigurieren Sie LLM-Einstellungen.",
+    "tour_analytics_dash": "Analytik-Dashboard",
+    "tour_analytics_dash_text": "Sehen Sie Studierendenleistungen, Notenverteilungen und exportieren Sie Berichte.",
+    "tour_skip": "Überspringen",
+    "tour_back": "Zurück",
+    "tour_next": "Weiter →",
+    "tour_done": "Fertig!",
+    "startGuide": "Leitfaden",
+    "tooltip_rawProblem": "WARUM: Probleme aus der realen Welt werden selten in einer klaren, lösbaren Form präsentiert. Zu erkennen, was fehlt oder mehrdeutig ist, ist der erste Schritt einer effektiven KI-Zusammenarbeit. WAS: Dies ist ein rohes, absichtlich unvollständiges Problem, das aus Ihrem Kursmaterial generiert wurde. Es enthält Lücken, unausgesprochene Annahmen und Mehrdeutigkeiten, die Sie klären müssen, bevor die KI eine nützliche Lösung erzeugen kann. WIE: Lesen Sie das Problem sorgfältig. Fragen Sie sich: Welche Informationen fehlen? Welche Begriffe sind vage? Welche Annahmen werden getroffen? Ihr Ziel ist es, im nächsten Schritt zu identifizieren, was geklärt oder ergänzt werden muss.",
+    "tooltip_refinement": "WARUM: Anfängliche Problemstellungen sind oft unvollständig oder mehrdeutig. Verfeinerungen reduzieren Unsicherheit, gleichen Erwartungen ab und helfen der KI, genauere, relevantere und überprüfbare Ergebnisse zu liefern. WAS: Verfeinerungen sind Ergänzungen, die die Aufgabe präziser machen. Sie können das Problem selbst definieren (Eingaben, Ausgaben, Einschränkungen, Annahmen, Kontext und Bewertungskriterien) oder explizite Anfragen an die KI hinzufügen (wichtige Grenzfälle auflisten, Alternativen vergleichen oder Kompromisse erklären). WIE: Suchen Sie nach dem, was fehlt, unklar oder unterspezifiziert ist. Einige Verfeinerungen werden manuell als Aufgabenspezifikationen bereitgestellt, andere sind direkte Anweisungen an die KI, wie sie die Aufgabe angehen oder die Antwort strukturieren soll. Fügen Sie Details hinzu, die Mehrdeutigkeit reduzieren, den Lösungsprozess leiten oder die Nützlichkeit des Ergebnisses verbessern.",
+    "tooltip_selectRefinements": "WARUM: Anfängliche Problemstellungen sind oft unvollständig oder mehrdeutig. Die Auswahl der richtigen Verfeinerungen reduziert Unsicherheit und hilft der KI, genaue, relevante Ergebnisse zu liefern. WAS: Jede Option stellt eine einzelne Verfeinerung dar — sie kann das Problem definieren (Eingaben, Einschränkungen, Annahmen) oder eine explizite Anfrage an die KI hinzufügen (Grenzfälle auflisten, Alternativen vergleichen). Wählen Sie alle Verfeinerungen aus, die Sie für nötig halten. WIE: Bewerten Sie jede Option: Behebt sie eine echte Lücke im Problem? Fügt sie nützliche Anleitung für die KI hinzu? Vermeiden Sie Verfeinerungen, die überspezifizieren, dem Problem widersprechen oder irrelevante Einschränkungen hinzufügen.",
+    "tooltip_judging": "WARUM: KI-generierte Lösungen sehen auf den ersten Blick oft korrekt aus, enthalten aber subtile Fehler, übermäßige Vereinfachungen oder fehlende Elemente. Beurteilen stärkt Ihre Fähigkeit, KI-Ergebnisse kritisch zu bewerten — eine wesentliche Kompetenz für jeden Fachmann, der mit KI arbeitet. WAS: Beurteilen bedeutet, die Lösung der KI zu überprüfen, um Fehler, logische Lücken, fehlende Grenzfälle oder falsche Annahmen zu identifizieren. Sie bewerten, ob das Ergebnis das verfeinerte Problem vollständig und korrekt behandelt, und markieren spezifische Probleme, die korrigiert werden müssen. WIE: Vergleichen Sie die Lösung mit den Problemanforderungen und Ihrem Fachwissen. Prüfen Sie auf Rechenfehler, fehlerhafte Argumentation, unvollständige Abdeckung oder Schlussfolgerungen, die nicht aus den Prämissen folgen. Seien Sie spezifisch — beschreiben Sie jedes Problem klar, damit es im nächsten Schritt bearbeitet werden kann.",
+    "tooltip_steering": "WARUM: Fehler zu identifizieren ist nur die halbe Kompetenz. Steuerung lehrt Sie, die KI zu besseren Ergebnissen zu leiten, indem Sie präzise, umsetzbare Korrekturen geben — die Kernkompetenz effektiver Mensch-KI-Zusammenarbeit. WAS: Steuern bedeutet, spezifische Korrekturen oder Anweisungen zu verfassen, die die bei der Beurteilung identifizierten Probleme behandeln. Die KI wird Ihre Anleitung nutzen, um eine verbesserte Lösung zu generieren. Ihre Korrekturen definieren, was sich ändern soll und wie. WIE: Seien Sie präzise und konstruktiv. Anstatt zu sagen ‚das ist falsch', erklären Sie, was der richtige Ansatz sein sollte und warum. Geben Sie konkrete Anweisungen: korrigieren Sie eine Formel, fügen Sie eine fehlende Einschränkung hinzu, strukturieren Sie ein Argument um oder fordern Sie eine andere Methode an. Je klarer Ihre Anleitung, desto besser das überarbeitete Ergebnis der KI.",
+    "problemRefinement": "Problemdefinition",
+    "aiTaskRefinement": "KI-Aufgabenanweisung",
+    "tooltip_problemRefinement": "Definiert das Problem selbst: fügt Eingaben, Ausgaben, Einschränkungen, Annahmen, Kontext oder Bewertungskriterien hinzu, um Mehrdeutigkeit zu reduzieren.",
+    "tooltip_aiTaskRefinement": "Eine direkte Anweisung an die KI: bitten Sie sie, Grenzfälle aufzulisten, Alternativen zu vergleichen, Kompromisse zu erklären oder die Antwort auf eine bestimmte Weise zu strukturieren.",
+    "suggestWithAI": "✨ KI-Vorschlag",
+    "suggestTooltip": "Lassen Sie die KI eine Antwort vorschlagen, um Ihnen den Einstieg zu erleichtern. Sie können den Vorschlag vor dem Absenden bearbeiten.",
+    "aiSuggesting": "KI denkt nach...",
+    "override": "Ändern",
+    "selectGrade": "Bitte wählen Sie eine Note",
+    "overrideReason": "Grund für die Änderung (optional):",
+    "gradeOverridden": "Note erfolgreich geändert",
+    "overrideFailed": "Änderung fehlgeschlagen",
+    "overriddenFrom": "Geändert von",
+    "clone": "Klonen",
+    "cloneFailed": "Klonen fehlgeschlagen",
+    "cloneSuccess": "Aufgabe erfolgreich geklont",
+    "editRubric": "Rubrik bearbeiten",
+    "saveRubric": "Rubrik speichern",
+    "rubricSaved": "Rubrik gespeichert",
+    "rubricSaveFailed": "Rubrik konnte nicht gespeichert werden",
+    "addCriterion": "Kriterium hinzufügen",
+    "removeCriterion": "Entfernen",
+    "criterionName": "Kriteriumsname",
+    "criterionDescription": "Beschreibung",
+    "whatIsCoReasoning": "Was ist Co-Reasoning?",
+    "whatIsCoReasoningSubtitle": "Lernen Sie, kritisch mit KI zu denken — nicht nur sie zu nutzen",
+    "theProblem": "Das Problem",
+    "theProblemText": "Die meisten Menschen nutzen KI passiv: Frage einfügen, Antwort kopieren. Doch KI-Ausgaben enthalten oft subtile Fehler, fehlende Annahmen und logische Lücken. Wenn Sie diese Probleme nicht erkennen können, nutzen Sie die KI nicht — sie nutzt Sie. Co-Reasoning lehrt Sie, <em>mit</em> KI als kritischem Partner zu arbeiten, nicht als Krücke.",
+    "theThreeSkills": "Die drei Kompetenzen",
+    "theThreeSkillsDesc": "Co-Reasoning entwickelt drei unabhängige Kompetenzen des kritischen Denkens:",
+    "framingSkillTitle": "Rahmung",
+    "framingSkillDesc": "Verwandeln Sie vage Probleme in klar definierte Aufgaben. Reale Probleme sind unstrukturiert — Sie müssen erkennen, was fehlt, Annahmen ergänzen und Anforderungen klären, bevor die KI helfen kann.",
+    "judgingSkillTitle": "Beurteilung",
+    "judgingSkillDesc": "Finden Sie, was an der Antwort der KI falsch ist. KI-Lösungen sehen gut aus, enthalten aber subtile Fehler. Ihre Aufgabe ist es, falsche Annahmen, fehlende Grenzfälle und logische Fehler zu identifizieren.",
+    "steeringSkillTitle": "Steuerung",
+    "steeringSkillDesc": "Leiten Sie die KI zu einer besseren Antwort. Sobald Sie Probleme gefunden haben, geben Sie der KI spezifische, umsetzbare Korrekturen — keine vagen Beschwerden.",
+    "howChallengeWorks": "Wie eine Aufgabe funktioniert",
+    "howChallengeWorksDesc": "Jede Aufgabe führt Sie durch die drei Kompetenzen in Folge:",
+    "step1Text": "<strong>Lesen</strong> Sie eine absichtlich schlecht definierte Aufgabenstellung",
+    "step2Text": "<strong>Rahmen</strong> Sie sie, indem Sie Verfeinerungen zur Klärung des Problems auswählen oder schreiben",
+    "step3Text": "<strong>Sehen</strong> Sie eine KI-generierte Lösung, die absichtlich unvollkommen ist",
+    "step4Text": "<strong>Beurteilen</strong> Sie die Probleme — identifizieren Sie Fehler, falsche Annahmen und fehlende Fälle",
+    "step5Text": "<strong>Steuern</strong> Sie mit spezifischen, umsetzbaren Korrekturen zur Verbesserung der Lösung",
+    "step6Text": "<strong>Überprüfen</strong> Sie Ihre drei unabhängigen Noten und detailliertes Feedback",
+    "graded": "Benotet (A/B/C)",
+    "whyThreeGrades": "Warum drei Noten?",
+    "whyThreeGradesDesc": "Jede Kompetenz wird unabhängig benotet, da es sich um verschiedene Fähigkeiten handelt. Sie könnten ein Problem hervorragend rahmen, aber offensichtliche Fehler in der Antwort der KI übersehen, oder gut beurteilen, aber vages Steuerungsfeedback geben. Drei separate Noten geben Ihnen ein klares Bild, wo Sie sich verbessern können.",
+    "gradeExcellent": "Ausgezeichnet",
+    "gradeExcellentDesc": "Gründlich, präzise und einsichtsreich",
+    "gradeGood": "Gut",
+    "gradeGoodDesc": "Solides Verständnis mit kleineren Lücken",
+    "gradeNeedsWork": "Verbesserungsbedarf",
+    "gradeNeedsWorkDesc": "Wesentliche Probleme zu beheben",
+    "practiceVsAssessment": "Übung vs. Bewertung",
+    "practiceVsAssessmentDesc": "Aufgaben gibt es in zwei Modi:",
+    "readyToStart": "Bereit, Ihre kritischen KI-Kompetenzen zu entwickeln?",
+    "startFirstChallenge": "Starten Sie Ihre erste Aufgabe",
+    "guideStepProblem": "Problem",
+    "guideStepGaps": "Lücken",
+    "guideStepFrame": "Rahmung",
+    "guideStepSolution": "Lösung",
+    "guideStepJudge": "Beurteilung",
+    "guideStepSteer": "Steuerung",
+    "guideStepGrades": "Noten",
+    "guideStepGo": "Los!",
+    "guideStep1Title": "Hier ist ein Rohproblem",
+    "guideStep1Subtitle": "Das gibt Ihnen ein Dozent. Lesen Sie es sorgfältig — Ihre Aufgabe ist es, kritisch darüber nachzudenken, bevor die KI zu arbeiten beginnt.",
+    "guideRawProblemLabel": "Rohproblem-Beschreibung",
+    "guideRawProblemText": "Entwerfen Sie ein Echtzeit-Sortiermodul für ein IoT-Sensornetzwerk. Das System empfängt Messwerte von einigen hundert Temperatursensoren. Es muss aktuelle Messwerte nach Zeitstempel sortieren, Datenspitzen zu Spitzenzeiten bewältigen und eine Abfrage-API unterstützen, die das letzte sortierte Fenster zurückgibt. Optimieren Sie für geringen Speicherverbrauch.",
+    "guideStep1AnnotationLabel": "Was passiert:",
+    "guideStep1AnnotationText": "In einer echten Aufgabe ist das das Erste, was Sie sehen. Das Problem klingt vernünftig, aber ist es vollständig genug, damit die KI es gut lösen kann? Das finden Sie als Nächstes heraus.",
+    "guideStep2Title": "Bemerken Sie, was fehlt?",
+    "guideStep2Subtitle": "Reale Probleme sind oft mehrdeutig. Eine Schlüsselkompetenz des Co-Reasonings ist es, die Lücken zu erkennen, bevor die KI mit der Lösung beginnt.",
+    "guideProblemAgainLabel": "Das Problem nochmal",
+    "guideGap1": "<strong>Der Sortierschlüssel ist unklar:</strong> „Nach Zeitstempel sortieren\" — aber was ist mit Messwerten mit identischen Zeitstempeln? Es gibt keine Strategie zur Auflösung von Gleichständen.",
+    "guideGap2": "<strong>„Einige hundert\" ist vage:</strong> Sind es 200? 500? 900? Die Wahl der Datenstruktur und des Algorithmus hängt stark vom tatsächlichen Maßstab ab.",
+    "guideGap3": "<strong>„Datenspitzen\" ist undefiniert:</strong> Bedeutet das 2x die normale Rate? 100x? Soll das System Messwerte verwerfen, puffern oder alle verarbeiten?",
+    "guideGap4": "<strong>Keine Fenstergröße angegeben:</strong> „Letztes sortiertes Fenster\" — wie groß? Die letzten 10 Sekunden? Die letzten 1000 Messwerte? Das verändert das Speichermodell grundlegend.",
+    "guideStep2AnnotationLabel": "Das ist Rahmung:",
+    "guideStep2AnnotationText": "Bevor die KI eine einzige Zeile Code schreibt, verfeinern Sie das Problem, indem Sie identifizieren, was fehlt, mehrdeutig oder unterspezifiziert ist. Bessere Rahmung führt zu besserer KI-Ausgabe.",
+    "guideStep3Title": "Rahmen Sie es",
+    "guideStep3Subtitle": "Wählen Sie die Aussagen, die Lücken korrekt identifizieren oder nützliche Einschränkungen hinzufügen. In einer echten Aufgabe wählen Sie aus Multiple-Choice-Optionen.",
+    "guideFrame1": "Der Sortierschlüssel braucht einen Gleichstandsbrecher — bei gleichen Zeitstempeln soll die Sensor-ID als sekundärer Sortierschlüssel verwendet werden.",
+    "guideFrame1Exp": "Richtig: Identifiziert eine echte Mehrdeutigkeit und schlägt eine konkrete Lösung vor.",
+    "guideFrame2": "Definieren Sie „einige hundert\" als genau 500 Sensoren, die jeweils einen Messwert pro Sekunde senden.",
+    "guideFrame2Exp": "Richtig: Legt eine vage Menge mit einer spezifischen, überprüfbaren Zahl fest.",
+    "guideFrame3": "Python verwenden, weil es die beliebteste Sprache für IoT ist.",
+    "guideFrame3Exp": "Falsch: Das ist eine Implementierungsentscheidung, keine Problemklärung. Rahmung bezieht sich auf das Problem, nicht auf die Lösung.",
+    "guideFrame4": "Definieren Sie „Datenspitze\" als bis zu 5x normalen Durchsatz und legen Sie fest, dass keine Messwerte verworfen werden dürfen.",
+    "guideFrame4Exp": "Richtig: Klärt einen mehrdeutigen Begriff mit konkreten Parametern und einer klaren Anforderung.",
+    "guideFrame5": "Das Problem ist klar genug — es sind keine zusätzlichen Einschränkungen erforderlich.",
+    "guideFrame5Exp": "Falsch: Das Problem hat mehrere Mehrdeutigkeiten, die zu einer unvollständigen Lösung führen würden.",
+    "guideStep3AnnotationLabel": "Bewertung:",
+    "guideStep3AnnotationText": "Sie erhalten eine höhere Rahmungsnote, wenn Sie echte Lücken korrekt identifizieren und Optionen vermeiden, die vorschnell zu Lösungen springen oder die Notwendigkeit einer Klärung abtun.",
+    "guideStep4Title": "Die KI generiert eine Lösung",
+    "guideStep4Subtitle": "Basierend auf Ihrer Rahmung erstellt die KI eine Lösung. Aber KI-Lösungen sind oft plausibel und dennoch fehlerhaft — Ihre Aufgabe ist es, sie kritisch zu bewerten.",
+    "guideAiSolutionLabel": "KI-generierte Lösung",
+    "guideApproachLabel": "Ansatz:",
+    "guideApproachText": "Verwendung eines Ringpuffers fester Größe mit 1000 Einträgen, sortiert mittels Einfügesortierung bei jedem neuen Messwert.",
+    "guideComplexityLabel": "Komplexität:",
+    "guideComplexityText": "O(n) pro Einfügung aufgrund der Listenverschiebung. Der Speicher ist auf O(Fenstergröße) begrenzt.",
+    "guideStep4AnnotationLabel": "Schauen Sie genau hin:",
+    "guideStep4AnnotationText": "Diese Lösung kompiliert und klingt vernünftig, hat aber echte Probleme. Können Sie sie erkennen? Das ist der nächste Schritt.",
+    "guideStep5Title": "Beurteilen Sie die Lösung",
+    "guideStep5Subtitle": "Identifizieren Sie, was an der Lösung der KI falsch ist. Wählen Sie die Aussagen, die korrekt auf echte Probleme hinweisen.",
+    "guideJudge1": "Die List Comprehension <code>[r.timestamp for r in self.buffer]</code> baut die gesamte Schlüsselliste bei jeder Einfügung neu auf — das ist ein O(n)-Overhead zusätzlich zur O(n)-Einfügung.",
+    "guideJudge1Exp": "Richtig: Das ist ein echter Leistungsfehler. Die Schlüsselextraktion sollte eine separate sortierte Struktur oder SortedList verwenden.",
+    "guideJudge2": "Das Konzept des Ringpuffers ist für diesen Anwendungsfall grundlegend falsch.",
+    "guideJudge2Exp": "Falsch: Ein begrenzter Puffer ist ein vernünftiger Ansatz für ein Gleitfenster — die Implementierungsdetails sind das Problem, nicht das Konzept.",
+    "guideJudge3": "Es gibt keinen Gleichstandsbrecher bei identischen Zeitstempeln — die Sensor-ID sollte als sekundärer Sortierschlüssel verwendet werden.",
+    "guideJudge3Exp": "Richtig: Dies wurde während der Rahmung identifiziert, aber die KI hat es in der Implementierung ignoriert.",
+    "guideJudge4": "Bei Datenspitzen (5x Durchsatz) wird die O(n)-Einfügung bei 500 gleichzeitig sendenden Sensoren zu Latenzaufbau führen.",
+    "guideJudge4Exp": "Richtig: Bei 2500 Messwerten/Sek. während Spitzen erzeugt eine O(n)-Einfügung in einer 1000-Elemente-Liste einen echten Engpass.",
+    "guideJudge5": "Python ist zu langsam für Echtzeitsysteme; dies sollte in C++ umgeschrieben werden.",
+    "guideJudge5Exp": "Falsch: Die Sprachwahl ist wichtig, aber Beurteilung bezieht sich auf die Bewertung der Logik und Korrektheit der Lösung, nicht auf Implementierungsentscheidungen.",
+    "guideStep5AnnotationLabel": "Bewertung:",
+    "guideStep5AnnotationText": "Sie erhalten eine höhere Beurteilungsnote, indem Sie echte logische und Korrektheitsprobleme finden. Vermeiden Sie vage Beschwerden oder Meinungen über Technologieentscheidungen.",
+    "guideStep6Title": "Steuern Sie die KI",
+    "guideStep6Subtitle": "Leiten Sie nun die KI an, ihre Fehler zu beheben. Wählen Sie Korrekturen, die spezifisch und umsetzbar sind.",
+    "guideSteer1": "Ersetzen Sie den Liste-+-bisect-Ansatz durch eine SortedList aus der sortedcontainers-Bibliothek, die O(log n)-Einfügung bietet und den Neuaufbau der Schlüsselliste vermeidet.",
+    "guideSteer1Exp": "Richtig: Spezifische Korrektur, nennt die genaue Bibliothek und erklärt, warum sie das Leistungsproblem löst.",
+    "guideSteer2": "Die Sortierung schneller machen.",
+    "guideSteer2Exp": "Falsch: Zu vage — die KI muss wissen, was zu ändern ist und wie. „Schneller\" leitet nichts an.",
+    "guideSteer3": "Den Sortierschlüssel in ein Tupel (Zeitstempel, Sensor-ID) ändern, damit Messwerte mit identischen Zeitstempeln deterministisch geordnet werden.",
+    "guideSteer3Exp": "Richtig: Präzise Anweisung — gibt die genaue Datenstrukturänderung und den Grund dafür an.",
+    "guideSteer4": "Einen Spitzenerkennungsmechanismus hinzufügen: Wenn die Eingangsrate 2500/Sek. übersteigt, auf Stapeleinfügung umschalten (200ms sammeln, dann Massensortierung), um den Overhead zu amortisieren.",
+    "guideSteer4Exp": "Richtig: Behandelt das Spitzenszenario mit konkreten Schwellenwerten und einer konkreten Strategie.",
+    "guideSteer5": "Die Lösung hat zu viele Fehler, bitte von vorne anfangen.",
+    "guideSteer5Exp": "Falsch: Arbeit wegwerfen ist keine Steuerung — gute Korrekturen bauen auf dem Vorhandenen auf und beheben spezifische Probleme.",
+    "guideStep6AnnotationLabel": "Bewertung:",
+    "guideStep6AnnotationText": "Sie erhalten eine höhere Steuerungsnote durch präzise, konstruktive Korrekturen. Sagen Sie der KI genau, was zu ändern ist und warum — nicht nur „beheben Sie es\".",
+    "guideStep7Title": "Sehen Sie Ihre Noten",
+    "guideStep7Subtitle": "Nach Abschluss aller Phasen erhalten Sie Noten für jede Co-Reasoning-Dimension mit personalisiertem Feedback.",
+    "guideGradeFramingFeedback": "Hervorragende Problemverfeinerung. Sie haben alle wesentlichen Mehrdeutigkeiten identifiziert und präzise Einschränkungen hinzugefügt, die die Aufgabenspezifikation für die KI verbessert haben.",
+    "guideGradeJudgingFeedback": "Gute kritische Bewertung. Sie haben den Leistungsfehler und den fehlenden Gleichstandsbrecher erkannt, hätten aber bei der Analyse der Spitzenauswirkungen präziser sein können.",
+    "guideGradeSteeringFeedback": "Starke Korrekturen mit konkreten Alternativen. Die Stapeleinfügungsstrategie war kreativ. Erwägen Sie auch die Behandlung von Grenzfällen wie Messwerten, die nicht in der richtigen Reihenfolge eintreffen.",
+    "guideStep7AnnotationLabel": "So funktioniert die Bewertung:",
+    "guideStep7AnnotationText": "Jede Dimension wird mit A/B/C bewertet, basierend auf der Qualität Ihrer Entscheidungen. Im Übungsmodus sehen Sie Feedback nach jeder Phase; im Bewertungsmodus wird das Feedback bis zum Ende aufgeschoben.",
+    "guideStep8Title": "Bereit für eine echte Aufgabe?",
+    "guideStep8Subtitle": "Sie haben gesehen, wie Rahmung, Beurteilung und Steuerung zusammenwirken. Wenden Sie diese Kompetenzen nun bei einer echten Aufgabe mit Live-Bewertung an.",
+    "guideStartRealChallenge": "Eine echte Aufgabe starten",
+    "guideStep8AnnotationLabel": "Wie es weitergeht:",
+    "guideStep8AnnotationText": "Durchsuchen Sie die Aufgabenliste, wählen Sie eine Aufgabe aus einem Ihrer Kurse und starten Sie sie im Übungsmodus, um sofortiges Feedback zu jeder Phase zu erhalten. Wenn Sie sich verbessern, versuchen Sie den Bewertungsmodus für eine zeitlich begrenzte, ungeführte Erfahrung.",
+    "guidePrevious": "&#8592; Zurück",
+    "guideNext": "Weiter &#8594;",
+    "guideStepCounter": "Schritt 1 von 8",
+    "guideStepXofY": "Schritt {0} von {1}"
   },
   "institutions": {
     "institutions": [
@@ -1439,55 +1631,59 @@ window.CONTENT["de"] = {
   "tooltips": {
     "challengeType": {
       "title": "Aufgabentyp",
-      "text": "Uebungsaufgaben ermoeglichen Wiederholungsversuche mit Feedback nach jeder Phase. Pruefungsaufgaben werden benotet, mit Feedback erst am Ende."
+      "text": "WHY: Unterschiedliche Lernziele erfordern unterschiedliche Feedback-Ansätze — Übungen bauen Kompetenzen durch Iteration auf, während Prüfungen die eigenständige Leistungsfähigkeit messen. WHAT: Der Übungsmodus zeigt KI-generiertes Feedback nach jeder Phase und hilft Ihnen, in Echtzeit aus Fehlern zu lernen. Der Prüfungsmodus hält das Feedback bis zum Abschluss zurück und testet Ihre ununterstützten Co-Reasoning-Fähigkeiten. HOW: Wählen Sie Übung zum Lernen und Erkunden. Wählen Sie Prüfung für benotete Bewertungen oder wenn das tatsächliche Kompetenzniveau gemessen werden soll."
     },
     "visibility": {
       "title": "Sichtbarkeit",
-      "text": "Oeffentliche Aufgaben sind fuer alle eingeschriebenen Studierenden sichtbar. Private Aufgaben sind nur fuer ihre Erstellerin oder ihren Ersteller sichtbar."
+      "text": "WHY: Die Kontrolle darüber, wer eine Aufgabe sehen kann, ermöglicht es Dozierenden, Kursinhalte zu verwalten, und Studierenden, persönliches Übungsmaterial zu erstellen. WHAT: Öffentliche Aufgaben sind für alle eingeschriebenen Studierenden im Kurs sichtbar. Private Aufgaben sind nur für ihre Erstellerin oder ihren Ersteller sichtbar. HOW: Öffentliche Aufgaben erscheinen in der Aufgabenliste des Kurses für alle Abonnierenden. Private Aufgaben erscheinen nur in Ihrer persönlichen Aufgabenliste."
     },
     "maxCycles": {
       "title": "Maximale Zyklen",
-      "text": "Die maximale Anzahl erlaubter Bewertungs- und Steuerungszyklen. Mehr Zyklen bieten mehr Moeglichkeiten, die KI-Ausgabe zu verbessern."
+      "text": "WHY: Mehr Zyklen bieten mehr Gelegenheiten, iterative Korrektur zu üben, aber zu viele können Engagement und Konzentration verringern. WHAT: Die maximale Anzahl erlaubter Bewertungs- und Steuerungszyklen pro Aufgabendurchlauf. Nach dem letzten Zyklus wird der Durchlauf abgeschlossen und alle Noten werden berechnet. HOW: 3–5 Zyklen sind üblich. Verwenden Sie weniger für schnellere Bewertungen, mehr für tiefgehende Übungsaufgaben."
     },
     "subjectPath": {
       "title": "Themenpfad",
-      "text": "Die thematische Hierarchie, zu der diese Aufgabe gehoert, innerhalb des Themenbaums des Kurses."
+      "text": "WHY: Die Zuordnung von Aufgaben zu bestimmten Themen hilft bei der Organisation von Inhalten und ermöglicht gezielte Analysen zu Kompetenzbereichen. WHAT: Die thematische Hierarchie, zu der diese Aufgabe gehört, innerhalb des Themenbaums des Kurses. Aufgabenstellungen und Bewertungsraster werden basierend auf diesen Themenbereichen generiert. HOW: Wählen Sie spezifische Blattknoten für fokussierte Aufgaben oder breitere übergeordnete Knoten für vielfältigere Aufgabenstellungen."
     },
     "responseType": {
       "title": "Antworttyp",
-      "text": "Multiple-Choice bietet vordefinierte Optionen. Offene Antwort erlaubt freies schriftliches Argumentieren."
+      "text": "WHY: Das Antwortformat prägt das Lernerlebnis — Multiple-Choice fördert die Entscheidungsfindung, während offene Antworten eigenständiges Denkvermögen entwickeln. WHAT: Multiple-Choice präsentiert vorgenerierte Optionen zur Auswahl. Offene Antwort erlaubt freies schriftliches Argumentieren und individuelle Verfeinerungen. HOW: Verwenden Sie Multiple-Choice für einführende Aufgaben. Verwenden Sie offene Antwort für fortgeschrittene Aufgaben, die eigenständiges kritisches Denken erfordern."
     },
     "framingPhase": {
       "title": "Rahmungsphase",
-      "text": "Die Studierenden bewerten das Rohproblem und uebersetzen es in eine klar definierte Aufgabe, indem sie Annahmen und Einschraenkungen hinzufuegen."
+      "text": "WHY: Reale Probleme sind nie für KI vorformatiert. Die Rahmung lehrt Sie, vage Anforderungen in präzise, umsetzbare Aufgaben zu verwandeln. WHAT: Sie erhalten ein rohes, absichtlich unvollständiges Problem und müssen es verfeinern, indem Sie Annahmen, Einschränkungen und Klarstellungen hinzufügen, bevor die KI eine Lösung generiert. Dies ist Phase 1 des Co-Reasoning-Prozesses (siehe das Prozessdiagramm für den vollständigen Ablauf). HOW: Lesen Sie das Problem sorgfältig. Identifizieren Sie, was fehlt, mehrdeutig oder angenommen wird. Fügen Sie Präzisierungen hinzu, die die Aufgabe klar definieren."
     },
     "judgingPhase": {
       "title": "Bewertungsphase",
-      "text": "Die Studierenden ueberpruefen die KI-generierte Loesung und identifizieren, was richtig, was falsch und was verbesserungswuerdig ist."
+      "text": "WHY: KI-Ausgaben enthalten oft subtile Fehler, die sorgfältige Fachexpertise zur Erkennung erfordern. Das Bewerten baut Ihre analytischen Evaluierungsfähigkeiten auf. WHAT: Sie überprüfen die KI-generierte Lösung und identifizieren spezifische Fehler, Lücken oder falsche Annahmen. Dies ist Phase 2A des Co-Reasoning-Prozesses (siehe das Prozessdiagramm für den vollständigen Ablauf). Ihre Bewertungen werden für die Benotung erfasst, aber NICHT an die KI gesendet. HOW: Lesen Sie die Lösung kritisch. Achten Sie auf logische Fehler, fehlende Elemente, falsche Fakten und unausgesprochene Annahmen."
     },
     "steeringPhase": {
       "title": "Steuerungsphase",
-      "text": "Die Studierenden geben gezieltes Feedback, um die KI zu einer besseren Loesung zu fuehren."
+      "text": "WHY: Zu wissen, wie man präzises, umsetzbares Feedback an KI gibt, ist die Kernkompetenz effektiver Mensch-KI-Zusammenarbeit. WHAT: Sie schreiben spezifische Korrekturen oder Anweisungen, um die identifizierten Probleme zu beheben. Dies ist Phase 2B des Co-Reasoning-Prozesses (siehe das Prozessdiagramm für den vollständigen Ablauf). Die KI verarbeitet Ihre Steuerung und generiert eine verbesserte Lösung. HOW: Seien Sie spezifisch und konkret. Sagen Sie der KI genau, was korrigiert werden soll. Klare Korrekturen erzeugen bessere Überarbeitungen — vages Feedback erzeugt vage Verbesserungen."
     },
     "coReasoningScore": {
       "title": "Co-Reasoning-Bewertung",
-      "text": "Gesamtleistung, die Rahmungsgenauigkeit, Bewertungsqualitaet und Steuerungseffektivitaet kombiniert."
+      "text": "WHY: Eine kombinierte Bewertung hilft Ihnen, Ihre Gesamteffektivität als KI-Kollaborateur über alle drei Co-Reasoning-Kompetenzen zu verstehen. WHAT: Ihre Gesamtleistungsnote, die Rahmungsgenauigkeit, Bewertungsqualität und Steuerungseffektivität kombiniert. Jede Kompetenz wird unabhängig benotet (A/B/C). HOW: Konzentrieren Sie sich zunächst auf die Verbesserung Ihres schwächsten Kompetenzbereichs. Überprüfen Sie das Feedback jeder Phase, um zu verstehen, wo Sie sich verbessern können."
     },
     "rubric": {
       "title": "Bewertungsraster",
-      "text": "Die Bewertungskriterien, die zur Beurteilung der Co-Reasoning-Leistung in jeder Phase verwendet werden."
+      "text": "WHY: Einheitliche Bewertungskriterien gewährleisten eine faire, objektive Benotung für alle Studierenden und Aufgabenversuche. WHAT: KI-generierte Bewertungskriterien zur Beurteilung Ihrer Co-Reasoning-Leistung in jeder Phase (Rahmung, Bewertung, Steuerung). Das Bewertungsraster ist auf den Fachbereich der Aufgabe zugeschnitten. HOW: Bewertungsraster sind während der Aufgabe unsichtbar. Nach dem Abschluss spiegeln Ihre Noten wider, wie gut Sie die Rasterkriterien erfüllt haben."
     },
     "subjectTree": {
       "title": "Themenbaum",
-      "text": "Eine hierarchische Organisation von Themen innerhalb eines Kurses. Aufgaben werden bestimmten Knoten zugeordnet."
+      "text": "WHY: Die hierarchische Organisation von Themen ermöglicht strukturierte Kursinhalte und gezielte Kompetenzbewertung über Fachbereiche hinweg. WHAT: Eine baumstrukturierte Organisation von Themen innerhalb eines Kurses. Aufgaben werden bestimmten Knoten zugeordnet, und Aufgabenstellungen werden aus den ausgewählten Themen generiert. HOW: Dozierende erstellen den Baum über die Kurseinstellungen. Studierende sehen Aufgaben nach Fachbereichen geordnet."
+    },
+    "coReasoningProcess": {
+      "title": "Der Co-Reasoning-Prozess",
+      "text": "WHY: Das Verständnis des vollständigen Co-Reasoning-Ablaufs hilft Ihnen zu sehen, wie jede Phase auf der vorherigen aufbaut und warum jede Kompetenz wichtig ist. WHAT: Der Prozess umfasst drei Phasen: (1) Rahmung — ein vages Problem in eine klar definierte Aufgabe verwandeln, (2A) Bewertung — Probleme in der KI-Lösung identifizieren, (2B) Steuerung — Korrekturen schreiben, um die KI-Ausgabe zu verbessern. Bewertung und Steuerung wiederholen sich in Zyklen. HOW: Klicken Sie auf den Link zum Prozessdiagramm oder suchen Sie das Ablaufdiagramm-Symbol, um das vollständige visuelle Diagramm des Co-Reasoning-Prozesses zu sehen."
     },
     "courseSubscription": {
       "title": "Kursanmeldung",
-      "text": "Melden Sie sich fuer einen Kurs an, um auf dessen Aufgaben zuzugreifen und Ihren Fortschritt zu verfolgen."
+      "text": "WHY: Die Anmeldung verbindet Sie mit der Aufgabenbibliothek eines Kurses und ermöglicht es Ihrem Dozierenden, Ihren Fortschritt zu verfolgen. WHAT: Nach der Anmeldung erscheinen die öffentlichen Aufgaben des Kurses in Ihrer Aufgabenliste und Ihre Ergebnisse werden in die Kursanalysen einbezogen. HOW: Klicken Sie auf Anmelden auf einer beliebigen verfügbaren Kurskarte. Sie können sich jederzeit über den Kurskatalog wieder abmelden."
     },
     "analyticsOverview": {
       "title": "Ihre Auswertungen",
-      "text": "Sehen Sie Ihre Leistungstrends, Notenverteilungen und detaillierte Aufschluesselungen ueber alle Ihre Aufgabendurchlaeufe."
+      "text": "WHY: Die Verfolgung Ihrer Leistung über die Zeit hinweg offenbart Muster, Stärken und Bereiche, die Aufmerksamkeit erfordern. WHAT: Eine visuelle Zusammenfassung Ihrer Noten über alle abgeschlossenen Aufgabendurchläufe, einschließlich Verteilungen nach Kompetenz und Trends über die Zeit. HOW: Verwenden Sie die Filter, um sich auf bestimmte Kurse oder Aufgabentypen zu konzentrieren. Klicken Sie auf eine beliebige Aufgabe in der Tabelle, um den detaillierten Bericht zu sehen."
     },
     "colChallenge": {
       "title": "Aufgabe",
@@ -1495,27 +1691,27 @@ window.CONTENT["de"] = {
     },
     "colCourse": {
       "title": "Kurs",
-      "text": "Der Kurs, zu dem diese Aufgabe gehoert."
+      "text": "Der Kurs, zu dem diese Aufgabe gehört."
     },
     "colType": {
       "title": "Typ",
-      "text": "Uebungsaufgaben ermoeglichen Wiederholungen mit Feedback. Pruefungsaufgaben werden benotet, mit Feedback erst am Ende."
+      "text": "Übungsaufgaben ermöglichen Wiederholungen mit Feedback. Prüfungsaufgaben werden benotet, mit Feedback erst am Ende."
     },
     "colVisibility": {
       "title": "Sichtbarkeit",
-      "text": "Oeffentliche Aufgaben stammen aus Ihren abonnierten Kursen. Private Aufgaben sind solche, die Sie fuer sich selbst erstellt haben."
+      "text": "Öffentliche Aufgaben stammen aus Ihren abonnierten Kursen. Private Aufgaben sind solche, die Sie für sich selbst erstellt haben."
     },
     "colCreated": {
       "title": "Erstellt",
-      "text": "Das Datum, an dem diese Aufgabe veroeffentlicht oder erstellt wurde."
+      "text": "Das Datum, an dem diese Aufgabe veröffentlicht oder erstellt wurde."
     },
     "colCreator": {
-      "title": "Ersteller",
-      "text": "Der Dozent oder Student, der diese Aufgabe erstellt hat."
+      "title": "Ersteller/in",
+      "text": "Der Dozierende oder Studierende, der diese Aufgabe erstellt hat."
     },
     "colLastAttempt": {
       "title": "Letzter Versuch",
-      "text": "Wann Sie diese Aufgabe zuletzt versucht haben, falls ueberhaupt."
+      "text": "Wann Sie diese Aufgabe zuletzt versucht haben, falls überhaupt."
     },
     "colStatus": {
       "title": "Status",
@@ -1523,11 +1719,11 @@ window.CONTENT["de"] = {
     },
     "colActions": {
       "title": "Aktionen",
-      "text": "Verfuegbare Aktionen wie Starten, Fortsetzen, Ergebnisse anzeigen oder Erneut ausfuehren."
+      "text": "Verfügbare Aktionen: Starten, Fortsetzen, Ergebnisse anzeigen oder Erneut ausführen."
     },
     "instrAnalyticsOverview": {
       "title": "Kursauswertung",
-      "text": "Zusammengefasste Leistungsdaten aller Studierenden in diesem Kurs. Enthaelt nur Ergebnisse oeffentlicher Aufgaben."
+      "text": "WHY: Das Verständnis der aggregierten Studierendenleistung hilft Ihnen, schwierige Bereiche zu identifizieren und Ihren Lehransatz anzupassen. WHAT: Aggregierte Leistungsdaten aller Studierenden in diesem Kurs, einschließlich Notenverteilungen und Aufschlüsselungen pro Studierendem. Enthält nur Ergebnisse öffentlicher Aufgaben. HOW: Verwenden Sie die Kurs- und Aufgabenfilter, um die Analyse zu vertiefen. Exportieren Sie als PDF für institutionelle Berichte."
     },
     "instrCourseSubscription": {
       "title": "Kursverwaltung",
@@ -1543,27 +1739,67 @@ window.CONTENT["de"] = {
     },
     "instrColType": {
       "title": "Typ",
-      "text": "Uebung: Studierende erhalten Feedback nach jeder Phase. Pruefung: Feedback wird bis zum Abschluss zurueckgehalten."
+      "text": "Übung: Studierende erhalten Feedback nach jeder Phase. Prüfung: Feedback wird bis zum Abschluss zurückgehalten."
     },
     "instrColVisibility": {
       "title": "Sichtbarkeit",
-      "text": "Oeffentliche Aufgaben sind fuer alle Kursabonnenten verfuegbar. Private Aufgaben sind nur fuer ihre Erstellerin oder ihren Ersteller sichtbar."
+      "text": "Öffentliche Aufgaben sind für alle Kursabonnierenden verfügbar. Private Aufgaben sind nur für ihre Erstellerin oder ihren Ersteller sichtbar."
     },
     "instrColSubmissions": {
       "title": "Einreichungen",
-      "text": "Gesamtanzahl der Studierendendurchlaeufe fuer diese Aufgabe, einschliesslich laufender und abgeschlossener Versuche."
+      "text": "Gesamtanzahl der Studierendendurchläufe für diese Aufgabe, einschließlich laufender und abgeschlossener Versuche."
     },
     "instrColAvgGrade": {
       "title": "Durchschnittsnote",
-      "text": "Durchschnittliche Note ueber alle abgeschlossenen Studierendendurchlaeufe, kombiniert aus Rahmungs-, Bewertungs- und Steuerungspunkten."
+      "text": "Durchschnittliche Note über alle abgeschlossenen Studierendendurchläufe, kombiniert aus Rahmungs-, Bewertungs- und Steuerungsnoten."
     },
     "instrColStatus": {
       "title": "Status",
-      "text": "Lebenszyklus der Aufgabe: Entwurf (noch nicht sichtbar), Veroeffentlicht (aktiv) oder Archiviert (ausgeblendet)."
+      "text": "Lebenszyklus der Aufgabe: Entwurf (noch nicht sichtbar), Veröffentlicht (aktiv) oder Archiviert (ausgeblendet)."
     },
     "instrColActions": {
       "title": "Aktionen",
-      "text": "Verfuegbare Aktionen: Bearbeiten, Vorschau, Auswertung anzeigen oder Loeschen."
+      "text": "Verfügbare Aktionen: Bearbeiten, Vorschau, Auswertung anzeigen oder Löschen."
+    },
+    "profileRole": {
+      "title": "Ihre Rolle",
+      "text": "WHY: Ihre Rolle bestimmt, welche Funktionen und Seiten Ihnen zur Verfügung stehen. WHAT: Studierende bearbeiten Aufgaben und bauen Co-Reasoning-Kompetenzen auf. Dozierende erstellen Aufgaben, verwalten Kurse und überprüfen die Leistung der Studierenden. HOW: Ihre Rolle wird bei der Registrierung zugewiesen und kann nicht geändert werden. Kontaktieren Sie Ihre Administration, wenn Sie eine Rollenänderung benötigen."
+    },
+    "profileStats": {
+      "title": "Ihre Statistiken",
+      "text": "WHY: Die Verfolgung Ihrer Aktivität hilft Ihnen zu verstehen, wie aktiv Sie die Plattform nutzen. WHAT: Erstellte Aufgaben zeigt, wie viele Aufgaben Sie verfasst haben. Durchgeführte Aufgaben zeigt, wie viele Aufgabendurchläufe Sie abgeschlossen haben. HOW: Um Ihre Statistiken zu erhöhen, erstellen Sie neue Aufgaben oder schließen Sie weitere Durchläufe aus Ihren abonnierten Kursen ab."
+    },
+    "profileCourses": {
+      "title": "Kursabonnements",
+      "text": "WHY: Ihre Kursabonnements bestimmen, welche Aufgaben Ihnen zur Verfügung stehen und welche Analysedaten erfasst werden. WHAT: Eine Liste aller Kurse, die Sie derzeit abonniert haben. Jeder Kurs bietet Zugang zu seinen öffentlichen Aufgaben. HOW: Abonnieren Sie neue Kurse über die Kurskatalogseite. Sie können sich jederzeit wieder abmelden."
+    },
+    "instrAnalyticsStudent": {
+      "title": "Student",
+      "text": "The student's display name as registered on the platform."
+    },
+    "instrAnalyticsEmail": {
+      "title": "Email",
+      "text": "The student's email address for identification."
+    },
+    "instrAnalyticsRuns": {
+      "title": "Runs Completed",
+      "text": "WHY: Tracking completed vs total runs shows student engagement and progress. WHAT: The number of completed challenge runs out of total runs attempted by this student. HOW: A low completion ratio may indicate a student is struggling or disengaged."
+    },
+    "instrAnalyticsActions": {
+      "title": "Actions",
+      "text": "Available actions for this student. Click Review to see the detailed report of a completed challenge run."
+    },
+    "gradeA": {
+      "title": "Note A — Ausgezeichnet",
+      "text": "WHY: Noten helfen Ihnen, Ihre Co-Reasoning-Kompetenz zu verfolgen. WHAT: Note A bedeutet, dass Sie ein ausgezeichnetes Verständnis gezeigt haben — Sie haben die zentralen Probleme identifiziert, starke Verfeinerungen geliefert und tiefgehendes kritisches Denken bewiesen. HOW: Wenden Sie diese Fähigkeiten weiterhin konsequent bei verschiedenen Aufgaben an."
+    },
+    "gradeB": {
+      "title": "Note B — Gut",
+      "text": "WHY: Noten helfen Ihnen, Ihre Co-Reasoning-Kompetenz zu verfolgen. WHAT: Note B bedeutet, dass Sie gutes Verständnis gezeigt haben, mit Verbesserungspotenzial — Sie haben die Hauptpunkte erfasst, aber möglicherweise Nuancen übersehen oder unnötige Elemente einbezogen. HOW: Überprüfen Sie das Feedback sorgfältig und konzentrieren Sie sich auf die spezifisch genannten Lücken."
+    },
+    "gradeC": {
+      "title": "Note C — Verbesserungsbedarf",
+      "text": "WHY: Noten helfen Ihnen, Ihre Co-Reasoning-Kompetenz zu verfolgen. WHAT: Note C bedeutet, dass erhebliche Verbesserung erforderlich ist — wichtige Probleme wurden übersehen oder die Antwort hat die Aufgabenanforderungen nicht ausreichend erfüllt. HOW: Lesen Sie das Problem erneut sorgfältig, studieren Sie das Feedback und versuchen Sie ähnliche Aufgaben, um Ihre Fähigkeiten auszubauen."
     }
   },
   "challenges": {

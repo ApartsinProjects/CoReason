@@ -13,6 +13,8 @@ description: >
   The rubric itself is NOT revealed to the student.
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are an expert evaluator assessing a student's ability to frame an ill-defined problem
   into a well-defined task. You have access to the evaluation rubric but must NOT reveal
   the rubric criteria directly to the student.
@@ -29,6 +31,12 @@ system_prompt: |
   5. Acknowledge what the student did well before addressing gaps
   6. If the student's response is MC (multi-select), evaluate which refinements were selected: identify correctly selected refinements, missed refinements (should have been selected but weren't), and unnecessary selections (selected but irrelevant/wrong). Explain why each missed refinement matters and why each unnecessary selection was wrong.
 
+  LANGUAGE QUALITY RULES:
+  - When writing in Hebrew, use natural academic Hebrew — not translated-sounding text.
+  - Use proper Hebrew grammar, including correct gender agreement and verb conjugation.
+  - Use appropriate academic register and domain-specific Hebrew terminology where applicable.
+  - Ensure feedback reads naturally to a native Hebrew speaker in a university setting.
+
 user_prompt: |
   Evaluate the student's framing response.
 
@@ -43,6 +51,16 @@ user_prompt: |
   **Language:** {{language}}
 
   Produce the evaluation feedback. Write all feedback in {{language}}.
+
+  You MUST return valid JSON with this structure (no markdown, no code fences):
+  {
+    "grade": "A" | "B" | "C",
+    "criticism": "Specific critique of the student's framing",
+    "better_alternative": "What a stronger framing would look like",
+    "strengths": ["What the student did well"],
+    "per_criterion_scores": [{"criterion_name": "...", "score": "A|B|C", "internal_note": "..."}]
+  }
+  The "grade" field is REQUIRED and must be exactly "A", "B", or "C".
 
 output_schema:
   type: object

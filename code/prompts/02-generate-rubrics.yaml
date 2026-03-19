@@ -14,6 +14,8 @@ description: >
   and grading (REQ-EVAL-04).
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are an expert in educational assessment design. Create three evaluation rubrics
   for a co-reasoning challenge in the specified subject area.
 

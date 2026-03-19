@@ -17,9 +17,11 @@
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/utils.js"></script>
   <script src="js/user-header.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
@@ -28,8 +30,8 @@
       <a href="student-analytics.html" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
-      <a href="#" onclick="CoReasonTour.restart(document.body.dataset.role||'student');return false;" data-t="startGuide" style="font-size:12px;color:var(--primary);text-decoration:none;opacity:.7;margin-right:4px;" title="Start Guide">Guide</a>
-      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <a href="interactive-guide.html" class="guide-link" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
       <span id="userName">—</span>
@@ -38,13 +40,13 @@
     </div>
   </header>
 
-  <main class="page">
+  <main class="page" id="main-content">
     <div class="page-header flex-between">
       <div>
         <h1 data-t="challenges">Challenges</h1>
         <p data-t="challengeListDesc">Browse, filter, and run challenges from your courses</p>
       </div>
-      <a href="create-challenge.html" class="btn btn-primary" data-t="createChallenge">+ Create Challenge</a>
+      <a href="create-challenge.html" class="btn btn-primary" data-t="createChallenge" id="createChallengeBtn" style="display:none">+ Create Challenge</a>
     </div>
 
     <!-- Filter Bar -->
@@ -80,11 +82,11 @@
               <th></th>
               <th data-t="challenge" data-tooltip="colChallenge">Challenge</th>
               <th data-t="course" data-tooltip="colCourse">Course</th>
-              <th data-t="type" data-tooltip="colType">Type</th>
-              <th data-t="visibility" data-tooltip="colVisibility">Visibility</th>
-              <th data-t="created" data-tooltip="colCreated">Created</th>
-              <th data-t="creator" data-tooltip="colCreator">Creator</th>
-              <th data-t="lastAttempt" data-tooltip="colLastAttempt">Last Attempt</th>
+              <th class="hide-mobile" data-t="type" data-tooltip="colType">Type</th>
+              <th class="hide-mobile" data-t="visibility" data-tooltip="colVisibility">Visibility</th>
+              <th class="hide-mobile" data-t="created" data-tooltip="colCreated">Created</th>
+              <th class="hide-mobile" data-t="creator" data-tooltip="colCreator">Creator</th>
+              <th class="hide-mobile" data-t="lastAttempt" data-tooltip="colLastAttempt">Last Attempt</th>
               <th data-t="status" data-tooltip="colStatus">Status</th>
               <th data-t="actions" data-tooltip="colActions">Actions</th>
             </tr>
@@ -113,6 +115,11 @@
         if (window._currentUser) {
           clearInterval(check);
           currentUser = window._currentUser;
+          // Show Create Challenge button for instructors
+          if (currentUser.role === 'instructor') {
+            var createBtn = document.getElementById('createChallengeBtn');
+            if (createBtn) createBtn.style.display = '';
+          }
           loadCourses();
           loadChallenges();
         }
@@ -157,7 +164,7 @@
     // ── Render table rows ──
     function renderChallenges(list) {
       if (list.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="10" class="empty-state"><div>📋</div><p data-t="noMatchingResults">No challenge runs match the selected filters.</p></td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" class="empty-state"><div>📋</div><p data-t="noMatchingChallenges">No challenges match the selected filters.</p></td></tr>';
         if (window.translatePage) translatePage();
         return;
       }
@@ -176,33 +183,39 @@
 
         // Challenge name
         var tdName = document.createElement('td');
+        tdName.setAttribute('dir', 'auto');
         tdName.innerHTML = '<strong>' + escHtml(ch.title || ch.name || 'Untitled') + '</strong>';
         tr.appendChild(tdName);
 
         // Course
         var tdCourse = document.createElement('td');
+        tdCourse.setAttribute('dir', 'auto');
         tdCourse.textContent = ch.course_name || ch.courseName || '—';
         tr.appendChild(tdCourse);
 
         // Type
         var tdType = document.createElement('td');
+        tdType.className = 'hide-mobile';
         var cType = (ch.type || ch.challenge_type || 'practice').toLowerCase();
         tdType.innerHTML = '<span class="badge badge-' + cType + '" data-t="' + cType + '">' + capitalize(cType) + '</span>';
         tr.appendChild(tdType);
 
         // Visibility
         var tdVis = document.createElement('td');
+        tdVis.className = 'hide-mobile';
         var vis = (ch.visibility || 'public').toLowerCase();
         tdVis.innerHTML = '<span class="badge badge-' + vis + '" data-t="' + vis + '">' + capitalize(vis) + '</span>';
         tr.appendChild(tdVis);
 
         // Created date
         var tdCreated = document.createElement('td');
+        tdCreated.className = 'hide-mobile';
         tdCreated.textContent = formatDate(ch.created_at || ch.createdAt);
         tr.appendChild(tdCreated);
 
         // Creator
         var tdCreator = document.createElement('td');
+        tdCreator.className = 'hide-mobile';
         var creatorName = ch.creator_name || ch.creatorName || '';
         if (currentUser && (ch.creator_id === currentUser.id || ch.creatorId === currentUser.id)) {
           creatorName = t('me') || 'Me';
@@ -212,6 +225,7 @@
 
         // Last attempt
         var tdAttempt = document.createElement('td');
+        tdAttempt.className = 'hide-mobile';
         tdAttempt.textContent = (ch.last_attempt_at || ch.last_attempt) ? formatDate(ch.last_attempt_at || ch.last_attempt) : '—';
         tr.appendChild(tdAttempt);
 
@@ -266,22 +280,51 @@
 
       // Private challenges: owner gets edit & delete
       if (vis === 'private' && isOwner) {
-        html += ' <a href="create-challenge.html?id=' + id + '" class="btn btn-outline btn-sm" title="Edit" aria-label="Edit">&#9998;</a>';
-        html += ' <button class="btn btn-outline btn-sm" title="Delete" style="color:var(--danger);" onclick="deleteChallenge(\'' + id + '\')" aria-label="Delete">&#128465;</button>';
+        html += ' <a href="create-challenge.html?id=' + id + '" class="btn btn-outline btn-sm" title="' + (t('edit') || 'Edit') + '" aria-label="' + (t('edit') || 'Edit') + '">&#9998;</a>';
+        html += ' <button class="btn btn-outline btn-sm" title="' + (t('deleteChallenge') || 'Delete') + '" style="color:var(--danger);" onclick="deleteChallenge(\'' + id + '\')" aria-label="' + (t('deleteChallenge') || 'Delete') + '">&#128465;</button>';
       }
+
+      // Clone button — available for any visible challenge
+      html += ' <a href="#" class="btn btn-outline btn-sm" title="' + (t('clone') || 'Clone') + '" onclick="cloneChallenge(\'' + id + '\');return false;" aria-label="' + (t('clone') || 'Clone') + '">&#10697;</a>';
 
       html += '</div>';
       return html;
     }
 
+    // ── Reusable confirmation modal ──
+    function showConfirmModal(title, message, onConfirm) {
+      var overlay = document.createElement('div');
+      overlay.className = 'confirm-modal-overlay';
+      overlay.innerHTML = '<div class="confirm-modal"><h3>' + title + '</h3><p>' + message + '</p><div class="confirm-modal-actions"><button class="btn btn-outline" id="confirmCancel">' + (t('cancel') || 'Cancel') + '</button><button class="btn btn-danger" id="confirmOk">' + (t('confirm') || 'Confirm') + '</button></div></div>';
+      document.body.appendChild(overlay);
+      overlay.querySelector('#confirmCancel').onclick = function() { overlay.remove(); };
+      overlay.querySelector('#confirmOk').onclick = function() { overlay.remove(); onConfirm(); };
+      overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
+      document.addEventListener('keydown', function handler(e) { if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', handler); } });
+    }
+
     // ── Delete challenge ──
     window.deleteChallenge = function(id) {
-      if (!confirm(t('confirmDeleteChallenge') || 'Are you sure you want to delete this challenge?')) return;
-      API.challenges.delete(id).then(function() {
-        allChallenges = allChallenges.filter(function(c) { return (c._id || c.id) !== id; });
-        applyFilters();
+      showConfirmModal(
+        t('deleteChallenge') || 'Delete Challenge',
+        t('confirmDeleteChallenge') || 'Are you sure you want to delete this challenge?',
+        function() {
+          API.challenges.delete(id).then(function() {
+            allChallenges = allChallenges.filter(function(c) { return (c._id || c.id) !== id; });
+            applyFilters();
+          }).catch(function(err) {
+            showToast((t('deleteFailed') || 'Delete failed') + ': ' + err.message, 'error');
+          });
+        }
+      );
+    };
+
+    // ── Clone challenge ──
+    window.cloneChallenge = function(id) {
+      API.post('/challenges/' + id + '/clone').then(function(cloned) {
+        window.location.href = 'create-challenge.html?id=' + (cloned._id || cloned.id);
       }).catch(function(err) {
-        alert((t('deleteFailed') || 'Delete failed') + ': ' + err.message);
+        showToast((t('cloneFailed') || 'Clone failed') + ': ' + err.message, 'error');
       });
     };
 
@@ -348,7 +391,7 @@
       if (!d) return '—';
       try {
         var dt = new Date(d);
-        return dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        return dt.toLocaleDateString(getLang() || undefined, { month: 'short', day: 'numeric' });
       } catch (e) { return d; }
     }
 

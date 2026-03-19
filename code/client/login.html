@@ -35,7 +35,11 @@
   </style>
 </head>
 <body>
-  <div class="login-container">
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <div class="login-container" id="main-content">
+    <div style="text-align:right; margin-bottom:8px;">
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+    </div>
     <div class="login-logo">
       <img src="assets/logo.png" alt="AI CoReasoning Lab">
       <h1>AI CoReasoning Lab</h1>
@@ -45,7 +49,7 @@
     <div class="login-card">
       <h2 data-t="welcomeBack">Welcome Back</h2>
 
-      <div id="errorMsg" class="error-message" role="alert"></div>
+      <div id="loginError" class="error-message" role="alert"></div>
 
       <!-- SSO Buttons -->
       <div class="sso-buttons">
@@ -61,24 +65,24 @@
       <form id="loginForm">
         <div class="form-group">
           <label for="loginEmail" data-t="email">Email</label>
-          <input type="email" id="loginEmail" class="form-control" placeholder="you@university.edu" required>
+          <input type="email" id="loginEmail" class="form-control" placeholder="you@university.edu" required aria-describedby="loginError" autocomplete="email">
         </div>
         <div class="form-group">
           <label for="loginPassword" data-t="password">Password</label>
-          <input type="password" id="loginPassword" class="form-control" data-t-placeholder="enterPassword" placeholder="Enter your password" required>
+          <input type="password" id="loginPassword" class="form-control" data-t-placeholder="enterPassword" placeholder="Enter your password" required aria-describedby="loginError" autocomplete="current-password">
         </div>
 
         <button type="submit" id="loginBtn" class="btn btn-primary btn-lg" style="width:100%; justify-content:center; margin-top:8px;" data-t="signIn">Sign In</button>
       </form>
     </div>
 
-    <!-- Quick Test Login -->
+    <!-- Quick Demo Login -->
     <div class="test-login-section" id="testLoginSection">
-      <h3 data-t="quickTestLogin">Quick Login — Test Users</h3>
+      <h3 data-t="quickTestLogin">Quick Login — Demo Users</h3>
       <select class="test-login-select" id="testUserSelect">
-        <option value="">Select a test user...</option>
+        <option value="">Select a demo user...</option>
       </select>
-      <button type="button" id="testLoginBtn" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;" disabled data-t="signInAsTestUser">Sign In as Test User</button>
+      <button type="button" id="testLoginBtn" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;" disabled data-t="signInAsTestUser">Sign In as Demo User</button>
     </div>
 
     <div class="footer-link">
@@ -88,30 +92,30 @@
 
   <script>
     const form = document.getElementById('loginForm');
-    const errorMsg = document.getElementById('errorMsg');
+    const errorMsg = document.getElementById('loginError');
     const loginBtn = document.getElementById('loginBtn');
 
-    // --- Load test users ---
-    (async function loadTestUsers() {
+    // --- Load demo users ---
+    (async function loadDemoUsers() {
       try {
         const users = await API.get('/auth/test-users');
         const select = document.getElementById('testUserSelect');
         const btn = document.getElementById('testLoginBtn');
         if (!Array.isArray(users) || users.length === 0) {
-          select.innerHTML = '<option value="">No test users available</option>';
+          select.innerHTML = '<option value="">No demo users available</option>';
           return;
         }
         // Group by role
         const instructors = users.filter(u => u.role === 'instructor');
         const students = users.filter(u => u.role === 'student');
-        let html = '<option value="">Select a test user...</option>';
+        let html = '<option value="">Select a demo user...</option>';
         if (instructors.length) {
-          html += '<optgroup label="Instructors">';
+          html += '<optgroup label="Instructors" data-t="instructors">';
           instructors.forEach(u => { html += `<option value="${u.email}" data-role="${u.role}" data-lang="${u.preferred_language || 'en'}">${u.name} — ${u.institution || 'N/A'}</option>`; });
           html += '</optgroup>';
         }
         if (students.length) {
-          html += '<optgroup label="Students">';
+          html += '<optgroup label="Students" data-t="students">';
           students.forEach(u => { html += `<option value="${u.email}" data-role="${u.role}" data-lang="${u.preferred_language || 'en'}">${u.name} — ${u.institution || 'N/A'}</option>`; });
           html += '</optgroup>';
         }
@@ -121,7 +125,7 @@
           if (!select.value) return;
           const role = select.selectedOptions[0].dataset.role;
           btn.disabled = true;
-          btn.textContent = 'Signing in...';
+          btn.textContent = t('signingIn') || 'Signing in...';
           errorMsg.style.display = 'none';
           try {
             const loginData = await API.post('/auth/test-login', { email: select.value });
@@ -130,15 +134,15 @@
             if (typeof switchLanguage === 'function') switchLanguage(userLang);
             window.location.href = role === 'instructor' ? '/challenge-list-instructor.html' : '/challenge-list.html';
           } catch (err) {
-            errorMsg.textContent = err.message || 'Test login failed.';
+            errorMsg.textContent = err.message || 'Demo login failed.';
             errorMsg.style.display = 'block';
             btn.disabled = false;
-            btn.textContent = 'Sign In as Test User';
+            btn.textContent = t('signInAsTestUser') || 'Sign In as Demo User';
           }
         });
       } catch (err) {
-        console.error('[Login] Failed to load test users:', err.message || err);
-        document.getElementById('testUserSelect').innerHTML = '<option value="">Could not load test users</option>';
+        console.error('[Login] Failed to load demo users:', err.message || err);
+        document.getElementById('testUserSelect').innerHTML = '<option value="">Could not load demo users</option>';
       }
     })();
 
@@ -146,18 +150,22 @@
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
       errorMsg.style.display = 'none';
+      document.getElementById('loginEmail').removeAttribute('aria-invalid');
+      document.getElementById('loginPassword').removeAttribute('aria-invalid');
 
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
 
       if (!email || !password) {
-        errorMsg.textContent = 'Please enter both email and password.';
+        errorMsg.textContent = t('enterEmailAndPassword') || 'Please enter both email and password.';
         errorMsg.style.display = 'block';
+        if (!email) document.getElementById('loginEmail').focus();
+        else document.getElementById('loginPassword').focus();
         return;
       }
 
       loginBtn.disabled = true;
-      loginBtn.textContent = 'Signing in...';
+      loginBtn.textContent = t('signingIn') || 'Signing in...';
 
       try {
         const data = await API.post('/auth/login', { email, password });
@@ -173,8 +181,11 @@
       } catch (err) {
         errorMsg.textContent = err.message || 'Login failed. Please check your credentials.';
         errorMsg.style.display = 'block';
+        document.getElementById('loginEmail').setAttribute('aria-invalid', 'true');
+        document.getElementById('loginPassword').setAttribute('aria-invalid', 'true');
+      } finally {
         loginBtn.disabled = false;
-        loginBtn.textContent = 'Sign In';
+        loginBtn.textContent = t('signIn') || 'Sign In';
       }
     });
   </script>

@@ -5,6 +5,7 @@ const session = require('express-session');
 const passport = require('passport');
 const helmet = require('helmet');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const path = require('path');
 const { loadConfig } = require('./utils/config');
@@ -21,14 +22,67 @@ async function startServer() {
   const logger = createLogger(config.logging);
   const app = express();
 
-  // --- Security & parsing ---
+  // --- Security headers ---
   app.use(helmet({
-    contentSecurityPolicy: false,  // Allow inline scripts for frontend pages
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],  // Allow inline scripts for vanilla JS frontend
+        styleSrc: ["'self'", "'unsafe-inline'"],    // Allow inline styles
+        imgSrc: ["'self'", "data:", "https:"],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        frameAncestors: ["'none'"],
+      },
+    },
   }));
+
+  // --- CORS ---
+  const allowedOrigins = process.env.CORS_ORIGINS
+    ? process.env.CORS_ORIGINS.split(',').map(s => s.trim())
+    : (process.env.NODE_ENV === 'production' ? [] : [true]);  // Allow all in dev, restrict in prod
   app.use(cors({
-    origin: true,
+    origin: allowedOrigins.length === 1 && allowedOrigins[0] === true ? true : allowedOrigins,
     credentials: true,
   }));
+
+  // --- Rate limiting ---
+  const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,  // 15 minutes
+    max: 300,                   // 300 requests per window
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many requests, please try again later.' },
+  });
+  app.use('/api/', apiLimiter);
+
+  // Stricter rate limit for auth mutation endpoints (login, register, test-login)
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 20,  // 20 auth attempts per 15 min
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many authentication attempts, please try again later.' },
+  });
+  // Apply only to auth mutation routes, NOT to GET /auth/me (called on every page load)
+  app.use('/api/v1/auth/login', authLimiter);
+  app.use('/api/v1/auth/register', authLimiter);
+  app.use('/api/v1/auth/test-login', authLimiter);
+
+  // Stricter rate limit for LLM endpoints (expensive operations)
+  const llmLimiter = rateLimit({
+    windowMs: 60 * 1000,       // 1 minute
+    max: 10,                    // 10 LLM calls per minute
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many AI requests, please wait before trying again.' },
+  });
+  app.use('/api/v1/llm/', llmLimiter);
+  app.use('/api/v1/challenges/preview-problem', llmLimiter);
+  app.use('/api/v1/challenges/preview-rubric', llmLimiter);
+
+  // --- Parsing ---
   app.use(compression());
   app.use(express.json({ limit: SERVER.JSON_BODY_LIMIT }));
   app.use(express.urlencoded({ extended: true }));
@@ -54,6 +108,14 @@ async function startServer() {
       conString: process.env.DATABASE_URL || config.database.connection,
       tableName: SERVER.SESSION_TABLE_NAME,
       createTableIfMissing: true,
+    });
+  } else {
+    // Use a file-based SQLite session store for development/test via knex
+    const KnexSessionStore = require('./utils/knex-session-store')(session);
+    sessionConfig.store = new KnexSessionStore({
+      knex: require('./db/knexfile').createKnex(config),
+      tableName: SERVER.SESSION_TABLE_NAME || 'sessions',
+      createTable: true,
     });
   }
 
@@ -99,6 +161,7 @@ async function startServer() {
       generateFramingMC: async () => LLM_FALLBACK_FRAMING_OPTIONS,
       generateJudgingMC: async () => LLM_FALLBACK_JUDGING_OPTIONS,
       generateSteeringMC: async () => LLM_FALLBACK_STEERING_OPTIONS,
+      generateRubrics: async () => null,
       generateRubricPreview: async () => null,
       generateSubjectTree: async () => LLM_STUB_SUBJECT_TREE,
     };

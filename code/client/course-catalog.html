@@ -9,7 +9,7 @@
   <style>
     .course-card { position: relative; transition: box-shadow .15s; }
     .course-card:hover { box-shadow: var(--shadow-lg); }
-    .course-card .course-dept { font-size: 12px; color: var(--teal); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .course-card .course-dept { font-size: 12px; color: var(--teal); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: calc(100% - 100px); }
     .course-card h3 { font-size: 16px; margin-bottom: 8px; }
     .course-card .course-meta { font-size: 13px; color: var(--text-secondary); }
     .course-card .course-meta span { display: inline-flex; align-items: center; gap: 4px; margin-inline-end: 12px; }
@@ -23,9 +23,11 @@
   <script src="content-loader.js"></script>
   <script src="js/tooltips.js"></script>
   <script src="js/api-client.js"></script>
+  <script src="js/utils.js"></script>
   <script src="js/user-header.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
   <header class="topnav">
     <a href="index.html" class="logo"><img src="assets/logo.png" alt="Logo"> AI CoReasoning Lab</a>
     <nav>
@@ -34,7 +36,8 @@
       <a href="student-analytics.html" data-t="myResults">My Results</a>
     </nav>
     <div class="user-area">
-      <select class="lang-select"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
+      <a href="interactive-guide.html" class="guide-link" title="Interactive Guide" data-t="guide">Guide</a>
+      <select class="lang-select" aria-label="Select language"><option value="en">EN</option><option value="he">HE</option><option value="fr">FR</option><option value="de">DE</option><option value="es">ES</option></select>
       <span style="background:#e8eaf6;color:#1a237e;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px" data-t="student">Student</span>
       <span id="userInstitution" style="font-size:12px;color:#1a237e;background:#e8eaf6;padding:2px 10px;border-radius:12px;font-weight:600;"></span>
       <span id="userName">—</span>
@@ -43,7 +46,7 @@
     </div>
   </header>
 
-  <main class="page">
+  <main class="page" id="main-content">
     <div class="page-header">
       <h1 data-t="courseCatalog" data-tooltip="courseSubscription">Course Catalog</h1>
       <p data-t="courseCatalogDesc">Browse and subscribe to courses</p>
@@ -140,8 +143,8 @@
         if (isSub) {
           html += '<span class="subscribed-badge" data-t="subscribed">&#10003; Subscribed</span>';
         }
-        html += '<div class="course-dept">' + escHtml(c.department || '') + '</div>';
-        html += '<h3>' + escHtml(c.name || 'Untitled') + '</h3>';
+        html += '<div class="course-dept" dir="auto">' + escHtml(c.department || '') + '</div>';
+        html += '<h3 dir="auto">' + escHtml(c.name || 'Untitled') + '</h3>';
         html += '<div class="course-meta">';
         html += '<span>&#128100; ' + (c.instructor_count || c.instructorCount || 0) + ' <span data-t="instructors">instructors</span></span>';
         html += '<span>&#128203; ' + (c.challenge_count || c.challengeCount || 0) + ' <span data-t="challenges">challenges</span></span>';
@@ -190,7 +193,7 @@
         });
         applyFilters();
       }).catch(function(err) {
-        alert((subscribe ? 'Subscribe' : 'Unsubscribe') + ' failed: ' + err.message);
+        showToast((subscribe ? (t('subscribeFailed') || 'Subscribe failed') : (t('unsubscribeFailed') || 'Unsubscribe failed')) + ': ' + err.message, 'error');
       });
     };
 

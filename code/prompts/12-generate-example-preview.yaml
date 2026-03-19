@@ -13,6 +13,8 @@ description: >
   rubrics and configuration make sense.
 
 system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
   You are generating a PREVIEW example of a co-reasoning problem for a challenge
   that is being defined. This preview helps the challenge creator verify that:
   1. The problem aligns with the selected subject area
@@ -41,6 +43,17 @@ user_prompt: |
 
   Produce the example problem WITH [gap annotations] visible to the creator.
   Write the problem and annotations in {{language}}.
+
+  IMPORTANT: The `problem_text` field must be plain readable text (the problem scenario as a student would see it), NOT a JSON object or structured data. The `annotated_gaps` array and `creator_notes` are the only structured fields.
+
+  Return your response as a single JSON object with this exact structure:
+  {
+    "problem_text": "Plain text problem scenario with [annotated gaps]...",
+    "annotated_gaps": [
+      { "gap_text": "...", "rubric_alignment": "..." }
+    ],
+    "creator_notes": "Brief note..."
+  }
 
 output_schema:
   type: object
