@@ -530,5 +530,20 @@ independently-assessable skills, Framing, Judging, and Steering, separates the p
 from the post-generation one in a way prior frameworks do not, and shows that the three can be
 measured apart. We offer it as a foundation for the assessment and instruction the moment demands.
 
+## Appendix A. System walkthrough
+
+Figure A1 shows a single challenge run in CoReasoning Lab, illustrating how the three skills appear as
+distinct, separately-scored stages of one continuous task. In Phase 1 the learner refines an
+ill-defined problem and receives a Framing grade. The system then produces a deliberately flawed
+solution. In Phase 2 the learner judges that output (flagging real issues while avoiding distractors)
+and steers the AI with a targeted correction; the output converges across cycles. The final report
+returns three independent grades with per-skill diagnostic feedback, the interface-level expression of
+the framework's central claim that productive AI use is not one skill but three.
+
+![Figure A1. A CoReasoning Lab challenge run.](assets/system-mockup.svg)
+
+*Figure A1. The learner experience: Framing (Phase 1), the Judge–Steer cycle (Phase 2), and the
+per-skill report. Each skill is scored and given feedback independently.*
+
 ## References
-[Compiled in references.bib — see paper/references working set.]
+[Rendered from `references.bib` (43 entries, validated). See the repository for the BibTeX source.]
