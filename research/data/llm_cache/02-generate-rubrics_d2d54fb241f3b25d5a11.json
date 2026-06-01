@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Statistics",
+    "subject_path": "Statistics > Hypothesis Testing",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Identification of Variables",
+        "description": "Clearly identifies dependent and independent variables relevant to the hypothesis.",
+        "excellent_indicator": "All relevant variables are identified with clear definitions and their roles in the hypothesis.",
+        "poor_indicator": "Misses key variables or misidentifies their roles in the hypothesis."
+      },
+      {
+        "name": "Clarity of Hypothesis",
+        "description": "Formulates a clear and testable hypothesis based on the problem statement.",
+        "excellent_indicator": "The hypothesis is concise, specific, and directly addresses the problem.",
+        "poor_indicator": "The hypothesis is vague, overly broad, or does not relate to the problem."
+      },
+      {
+        "name": "Contextual Understanding",
+        "description": "Demonstrates a strong understanding of the context in which the hypothesis is framed.",
+        "excellent_indicator": "Provides a thorough explanation of the context and its relevance to the hypothesis.",
+        "poor_indicator": "Fails to explain the context or demonstrates a misunderstanding of its relevance."
+      }
+    ],
+    "typical_errors": [
+      "Confusing dependent and independent variables.",
+      "Formulating a hypothesis that cannot be tested statistically.",
+      "Neglecting to provide context or background information for the hypothesis."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "Accurately identifies statistical errors or gaps in AI-generated outputs.",
+        "excellent_indicator": "All significant errors and gaps are identified with clear explanations of why they are incorrect.",
+        "poor_indicator": "Misses key errors or incorrectly identifies correct outputs as errors."
+      },
+      {
+        "name": "Statistical Reasoning",
+        "description": "Applies appropriate statistical reasoning to evaluate the AI's outputs.",
+        "excellent_indicator": "Demonstrates a strong understanding of statistical concepts and applies them correctly to judge outputs.",
+        "poor_indicator": "Lacks understanding of relevant statistical concepts or applies them incorrectly."
+      },
+      {
+        "name": "Use of Terminology",
+        "description": "Utilizes correct statistical terminology when assessing AI outputs.",
+        "excellent_indicator": "Terminology is used accurately and appropriately throughout the evaluation.",
+        "poor_indicator": "Terminology is misused or not used at all, leading to confusion."
+      }
+    ],
+    "typical_errors": [
+      "Failing to recognize common statistical misconceptions in AI outputs.",
+      "Overlooking assumptions related to hypothesis testing, such as normality or independence.",
+      "Using incorrect statistical terms when describing errors."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Clarity of Corrections",
+        "description": "Provides clear and actionable corrections to the AI outputs.",
+        "excellent_indicator": "Corrections are specific, detailed, and easy to understand, guiding the AI effectively.",
+        "poor_indicator": "Corrections are vague, unclear, or not actionable, making it difficult for the AI to improve."
+      },
+      {
+        "name": "Relevance of Corrections",
+        "description": "Ensures corrections are relevant to the identified errors in the AI outputs.",
+        "excellent_indicator": "All corrections directly address the identified errors and gaps, enhancing the AI's output.",
+        "poor_indicator": "Corrections do not relate to the identified errors, leading to confusion or further errors."
+      },
+      {
+        "name": "Iterative Improvement",
+        "description": "Demonstrates ability to iteratively refine corrections based on AI responses.",
+        "excellent_indicator": "Shows clear progression in the quality of corrections through multiple iterations.",
+        "poor_indicator": "Fails to adapt or improve corrections based on previous AI responses."
+      }
+    ],
+    "typical_errors": [
+      "Providing corrections that don't address the core issues identified in the AI outputs.",
+      "Making corrections that introduce new errors or misconceptions.",
+      "Not iterating on corrections based on feedback from previous AI outputs."
+    ]
+  }
+}

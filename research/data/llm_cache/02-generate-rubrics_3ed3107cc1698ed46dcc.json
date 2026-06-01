@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Databases",
+    "subject_path": "Databases > Indexing & Query Optimization",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Definition",
+        "description": "Clearly defines the indexing and query optimization problem based on given data.",
+        "excellent_indicator": "The problem is articulated with specific terms related to indexing and query performance, outlining key objectives.",
+        "poor_indicator": "The problem is vaguely defined with little to no reference to indexing or query optimization concepts."
+      },
+      {
+        "name": "Contextual Relevance",
+        "description": "Identifies relevant background information and context that influences the indexing strategy.",
+        "excellent_indicator": "Context is well-researched, referencing specific database schemas or data characteristics that impact indexing.",
+        "poor_indicator": "Context is missing or irrelevant, failing to connect to the indexing and query optimization challenge."
+      },
+      {
+        "name": "Task Specification",
+        "description": "Translates the ill-defined problem into a well-defined task with clear objectives.",
+        "excellent_indicator": "The task includes measurable goals, specifying desired outcomes for indexing and query performance.",
+        "poor_indicator": "The task lacks clarity and measurable objectives, making it difficult to assess progress."
+      }
+    ],
+    "typical_errors": [
+      "Confusing indexing with other database concepts like normalization.",
+      "Neglecting to consider the specific database management system in use.",
+      "Failing to outline the performance metrics relevant to the problem."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "Effectively identifies errors or gaps in the AI-generated output related to indexing.",
+        "excellent_indicator": "All significant errors are identified, with clear explanations of their implications on query performance.",
+        "poor_indicator": "Few or no errors are identified, or the identified errors are trivial and do not impact the overall indexing strategy."
+      },
+      {
+        "name": "Relevance of Feedback",
+        "description": "Assesses the relevance of the AI output to the original problem and task.",
+        "excellent_indicator": "Feedback clearly aligns with the outlined problem and task, highlighting critical issues.",
+        "poor_indicator": "Feedback is unrelated to the problem or lacks focus on indexing and optimization aspects."
+      },
+      {
+        "name": "Depth of Analysis",
+        "description": "Provides a deep analysis of the AI output, considering various indexing strategies.",
+        "excellent_indicator": "Analysis includes multiple perspectives on indexing and optimization, considering trade-offs and implications.",
+        "poor_indicator": "Analysis is superficial, lacking depth or consideration of different indexing strategies."
+      }
+    ],
+    "typical_errors": [
+      "Overlooking minor errors that can significantly affect performance.",
+      "Focusing only on syntactical errors instead of logical issues.",
+      "Failing to connect feedback to specific indexing strategies."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Corrective Commands",
+        "description": "Provides clear and precise commands to correct AI outputs.",
+        "excellent_indicator": "Commands are specific, actionable, and directly address identified errors in indexing.",
+        "poor_indicator": "Commands are vague or do not directly address the issues identified in the AI output."
+      },
+      {
+        "name": "Iterative Improvement",
+        "description": "Demonstrates an iterative approach to refining the AI output based on feedback.",
+        "excellent_indicator": "Shows a clear progression in improvements with each iteration, enhancing indexing effectiveness.",
+        "poor_indicator": "No noticeable improvement across iterations, or the same errors are repeated without adjustments."
+      },
+      {
+        "name": "Conceptual Clarity",
+        "description": "Exhibits a strong understanding of indexing and optimization principles in steering commands.",
+        "excellent_indicator": "Commands reflect a deep understanding of database concepts, leading to effective steering.",
+        "poor_indicator": "Commands show a lack of understanding of indexing principles, resulting in ineffective guidance."
+      }
+    ],
+    "typical_errors": [
+      "Issuing commands that contradict established indexing practices.",
+      "Not considering the database size or structure when steering.",
+      "Failing to provide sufficient detail in commands for effective changes."
+    ]
+  }
+}

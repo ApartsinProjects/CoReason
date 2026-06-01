@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Algorithms",
+    "subject_path": "Algorithms > Sorting & Searching",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Identification",
+        "description": "Clearly identifies and articulates the key components of the ill-defined problem, including input and output specifications.",
+        "excellent_indicator": "Accurately describes the problem with all necessary components and constraints, using appropriate terminology.",
+        "poor_indicator": "Fails to identify crucial components of the problem or misinterprets the problem requirements."
+      },
+      {
+        "name": "Task Specification",
+        "description": "Translates the ill-defined problem into a well-defined task with clear objectives and steps to solve it.",
+        "excellent_indicator": "Defines a comprehensive and clear task that outlines a logical approach to solving the problem.",
+        "poor_indicator": "Provides an ambiguous or incomplete task definition that lacks clarity or logical structure."
+      },
+      {
+        "name": "Algorithm Selection Consideration",
+        "description": "Considers appropriate algorithms for sorting or searching based on the problem context and requirements.",
+        "excellent_indicator": "Selects an optimal algorithm that is well-suited for the specific problem characteristics and justifies the choice effectively.",
+        "poor_indicator": "Chooses a suboptimal or irrelevant algorithm without proper justification."
+      }
+    ],
+    "typical_errors": [
+      "Misunderstanding the problem requirements leading to incorrect task framing.",
+      "Neglecting to specify input and output clearly, resulting in ambiguity.",
+      "Selecting an inappropriate algorithm based on the problem context."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "Effectively identifies errors or gaps in the AI-generated output related to sorting or searching algorithms.",
+        "excellent_indicator": "Accurately points out multiple specific errors in the output with clear explanations.",
+        "poor_indicator": "Identifies few or no errors, or provides vague explanations that do not demonstrate understanding."
+      },
+      {
+        "name": "Complexity Analysis",
+        "description": "Evaluates the efficiency of the AI's proposed solution with respect to time and space complexity.",
+        "excellent_indicator": "Provides a thorough analysis of the algorithm's complexity, comparing it against alternatives where relevant.",
+        "poor_indicator": "Fails to analyze complexity or provides incorrect complexity assessments."
+      },
+      {
+        "name": "Correctness of Output",
+        "description": "Assesses whether the output meets the specified requirements and constraints of the task.",
+        "excellent_indicator": "Determines with confidence that the output meets all requirements and identifies any deviations.",
+        "poor_indicator": "Overlooks significant inaccuracies in the output or incorrectly claims it meets the requirements."
+      }
+    ],
+    "typical_errors": [
+      "Missing key errors in the AI output due to lack of attention to detail.",
+      "Misunderstanding algorithm complexity leading to incorrect assessments.",
+      "Assuming the AI output is correct without thorough evaluation."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Correction Clarity",
+        "description": "Provides clear and precise commands to correct the identified errors in the AI output.",
+        "excellent_indicator": "Delivers specific and actionable corrections that directly address the identified errors.",
+        "poor_indicator": "Gives vague or unclear commands that do not effectively resolve the issues in the output."
+      },
+      {
+        "name": "Iterative Improvement",
+        "description": "Demonstrates the ability to iteratively refine the AI output based on previous judgments.",
+        "excellent_indicator": "Shows a clear progression of improvements in the AI output with each iteration based on feedback provided.",
+        "poor_indicator": "Fails to make meaningful improvements in the output despite providing corrections."
+      },
+      {
+        "name": "Algorithmic Insight",
+        "description": "Incorporates understanding of sorting and searching algorithms into steering commands to enhance the AI's output.",
+        "excellent_indicator": "Utilizes algorithmic principles effectively to guide the AI towards a more efficient solution.",
+        "poor_indicator": "Provides corrections without demonstrating an understanding of algorithmic principles, leading to ineffective guidance."
+      }
+    ],
+    "typical_errors": [
+      "Providing corrections that do not align with the identified errors in the AI output.",
+      "Failing to refine the output in subsequent iterations, leading to stagnant results.",
+      "Incorrectly steering the AI based on misunderstandings of algorithm behavior."
+    ]
+  }
+}

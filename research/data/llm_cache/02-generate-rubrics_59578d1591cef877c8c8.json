@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Machine Learning",
+    "subject_path": "ML > Model Evaluation & Overfitting",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Identification",
+        "description": "Clearly identifies the key components of the ill-defined problem related to model evaluation and overfitting.",
+        "excellent_indicator": "Accurately identifies all relevant aspects of the problem, including the types of models involved and evaluation metrics.",
+        "poor_indicator": "Fails to identify key components or misinterprets the problem context."
+      },
+      {
+        "name": "Task Specification",
+        "description": "Translates the ill-defined problem into a well-defined task with clear objectives and constraints.",
+        "excellent_indicator": "Defines specific, measurable objectives and constraints that guide the model evaluation process.",
+        "poor_indicator": "Provides vague objectives or lacks clarity in task definition."
+      },
+      {
+        "name": "Contextual Relevance",
+        "description": "Ensures that the defined task is relevant to current best practices in model evaluation and overfitting avoidance.",
+        "excellent_indicator": "Aligns the task with established methodologies and contemporary challenges in machine learning.",
+        "poor_indicator": "Ignores established practices or suggests irrelevant approaches."
+      }
+    ],
+    "typical_errors": [
+      "Overlooking key aspects of model evaluation such as bias-variance tradeoff.",
+      "Failing to specify clear objectives, resulting in ambiguous tasks.",
+      "Misunderstanding the relevance of overfitting in the context of the problem."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "Effectively identifies errors and gaps in the AI-generated output related to model evaluation and overfitting.",
+        "excellent_indicator": "Clearly articulates all major errors and gaps, demonstrating a deep understanding of evaluation metrics and overfitting.",
+        "poor_indicator": "Misses critical errors or identifies irrelevant issues unrelated to model evaluation."
+      },
+      {
+        "name": "Use of Evaluation Metrics",
+        "description": "Evaluates the AI output using relevant evaluation metrics (e.g., accuracy, precision, recall, F1-score).",
+        "excellent_indicator": "Selects and applies appropriate metrics for the context, demonstrating a solid understanding of their implications.",
+        "poor_indicator": "Uses inappropriate or irrelevant metrics that do not align with the task."
+      },
+      {
+        "name": "Critical Analysis",
+        "description": "Analyzes the AI output critically, considering the implications of identified errors on model performance.",
+        "excellent_indicator": "Provides a thorough analysis of how errors affect overall model effectiveness and potential improvements.",
+        "poor_indicator": "Offers superficial analysis without connecting errors to model performance."
+      }
+    ],
+    "typical_errors": [
+      "Failing to recognize overfitting signs in the AI output.",
+      "Inadequate explanation of why certain evaluation metrics are more relevant than others.",
+      "Overlooking the importance of context when analyzing errors."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Correction Clarity",
+        "description": "Provides clear and actionable correction commands to the AI based on identified errors.",
+        "excellent_indicator": "Articulates precise and well-structured commands that directly address the errors identified.",
+        "poor_indicator": "Issues vague or confusing commands that do not effectively guide the AI's corrections."
+      },
+      {
+        "name": "Iterative Improvement",
+        "description": "Demonstrates an understanding of iterative improvement by refining AI outputs through multiple correction cycles.",
+        "excellent_indicator": "Successfully refines the AI output through thoughtful iterations that progressively enhance model evaluation.",
+        "poor_indicator": "Fails to iterate effectively, resulting in minimal improvement or repeated errors."
+      },
+      {
+        "name": "Feedback Relevance",
+        "description": "Gives relevant feedback that helps improve the AI's understanding and output regarding model evaluation.",
+        "excellent_indicator": "Feedback is specific, relevant, and directly tied to the identified issues in the AI's response.",
+        "poor_indicator": "Provides irrelevant feedback that does not contribute to understanding or correcting the AI's output."
+      }
+    ],
+    "typical_errors": [
+      "Offering corrections that do not align with the identified errors in the AI output.",
+      "Neglecting to iterate on corrections, leading to a stagnant output.",
+      "Providing feedback that is too general or unrelated to the specific issues at hand."
+    ]
+  }
+}

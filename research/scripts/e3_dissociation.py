@@ -7,7 +7,7 @@ weak-judge). Grade with gpt-4o; simulate with gpt-4o-mini (different models -> n
 
 Run:  COREASON_GRADER=openai:gpt-4o python research/scripts/e3_dissociation.py
 """
-import json, sys, csv, itertools, statistics as st
+import os, json, sys, csv, itertools, statistics as st
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -15,6 +15,7 @@ from e3_pilot import build_challenge, grade_one
 from harness import GMAP, ROOT, _provider_use
 
 OUT = ROOT / "research/results"; OUT.mkdir(parents=True, exist_ok=True)
+TAG = os.environ.get("COREASON_TAG", "")  # output suffix for grader-robustness runs
 STRONG, WEAK = "expert", "novice"          # per-skill levels
 SKILLS = ["framing", "judging", "steering"]
 
@@ -57,9 +58,9 @@ def main():
     fields = ["challenge","subject","framing_level","judging_level","steering_level",
               "framing_grade","judging_grade","steering_grade",
               "judging_real_flagged","judging_false_flagged","judging_total_real"]
-    with open(OUT / "e3_dissociation_grades.csv", "w", newline="", encoding="utf-8") as fh:
+    with open(OUT / f"e3_dissociation_grades{TAG}.csv", "w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore"); w.writeheader(); w.writerows(rows)
-    json.dump(rows, open(OUT / "e3_dissociation_complete.json", "w", encoding="utf-8"),
+    json.dump(rows, open(OUT / f"e3_dissociation_complete{TAG}.json", "w", encoding="utf-8"),
               ensure_ascii=False, indent=2, default=str)
 
     # ---- dissociation analysis: own-effect vs cross-effects ----

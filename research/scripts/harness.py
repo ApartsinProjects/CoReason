@@ -82,8 +82,14 @@ def _extract_json(text):
 # OpenAI gpt-4o-mini as a reliability fallback; Groq llama last (free-tier TPD often exhausted).
 # Override with COREASON_GRADER=openai:gpt-4o (reliable single-provider grading for big runs).
 _grader_env = os.environ.get("COREASON_GRADER", "")
-if _grader_env.startswith("openai:"):
-    _GRADER_CHAIN = [(_openai, "openai", _grader_env.split(":", 1)[1], 4)]
+_PROV = {"openai": _openai, "openrouter": _openrouter, "groq": _groq}
+if ":" in _grader_env and _grader_env.split(":", 1)[0] in _PROV:
+    _pv, _mdl = _grader_env.split(":", 1)
+    # primary = chosen backend; keep OpenAI gpt-4o-mini as a reliability fallback if primary differs
+    _chain = [(_PROV[_pv], _pv, _mdl, 6)]
+    if _pv != "openai":
+        _chain.append((_openai, "openai", "gpt-4o-mini", 3))
+    _GRADER_CHAIN = _chain
 else:
     _GRADER_CHAIN = [(_openrouter, "openrouter", "meta-llama/llama-3.3-70b-instruct", 7),
                      (_openai, "openai", "gpt-4o-mini", 3),
@@ -161,9 +167,13 @@ def run_prompt(stem, vars, temperature=None, max_tokens=None, seed=None, use_cac
         "keys: " + ", ".join(keys) + ". No markdown fences, no prose outside the JSON.\nSchema:\n"
         + json.dumps(schema) if schema else "")
     user = _render(p["user_prompt"], vars)
+    # Namespace the cache by GRADER model for grading prompts only, so re-grading the same
+    # (cached) challenges + learner responses with a different backend yields fresh grades while
+    # generation (01-07, 14) and the AI-update (04) stay fixed across grader-robustness runs.
+    grader_tag = _GRADER_CHAIN[0][2] if any(stem.startswith(s) for s in ("08", "09", "10", "11")) else ""
     key = hashlib.sha256(json.dumps(
-        {"stem": stem, "system": system, "user": user, "temp": temp, "mt": mt, "seed": seed},
-        sort_keys=True).encode()).hexdigest()[:20]
+        {"stem": stem, "system": system, "user": user, "temp": temp, "mt": mt, "seed": seed,
+         "grader": grader_tag}, sort_keys=True).encode()).hexdigest()[:20]
     cf = CACHE_DIR / f"{stem}_{key}.json"
     if use_cache and cf.exists():
         return json.load(open(cf, encoding="utf-8"))

@@ -1,0 +1,32 @@
+{
+  "refinement_sections": [
+    {
+      "section_type": "Problem Definition",
+      "content": "The primary issue is the performance degradation of the current sorting algorithm utilized in our data analysis application. This problem needs to be clearly defined in terms of specific performance metrics (e.g., time complexity, space complexity) and the nature of the datasets being sorted (e.g., size, data type, distribution)."
+    },
+    {
+      "section_type": "Current Implementation Analysis",
+      "content": "A thorough analysis of the existing sorting algorithm should be conducted, including its time and space complexity, the algorithm's behavior with various dataset sizes, and any potential bottlenecks in the implementation. Profiling tools should be employed to gather empirical performance data."
+    },
+    {
+      "section_type": "Optimization Goals",
+      "content": "Define specific optimization goals, such as reducing the average-case time complexity, improving worst-case performance, and ensuring stability in sorting (maintaining the relative order of equal elements). Additionally, consider the scalability of the algorithm when handling large datasets."
+    },
+    {
+      "section_type": "Alternative Algorithms Selection",
+      "content": "Identify at least one alternative sorting algorithm for comparison, such as QuickSort or MergeSort. The selection should be based on their theoretical performance and practical applicability to the dataset characteristics."
+    },
+    {
+      "section_type": "Evaluation Criteria",
+      "content": "Establish clear evaluation criteria for comparing the current implementation with the alternative algorithm. This should include metrics such as execution time, memory usage, and the correctness of the sorted output. Consider edge cases and large datasets in the evaluation."
+    },
+    {
+      "section_type": "Assumptions and Constraints",
+      "content": "Document any assumptions made during the analysis, such as the nature of the input data and the environment in which the algorithm will run. Identify any constraints, such as memory limits or time restrictions, that could impact the optimization process."
+    },
+    {
+      "section_type": "Reporting Findings",
+      "content": "Prepare a comprehensive report that includes the analysis of the current implementation, the optimization strategy employed, a comparison with the alternative algorithm, and any assumptions made. The report should be structured clearly, with sections for introduction, methodology, results, and conclusions, and should be ready for presentation within the two-week deadline."
+    }
+  ]
+}

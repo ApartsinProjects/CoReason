@@ -1,0 +1,134 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is experiencing performance issues with a sorting algorithm used in our data analysis application. I need you to analyze the current implementation and optimize it. Please ensure that the output retains the correct order of elements after sorting and can handle large datasets efficiently. You should also provide a comparison with at least one alternative algorithm to demonstrate the improvements. Be prepared to present your findings in a report, including any assumptions made during your analysis. Time is of the essence, as we need this resolved in the next two weeks.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary issue is the performance degradation of the current sorting algorithm utilized in our data analysis application. This problem needs to be clearly defined in terms of specific performance metrics (e.g., time complexity, space complexity) and the nature of the datasets being sorted (e.g., size, data type, distribution).\"}, {\"section_type\": \"Current Implementation Analysis\", \"content\": \"A thorough analysis of the existing sorting algorithm should be conducted, including its time and space complexity, the algorithm's behavior with various dataset sizes, and any potential bottlenecks in the implementation. Profiling tools should be employed to gather empirical performance data.\"}, {\"section_type\": \"Optimization Goals\", \"content\": \"Define specific optimization goals, such as reducing the average-case time complexity, improving worst-case performance, and ensuring stability in sorting (maintaining the relative order of equal elements). Additionally, consider the scalability of the algorithm when handling large datasets.\"}, {\"section_type\": \"Alternative Algorithms Selection\", \"content\": \"Identify at least one alternative sorting algorithm for comparison, such as QuickSort or MergeSort. The selection should be based on their theoretical performance and practical applicability to the dataset characteristics.\"}, {\"section_type\": \"Evaluation Criteria\", \"content\": \"Establish clear evaluation criteria for comparing the current implementation with the alternative algorithm. This should include metrics such as execution time, memory usage, and the correctness of the sorted output. Consider edge cases and large datasets in the evaluation.\"}, {\"section_type\": \"Assumptions and Constraints\", \"content\": \"Document any assumptions made during the analysis, such as the nature of the input data and the environment in which the algorithm will run. Identify any constraints, such as memory limits or time restrictions, that could impact the optimization process.\"}, {\"section_type\": \"Reporting Findings\", \"content\": \"Prepare a comprehensive report that includes the analysis of the current implementation, the optimization strategy employed, a comparison with the alternative algorithm, and any assumptions made. The report should be structured clearly, with sections for introduction, methodology, results, and conclusions, and should be ready for presentation within the two-week deadline.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Clearly identifies and articulates the key components of the ill-defined problem, including input and output specifications.",
+          "excellent_indicator": "Accurately describes the problem with all necessary components and constraints, using appropriate terminology.",
+          "poor_indicator": "Fails to identify crucial components of the problem or misinterprets the problem requirements."
+        },
+        {
+          "name": "Task Specification",
+          "description": "Translates the ill-defined problem into a well-defined task with clear objectives and steps to solve it.",
+          "excellent_indicator": "Defines a comprehensive and clear task that outlines a logical approach to solving the problem.",
+          "poor_indicator": "Provides an ambiguous or incomplete task definition that lacks clarity or logical structure."
+        },
+        {
+          "name": "Algorithm Selection Consideration",
+          "description": "Considers appropriate algorithms for sorting or searching based on the problem context and requirements.",
+          "excellent_indicator": "Selects an optimal algorithm that is well-suited for the specific problem characteristics and justifies the choice effectively.",
+          "poor_indicator": "Chooses a suboptimal or irrelevant algorithm without proper justification."
+        }
+      ],
+      "typical_errors": [
+        "Misunderstanding the problem requirements leading to incorrect task framing.",
+        "Neglecting to specify input and output clearly, resulting in ambiguity.",
+        "Selecting an inappropriate algorithm based on the problem context."
+      ]
+    },
+    "best_framing": {
+      "base": "Our company is experiencing performance issues with a sorting algorithm used in our data analysis application. I need you to analyze the current implementation and optimize it. Please ensure that the output retains the correct order of elements after sorting and can handle large datasets efficiently. You should also provide a comparison with at least one alternative algorithm to demonstrate the improvements. Be prepared to present your findings in a report, including any assumptions made during your analysis. Time is of the essence, as we need this resolved in the next two weeks.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Current Algorithm",
+              "description": "Assume the current sorting algorithm is a specific implementation (e.g., QuickSort, MergeSort) that needs to be identified for effective analysis.",
+              "addresses_gap": "What is the current sorting algorithm being used?"
+            },
+            {
+              "title": "Performance Issues",
+              "description": "Assume that the performance issues may include factors such as time complexity, space complexity, or stability of sorting, which need to be specified.",
+              "addresses_gap": "What specific performance issues are we encountering?"
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Performance Metrics",
+              "description": "Clarify which performance metrics (e.g., execution time, memory usage, scalability) should be used to evaluate the sorting algorithm's efficiency.",
+              "addresses_gap": "What criteria should be used to evaluate the efficiency of the algorithms?"
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Output Verification",
+              "description": "The solution should ensure that the sorted output retains the correct order of elements and can handle datasets of specified sizes (e.g., up to 1 million elements).",
+              "addresses_gap": "Ensures the output retains the correct order of elements after sorting."
+            },
+            {
+              "title": "Algorithm Comparison",
+              "description": "Success will also be measured by the effectiveness of the comparison with at least one alternative sorting algorithm, demonstrating clear improvements in performance.",
+              "addresses_gap": "Provide a comparison with at least one alternative algorithm to demonstrate the improvements."
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "In Scope",
+              "description": "The analysis will focus on optimizing the current sorting algorithm and comparing it with one alternative algorithm.",
+              "addresses_gap": "Defines the specific focus of the task."
+            },
+            {
+              "title": "Out of Scope",
+              "description": "The task will not include modifications to the data analysis application beyond the sorting algorithm.",
+              "addresses_gap": "Clarifies what the analysis will not cover."
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by clearly identifying the problem components, specifying the task with logical steps, and considering appropriate algorithms for selection based on the problem context."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "While your framing identifies the performance degradation of the sorting algorithm and outlines several important aspects, it lacks specificity in certain areas. For instance, in the 'Optimization Goals' section, you mention reducing average-case time complexity but do not specify target metrics or benchmarks. Additionally, in 'Assumptions and Constraints', you could have elaborated on the current algorithm being used, which is crucial for a thorough analysis. Furthermore, the 'Evaluation Criteria' could benefit from more detail regarding edge cases and specific performance metrics to be used in comparison.",
+  "better_alternative": "A stronger framing would include explicit identification of the current sorting algorithm, such as QuickSort or MergeSort, which would guide the analysis. It should also outline specific performance metrics to evaluate, such as expected execution time for different dataset sizes. In the 'Evaluation Criteria', detailing how edge cases will be handled and providing clear benchmarks for success would enhance clarity. Additionally, defining what constitutes 'large datasets' in measurable terms would provide a clearer scope for the analysis.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Identification",
+      "score": "B",
+      "internal_note": "Identifies key components but lacks specific details on the current algorithm and performance issues."
+    },
+    {
+      "criterion_name": "Task Specification",
+      "score": "B",
+      "internal_note": "Defines the task but could improve clarity by specifying performance metrics and benchmarks."
+    },
+    {
+      "criterion_name": "Algorithm Selection Consideration",
+      "score": "A",
+      "internal_note": "Correctly identifies the need to compare with alternative algorithms, demonstrating good understanding."
+    }
+  ],
+  "strengths": [
+    "Clearly articulates the performance issues with the current sorting algorithm.",
+    "Identifies the need for a thorough analysis and comparison with alternative algorithms.",
+    "Outlines the importance of documenting assumptions and constraints."
+  ],
+  "refinements_correctly_selected": [
+    "Current Implementation Analysis",
+    "Optimization Goals",
+    "Alternative Algorithms Selection",
+    "Evaluation Criteria",
+    "Assumptions and Constraints",
+    "Reporting Findings"
+  ],
+  "refinements_missed": [
+    "Specificity in performance metrics and benchmarks in the Optimization Goals section.",
+    "Identification of the current sorting algorithm in the Assumptions and Constraints section."
+  ],
+  "unnecessary_selections": []
+}

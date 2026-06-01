@@ -26,6 +26,8 @@ Denny, P., Leinonen, J., Prather, J., Luxton-Reilly, A., Amarouche, T., Becker, 
 
 Di Santi, E. (2026). Cognitive Amplification vs Cognitive Delegation in Human-AI Systems: A Metric Framework. *arXiv preprint arXiv:2603.18677*.
 
+Durkin, K., & Rittle-Johnson, B. (2012). The Effectiveness of Using Incorrect Examples to Support Learning about Decimal Magnitude. *Learning and Instruction*, 22(3), 206–214. https://doi.org/10.1016/j.learninstruc.2011.11.001
+
 Facione, P. A. (1990). Critical Thinking: A Statement of Expert Consensus for Purposes of Educational Assessment and Instruction (The Delphi Report). *American Philosophical Association*.
 
 Feng, Y., Wang, S., Cheng, Z., Wan, Y., & Chen, D. (2025). Are We on the Right Way to Assessing LLM-as-a-Judge?. *arXiv preprint arXiv:2512.16041*.
@@ -38,6 +40,8 @@ Gerlich, M. (2025). AI Tools in Society: Impacts on Cognitive Offloading and the
 
 Gilson, L. L., & Goldberg, C. B. (2015). Editors' Comment: So, What Is a Conceptual Paper?. *Group \& Organization Management*, 40(2), 127–130. https://doi.org/10.1177/1059601115576425
 
+Gro{\ss}e, C. S., & Renkl, A. (2007). Finding and Fixing Errors in Worked Examples: Can This Foster Learning Outcomes?. *Learning and Instruction*, 17(6), 612–634. https://doi.org/10.1016/j.learninstruc.2007.09.008
+
 Gu, X., & Ericson, B. J. (2025). AI Literacy in K-12 and Higher Education in the Wake of Generative AI: An Integrative Review. *Proceedings of the 2025 ACM Conference on International Computing Education Research (ICER)*, 125–140. https://doi.org/10.1145/3702652.3744217
 
 Hattie, J., & Timperley, H. (2007). The Power of Feedback. *Review of Educational Research*, 77(1), 81–112.
@@ -45,6 +49,8 @@ Hattie, J., & Timperley, H. (2007). The Power of Feedback. *Review of Educationa
 Jaakkola, E. (2020). Designing Conceptual Articles: Four Approaches. *AMS Review*, 10, 18–26.
 
 Jin, Y., Martinez-Maldonado, R., Ga{\v{s}}evi{\'c}, D., & Yan, L. (2024). GLAT: The Generative AI Literacy Assessment Test. *arXiv preprint arXiv:2411.00283*.
+
+Kane, M. T. (2013). Validating the Interpretations and Uses of Test Scores. *Journal of Educational Measurement*, 50(1), 1–73. https://doi.org/10.1111/jedm.12000
 
 Kapur, M. (2008). Productive Failure. *Cognition and Instruction*, 26(3), 379–424.
 
@@ -61,6 +67,8 @@ Li, C., Cui, H., & Hagedorn, L. S. (2026). The Cognitive Impact of ChatGPT in Hi
 Lo, L. S. (2023). The CLEAR Path: A Framework for Enhancing Information Literacy through Prompt Engineering. *The Journal of Academic Librarianship*, 49(4).
 
 Long, D., & Magerko, B. (2020). What Is AI Literacy? Competencies and Design Considerations. *Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems*, 1–16.
+
+Messick, S. (1995). Validity of Psychological Assessment: Validation of Inferences from Persons' Responses and Performances as Scientific Inquiry into Score Meaning. *American Psychologist*, 50(9), 741–749. https://doi.org/10.1037/0003-066X.50.9.741
 
 Nazaretsky, T., Gabbay, H., & K{\"a}ser, T. (2025). Can Students Judge Like Experts? A Large-Scale Study on AI and Human Personalized Formative Feedback. *Computers and Education: Artificial Intelligence*. https://doi.org/10.1016/j.caeai.2025.100533
 

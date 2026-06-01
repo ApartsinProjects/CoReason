@@ -140,7 +140,14 @@ The three skills are not an arbitrary list; they instantiate a well-understood c
 architecture. Nelson and Narens (1990) describe metacognition as a two-level system: an object level
 (cognition itself) and a meta level (a dynamic model of the object level), linked by **monitoring**
 (information flowing from object to meta) and **control** (commands flowing from meta to object).
-In CoReasoning, the AI's generative process is the object level the learner supervises:
+In CoReasoning, the learner's meta level supervises an object level that is *external*, the AI's
+generative process, rather than the learner's own cognition. This is a deliberate extension of the
+Nelson-Narens architecture from intrapersonal monitoring to what we term *exo-directed* monitoring and
+control, and it is the framework's central theoretical move: the same metacognitive machinery is turned
+outward onto a fallible cognitive artifact. The extension is non-trivial because exo-directed monitoring
+adds an epistemic-vigilance burden absent from self-monitoring (the learner must model the reliability
+of a source whose competence differs from, and is opaque to, their own), which is exactly why Judging
+is bounded by domain knowledge (Proposition P4). With that caveat stated, the mapping is direct:
 
 - **Judging is monitoring.** The learner compares AI output against an internal model of an adequate
   solution and registers discrepancies.
@@ -421,6 +428,11 @@ rubrics, one each for Framing, Judging, and Steering, is generated for the subje
 three to five measurable criteria and explicit excellent and poor indicators. A gold-standard "best
 framing" is generated as an internal reference. The design instantiates an inverted cognitive
 apprenticeship: rather than observing an expert, the learner is given a fallible artifact to repair.
+This connects the instrument to the instructional literature on learning from errors and erroneous
+examples, in which studying and correcting flawed solutions improves error detection and conceptual
+understanding relative to studying only correct ones (Große & Renkl, 2007; Durkin & Rittle-Johnson,
+2012); CoReasoning generalizes that paradigm from static worked examples to an interactive,
+learner-driven repair loop over AI output.
 
 **The deliberately-imperfect output.** After the learner frames the task, the model produces a
 plausible, professional-looking solution that is required to embed two to four non-trivial issues,
@@ -499,10 +511,16 @@ The diagonal (own-skill) effects are statistically reliable: bootstrap 95% confi
 (2,000 resamples) exclude zero for Framing (+0.60, CI [+0.38, +0.81]) and Steering (+0.50, CI
 [+0.18, +0.82]); Judging is deterministic by construction (+2.00). The same separation appears in the
 inter-skill grade correlations across the 40 learners: Framing–Judging $\rho = 0.00$,
-Framing–Steering $\rho = -0.22$, Judging–Steering $\rho = +0.17$, none significant (all $p > 0.17$),
-and the first principal component accounts for 42% of the variance. With only three indicators a formal
-factor model is under-identified, so we report these descriptively rather than as a confirmatory
-dimensionality test; the point is simply that the grades do not collapse onto a single dimension.
+Framing–Steering $\rho = -0.22$, Judging–Steering $\rho = +0.17$, none significant (all $p > 0.17$).
+The **Framing–Judging** pair is the cleanest demonstration and the one we lead with: these two skills
+are scored by entirely separate mechanisms (free-text framing evaluation versus issue-selection
+judging) yet their grades are exactly uncorrelated ($\rho = 0.00$), which a single general-ability
+account cannot produce. We do not lead with the Judging–Steering pair because Proposition P2 predicts a
+ceiling relation between them, so some positive association there is expected and is not evidence
+against separability. The first principal component accounts for 42% of the variance, but with only
+three indicators a formal factor model is under-identified, so we report this descriptively rather than
+as a confirmatory dimensionality test; the point is simply that the grades do not collapse onto a
+single dimension.
 
 The designed-contrast personas make the separation concrete (Figure 3). A *weak-framer / strong-judge*
 learner scores Framing C but Judging A; a *strong-framer / weak-judge* learner inverts this to Framing
@@ -582,7 +600,12 @@ expert frontier.
 
 The feasibility demonstration shows that the constructs are separable and measurable; it does not
 establish that the automated grades match expert human judgment, nor that exercising the skills
-improves learning. We therefore specify the validation program the framework invites.
+improves learning. We therefore specify the validation program the framework invites, organized as an
+argument-based validity case in the sense of Messick (1995) and Kane (2013): the present evidence
+supports the *scoring* and *generalization* inferences (the instrument scores consistently and the
+three constructs separate), while the *extrapolation* inference (that the scores reflect a human
+competency that transfers) and the *implication* inference (that the scores support instructional
+decisions) remain to be established by the studies below.
 
 First, an instrument-validity study: a stratified sample of transcripts is re-graded by multiple
 blind human experts using the per-skill rubrics, and agreement with the automated grader is reported
@@ -686,6 +709,8 @@ Denny, P., Leinonen, J., Prather, J., Luxton-Reilly, A., Amarouche, T., Becker, 
 
 Di Santi, E. (2026). Cognitive Amplification vs Cognitive Delegation in Human-AI Systems: A Metric Framework. *arXiv preprint arXiv:2603.18677*.
 
+Durkin, K., & Rittle-Johnson, B. (2012). The Effectiveness of Using Incorrect Examples to Support Learning about Decimal Magnitude. *Learning and Instruction*, 22(3), 206–214. https://doi.org/10.1016/j.learninstruc.2011.11.001
+
 Facione, P. A. (1990). Critical Thinking: A Statement of Expert Consensus for Purposes of Educational Assessment and Instruction (The Delphi Report). *American Philosophical Association*.
 
 Feng, Y., Wang, S., Cheng, Z., Wan, Y., & Chen, D. (2025). Are We on the Right Way to Assessing LLM-as-a-Judge?. *arXiv preprint arXiv:2512.16041*.
@@ -698,6 +723,8 @@ Gerlich, M. (2025). AI Tools in Society: Impacts on Cognitive Offloading and the
 
 Gilson, L. L., & Goldberg, C. B. (2015). Editors' Comment: So, What Is a Conceptual Paper?. *Group \& Organization Management*, 40(2), 127–130. https://doi.org/10.1177/1059601115576425
 
+Gro{\ss}e, C. S., & Renkl, A. (2007). Finding and Fixing Errors in Worked Examples: Can This Foster Learning Outcomes?. *Learning and Instruction*, 17(6), 612–634. https://doi.org/10.1016/j.learninstruc.2007.09.008
+
 Gu, X., & Ericson, B. J. (2025). AI Literacy in K-12 and Higher Education in the Wake of Generative AI: An Integrative Review. *Proceedings of the 2025 ACM Conference on International Computing Education Research (ICER)*, 125–140. https://doi.org/10.1145/3702652.3744217
 
 Hattie, J., & Timperley, H. (2007). The Power of Feedback. *Review of Educational Research*, 77(1), 81–112.
@@ -705,6 +732,8 @@ Hattie, J., & Timperley, H. (2007). The Power of Feedback. *Review of Educationa
 Jaakkola, E. (2020). Designing Conceptual Articles: Four Approaches. *AMS Review*, 10, 18–26.
 
 Jin, Y., Martinez-Maldonado, R., Ga{\v{s}}evi{\'c}, D., & Yan, L. (2024). GLAT: The Generative AI Literacy Assessment Test. *arXiv preprint arXiv:2411.00283*.
+
+Kane, M. T. (2013). Validating the Interpretations and Uses of Test Scores. *Journal of Educational Measurement*, 50(1), 1–73. https://doi.org/10.1111/jedm.12000
 
 Kapur, M. (2008). Productive Failure. *Cognition and Instruction*, 26(3), 379–424.
 
@@ -721,6 +750,8 @@ Li, C., Cui, H., & Hagedorn, L. S. (2026). The Cognitive Impact of ChatGPT in Hi
 Lo, L. S. (2023). The CLEAR Path: A Framework for Enhancing Information Literacy through Prompt Engineering. *The Journal of Academic Librarianship*, 49(4).
 
 Long, D., & Magerko, B. (2020). What Is AI Literacy? Competencies and Design Considerations. *Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems*, 1–16.
+
+Messick, S. (1995). Validity of Psychological Assessment: Validation of Inferences from Persons' Responses and Performances as Scientific Inquiry into Score Meaning. *American Psychologist*, 50(9), 741–749. https://doi.org/10.1037/0003-066X.50.9.741
 
 Nazaretsky, T., Gabbay, H., & K{\"a}ser, T. (2025). Can Students Judge Like Experts? A Large-Scale Study on AI and Human Personalized Formative Feedback. *Computers and Education: Artificial Intelligence*. https://doi.org/10.1016/j.caeai.2025.100533
 

@@ -1,0 +1,36 @@
+{
+  "refinement_sections": [
+    {
+      "section_type": "Problem Definition",
+      "content": "The primary issue is the performance inefficiency of the current sorting algorithm within our data analysis application. To define the problem more clearly, we need to identify the specific performance metrics that are lacking, such as time complexity, space complexity, and scalability with respect to large datasets."
+    },
+    {
+      "section_type": "Current Implementation Analysis",
+      "content": "Conduct a thorough analysis of the current sorting algorithm, including its time complexity (e.g., O(n^2), O(n log n)), space complexity, and any potential bottlenecks in its implementation. This will involve reviewing the code, profiling its performance with various dataset sizes, and identifying any inefficiencies."
+    },
+    {
+      "section_type": "Optimization Goals",
+      "content": "The optimization should aim to improve the algorithm's performance while ensuring that it retains the correct order of elements. Key goals include reducing the time complexity, minimizing memory usage, and ensuring that the algorithm can efficiently handle datasets that are significantly larger than those currently tested."
+    },
+    {
+      "section_type": "Alternative Algorithm Selection",
+      "content": "Select at least one alternative sorting algorithm for comparison, such as QuickSort or MergeSort. The choice should be based on their theoretical performance characteristics and suitability for the types of data we are sorting."
+    },
+    {
+      "section_type": "Performance Comparison",
+      "content": "Develop a benchmarking framework to compare the current algorithm with the selected alternative. This should include tests on various dataset sizes and types to evaluate performance metrics such as execution time, memory usage, and stability of sorting."
+    },
+    {
+      "section_type": "Assumptions Documentation",
+      "content": "Document any assumptions made during the analysis and optimization process. This should include assumptions about the nature of the data, expected dataset sizes, and the computing environment."
+    },
+    {
+      "section_type": "Reporting",
+      "content": "Prepare a comprehensive report that includes the analysis of the current implementation, the optimization process, performance comparisons with the alternative algorithm, and any recommendations for future improvements. The report should be structured clearly to facilitate understanding by stakeholders."
+    },
+    {
+      "section_type": "Timeline Management",
+      "content": "Establish a timeline for each phase of the analysis and optimization process, ensuring that all tasks are completed within the two-week deadline. This should include milestones for the analysis, implementation of optimizations, benchmarking, and report preparation."
+    }
+  ]
+}
