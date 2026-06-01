@@ -8,12 +8,15 @@
 
 ## Abstract
 
-Generative AI makes it trivial to obtain an answer and difficult to obtain understanding. As large
-language models are absorbed into education, the dominant design objective has been speed-to-answer,
-even as a growing body of evidence links uncritical AI use to cognitive offloading and weakened
-critical thinking. We argue that the educational question is not whether students use AI but
-*whether they use it as critical collaborators*, and that this capability can be named, decomposed,
-and assessed. We propose **CoReasoning**, a competency model that factors productive work with
+Generative AI makes it trivial to obtain an answer and difficult to obtain understanding. As students
+adopt these tools, uncritical use is increasingly linked to cognitive offloading and weakened critical
+thinking. The skill that now matters is therefore not *whether* students use AI, but whether they use
+it *critically*: framing the task before they ask, judging the output they get back, and steering the
+model toward something better. This skill, however, cannot currently be assessed. Existing AI-literacy
+measures fold it into a single "prompting" score that cannot diagnose *why* a given learner's AI use
+succeeds or fails, whether they specified the task poorly, missed the flaws in the output, or failed to
+correct them. We argue that the competency can instead be named, decomposed, and measured. We propose
+**CoReasoning**, a competency model that factors productive work with
 generative AI into three temporally and cognitively distinct, independently-assessable skills:
 **Framing** (transforming an ill-defined problem into a well-specified task before invoking AI),
 **Judging** (critically evaluating AI output for errors, gaps, unstated assumptions, and risk),
