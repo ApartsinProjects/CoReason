@@ -80,6 +80,19 @@ Bugs fixed this cycle (4): (1) prompt 04 JSON TRUNCATION at max_tokens -> raised
   ignores json_mode on prompt 01) -> wrap prose into primary string field. (4) provider None-guard.
 Full run (5 challenges x 8 profiles = 40 learners, gpt-4o grader) launched for stable estimates + CIs.
 
+## C5 (2026-06-01): Review round 2 = MINOR REVISION + analyses
+Round-1 structural blockers RESOLVED (dissociation run + novelty defense + J/S boundary). Round-2
+must-dos addressed: (1) fixed Sec 11 model-family contradiction (gpt-4o-mini learners / gpt-4o grader;
+deployed engine llama noted as future robustness); (2) figure-numbering collision (Sec 7 screens ->
+Figures A1/A2); (3) reinterpreted weak steering own-effect as grader-leniency floor + added bootstrap
+CIs; (4) re-scoped propositions (P3 demo-supported, P2 partial, P1/P4/P5 = validation hypotheses with
+named falsifiers); (5) named the recursive "who grades the grader" threat + committed to human-verified
+seeded-issue subset; bib count 43->50.
+Supporting analyses (no API): inter-skill Spearman correlations (N=40): F~J rho=0.00, F~S=-0.22,
+J~S=+0.17 (all p>0.17); 1st principal factor = 42% variance (=> separable). Bootstrap 95% CI on
+diagonal own-effects: Framing +0.60 [+0.38,+0.81], Steering +0.50 [+0.18,+0.82], Judging +2.00 (det).
+E2 grader reliability run in progress (re-grade fixed transcripts N=5, bypass cache on 08/09/10/11).
+
 ## Current standing + next
 - E1-on-DB abandoned (data invalid). E1 re-scoped to run on E3-generated controlled data.
 - BLOCKER/GATE: all remaining experiments need the Groq API (llama-3.3-70b). Next action: verify the key works; if dead, fall back to OpenRouter/OpenAI (keys present).

@@ -139,8 +139,13 @@ def _chat_openai(system, user, temperature, max_tokens, model=SIM_MODEL, json_mo
             time.sleep(2 * (attempt + 1))
     raise RuntimeError(f"openai sim failed: {last}")
 
+# stems listed here bypass the cache (used by E2 to sample the grader repeatedly)
+NO_CACHE_STEMS = set()
+
 def run_prompt(stem, vars, temperature=None, max_tokens=None, seed=None, use_cache=True):
     """Run a production prompt YAML with variable substitution. Returns parsed dict."""
+    if any(stem.startswith(s) for s in NO_CACHE_STEMS):
+        use_cache = False
     p = load_prompt(stem)
     params = p.get("parameters", {})
     temp = temperature if temperature is not None else params.get("temperature", 0.4)
