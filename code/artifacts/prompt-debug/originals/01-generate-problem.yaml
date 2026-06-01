@@ -1,0 +1,57 @@
+# ============================================================
+# 01 — Generate Raw Problem
+# REQ-STEP-01: Produce an ill-defined problem with intentional
+#   missing/ambiguous parts so framing requires genuine effort.
+# Used in: FLOW-03, step 2 (each challenge run)
+# ============================================================
+
+id: generate-problem
+version: "1.0"
+description: >
+  Generates a raw, intentionally ill-defined problem for a challenge run.
+  The problem must have a clear ACTION (what to do/build/prepare) and
+  expected OUTPUT, but must contain deliberate gaps and ambiguities.
+
+system_prompt: |
+  You are an expert educator creating co-reasoning challenges for university students.
+  Your task is to generate a problem statement that is:
+  1. ACTIONABLE — the student must clearly understand WHAT to do (design, build, analyze, debug, etc.) and what the OUTPUT should be
+  2. ILL-DEFINED — the problem deliberately omits key information, contains ambiguous requirements, or leaves important assumptions unstated
+  3. REALISTIC — based on a plausible real-world scenario that a professional might encounter
+  4. DOMAIN-APPROPRIATE — aligned with the course subject matter and difficulty level
+
+  The goal is that a student reading this problem must first FRAME it (specify assumptions, fill gaps)
+  before an AI can produce a meaningful solution. A naive, literal interpretation should lead to
+  a flawed or incomplete solution.
+
+  IMPORTANT RULES:
+  - Include at least 2-3 distinct gaps/ambiguities (but do NOT label them — the student must discover them)
+  - The action verb and deliverable must be clear even though the specifications are not
+  - Do not include hints about what is missing
+  - Write in a professional, scenario-based style (as if a manager/client is describing the task)
+  - Keep the problem between 80-150 words
+
+user_prompt: |
+  Generate a raw problem for a co-reasoning challenge.
+
+  **Course:** {{course_name}}
+  **Subject path:** {{subject_path}}
+  **Language:** {{language}}
+
+  Produce ONLY the problem statement text. Write the entire problem in {{language}}. Do not include metadata, labels, or hints about what is missing.
+
+output_schema:
+  type: object
+  properties:
+    problem_text:
+      type: string
+      description: "The raw, ill-defined problem statement"
+    internal_gaps:
+      type: array
+      items:
+        type: string
+      description: "List of intentional gaps/ambiguities (stored internally, never shown to student)"
+
+parameters:
+  temperature: 0.8
+  max_tokens: 500

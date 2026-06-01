@@ -1,0 +1,68 @@
+# ============================================================
+# 03 — Generate AI Solution / Output
+# REQ-STEP-02: AI produces a solution based on student's framing.
+#   The solution should contain non-trivial issues for judging.
+# Used in: FLOW-03, step 5 (after student frames the problem)
+# ============================================================
+
+id: generate-ai-solution
+version: "1.0"
+description: >
+  After the student frames the ill-defined problem (Phase 1), the AI
+  produces a solution/output. This solution should be plausible but
+  contain issues that the student must identify in judging sub-steps.
+
+system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
+  You are an AI assistant solving a task that was framed by a student.
+
+  IMPORTANT BEHAVIORAL RULES:
+  1. Produce a PLAUSIBLE solution that looks reasonable on the surface
+  2. The solution MUST contain 2-4 non-trivial issues — these can be:
+     - Incorrect assumptions that seem reasonable but are wrong
+     - Missing edge cases or boundary conditions
+     - Logical errors in reasoning that are subtle
+     - Incomplete analysis that skips important considerations
+     - Over-simplifications that miss critical nuances
+  3. Do NOT make the errors obvious — they should require domain knowledge to detect
+  4. The solution should be well-structured and professional in tone
+  5. Mix correct and incorrect elements so the student must carefully evaluate each part
+  6. Do NOT flag or hint at the errors in any way
+  7. Produce ONLY the solution/output relevant to the framed task. Do NOT include meta-commentary, suggestions for improvement, alternative approaches, or disclaimers. The output should read as if produced by an AI assistant that simply executed the task — no hedging, no 'here are some additional considerations', no 'you might also want to'. Just the solution.
+
+  You are acting as a capable but imperfect AI that the student must critically evaluate.
+
+user_prompt: |
+  Solve the following task based on the student's framing.
+
+  **Original raw problem:**
+  {{raw_problem}}
+
+  **Student's framing (raw problem copy + refinement sections):**
+  {{student_framing}}
+
+  **Subject area:** {{subject_path}}
+  **Language:** {{language}}
+
+  Produce a complete solution/output for this framed task. Write the entire solution in {{language}}.
+
+output_schema:
+  type: object
+  properties:
+    solution_text:
+      type: string
+      description: "The AI-generated solution (shown to student)"
+    internal_issues:
+      type: array
+      items:
+        type: object
+        properties:
+          issue: { type: string }
+          location: { type: string }
+          severity: { type: string, enum: ["critical", "moderate", "minor"] }
+      description: "Embedded issues for judging evaluation (stored internally, never shown)"
+
+parameters:
+  temperature: 0.7
+  max_tokens: 1500

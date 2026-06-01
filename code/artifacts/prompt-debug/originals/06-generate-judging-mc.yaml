@@ -1,0 +1,86 @@
+# ============================================================
+# 06 — Generate Judging Multiple-Choice Options
+# REQ-RESP-05: MC options for judging sub-step in Phase 2.
+# REQ-EVAL-02: Distractors driven by the Judging rubric.
+# Used in: FLOW-03, step 8 (judging sub-step, each cycle)
+# ============================================================
+
+id: generate-judging-mc
+version: "1.0"
+description: >
+  Generates MC options for the Judging sub-step within each Phase 2 cycle.
+  Options describe possible issues/gaps/errors in the current AI output.
+  Student selects the issues they identify. Responses are NOT sent to AI.
+
+system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
+  You are generating multiple-choice options for the Judging sub-step of a co-reasoning challenge.
+  The student is reviewing the AI's current output and must identify issues, gaps, or errors.
+
+  SELECTION MODE: Multiple-choice multi-select — the student selects ALL options they
+  believe are real issues. Multiple selections are allowed.
+
+  OPTION COMPOSITION (out of {{num_options}} total options):
+  - {{num_correct}} correct option(s): real issues that actually exist in the AI output
+  - {{num_incorrect}} incorrect option(s): distractor issues that seem plausible but are
+    not actually wrong, including at least one that says a correct part is wrong
+    (tests over-criticism)
+
+  OPTION DESIGN RULES:
+  1. Correct options must describe REAL issues that actually exist in the AI output
+  2. Incorrect options must describe plausible-sounding but non-existent issues
+  3. Include at least one incorrect option that claims a correct part of the output is
+     wrong (tests over-criticism)
+  4. Each option should describe a SPECIFIC issue, not a vague concern
+  5. Each option has an internal explanation (shown AFTER submission)
+  6. Options should probe different rubric criteria:
+     - Logical error detection
+     - Incorrect assumption identification
+     - Completeness assessment
+     - Domain-specific knowledge application
+
+  IMPORTANT: Reference the actual content of the AI output — options must be grounded
+  in what the AI actually wrote, not generic issue categories.
+
+  Every option MUST be plausible to a student with domain knowledge — do NOT include
+  absurdly obvious wrong answers or filler options. Even distractor issues (non-real issues)
+  should require genuine domain reasoning to dismiss. Avoid options that any student could
+  rule out without expertise (e.g., irrelevant concerns or comically wrong claims).
+
+user_prompt: |
+  Generate {{num_options}} judging options for the current AI output.
+
+  **Original problem:** {{raw_problem}}
+  **Student's framing:** {{student_framing}}
+  **Current AI output:** {{current_ai_output}}
+  **Cycle number:** {{cycle_number}}
+  **Previous judgements (if any):** {{previous_judgements}}
+  **Judging rubric criteria:** {{judging_rubric}}
+  **Known issues in AI output:** {{internal_issues}}
+  **Language:** {{language}}
+
+  Generate options that describe specific issues the student might identify.
+  Write all option text and explanations in {{language}}.
+
+output_schema:
+  type: object
+  properties:
+    options:
+      type: array
+      items:
+        type: object
+        properties:
+          id: { type: string }
+          text: { type: string, description: "Issue description shown to student" }
+          is_real_issue: { type: boolean, description: "Whether this is an actual issue in the output" }
+          explanation: { type: string, description: "Why this is/isn't a real issue — shown AFTER submission" }
+          rubric_criteria_targeted: { type: string }
+          severity: { type: string, enum: ["critical", "moderate", "minor", "not_an_issue"] }
+
+parameters:
+  temperature: 0.6
+  max_tokens: 1500
+  num_options_default: 5
+  num_correct_default: 3
+  num_incorrect_default: 2

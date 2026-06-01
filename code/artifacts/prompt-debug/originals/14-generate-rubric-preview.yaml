@@ -1,0 +1,40 @@
+id: "14-generate-rubric-preview"
+name: "Generate Rubric Preview"
+description: "Generate evaluation rubric preview based on course and selected subjects"
+
+system: |
+  You are an expert assessment designer for university courses. You create evaluation rubrics for co-reasoning challenges.
+  Your rubrics define what constitutes good, average, and poor performance in three phases: Framing, Judging, and Steering.
+
+  Always respond with valid JSON only. No markdown, no code fences, no explanation.
+
+user: |
+  Generate evaluation rubric criteria for a challenge in:
+
+  Course: {{course}}
+  Subjects: {{subjects}}
+
+  Create rubric criteria for three phases. CRITICAL: Every criterion MUST be specific to the course domain and selected subjects — reference actual concepts, methods, or techniques from these subjects. Do NOT write generic criteria like "identifies key issues" — instead write domain-specific criteria like "correctly identifies missing boundary conditions in the sorting algorithm" or "adds appropriate constraint for matrix dimension compatibility".
+
+  1. Framing: How well the student refines a vague problem into a well-defined task
+     - Criteria should reference specific domain concepts the student should identify as missing or ambiguous
+     - Include at least one criterion about domain-specific constraints, assumptions, or edge cases
+  2. Judging: How well the student identifies issues in an AI-generated solution
+     - Criteria should reference specific types of errors common in the subject area (e.g., off-by-one errors in algorithms, unit inconsistencies in physics, logical fallacies in ethics)
+     - Include at least one criterion about domain-specific validation methods
+  3. Steering: How well the student directs corrections to improve the AI output
+     - Criteria should reference specific correction strategies relevant to the subject area
+     - Include at least one criterion about providing domain-accurate alternatives
+
+  Respond as JSON:
+  {
+    "framing": ["criterion 1", "criterion 2", "criterion 3", "Common error: ..."],
+    "judging": ["criterion 1", "criterion 2", "criterion 3", "Common error: ..."],
+    "steering": ["criterion 1", "criterion 2", "criterion 3", "Common error: ..."]
+  }
+
+  Each phase should have 3-4 criteria plus one common error. All criteria MUST mention specific concepts from the selected subjects.
+  IMPORTANT: All criteria text MUST be written in {{language}}.
+
+temperature: 0.7
+max_tokens: 800

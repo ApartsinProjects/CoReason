@@ -1,0 +1,93 @@
+# ============================================================
+# 14 — Generate Best Framing (Gold Standard)
+# REQ-EVAL-03: Provides the ideal framing for evaluation comparison.
+# Used in: FLOW-02, step 9b (during challenge definition)
+# ============================================================
+
+id: generate-best-framing
+version: "1.0"
+description: >
+  Generates the "best framing" (gold standard) for a raw problem during
+  challenge definition. This ideal framing is used internally by prompt 08
+  (evaluate-framing) as a reference when grading student framings. It is
+  NEVER shown to students.
+
+  The framing follows the same structure as a student open-ended response:
+  it starts from the raw problem as a base and adds refinement sections
+  that are relevant to this specific problem. The LLM chooses which
+  refinement section types are appropriate (e.g., constraints, assumptions,
+  clarifications, success metrics, scope boundaries, etc.).
+
+system_prompt: |
+  You are an expert educator creating the ideal framing of an ill-defined problem.
+  This "best framing" serves as the gold-standard reference for evaluating student
+  framings — it is never shown to students.
+
+  FRAMING STRUCTURE:
+  The framing consists of:
+  1. **Base** — the raw problem text (copied verbatim, read-only)
+  2. **Refinement sections** — additional sections the student would add to transform
+     the ill-defined problem into a well-defined task
+
+  REFINEMENT SECTION RULES:
+  1. Choose ONLY the refinement section types that are relevant to this specific problem.
+     Common types include (but are not limited to):
+     - **Assumptions** — unstated facts the solver must decide on
+     - **Constraints** — boundaries, limits, or non-functional requirements
+     - **Clarifications** — resolving ambiguous statements in the problem
+     - **Success Metrics** — how to measure whether the solution is adequate
+     - **Scope Boundaries** — what is in/out of scope
+     - **Domain Context** — relevant background the problem omits
+  2. Do NOT include all section types mechanically — only include those that address
+     actual gaps in THIS raw problem
+  3. Each refinement section should contain specific, justified entries — not vague
+     platitudes. Every entry should reference a concrete gap in the raw problem
+  4. The framing should be what an excellent student with domain expertise would produce
+  5. The combined framing (base + refinements) should be sufficient for an AI to produce
+     a high-quality solution without further clarification
+  6. Align the framing with the provided rubric criteria — ensure the best framing would
+     score "A" on every rubric criterion
+
+user_prompt: |
+  Generate the best (gold-standard) framing for this raw problem.
+
+  **Course:** {{course_name}}
+  **Subject path:** {{subject_path}}
+  **Raw problem:** {{raw_problem}}
+  **Framing rubric (for alignment):** {{framing_rubric}}
+  **Known internal gaps in the problem:** {{internal_gaps}}
+  **Language:** {{language}}
+
+  Produce the ideal framing that an excellent student would create.
+  Write all framing content in {{language}}.
+
+output_schema:
+  type: object
+  properties:
+    base:
+      type: string
+      description: "The raw problem text copied verbatim (read-only base field)"
+    refinement_sections:
+      type: array
+      items:
+        type: object
+        properties:
+          section_type:
+            type: string
+            description: "Type of refinement (e.g., 'Assumptions', 'Constraints', 'Clarifications', 'Success Metrics')"
+          entries:
+            type: array
+            items:
+              type: object
+              properties:
+                title: { type: string, description: "Short name for this refinement entry" }
+                description: { type: string, description: "Detailed justification and content" }
+                addresses_gap: { type: string, description: "Which gap in the raw problem this entry addresses" }
+      description: "Refinement sections added to the base problem — only types relevant to this problem"
+    coverage_notes:
+      type: string
+      description: "Internal note on which rubric criteria are addressed by this framing"
+
+parameters:
+  temperature: 0.4
+  max_tokens: 1500

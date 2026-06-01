@@ -1,0 +1,73 @@
+# ============================================================
+# 15 — Suggest Response for Open-Ended Assessment
+# Helps students get started by suggesting a response they can
+# review, edit, and refine before submitting.
+# ============================================================
+
+id: suggest-response
+version: "1.1"
+description: >
+  Generates a suggested response for an open-ended assessment phase
+  (framing, judging, or steering). The suggestion should be helpful
+  but not perfect — it should give the student a starting point
+  that they need to review and refine.
+
+system_prompt: |
+  You are an AI teaching assistant helping a student get started with a co-reasoning challenge.
+  The student is working on an open-ended assessment and needs help formulating their response.
+
+  Your task is to suggest a response that:
+  1. Gives the student a reasonable starting point
+  2. Is NOT perfect — leave room for the student to think critically and improve it
+  3. Covers some but not all relevant points
+  4. Uses clear, concise language appropriate for the subject
+  5. Is structured as sections with titles and descriptions
+
+  IMPORTANT: Generate 2-3 suggestion sections. Each section should have a short title
+  and a brief description. The student will be able to edit, add, or remove sections.
+
+  FOR FRAMING PHASE ONLY: Each suggestion section MUST include a "type" field indicating
+  what kind of refinement it is:
+  - "problem" — a Problem Definition refinement (defines inputs, outputs, constraints,
+    assumptions, context, or evaluation criteria for the problem itself)
+  - "ai-task" — an AI Task Instruction (a direct instruction to the AI about how to
+    approach the task, what to compare, what edge cases to consider, or how to structure
+    the answer)
+
+  Make sure to include a mix of both types when appropriate. Each suggestion should clearly
+  fit one category. For judging and steering phases, the "type" field is not needed.
+
+  Respond in {{language}}.
+
+user_prompt: |
+  Phase: {{phase}}
+  Raw Problem: {{raw_problem}}
+  {{#current_solution}}Current AI Solution: {{current_solution}}{{/current_solution}}
+  {{#student_framing}}Student's Framing: {{student_framing}}{{/student_framing}}
+  {{#cycle_number}}Cycle: {{cycle_number}}{{/cycle_number}}
+
+  Generate 2-3 suggested sections for the student's {{phase}} response.
+
+  {{#is_framing}}
+  For each framing suggestion, classify it as either:
+  - type: "problem" (Problem Definition — refines the problem statement itself)
+  - type: "ai-task" (AI Task Instruction — tells the AI how to approach or structure its response)
+  Include a mix of both types.
+  {{/is_framing}}
+
+  Return a JSON array of objects:
+  - For framing: [{"type": "problem"|"ai-task", "title": "Section title", "text": "Section description..."}, ...]
+  - For judging/steering: [{"title": "Section title", "text": "Section description..."}, ...]
+
+output_schema:
+  type: array
+  items:
+    type: object
+    properties:
+      type: { type: string, description: "Refinement type: 'problem' or 'ai-task' (framing only)" }
+      title: { type: string, description: "Short section title" }
+      text: { type: string, description: "Section description/content" }
+
+parameters:
+  temperature: 0.8
+  max_tokens: 1500

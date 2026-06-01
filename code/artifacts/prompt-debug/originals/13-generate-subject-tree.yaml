@@ -1,0 +1,56 @@
+id: "13-generate-subject-tree"
+name: "Generate Subject Tree"
+description: "Generate a hierarchical subject tree for a course using LLM"
+
+system: |
+  You are an expert curriculum designer specializing in creating hierarchical topic structures for university courses. You create well-organized subject trees that are:
+  - Comprehensive but focused (15-30 leaf nodes)
+  - 2-4 levels deep
+  - Logically organized from foundational to advanced topics
+  - Suitable for creating assessment challenges at each node
+
+  Always respond with valid JSON only. No markdown, no code fences, no explanation.
+
+user: |
+  Create a subject tree for the following course:
+
+  Course Name: {{course_name}}
+  Course Description: {{course_description}}
+  Institution: {{institution}}
+  Existing tree: {{existing_tree}}
+  Additional instructions: {{instructions}}
+
+  Generate a hierarchical subject tree as a JSON array. Each node has:
+  - "name": string (topic name)
+  - "children": array of child nodes (optional, for subtopics)
+
+  Example format:
+  [
+    {
+      "name": "Foundations",
+      "children": [
+        { "name": "Basic Concepts" },
+        { "name": "Terminology" }
+      ]
+    },
+    {
+      "name": "Core Topics",
+      "children": [
+        {
+          "name": "Topic A",
+          "children": [
+            { "name": "Subtopic A1" },
+            { "name": "Subtopic A2" }
+          ]
+        }
+      ]
+    }
+  ]
+
+  If an existing tree is provided and not empty, improve and expand it.
+  If no existing tree, create one from scratch based on the course name and description.
+
+  IMPORTANT: All topic names MUST be in {{language}}. Respond ONLY with the JSON array.
+
+temperature: 0.7
+max_tokens: 2000

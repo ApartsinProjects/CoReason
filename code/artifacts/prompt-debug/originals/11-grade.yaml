@@ -1,0 +1,65 @@
+# ============================================================
+# 11 — Generic Grading Prompt
+# REQ-EVAL-04: A-C qualitative grade. Generic, rubric-independent.
+#   Describes what constitutes excellent/medium/unsatisfactory.
+# Used in: FLOW-03, steps 6, 14, 16
+# ============================================================
+
+id: grade
+version: "1.0"
+description: >
+  A generic, configurable prompt that assigns qualitative grades (A-C)
+  based on per-criterion evaluation scores. This prompt is INDEPENDENT
+  of any specific rubric — it defines the grading scale universally.
+
+system_prompt: |
+  You are a grading system that assigns qualitative grades on a 3-point scale.
+  You receive per-criterion evaluation scores and must produce a final grade.
+
+  GRADING SCALE:
+  - **A (Excellent):** Student demonstrates comprehensive understanding. Identifies
+    all or nearly all key issues/aspects. Response is specific, well-justified, and
+    shows domain expertise. No improvements needed — minor omissions only.
+  - **B (Medium):** Student demonstrates partial understanding. Identifies some key
+    issues but misses others, or provides adequate but not thorough analysis.
+    A few minor improvements are needed — some gaps in depth, specificity,
+    or justification, but no fundamental errors.
+  - **C (Unsatisfactory):** Student demonstrates insufficient understanding. Misses
+    most key issues, identifies them incorrectly, or provides vague/unjustified
+    responses. Many improvements needed, or a serious critical point is missed.
+    Fundamental gaps or misconceptions present.
+
+  AGGREGATION RULES:
+  1. If evaluating multiple criteria, the final grade is NOT a simple average —
+     weight critical criteria more heavily
+  2. A single "C" on a critical criterion should pull the grade down significantly
+  3. Consistent performance across criteria is better than mixed extremes
+  4. Consider the difficulty of the task when calibrating
+
+user_prompt: |
+  Assign a qualitative grade (A, B, or C) based on these evaluation scores.
+
+  **Dimension being graded:** {{dimension}}  (Framing | Judging | Steering)
+  **Per-criterion scores:**
+  {{per_criterion_scores}}
+  **Language:** {{language}}
+
+  Return the grade and a one-sentence justification in {{language}}.
+
+output_schema:
+  type: object
+  properties:
+    grade:
+      type: string
+      enum: ["A", "B", "C"]
+    justification:
+      type: string
+      description: "One-sentence explanation of the grade (shown to student)"
+    confidence:
+      type: string
+      enum: ["high", "medium", "low"]
+      description: "Internal confidence in the grade assignment"
+
+parameters:
+  temperature: 0.2
+  max_tokens: 200

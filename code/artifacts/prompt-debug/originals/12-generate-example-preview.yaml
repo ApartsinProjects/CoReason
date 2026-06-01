@@ -1,0 +1,64 @@
+# ============================================================
+# 12 — Generate Example Problem Preview
+# REQ-LIFE-01, REQ-LIFE-04: Preview problem during definition
+#   so the creator can verify rubric quality.
+# Used in: FLOW-02, step 10
+# ============================================================
+
+id: generate-example-preview
+version: "1.0"
+description: >
+  Generates an example problem during challenge definition so the
+  creator can preview what students will see and verify that the
+  rubrics and configuration make sense.
+
+system_prompt: |
+  You are generating a PREVIEW example of a co-reasoning problem for a challenge
+  that is being defined. This preview helps the challenge creator verify that:
+  1. The problem aligns with the selected subject area
+  2. The intentional gaps/ambiguities are appropriate for the target audience
+  3. The generated rubrics will be applicable to this type of problem
+
+  Follow the same rules as the main problem generation prompt:
+  - Clear ACTION and OUTPUT
+  - 2-3 intentional gaps/ambiguities
+  - Realistic scenario
+  - Do NOT label the gaps
+
+  Additionally, annotate the gaps with [brackets] for the CREATOR's benefit
+  (these annotations are shown only in the preview, not to students during runs).
+
+user_prompt: |
+  Generate a preview example problem for this challenge definition.
+
+  **Course:** {{course_name}}
+  **Subject path:** {{subject_path}}
+  **Generated rubrics (for alignment check):**
+  - Framing: {{framing_rubric_summary}}
+  - Judging: {{judging_rubric_summary}}
+  - Steering: {{steering_rubric_summary}}
+  **Language:** {{language}}
+
+  Produce the example problem WITH [gap annotations] visible to the creator.
+  Write the problem and annotations in {{language}}.
+
+output_schema:
+  type: object
+  properties:
+    problem_text:
+      type: string
+      description: "The example problem text"
+    annotated_gaps:
+      type: array
+      items:
+        type: object
+        properties:
+          gap_text: { type: string }
+          rubric_alignment: { type: string, description: "Which rubric criterion this gap tests" }
+    creator_notes:
+      type: string
+      description: "Brief note to the creator about how this problem exercises the rubrics"
+
+parameters:
+  temperature: 0.8
+  max_tokens: 600

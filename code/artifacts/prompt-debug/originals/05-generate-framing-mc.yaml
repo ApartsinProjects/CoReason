@@ -1,0 +1,79 @@
+# ============================================================
+# 05 — Generate Framing Multiple-Choice Options
+# REQ-RESP-02: MC options with distractors for Phase 1 — Framing.
+# REQ-EVAL-02: Distractors driven by the Framing rubric.
+# Used in: FLOW-03, step 4 (when framing is MC)
+# ============================================================
+
+id: generate-framing-mc
+version: "1.0"
+description: >
+  Generates multiple-choice options for the Framing phase. Each option
+  represents a different way to frame/define the ill-defined problem.
+  Includes challenging distractors that probe specific rubric criteria.
+
+system_prompt: |
+  You MUST respond with valid JSON matching the output schema below. Do not include markdown code fences or any text outside the JSON object.
+
+  You are generating multiple-choice options for a co-reasoning challenge's Framing phase.
+  The student is presented with an ill-defined problem and must choose the best way to
+  frame it into a well-defined task (by specifying assumptions, filling gaps, etc.).
+
+  SELECTION MODE: Multi-select (select all that apply) — the student selects ALL refinements they believe should be applied to the raw problem.
+
+  Each option represents a single refinement (assumption, constraint, or clarification) that may or may not be appropriate for this problem.
+
+  OPTION COMPOSITION (out of {{num_options}} total options):
+  - {{num_correct}} correct refinements: genuine gaps that need to be addressed
+  - {{num_incorrect}} incorrect refinements: plausible-sounding but unnecessary, wrong, or irrelevant
+
+  OPTION DESIGN RULES:
+  1. Each option is ONE refinement (a single assumption, constraint, clarification, or metric).
+     Do NOT bundle multiple refinements into one option.
+  2. Correct refinements address genuine gaps or ambiguities in the raw problem that need
+     to be resolved for a well-defined task.
+  3. Incorrect refinements (distractors) should be plausible-sounding but fall into categories such as:
+     - Over-specification: adding unnecessary constraints not warranted by the problem
+     - Wrong assumptions: assuming something that contradicts or misreads the problem
+     - Irrelevant constraints: addressing concerns outside the problem's scope
+     - Redundant clarifications: restating what is already clear in the problem
+  4. All options must be roughly the same length and level of detail
+  5. Each option includes an internal explanation (shown AFTER submission, not during)
+  6. Shuffle the correct/incorrect positions — do not cluster them
+  7. Every option MUST be plausible to a student with domain knowledge — do NOT include
+     absurdly obvious wrong answers or filler options. Even the weakest distractor should
+     require genuine thought to dismiss. Avoid options that any student could rule out
+     without domain expertise (e.g., irrelevant or comically wrong choices).
+
+user_prompt: |
+  Generate {{num_options}} multiple-choice options for framing this problem.
+
+  **Raw problem:** {{raw_problem}}
+  **Subject:** {{subject_path}}
+  **Framing rubric criteria:** {{framing_rubric}}
+  **Language:** {{language}}
+
+  Each option should represent a single refinement (assumption, constraint, clarification, or metric) the student might add to the raw problem.
+  Write all option text and explanations in {{language}}.
+
+output_schema:
+  type: object
+  properties:
+    options:
+      type: array
+      items:
+        type: object
+        properties:
+          id: { type: string }
+          text: { type: string, description: "The framing option shown to the student" }
+          is_correct: { type: boolean, description: "Whether this refinement is appropriate and necessary" }
+          quality: { type: string, enum: ["excellent", "good", "fair", "poor"] }
+          explanation: { type: string, description: "Why correct/incorrect — shown AFTER submission only" }
+          rubric_criteria_targeted: { type: string, description: "Which rubric criterion this tests" }
+
+parameters:
+  temperature: 0.7
+  max_tokens: 2000
+  num_options_default: 5
+  num_correct_default: 3
+  num_incorrect_default: 2

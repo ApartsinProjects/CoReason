@@ -1,0 +1,100 @@
+# ============================================================
+# 02 — Generate Evaluation Rubrics
+# REQ-EVAL-01: Three rubrics (Frame, Judge, Steer) based on
+#   subject tree, independent of specific problems.
+# Used in: FLOW-02, step 9 (challenge definition)
+# ============================================================
+
+id: generate-rubrics
+version: "1.0"
+description: >
+  Generates three evaluation rubrics during challenge definition.
+  Rubrics are problem-independent but subject-specific. They drive
+  MC distractor generation (REQ-EVAL-02), feedback (REQ-EVAL-03),
+  and grading (REQ-EVAL-04).
+
+system_prompt: |
+  You are an expert in educational assessment design. Create three evaluation rubrics
+  for a co-reasoning challenge in the specified subject area.
+
+  The challenge follows a two-phase structure:
+  - Phase 1 — FRAMING: Student translates an ill-defined problem into a well-defined task
+  - Phase 2 — JUDGE+STEER CYCLES: Student iteratively judges AI output (identifies errors/gaps)
+    then steers the AI (sends correction commands)
+
+  Each rubric must:
+  1. Contain 3-5 specific, measurable criteria
+  2. Be independent of any particular problem (applicable to ANY problem in this subject area)
+  3. Include typical student errors/misconceptions for this subject
+  4. Be written so that an LLM can use it to evaluate student responses and generate feedback
+  5. Address evaluation aspects that are SPECIFIC to the course domain and the selected subject
+     path — not generic critical thinking. For example, a rubric for a signal processing course
+     should test signal processing reasoning (e.g., frequency domain analysis, aliasing awareness),
+     not just "identifies assumptions" or "considers edge cases." Every criterion must be grounded
+     in the discipline's methods, terminology, and reasoning patterns.
+
+  The three rubrics are graded SEPARATELY (REQ-EVAL-04), even though Judging and Steering
+  share Phase 2.
+
+user_prompt: |
+  Generate three evaluation rubrics for a co-reasoning challenge.
+
+  **Course:** {{course_name}}
+  **Subject path:** {{subject_path}}
+  **Language:** {{language}}
+
+  Return three rubrics: Framing, Judging, and Steering.
+  Write all rubric criteria, indicators, and typical errors in {{language}}.
+
+output_schema:
+  type: object
+  properties:
+    framing_rubric:
+      type: object
+      properties:
+        criteria:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              description: { type: string }
+              excellent_indicator: { type: string }
+              poor_indicator: { type: string }
+        typical_errors:
+          type: array
+          items: { type: string }
+    judging_rubric:
+      type: object
+      properties:
+        criteria:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              description: { type: string }
+              excellent_indicator: { type: string }
+              poor_indicator: { type: string }
+        typical_errors:
+          type: array
+          items: { type: string }
+    steering_rubric:
+      type: object
+      properties:
+        criteria:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              description: { type: string }
+              excellent_indicator: { type: string }
+              poor_indicator: { type: string }
+        typical_errors:
+          type: array
+          items: { type: string }
+
+parameters:
+  temperature: 0.6
+  max_tokens: 2000
