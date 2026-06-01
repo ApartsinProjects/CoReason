@@ -52,14 +52,16 @@ img[src$=".png"]{border:1px solid var(--line);border-radius:6px}
   text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:100}
 .docxlink:hover{text-decoration:none;background:#1e4a94}
 @media print{.docxlink,.banner{display:none}}
+.references{font-size:.86rem;line-height:1.5}
+.references p{padding-left:2em;text-indent:-2em;margin:0 0 .55rem}
 footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
 <a class="docxlink" href="https://github.com/ApartsinProjects/CoReason" style="right:140px;background:#24292f">&#9733; GitHub</a>
 <a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx</a>
-<div class="banner"><strong>Working preprint draft.</strong> Conceptual / position paper with a
-proof-of-concept feasibility demonstration.</div>
+<div class="banner">Preprint &middot; conceptual/position paper with a proof-of-concept feasibility
+demonstration &middot; open-source (MIT).</div>
 {body}
 <footer>
 Generated from <code>paper/coreasoning.md</code>. Math rendered with KaTeX.
@@ -72,7 +74,8 @@ Open-source (MIT) &mdash; system, instrument, data, and figures at
 
 def main():
     text = SRC.read_text(encoding="utf-8")
-    html = markdown.markdown(text, extensions=["tables", "fenced_code", "toc", "sane_lists", "attr_list"])
+    html = markdown.markdown(text, extensions=["tables", "fenced_code", "toc", "sane_lists",
+                                               "attr_list", "md_in_html"])
     # promote the first H1's following italic line to a subtitle look (handled by CSS via em)
     OUT.write_text(TEMPLATE.replace("{body}", html), encoding="utf-8")
     (OUT.parent / ".nojekyll").write_text("", encoding="utf-8")

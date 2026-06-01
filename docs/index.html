@@ -41,16 +41,18 @@ img[src$=".png"]{border:1px solid var(--line);border-radius:6px}
   text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:100}
 .docxlink:hover{text-decoration:none;background:#1e4a94}
 @media print{.docxlink,.banner{display:none}}
+.references{font-size:.86rem;line-height:1.5}
+.references p{padding-left:2em;text-indent:-2em;margin:0 0 .55rem}
 footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
 <a class="docxlink" href="https://github.com/ApartsinProjects/CoReason" style="right:140px;background:#24292f">&#9733; GitHub</a>
 <a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx</a>
-<div class="banner"><strong>Working preprint draft.</strong> Conceptual / position paper with a
-proof-of-concept feasibility demonstration.</div>
+<div class="banner">Preprint &middot; conceptual/position paper with a proof-of-concept feasibility
+demonstration &middot; open-source (MIT).</div>
 <h1 id="framing-judging-steering-an-assessable-competency-model-for-reasoning-with-generative-ai">Framing, Judging, Steering: An Assessable Competency Model for Reasoning With Generative AI</h1>
-<p><em>Working draft — arXiv preprint. Target: Computers &amp; Education: AI (Position Paper) / AIED Blue Sky / IJAIED.</em></p>
+<p><em>Preprint. Open-source (MIT): <a href="https://github.com/ApartsinProjects/CoReason">github.com/ApartsinProjects/CoReason</a></em></p>
 <h2 id="abstract">Abstract</h2>
 <p>Generative AI makes it trivial to obtain an answer and difficult to obtain understanding. As large
 language models are absorbed into education, the dominant design objective has been speed-to-answer,
@@ -86,9 +88,15 @@ of "cognitive debt" when an assistant carries the reasoning load (Kosmyna et al.
 time, field studies of professional AI use show that the benefit of AI is sharply conditional on the
 user's skill in directing it: assistance helps inside a model's competence frontier and <em>harms</em>
 outside it (Dell'Acqua et al., 2023), and the most effective users adopt an iterative, critical
-"push-back-and-validate" mode rather than wholesale delegation (Randazzo et al., 2025).</p>
+"push-back-and-validate" mode rather than wholesale delegation (Randazzo et al., 2025). Meta-analytic
+evidence is sobering: human-AI teams frequently underperform the better of the human or the AI alone
+(Vaccaro et al., 2024), which makes the human's skill in directing the system, not mere access to it,
+the decisive variable.</p>
 <p>These findings share a structure. The difference between productive and counterproductive AI use is
-not access to AI; it is a <em>competency</em> that some learners exercise and others do not. If that
+not access to AI; it is a <em>competency</em> that some learners exercise and others do not. This echoes the
+long-standing distinction between the effects obtained <em>with</em> a technology during use and the cognitive
+residue left <em>of</em> it, which depends on the learner's mindful engagement in the partnership
+(Salomon et al., 1991). If that
 competency can be named and decomposed, it can be taught and assessed. Current AI-literacy assessment
 can often tell us <em>that</em> a learner's AI use is unproductive but not <em>why</em>: whether they specified the
 task badly, failed to detect the flaws in the output, or knew the flaws but could not correct them.
@@ -118,7 +126,8 @@ three distinct skills, each independently assessable:</p>
    than ad hoc.</li>
 <li><strong>Five testable propositions</strong> about how the skills relate (framing gates the loop; judging gates
    steering; the skills dissociate; judging transfers less than framing; the model inverts cognitive
-   offloading), turning a taxonomy into a framework with empirical commitments.</li>
+   offloading), which is what turns a taxonomy into a conceptual contribution that proposes new
+   relationships among constructs (Gilson &amp; Goldberg, 2015; Jaakkola, 2020).</li>
 <li><strong>A precise novelty positioning</strong> against the nearest prior frameworks (AI-fluency, metacognitive-
    demands, prompt-literacy, and AI-literacy models), stating exactly what is and is not new.</li>
 <li><strong>A proof-of-concept instrument and feasibility demonstration</strong>, with cross-model controls, showing
@@ -229,14 +238,16 @@ this internally and externally coherent?). Barzilai and Chinn's (2018) account o
 performance adds the criteria-for-good-knowledge dimension that a learner must hold to judge well, and
 the human-automation literature supplies the calibration target: reliance matched to actual
 reliability (Lee &amp; See, 2004), the failure of which is the over-reliance documented in AI-assisted
-decision-making (Bansal et al., 2021; Buçinca et al., 2021). That Judging is a trainable skill rather
+decision-making (Bansal et al., 2021; Buçinca et al., 2021) and the broader automation-complacency it
+extends (Parasuraman &amp; Manzey, 2010). That Judging is a trainable skill rather
 than an automatic byproduct of competence is underscored by recent evidence that metacognitive
 monitoring can decouple from performance in human-AI reasoning (Fernandes et al., 2024), and by recent
-work in Computers &amp; Education: AI on whether learners can evaluate AI output quality as experts do.</p>
+work on whether learners can evaluate AI output quality as experts do (Nazaretsky et al., 2025).</p>
 <p><strong>Steering</strong> is metacognitive control (Nelson &amp; Narens, 1990): acting on the monitoring signal to
 change the object-level process. Pedagogically it is an inversion of cognitive-apprenticeship coaching
 and scaffolding (Collins, Brown &amp; Newman, 1989), in which the learner, rather than the master, supplies
-the corrective guidance, and its quality is well described by feed-forward, the "where to next"
+the corrective guidance; its quality depends on the learner monitoring the work against held standards
+(Sadler, 1989) and is well described by feed-forward, the "where to next"
 component of effective feedback (Hattie &amp; Timperley, 2007).</p>
 <p><strong>The loop and its positioning.</strong> The Judge-Steer cycle is designed to push learners into the
 Interactive mode of the ICAP framework (Chi &amp; Wylie, 2014), in which knowledge is co-constructed
@@ -368,11 +379,12 @@ construct, or (ii) <em>fuse</em> Framing and Steering into one "prompting/iterat
 <p>No prior column cleanly separates the pre-generation and post-generation skills <em>and</em> treats all
 three as independently scored competencies. That conjunction is the contribution.</p>
 <p><strong>Validated GenAI-competency instruments.</strong> A parallel line of work builds psychometric instruments
-for AI and generative-AI competence, including validated scales such as GenAIComp (with factors derived
-from digital-competence frameworks) and assessment tests such as GLAT. These establish that GenAI
-competence can be measured, but their factor structures are literacy-oriented (information literacy,
-ethics, content creation) and do not isolate a Framing, Judging, or Steering construct. The work
-closest to ours pairs AI-collaboration literacy with metacognition and includes an AI-evaluation
+for AI and generative-AI competence, including validated scales such as GenAIComp (Lee et al., 2025;
+with factors derived from digital-competence frameworks) and assessment tests such as GLAT
+(Jin et al., 2024). These establish that GenAI competence can be measured, but their factor structures
+are literacy-oriented (information literacy, ethics, content creation) and do not isolate a Framing,
+Judging, or Steering construct. The work closest to ours pairs AI-collaboration literacy with
+metacognition (Sidra &amp; Mason, 2025) and includes an AI-evaluation
 sub-construct that overlaps Judging; we differ in separating the pre-generation and post-generation
 control skills and in demonstrating their dissociation rather than positing correlated factors.
 CoReasoning is complementary to this measurement program: it supplies the specific, theory-derived
@@ -648,7 +660,58 @@ Bottom: the student trend report (per-skill grades over time) and the instructor
 (grade distribution by rubric and per-student results). All views report Framing, Judging, and
 Steering independently.</em></p>
 <h2 id="references">References</h2>
-<p>[Rendered from <code>references.bib</code> (50 entries, validated). See the repository for the BibTeX source.]</p>
+<div class="references">
+<p>Acar, O. A. (2023). AI Prompt Engineering Isn't the Future. <em>Harvard Business Review, June 6</em>.</p>
+<p>Anderson, L. W., &amp; Krathwohl, D. R. (2001). A Taxonomy for Learning, Teaching, and Assessing: A Revision of Bloom's Taxonomy of Educational Objectives. <em>Longman</em>.</p>
+<p>Annapureddy, R., Fornaroli, A., &amp; Gatica-Perez, D. (2024). Generative AI Literacy: Twelve Defining Competencies. <em>Digital Government: Research and Practice</em>.</p>
+<p>Bansal, G., Wu, T., Zhou, J., Fok, R., Nushi, B., Kamar, E., Ribeiro, M. T., &amp; Weld, D. S. (2021). Does the Whole Exceed Its Parts? The Effect of AI Explanations on Complementary Team Performance. <em>Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems</em>.</p>
+<p>Barzilai, S., &amp; Chinn, C. A. (2018). On the Goals of Epistemic Education: Promoting Apt Epistemic Performance. <em>Journal of the Learning Sciences</em>, 27(3), 353–389.</p>
+<p>Bjork, E. L., &amp; Bjork, R. A. (2011). Making Things Hard on Yourself, but in a Good Way: Creating Desirable Difficulties to Enhance Learning. <em>Psychology and the Real World</em>, 56–64.</p>
+<p>Bu{\c{c}}inca, Z., Malaya, M. B., &amp; Gajos, K. Z. (2021). To Trust or to Think: Cognitive Forcing Functions Can Reduce Overreliance on AI in AI-Assisted Decision-Making. <em>Proceedings of the ACM on Human-Computer Interaction</em>, 5(CSCW1), 1–21.</p>
+<p>Chi, M. T. H., &amp; Wylie, R. (2014). The ICAP Framework: Linking Cognitive Engagement to Active Learning Outcomes. <em>Educational Psychologist</em>, 49(4), 219–243.</p>
+<p>Clerc, O., Abdelghani, R., Desvaux, C., Poisson, E., Oudeyer, P., &amp; Sauz{\'e}on, H. (2026). Teaching Students to Question the Machine: An AI Literacy Intervention Improves Students' Regulation of LLM Use in a Science Task. <em>arXiv preprint arXiv:2604.01955</em>.</p>
+<p>Collins, A., Brown, J. S., &amp; Newman, S. E. (1989). Cognitive Apprenticeship: Teaching the Crafts of Reading, Writing, and Mathematics. <em>Knowing, Learning, and Instruction: Essays in Honor of Robert Glaser</em>, 453–494.</p>
+<p>Dakan, R., &amp; Feller, J. (2025). Framework for AI Fluency. <em>Anthropic</em>.</p>
+<p>Dell'Acqua, F., McFowland III, E., Mollick, E., Lifshitz-Assaf, H., Kellogg, K., Rajendran, S., Krayer, L., Candelon, F., &amp; Lakhani, K. R. (2023). Navigating the Jagged Technological Frontier. <em>Harvard Business School Working Paper 24-013</em>.</p>
+<p>Denny, P., Leinonen, J., Prather, J., Luxton-Reilly, A., Amarouche, T., Becker, B. A., &amp; Reeves, B. N. (2024). Prompt Problems: A New Programming Exercise for the Generative AI Era. <em>Proceedings of the 55th ACM Technical Symposium on Computer Science Education (SIGCSE)</em>.</p>
+<p>Di Santi, E. (2026). Cognitive Amplification vs Cognitive Delegation in Human-AI Systems: A Metric Framework. <em>arXiv preprint arXiv:2603.18677</em>.</p>
+<p>Facione, P. A. (1990). Critical Thinking: A Statement of Expert Consensus for Purposes of Educational Assessment and Instruction (The Delphi Report). <em>American Philosophical Association</em>.</p>
+<p>Feng, Y., Wang, S., Cheng, Z., Wan, Y., &amp; Chen, D. (2025). Are We on the Right Way to Assessing LLM-as-a-Judge?. <em>arXiv preprint arXiv:2512.16041</em>.</p>
+<p>Fernandes, D., Villa, S., Nicholls, S., Haavisto, O., Buschek, D., Schmidt, A., Kosch, T., Shen, C., &amp; Welsch, R. (2024). Performance and Metacognition Disconnect when Reasoning in Human-AI Interaction. <em>arXiv preprint arXiv:2409.16708</em>.</p>
+<p>Flavell, J. H. (1979). Metacognition and Cognitive Monitoring: A New Area of Cognitive-Developmental Inquiry. <em>American Psychologist</em>, 34(10), 906–911.</p>
+<p>Gerlich, M. (2025). AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking. <em>Societies</em>, 15(1), 6.</p>
+<p>Gilson, L. L., &amp; Goldberg, C. B. (2015). Editors' Comment: So, What Is a Conceptual Paper?. <em>Group \&amp; Organization Management</em>, 40(2), 127–130. https://doi.org/10.1177/1059601115576425</p>
+<p>Gu, X., &amp; Ericson, B. J. (2025). AI Literacy in K-12 and Higher Education in the Wake of Generative AI: An Integrative Review. <em>Proceedings of the 2025 ACM Conference on International Computing Education Research (ICER)</em>, 125–140. https://doi.org/10.1145/3702652.3744217</p>
+<p>Hattie, J., &amp; Timperley, H. (2007). The Power of Feedback. <em>Review of Educational Research</em>, 77(1), 81–112.</p>
+<p>Jaakkola, E. (2020). Designing Conceptual Articles: Four Approaches. <em>AMS Review</em>, 10, 18–26.</p>
+<p>Jin, Y., Martinez-Maldonado, R., Ga{\v{s}}evi{\'c}, D., &amp; Yan, L. (2024). GLAT: The Generative AI Literacy Assessment Test. <em>arXiv preprint arXiv:2411.00283</em>.</p>
+<p>Kapur, M. (2008). Productive Failure. <em>Cognition and Instruction</em>, 26(3), 379–424.</p>
+<p>Kim, P., Wang, W., &amp; Bonk, C. J. (2025). Generative AI as a Coach to Help Students Enhance Proficiency in Question Formulation. <em>Journal of Educational Computing Research</em>, 63(3), 565–586. https://doi.org/10.1177/07356331251314222</p>
+<p>Kosmyna, N., Hauptmann, E., Yuan, Y. T., Situ, J., Liao, X., Beresnitzky, A. V., Braunstein, I., &amp; Maes, P. (2025). Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task. <em>arXiv preprint arXiv:2506.08872</em>.</p>
+<p>Lee, J. D., &amp; See, K. A. (2004). Trust in Automation: Designing for Appropriate Reliance. <em>Human Factors</em>, 46(1), 50–80.</p>
+<p>Lee, S. C., Baby, T., Vongvit, R., Lee, J., Kim, Y., Min, C., &amp; Yoon, S. H. (2025). Development and Validation of a Generative AI Competence Scale. <em>Technology in Society</em>. https://doi.org/10.1016/j.techsoc.2025.103059</p>
+<p>Li, C., Cui, H., &amp; Hagedorn, L. S. (2026). The Cognitive Impact of ChatGPT in Higher Education: A Systematic Review of Critical and Creative Thinking Outcomes. <em>Computers and Education: Artificial Intelligence</em>, 10, 100571. https://doi.org/10.1016/j.caeai.2026.100571</p>
+<p>Lo, L. S. (2023). The CLEAR Path: A Framework for Enhancing Information Literacy through Prompt Engineering. <em>The Journal of Academic Librarianship</em>, 49(4).</p>
+<p>Long, D., &amp; Magerko, B. (2020). What Is AI Literacy? Competencies and Design Considerations. <em>Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems</em>, 1–16.</p>
+<p>Nazaretsky, T., Gabbay, H., &amp; K{\"a}ser, T. (2025). Can Students Judge Like Experts? A Large-Scale Study on AI and Human Personalized Formative Feedback. <em>Computers and Education: Artificial Intelligence</em>. https://doi.org/10.1016/j.caeai.2025.100533</p>
+<p>Nelson, T. O., &amp; Narens, L. (1990). Metamemory: A Theoretical Framework and New Findings. <em>The Psychology of Learning and Motivation</em>, 26, 125–173.</p>
+<p>Parasuraman, R., &amp; Manzey, D. H. (2010). Complacency and Bias in Human Use of Automation: An Attentional Integration. <em>Human Factors</em>, 52(3), 381–410.</p>
+<p>Paul, R., &amp; Elder, L. (2006). The Miniature Guide to Critical Thinking: Concepts and Tools. <em>Foundation for Critical Thinking</em>.</p>
+<p>Randazzo, B., Lifshitz-Assaf, H., Kellogg, K., Dell'Acqua, F., Mollick, E., Candelon, F., &amp; Lakhani, K. R. (2025). Cyborgs, Centaurs and Self-Automators: Modes of Human-AI Collaboration in Knowledge Work. <em>Harvard Business School Working Paper 26-036</em>.</p>
+<p>Runco, M. A., &amp; Chand, I. (1995). Cognition and Creativity. <em>Educational Psychology Review</em>, 7(3), 243–267.</p>
+<p>Sadler, D. R. (1989). Formative Assessment and the Design of Instructional Systems. <em>Instructional Science</em>, 18(2), 119–144.</p>
+<p>Salomon, G., Perkins, D. N., &amp; Globerson, T. (1991). Partners in Cognition: Extending Human Intelligence with Intelligent Technologies. <em>Educational Researcher</em>, 20(3), 2–9.</p>
+<p>Sidra, S., &amp; Mason, C. (2025). Generative AI in Human-AI Collaboration: Validation of the Collaborative AI Literacy and Collaborative AI Metacognition Scales. <em>International Journal of Human-Computer Interaction</em>. https://doi.org/10.1080/10447318.2025.2543997</p>
+<p>Sperber, D., Cl{\'e}ment, F., Heintz, C., Mascaro, O., Mercier, H., Origgi, G., &amp; Wilson, D. (2010). Epistemic Vigilance. <em>Mind \&amp; Language</em>, 25(4), 359–393.</p>
+<p>Srinath, S., Vadaparty, A., Smith IV, D. H., Porter, L., &amp; Zingaro, D. (2025). Assessing Problem Decomposition in CS1 for the GenAI Era. <em>arXiv preprint arXiv:2511.05764</em>.</p>
+<p>Tankelevitch, L., Kewenig, V., Simkute, A., Scott, A. E., Sarkar, A., Sellen, A., &amp; Rintel, S. (2024). The Metacognitive Demands and Opportunities of Generative AI. <em>Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems</em>.</p>
+<p>Tour, E., &amp; Zadorozhnyy, A. (2025). Conceptualizing and Operationalizing Prompt Literacy for English Language Learners. <em>Journal of Adolescent \&amp; Adult Literacy</em>. https://doi.org/10.1002/jaal.70020</p>
+<p>Vaccaro, M., Almaatouq, A., &amp; Malone, T. (2024). When Combinations of Humans and AI Are Useful: A Systematic Review and Meta-Analysis. <em>Nature Human Behaviour</em>, 8, 2293–2303.</p>
+<p>Vygotsky, L. S. (1978). Mind in Society: The Development of Higher Psychological Processes. <em>Harvard University Press</em>.</p>
+<p>Winne, P. H., &amp; Hadwin, A. F. (1998). Studying as Self-Regulated Learning. <em>Metacognition in Educational Theory and Practice</em>, 277–304.</p>
+<p>Zimmerman, B. J. (2000). Attaining Self-Regulation: A Social Cognitive Perspective. <em>Handbook of Self-Regulation</em>, 13–39.</p>
+<p>{UNESCO} (2024). AI Competency Framework for Students. <em>UNESCO</em>.</p>
+</div>
 <footer>
 Generated from <code>paper/coreasoning.md</code>. Math rendered with KaTeX.
 Open-source (MIT) &mdash; system, instrument, data, and figures at
