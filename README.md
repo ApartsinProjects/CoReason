@@ -12,7 +12,7 @@ independently-assessable competencies: **Framing**, **Judging**, and **Steering*
 ## 📄 Paper (open-source, MIT)
 
 **"Framing, Judging, Steering: An Assessable Competency Model for Teaching Students to Reason With
-Generative AI"** — Alexander Apartsin (Holon Institute of Technology) and Yehudit Aperstein (Afeka
+Generative AI"** by Alexander Apartsin (Holon Institute of Technology) and Yehudit Aperstein (Afeka
 College of Engineering).
 
 A theoretically-grounded competency model with a proof-of-concept instrument and a feasibility
@@ -28,9 +28,9 @@ self-consistent. No learning-outcome claims are made; a human-rater validation s
 
 ## The framework
 
-- **Framing** — turn an ill-defined problem into a well-specified task *before* invoking AI.
-- **Judging** — critically evaluate AI output for errors, gaps, unstated assumptions, and risk.
-- **Steering** — iteratively redirect the AI toward a better solution across cycles.
+- **Framing**: turn an ill-defined problem into a well-specified task *before* invoking AI.
+- **Judging**: critically evaluate AI output for errors, gaps, unstated assumptions, and risk.
+- **Steering**: iteratively redirect the AI toward a better solution across cycles.
 
 The defining move is separating the *pre-generation* skill (Framing) from the *post-generation*
 corrective skill (Steering), which prior frameworks fuse under "prompting." Each skill is grounded in
@@ -50,7 +50,7 @@ mockups; static UI mockups live in `screens/`.
 
 ```text
 paper/            manuscript (coreasoning.md), references.bib, figures, build_html.py, SUBMISSION/, reviews/
-docs/             rendered site: index.html (KaTeX), coreasoning.docx, assets/  — served via GitHub Pages
+docs/             rendered site: index.html (KaTeX), coreasoning.docx, assets/ (served via GitHub Pages)
 research/
   scripts/        reproducible harness: harness.py, e3_dissociation.py, e3_expand.py,
                   e2_reliability.py, e1_analysis.py, make_figures.py, render_bib.py, batch_openai.py
