@@ -1,0 +1,132 @@
+{
+  "_vars": {
+    "raw_problem": "We need you to design a syntactic parser that can accurately analyze English sentences for our linguistic research project. The parser should identify and label the different syntactic structures present in the sentences. While the primary focus is on declarative sentences, it should also handle questions and commands effectively. Your output should be a software prototype that demonstrates the parsing capabilities with sample sentences. Consider incorporating contemporary linguistic theories, but keep in mind the practical constraints of computational efficiency. No specific sentence dataset is provided, so you'll need to determine suitable examples. Additionally, decide on the evaluation criteria to assess the parser's performance, but ensure it aligns with industry standards. Please document your design choices and assumptions in a brief report accompanying the software.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to create a computer program that can look at English sentences and understand their structure. This means it should be able to tell what parts of the sentence are nouns, verbs, adjectives, etc. The main goal is to work with normal statements but also include questions and commands.\"}, {\"section_type\": \"Requirements\", \"content\": \"The program should work with different types of sentences, especially simple ones. It should also be able to analyze sentences quickly enough to be useful. We need to include some recent ideas from linguistics, but I'm not sure what those are yet.\"}, {\"section_type\": \"Dataset\", \"content\": \"We don't have a specific set of sentences to use, so we will need to come up with our own examples. I think we can use common sentences that people use every day.\"}, {\"section_type\": \"Evaluation Criteria\", \"content\": \"We need to think about how to check if the program is working well. This might include seeing how many sentences it gets right compared to what a human would say. I'm not sure what the industry standards are for this.\"}, {\"section_type\": \"Documentation\", \"content\": \"We should write a short report that explains how we made the program and what choices we made. This should also include any assumptions we had about the sentences we chose.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Core Syntactic Structures",
+          "description": "Ability to identify and define the main syntactic structures relevant to the problem.",
+          "excellent_indicator": "Clearly identifies relevant syntactic structures such as noun phrases, verb phrases, and clauses.",
+          "poor_indicator": "Fails to identify or incorrectly labels basic syntactic structures."
+        },
+        {
+          "name": "Clarification of Ambiguities",
+          "description": "Ability to recognize and clarify syntactic ambiguities in the problem statement.",
+          "excellent_indicator": "Identifies potential ambiguities and provides clear distinctions between possible interpretations.",
+          "poor_indicator": "Overlooks ambiguities or provides vague clarifications."
+        },
+        {
+          "name": "Specification of Parsing Goals",
+          "description": "Ability to translate the problem into specific parsing tasks and objectives.",
+          "excellent_indicator": "Clearly defines the parsing goals with a focus on extracting syntactic relationships.",
+          "poor_indicator": "Provides unclear or overly broad parsing goals without focus."
+        }
+      ],
+      "typical_errors": [
+        "Confusing syntactic categories with semantic roles.",
+        "Failing to recognize compound structures.",
+        "Overlooking potential ambiguities in conjunctions."
+      ]
+    },
+    "best_framing": {
+      "base": "We need you to design a syntactic parser that can accurately analyze English sentences for our linguistic research project. The parser should identify and label the different syntactic structures present in the sentences. While the primary focus is on declarative sentences, it should also handle questions and commands effectively. Your output should be a software prototype that demonstrates the parsing capabilities with sample sentences. Consider incorporating contemporary linguistic theories, but keep in mind the practical constraints of computational efficiency. No specific sentence dataset is provided, so you'll need to determine suitable examples. Additionally, decide on the evaluation criteria to assess the parser's performance, but ensure it aligns with industry standards. Please document your design choices and assumptions in a brief report accompanying the software.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Contemporary Linguistic Theories",
+              "description": "Assume that contemporary linguistic theories such as Chomsky's Minimalist Program and Dependency Grammar are relevant for this task. These theories provide a framework for understanding syntactic structures and can guide the parser's design.",
+              "addresses_gap": "What contemporary linguistic theories to incorporate."
+            },
+            {
+              "title": "Evaluation Criteria",
+              "description": "Assume that the evaluation criteria will include precision, recall, and F1 score, as these are standard metrics in syntactic parsing tasks. Additionally, computational efficiency should be considered, measured by parsing time per sentence.",
+              "addresses_gap": "What the evaluation criteria should be."
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Computational Efficiency",
+              "description": "The parser must operate efficiently, ideally processing sentences in linear or near-linear time complexity to ensure scalability.",
+              "addresses_gap": "Practical constraints of computational efficiency."
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Scope of Sentence Types",
+              "description": "Clarify that the parser should handle declarative sentences as the primary focus, but must also be capable of parsing interrogative and imperative sentences effectively.",
+              "addresses_gap": "Ambiguity in the types of sentences to be parsed."
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Syntactic Structure Identification",
+              "description": "Success is measured by the parser's ability to accurately identify and label core syntactic structures such as noun phrases, verb phrases, prepositional phrases, and clauses.",
+              "addresses_gap": "What specific syntactic structures need to be identified."
+            },
+            {
+              "title": "Handling of Sentence Variability",
+              "description": "The parser should demonstrate robust performance across a variety of sentence types and complexities, including compound and complex sentences.",
+              "addresses_gap": "Handling different sentence structures effectively."
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "Inclusion of Sample Sentences",
+              "description": "The scope includes selecting a diverse set of sample sentences that reflect various syntactic structures and sentence types. This selection should include both simple and complex sentences to test the parser's capabilities.",
+              "addresses_gap": "No specific sentence dataset is provided."
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by clearly defining syntactic structures, clarifying ambiguities, and specifying parsing goals. It ensures that the parser's design is aligned with contemporary linguistic theories and industry standards for evaluation."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks specificity in several areas. For example, in the 'Problem Definition' section, the student mentions identifying parts of speech like nouns and verbs but does not explicitly mention more complex syntactic structures such as noun phrases or verb phrases, which are crucial for syntactic parsing. The 'Requirements' section is vague about the incorporation of contemporary linguistic theories, stating uncertainty about which theories to use. Furthermore, the 'Evaluation Criteria' section lacks clarity on industry standards and specific metrics to assess the parser's performance, such as precision or recall.",
+  "better_alternative": "A stronger framing would explicitly identify key syntactic structures like noun phrases, verb phrases, and clauses. It would also specify contemporary linguistic theories, such as Chomsky's Minimalist Program, to guide the parser's design. Additionally, it should clearly define evaluation criteria using standard metrics like precision, recall, and F1 score, and consider computational efficiency as a critical factor. Clarifying the types of sentences to be parsed, including declarative, interrogative, and imperative, would also strengthen the framing.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Core Syntactic Structures",
+      "score": "B",
+      "internal_note": "Mentions basic parts of speech but lacks detail on complex syntactic structures."
+    },
+    {
+      "criterion_name": "Clarification of Ambiguities",
+      "score": "C",
+      "internal_note": "Does not address ambiguities in sentence types or parsing goals."
+    },
+    {
+      "criterion_name": "Specification of Parsing Goals",
+      "score": "B",
+      "internal_note": "Provides general goals but lacks specificity in defining parsing tasks and objectives."
+    }
+  ],
+  "strengths": [
+    "The student recognizes the need to handle different sentence types, including questions and commands.",
+    "There is an attempt to consider recent linguistic theories, even though it lacks specificity."
+  ],
+  "refinements_correctly_selected": [],
+  "refinements_missed": [
+    "Identification of specific syntactic structures like noun phrases, verb phrases, and clauses",
+    "Clarification of sentence types to be parsed",
+    "Specification of evaluation criteria using industry-standard metrics"
+  ],
+  "unnecessary_selections": []
+}

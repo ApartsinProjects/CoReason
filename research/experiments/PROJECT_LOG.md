@@ -121,3 +121,13 @@ cross-grader replication; integrate robustness paragraph in Sec 8; blind-graded 
 255-vs-280 caching reconciled; Judging ground-truth flagged machine-generated/contingent; learner->
 simulated/model-assigned slips fixed; "metacognitive laziness" now cites Fan et al. 2025 (BJET).
 Bibliography 55 refs, 54 valid (Acar HBR verified live, HTTP 200). HTML+docx rebuilt.
+
+## C8 (2026-06-01): Strengthening — harsher-Steering ablation + expand to N=80
+Harsher-steering ablation (strict rubric, re-grade 40): steering own-effect +0.40 (vs +0.50 standard)
+= indistinguishable -> weak steering signal is NOT rubric-leniency; corrected interpretation to P2
+confound + simulated-response homogeneity. Dissociation robust to strictness (ratio 27.5; contrasts
+decouple). Expand-N: +5 new subjects (40 new learners) pooled -> N=80, 10 subjects. Effect matrix:
+Framing +0.62 [0.46,0.77], Judging +2.00, Steering +0.43 [0.20,0.65]; diag +1.02 vs cross +0.008.
+Correlations: F-J rho=-0.03 (ns), F-S rho=-0.12 (ns), J-S rho=+0.25 (p=0.02, significant = the P2
+ceiling, now visible with power). 1st PC 43%. Own-effects positive in 9/10 subjects (F & S). Figures
+regenerated at N=80. ALL reviewer-raised compute items now closed; only the human-rater study remains.

@@ -1,0 +1,131 @@
+{
+  "_vars": {
+    "raw_problem": "As a financial analyst for a mid-sized manufacturing company, you are tasked with evaluating an investment proposal to expand production capacity. The project involves purchasing new machinery and renovating an existing facility. You need to prepare a capital budgeting report that includes calculations of the Net Present Value (NPV) and Internal Rate of Return (IRR) for the project. The proposal provides a cost estimate for the machinery but lacks specifics on the renovation costs and any potential changes in working capital. Additionally, assume a discount rate, but the basis for this rate is not provided. Your report should conclude with a recommendation on whether to proceed with the investment, considering both financial metrics and any strategic business factors you deem relevant. Present your findings to the senior management team.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly state the goal of the project, which is to evaluate an investment proposal for expanding production capacity by buying new machinery and renovating a facility.\"}, {\"section_type\": \"Data Requirements\", \"content\": \"List the specific data needed to perform the analysis, such as renovation costs, potential changes in working capital, and the rationale for the discount rate.\"}, {\"section_type\": \"Calculation Methods\", \"content\": \"Outline how to calculate NPV and IRR, including the formulas needed, but without going into too much detail.\"}, {\"section_type\": \"Considerations for Recommendation\", \"content\": \"Mention that the recommendation should be based on both NPV and IRR results, as well as any strategic factors like market demand or competition.\"}, {\"section_type\": \"Presentation Preparation\", \"content\": \"Identify that the report should be structured clearly for the management team, including an executive summary and key findings.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Ability to identify the core components of the capital budgeting problem, including cash flows, discount rates, and time horizon.",
+          "excellent_indicator": "Clearly identifies all relevant components and their interdependencies within the capital budgeting context.",
+          "poor_indicator": "Fails to identify key components or misinterprets their relevance to the capital budgeting problem."
+        },
+        {
+          "name": "Assumption Articulation",
+          "description": "Ability to articulate clear and relevant assumptions underlying the capital budgeting analysis.",
+          "excellent_indicator": "Provides well-reasoned assumptions that align with financial principles and the specifics of the problem.",
+          "poor_indicator": "Assumptions are vague, irrelevant, or contradict basic financial principles."
+        },
+        {
+          "name": "Task Definition",
+          "description": "Ability to translate the ill-defined problem into a well-defined task with clear objectives and constraints.",
+          "excellent_indicator": "Formulates a specific, actionable task that is logically structured and considers all given constraints.",
+          "poor_indicator": "The task is vague, lacks clear objectives, or ignores key constraints."
+        }
+      ],
+      "typical_errors": [
+        "Overlooking the impact of discount rates on cash flow valuation.",
+        "Misinterpreting the time horizon for the investment.",
+        "Ignoring inflation effects on future cash flows."
+      ]
+    },
+    "best_framing": {
+      "base": "As a financial analyst for a mid-sized manufacturing company, you are tasked with evaluating an investment proposal to expand production capacity. The project involves purchasing new machinery and renovating an existing facility. You need to prepare a capital budgeting report that includes calculations of the Net Present Value (NPV) and Internal Rate of Return (IRR) for the project. The proposal provides a cost estimate for the machinery but lacks specifics on the renovation costs and any potential changes in working capital. Additionally, assume a discount rate, but the basis for this rate is not provided. Your report should conclude with a recommendation on whether to proceed with the investment, considering both financial metrics and any strategic business factors you deem relevant. Present your findings to the senior management team.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Renovation Cost Estimate",
+              "description": "Assume that the renovation costs are estimated to be 30% of the machinery cost, based on industry standards for similar projects. This assumption is necessary due to the lack of specific renovation cost details in the proposal.",
+              "addresses_gap": "Renovation costs are not specified"
+            },
+            {
+              "title": "Working Capital Changes",
+              "description": "Assume an increase in working capital equivalent to 10% of the initial machinery cost, reflecting typical increases in inventory and receivables associated with expanded production capacity.",
+              "addresses_gap": "Changes in working capital are not detailed"
+            },
+            {
+              "title": "Discount Rate Basis",
+              "description": "Assume a discount rate of 8%, derived from the company's weighted average cost of capital (WACC) based on historical data and comparable industry rates.",
+              "addresses_gap": "Basis for the discount rate is not provided"
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Time Horizon",
+              "description": "The project evaluation should consider a 10-year time horizon, typical for capital investments in manufacturing, to capture long-term benefits and costs.",
+              "addresses_gap": "Misinterpreting the time horizon for the investment"
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Financial Metrics",
+              "description": "The project's success will be primarily measured by achieving a positive NPV and an IRR that exceeds the assumed discount rate of 8%.",
+              "addresses_gap": "Overlooking the impact of discount rates on cash flow valuation"
+            },
+            {
+              "title": "Strategic Alignment",
+              "description": "Evaluate the project's alignment with the company's strategic goals, such as market expansion or technological leadership, as a secondary success metric.",
+              "addresses_gap": "Considering strategic business factors"
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Definition of Strategic Business Factors",
+              "description": "Strategic business factors refer to non-financial considerations such as market positioning, competitive advantage, and alignment with long-term corporate strategy.",
+              "addresses_gap": "Ambiguity in what constitutes strategic business factors"
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by clearly identifying problem components, articulating assumptions, and defining tasks with constraints. It ensures comprehensive coverage of financial principles and strategic considerations."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks specific assumptions that are crucial for a comprehensive analysis. For instance, while they mentioned the need for renovation costs and working capital changes, they did not propose any assumptions to fill these gaps. Additionally, the basis for the discount rate was not articulated, which is essential for accurate NPV and IRR calculations. The framing also did not specify the time horizon for the investment, which is a critical component in capital budgeting.",
+  "better_alternative": "A stronger framing would include specific assumptions to address missing data, such as estimating renovation costs as a percentage of machinery costs based on industry standards, and defining a basis for the discount rate, such as using the company's WACC. It should also specify a time horizon for the investment, such as a 10-year period, to ensure all financial metrics are calculated over a relevant timeframe. Furthermore, the framing should explicitly define strategic business factors to ensure they are considered alongside financial metrics.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Identification",
+      "score": "B",
+      "internal_note": "Identified core components but missed detailing interdependencies, such as the impact of the discount rate on cash flows."
+    },
+    {
+      "criterion_name": "Assumption Articulation",
+      "score": "C",
+      "internal_note": "Did not articulate specific assumptions for renovation costs, working capital changes, or the discount rate."
+    },
+    {
+      "criterion_name": "Task Definition",
+      "score": "B",
+      "internal_note": "Defined the task but lacked specificity in objectives and constraints, such as time horizon and strategic considerations."
+    }
+  ],
+  "strengths": [
+    "The student correctly identified the need for data on renovation costs and working capital changes.",
+    "They acknowledged the importance of both financial metrics and strategic factors in the recommendation."
+  ],
+  "refinements_correctly_selected": [
+    "Data Requirements",
+    "Considerations for Recommendation"
+  ],
+  "refinements_missed": [
+    "Assumptions",
+    "Constraints"
+  ],
+  "unnecessary_selections": [
+    "Calculation Methods"
+  ]
+}

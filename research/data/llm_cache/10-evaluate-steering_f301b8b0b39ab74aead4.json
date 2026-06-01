@@ -1,0 +1,93 @@
+{
+  "_vars": {
+    "raw_problem": "We need you to design a syntactic parser that can accurately analyze English sentences for our linguistic research project. The parser should identify and label the different syntactic structures present in the sentences. While the primary focus is on declarative sentences, it should also handle questions and commands effectively. Your output should be a software prototype that demonstrates the parsing capabilities with sample sentences. Consider incorporating contemporary linguistic theories, but keep in mind the practical constraints of computational efficiency. No specific sentence dataset is provided, so you'll need to determine suitable examples. Additionally, decide on the evaluation criteria to assess the parser's performance, but ensure it aligns with industry standards. Please document your design choices and assumptions in a brief report accompanying the software.",
+    "student_framing": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The goal is to create a program that can understand English sentences. This means the program should look at sentences and figure out their structure, like identifying subjects, verbs, and objects.\"}, {\"section_type\": \"Scope Definition\", \"content\": \"We will focus on three types of sentences: declarative sentences (statements), questions, and commands. This means we need to make sure the parser works well for each of these types.\"}, {\"section_type\": \"Data Collection\", \"content\": \"Since there's no specific dataset provided, I will look for common English sentences online or in textbooks to use as examples for testing the parser.\"}, {\"section_type\": \"Performance Evaluation\", \"content\": \"I need to decide how to check if the parser is working well. This could include looking at how many sentences it gets right versus how many it gets wrong.\"}, {\"section_type\": \"Documentation\", \"content\": \"I will write a short report explaining how I built the parser, the choices I made, and any assumptions I had while designing it.\"}]",
+    "ai_outputs_per_cycle": [
+      "Designing a syntactic parser for English sentences involves several key steps and considerations. Below is a proposed approach to developing this parser, taking into account the assumptions, constraints, and success metrics outlined.\n\n### Parser Design\n\n1. **Theoretical Framework:**\n   - **Chomsky's Minimalist Program:** This theory can guide the hierarchical structure of sentences, focusing on the economy of derivation and representation. It suggests that sentences are built from a base structure that is transformed into the surface structure through movement and agreement operations.\n   - **Dependency Grammar:** This framework is useful for identifying the relationships between words in a sentence, emphasizing the connections between heads and dependents.\n\n2. **Algorithm Choice:**\n   - Given the constraint of computational efficiency, we will implement a **shift-reduce parser**. This type of parser operates in linear time and is well-suited for handling complex sentence structures in an efficient manner.\n\n3. **Syntactic Structures to Identify:**\n   - The parser will identify core structures such as noun phrases (NP), verb phrases (VP), prepositional phrases (PP), and clauses. It will also handle interrogative (e.g., \"Is she coming?\") and imperative sentences (e.g., \"Close the door.\").\n\n4. **Handling Sentence Variability:**\n   - To ensure robustness, the parser will be tested on a diverse set of sentences, including simple sentences (e.g., \"The cat sat on the mat.\"), compound sentences (e.g., \"He ran fast, and she caught up.\"), and complex sentences (e.g., \"Although it was raining, we went for a walk.\").\n\n### Implementation\n\n- **Prototype Software:** The software will be written in Python, utilizing libraries such as NLTK for natural language processing tasks.\n- **Sample Sentences:** A set of 50 sentences will be manually curated to cover a wide range of syntactic structures and sentence types.\n- **Output:** The parser will produce a labeled bracketed representation of the syntactic structures in each sentence.\n\n### Evaluation Criteria\n\n- **Precision, Recall, and F1 Score:** The parser's performance will be evaluated using these standard metrics to measure its accuracy in identifying syntactic structures.\n- **Computational Efficiency:** We will measure the average parsing time per sentence to ensure it meets the linear time complexity requirement.\n\n### Documentation\n\nA brief report will accompany the prototype, detailing the design choices, the rationale behind the chosen algorithms, and any assumptions made during the development process. This report will also include sample outputs and an analysis of the parser's performance based on the evaluation criteria.\n\nBy following this plan, the parser should effectively analyze a wide range of English sentences, providing useful insights for linguistic research while adhering to computational constraints.",
+      "Designing a syntactic parser for English sentences involves several key steps and considerations. Below is a proposed approach to developing this parser, taking into account the assumptions, constraints, and success metrics outlined.\n\n### Parser Design\n\n1. **Theoretical Framework:**\n   - **Chomsky's Minimalist Program:** This theory can guide the hierarchical structure of sentences, focusing on the economy of derivation and representation. It suggests that sentences are built from a base structure that is transformed into the surface structure through movement and agreement operations.\n   - **Dependency Grammar:** This framework is useful for identifying the relationships between words in a sentence, emphasizing the connections between heads and dependents.\n\n2. **Algorithm Choice:**\n   - To better handle the complexities of various sentence structures, we will implement a **chart parser**. This type of parser is capable of efficiently handling nested and ambiguous sentences by storing partial results and reusing them, thus ensuring comprehensive coverage of different syntactic phenomena.\n\n3. **Syntactic Structures to Identify:**\n   - The parser will identify core structures such as noun phrases (NP), verb phrases (VP), prepositional phrases (PP), and clauses. It will also handle interrogative (e.g., \"Is she coming?\") and imperative sentences (e.g., \"Close the door.\") with a focus on inversion and ellipsis in questions and subject omission in commands.\n\n4. **Handling Sentence Variability:**\n   - To ensure robustness, the parser will be tested on an expanded set of 100 sentences, covering a wide range of syntactic phenomena, including rare constructions and regional dialect variations. This diverse dataset will include simple, compound, and complex sentences.\n\n### Implementation\n\n- **Prototype Software:** The software will be written in Python, utilizing libraries such as NLTK for natural language processing tasks. A detailed analysis of NLTK's capabilities and limitations will be conducted to understand its impact on parsing accuracy.\n- **Sample Sentences:** The expanded dataset of 100 sentences will be manually curated, ensuring it includes various syntactic structures and sentence types.\n- **Output:** The parser will produce a labeled bracketed representation of the syntactic structures in each sentence.\n\n### Evaluation Criteria\n\n- **Precision, Recall, and F1 Score:** The parser's performance will be evaluated using these standard metrics to measure its accuracy in identifying syntactic structures.\n- **Computational Efficiency:** We will measure the average parsing time per sentence, aiming for efficient processing despite the more sophisticated algorithm.\n\n### Documentation\n\nA brief report will accompany the prototype, detailing the design choices, the rationale behind the chosen algorithms, and any assumptions made during the development process. This report will also include sample outputs and an analysis of the parser's performance based on the evaluation criteria, as well as specific challenges and solutions related to interrogative and imperative sentences.\n\nBy following this plan, the parser should effectively analyze a wide range of English sentences, providing useful insights for linguistic research while adhering to computational constraints."
+    ],
+    "steering_commands_per_cycle": [
+      [
+        "Consider implementing a more sophisticated parsing algorithm, such as a chart parser or a recursive descent parser, to better handle the complexities of various sentence structures, especially for nested and ambiguous sentences.",
+        "Expand the sample sentence set beyond 50 to include a more comprehensive range of syntactic phenomena, including rare constructions and regional dialect variations, to ensure robustness in evaluation.",
+        "Include a detailed analysis of NLTK's capabilities and limitations, particularly regarding its parsing accuracy and how it may affect the parser's overall performance in different contexts.",
+        "Provide a more thorough examination of the parsing challenges associated with interrogative and imperative sentences, including specific examples and how the parser will handle inversion and ellipsis in questions, as well as the omission of subjects in commands."
+      ]
+    ],
+    "judging_responses_per_cycle": [
+      {
+        "flagged_issues": [
+          "The choice of a shift-reduce parser may not be optimal for all types of complex sentences, potentially impacting accuracy.",
+          "The assumption that a set of 50 sentences is sufficient for evaluation may not capture the full variability of English syntax.",
+          "The reliance on NLTK without mention of potential limitations in its parsing capabilities may lead to overlooked constraints.",
+          "The handling of interrogative and imperative sentences is mentioned, but not sufficiently detailed in terms of specific parsing challenges."
+        ]
+      }
+    ],
+    "response_type": "open_ended_instructions",
+    "final_remaining_issues": [
+      "The analysis of NLTK's limitations is not detailed in the updated output.",
+      "The expanded sentence set might still miss specific rare constructions."
+    ],
+    "steering_rubric": {
+      "criteria": [
+        {
+          "name": "Precision in Correction Commands",
+          "description": "Ability to provide clear and precise instructions to correct AI parsing errors.",
+          "excellent_indicator": "Provides detailed and specific commands that directly address identified errors.",
+          "poor_indicator": "Gives vague or overly general instructions that do not clearly guide AI corrections."
+        },
+        {
+          "name": "Adaptation to AI Feedback",
+          "description": "Ability to adapt and refine correction commands based on AI's responses.",
+          "excellent_indicator": "Effectively adjusts commands in response to AI feedback, showing iterative improvement.",
+          "poor_indicator": "Repeats ineffective commands without adjustment or fails to respond to AI feedback."
+        },
+        {
+          "name": "Use of Linguistic Terminology",
+          "description": "Effectiveness in using appropriate linguistic terminology in steering commands.",
+          "excellent_indicator": "Consistently uses accurate and relevant linguistic terms in commands.",
+          "poor_indicator": "Misuses or avoids linguistic terminology, leading to unclear instructions."
+        }
+      ],
+      "typical_errors": [
+        "Issuing commands without specifying the affected syntactic elements.",
+        "Failing to update commands when previous attempts do not yield improvements.",
+        "Using informal language instead of precise linguistic terms."
+      ]
+    },
+    "done_at_cycle": "1",
+    "max_cycles": "3",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's steering commands were generally specific and targeted key issues, such as the choice of parsing algorithm and the need for a more comprehensive sentence set. However, the command regarding the analysis of NLTK's capabilities was not fully addressed, as the AI output still lacked detail in this area. Additionally, while the student expanded the sentence set, there was no explicit mention of ensuring coverage of specific rare constructions, which was a missed opportunity for further improvement.",
+  "better_alternative": "A more effective steering command would have explicitly requested a deeper analysis of NLTK's limitations, perhaps by suggesting specific aspects to evaluate, such as its handling of particular syntactic phenomena or its performance compared to other libraries. Additionally, the student could have requested explicit examples of rare constructions to ensure they were covered in the expanded sentence set.",
+  "convergence_assessment": "The solution improved significantly across cycles, with the student addressing key issues related to algorithm choice and sentence set diversity. The AI output became more comprehensive and aligned with the problem requirements.",
+  "done_timing_assessment": "Marking 'done' after the first cycle was premature, as there were still unresolved issues, particularly regarding the detailed analysis of NLTK's limitations and coverage of rare constructions.",
+  "corrections_well_chosen": [
+    "Consider implementing a more sophisticated parsing algorithm, such as a chart parser or a recursive descent parser.",
+    "Expand the sample sentence set beyond 50 to include a more comprehensive range of syntactic phenomena."
+  ],
+  "corrections_missed": [
+    "Include a detailed analysis of NLTK's capabilities and limitations."
+  ],
+  "corrections_counterproductive": [],
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Precision in Correction Commands",
+      "score": "B",
+      "internal_note": "Commands were generally precise but lacked specificity in some areas, such as NLTK analysis."
+    },
+    {
+      "criterion_name": "Adaptation to AI Feedback",
+      "score": "A",
+      "internal_note": "Student adapted well to AI feedback, improving the solution significantly."
+    },
+    {
+      "criterion_name": "Use of Linguistic Terminology",
+      "score": "A",
+      "internal_note": "Appropriate linguistic terminology was used effectively in commands."
+    }
+  ]
+}

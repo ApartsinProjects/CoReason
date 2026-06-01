@@ -1,41 +1,81 @@
-challenge,subject,framing_level,judging_level,steering_level,framing_grade,judging_grade,steering_grade,judging_real_flagged,judging_false_flagged,judging_total_real
-0,Algorithms > Sorting & Searching,expert,expert,expert,B,A,B,4,0,4
-0,Algorithms > Sorting & Searching,expert,expert,novice,B,A,C,4,0,4
-0,Algorithms > Sorting & Searching,expert,novice,expert,C,C,C,1,1,4
-0,Algorithms > Sorting & Searching,expert,novice,novice,B,C,C,1,1,4
-0,Algorithms > Sorting & Searching,novice,expert,expert,C,A,B,4,0,4
-0,Algorithms > Sorting & Searching,novice,expert,novice,C,A,C,4,0,4
-0,Algorithms > Sorting & Searching,novice,novice,expert,C,C,B,1,1,4
-0,Algorithms > Sorting & Searching,novice,novice,novice,C,C,C,1,1,4
-1,Microeconomics > Supply & Demand,expert,expert,expert,B,A,B,4,0,4
-1,Microeconomics > Supply & Demand,expert,expert,novice,B,A,A,4,0,4
-1,Microeconomics > Supply & Demand,expert,novice,expert,B,C,B,1,1,4
-1,Microeconomics > Supply & Demand,expert,novice,novice,B,C,B,1,1,4
-1,Microeconomics > Supply & Demand,novice,expert,expert,C,A,A,4,0,4
-1,Microeconomics > Supply & Demand,novice,expert,novice,C,A,B,4,0,4
-1,Microeconomics > Supply & Demand,novice,novice,expert,C,C,B,1,1,4
-1,Microeconomics > Supply & Demand,novice,novice,novice,C,C,B,1,1,4
-2,ML > Model Evaluation & Overfitting,expert,expert,expert,B,A,B,4,0,4
-2,ML > Model Evaluation & Overfitting,expert,expert,novice,B,A,C,4,0,4
-2,ML > Model Evaluation & Overfitting,expert,novice,expert,B,C,B,1,1,4
-2,ML > Model Evaluation & Overfitting,expert,novice,novice,B,C,C,1,1,4
-2,ML > Model Evaluation & Overfitting,novice,expert,expert,C,A,B,4,0,4
-2,ML > Model Evaluation & Overfitting,novice,expert,novice,C,A,B,4,0,4
-2,ML > Model Evaluation & Overfitting,novice,novice,expert,C,C,A,1,1,4
-2,ML > Model Evaluation & Overfitting,novice,novice,novice,C,C,B,1,1,4
-3,Databases > Indexing & Query Optimization,expert,expert,expert,C,A,B,4,0,4
-3,Databases > Indexing & Query Optimization,expert,expert,novice,C,A,B,4,0,4
-3,Databases > Indexing & Query Optimization,expert,novice,expert,C,C,B,1,1,4
-3,Databases > Indexing & Query Optimization,expert,novice,novice,B,C,C,1,1,4
-3,Databases > Indexing & Query Optimization,novice,expert,expert,C,A,B,4,0,4
-3,Databases > Indexing & Query Optimization,novice,expert,novice,C,A,B,4,0,4
-3,Databases > Indexing & Query Optimization,novice,novice,expert,C,C,B,1,1,4
-3,Databases > Indexing & Query Optimization,novice,novice,novice,C,C,B,1,1,4
-4,Statistics > Hypothesis Testing,expert,expert,expert,C,A,A,4,0,4
-4,Statistics > Hypothesis Testing,expert,expert,novice,C,A,C,4,0,4
-4,Statistics > Hypothesis Testing,expert,novice,expert,C,C,B,1,1,4
-4,Statistics > Hypothesis Testing,expert,novice,novice,C,C,B,1,1,4
-4,Statistics > Hypothesis Testing,novice,expert,expert,C,A,B,4,0,4
-4,Statistics > Hypothesis Testing,novice,expert,novice,C,A,B,4,0,4
-4,Statistics > Hypothesis Testing,novice,novice,expert,C,C,B,1,1,4
-4,Statistics > Hypothesis Testing,novice,novice,novice,C,C,C,1,1,4
+challenge,subject,framing_level,judging_level,steering_level,framing_grade,judging_grade,steering_grade
+0,Algorithms > Sorting & Searching,expert,expert,expert,B,A,B
+0,Algorithms > Sorting & Searching,expert,expert,novice,B,A,C
+0,Algorithms > Sorting & Searching,expert,novice,expert,C,C,C
+0,Algorithms > Sorting & Searching,expert,novice,novice,B,C,C
+0,Algorithms > Sorting & Searching,novice,expert,expert,C,A,B
+0,Algorithms > Sorting & Searching,novice,expert,novice,C,A,C
+0,Algorithms > Sorting & Searching,novice,novice,expert,C,C,B
+0,Algorithms > Sorting & Searching,novice,novice,novice,C,C,C
+1,Microeconomics > Supply & Demand,expert,expert,expert,B,A,B
+1,Microeconomics > Supply & Demand,expert,expert,novice,B,A,A
+1,Microeconomics > Supply & Demand,expert,novice,expert,B,C,B
+1,Microeconomics > Supply & Demand,expert,novice,novice,B,C,B
+1,Microeconomics > Supply & Demand,novice,expert,expert,C,A,A
+1,Microeconomics > Supply & Demand,novice,expert,novice,C,A,B
+1,Microeconomics > Supply & Demand,novice,novice,expert,C,C,B
+1,Microeconomics > Supply & Demand,novice,novice,novice,C,C,B
+2,ML > Model Evaluation & Overfitting,expert,expert,expert,B,A,B
+2,ML > Model Evaluation & Overfitting,expert,expert,novice,B,A,C
+2,ML > Model Evaluation & Overfitting,expert,novice,expert,B,C,B
+2,ML > Model Evaluation & Overfitting,expert,novice,novice,B,C,C
+2,ML > Model Evaluation & Overfitting,novice,expert,expert,C,A,B
+2,ML > Model Evaluation & Overfitting,novice,expert,novice,C,A,B
+2,ML > Model Evaluation & Overfitting,novice,novice,expert,C,C,A
+2,ML > Model Evaluation & Overfitting,novice,novice,novice,C,C,B
+3,Databases > Indexing & Query Optimization,expert,expert,expert,C,A,B
+3,Databases > Indexing & Query Optimization,expert,expert,novice,C,A,B
+3,Databases > Indexing & Query Optimization,expert,novice,expert,C,C,B
+3,Databases > Indexing & Query Optimization,expert,novice,novice,B,C,C
+3,Databases > Indexing & Query Optimization,novice,expert,expert,C,A,B
+3,Databases > Indexing & Query Optimization,novice,expert,novice,C,A,B
+3,Databases > Indexing & Query Optimization,novice,novice,expert,C,C,B
+3,Databases > Indexing & Query Optimization,novice,novice,novice,C,C,B
+4,Statistics > Hypothesis Testing,expert,expert,expert,C,A,A
+4,Statistics > Hypothesis Testing,expert,expert,novice,C,A,C
+4,Statistics > Hypothesis Testing,expert,novice,expert,C,C,B
+4,Statistics > Hypothesis Testing,expert,novice,novice,C,C,B
+4,Statistics > Hypothesis Testing,novice,expert,expert,C,A,B
+4,Statistics > Hypothesis Testing,novice,expert,novice,C,A,B
+4,Statistics > Hypothesis Testing,novice,novice,expert,C,C,B
+4,Statistics > Hypothesis Testing,novice,novice,novice,C,C,C
+100,Operating Systems > CPU Scheduling,expert,expert,expert,B,A,A
+100,Operating Systems > CPU Scheduling,expert,expert,novice,B,A,B
+100,Operating Systems > CPU Scheduling,expert,novice,expert,B,C,B
+100,Operating Systems > CPU Scheduling,expert,novice,novice,B,C,C
+100,Operating Systems > CPU Scheduling,novice,expert,expert,C,A,B
+100,Operating Systems > CPU Scheduling,novice,expert,novice,C,A,B
+100,Operating Systems > CPU Scheduling,novice,novice,expert,C,C,C
+100,Operating Systems > CPU Scheduling,novice,novice,novice,B,C,C
+101,Calculus > Constrained Optimization,expert,expert,expert,B,A,B
+101,Calculus > Constrained Optimization,expert,expert,novice,B,A,B
+101,Calculus > Constrained Optimization,expert,novice,expert,B,C,B
+101,Calculus > Constrained Optimization,expert,novice,novice,B,C,C
+101,Calculus > Constrained Optimization,novice,expert,expert,C,A,B
+101,Calculus > Constrained Optimization,novice,expert,novice,C,A,A
+101,Calculus > Constrained Optimization,novice,novice,expert,C,C,A
+101,Calculus > Constrained Optimization,novice,novice,novice,C,C,B
+102,Organic Chemistry > Reaction Mechanisms,expert,expert,expert,C,A,B
+102,Organic Chemistry > Reaction Mechanisms,expert,expert,novice,C,A,B
+102,Organic Chemistry > Reaction Mechanisms,expert,novice,expert,B,C,B
+102,Organic Chemistry > Reaction Mechanisms,expert,novice,novice,C,C,C
+102,Organic Chemistry > Reaction Mechanisms,novice,expert,expert,C,A,B
+102,Organic Chemistry > Reaction Mechanisms,novice,expert,novice,C,A,B
+102,Organic Chemistry > Reaction Mechanisms,novice,novice,expert,C,C,B
+102,Organic Chemistry > Reaction Mechanisms,novice,novice,novice,C,C,C
+103,Linguistics > Syntactic Parsing,expert,expert,expert,C,A,B
+103,Linguistics > Syntactic Parsing,expert,expert,novice,B,A,B
+103,Linguistics > Syntactic Parsing,expert,novice,expert,C,C,A
+103,Linguistics > Syntactic Parsing,expert,novice,novice,B,C,B
+103,Linguistics > Syntactic Parsing,novice,expert,expert,C,A,B
+103,Linguistics > Syntactic Parsing,novice,expert,novice,C,A,B
+103,Linguistics > Syntactic Parsing,novice,novice,expert,C,C,B
+103,Linguistics > Syntactic Parsing,novice,novice,novice,C,C,B
+104,Corporate Finance > Capital Budgeting,expert,expert,expert,B,A,B
+104,Corporate Finance > Capital Budgeting,expert,expert,novice,B,A,B
+104,Corporate Finance > Capital Budgeting,expert,novice,expert,B,C,B
+104,Corporate Finance > Capital Budgeting,expert,novice,novice,B,C,B
+104,Corporate Finance > Capital Budgeting,novice,expert,expert,B,A,A
+104,Corporate Finance > Capital Budgeting,novice,expert,novice,C,A,B
+104,Corporate Finance > Capital Budgeting,novice,novice,expert,C,C,B
+104,Corporate Finance > Capital Budgeting,novice,novice,novice,C,C,B

@@ -1,0 +1,126 @@
+{
+  "_vars": {
+    "raw_problem": "As a consultant for a logistics company, you have been tasked with optimizing the delivery routes for a fleet of delivery trucks. The goal is to minimize the total travel time while satisfying certain constraints related to fuel consumption and time windows for deliveries. You have access to the company’s data on travel times, fuel costs, and delivery schedules, but some information may need to be inferred or estimated. Develop a mathematical model to solve this optimization problem and provide a concise report explaining your approach, assumptions, and solution. Focus on using calculus-based techniques to address the constraints, but consider that not all factors influencing the problem have been explicitly defined.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to figure out how to make delivery routes better for trucks. The main goal is to make sure the trucks take the least amount of time to deliver while also keeping in mind how much fuel they use and when the deliveries need to happen.\"}, {\"section_type\": \"Constraints Identification\", \"content\": \"We have to think about some important limits: the fuel the trucks can use, the times they have to deliver, and maybe other things like traffic or road conditions that we might not know.\"}, {\"section_type\": \"Data Collection\", \"content\": \"We have some data about how long it takes to travel different routes and how much fuel costs. We might need to guess some numbers for things we don’t have, like traffic patterns.\"}, {\"section_type\": \"Mathematical Model\", \"content\": \"We could use equations to represent the time it takes for each route, the fuel costs, and the delivery times. We want to create a function that shows total travel time and then minimize that.\"}, {\"section_type\": \"Approach\", \"content\": \"We can use calculus to find the best routes. This might involve finding the minimum of our function while keeping the constraints in mind, but I’m not really sure how to do that yet.\"}, {\"section_type\": \"Reporting\", \"content\": \"I need to write a report that explains how I did everything, what I assumed, and what my solution is. I should try to be clear but I might need help with the details.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Constraints",
+          "description": "Ability to identify and clearly state all relevant constraints in the problem.",
+          "excellent_indicator": "All constraints are accurately identified and clearly articulated, including implicit constraints.",
+          "poor_indicator": "Constraints are missing, incomplete, or incorrectly identified."
+        },
+        {
+          "name": "Objective Function Formulation",
+          "description": "Ability to translate the problem into a well-defined objective function.",
+          "excellent_indicator": "The objective function is correctly formulated and aligns with the problem's goals.",
+          "poor_indicator": "The objective function is incorrectly formulated or does not match the problem's goals."
+        },
+        {
+          "name": "Understanding of Problem Context",
+          "description": "Demonstrates understanding of the problem context and its implications for the optimization task.",
+          "excellent_indicator": "Shows deep understanding of the problem context and correctly integrates it into the task framing.",
+          "poor_indicator": "Lacks understanding of the problem context or misinterprets its implications."
+        }
+      ],
+      "typical_errors": [
+        "Neglecting implicit constraints that affect the solution space.",
+        "Formulating an objective function that does not reflect the problem's goals.",
+        "Misinterpreting the problem context and its impact on constraints."
+      ]
+    },
+    "best_framing": {
+      "base": "As a consultant for a logistics company, you have been tasked with optimizing the delivery routes for a fleet of delivery trucks. The goal is to minimize the total travel time while satisfying certain constraints related to fuel consumption and time windows for deliveries. You have access to the company’s data on travel times, fuel costs, and delivery schedules, but some information may need to be inferred or estimated. Develop a mathematical model to solve this optimization problem and provide a concise report explaining your approach, assumptions, and solution. Focus on using calculus-based techniques to address the constraints, but consider that not all factors influencing the problem have been explicitly defined.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Static Traffic Conditions",
+              "description": "Assume that traffic conditions remain constant during the delivery period, allowing travel times to be predictable and based solely on distance and speed limits.",
+              "addresses_gap": "The relationship between travel time and the chosen routes is ambiguous."
+            },
+            {
+              "title": "Linear Fuel Consumption",
+              "description": "Assume a linear relationship between fuel consumption and distance traveled, with a fixed rate of fuel consumption per mile.",
+              "addresses_gap": "Specific details on how fuel consumption impacts the optimization are missing."
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Delivery Time Windows",
+              "description": "Each delivery must occur within a specified time window. Assume these time windows are hard constraints that cannot be violated.",
+              "addresses_gap": "Time windows for deliveries are not fully defined."
+            },
+            {
+              "title": "Fuel Budget Constraint",
+              "description": "The total fuel consumption for all routes must not exceed a specified budget. This budget is determined based on historical fuel costs and average consumption rates.",
+              "addresses_gap": "Specific details on how fuel consumption impacts the optimization are missing."
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Objective Function Definition",
+              "description": "The primary objective is to minimize the total travel time across all routes. This involves summing the travel times of all individual routes and minimizing this total.",
+              "addresses_gap": "The relationship between travel time and the chosen routes is ambiguous."
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Minimized Total Travel Time",
+              "description": "The solution should demonstrate a reduction in total travel time compared to a baseline scenario without optimization.",
+              "addresses_gap": "The goal is to minimize the total travel time."
+            },
+            {
+              "title": "Adherence to Constraints",
+              "description": "The solution must respect all delivery time windows and the fuel budget constraint, indicating successful constraint management.",
+              "addresses_gap": "Constraints related to fuel consumption and time windows for deliveries."
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "The framing addresses all rubric criteria: constraints are clearly identified and articulated, the objective function is well-defined, and the problem context is thoroughly understood and integrated into the task framing. This ensures a comprehensive approach to solving the optimization problem."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks specificity in identifying constraints and formulating the objective function. While they mention fuel usage and delivery times, they do not clearly define these as constraints or explain how they will be mathematically represented. The objective function is vaguely described as 'a function that shows total travel time' without a clear formulation. Additionally, the student expresses uncertainty about using calculus, indicating a lack of understanding of the problem context and the mathematical techniques required.",
+  "better_alternative": "A stronger framing would explicitly define constraints such as 'each delivery must occur within a specified time window' and 'total fuel consumption must not exceed a certain limit.' The objective function should be clearly articulated, such as 'minimize the sum of travel times for all routes.' The student should also demonstrate a clear plan for using calculus-based techniques to optimize the routes, perhaps by discussing potential methods like Lagrange multipliers or gradient descent.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Constraints",
+      "score": "B",
+      "internal_note": "Constraints are mentioned but not clearly defined or articulated."
+    },
+    {
+      "criterion_name": "Objective Function Formulation",
+      "score": "C",
+      "internal_note": "Objective function is vaguely described without clear formulation."
+    },
+    {
+      "criterion_name": "Understanding of Problem Context",
+      "score": "B",
+      "internal_note": "Shows some understanding of the problem context but lacks clarity on using calculus for optimization."
+    }
+  ],
+  "strengths": [
+    "The student identifies the need to minimize travel time and considers fuel consumption and delivery times as important factors."
+  ],
+  "refinements_correctly_selected": [],
+  "refinements_missed": [
+    "Assumptions about traffic conditions",
+    "Explicit definition of delivery time windows",
+    "Clear formulation of the objective function"
+  ],
+  "unnecessary_selections": []
+}

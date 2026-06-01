@@ -1,0 +1,94 @@
+{
+  "_vars": {
+    "raw_problem": "We need you to design a syntactic parser that can accurately analyze English sentences for our linguistic research project. The parser should identify and label the different syntactic structures present in the sentences. While the primary focus is on declarative sentences, it should also handle questions and commands effectively. Your output should be a software prototype that demonstrates the parsing capabilities with sample sentences. Consider incorporating contemporary linguistic theories, but keep in mind the practical constraints of computational efficiency. No specific sentence dataset is provided, so you'll need to determine suitable examples. Additionally, decide on the evaluation criteria to assess the parser's performance, but ensure it aligns with industry standards. Please document your design choices and assumptions in a brief report accompanying the software.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to develop a syntactic parser capable of analyzing English sentences, focusing on identifying and labeling various syntactic structures such as noun phrases, verb phrases, clauses, and sentence types. The parser must accurately handle declarative sentences, questions, and commands while maintaining computational efficiency.\"}, {\"section_type\": \"Scope and Limitations\", \"content\": \"The parser will prioritize declarative sentences but must also effectively parse interrogative and imperative forms. Limitations include the absence of a pre-defined dataset, necessitating the selection of representative examples. The parser will be designed to handle a reasonable range of sentence complexity, but extreme edge cases may not be fully addressed due to computational constraints.\"}, {\"section_type\": \"Linguistic Theoretical Framework\", \"content\": \"The parser will incorporate contemporary linguistic theories such as X-bar theory and dependency grammar to ensure a robust analysis of syntactic structures. Additionally, it will consider transformational grammar principles to account for sentence variations, particularly in questions and commands.\"}, {\"section_type\": \"Data Collection\", \"content\": \"I will curate a dataset of sample sentences that includes a balanced mix of declarative, interrogative, and imperative sentences. This dataset will be sourced from various linguistic corpora and literature to ensure diversity in structure and complexity.\"}, {\"section_type\": \"Evaluation Criteria\", \"content\": \"The parser's performance will be evaluated based on precision, recall, and F1 score against a manually annotated gold standard dataset. Additionally, user feedback will be collected to assess usability and practical effectiveness. Industry standards such as the Penn Treebank guidelines will inform the evaluation framework.\"}, {\"section_type\": \"Documentation and Reporting\", \"content\": \"A comprehensive report will accompany the software prototype, detailing the design choices, assumptions made during development, the theoretical frameworks employed, and the results of the evaluation process. This documentation will serve as a reference for future improvements and adaptations of the parser.\"}]",
+    "ai_outputs_per_cycle": [
+      "To design a syntactic parser for English sentences, we will integrate contemporary linguistic theories such as Chomsky's Minimalist Program and Dependency Grammar. These frameworks will guide the parser in identifying and labeling syntactic structures like noun phrases, verb phrases, and clauses. The parser will primarily focus on declarative sentences but will also handle interrogative and imperative sentences effectively.\n\n**Design and Implementation:**\n\n1. **Architecture:**\n   - Utilize a rule-based approach augmented with machine learning techniques to allow flexibility and scalability.\n   - Implement a dependency parser using a transition-based system, which is suitable for real-time applications due to its efficiency.\n\n2. **Algorithm:**\n   - Employ a bottom-up parsing strategy using shift-reduce parsing methods.\n   - For machine learning, use a neural network model trained on a corpus annotated with syntactic structures.\n\n3. **Sample Sentences:**\n   - Create a diverse set of sample sentences reflecting various syntactic structures, including simple, compound, and complex sentences.\n   - Examples: \"The cat sat on the mat.\", \"Can you open the door?\", \"Please sit down.\"\n\n4. **Evaluation Criteria:**\n   - Measure parser performance using precision, recall, and F1 score.\n   - Evaluate computational efficiency by measuring parsing time per sentence, aiming for near-linear time complexity.\n\n5. **Prototype:**\n   - Develop a software prototype in Python, utilizing libraries such as NLTK and spaCy for NLP tasks.\n   - Include a user interface for inputting sentences and displaying parsed structures.\n\n6. **Documentation:**\n   - Provide a report detailing design choices, assumptions, and evaluation results.\n   - Discuss trade-offs between accuracy and efficiency, and potential areas for improvement.\n\nThe prototype will demonstrate the ability to accurately parse and label syntactic structures in a variety of sentence types, aligning with the specified success metrics.",
+      "To design a syntactic parser for English sentences, we will incorporate contemporary linguistic theories such as X-bar theory and Dependency Grammar. These frameworks will guide the parser in identifying and labeling syntactic structures like noun phrases, verb phrases, and clauses. The parser will primarily focus on declarative sentences but will also handle interrogative and imperative sentences effectively.\n\n**Design and Implementation:**\n\n1. **Architecture:**\n   - Utilize a hybrid approach combining rule-based methods with statistical parsing techniques to enhance flexibility and scalability.\n   - Implement a constituency parser, which aligns well with contemporary linguistic theories and is capable of handling complex sentence structures.\n\n2. **Algorithm:**\n   - Employ a top-down parsing strategy using CYK parsing methods.\n   - For statistical parsing, use a neural network model trained on a corpus annotated with syntactic structures, ensuring it can manage longer sentences effectively.\n\n3. **Sample Sentences:**\n   - Create a diverse set of sample sentences reflecting various syntactic structures, including simple, compound, complex, and compound-complex sentences.\n   - Examples: \"The cat sat on the mat.\", \"Can you open the door?\", \"Please sit down.\", \"While I was eating, the cat sat on the mat, and it purred loudly.\"\n\n4. **Evaluation Criteria:**\n   - Measure parser performance using precision, recall, and F1 score.\n   - Assess the parser's ability to handle longer sentences with varying complexity, aiming for efficiency in parsing time.\n\n5. **Prototype:**\n   - Develop a software prototype in Python, utilizing libraries such as AllenNLP and spaCy, ensuring they provide the necessary features for parsing and handling longer sentences.\n   - Include a user interface for inputting sentences and displaying parsed structures.\n\n6. **Documentation:**\n   - Provide a detailed report on design choices, assumptions, and evaluation results.\n   - Discuss trade-offs between accuracy and efficiency, and identify potential areas for future improvement.\n\nThe prototype will demonstrate the ability to accurately parse and label syntactic structures in a variety of sentence types, aligning with the specified success metrics."
+    ],
+    "steering_commands_per_cycle": [
+      [
+        "Consider using a different parsing method that might fit better with contemporary theories.",
+        "Make sure the parser can handle longer sentences since it struggles with those.",
+        "Add more examples to show how the parser works with different sentence types.",
+        "Review the choice of libraries to ensure they support the required features."
+      ]
+    ],
+    "judging_responses_per_cycle": [
+      {
+        "flagged_issues": [
+          "Dependency parser choice may not align with all contemporary linguistic theories.",
+          "The parser cannot handle sentences with more than ten words, making it unsuitable for complex sentence structures."
+        ]
+      }
+    ],
+    "response_type": "open_ended_instructions",
+    "final_remaining_issues": [
+      "The parser's handling of extremely complex or recursive sentences is still not fully addressed.",
+      "The evaluation criteria may not account for all nuances in user feedback or usability."
+    ],
+    "steering_rubric": {
+      "criteria": [
+        {
+          "name": "Precision in Correction Commands",
+          "description": "Ability to provide clear and precise instructions to correct AI parsing errors.",
+          "excellent_indicator": "Provides detailed and specific commands that directly address identified errors.",
+          "poor_indicator": "Gives vague or overly general instructions that do not clearly guide AI corrections."
+        },
+        {
+          "name": "Adaptation to AI Feedback",
+          "description": "Ability to adapt and refine correction commands based on AI's responses.",
+          "excellent_indicator": "Effectively adjusts commands in response to AI feedback, showing iterative improvement.",
+          "poor_indicator": "Repeats ineffective commands without adjustment or fails to respond to AI feedback."
+        },
+        {
+          "name": "Use of Linguistic Terminology",
+          "description": "Effectiveness in using appropriate linguistic terminology in steering commands.",
+          "excellent_indicator": "Consistently uses accurate and relevant linguistic terms in commands.",
+          "poor_indicator": "Misuses or avoids linguistic terminology, leading to unclear instructions."
+        }
+      ],
+      "typical_errors": [
+        "Issuing commands without specifying the affected syntactic elements.",
+        "Failing to update commands when previous attempts do not yield improvements.",
+        "Using informal language instead of precise linguistic terms."
+      ]
+    },
+    "done_at_cycle": "1",
+    "max_cycles": "3",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's steering commands were somewhat vague and did not fully address all critical issues. For instance, the command to 'consider using a different parsing method' was not specific about which method might be more suitable. Additionally, the suggestion to 'add more examples' was not targeted at resolving the core issue of the parser's inability to handle complex sentences effectively.",
+  "better_alternative": "A more effective approach would have been to specify which contemporary linguistic theories the parser should align with, such as suggesting specific parsing methods that are known to work well with those theories. Additionally, the student could have recommended specific techniques or algorithms to improve the parser's ability to handle longer and more complex sentences, such as recursive sentence structures.",
+  "convergence_assessment": "The solution showed some improvement across cycles, particularly in the choice of parsing methods and the inclusion of more diverse sentence examples. However, the core issue of handling complex sentences was not fully resolved, indicating partial convergence.",
+  "done_timing_assessment": "Marking 'done' after the first cycle was premature, as there were still unresolved issues related to handling extremely complex sentences and refining the evaluation criteria.",
+  "corrections_well_chosen": [
+    "Make sure the parser can handle longer sentences since it struggles with those.",
+    "Review the choice of libraries to ensure they support the required features."
+  ],
+  "corrections_missed": [
+    "Specify which parsing methods align with contemporary linguistic theories.",
+    "Address the handling of extremely complex or recursive sentences."
+  ],
+  "corrections_counterproductive": [
+    "Consider using a different parsing method that might fit better with contemporary theories."
+  ],
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Precision in Correction Commands",
+      "score": "B",
+      "internal_note": "Commands were somewhat vague and lacked specificity."
+    },
+    {
+      "criterion_name": "Adaptation to AI Feedback",
+      "score": "B",
+      "internal_note": "Some adaptation was evident, but not all critical issues were addressed."
+    },
+    {
+      "criterion_name": "Use of Linguistic Terminology",
+      "score": "B",
+      "internal_note": "Use of linguistic terminology was adequate but could have been more precise."
+    }
+  ]
+}

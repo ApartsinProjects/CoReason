@@ -1,0 +1,133 @@
+{
+  "_vars": {
+    "raw_problem": "As a consultant for a logistics company, you have been tasked with optimizing the delivery routes for a fleet of delivery trucks. The goal is to minimize the total travel time while satisfying certain constraints related to fuel consumption and time windows for deliveries. You have access to the company’s data on travel times, fuel costs, and delivery schedules, but some information may need to be inferred or estimated. Develop a mathematical model to solve this optimization problem and provide a concise report explaining your approach, assumptions, and solution. Focus on using calculus-based techniques to address the constraints, but consider that not all factors influencing the problem have been explicitly defined.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to minimize the total travel time of a fleet of delivery trucks while adhering to specific constraints. The constraints include fuel consumption limits, delivery time windows, and vehicle capacity. We need to define the variables clearly, such as the number of trucks, the delivery locations, and the distances between them.\"}, {\"section_type\": \"Data Collection and Analysis\", \"content\": \"Gather comprehensive data on travel times, fuel consumption rates, and delivery schedules. This includes historical data on traffic patterns, seasonal variations, and any other factors that could affect delivery times. Identify any missing data points that may require estimation and outline methods for estimating these values.\"}, {\"section_type\": \"Mathematical Model Formulation\", \"content\": \"Formulate the problem as a constrained optimization model. Define the objective function as the total travel time, which can be expressed as a function of the routes taken by the trucks. Introduce constraints for fuel consumption, delivery time windows, and vehicle capacity. Use calculus-based techniques, such as Lagrange multipliers or the Karush-Kuhn-Tucker conditions, to incorporate these constraints into the optimization process.\"}, {\"section_type\": \"Assumptions\", \"content\": \"Clearly state all assumptions made during the modeling process. This includes assumptions about the linearity of travel times, the reliability of fuel consumption data, and the independence of delivery times from external factors such as weather or traffic conditions.\"}, {\"section_type\": \"Solution Approach\", \"content\": \"Outline the solution approach, detailing the algorithms or numerical methods to be used for solving the optimization problem. Consider using techniques such as gradient descent, simplex method, or genetic algorithms, depending on the complexity of the problem and the nature of the constraints.\"}, {\"section_type\": \"Validation and Sensitivity Analysis\", \"content\": \"Plan for validation of the model by comparing the optimized routes against actual historical delivery performance. Conduct a sensitivity analysis to understand how changes in constraints or input data affect the solution, ensuring robustness in the proposed delivery routes.\"}, {\"section_type\": \"Reporting\", \"content\": \"Prepare a concise report summarizing the methodology, assumptions, and results. Include visualizations of the optimized routes and a discussion of potential implications for operational efficiency and cost savings for the logistics company.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Constraints",
+          "description": "Ability to identify and clearly state all relevant constraints in the problem.",
+          "excellent_indicator": "All constraints are accurately identified and clearly articulated, including implicit constraints.",
+          "poor_indicator": "Constraints are missing, incomplete, or incorrectly identified."
+        },
+        {
+          "name": "Objective Function Formulation",
+          "description": "Ability to translate the problem into a well-defined objective function.",
+          "excellent_indicator": "The objective function is correctly formulated and aligns with the problem's goals.",
+          "poor_indicator": "The objective function is incorrectly formulated or does not match the problem's goals."
+        },
+        {
+          "name": "Understanding of Problem Context",
+          "description": "Demonstrates understanding of the problem context and its implications for the optimization task.",
+          "excellent_indicator": "Shows deep understanding of the problem context and correctly integrates it into the task framing.",
+          "poor_indicator": "Lacks understanding of the problem context or misinterprets its implications."
+        }
+      ],
+      "typical_errors": [
+        "Neglecting implicit constraints that affect the solution space.",
+        "Formulating an objective function that does not reflect the problem's goals.",
+        "Misinterpreting the problem context and its impact on constraints."
+      ]
+    },
+    "best_framing": {
+      "base": "As a consultant for a logistics company, you have been tasked with optimizing the delivery routes for a fleet of delivery trucks. The goal is to minimize the total travel time while satisfying certain constraints related to fuel consumption and time windows for deliveries. You have access to the company’s data on travel times, fuel costs, and delivery schedules, but some information may need to be inferred or estimated. Develop a mathematical model to solve this optimization problem and provide a concise report explaining your approach, assumptions, and solution. Focus on using calculus-based techniques to address the constraints, but consider that not all factors influencing the problem have been explicitly defined.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Static Traffic Conditions",
+              "description": "Assume that traffic conditions remain constant during the delivery period, allowing travel times to be predictable and based solely on distance and speed limits.",
+              "addresses_gap": "The relationship between travel time and the chosen routes is ambiguous."
+            },
+            {
+              "title": "Linear Fuel Consumption",
+              "description": "Assume a linear relationship between fuel consumption and distance traveled, with a fixed rate of fuel consumption per mile.",
+              "addresses_gap": "Specific details on how fuel consumption impacts the optimization are missing."
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Delivery Time Windows",
+              "description": "Each delivery must occur within a specified time window. Assume these time windows are hard constraints that cannot be violated.",
+              "addresses_gap": "Time windows for deliveries are not fully defined."
+            },
+            {
+              "title": "Fuel Budget Constraint",
+              "description": "The total fuel consumption for all routes must not exceed a specified budget. This budget is determined based on historical fuel costs and average consumption rates.",
+              "addresses_gap": "Specific details on how fuel consumption impacts the optimization are missing."
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Objective Function Definition",
+              "description": "The primary objective is to minimize the total travel time across all routes. This involves summing the travel times of all individual routes and minimizing this total.",
+              "addresses_gap": "The relationship between travel time and the chosen routes is ambiguous."
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Minimized Total Travel Time",
+              "description": "The solution should demonstrate a reduction in total travel time compared to a baseline scenario without optimization.",
+              "addresses_gap": "The goal is to minimize the total travel time."
+            },
+            {
+              "title": "Adherence to Constraints",
+              "description": "The solution must respect all delivery time windows and the fuel budget constraint, indicating successful constraint management.",
+              "addresses_gap": "Constraints related to fuel consumption and time windows for deliveries."
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "The framing addresses all rubric criteria: constraints are clearly identified and articulated, the objective function is well-defined, and the problem context is thoroughly understood and integrated into the task framing. This ensures a comprehensive approach to solving the optimization problem."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing is generally well-structured, but there are some areas that could be improved. In the 'Problem Definition' section, the student mentions vehicle capacity as a constraint, which was not specified in the raw problem. This could lead to unnecessary complexity. Additionally, while the student correctly identifies the need to use calculus-based techniques, the mention of specific methods like 'Lagrange multipliers' or 'Karush-Kuhn-Tucker conditions' could be more explicitly tied to how they will address the constraints. In the 'Data Collection and Analysis' section, while comprehensive, the student could have emphasized the importance of estimating missing data more clearly. Finally, the 'Assumptions' section could be more detailed in addressing the potential variability in traffic conditions and how this might impact delivery times.",
+  "better_alternative": "A stronger framing would include a more precise alignment of constraints with the raw problem, avoiding unnecessary additions like vehicle capacity unless justified. The student could enhance the discussion on calculus-based techniques by explicitly linking them to how they will handle the specific constraints of fuel consumption and time windows. Additionally, a more focused approach on estimating missing data and addressing variability in traffic conditions would strengthen the framing. For example, discussing potential methods for estimating missing data and considering dynamic traffic conditions could provide a more robust model.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Constraints",
+      "score": "B",
+      "internal_note": "Identified constraints well but included unnecessary vehicle capacity."
+    },
+    {
+      "criterion_name": "Objective Function Formulation",
+      "score": "A",
+      "internal_note": "Objective function was well-defined and aligned with the problem."
+    },
+    {
+      "criterion_name": "Understanding of Problem Context",
+      "score": "B",
+      "internal_note": "Understood context well but could improve on addressing traffic variability."
+    }
+  ],
+  "strengths": [
+    "Clearly defined the objective function as minimizing total travel time.",
+    "Identified relevant data sources and the need for data estimation.",
+    "Outlined a comprehensive solution approach with validation and sensitivity analysis."
+  ],
+  "refinements_correctly_selected": [
+    "Delivery Time Windows",
+    "Fuel Budget Constraint",
+    "Objective Function Definition"
+  ],
+  "refinements_missed": [
+    "Static Traffic Conditions",
+    "Linear Fuel Consumption"
+  ],
+  "unnecessary_selections": [
+    "Vehicle Capacity"
+  ]
+}

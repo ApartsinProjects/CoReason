@@ -1,0 +1,90 @@
+{
+  "_vars": {
+    "raw_problem": "As a financial analyst for a mid-sized manufacturing company, you are tasked with evaluating an investment proposal to expand production capacity. The project involves purchasing new machinery and renovating an existing facility. You need to prepare a capital budgeting report that includes calculations of the Net Present Value (NPV) and Internal Rate of Return (IRR) for the project. The proposal provides a cost estimate for the machinery but lacks specifics on the renovation costs and any potential changes in working capital. Additionally, assume a discount rate, but the basis for this rate is not provided. Your report should conclude with a recommendation on whether to proceed with the investment, considering both financial metrics and any strategic business factors you deem relevant. Present your findings to the senior management team.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"I need to evaluate an investment proposal for a manufacturing company. The proposal is about buying new machines and renovating a facility to increase production. I have to prepare a report that includes financial calculations.\"}, {\"section_type\": \"Key Components\", \"content\": \"The report should include Net Present Value (NPV) and Internal Rate of Return (IRR). I also need to find out the renovation costs and changes in working capital, which are not provided.\"}, {\"section_type\": \"Assumptions Needed\", \"content\": \"I need to assume a discount rate for my calculations, but I don't know how to choose it since the proposal doesn't explain it.\"}, {\"section_type\": \"Recommendation\", \"content\": \"At the end of the report, I should give a recommendation on whether to go ahead with the investment based on financial numbers and some business factors.\"}, {\"section_type\": \"Presentation\", \"content\": \"I will need to present my findings to the senior management team, so I should make sure my report is clear and understandable.\"}]",
+    "ai_outputs_per_cycle": [
+      "To evaluate the investment proposal for expanding production capacity, we'll conduct a thorough capital budgeting analysis using Net Present Value (NPV) and Internal Rate of Return (IRR) as our primary financial metrics. The assumptions made are critical for this analysis due to the lack of detailed information in certain areas of the proposal.\n\n### Assumptions\n1. **Renovation Costs:** Estimated at 30% of the machinery cost, an industry-standard ratio for similar projects.\n2. **Working Capital Changes:** An increase of 10% of the initial machinery cost to accommodate expanded production requirements.\n3. **Discount Rate:** 8%, based on the company's weighted average cost of capital (WACC).\n4. **Time Horizon:** A 10-year period for evaluation, consistent with typical capital investments in manufacturing.\n\n### Financial Analysis\n- **Net Present Value (NPV):**\n  - Calculate the expected cash flows over the 10-year period, including the initial investment, operating cash inflows, and outflows related to renovation and working capital changes.\n  - Discount these cash flows at the 8% discount rate to determine the NPV.\n  - A positive NPV indicates that the project is expected to generate value over its lifetime.\n\n- **Internal Rate of Return (IRR):**\n  - Calculate the IRR by finding the discount rate that sets the NPV of the cash flows to zero.\n  - The IRR should be compared against the 8% discount rate; a higher IRR suggests a favorable investment.\n\n### Strategic Considerations\n- Evaluate the project's alignment with the company's strategic objectives such as market expansion, enhancing production capabilities, and improving technological leadership.\n- Consider potential competitive advantages, market positioning, and long-term corporate strategy alignment.\n\n### Conclusion\nBased on the financial metrics, if the NPV is positive and the IRR exceeds 8%, the project is financially attractive. Additionally, if the strategic evaluation indicates alignment with the company's goals, it strengthens the case for proceeding with the investment. However, senior management should also consider potential risks and uncertainties in renovation costs and working capital changes before making a final decision.",
+      "To evaluate the investment proposal for expanding production capacity, we'll conduct a thorough capital budgeting analysis using Net Present Value (NPV) and Internal Rate of Return (IRR) as our primary financial metrics. The assumptions made are critical for this analysis due to the lack of detailed information in certain areas of the proposal.\n\n### Assumptions\n1. **Renovation Costs:** Estimated at 25% of the machinery cost, a revised assumption based on recent industry trends for similar projects.\n2. **Working Capital Changes:** An increase of 10% of the initial machinery cost to accommodate expanded production requirements.\n3. **Discount Rate:** 9%, adjusted after considering the manufacturing sector's risk profile and the company's financial health.\n4. **Time Horizon:** A 10-year period for evaluation, consistent with typical capital investments in manufacturing.\n\n### Financial Analysis\n- **Net Present Value (NPV):**\n  - Calculate the expected cash flows over the 10-year period, including the initial investment, operating cash inflows, and outflows related to renovation and working capital changes.\n  - Discount these cash flows at the 9% discount rate to determine the NPV.\n  - A positive NPV indicates that the project is expected to generate value over its lifetime.\n\n- **Internal Rate of Return (IRR):**\n  - Calculate the IRR by finding the discount rate that sets the NPV of the cash flows to zero.\n  - The IRR should be compared against the 9% discount rate; a higher IRR suggests a favorable investment.\n\n### Strategic Considerations\n- Evaluate the project's alignment with the company's strategic objectives such as market expansion, enhancing production capabilities, and improving technological leadership.\n- Consider potential competitive advantages, market positioning, and long-term corporate strategy alignment.\n\n### Conclusion\nBased on the financial metrics, if the NPV is positive and the IRR exceeds 9%, the project is financially attractive. Additionally, if the strategic evaluation indicates alignment with the company's goals, it strengthens the case for proceeding with the investment. However, senior management should also consider potential risks and uncertainties in renovation costs and working capital changes before making a final decision."
+    ],
+    "steering_commands_per_cycle": [
+      [
+        "Reconsider the assumption about renovation costs being 30% of machinery costs, as this might not be accurate for all situations.",
+        "Check if the 8% discount rate is suitable for our company's specific context, since it might not be the right choice for manufacturing investments."
+      ]
+    ],
+    "judging_responses_per_cycle": [
+      {
+        "flagged_issues": [
+          "Assumption of renovation costs as 30% of machinery costs may not apply universally in all manufacturing settings.",
+          "The analysis uses an incorrect discount rate, as 8% is not appropriate for capital investments in manufacturing."
+        ]
+      }
+    ],
+    "response_type": "open_ended_instructions",
+    "final_remaining_issues": [
+      "The assumption for working capital changes remains simplistic and may not account for more complex factors.",
+      "The time horizon is set at 10 years without specific justification for this choice."
+    ],
+    "steering_rubric": {
+      "criteria": [
+        {
+          "name": "Correction Command Clarity",
+          "description": "Ability to provide clear and precise correction commands to the AI based on identified errors.",
+          "excellent_indicator": "Commands are specific, actionable, and address the identified errors directly.",
+          "poor_indicator": "Commands are vague, general, or fail to address the identified errors effectively."
+        },
+        {
+          "name": "Feedback Integration",
+          "description": "Ability to integrate new information or feedback into the AI's analysis to improve accuracy.",
+          "excellent_indicator": "Successfully incorporates new data or feedback to refine the AI's analysis and output.",
+          "poor_indicator": "Fails to integrate new information effectively, resulting in minimal improvement."
+        },
+        {
+          "name": "Iterative Improvement",
+          "description": "Ability to iteratively refine AI output through multiple cycles of judgment and steering.",
+          "excellent_indicator": "Consistently improves the AI's output through well-reasoned iterative cycles.",
+          "poor_indicator": "Shows little to no improvement over multiple iterations, or introduces new errors."
+        }
+      ],
+      "typical_errors": [
+        "Providing overly generic correction commands that do not address specific errors.",
+        "Failing to update assumptions or inputs based on new information.",
+        "Neglecting to check if previous corrections have been implemented correctly."
+      ]
+    },
+    "done_at_cycle": "1",
+    "max_cycles": "3",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's steering commands were somewhat specific, addressing the renovation cost assumption and the discount rate. However, they missed critical issues such as the simplistic assumption for working capital changes and the arbitrary time horizon. Additionally, the student marked the task as done too early, without addressing these remaining issues.",
+  "better_alternative": "A more effective steering approach would include commands to reassess the working capital changes assumption to reflect more complex factors and justify the chosen time horizon. These adjustments would ensure a more comprehensive and accurate financial analysis.",
+  "convergence_assessment": "The solution showed some improvement, particularly in adjusting the renovation cost assumption and the discount rate. However, it did not fully converge towards correctness due to remaining unaddressed issues.",
+  "done_timing_assessment": "Marking 'done' was premature as there were still unresolved issues, such as the simplistic working capital changes assumption and the lack of justification for the time horizon.",
+  "corrections_well_chosen": [
+    "Reconsider the assumption about renovation costs being 30% of machinery costs",
+    "Check if the 8% discount rate is suitable for our company's specific context"
+  ],
+  "corrections_missed": [
+    "Reassess the working capital changes assumption",
+    "Justify the time horizon for evaluation"
+  ],
+  "corrections_counterproductive": [],
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Correction Command Clarity",
+      "score": "B",
+      "internal_note": "Commands were specific but did not cover all critical issues."
+    },
+    {
+      "criterion_name": "Feedback Integration",
+      "score": "B",
+      "internal_note": "Integrated feedback on renovation costs and discount rate but missed other critical areas."
+    },
+    {
+      "criterion_name": "Iterative Improvement",
+      "score": "B",
+      "internal_note": "Some improvement was made, but the solution did not fully converge due to unresolved issues."
+    }
+  ]
+}
