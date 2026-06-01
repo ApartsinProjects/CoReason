@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Operating Systems",
+    "subject_path": "Operating Systems > CPU Scheduling",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Decomposition",
+        "description": "Ability to break down the ill-defined problem into specific components related to CPU scheduling.",
+        "excellent_indicator": "Accurately identifies all relevant components such as process arrival times, burst times, priorities, and CPU scheduling criteria.",
+        "poor_indicator": "Misses key components like process priorities or misidentifies irrelevant details as important."
+      },
+      {
+        "name": "Terminology Usage",
+        "description": "Correct use of CPU scheduling terminology to define the problem.",
+        "excellent_indicator": "Uses terms such as 'preemptive', 'non-preemptive', 'context switch', and 'throughput' correctly.",
+        "poor_indicator": "Confuses terms like 'preemptive' and 'non-preemptive' or uses incorrect terminology."
+      },
+      {
+        "name": "Goal Specification",
+        "description": "Clearly defines the goal of the CPU scheduling task.",
+        "excellent_indicator": "Specifies goals such as minimizing turnaround time or maximizing CPU utilization.",
+        "poor_indicator": "Fails to specify a clear goal or sets conflicting objectives."
+      }
+    ],
+    "typical_errors": [
+      "Confusing preemptive with non-preemptive scheduling.",
+      "Ignoring process priorities in problem framing.",
+      "Setting unclear or conflicting scheduling goals."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "Ability to identify errors in AI-generated CPU scheduling solutions.",
+        "excellent_indicator": "Correctly identifies all errors such as incorrect waiting time calculations or improper context switch handling.",
+        "poor_indicator": "Fails to notice significant errors or incorrectly identifies correct outputs as errors."
+      },
+      {
+        "name": "Performance Metric Evaluation",
+        "description": "Evaluates AI solutions based on CPU scheduling performance metrics.",
+        "excellent_indicator": "Accurately assesses metrics like average waiting time and CPU utilization.",
+        "poor_indicator": "Misinterprets performance metrics or focuses on irrelevant metrics."
+      },
+      {
+        "name": "Algorithm Suitability Assessment",
+        "description": "Judges the suitability of the scheduling algorithm used by AI for the given task.",
+        "excellent_indicator": "Correctly assesses whether the chosen algorithm (e.g., Round Robin, SJF) is appropriate for the task requirements.",
+        "poor_indicator": "Fails to recognize algorithm limitations or suggests inappropriate algorithms."
+      }
+    ],
+    "typical_errors": [
+      "Overlooking context switch penalties in performance evaluation.",
+      "Misjudging the appropriateness of a scheduling algorithm.",
+      "Failing to differentiate between similar scheduling metrics."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Correction Command Precision",
+        "description": "Clarity and precision of commands given to AI to correct scheduling errors.",
+        "excellent_indicator": "Provides clear, precise commands that directly address identified errors, using correct scheduling terminology.",
+        "poor_indicator": "Commands are vague, incorrect, or do not address the identified errors."
+      },
+      {
+        "name": "Algorithm Adjustment",
+        "description": "Effectiveness in steering AI towards using a more suitable scheduling algorithm.",
+        "excellent_indicator": "Successfully guides AI to switch to a more appropriate algorithm based on task requirements.",
+        "poor_indicator": "Fails to suggest an appropriate algorithm change or suggests unsuitable alternatives."
+      },
+      {
+        "name": "Performance Criteria Adjustment",
+        "description": "Ability to guide AI in refining performance criteria for better scheduling outcomes.",
+        "excellent_indicator": "Successfully refines criteria like reducing waiting time or increasing throughput as per task goals.",
+        "poor_indicator": "Suggests irrelevant criteria adjustments or does not align with task goals."
+      }
+    ],
+    "typical_errors": [
+      "Giving imprecise or incorrect correction commands.",
+      "Suggesting inappropriate algorithm changes without considering task requirements.",
+      "Focusing on irrelevant performance criteria adjustments."
+    ]
+  }
+}

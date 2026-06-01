@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Linguistics",
+    "subject_path": "Linguistics > Syntactic Parsing",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Identification of Core Syntactic Structures",
+        "description": "Ability to identify and define the main syntactic structures relevant to the problem.",
+        "excellent_indicator": "Clearly identifies relevant syntactic structures such as noun phrases, verb phrases, and clauses.",
+        "poor_indicator": "Fails to identify or incorrectly labels basic syntactic structures."
+      },
+      {
+        "name": "Clarification of Ambiguities",
+        "description": "Ability to recognize and clarify syntactic ambiguities in the problem statement.",
+        "excellent_indicator": "Identifies potential ambiguities and provides clear distinctions between possible interpretations.",
+        "poor_indicator": "Overlooks ambiguities or provides vague clarifications."
+      },
+      {
+        "name": "Specification of Parsing Goals",
+        "description": "Ability to translate the problem into specific parsing tasks and objectives.",
+        "excellent_indicator": "Clearly defines the parsing goals with a focus on extracting syntactic relationships.",
+        "poor_indicator": "Provides unclear or overly broad parsing goals without focus."
+      }
+    ],
+    "typical_errors": [
+      "Confusing syntactic categories with semantic roles.",
+      "Failing to recognize compound structures.",
+      "Overlooking potential ambiguities in conjunctions."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Detection in Parse Trees",
+        "description": "Ability to identify incorrect or incomplete elements in AI-generated parse trees.",
+        "excellent_indicator": "Accurately identifies errors in node labels, branching, or missing elements.",
+        "poor_indicator": "Misses obvious errors or incorrectly reports correct structures as erroneous."
+      },
+      {
+        "name": "Evaluation of Structural Consistency",
+        "description": "Ability to assess the consistency of syntactic structures with linguistic theory.",
+        "excellent_indicator": "Consistently evaluates parse trees against established syntactic rules and theories.",
+        "poor_indicator": "Ignores or misapplies syntactic rules, leading to inconsistent evaluations."
+      },
+      {
+        "name": "Identification of Parsing Gaps",
+        "description": "Ability to recognize areas where the AI's parsing is incomplete or lacks depth.",
+        "excellent_indicator": "Identifies specific omissions or areas lacking detail in the parse.",
+        "poor_indicator": "Fails to recognize incomplete parsing or provides vague comments."
+      }
+    ],
+    "typical_errors": [
+      "Confusing syntactic errors with semantic errors.",
+      "Overlooking non-standard syntactic forms.",
+      "Failing to recognize missing modifiers or adjuncts."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Precision in Correction Commands",
+        "description": "Ability to provide clear and precise instructions to correct AI parsing errors.",
+        "excellent_indicator": "Provides detailed and specific commands that directly address identified errors.",
+        "poor_indicator": "Gives vague or overly general instructions that do not clearly guide AI corrections."
+      },
+      {
+        "name": "Adaptation to AI Feedback",
+        "description": "Ability to adapt and refine correction commands based on AI's responses.",
+        "excellent_indicator": "Effectively adjusts commands in response to AI feedback, showing iterative improvement.",
+        "poor_indicator": "Repeats ineffective commands without adjustment or fails to respond to AI feedback."
+      },
+      {
+        "name": "Use of Linguistic Terminology",
+        "description": "Effectiveness in using appropriate linguistic terminology in steering commands.",
+        "excellent_indicator": "Consistently uses accurate and relevant linguistic terms in commands.",
+        "poor_indicator": "Misuses or avoids linguistic terminology, leading to unclear instructions."
+      }
+    ],
+    "typical_errors": [
+      "Issuing commands without specifying the affected syntactic elements.",
+      "Failing to update commands when previous attempts do not yield improvements.",
+      "Using informal language instead of precise linguistic terms."
+    ]
+  }
+}

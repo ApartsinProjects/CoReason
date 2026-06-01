@@ -1,0 +1,174 @@
+{
+  "_vars": {
+    "raw_problem": "Our team is developing a predictive model for customer churn using historical sales and interaction data. We need you to evaluate the model's performance and ensure it does not overfit the training data. Your task is to analyze the model's accuracy and provide a detailed report on its performance metrics. Additionally, suggest methods for improvement based on your findings. The final output should include both numerical results and a written summary of your recommendations. Please ensure your analysis is comprehensive and addresses any potential issues with generalization to new data.",
+    "student_framing": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what customer churn is and why it's important for businesses. I should learn about the predictive model we're using and what historical sales and interaction data means.\"}, {\"section_type\": \"Model Evaluation Metrics\", \"content\": \"I should find out what performance metrics are used to evaluate the model, like accuracy, precision, recall, and F1 score. I need to know how to calculate these metrics.\"}, {\"section_type\": \"Overfitting Definition\", \"content\": \"I need to understand what overfitting means and how it affects the model's performance. I should learn how to check if the model is overfitting.\"}, {\"section_type\": \"Analysis Process\", \"content\": \"I need to outline the steps to analyze the model's performance, including data splitting, training the model, and evaluating it on a test set.\"}, {\"section_type\": \"Improvement Suggestions\", \"content\": \"I should look for common methods to improve model performance, like regularization, cross-validation, or using more data.\"}, {\"section_type\": \"Report Structure\", \"content\": \"I need to plan how to structure my report, including an introduction, methodology, results, and a conclusion with recommendations.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Clearly identifies the key components of the ill-defined problem related to model evaluation and overfitting.",
+          "excellent_indicator": "Accurately identifies all relevant aspects of the problem, including the types of models involved and evaluation metrics.",
+          "poor_indicator": "Fails to identify key components or misinterprets the problem context."
+        },
+        {
+          "name": "Task Specification",
+          "description": "Translates the ill-defined problem into a well-defined task with clear objectives and constraints.",
+          "excellent_indicator": "Defines specific, measurable objectives and constraints that guide the model evaluation process.",
+          "poor_indicator": "Provides vague objectives or lacks clarity in task definition."
+        },
+        {
+          "name": "Contextual Relevance",
+          "description": "Ensures that the defined task is relevant to current best practices in model evaluation and overfitting avoidance.",
+          "excellent_indicator": "Aligns the task with established methodologies and contemporary challenges in machine learning.",
+          "poor_indicator": "Ignores established practices or suggests irrelevant approaches."
+        }
+      ],
+      "typical_errors": [
+        "Overlooking key aspects of model evaluation such as bias-variance tradeoff.",
+        "Failing to specify clear objectives, resulting in ambiguous tasks.",
+        "Misunderstanding the relevance of overfitting in the context of the problem."
+      ]
+    },
+    "best_framing": {
+      "_vars": {
+        "course_name": "Machine Learning",
+        "subject_path": "ML > Model Evaluation & Overfitting",
+        "raw_problem": "Our team is developing a predictive model for customer churn using historical sales and interaction data. We need you to evaluate the model's performance and ensure it does not overfit the training data. Your task is to analyze the model's accuracy and provide a detailed report on its performance metrics. Additionally, suggest methods for improvement based on your findings. The final output should include both numerical results and a written summary of your recommendations. Please ensure your analysis is comprehensive and addresses any potential issues with generalization to new data.",
+        "framing_rubric": {
+          "criteria": [
+            {
+              "name": "Problem Identification",
+              "description": "Clearly identifies the key components of the ill-defined problem related to model evaluation and overfitting.",
+              "excellent_indicator": "Accurately identifies all relevant aspects of the problem, including the types of models involved and evaluation metrics.",
+              "poor_indicator": "Fails to identify key components or misinterprets the problem context."
+            },
+            {
+              "name": "Task Specification",
+              "description": "Translates the ill-defined problem into a well-defined task with clear objectives and constraints.",
+              "excellent_indicator": "Defines specific, measurable objectives and constraints that guide the model evaluation process.",
+              "poor_indicator": "Provides vague objectives or lacks clarity in task definition."
+            },
+            {
+              "name": "Contextual Relevance",
+              "description": "Ensures that the defined task is relevant to current best practices in model evaluation and overfitting avoidance.",
+              "excellent_indicator": "Aligns the task with established methodologies and contemporary challenges in machine learning.",
+              "poor_indicator": "Ignores established practices or suggests irrelevant approaches."
+            }
+          ],
+          "typical_errors": [
+            "Overlooking key aspects of model evaluation such as bias-variance tradeoff.",
+            "Failing to specify clear objectives, resulting in ambiguous tasks.",
+            "Misunderstanding the relevance of overfitting in the context of the problem."
+          ]
+        },
+        "internal_gaps": [
+          "What specific performance metrics should be evaluated?",
+          "What data set should be used for testing versus training?",
+          "What criteria determine whether the model is overfitting?"
+        ],
+        "language": "English"
+      },
+      "_temp": 0.4,
+      "base": "Our team is developing a predictive model for customer churn using historical sales and interaction data. We need you to evaluate the model's performance and ensure it does not overfit the training data. Your task is to analyze the model's accuracy and provide a detailed report on its performance metrics. Additionally, suggest methods for improvement based on your findings. The final output should include both numerical results and a written summary of your recommendations. Please ensure your analysis is comprehensive and addresses any potential issues with generalization to new data.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Data Quality",
+              "description": "Assume that the historical sales and interaction data is clean, complete, and representative of the customer base.",
+              "addresses_gap": "The problem does not specify the quality of the data, which is crucial for model evaluation."
+            },
+            {
+              "title": "Model Type",
+              "description": "Assume the model is a supervised learning model suitable for classification tasks, as it aims to predict customer churn.",
+              "addresses_gap": "The problem does not specify the type of predictive model being used, which affects evaluation metrics."
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Performance Metrics",
+              "description": "The analysis must include specific metrics such as accuracy, precision, recall, F1 score, and AUC-ROC.",
+              "addresses_gap": "The problem lacks clarity on which performance metrics should be evaluated."
+            },
+            {
+              "title": "Data Split",
+              "description": "The dataset should be split into a training set (70%) and a testing set (30%) to ensure proper evaluation.",
+              "addresses_gap": "The problem does not specify how to divide the dataset for testing versus training."
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Overfitting Criteria",
+              "description": "Clarify that overfitting is determined by a significant difference between training and testing accuracy, as well as high variance in performance metrics.",
+              "addresses_gap": "The problem does not define the criteria for identifying overfitting."
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Comprehensive Report",
+              "description": "The final report should include a detailed analysis of the model's performance metrics, visualizations of the results, and actionable recommendations for improvement.",
+              "addresses_gap": "The problem mentions a report but does not specify the depth of analysis required."
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "Focus on Model Evaluation",
+              "description": "The task should focus solely on evaluating the model's performance and suggesting improvements, not on data collection or preprocessing.",
+              "addresses_gap": "The problem does not delineate the boundaries of the task, which could lead to scope creep."
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by clearly identifying the key components of model evaluation, specifying measurable objectives and constraints, and ensuring relevance to best practices in machine learning."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks specificity in certain areas. For example, while they mention understanding what customer churn is, they do not explicitly identify the importance of churn prediction for business strategy. Additionally, the section on 'Analysis Process' is somewhat vague, as it does not detail specific steps or methods for evaluating overfitting, such as using validation sets or monitoring learning curves. The student also misses discussing the bias-variance tradeoff, which is crucial in understanding overfitting.",
+  "better_alternative": "A stronger framing would include a clear explanation of why predicting customer churn is critical for business, such as its impact on customer retention and revenue. It should also detail specific methods for detecting overfitting, like using cross-validation or examining learning curves, and discuss the importance of the bias-variance tradeoff in model evaluation. Additionally, the student could specify the types of models being considered, as this impacts the choice of evaluation metrics.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Identification",
+      "score": "B",
+      "internal_note": "Identifies key components but lacks depth in explaining the importance of churn prediction."
+    },
+    {
+      "criterion_name": "Task Specification",
+      "score": "B",
+      "internal_note": "Defines objectives but lacks clarity on specific steps for evaluating overfitting."
+    },
+    {
+      "criterion_name": "Contextual Relevance",
+      "score": "C",
+      "internal_note": "Misses discussing the bias-variance tradeoff and does not align fully with best practices."
+    }
+  ],
+  "strengths": [
+    "Identifies the need to understand customer churn and model evaluation metrics.",
+    "Considers methods for improving model performance."
+  ],
+  "refinements_correctly_selected": [
+    "Model Evaluation Metrics",
+    "Overfitting Definition",
+    "Improvement Suggestions"
+  ],
+  "refinements_missed": [
+    "Bias-Variance Tradeoff",
+    "Importance of Churn Prediction"
+  ],
+  "unnecessary_selections": []
+}

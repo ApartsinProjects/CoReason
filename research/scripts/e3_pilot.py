@@ -4,7 +4,7 @@ Generates fresh challenges with full ground truth, then for 4 competence levels
 Framing/Judging/Steering, grades them blind via the production prompts, and checks
 whether grades are monotone in competence. Saves COMPLETE data.
 """
-import json, sys, csv, random, hashlib
+import os, json, sys, csv, random, hashlib
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -112,6 +112,11 @@ def grade_one(ch, levels):
         ai_after = upd.get("updated_output", ch["ai_solution"])
     except Exception:
         rem = ch["internal_issues"]; ai_after = ch["ai_solution"]
+    STRICT_STEER = ("STRICTNESS OVERRIDE: grade steering harshly. Vague, generic, or non-prioritized "
+        "commands (e.g. 'make it better', 'fix the issues', 'improve clarity') MUST score C on every "
+        "criterion. Only precise commands that target the specific critical remaining issues, in the "
+        "right priority order, and that would plausibly drive convergence, may score A or B. When in "
+        "doubt, score lower.") if os.environ.get("COREASON_STRICT_STEER") else ""
     se = run_prompt("10-evaluate-steering", {
         "raw_problem": rp, "student_framing": student_framing,
         "ai_outputs_per_cycle": [ch["ai_solution"], ai_after],
@@ -119,7 +124,7 @@ def grade_one(ch, levels):
         "judging_responses_per_cycle": [{"flagged_issues": flagged}],
         "response_type": "open_ended_instructions", "final_remaining_issues": rem,
         "steering_rubric": rub["steering_rubric"],
-        "done_at_cycle": "1", "max_cycles": "3", "language": lang})
+        "done_at_cycle": "1", "max_cycles": "3", "language": lang}, system_suffix=STRICT_STEER)
     sg = run_prompt("11-grade", {"dimension": "Steering",
         "per_criterion_scores": se.get("per_criterion_scores", []), "language": lang})
     return {"level": lv["framing"] if lv["framing"]==lv["judging"]==lv["steering"] else "crossed",

@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Corporate Finance",
+    "subject_path": "Corporate Finance > Capital Budgeting",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Identification",
+        "description": "Ability to identify the core components of the capital budgeting problem, including cash flows, discount rates, and time horizon.",
+        "excellent_indicator": "Clearly identifies all relevant components and their interdependencies within the capital budgeting context.",
+        "poor_indicator": "Fails to identify key components or misinterprets their relevance to the capital budgeting problem."
+      },
+      {
+        "name": "Assumption Articulation",
+        "description": "Ability to articulate clear and relevant assumptions underlying the capital budgeting analysis.",
+        "excellent_indicator": "Provides well-reasoned assumptions that align with financial principles and the specifics of the problem.",
+        "poor_indicator": "Assumptions are vague, irrelevant, or contradict basic financial principles."
+      },
+      {
+        "name": "Task Definition",
+        "description": "Ability to translate the ill-defined problem into a well-defined task with clear objectives and constraints.",
+        "excellent_indicator": "Formulates a specific, actionable task that is logically structured and considers all given constraints.",
+        "poor_indicator": "The task is vague, lacks clear objectives, or ignores key constraints."
+      }
+    ],
+    "typical_errors": [
+      "Overlooking the impact of discount rates on cash flow valuation.",
+      "Misinterpreting the time horizon for the investment.",
+      "Ignoring inflation effects on future cash flows."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "Ability to identify errors or gaps in the AI's analysis of capital budgeting scenarios.",
+        "excellent_indicator": "Accurately pinpoints specific errors or omissions in cash flow projections, discount rate applications, or NPV calculations.",
+        "poor_indicator": "Fails to notice significant errors or gaps, or incorrectly identifies non-existent issues."
+      },
+      {
+        "name": "Financial Principle Application",
+        "description": "Ability to apply relevant financial principles to judge the AI's output.",
+        "excellent_indicator": "Uses sound financial reasoning to assess the accuracy and relevance of the AI's output.",
+        "poor_indicator": "Relies on superficial or incorrect financial principles, leading to flawed judgments."
+      },
+      {
+        "name": "Result Consistency",
+        "description": "Ability to evaluate the consistency of AI output with the initial problem framing and assumptions.",
+        "excellent_indicator": "Ensures that AI outputs align with the initial problem framing and assumptions.",
+        "poor_indicator": "Overlooks inconsistencies between AI output and the initial framing or assumptions."
+      }
+    ],
+    "typical_errors": [
+      "Misjudging the impact of tax adjustments on cash flows.",
+      "Overlooking inconsistencies in the AI's projected cash flows and discount rates.",
+      "Failing to recognize incorrect application of the payback period."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Correction Command Clarity",
+        "description": "Ability to provide clear and precise correction commands to the AI based on identified errors.",
+        "excellent_indicator": "Commands are specific, actionable, and address the identified errors directly.",
+        "poor_indicator": "Commands are vague, general, or fail to address the identified errors effectively."
+      },
+      {
+        "name": "Feedback Integration",
+        "description": "Ability to integrate new information or feedback into the AI's analysis to improve accuracy.",
+        "excellent_indicator": "Successfully incorporates new data or feedback to refine the AI's analysis and output.",
+        "poor_indicator": "Fails to integrate new information effectively, resulting in minimal improvement."
+      },
+      {
+        "name": "Iterative Improvement",
+        "description": "Ability to iteratively refine AI output through multiple cycles of judgment and steering.",
+        "excellent_indicator": "Consistently improves the AI's output through well-reasoned iterative cycles.",
+        "poor_indicator": "Shows little to no improvement over multiple iterations, or introduces new errors."
+      }
+    ],
+    "typical_errors": [
+      "Providing overly generic correction commands that do not address specific errors.",
+      "Failing to update assumptions or inputs based on new information.",
+      "Neglecting to check if previous corrections have been implemented correctly."
+    ]
+  }
+}

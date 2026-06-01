@@ -1,0 +1,32 @@
+{
+  "_vars": {
+    "raw_problem": "As a financial analyst for a mid-sized manufacturing company, you are tasked with evaluating an investment proposal to expand production capacity. The project involves purchasing new machinery and renovating an existing facility. You need to prepare a capital budgeting report that includes calculations of the Net Present Value (NPV) and Internal Rate of Return (IRR) for the project. The proposal provides a cost estimate for the machinery but lacks specifics on the renovation costs and any potential changes in working capital. Additionally, assume a discount rate, but the basis for this rate is not provided. Your report should conclude with a recommendation on whether to proceed with the investment, considering both financial metrics and any strategic business factors you deem relevant. Present your findings to the senior management team.",
+    "student_framing": "[{\"section_type\": \"Assumptions\", \"entries\": [{\"title\": \"Renovation Cost Estimate\", \"description\": \"Assume that the renovation costs are estimated to be 30% of the machinery cost, based on industry standards for similar projects. This assumption is necessary due to the lack of specific renovation cost details in the proposal.\", \"addresses_gap\": \"Renovation costs are not specified\"}, {\"title\": \"Working Capital Changes\", \"description\": \"Assume an increase in working capital equivalent to 10% of the initial machinery cost, reflecting typical increases in inventory and receivables associated with expanded production capacity.\", \"addresses_gap\": \"Changes in working capital are not detailed\"}, {\"title\": \"Discount Rate Basis\", \"description\": \"Assume a discount rate of 8%, derived from the company's weighted average cost of capital (WACC) based on historical data and comparable industry rates.\", \"addresses_gap\": \"Basis for the discount rate is not provided\"}]}, {\"section_type\": \"Constraints\", \"entries\": [{\"title\": \"Time Horizon\", \"description\": \"The project evaluation should consider a 10-year time horizon, typical for capital investments in manufacturing, to capture long-term benefits and costs.\", \"addresses_gap\": \"Misinterpreting the time horizon for the investment\"}]}, {\"section_type\": \"Success Metrics\", \"entries\": [{\"title\": \"Financial Metrics\", \"description\": \"The project's success will be primarily measured by achieving a positive NPV and an IRR that exceeds the assumed discount rate of 8%.\", \"addresses_gap\": \"Overlooking the impact of discount rates on cash flow valuation\"}, {\"title\": \"Strategic Alignment\", \"description\": \"Evaluate the project's alignment with the company's strategic goals, such as market expansion or technological leadership, as a secondary success metric.\", \"addresses_gap\": \"Considering strategic business factors\"}]}, {\"section_type\": \"Clarifications\", \"entries\": [{\"title\": \"Definition of Strategic Business Factors\", \"description\": \"Strategic business factors refer to non-financial considerations such as market positioning, competitive advantage, and alignment with long-term corporate strategy.\", \"addresses_gap\": \"Ambiguity in what constitutes strategic business factors\"}]}]",
+    "subject_path": "Corporate Finance > Capital Budgeting",
+    "language": "English"
+  },
+  "_temp": 0.7,
+  "solution_text": "To evaluate the investment proposal for expanding production capacity, we'll conduct a thorough capital budgeting analysis using Net Present Value (NPV) and Internal Rate of Return (IRR) as our primary financial metrics. The assumptions made are critical for this analysis due to the lack of detailed information in certain areas of the proposal.\n\n### Assumptions\n1. **Renovation Costs:** Estimated at 30% of the machinery cost, an industry-standard ratio for similar projects.\n2. **Working Capital Changes:** An increase of 10% of the initial machinery cost to accommodate expanded production requirements.\n3. **Discount Rate:** 8%, based on the company's weighted average cost of capital (WACC).\n4. **Time Horizon:** A 10-year period for evaluation, consistent with typical capital investments in manufacturing.\n\n### Financial Analysis\n- **Net Present Value (NPV):**\n  - Calculate the expected cash flows over the 10-year period, including the initial investment, operating cash inflows, and outflows related to renovation and working capital changes.\n  - Discount these cash flows at the 8% discount rate to determine the NPV.\n  - A positive NPV indicates that the project is expected to generate value over its lifetime.\n\n- **Internal Rate of Return (IRR):**\n  - Calculate the IRR by finding the discount rate that sets the NPV of the cash flows to zero.\n  - The IRR should be compared against the 8% discount rate; a higher IRR suggests a favorable investment.\n\n### Strategic Considerations\n- Evaluate the project's alignment with the company's strategic objectives such as market expansion, enhancing production capabilities, and improving technological leadership.\n- Consider potential competitive advantages, market positioning, and long-term corporate strategy alignment.\n\n### Conclusion\nBased on the financial metrics, if the NPV is positive and the IRR exceeds 8%, the project is financially attractive. Additionally, if the strategic evaluation indicates alignment with the company's goals, it strengthens the case for proceeding with the investment. However, senior management should also consider potential risks and uncertainties in renovation costs and working capital changes before making a final decision.",
+  "internal_issues": [
+    {
+      "issue": "Assumption of renovation costs as 30% of machinery costs may not apply universally in all manufacturing settings.",
+      "location": "Assumptions",
+      "severity": "moderate"
+    },
+    {
+      "issue": "The discount rate of 8% might not accurately reflect current market conditions or company-specific risks.",
+      "location": "Assumptions",
+      "severity": "moderate"
+    },
+    {
+      "issue": "The analysis does not consider tax implications, which can significantly affect cash flows and project viability.",
+      "location": "Financial Analysis",
+      "severity": "critical"
+    },
+    {
+      "issue": "Strategic considerations are outlined but lack specific metrics or methodologies to evaluate alignment objectively.",
+      "location": "Strategic Considerations",
+      "severity": "minor"
+    }
+  ]
+}

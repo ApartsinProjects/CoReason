@@ -148,8 +148,10 @@ def _chat_openai(system, user, temperature, max_tokens, model=SIM_MODEL, json_mo
 # stems listed here bypass the cache (used by E2 to sample the grader repeatedly)
 NO_CACHE_STEMS = set()
 
-def run_prompt(stem, vars, temperature=None, max_tokens=None, seed=None, use_cache=True):
-    """Run a production prompt YAML with variable substitution. Returns parsed dict."""
+def run_prompt(stem, vars, temperature=None, max_tokens=None, seed=None, use_cache=True, system_suffix=""):
+    """Run a production prompt YAML with variable substitution. Returns parsed dict.
+    system_suffix appends to the system prompt (e.g., an ablation strictness override);
+    it is part of the cache key, so a different suffix yields fresh grades."""
     if any(stem.startswith(s) for s in NO_CACHE_STEMS):
         use_cache = False
     p = load_prompt(stem)
@@ -166,6 +168,8 @@ def run_prompt(stem, vars, temperature=None, max_tokens=None, seed=None, use_cac
         '"type", "properties", or "items" as top-level keys. The object MUST have exactly these top-level '
         "keys: " + ", ".join(keys) + ". No markdown fences, no prose outside the JSON.\nSchema:\n"
         + json.dumps(schema) if schema else "")
+    if system_suffix:
+        system = system + "\n\n" + system_suffix
     user = _render(p["user_prompt"], vars)
     # Namespace the cache by GRADER model for grading prompts only, so re-grading the same
     # (cached) challenges + learner responses with a different backend yields fresh grades while

@@ -568,8 +568,8 @@ dominate cross-skill effects (diagonal +0.47 versus off-diagonal +0.07). Notably
 grader Judging's own-effect falls from +2.00 to +0.65, comparable to Framing's +0.65, which confirms
 that the large +2.00 was specific to gpt-4o's strict adherence to the seeded-issue selection rather
 than a property of the construct; the separation holds, and in fact becomes more balanced across the
-three skills, under a second backend. (Steering's own-effect remains the weakest, +0.10 here, again
-indicating grader leniency on steering rather than absence of the construct.)
+three skills, under a second backend. (Steering's own-effect remains the weakest, +0.10 here,
+consistent with the Proposition-P2 confound discussed below rather than absence of the construct.)
 
 **Scope and caveats.** These results establish feasibility, not validity. (i) Judging's dissociation is
 partly built in: its competence is operationalized by a controlled selection over ground-truth issues,
@@ -580,12 +580,16 @@ are the stronger evidence. (ii) The grader is a single model family; whether the
 across grader backends, and whether the automated grades agree with human experts, are the validity
 questions deferred to Section 10. (iii) With three grade indicators a stable factor model is
 under-identified, so we report the manipulation-based effect matrix and the inter-skill correlations
-rather than an exploratory factor analysis. (iv) Steering shows the weakest own-effect (+0.50); Figure
-3 indicates a grader-leniency floor, weak steering is seldom graded all the way to C, which compresses
-the effect. This is partly an instrument artifact (the steering evaluator is lenient and would benefit
-from a stricter rubric) and partly the confound that Proposition P2 predicts (steering quality is
-bounded by the judging it follows). Disentangling the two requires a harsher steering rubric and human
-calibration, which we leave to the validation study.
+rather than an exploratory factor analysis. (iv) Steering shows the weakest own-effect (+0.50). We
+initially attributed this to grader leniency and tested that hypothesis directly with an ablation:
+re-grading every transcript under a deliberately strict steering rubric (which mandates a C for vague
+or non-prioritized commands). The strict rubric did *not* recover a larger effect, the steering
+own-effect was +0.40, statistically indistinguishable from +0.50, while the overall dissociation
+persisted (ratio 27.5; the designed contrasts still decouple). The weak steering signal is therefore
+not a simple rubric-leniency artifact. The more likely causes are the confound that Proposition P2
+predicts (steering quality is bounded by the judging it follows, so a competence manipulation on
+steering alone has limited headroom) and homogeneity in the simulated steering responses; both are best
+resolved with human steering data, which we leave to the validation study.
 
 ## 9. Tensions and boundary conditions
 

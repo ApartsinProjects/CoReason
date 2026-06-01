@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Calculus",
+    "subject_path": "Calculus > Constrained Optimization",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Identification of Constraints",
+        "description": "Ability to identify and clearly state all relevant constraints in the problem.",
+        "excellent_indicator": "All constraints are accurately identified and clearly articulated, including implicit constraints.",
+        "poor_indicator": "Constraints are missing, incomplete, or incorrectly identified."
+      },
+      {
+        "name": "Objective Function Formulation",
+        "description": "Ability to translate the problem into a well-defined objective function.",
+        "excellent_indicator": "The objective function is correctly formulated and aligns with the problem's goals.",
+        "poor_indicator": "The objective function is incorrectly formulated or does not match the problem's goals."
+      },
+      {
+        "name": "Understanding of Problem Context",
+        "description": "Demonstrates understanding of the problem context and its implications for the optimization task.",
+        "excellent_indicator": "Shows deep understanding of the problem context and correctly integrates it into the task framing.",
+        "poor_indicator": "Lacks understanding of the problem context or misinterprets its implications."
+      }
+    ],
+    "typical_errors": [
+      "Neglecting implicit constraints that affect the solution space.",
+      "Formulating an objective function that does not reflect the problem's goals.",
+      "Misinterpreting the problem context and its impact on constraints."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification in Calculations",
+        "description": "Ability to identify errors in the AI's mathematical calculations related to constrained optimization.",
+        "excellent_indicator": "Correctly identifies all errors in calculations, including subtle mistakes.",
+        "poor_indicator": "Fails to identify significant errors or identifies incorrect errors."
+      },
+      {
+        "name": "Validation of Feasibility",
+        "description": "Ability to assess whether the AI's solution respects all problem constraints.",
+        "excellent_indicator": "Accurately evaluates the feasibility of solutions with respect to all constraints.",
+        "poor_indicator": "Overlooks constraint violations or incorrectly judges feasible solutions as infeasible."
+      },
+      {
+        "name": "Optimality Assessment",
+        "description": "Ability to determine if the AI's solution is optimal given the constraints.",
+        "excellent_indicator": "Accurately assesses the optimality of solutions, considering constraint boundaries.",
+        "poor_indicator": "Misjudges optimality or fails to recognize suboptimal solutions."
+      }
+    ],
+    "typical_errors": [
+      "Overlooking errors in constraint handling in the AI's solution.",
+      "Misjudging the feasibility of solutions due to incorrect constraint interpretation.",
+      "Failing to recognize when a solution is suboptimal."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Effective Correction Commands",
+        "description": "Ability to provide clear and effective correction commands to improve AI output.",
+        "excellent_indicator": "Commands are precise, addressing specific errors and guiding the AI towards a correct solution.",
+        "poor_indicator": "Commands are vague, incorrect, or do not address the identified errors."
+      },
+      {
+        "name": "Guidance on Constraint Handling",
+        "description": "Ability to direct the AI in correctly applying constraints to the optimization problem.",
+        "excellent_indicator": "Provides clear, actionable guidance on constraint application, leading to correct constraint handling.",
+        "poor_indicator": "Fails to provide effective guidance on constraints, leading to persistent errors."
+      },
+      {
+        "name": "Feedback on Objective Function Adjustments",
+        "description": "Ability to guide adjustments to the objective function to better align with problem goals.",
+        "excellent_indicator": "Feedback is specific and improves alignment of the objective function with problem goals.",
+        "poor_indicator": "Feedback is irrelevant or does not improve the objective function alignment."
+      }
+    ],
+    "typical_errors": [
+      "Providing correction commands that are too general or not actionable.",
+      "Failing to guide the AI in properly handling constraints.",
+      "Giving feedback that does not improve or misaligns the objective function."
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "_vars": {
+    "course_name": "Organic Chemistry",
+    "subject_path": "Organic Chemistry > Reaction Mechanisms",
+    "raw_problem": "As part of our ongoing project to develop more sustainable chemical processes, we need to understand the mechanism behind the selective oxidation of a secondary alcohol to a ketone using an environmentally friendly oxidizing agent. Design a detailed reaction mechanism for this transformation. Your report should include a step-by-step breakdown of the mechanism, highlighting any intermediates and transition states. Also, evaluate the potential environmental impact of the oxidizing agent used. Note that the specific secondary alcohol and oxidizing agent have not been provided, so you will need to select appropriate examples to illustrate your mechanism. Additionally, consider any potential side reactions that could occur and how they might be minimized.",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Reaction Components",
+          "description": "Ability to correctly identify and articulate the reactants, products, and intermediates involved in the reaction.",
+          "excellent_indicator": "Accurately identifies all relevant reactants, products, and intermediates with appropriate chemical names and structures.",
+          "poor_indicator": "Fails to identify key reactants or products, or mislabels intermediates."
+        },
+        {
+          "name": "Clarification of Reaction Conditions",
+          "description": "Ability to specify the conditions under which the reaction occurs, such as temperature, solvent, and catalysts.",
+          "excellent_indicator": "Clearly specifies all relevant reaction conditions, demonstrating an understanding of their impact on the reaction.",
+          "poor_indicator": "Omits important reaction conditions or misunderstands their role in the mechanism."
+        },
+        {
+          "name": "Definition of Reaction Pathway",
+          "description": "Ability to outline a step-by-step pathway for the reaction, identifying key mechanistic steps.",
+          "excellent_indicator": "Provides a detailed and correct step-by-step pathway, identifying each mechanistic step accurately.",
+          "poor_indicator": "Provides an incomplete or incorrect pathway, missing key steps or misidentifying mechanistic processes."
+        }
+      ],
+      "typical_errors": [
+        "Misidentifying the starting materials or products.",
+        "Neglecting to consider the role of catalysts or solvents.",
+        "Confusing reaction intermediates with by-products."
+      ]
+    },
+    "internal_gaps": [
+      "Specific secondary alcohol is not provided",
+      "Oxidizing agent is not specified",
+      "Environmental impact assessment lacks criteria for evaluation"
+    ],
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "base": "As part of our ongoing project to develop more sustainable chemical processes, we need to understand the mechanism behind the selective oxidation of a secondary alcohol to a ketone using an environmentally friendly oxidizing agent. Design a detailed reaction mechanism for this transformation. Your report should include a step-by-step breakdown of the mechanism, highlighting any intermediates and transition states. Also, evaluate the potential environmental impact of the oxidizing agent used. Note that the specific secondary alcohol and oxidizing agent have not been provided, so you will need to select appropriate examples to illustrate your mechanism. Additionally, consider any potential side reactions that could occur and how they might be minimized.",
+  "refinement_sections": [
+    {
+      "section_type": "Assumptions",
+      "entries": [
+        {
+          "title": "Selection of Secondary Alcohol",
+          "description": "Assume a commonly studied secondary alcohol such as 2-propanol for illustrating the mechanism, as it is a simple and well-known substrate for oxidation reactions.",
+          "addresses_gap": "Specific secondary alcohol is not provided"
+        },
+        {
+          "title": "Choice of Oxidizing Agent",
+          "description": "Assume the use of a known environmentally friendly oxidizing agent, such as TEMPO (2,2,6,6-Tetramethylpiperidine 1-oxyl), which is recognized for its selectivity and reduced environmental impact.",
+          "addresses_gap": "Oxidizing agent is not specified"
+        }
+      ]
+    },
+    {
+      "section_type": "Constraints",
+      "entries": [
+        {
+          "title": "Environmentally Friendly Criteria",
+          "description": "The chosen oxidizing agent must be non-toxic, biodegradable, and should not produce hazardous by-products, aligning with green chemistry principles.",
+          "addresses_gap": "Oxidizing agent is not specified"
+        }
+      ]
+    },
+    {
+      "section_type": "Clarifications",
+      "entries": [
+        {
+          "title": "Reaction Conditions Specification",
+          "description": "Clarify that the reaction conditions should include ambient temperature, the use of water or ethanol as a solvent, and the absence of heavy metal catalysts to ensure environmental friendliness.",
+          "addresses_gap": "Environmental impact assessment lacks criteria for evaluation"
+        }
+      ]
+    },
+    {
+      "section_type": "Success Metrics",
+      "entries": [
+        {
+          "title": "Mechanism Completeness",
+          "description": "The mechanism should accurately include all steps from the initial oxidation to the formation of the ketone, detailing intermediates and transition states.",
+          "addresses_gap": "Specific secondary alcohol is not provided"
+        },
+        {
+          "title": "Environmental Impact Evaluation",
+          "description": "Assess the environmental impact based on criteria such as the toxicity of the oxidizing agent, the biodegradability of by-products, and the overall atom economy of the reaction.",
+          "addresses_gap": "Environmental impact assessment lacks criteria for evaluation"
+        }
+      ]
+    },
+    {
+      "section_type": "Scope Boundaries",
+      "entries": [
+        {
+          "title": "Focus on Single Reaction Pathway",
+          "description": "Limit the analysis to the primary oxidation pathway of the selected secondary alcohol to a ketone, while briefly mentioning potential side reactions and their minimization strategies.",
+          "addresses_gap": "Specific secondary alcohol is not provided"
+        }
+      ]
+    }
+  ],
+  "coverage_notes": "This framing addresses all rubric criteria by specifying assumptions for missing components, clarifying reaction conditions, defining success metrics for evaluating the mechanism and environmental impact, and setting constraints to ensure the process aligns with sustainable chemistry principles."
+}

@@ -1,0 +1,173 @@
+{
+  "_vars": {
+    "raw_problem": "You have been tasked with analyzing the CPU scheduling performance for a new multi-core processor system at Tech Innovators Corp. The system's architecture supports several scheduling algorithms, and the management wants a report on which algorithm would optimize performance for their specific workloads. Your job is to design an experiment comparing at least three scheduling algorithms using a representative set of workloads that simulate real-world usage patterns. Consider factors like response time, throughput, and fairness in your analysis. Provide a detailed report summarizing your findings and recommendations for the most suitable scheduling algorithm for this system.\n\nPlease ensure your output includes the methodology, the criteria used for selecting the workloads, the evaluation metrics, and any assumptions made during the analysis.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"The objective is to analyze the CPU scheduling performance of a new multi-core processor system at Tech Innovators Corp. This involves comparing at least three distinct scheduling algorithms—such as Round Robin, Shortest Job First (SJF), and Priority Scheduling—against a set of predefined workloads that accurately reflect real-world usage patterns. The goal is to identify the scheduling algorithm that optimizes performance based on specific metrics.\"}, {\"section_type\": \"Methodology\", \"content\": \"1. Selection of Scheduling Algorithms: Choose three algorithms that are commonly used in multi-core systems. Justification for selection will be based on their theoretical performance and practical applicability. \\n2. Workload Selection: Define a representative set of workloads that encompass various usage patterns, such as batch processing, interactive tasks, and real-time applications. These workloads should be derived from actual usage data or industry benchmarks to ensure relevance. \\n3. Experimental Setup: Utilize a controlled environment to simulate the multi-core processor system. This includes configuring the hardware and software to ensure consistency across tests. \\n4. Implementation: Implement the selected scheduling algorithms in the experimental environment and prepare the workloads for execution. \\n5. Data Collection: Run the experiments multiple times to gather sufficient data for statistical analysis. Record metrics such as response time, throughput, and fairness for each algorithm under each workload.\"}, {\"section_type\": \"Evaluation Metrics\", \"content\": \"1. Response Time: Measure the time taken from when a request is submitted until it is completed. This is critical for user satisfaction, especially in interactive applications. \\n2. Throughput: Calculate the number of processes completed in a given time frame. Higher throughput indicates better utilization of CPU resources. \\n3. Fairness: Assess how evenly CPU time is distributed among processes. This can be measured using metrics like turnaround time and wait time for each process to ensure no single process is starved of resources.\"}, {\"section_type\": \"Workload Criteria\", \"content\": \"The workloads must be selected based on their relevance to typical applications that Tech Innovators Corp. handles. Criteria for selection include: \\n1. Diversity: Workloads should include CPU-bound, I/O-bound, and mixed workloads to cover a broad spectrum of use cases. \\n2. Realism: Use historical data or industry standards to ensure that the workloads reflect actual usage patterns. \\n3. Scalability: Ensure that the workloads can be adjusted in complexity and size to test the limits of the scheduling algorithms.\"}, {\"section_type\": \"Assumptions\", \"content\": \"1. The multi-core processor system is assumed to be homogeneous, meaning all cores are identical in performance. \\n2. It is assumed that the workloads can be executed independently without significant inter-process communication overhead. \\n3. The environment is controlled to minimize external factors that could affect performance, such as background processes or varying system loads. \\n4. The scheduling algorithms are assumed to be implemented correctly and optimized for the multi-core architecture.\"}, {\"section_type\": \"Reporting\", \"content\": \"The final report will include a comprehensive analysis of the data collected, visualizations of the performance metrics, and a discussion of the implications of the findings. Recommendations will be made based on the analysis, highlighting which scheduling algorithm is best suited for the specific workloads of Tech Innovators Corp.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Decomposition",
+          "description": "Ability to break down the ill-defined problem into specific components related to CPU scheduling.",
+          "excellent_indicator": "Accurately identifies all relevant components such as process arrival times, burst times, priorities, and CPU scheduling criteria.",
+          "poor_indicator": "Misses key components like process priorities or misidentifies irrelevant details as important."
+        },
+        {
+          "name": "Terminology Usage",
+          "description": "Correct use of CPU scheduling terminology to define the problem.",
+          "excellent_indicator": "Uses terms such as 'preemptive', 'non-preemptive', 'context switch', and 'throughput' correctly.",
+          "poor_indicator": "Confuses terms like 'preemptive' and 'non-preemptive' or uses incorrect terminology."
+        },
+        {
+          "name": "Goal Specification",
+          "description": "Clearly defines the goal of the CPU scheduling task.",
+          "excellent_indicator": "Specifies goals such as minimizing turnaround time or maximizing CPU utilization.",
+          "poor_indicator": "Fails to specify a clear goal or sets conflicting objectives."
+        }
+      ],
+      "typical_errors": [
+        "Confusing preemptive with non-preemptive scheduling.",
+        "Ignoring process priorities in problem framing.",
+        "Setting unclear or conflicting scheduling goals."
+      ]
+    },
+    "best_framing": {
+      "_vars": {
+        "course_name": "Operating Systems",
+        "subject_path": "Operating Systems > CPU Scheduling",
+        "raw_problem": "You have been tasked with analyzing the CPU scheduling performance for a new multi-core processor system at Tech Innovators Corp. The system's architecture supports several scheduling algorithms, and the management wants a report on which algorithm would optimize performance for their specific workloads. Your job is to design an experiment comparing at least three scheduling algorithms using a representative set of workloads that simulate real-world usage patterns. Consider factors like response time, throughput, and fairness in your analysis. Provide a detailed report summarizing your findings and recommendations for the most suitable scheduling algorithm for this system.\n\nPlease ensure your output includes the methodology, the criteria used for selecting the workloads, the evaluation metrics, and any assumptions made during the analysis.",
+        "framing_rubric": {
+          "criteria": [
+            {
+              "name": "Problem Decomposition",
+              "description": "Ability to break down the ill-defined problem into specific components related to CPU scheduling.",
+              "excellent_indicator": "Accurately identifies all relevant components such as process arrival times, burst times, priorities, and CPU scheduling criteria.",
+              "poor_indicator": "Misses key components like process priorities or misidentifies irrelevant details as important."
+            },
+            {
+              "name": "Terminology Usage",
+              "description": "Correct use of CPU scheduling terminology to define the problem.",
+              "excellent_indicator": "Uses terms such as 'preemptive', 'non-preemptive', 'context switch', and 'throughput' correctly.",
+              "poor_indicator": "Confuses terms like 'preemptive' and 'non-preemptive' or uses incorrect terminology."
+            },
+            {
+              "name": "Goal Specification",
+              "description": "Clearly defines the goal of the CPU scheduling task.",
+              "excellent_indicator": "Specifies goals such as minimizing turnaround time or maximizing CPU utilization.",
+              "poor_indicator": "Fails to specify a clear goal or sets conflicting objectives."
+            }
+          ],
+          "typical_errors": [
+            "Confusing preemptive with non-preemptive scheduling.",
+            "Ignoring process priorities in problem framing.",
+            "Setting unclear or conflicting scheduling goals."
+          ]
+        },
+        "internal_gaps": [
+          "Specific details about the processor system, such as the number of cores and supported algorithms, are not provided.",
+          "The characteristics of the workloads to be used in the experiment are not defined.",
+          "Evaluation metrics like response time, throughput, and fairness are mentioned, but how they should be measured is not specified."
+        ],
+        "language": "English"
+      },
+      "_temp": 0.4,
+      "base": "You have been tasked with analyzing the CPU scheduling performance for a new multi-core processor system at Tech Innovators Corp. The system's architecture supports several scheduling algorithms, and the management wants a report on which algorithm would optimize performance for their specific workloads. Your job is to design an experiment comparing at least three scheduling algorithms using a representative set of workloads that simulate real-world usage patterns. Consider factors like response time, throughput, and fairness in your analysis. Provide a detailed report summarizing your findings and recommendations for the most suitable scheduling algorithm for this system. Please ensure your output includes the methodology, the criteria used for selecting the workloads, the evaluation metrics, and any assumptions made during the analysis.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Processor System Details",
+              "description": "Assume the multi-core processor system has 8 cores and supports the following scheduling algorithms: Round Robin, Shortest Job First (SJF), and Priority Scheduling.",
+              "addresses_gap": "Specific details about the processor system, such as the number of cores and supported algorithms, are not provided."
+            },
+            {
+              "title": "Workload Characteristics",
+              "description": "Assume workloads consist of a mix of CPU-bound and I/O-bound processes, with varying process arrival times, burst times, and priorities.",
+              "addresses_gap": "The characteristics of the workloads to be used in the experiment are not defined."
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Algorithm Selection",
+              "description": "The experiment must include at least three scheduling algorithms: Round Robin, Shortest Job First (SJF), and Priority Scheduling.",
+              "addresses_gap": "The problem specifies the need to compare at least three algorithms but does not specify which ones."
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Evaluation Metrics Measurement",
+              "description": "Response time should be measured as the time from process arrival to the first execution. Throughput should be measured as the number of processes completed per unit time. Fairness should be evaluated based on the variance in process waiting times.",
+              "addresses_gap": "Evaluation metrics like response time, throughput, and fairness are mentioned, but how they should be measured is not specified."
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Optimal Algorithm Criteria",
+              "description": "The algorithm that minimizes average response time, maximizes throughput, and ensures fairness (low variance in waiting times) will be considered optimal.",
+              "addresses_gap": "The problem does not specify how to determine which algorithm optimizes performance."
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "In-Scope Elements",
+              "description": "Focus on CPU scheduling algorithms and their performance under different workloads. Exclude hardware optimization and non-scheduling related performance enhancements.",
+              "addresses_gap": "The problem does not define what aspects of the system are in or out of scope."
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by decomposing the problem into specific components related to CPU scheduling, using correct terminology, and clearly defining the goals and success metrics for the task."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing response is generally well-structured and covers many important aspects of the problem. However, there are some areas that could be improved. For instance, while the student mentions the selection of scheduling algorithms and workloads, they do not explicitly discuss the importance of process arrival times, burst times, and priorities, which are crucial components in CPU scheduling analysis. Additionally, the student does not clearly distinguish between preemptive and non-preemptive scheduling, which is important for understanding the nuances of different algorithms.",
+  "better_alternative": "A stronger framing would explicitly mention the importance of process characteristics such as arrival times, burst times, and priorities as part of the problem decomposition. Additionally, it would clarify the distinction between preemptive and non-preemptive scheduling algorithms, which would help in understanding the context of each algorithm's application. The student could also specify how these characteristics influence the performance metrics like response time, throughput, and fairness.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Decomposition",
+      "score": "B",
+      "internal_note": "The student identifies major components like scheduling algorithms and workloads but misses key details like process arrival times and priorities."
+    },
+    {
+      "criterion_name": "Terminology Usage",
+      "score": "B",
+      "internal_note": "The student uses terms like 'throughput' correctly but does not distinguish between preemptive and non-preemptive scheduling."
+    },
+    {
+      "criterion_name": "Goal Specification",
+      "score": "A",
+      "internal_note": "The student clearly defines goals related to optimizing performance based on specific metrics."
+    }
+  ],
+  "strengths": [
+    "The student clearly defines the goals of the task, focusing on optimizing performance based on metrics like response time, throughput, and fairness.",
+    "The methodology is well-structured, covering algorithm selection, workload selection, and data collection."
+  ],
+  "refinements_correctly_selected": [
+    "Selection of Scheduling Algorithms",
+    "Workload Selection",
+    "Experimental Setup",
+    "Data Collection",
+    "Response Time",
+    "Throughput",
+    "Fairness"
+  ],
+  "refinements_missed": [
+    "Explicit mention of process arrival times and priorities",
+    "Distinction between preemptive and non-preemptive scheduling"
+  ],
+  "unnecessary_selections": []
+}
