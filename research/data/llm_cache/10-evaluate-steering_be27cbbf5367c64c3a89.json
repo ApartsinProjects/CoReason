@@ -1,0 +1,91 @@
+{
+  "_vars": {
+    "raw_problem": "Design a pricing strategy for a new restaurant in a downtown area, considering the existing competition and consumer preferences. The restaurant will serve a mix of local and international cuisine, and the target audience includes both locals and tourists. The goal is to maximize profits while maintaining a competitive edge. Provide a detailed plan, including the pricing structure and any promotional offers.",
+    "student_framing": "[{\"section_type\": \"problem_statement\", \"content\": \"like design a pricing thing for a restaurant\"}, {\"section_type\": \"target_audience\", \"content\": \"um locals and tourists i guess\"}, {\"section_type\": \"competition\", \"content\": \"there are other restaurants around\"}, {\"section_type\": \"pricing_strategy\", \"content\": \"just charge like 10-15 bucks a meal\"}, {\"section_type\": \"promotional_offers\", \"content\": \"have a happy hour or something\"}]",
+    "ai_outputs_per_cycle": [
+      "To develop an effective pricing strategy for the new restaurant in the downtown area, we first analyze the market structure and consumer behavior. Given the monopolistically competitive nature of the market, with many firms offering differentiated products, the restaurant has some flexibility in setting its prices but must remain competitive.\n\nThe target audience, comprising young professionals and tourists seeking unique dining experiences, is price-sensitive but also values the quality of the dining experience. This suggests a pricing strategy that balances affordability with the perception of high quality.\n\nAssuming average and marginal costs typical for the industry, with potential economies of scale, the restaurant should aim to optimize its menu pricing to cover costs while attracting a loyal customer base. A tiered pricing structure could be implemented, with premium prices for international cuisine and slightly lower prices for local dishes, reflecting both the costs of ingredients and the demand for each type of cuisine.\n\nTo maintain a competitive edge, the restaurant should consider promotional offers, such as discounts for first-time customers, loyalty programs, and limited-time offers for seasonal menu items. These promotions can help attract new customers and retain existing ones, contributing to the goal of achieving a minimum profit margin of 15% within the first year and ensuring customer retention rates of at least 20%.\n\nThe pricing strategy must also account for current market trends, including the shift towards sustainable and locally sourced ingredients, and the demand for unique dining experiences. Incorporating these elements into the menu and pricing structure can enhance the restaurant's appeal to its target audience and differentiate it from competitors.\n\nFinally, the restaurant must comply with all local health, safety, zoning, and licensing regulations, which could impact operational costs and, consequently, pricing decisions. By carefully balancing these factors, the restaurant can establish a pricing strategy that maximizes profits while maintaining a competitive position in the downtown area's restaurant market."
+    ],
+    "steering_commands_per_cycle": [
+      [
+        "make it better",
+        "add more stuff",
+        "done"
+      ]
+    ],
+    "judging_responses_per_cycle": [
+      {
+        "flagged_issues": [
+          "The solution does not consider the target audience's preferences and price sensitivity.",
+          "The proposed tiered pricing structure is too simplistic and does not account for variations in ingredient costs."
+        ]
+      }
+    ],
+    "response_type": "open_ended_instructions",
+    "final_remaining_issues": [
+      "Overlooks potential fluctuations in supply chain costs due to external factors like weather or global events, which could significantly affect menu pricing.",
+      "Fails to account for the potential cannibalization of sales from the premium international cuisine menu by the lower-priced local dishes, which could negatively impact overall revenue.",
+      "Assumes a uniform price elasticity across all menu items without conducting specific demand analyses, which might lead to suboptimal pricing for certain dishes.",
+      "Does not consider the impact of external factors like local events or festivals on demand and pricing strategy, which could offer opportunities for temporary price adjustments to maximize profits."
+    ],
+    "steering_rubric": {
+      "criteria": [
+        {
+          "name": "Correction Command Accuracy",
+          "description": "Provides accurate and relevant correction commands to the AI",
+          "excellent_indicator": "Specifies clear, concise, and relevant corrections that address errors or gaps in AI output",
+          "poor_indicator": "Provides vague, irrelevant, or incorrect correction commands"
+        },
+        {
+          "name": "Economic Concept Application in Steering",
+          "description": "Applies microeconomic concepts to guide the AI's reasoning and output",
+          "excellent_indicator": "Correctly applies concepts such as comparative advantage, opportunity cost, and market equilibrium to steer the AI",
+          "poor_indicator": "Fails to apply relevant microeconomic concepts or applies them incorrectly"
+        },
+        {
+          "name": "Iterative Refinement",
+          "description": "Refines and adjusts correction commands based on AI output and feedback",
+          "excellent_indicator": "Iteratively refines correction commands to improve the accuracy and relevance of AI output",
+          "poor_indicator": "Fails to refine or adjust correction commands in response to AI output and feedback"
+        }
+      ],
+      "typical_errors": [
+        "Providing incomplete or ambiguous correction commands",
+        "Failing to consider the implications of correction commands on AI output",
+        "Ignoring feedback from the AI"
+      ]
+    },
+    "done_at_cycle": "1",
+    "max_cycles": "3",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's steering commands lacked specificity and failed to address critical issues identified in the judging responses. The commands, such as 'make it better' and 'add more stuff', were too vague to guide the AI effectively towards a better solution. Furthermore, marking 'done' after the first cycle was premature, given the remaining issues and the lack of significant improvement in the AI's output.",
+  "better_alternative": "A more effective approach would have been to provide detailed and targeted correction commands that directly addressed the identified issues, such as 'consider the price sensitivity of the target audience' or 'develop a more nuanced pricing structure that accounts for variations in ingredient costs'. Additionally, the student should have iteratively refined their correction commands based on the AI's output and feedback, rather than relying on generic prompts.",
+  "convergence_assessment": "The solution did not converge well towards correctness across cycles, primarily due to the lack of effective steering. The AI's output, while detailed, did not adequately address the critical issues identified by the student, and the premature conclusion of the process meant that these issues were not fully resolved.",
+  "done_timing_assessment": "Marking 'done' after the first cycle was inappropriate, as it did not allow for sufficient refinement of the solution. Given the complexity of the problem and the identified issues, additional cycles with more targeted steering were necessary to achieve a satisfactory solution.",
+  "corrections_well_chosen": [],
+  "corrections_missed": [
+    "Consideration of the target audience's preferences and price sensitivity",
+    "Development of a more nuanced pricing structure accounting for variations in ingredient costs",
+    "Analysis of potential fluctuations in supply chain costs",
+    "Evaluation of the impact of external factors like local events or festivals on demand and pricing strategy"
+  ],
+  "corrections_counterproductive": [],
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Correction Command Accuracy",
+      "score": "C",
+      "internal_note": "The student's correction commands were vague and did not accurately address the identified issues."
+    },
+    {
+      "criterion_name": "Economic Concept Application in Steering",
+      "score": "C",
+      "internal_note": "The student did not apply relevant microeconomic concepts to guide the AI's reasoning and output."
+    },
+    {
+      "criterion_name": "Iterative Refinement",
+      "score": "C",
+      "internal_note": "The student failed to refine or adjust correction commands in response to AI output and feedback."
+    }
+  ]
+}

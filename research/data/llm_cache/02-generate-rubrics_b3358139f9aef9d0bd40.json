@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Algorithms",
+    "subject_path": "Algorithms > Sorting & Searching",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Definition",
+        "description": "The student accurately defines the problem, identifying key elements such as input, output, and constraints.",
+        "excellent_indicator": "Clearly states the problem, including all necessary parameters and constraints.",
+        "poor_indicator": "Fails to identify key elements of the problem or misinterprets the problem statement."
+      },
+      {
+        "name": "Relevance to Sorting & Searching",
+        "description": "The student demonstrates an understanding of how the problem relates to sorting and searching algorithms.",
+        "excellent_indicator": "Effectively explains how sorting and searching concepts apply to the problem.",
+        "poor_indicator": "Fails to recognize or explain the connection between the problem and sorting and searching algorithms."
+      },
+      {
+        "name": "Well-Defined Task",
+        "description": "The student translates the ill-defined problem into a well-defined task with clear objectives and requirements.",
+        "excellent_indicator": "Produces a well-defined task that is solvable using sorting and searching algorithms.",
+        "poor_indicator": "Fails to create a solvable task or defines a task that is not relevant to the problem."
+      }
+    ],
+    "typical_errors": [
+      "Misinterpreting the problem statement",
+      "Failing to consider constraints",
+      "Not recognizing the relevance of sorting and searching algorithms"
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "The student accurately identifies errors or gaps in the AI output.",
+        "excellent_indicator": "Correctly identifies all errors or gaps in the AI output, including those related to sorting and searching algorithms.",
+        "poor_indicator": "Fails to identify errors or gaps in the AI output or incorrectly identifies correct output as erroneous."
+      },
+      {
+        "name": "Analysis of AI Output",
+        "description": "The student demonstrates an understanding of the AI output, including any sorting and searching algorithms used.",
+        "excellent_indicator": "Provides a clear and accurate analysis of the AI output, including the effectiveness of any sorting and searching algorithms used.",
+        "poor_indicator": "Fails to demonstrate an understanding of the AI output or the sorting and searching algorithms used."
+      },
+      {
+        "name": "Relevance to Problem",
+        "description": "The student evaluates the AI output in the context of the original problem, considering whether it addresses the key elements and constraints.",
+        "excellent_indicator": "Effectively evaluates the AI output in the context of the original problem, considering all key elements and constraints.",
+        "poor_indicator": "Fails to consider the original problem when evaluating the AI output or neglects key elements and constraints."
+      }
+    ],
+    "typical_errors": [
+      "Failing to consider the time or space complexity of the AI output",
+      "Not evaluating the AI output in the context of the original problem",
+      "Incorrectly identifying errors or gaps in the AI output"
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Correction Commands",
+        "description": "The student provides clear and effective correction commands to the AI.",
+        "excellent_indicator": "Provides correction commands that are clear, concise, and relevant to the errors or gaps identified in the AI output.",
+        "poor_indicator": "Fails to provide clear or effective correction commands, or provides commands that are not relevant to the errors or gaps identified."
+      },
+      {
+        "name": "Sorting & Searching Concepts",
+        "description": "The student demonstrates an understanding of sorting and searching concepts when providing correction commands.",
+        "excellent_indicator": "Effectively applies sorting and searching concepts when providing correction commands, demonstrating a clear understanding of the algorithms and their limitations.",
+        "poor_indicator": "Fails to demonstrate an understanding of sorting and searching concepts when providing correction commands, or applies them incorrectly."
+      },
+      {
+        "name": "Iteration and Refining",
+        "description": "The student iteratively refines the correction commands based on the AI output, demonstrating an ability to adapt and improve the solution.",
+        "excellent_indicator": "Effectively iterates and refines the correction commands, demonstrating an ability to adapt and improve the solution based on the AI output.",
+        "poor_indicator": "Fails to iterate and refine the correction commands, or demonstrates an inability to adapt and improve the solution."
+      }
+    ],
+    "typical_errors": [
+      "Providing ambiguous or unclear correction commands",
+      "Failing to consider the trade-offs between different sorting and searching algorithms",
+      "Not iteratively refining the correction commands based on the AI output"
+    ]
+  }
+}

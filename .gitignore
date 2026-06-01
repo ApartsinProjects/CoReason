@@ -1,1 +1,21 @@
 node_modules/
+
+# Secrets - never commit
+.env
+.env.*
+.env.all
+**/.env.all
+*.key
+*.pem
+
+# Databases / runtime data dumps
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.db
+*-wal
+*-shm
+
+# Logs
+logs/
+*.log

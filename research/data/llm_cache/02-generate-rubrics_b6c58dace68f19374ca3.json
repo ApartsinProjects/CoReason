@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Machine Learning",
+    "subject_path": "ML > Model Evaluation & Overfitting",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Definition",
+        "description": "Student clearly defines the problem and identifies key elements of model evaluation and overfitting.",
+        "excellent_indicator": "The problem definition is concise, well-structured, and directly related to model evaluation and overfitting.",
+        "poor_indicator": "The problem definition is vague, incomplete, or unrelated to model evaluation and overfitting."
+      },
+      {
+        "name": "Relevant Concepts",
+        "description": "Student identifies relevant concepts and techniques in model evaluation and overfitting, such as cross-validation and regularization.",
+        "excellent_indicator": "The student identifies a range of relevant concepts and techniques, demonstrating a thorough understanding of model evaluation and overfitting.",
+        "poor_indicator": "The student fails to identify key concepts and techniques or demonstrates a limited understanding of model evaluation and overfitting."
+      },
+      {
+        "name": "Evaluation Metrics",
+        "description": "Student selects appropriate evaluation metrics for the problem, such as accuracy, precision, and recall.",
+        "excellent_indicator": "The student selects a range of relevant evaluation metrics, demonstrating an understanding of their strengths and limitations.",
+        "poor_indicator": "The student selects inappropriate or incomplete evaluation metrics, demonstrating a limited understanding of their use in model evaluation."
+      }
+    ],
+    "typical_errors": [
+      "Failure to consider class imbalance",
+      "Inadequate handling of missing data",
+      "Insufficient consideration of model complexity"
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "Student accurately identifies errors and gaps in AI output, such as overfitting or underfitting.",
+        "excellent_indicator": "The student consistently identifies errors and gaps in AI output, demonstrating a thorough understanding of model evaluation and overfitting.",
+        "poor_indicator": "The student fails to identify errors and gaps in AI output or demonstrates a limited understanding of model evaluation and overfitting."
+      },
+      {
+        "name": "Analysis of Results",
+        "description": "Student analyzes AI output and results, considering factors such as bias, variance, and model complexity.",
+        "excellent_indicator": "The student provides a detailed analysis of AI output and results, demonstrating a thorough understanding of model evaluation and overfitting.",
+        "poor_indicator": "The student provides a limited or superficial analysis of AI output and results, demonstrating a limited understanding of model evaluation and overfitting."
+      },
+      {
+        "name": "Model Evaluation",
+        "description": "Student evaluates the performance of the model, considering factors such as accuracy, precision, and recall.",
+        "excellent_indicator": "The student provides a comprehensive evaluation of the model's performance, demonstrating a thorough understanding of model evaluation and overfitting.",
+        "poor_indicator": "The student provides a limited or incomplete evaluation of the model's performance, demonstrating a limited understanding of model evaluation and overfitting."
+      }
+    ],
+    "typical_errors": [
+      "Failure to consider the impact of hyperparameter tuning",
+      "Inadequate analysis of model interpretability",
+      "Insufficient consideration of model robustness"
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Correction Commands",
+        "description": "Student provides clear and effective correction commands to the AI, such as adjusting hyperparameters or selecting alternative models.",
+        "excellent_indicator": "The student provides concise and well-structured correction commands, demonstrating a thorough understanding of model evaluation and overfitting.",
+        "poor_indicator": "The student provides vague or ineffective correction commands, demonstrating a limited understanding of model evaluation and overfitting."
+      },
+      {
+        "name": "Model Selection",
+        "description": "Student selects an appropriate model or algorithm, considering factors such as model complexity and data characteristics.",
+        "excellent_indicator": "The student selects a suitable model or algorithm, demonstrating a thorough understanding of model evaluation and overfitting.",
+        "poor_indicator": "The student selects an inappropriate model or algorithm, demonstrating a limited understanding of model evaluation and overfitting."
+      },
+      {
+        "name": "Hyperparameter Tuning",
+        "description": "Student tunes hyperparameters effectively, considering factors such as learning rate and regularization strength.",
+        "excellent_indicator": "The student tunes hyperparameters effectively, demonstrating a thorough understanding of model evaluation and overfitting.",
+        "poor_indicator": "The student fails to tune hyperparameters effectively, demonstrating a limited understanding of model evaluation and overfitting."
+      }
+    ],
+    "typical_errors": [
+      "Failure to consider the impact of regularization on model performance",
+      "Inadequate tuning of hyperparameters",
+      "Insufficient consideration of model capacity"
+    ]
+  }
+}

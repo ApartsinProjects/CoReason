@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Microeconomics",
+    "subject_path": "Microeconomics > Supply & Demand",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Definition",
+        "description": "Clearly defines the economic problem and identifies key variables",
+        "excellent_indicator": "Specifies the market, goods or services, and relevant stakeholders",
+        "poor_indicator": "Fails to identify key variables or stakeholders"
+      },
+      {
+        "name": "Assumptions and Constraints",
+        "description": "Recognizes and states assumptions and constraints relevant to the problem",
+        "excellent_indicator": "Explicitly states assumptions about market structure, consumer behavior, and production costs",
+        "poor_indicator": "Ignores or fails to acknowledge critical assumptions"
+      },
+      {
+        "name": "Economic Concepts Application",
+        "description": "Applies relevant microeconomic concepts to the problem",
+        "excellent_indicator": "Correctly applies concepts such as supply and demand, opportunity cost, and market equilibrium",
+        "poor_indicator": "Misapplies or fails to apply relevant microeconomic concepts"
+      }
+    ],
+    "typical_errors": [
+      "Omitting critical variables or stakeholders",
+      "Failing to consider opportunity costs",
+      "Misunderstanding market structures"
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "Correctly identifies errors or gaps in AI output",
+        "excellent_indicator": "Accurately identifies errors in calculations, graphs, or economic reasoning",
+        "poor_indicator": "Fails to recognize or incorrectly identifies errors"
+      },
+      {
+        "name": "Economic Reasoning Evaluation",
+        "description": "Evaluates the economic reasoning and assumptions underlying AI output",
+        "excellent_indicator": "Assesses the validity of assumptions, recognizes biases, and evaluates the soundness of economic arguments",
+        "poor_indicator": "Fails to critically evaluate economic reasoning or assumptions"
+      },
+      {
+        "name": "Market Analysis",
+        "description": "Analyzes the market and its dynamics based on AI output",
+        "excellent_indicator": "Correctly interprets market trends, identifies shifts in supply and demand, and understands the implications of changes in market conditions",
+        "poor_indicator": "Misinterprets market trends or fails to understand the implications of changes in market conditions"
+      }
+    ],
+    "typical_errors": [
+      "Failing to consider the ceteris paribus assumption",
+      "Misinterpreting the law of diminishing returns",
+      "Overlooking the role of externalities"
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Correction Command Accuracy",
+        "description": "Provides accurate and relevant correction commands to the AI",
+        "excellent_indicator": "Specifies clear, concise, and relevant corrections that address errors or gaps in AI output",
+        "poor_indicator": "Provides vague, irrelevant, or incorrect correction commands"
+      },
+      {
+        "name": "Economic Concept Application in Steering",
+        "description": "Applies microeconomic concepts to guide the AI's reasoning and output",
+        "excellent_indicator": "Correctly applies concepts such as comparative advantage, opportunity cost, and market equilibrium to steer the AI",
+        "poor_indicator": "Fails to apply relevant microeconomic concepts or applies them incorrectly"
+      },
+      {
+        "name": "Iterative Refinement",
+        "description": "Refines and adjusts correction commands based on AI output and feedback",
+        "excellent_indicator": "Iteratively refines correction commands to improve the accuracy and relevance of AI output",
+        "poor_indicator": "Fails to refine or adjust correction commands in response to AI output and feedback"
+      }
+    ],
+    "typical_errors": [
+      "Providing incomplete or ambiguous correction commands",
+      "Failing to consider the implications of correction commands on AI output",
+      "Ignoring feedback from the AI"
+    ]
+  }
+}
