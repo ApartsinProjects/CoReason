@@ -1,0 +1,126 @@
+{
+  "_vars": {
+    "raw_problem": "Our company has recently launched a new product, and we want to assess its market performance. Please design a hypothesis test to determine if the average sales of this product exceed a certain benchmark that we have in mind. The test should evaluate the data collected from our sales team over the past three months. Additionally, prepare a report that discusses your method, findings, and any recommendations based on the results. Ensure to highlight any assumptions you make during your analysis and how they might affect your conclusions.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to figure out if our new product is selling well compared to a specific sales target. This means we have to compare the average sales from the last three months to this target.\"}, {\"section_type\": \"Hypothesis Formulation\", \"content\": \"We should state two hypotheses. The null hypothesis (H0) could be that the average sales are less than or equal to the benchmark. The alternative hypothesis (H1) would be that the average sales are greater than the benchmark.\"}, {\"section_type\": \"Data Collection\", \"content\": \"We will use the sales data collected by our sales team from the last three months. We need to make sure we have all the sales figures for this period.\"}, {\"section_type\": \"Test Selection\", \"content\": \"We should choose a statistical test to use. A t-test might be appropriate if we assume that the sales data is normally distributed.\"}, {\"section_type\": \"Assumptions\", \"content\": \"We need to mention any assumptions we make, like if the sales data follows a normal distribution or if the sample size is large enough.\"}, {\"section_type\": \"Report Preparation\", \"content\": \"Finally, we will write a report that explains how we did the test, what the results were, and if we think the product is doing well or not. We need to make sure to include our assumptions and how they might change our conclusions.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Variables",
+          "description": "Clearly identifies dependent and independent variables relevant to the hypothesis.",
+          "excellent_indicator": "All relevant variables are identified with clear definitions and their roles in the hypothesis.",
+          "poor_indicator": "Misses key variables or misidentifies their roles in the hypothesis."
+        },
+        {
+          "name": "Clarity of Hypothesis",
+          "description": "Formulates a clear and testable hypothesis based on the problem statement.",
+          "excellent_indicator": "The hypothesis is concise, specific, and directly addresses the problem.",
+          "poor_indicator": "The hypothesis is vague, overly broad, or does not relate to the problem."
+        },
+        {
+          "name": "Contextual Understanding",
+          "description": "Demonstrates a strong understanding of the context in which the hypothesis is framed.",
+          "excellent_indicator": "Provides a thorough explanation of the context and its relevance to the hypothesis.",
+          "poor_indicator": "Fails to explain the context or demonstrates a misunderstanding of its relevance."
+        }
+      ],
+      "typical_errors": [
+        "Confusing dependent and independent variables.",
+        "Formulating a hypothesis that cannot be tested statistically.",
+        "Neglecting to provide context or background information for the hypothesis."
+      ]
+    },
+    "best_framing": {
+      "base": "Our company has recently launched a new product, and we want to assess its market performance. Please design a hypothesis test to determine if the average sales of this product exceed a certain benchmark that we have in mind. The test should evaluate the data collected from our sales team over the past three months. Additionally, prepare a report that discusses your method, findings, and any recommendations based on the results. Ensure to highlight any assumptions you make during your analysis and how they might affect your conclusions.",
+      "refinement_sections": [
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Benchmark for Average Sales",
+              "description": "The specific benchmark for average sales that the company wants to test against needs to be explicitly defined. This will allow for a clear hypothesis formulation and statistical testing.",
+              "addresses_gap": "The specific benchmark for average sales is not provided."
+            },
+            {
+              "title": "Sales Data Structure",
+              "description": "Details regarding the sales data structure, including sample size and distribution characteristics, are necessary to properly design the hypothesis test and ensure valid statistical inferences.",
+              "addresses_gap": "Details on the sales data structure (e.g., sample size, distribution) are missing."
+            },
+            {
+              "title": "Significance Level",
+              "description": "The significance level (alpha) for the hypothesis test needs to be specified to determine the threshold for rejecting the null hypothesis, which is essential for the test's execution.",
+              "addresses_gap": "The significance level for the hypothesis test is not specified."
+            }
+          ]
+        },
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Normality of Sales Data",
+              "description": "It is assumed that the sales data follows a normal distribution or that the sample size is large enough for the Central Limit Theorem to apply, which impacts the choice of statistical tests.",
+              "addresses_gap": "Assumptions about the distribution of the sales data need to be made for valid testing."
+            },
+            {
+              "title": "Independence of Observations",
+              "description": "It is assumed that the sales data collected over the past three months are independent observations, which is crucial for the validity of the hypothesis test.",
+              "addresses_gap": "Assumptions regarding the independence of sales data need to be clarified."
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Statistical Significance",
+              "description": "The primary success metric will be whether the hypothesis test results in a statistically significant finding that the average sales exceed the benchmark. This will be determined by the p-value in relation to the significance level.",
+              "addresses_gap": "Success metrics for evaluating the hypothesis test results need to be defined."
+            },
+            {
+              "title": "Confidence Intervals",
+              "description": "In addition to the hypothesis test, calculating confidence intervals for the average sales will provide insight into the range of values that likely contains the true average, which is a critical component of the analysis.",
+              "addresses_gap": "Additional metrics to evaluate the findings should be included."
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses the identification of variables by clarifying the benchmark and data structure, ensures clarity of hypothesis by specifying necessary details, and demonstrates contextual understanding by outlining assumptions and success metrics relevant to hypothesis testing."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "While you have made a good start in defining the problem and formulating hypotheses, your framing lacks specificity in several areas. For instance, you mention comparing average sales to a 'specific sales target' but do not define what that target is. This omission makes it difficult to assess the hypothesis clearly. Additionally, while you correctly identified the null and alternative hypotheses, you did not specify the significance level for your test, which is crucial for interpreting results. Your assumption about normal distribution is noted, but you should also clarify the independence of observations in your data collection.",
+  "better_alternative": "A stronger framing would explicitly define the benchmark for average sales to provide a clear target for comparison. Additionally, it would include details about the sales data structure, such as sample size and distribution characteristics, to ensure valid statistical inferences. Specifying the significance level for the hypothesis test would also enhance clarity. Finally, addressing the independence of observations would strengthen your assumptions section, providing a more robust framework for your analysis.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Variables",
+      "score": "C",
+      "internal_note": "Missed defining the specific benchmark for average sales."
+    },
+    {
+      "criterion_name": "Clarity of Hypothesis",
+      "score": "B",
+      "internal_note": "Hypotheses are clear, but lack context regarding significance level."
+    },
+    {
+      "criterion_name": "Contextual Understanding",
+      "score": "B",
+      "internal_note": "Assumptions are mentioned but need more detail on data independence."
+    }
+  ],
+  "strengths": [
+    "You clearly articulated the need to compare average sales to a target, which is essential for hypothesis testing.",
+    "The formulation of null and alternative hypotheses is well-structured and relevant."
+  ],
+  "refinements_correctly_selected": [
+    "Hypothesis Formulation",
+    "Data Collection",
+    "Assumptions"
+  ],
+  "refinements_missed": [
+    "Benchmark for Average Sales",
+    "Sales Data Structure",
+    "Significance Level"
+  ],
+  "unnecessary_selections": []
+}

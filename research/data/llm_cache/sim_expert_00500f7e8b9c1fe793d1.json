@@ -1,0 +1,36 @@
+{
+  "refinement_sections": [
+    {
+      "section_type": "Problem Definition",
+      "content": "Clearly define the specific queries that are experiencing performance issues, including their frequency and complexity. Identify the key metrics for measuring query performance, such as response time and resource utilization."
+    },
+    {
+      "section_type": "Current Indexing Strategy Analysis",
+      "content": "Conduct a thorough analysis of the existing indexing strategy, including the types of indexes currently in use (e.g., B-tree, hash, full-text), their distribution across the database, and the specific columns indexed. Evaluate the effectiveness of these indexes based on the query patterns observed."
+    },
+    {
+      "section_type": "Proposed Indexing Strategy",
+      "content": "Develop a new indexing strategy that may include composite indexes, covering indexes, or the use of partial indexes based on query patterns. Justify the choice of indexes with respect to the specific queries identified in the problem definition."
+    },
+    {
+      "section_type": "Performance Expectations",
+      "content": "Estimate the expected performance improvements using metrics such as reduced query response times and lower CPU/memory usage. Include benchmarks from similar databases or case studies that support these expectations."
+    },
+    {
+      "section_type": "Impact on Write Operations",
+      "content": "Analyze how the proposed indexing strategy will affect write operations, including insert, update, and delete performance. Discuss the trade-offs between read and write performance and the potential need for periodic index maintenance."
+    },
+    {
+      "section_type": "Data Integrity Considerations",
+      "content": "Address any potential impacts on data integrity due to the new indexing strategy, including how it may affect transaction isolation levels and consistency. Propose methods to ensure data integrity is maintained during and after the implementation of the new indexes."
+    },
+    {
+      "section_type": "Implementation Plan",
+      "content": "Outline a step-by-step implementation plan for the new indexing strategy, including a timeline, required resources, and a rollback plan in case of unforeseen issues."
+    },
+    {
+      "section_type": "Conclusion and Recommendations",
+      "content": "Summarize the findings and recommendations, emphasizing the importance of ongoing monitoring and adjustment of the indexing strategy based on evolving query patterns and database growth."
+    }
+  ]
+}

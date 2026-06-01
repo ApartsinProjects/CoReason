@@ -1,0 +1,32 @@
+{
+  "refinement_sections": [
+    {
+      "section_type": "Problem Understanding",
+      "content": "I need to understand what slow query performance means and how it affects the customer database. I should look into what indexing is and why it is important for query performance."
+    },
+    {
+      "section_type": "Current Situation",
+      "content": "The database has over a million records, so I need to find out how many indexes are currently in use and what kind of queries are running slowly."
+    },
+    {
+      "section_type": "Indexing Strategy",
+      "content": "I should learn about different types of indexing strategies, like single-column indexes or multi-column indexes, to see which one would work best for improving performance."
+    },
+    {
+      "section_type": "Impact on Write Operations",
+      "content": "I need to consider how changing the indexing strategy might affect write operations, like adding or updating records. I should find out if more indexes slow down writes."
+    },
+    {
+      "section_type": "Data Integrity Considerations",
+      "content": "I have to think about how the new indexing strategy could affect data integrity, especially if there are concurrent writes happening while queries are running."
+    },
+    {
+      "section_type": "Expected Outcomes",
+      "content": "I should try to estimate how much faster the queries will be after implementing the new indexing strategy and think about any trade-offs that come with it."
+    },
+    {
+      "section_type": "Report Structure",
+      "content": "I need to outline what my report will include: an introduction to the problem, analysis of the current indexing, proposed strategy, expected performance improvements, and trade-offs."
+    }
+  ]
+}

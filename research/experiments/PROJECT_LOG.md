@@ -108,3 +108,16 @@ consistent by the reviewer. **Review loop converged at Accept.**
 - E1-on-DB abandoned (data invalid). E1 re-scoped to run on E3-generated controlled data.
 - BLOCKER/GATE: all remaining experiments need the Groq API (llama-3.3-70b). Next action: verify the key works; if dead, fall back to OpenRouter/OpenAI (keys present).
 - Then: build prompt-runner harness → regenerate a controlled challenge set with full ground truth → generate simulated learners (strong/weak/adversarial) → grade → run E1+E3 → E2 reliability → E4 ablation.
+
+## C7 (2026-06-01): Round-4 line-by-line reviews + grader robustness
+Both journal reviews (education-sciences + computers-&-education) line-by-line: **Minor Revision,
+leaning Accept**; numbers re-verified exactly from CSVs. Grader-backend robustness COMPLETED:
+re-graded the same 40 transcripts with gpt-4o-mini (vs gpt-4o): dissociation REPLICATES (diag +0.47
+vs off-diag +0.07, ratio 7.0); Judging own-effect falls +2.00->+0.65 (so the +2.00 was gpt-4o-specific,
+not a construct artifact) -> separation more balanced across skills under a 2nd backend; designed
+contrasts replicate. Fixes applied: purge em-dashes (0 remain) + en-dash compounds standardized;
+abstract softened (strongest not decisive) + precision-not-accuracy + released-artifact sentence +
+cross-grader replication; integrate robustness paragraph in Sec 8; blind-graded flip-rate ~0.12 noted;
+255-vs-280 caching reconciled; Judging ground-truth flagged machine-generated/contingent; learner->
+simulated/model-assigned slips fixed; "metacognitive laziness" now cites Fan et al. 2025 (BJET).
+Bibliography 55 refs, 54 valid (Acar HBR verified live, HTTP 200). HTML+docx rebuilt.

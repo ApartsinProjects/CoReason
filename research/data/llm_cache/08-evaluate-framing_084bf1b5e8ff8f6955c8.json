@@ -1,0 +1,138 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is considering launching a new product in the competitive beverage market. Conduct a thorough analysis of the potential demand for this product, including identifying key factors that could influence its success. Based on your analysis, design a pricing strategy that maximizes revenue while ensuring market penetration. Your report should include both qualitative and quantitative assessments, but do not focus on external market research data. Determine how you will present your findings to upper management, specifying what kind of visual aids or metrics you might use. The final output should be a detailed document outlining your approach and strategy.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to figure out if people will want to buy our new drink and what might make them want to buy it. We should think about things like trends in drinks, what people like, and what makes a drink popular.\"}, {\"section_type\": \"Key Factors\", \"content\": \"Identify things that could affect how well our drink sells, such as taste, price, packaging, and advertising. Also consider the competition and what they are doing.\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Look at how many people might want to buy our drink and at what price. We can create a simple survey or use our own ideas about what people might think.\"}, {\"section_type\": \"Pricing Strategy\", \"content\": \"Think about how much to charge for our drink. We want to make money but also get people to try it. We could look at prices of similar drinks to help decide.\"}, {\"section_type\": \"Presentation of Findings\", \"content\": \"Plan how to show our ideas to the bosses. We could use charts or graphs to make it clear. Maybe show some pictures of the drink or examples of advertising.\"}, {\"section_type\": \"Final Document\", \"content\": \"Write everything down in a clear way. Include our ideas about demand, pricing, and how we will present it. Make sure it’s easy to understand.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Key Variables",
+          "description": "Student correctly identifies and defines the key variables relevant to the supply and demand problem.",
+          "excellent_indicator": "All relevant variables are identified and clearly defined, showing a deep understanding of their roles in the market.",
+          "poor_indicator": "Key variables are either missing or poorly defined, leading to confusion about their relevance."
+        },
+        {
+          "name": "Articulation of the Problem Context",
+          "description": "Student effectively describes the context and background of the problem, including market conditions and stakeholder impacts.",
+          "excellent_indicator": "The context is thoroughly articulated, providing a clear picture of the market dynamics involved.",
+          "poor_indicator": "The context is vague or incomplete, lacking essential details that affect the understanding of the problem."
+        },
+        {
+          "name": "Clarity of the Well-Defined Task",
+          "description": "Student translates the ill-defined problem into a clear, actionable task that can be analyzed using microeconomic principles.",
+          "excellent_indicator": "The task is well-structured and explicitly aligns with microeconomic analysis methods and terminology.",
+          "poor_indicator": "The task is unclear or misaligned with microeconomic analysis, making it difficult to approach systematically."
+        }
+      ],
+      "typical_errors": [
+        "Failing to identify all key variables affecting supply and demand.",
+        "Describing the context in overly simplistic terms without considering market complexities.",
+        "Formulating a task that lacks specificity or measurable outcomes."
+      ]
+    },
+    "best_framing": {
+      "base": "Our company is considering launching a new product in the competitive beverage market. Conduct a thorough analysis of the potential demand for this product, including identifying key factors that could influence its success. Based on your analysis, design a pricing strategy that maximizes revenue while ensuring market penetration. Your report should include both qualitative and quantitative assessments, but do not focus on external market research data. Determine how you will present your findings to upper management, specifying what kind of visual aids or metrics you might use. The final output should be a detailed document outlining your approach and strategy.",
+      "refinement_sections": [
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Type of Beverage Product",
+              "description": "The specific type of beverage product (e.g., energy drink, soft drink, health beverage) needs to be defined to tailor the analysis to relevant market dynamics and consumer preferences.",
+              "addresses_gap": "What specific type of beverage product is being considered?"
+            },
+            {
+              "title": "Target Market Demographics",
+              "description": "Identifying the target market demographics (age, income level, lifestyle) is essential for understanding demand and crafting an effective marketing strategy.",
+              "addresses_gap": "What are the target market demographics or segments?"
+            },
+            {
+              "title": "Timeframe for Analysis",
+              "description": "Specifying the timeframe for the demand analysis (short-term vs. long-term) will help in setting realistic expectations for market penetration and revenue generation.",
+              "addresses_gap": "What timeframe should the analysis cover (e.g., short-term, long-term)?"
+            }
+          ]
+        },
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Market Competitiveness",
+              "description": "Assume that the beverage market is highly competitive, which will influence pricing strategies and demand elasticity.",
+              "addresses_gap": "Assumes the competitive nature of the beverage market."
+            },
+            {
+              "title": "Consumer Preferences",
+              "description": "Assume that consumer preferences can change rapidly, which may affect demand forecasts and pricing strategies.",
+              "addresses_gap": "Assumes variability in consumer preferences."
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Revenue Targets",
+              "description": "Define specific revenue targets that will indicate the success of the pricing strategy and market penetration efforts.",
+              "addresses_gap": "How will the success of the pricing strategy be measured?"
+            },
+            {
+              "title": "Market Share Goals",
+              "description": "Establish goals for market share within a defined timeframe to evaluate the effectiveness of the launch strategy.",
+              "addresses_gap": "What are the metrics for measuring market penetration?"
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "Exclusion of External Market Research",
+              "description": "Clarify that the analysis will not include external market research data, focusing instead on internal data and insights.",
+              "addresses_gap": "The problem states not to focus on external market research data."
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses the identification of key variables, articulation of the problem context, and clarity of the well-defined task by clarifying ambiguities, establishing assumptions, and defining success metrics."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The framing provided lacks specificity and depth in several areas. For example, in the 'Problem Definition' section, stating 'we need to figure out if people will want to buy our new drink' is too vague and does not define what type of beverage is being considered. Additionally, the 'Demand Analysis' section mentions creating a survey but does not specify what questions would be asked or how the data would be analyzed. This lack of detail can lead to confusion about how to approach the task systematically.",
+  "better_alternative": "A stronger framing would clearly define the type of beverage product being launched, such as an energy drink or a health beverage. It should also include specific target market demographics to tailor the analysis effectively. Moreover, articulating the timeframe for the demand analysis (short-term vs. long-term) would help set realistic expectations. Including defined success metrics, such as revenue targets and market share goals, would provide measurable outcomes for the pricing strategy.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Key Variables",
+      "score": "C",
+      "internal_note": "Key variables such as specific product type and target market demographics are missing."
+    },
+    {
+      "criterion_name": "Articulation of the Problem Context",
+      "score": "C",
+      "internal_note": "The context is vague, lacking essential details about market dynamics."
+    },
+    {
+      "criterion_name": "Clarity of the Well-Defined Task",
+      "score": "B",
+      "internal_note": "The task is somewhat structured but lacks specificity in analysis methods and metrics."
+    }
+  ],
+  "strengths": [
+    "The student identified some relevant factors that could influence demand, such as taste, price, and advertising.",
+    "The presentation of findings section suggests using visual aids, which is a good approach for communicating ideas."
+  ],
+  "refinements_correctly_selected": [
+    "Key Factors",
+    "Demand Analysis",
+    "Pricing Strategy",
+    "Presentation of Findings"
+  ],
+  "refinements_missed": [
+    "Clarifications regarding the type of beverage product",
+    "Target market demographics",
+    "Timeframe for analysis",
+    "Success metrics such as revenue targets and market share goals"
+  ],
+  "unnecessary_selections": []
+}

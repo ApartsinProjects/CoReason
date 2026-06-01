@@ -1,0 +1,9 @@
+{
+  "commands": [
+    "Consider that composite indexes may not always improve performance and can affect write operations.",
+    "Acknowledge that table scans may still occur even with new indexes and clarify that they will not be completely eliminated.",
+    "Explain more about how to analyze query patterns for better index creation.",
+    "Add examples of specific slow queries to support the proposal.",
+    "Mention the importance of monitoring both read and write performance after implementing the new indexes."
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "refinement_sections": [
+    {
+      "section_type": "Problem Understanding",
+      "content": "The problem is about slow queries in a customer database with many records. I need to understand what types of queries are slow and which indexes are currently used."
+    },
+    {
+      "section_type": "Data Collection",
+      "content": "I should find out what the current indexing strategy is and gather data on the specific queries that are performing slowly. This might involve looking at query execution times and the database schema."
+    },
+    {
+      "section_type": "Indexing Strategy",
+      "content": "I need to learn about different indexing methods. For example, I could look into B-trees, hash indexes, or composite indexes. I should then think about which might work best for the queries that are slow."
+    },
+    {
+      "section_type": "Impact Analysis",
+      "content": "I should consider how changing indexes might affect write operations because adding indexes can slow down inserts and updates. I need to think about the balance between read performance and write performance."
+    },
+    {
+      "section_type": "Data Integrity Considerations",
+      "content": "I need to look into how new indexes could affect data integrity. For example, I should check if there are any constraints or if the indexes might cause issues with data consistency."
+    },
+    {
+      "section_type": "Report Structure",
+      "content": "The report should have an introduction, sections on the current situation, proposed indexing strategy, expected performance improvements, and potential trade-offs. I will also summarize my findings at the end."
+    }
+  ]
+}

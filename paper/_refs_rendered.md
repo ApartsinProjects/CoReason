@@ -30,6 +30,8 @@ Durkin, K., & Rittle-Johnson, B. (2012). The Effectiveness of Using Incorrect Ex
 
 Facione, P. A. (1990). Critical Thinking: A Statement of Expert Consensus for Purposes of Educational Assessment and Instruction (The Delphi Report). *American Philosophical Association*.
 
+Fan, Y., Tang, L., Le, H., Shen, K., Tan, S., Zhao, Y., Shen, Y., Li, X., & Ga{\v{s}}evi{\'c}, D. (2025). Beware of Metacognitive Laziness: Effects of Generative Artificial Intelligence on Learning Motivation, Processes, and Performance. *British Journal of Educational Technology*, 56(2), 489–530. https://doi.org/10.1111/bjet.13544
+
 Feng, Y., Wang, S., Cheng, Z., Wan, Y., & Chen, D. (2025). Are We on the Right Way to Assessing LLM-as-a-Judge?. *arXiv preprint arXiv:2512.16041*.
 
 Fernandes, D., Villa, S., Nicholls, S., Haavisto, O., Buschek, D., Schmidt, A., Kosch, T., Shen, C., & Welsch, R. (2024). Performance and Metacognition Disconnect when Reasoning in Human-AI Interaction. *arXiv preprint arXiv:2409.16708*.

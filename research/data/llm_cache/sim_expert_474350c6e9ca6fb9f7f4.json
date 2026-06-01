@@ -1,0 +1,8 @@
+{
+  "commands": [
+    "Revise the assumption regarding composite indexes to include a detailed analysis of their maintenance costs on write operations, including potential scenarios where they may not lead to performance gains.",
+    "Incorporate specific metrics for measuring performance improvements, such as average query response time before and after index implementation, and establish benchmarks for success evaluation.",
+    "Address the potential downsides of partial indexes by discussing how to ensure the indexed subset accurately reflects the overall data distribution, and consider scenarios where this might not hold true.",
+    "Include a methodology for effectively analyzing query patterns, such as implementing query logging or using performance monitoring tools to systematically identify and prioritize slow queries."
+  ]
+}

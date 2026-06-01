@@ -1,0 +1,9 @@
+{
+  "commands": [
+    "Include an analysis of the model's complexity to determine if it contributes to overfitting, such as examining the number of parameters relative to the size of the training dataset.",
+    "Specify which regularization method (L1, L2, or Elastic Net) would be most appropriate based on the model type (e.g., logistic regression, decision trees) and the nature of the data.",
+    "Address potential class imbalance in the dataset by evaluating the distribution of classes and considering techniques such as SMOTE or class weighting to improve precision and recall metrics.",
+    "Incorporate a validation set in the model evaluation process to fine-tune hyperparameters and validate model performance before testing on the unseen data.",
+    "Provide a deeper analysis of the AUC-ROC curve to understand the trade-offs between sensitivity and specificity, and how it relates to the chosen threshold for classification."
+  ]
+}

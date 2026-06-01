@@ -1,0 +1,8 @@
+{
+  "commands": [
+    "Revise the rationale for composite indexes to include a detailed analysis of the trade-offs associated with index maintenance on write operations, emphasizing that while they can improve read performance, they may also increase the cost of updates and inserts.",
+    "Incorporate specific metrics or benchmarks for measuring performance improvements, such as average query response time before and after implementation, to provide a clearer evaluation framework for the proposed indexing strategy.",
+    "Address the potential drawbacks of partial indexes by discussing the importance of ensuring that the indexed subset accurately reflects the distribution of data in the database, and consider scenarios where this may not hold true.",
+    "Include a detailed methodology for analyzing query patterns, suggesting the implementation of query logging and performance monitoring tools to systematically identify slow queries and their frequency, which would better inform the indexing strategy."
+  ]
+}

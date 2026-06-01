@@ -1,0 +1,32 @@
+{
+  "refinement_sections": [
+    {
+      "section_type": "Problem Definition",
+      "content": "Clearly define the scope of the slow query performance issue, including specific queries that exhibit poor performance, the frequency of these queries, and the average response times compared to acceptable benchmarks. Identify the key performance indicators (KPIs) that will be used to measure the success of the indexing strategy."
+    },
+    {
+      "section_type": "Current Indexing Strategy Analysis",
+      "content": "Conduct a thorough analysis of the existing indexing strategy, including the types of indexes currently in use (e.g., B-tree, hash, full-text), their distribution across the database schema, and the specific columns they cover. Evaluate the effectiveness of these indexes based on query execution plans and the database's workload characteristics."
+    },
+    {
+      "section_type": "Proposed Indexing Strategy",
+      "content": "Design a new indexing approach that may include the introduction of composite indexes, covering indexes, or partitioned indexes depending on the query patterns identified. Justify the choice of indexes based on the specific queries that need optimization and the overall data access patterns observed in the database."
+    },
+    {
+      "section_type": "Impact Assessment",
+      "content": "Evaluate the potential impact of the proposed indexing strategy on write operations, including insert, update, and delete operations. Discuss how the introduction of new indexes may affect the performance of these operations and the trade-offs involved in terms of storage and maintenance overhead."
+    },
+    {
+      "section_type": "Data Integrity Considerations",
+      "content": "Address any concerns related to data integrity that may arise from the new indexing strategy, including how the indexes will be maintained during concurrent write operations and the implications for transaction isolation levels."
+    },
+    {
+      "section_type": "Expected Performance Improvements",
+      "content": "Estimate the expected performance improvements in query response times based on the proposed indexing strategy. This should include quantitative benchmarks derived from testing or simulation, comparing the performance before and after the implementation of the new indexes."
+    },
+    {
+      "section_type": "Trade-offs and Recommendations",
+      "content": "Summarize the trade-offs involved in the proposed indexing strategy, including potential impacts on system resources, maintenance complexity, and the balance between read and write performance. Provide recommendations for monitoring and adjusting the indexing strategy over time to adapt to changing data access patterns."
+    }
+  ]
+}

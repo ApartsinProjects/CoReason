@@ -1,0 +1,8 @@
+{
+  "commands": [
+    "Clarify that while composite indexes can improve performance, they should be used judiciously as they may increase the overhead for write operations, potentially leading to slower insert/update performance.",
+    "Acknowledge that while the proposed strategy aims to minimize full table scans, it is unrealistic to expect that all scans will be eliminated; some queries may still require them depending on their complexity and the data distribution.",
+    "Include a detailed analysis of the trade-offs involved with each type of index proposed, particularly focusing on how they affect both read and write performance under different workloads.",
+    "Suggest implementing monitoring tools to continuously assess the performance impact of the new indexing strategy and make adjustments as necessary based on real-world usage patterns."
+  ]
+}

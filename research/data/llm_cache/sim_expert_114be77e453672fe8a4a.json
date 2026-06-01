@@ -1,0 +1,8 @@
+{
+  "commands": [
+    "Clarify that while composite indexes can improve performance, they should be implemented only after careful analysis of the specific query patterns and their impact on write operations.",
+    "Acknowledge that while the proposed strategy aims to reduce full table scans, it is unlikely to completely eliminate them; provide a more realistic expectation of performance improvements.",
+    "Include a discussion on the potential trade-offs of maintaining multiple indexes, particularly how they may affect the overall database performance during high write operations.",
+    "Suggest regular monitoring and analysis of query performance post-implementation to ensure that the indexing strategy remains effective and adjust as necessary."
+  ]
+}
