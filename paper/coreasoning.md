@@ -221,7 +221,7 @@ knowledge (Flavell, 1979).
 
 **Judging** is metacognitive monitoring (Nelson & Narens, 1990) directed at an external generative
 source. Its content is the evaluative core of critical thinking, the Delphi-consensus skills of
-analysis and evaluation (Facione, 1990) and the Paul-Elder intellectual standards, which supply a
+analysis and evaluation (Facione, 1990) and the Paul and Elder (2006) intellectual standards, which supply a
 ready vocabulary for assessing reasoning. Because the object being judged is a *communicated knowledge
 claim* from a fluent but fallible source, the most precise anchor is epistemic vigilance (Sperber et
 al., 2010), which pairs source monitoring (is this source trustworthy?) with content evaluation (is
@@ -591,16 +591,17 @@ deployment that scores judging without seeded ground truth.
 partly built in: its competence is operationalized by a controlled selection over ground-truth issues,
 so its clean diagonal (+2.00, with zero cross-effects) confirms the grader correctly rewards
 recall/precision but is not, by itself, a discovered separation. Framing and Steering responses are
-free-text and blind-graded, so their positive own-effects (+0.60, +0.50) with near-zero cross-effects
+free-text and blind-graded, so their positive own-effects (+0.62, +0.43) with near-zero cross-effects
 are the stronger evidence. (ii) The grader is a single model family; whether the dissociation replicates
 across grader backends, and whether the automated grades agree with human experts, are the validity
-questions deferred to Section 10. (iii) With three grade indicators a stable factor model is
-under-identified, so we report the manipulation-based effect matrix and the inter-skill correlations
-rather than an exploratory factor analysis. (iv) Steering shows the weakest own-effect (+0.50). We
-initially attributed this to grader leniency and tested that hypothesis directly with an ablation:
-re-grading the original 40-learner subset under a deliberately strict steering rubric (which mandates a C for vague
-or non-prioritized commands). The strict rubric did *not* recover a larger effect, the steering
-own-effect was +0.40, statistically indistinguishable from +0.50, while the overall dissociation
+questions deferred to Section 10. (iii) As noted above, with three indicators a factor model is
+under-identified, so the separability evidence rests on the manipulation-based effect matrix and the
+inter-skill correlations, not on a confirmatory dimensionality test. (iv) Steering shows the weakest own-effect (+0.43 at N=80).
+We initially attributed this to grader leniency and tested that hypothesis directly with an ablation:
+re-grading the original 40-learner subset under a deliberately strict steering rubric (which mandates a
+C for vague or non-prioritized commands). On that subset the standard rubric gives a steering own-effect
+of +0.50; the strict rubric did *not* recover a larger effect (+0.40, statistically indistinguishable),
+while the overall dissociation
 persisted (ratio 27.5; the designed contrasts still decouple). The weak steering signal is therefore
 not a simple rubric-leniency artifact. The more likely causes are the confound that Proposition P2
 predicts (steering quality is bounded by the judging it follows, so a competence manipulation on
