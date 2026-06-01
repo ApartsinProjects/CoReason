@@ -1,0 +1,72 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is experiencing performance issues with a sorting algorithm used in our data analysis application. I need you to analyze the current implementation and optimize it. Please ensure that the output retains the correct order of elements after sorting and can handle large datasets efficiently. You should also provide a comparison with at least one alternative algorithm to demonstrate the improvements. Be prepared to present your findings in a report, including any assumptions made during your analysis. Time is of the essence, as we need this resolved in the next two weeks.",
+    "student_framing": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The company has a sorting algorithm that is not working well for sorting data. I need to figure out what is wrong with it and how to make it better.\"}, {\"section_type\": \"Goals\", \"content\": \"I need to make sure the sorting still works correctly and can sort big amounts of data quickly. Also, I have to compare it with another sorting method.\"}, {\"section_type\": \"Tasks\", \"content\": \"1. Look at the current sorting algorithm and see how it works. 2. Find out what makes it slow or not good. 3. Try to make it faster or better. 4. Pick another sorting algorithm to compare with. 5. Write a report about what I did, what I found, and any guesses I made.\"}, {\"section_type\": \"Assumptions\", \"content\": \"I assume that the current algorithm is not optimized for large datasets. I also think that the comparison algorithm should be one that is commonly used and well-known.\"}, {\"section_type\": \"Timeframe\", \"content\": \"I need to finish all of this in two weeks, so I should plan my time carefully to get it done.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Clearly identifies and articulates the key components of the ill-defined problem, including input and output specifications.",
+          "excellent_indicator": "Accurately describes the problem with all necessary components and constraints, using appropriate terminology.",
+          "poor_indicator": "Fails to identify crucial components of the problem or misinterprets the problem requirements."
+        },
+        {
+          "name": "Task Specification",
+          "description": "Translates the ill-defined problem into a well-defined task with clear objectives and steps to solve it.",
+          "excellent_indicator": "Defines a comprehensive and clear task that outlines a logical approach to solving the problem.",
+          "poor_indicator": "Provides an ambiguous or incomplete task definition that lacks clarity or logical structure."
+        },
+        {
+          "name": "Algorithm Selection Consideration",
+          "description": "Considers appropriate algorithms for sorting or searching based on the problem context and requirements.",
+          "excellent_indicator": "Selects an optimal algorithm that is well-suited for the specific problem characteristics and justifies the choice effectively.",
+          "poor_indicator": "Chooses a suboptimal or irrelevant algorithm without proper justification."
+        }
+      ],
+      "typical_errors": [
+        "Misunderstanding the problem requirements leading to incorrect task framing.",
+        "Neglecting to specify input and output clearly, resulting in ambiguity.",
+        "Selecting an inappropriate algorithm based on the problem context."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks specificity in identifying the key components of the problem. For example, in the 'Problem Understanding' section, the student states, 'The company has a sorting algorithm that is not working well for sorting data,' but does not specify the nature of the performance issues or the requirements for handling large datasets. Additionally, the 'Goals' section mentions comparing with another sorting method but does not specify criteria for comparison, such as time complexity or space efficiency. The 'Tasks' section is somewhat vague, especially in step 2, where it says, 'Find out what makes it slow or not good,' without detailing how this analysis will be conducted. The 'Assumptions' section could be more detailed, particularly in justifying why a commonly used algorithm is chosen for comparison.",
+  "better_alternative": "A stronger framing would explicitly state the problem's performance issues, such as whether the algorithm is slow in terms of time complexity or inefficient in memory usage. It would also detail the input and output specifications, such as the size of the datasets and the expected order of elements. The 'Goals' section should include specific criteria for evaluating the alternative algorithm, like execution time or memory usage. In the 'Tasks' section, the student could outline specific methods for analyzing the current algorithm's performance, such as profiling or benchmarking. The 'Assumptions' section should justify the choice of comparison algorithm based on the problem's context, such as dataset characteristics or operational constraints.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Identification",
+      "score": "B",
+      "internal_note": "The student identifies the problem but lacks specificity in describing performance issues and constraints."
+    },
+    {
+      "criterion_name": "Task Specification",
+      "score": "B",
+      "internal_note": "The tasks are outlined but lack detailed steps and clarity on how to achieve the objectives."
+    },
+    {
+      "criterion_name": "Algorithm Selection Consideration",
+      "score": "C",
+      "internal_note": "The student mentions comparing with another algorithm but does not justify the choice or specify criteria for comparison."
+    }
+  ],
+  "strengths": [
+    "The student correctly identifies the need to analyze and optimize the current sorting algorithm.",
+    "The student acknowledges the importance of comparing with an alternative algorithm."
+  ],
+  "refinements_correctly_selected": [
+    "Problem Understanding",
+    "Goals",
+    "Tasks",
+    "Assumptions",
+    "Timeframe"
+  ],
+  "refinements_missed": [
+    "Detailed criteria for algorithm comparison",
+    "Specific methods for performance analysis"
+  ],
+  "unnecessary_selections": []
+}

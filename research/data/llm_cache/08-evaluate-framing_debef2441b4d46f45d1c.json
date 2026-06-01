@@ -1,0 +1,74 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is considering launching a new product in the competitive beverage market. Conduct a thorough analysis of the potential demand for this product, including identifying key factors that could influence its success. Based on your analysis, design a pricing strategy that maximizes revenue while ensuring market penetration. Your report should include both qualitative and quantitative assessments, but do not focus on external market research data. Determine how you will present your findings to upper management, specifying what kind of visual aids or metrics you might use. The final output should be a detailed document outlining your approach and strategy.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the new beverage product, including its type (e.g., soft drink, energy drink, health beverage), target demographic (age, lifestyle, preferences), and unique selling propositions (USPs) that differentiate it from existing products in the market.\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Identify and analyze key factors influencing demand, such as consumer preferences, trends in health and wellness, pricing sensitivity, and competitive landscape. Develop a demand curve based on hypothetical scenarios of price changes and consumer responses, and consider factors like seasonality and promotional impacts.\"}, {\"section_type\": \"Market Segmentation\", \"content\": \"Segment the potential market based on demographics, psychographics, and behavioral characteristics. Determine which segments show the highest potential demand and profitability, and outline tailored marketing strategies for each segment.\"}, {\"section_type\": \"Pricing Strategy Development\", \"content\": \"Design a pricing strategy that incorporates cost-plus pricing, value-based pricing, and competitive pricing. Include a break-even analysis to determine the minimum sales volume required at various price points to cover costs and achieve desired profit margins.\"}, {\"section_type\": \"Revenue Maximization Tactics\", \"content\": \"Explore various tactics for maximizing revenue, such as bundling, promotional pricing, and loyalty programs. Analyze the impact of these tactics on both short-term sales and long-term brand loyalty.\"}, {\"section_type\": \"Presentation Strategy\", \"content\": \"Outline a strategy for presenting findings to upper management, including a structured report format. Specify the use of visual aids such as graphs, charts, and infographics to illustrate demand trends, pricing strategies, and potential revenue outcomes. Include key performance indicators (KPIs) to measure success post-launch.\"}, {\"section_type\": \"Implementation Plan\", \"content\": \"Develop an implementation plan that includes timelines, responsibilities, and resource allocation for launching the product. Address potential risks and mitigation strategies to ensure a smooth market entry.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Key Variables",
+          "description": "Student correctly identifies and defines the key variables relevant to the supply and demand problem.",
+          "excellent_indicator": "All relevant variables are identified and clearly defined, showing a deep understanding of their roles in the market.",
+          "poor_indicator": "Key variables are either missing or poorly defined, leading to confusion about their relevance."
+        },
+        {
+          "name": "Articulation of the Problem Context",
+          "description": "Student effectively describes the context and background of the problem, including market conditions and stakeholder impacts.",
+          "excellent_indicator": "The context is thoroughly articulated, providing a clear picture of the market dynamics involved.",
+          "poor_indicator": "The context is vague or incomplete, lacking essential details that affect the understanding of the problem."
+        },
+        {
+          "name": "Clarity of the Well-Defined Task",
+          "description": "Student translates the ill-defined problem into a clear, actionable task that can be analyzed using microeconomic principles.",
+          "excellent_indicator": "The task is well-structured and explicitly aligns with microeconomic analysis methods and terminology.",
+          "poor_indicator": "The task is unclear or misaligned with microeconomic analysis, making it difficult to approach systematically."
+        }
+      ],
+      "typical_errors": [
+        "Failing to identify all key variables affecting supply and demand.",
+        "Describing the context in overly simplistic terms without considering market complexities.",
+        "Formulating a task that lacks specificity or measurable outcomes."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing does a good job of identifying several key aspects of the problem, such as defining the product and analyzing demand. However, it lacks depth in articulating the broader market context and the competitive landscape, which are crucial for understanding the potential success of the new product. Additionally, while the student includes a section on revenue maximization tactics, it could benefit from a more detailed exploration of how these tactics align with the overall market strategy.",
+  "better_alternative": "A stronger framing would involve a more comprehensive analysis of the competitive landscape, including specific competitors and their market positions. It would also include a deeper examination of consumer behavior trends and how they impact demand. Additionally, integrating a clear link between the pricing strategy and the identified market segments would provide a more cohesive approach to maximizing revenue.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Key Variables",
+      "score": "B",
+      "internal_note": "The student identifies several important variables like consumer preferences and pricing sensitivity but misses a deeper exploration of competitive dynamics."
+    },
+    {
+      "criterion_name": "Articulation of the Problem Context",
+      "score": "C",
+      "internal_note": "The context is not fully articulated; it lacks a comprehensive view of the market conditions and competitive landscape."
+    },
+    {
+      "criterion_name": "Clarity of the Well-Defined Task",
+      "score": "B",
+      "internal_note": "The task is generally clear but could be better aligned with microeconomic principles, particularly in terms of linking pricing strategies to market segments."
+    }
+  ],
+  "strengths": [
+    "Clearly defined new beverage product and target demographic.",
+    "Comprehensive demand analysis including consumer preferences and trends.",
+    "Detailed pricing strategy with various approaches."
+  ],
+  "refinements_correctly_selected": [
+    "Problem Definition",
+    "Demand Analysis",
+    "Pricing Strategy Development",
+    "Presentation Strategy"
+  ],
+  "refinements_missed": [
+    "Articulation of broader market context",
+    "Integration of competitive analysis into demand analysis"
+  ],
+  "unnecessary_selections": [
+    "Implementation Plan"
+  ]
+}

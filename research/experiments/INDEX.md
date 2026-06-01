@@ -14,7 +14,7 @@ learning-outcome claims; simulated learners; human-rater study prepared-not-run.
 | E2 | Grader test-retest reliability | Re-grade fixed transcripts N=5 | 92% self-consistent (precision); judging deterministic | done |
 | Robustness | Grader-backend robustness | Re-grade same 40 with gpt-4o-mini | Dissociation replicates (ratio 7.0); J own-effect 2.00→0.65 | done |
 | Ablation-S | Harsher-Steering ablation | Strict steering rubric re-grade | Steering own-effect +0.40 (not higher) → not a leniency artifact | done |
-| E4 | Ground-truth ablation | Strip gold-framing + seeded issues | (quantifies scaffolding contribution) | running |
+| E4 | Ground-truth ablation | Strip gold-framing + seeded issues | Judging collapses (+2.00→+0.45); Framing unaffected (+0.75); separability survives (ratio 29) | done |
 | Human | Human-rater agreement (κ/α) | Blind experts re-grade a sample | prepared; needs human raters | prepared, not run |
 
 ## Artifacts

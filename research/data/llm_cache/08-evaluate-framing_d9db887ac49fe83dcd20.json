@@ -1,0 +1,75 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is considering launching a new product in the competitive beverage market. Conduct a thorough analysis of the potential demand for this product, including identifying key factors that could influence its success. Based on your analysis, design a pricing strategy that maximizes revenue while ensuring market penetration. Your report should include both qualitative and quantitative assessments, but do not focus on external market research data. Determine how you will present your findings to upper management, specifying what kind of visual aids or metrics you might use. The final output should be a detailed document outlining your approach and strategy.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly articulate the specific beverage product being considered for launch, including its unique selling propositions (USPs) and target demographic. This will help in understanding the market segment and tailoring the analysis accordingly.\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Identify and analyze key factors influencing demand, such as consumer preferences, trends in health and wellness, seasonality, and competitive landscape. Conduct a SWOT analysis (Strengths, Weaknesses, Opportunities, Threats) to assess internal and external factors that may impact demand.\"}, {\"section_type\": \"Quantitative Assessment\", \"content\": \"Develop a demand forecasting model using historical sales data of similar products, considering variables such as price elasticity of demand, income elasticity, and cross-price elasticity with competitors' products. Use statistical methods to project potential sales volumes.\"}, {\"section_type\": \"Qualitative Assessment\", \"content\": \"Conduct focus groups or expert interviews to gather insights on consumer perceptions and attitudes towards the new product. Analyze qualitative data to identify themes that could inform product positioning and marketing strategies.\"}, {\"section_type\": \"Pricing Strategy\", \"content\": \"Formulate a pricing strategy that considers cost-plus pricing, value-based pricing, and competitive pricing. Analyze the trade-offs between penetration pricing and skimming strategies to determine the optimal price point that maximizes revenue while ensuring market entry.\"}, {\"section_type\": \"Presentation of Findings\", \"content\": \"Outline the structure of the report, including an executive summary, detailed analysis sections, and actionable recommendations. Specify the use of visual aids such as graphs, charts, and infographics to present quantitative data clearly. Include metrics like projected market share, revenue forecasts, and break-even analysis to support the recommendations.\"}, {\"section_type\": \"Implementation Plan\", \"content\": \"Propose an implementation timeline for the product launch, including key milestones and metrics for success. Discuss potential challenges in execution and strategies to mitigate risks.\"}, {\"section_type\": \"Feedback and Revision\", \"content\": \"Establish a process for gathering feedback from upper management post-presentation to refine the strategy based on their insights and suggestions.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Key Variables",
+          "description": "Student correctly identifies and defines the key variables relevant to the supply and demand problem.",
+          "excellent_indicator": "All relevant variables are identified and clearly defined, showing a deep understanding of their roles in the market.",
+          "poor_indicator": "Key variables are either missing or poorly defined, leading to confusion about their relevance."
+        },
+        {
+          "name": "Articulation of the Problem Context",
+          "description": "Student effectively describes the context and background of the problem, including market conditions and stakeholder impacts.",
+          "excellent_indicator": "The context is thoroughly articulated, providing a clear picture of the market dynamics involved.",
+          "poor_indicator": "The context is vague or incomplete, lacking essential details that affect the understanding of the problem."
+        },
+        {
+          "name": "Clarity of the Well-Defined Task",
+          "description": "Student translates the ill-defined problem into a clear, actionable task that can be analyzed using microeconomic principles.",
+          "excellent_indicator": "The task is well-structured and explicitly aligns with microeconomic analysis methods and terminology.",
+          "poor_indicator": "The task is unclear or misaligned with microeconomic analysis, making it difficult to approach systematically."
+        }
+      ],
+      "typical_errors": [
+        "Failing to identify all key variables affecting supply and demand.",
+        "Describing the context in overly simplistic terms without considering market complexities.",
+        "Formulating a task that lacks specificity or measurable outcomes."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing does a good job of identifying several important aspects, but there are some areas that could be improved. For example, while they mention conducting a SWOT analysis, they do not clearly define all the key variables that would be involved in this analysis, such as specific consumer demographics or detailed competitive factors. Additionally, the context of the problem is somewhat limited; the student does not delve deeply into the specific market conditions or stakeholder impacts, which are crucial for a comprehensive understanding. Furthermore, while the student outlines a structured approach, the clarity of the well-defined task could be improved by explicitly aligning it with microeconomic principles and ensuring that each step is actionable and measurable.",
+  "better_alternative": "A stronger framing would include a more detailed identification of key variables, such as specific consumer demographics, detailed competitive factors, and economic indicators that influence demand and pricing. The context should be expanded to include a thorough analysis of the current market conditions and stakeholder impacts, providing a comprehensive background. Additionally, the task should be clearly aligned with microeconomic principles, ensuring that each step is actionable and includes measurable outcomes, such as specific metrics for success.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Key Variables",
+      "score": "B",
+      "internal_note": "Student identifies some key variables but lacks depth in defining them, especially in the SWOT analysis."
+    },
+    {
+      "criterion_name": "Articulation of the Problem Context",
+      "score": "B",
+      "internal_note": "The context is described but lacks depth in terms of market conditions and stakeholder impacts."
+    },
+    {
+      "criterion_name": "Clarity of the Well-Defined Task",
+      "score": "B",
+      "internal_note": "The task is structured but could be more explicitly aligned with microeconomic principles and include measurable outcomes."
+    }
+  ],
+  "strengths": [
+    "The student effectively outlines a structured approach to the problem.",
+    "The inclusion of both quantitative and qualitative assessments is well-considered."
+  ],
+  "refinements_correctly_selected": [
+    "Demand Analysis",
+    "Quantitative Assessment",
+    "Qualitative Assessment",
+    "Pricing Strategy",
+    "Presentation of Findings"
+  ],
+  "refinements_missed": [
+    "Identification of specific consumer demographics",
+    "Detailed competitive factors",
+    "Economic indicators influencing demand and pricing"
+  ],
+  "unnecessary_selections": [
+    "Feedback and Revision"
+  ]
+}

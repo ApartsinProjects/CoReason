@@ -1,0 +1,69 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is experiencing performance issues with a sorting algorithm used in our data analysis application. I need you to analyze the current implementation and optimize it. Please ensure that the output retains the correct order of elements after sorting and can handle large datasets efficiently. You should also provide a comparison with at least one alternative algorithm to demonstrate the improvements. Be prepared to present your findings in a report, including any assumptions made during your analysis. Time is of the essence, as we need this resolved in the next two weeks.",
+    "student_framing": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The company has a sorting algorithm that is not performing well, but it's not clear what specific issues it has. We need to find out if it's slow, uses too much memory, or has bugs.\"}, {\"section_type\": \"Requirements\", \"content\": \"The algorithm must sort data correctly and be able to handle large datasets. We also need to compare it with another sorting algorithm.\"}, {\"section_type\": \"Output Expectations\", \"content\": \"The report should include the sorted results, the comparison of the current algorithm with another one, and any assumptions made.\"}, {\"section_type\": \"Timeline\", \"content\": \"We have two weeks to complete this task, so we should plan to analyze the current sorting algorithm first, then work on optimization, and finally prepare the report.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Clearly identifies and articulates the key components of the ill-defined problem, including input and output specifications.",
+          "excellent_indicator": "Accurately describes the problem with all necessary components and constraints, using appropriate terminology.",
+          "poor_indicator": "Fails to identify crucial components of the problem or misinterprets the problem requirements."
+        },
+        {
+          "name": "Task Specification",
+          "description": "Translates the ill-defined problem into a well-defined task with clear objectives and steps to solve it.",
+          "excellent_indicator": "Defines a comprehensive and clear task that outlines a logical approach to solving the problem.",
+          "poor_indicator": "Provides an ambiguous or incomplete task definition that lacks clarity or logical structure."
+        },
+        {
+          "name": "Algorithm Selection Consideration",
+          "description": "Considers appropriate algorithms for sorting or searching based on the problem context and requirements.",
+          "excellent_indicator": "Selects an optimal algorithm that is well-suited for the specific problem characteristics and justifies the choice effectively.",
+          "poor_indicator": "Chooses a suboptimal or irrelevant algorithm without proper justification."
+        }
+      ],
+      "typical_errors": [
+        "Misunderstanding the problem requirements leading to incorrect task framing.",
+        "Neglecting to specify input and output clearly, resulting in ambiguity.",
+        "Selecting an inappropriate algorithm based on the problem context."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks specificity in identifying the exact performance issues with the sorting algorithm. The statement 'it's not clear what specific issues it has' indicates a need for more precise problem identification. Additionally, while the student mentions the need to compare with another algorithm, they do not specify criteria for selecting an appropriate alternative algorithm.",
+  "better_alternative": "A stronger framing would explicitly identify potential performance metrics such as time complexity or memory usage that might be problematic. It would also outline specific criteria for selecting a comparison algorithm, such as efficiency with large datasets or stability. Including these details would provide a clearer path for analysis and optimization.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Identification",
+      "score": "B",
+      "internal_note": "Identified the need to determine specific performance issues, but lacked clarity on what those issues might be."
+    },
+    {
+      "criterion_name": "Task Specification",
+      "score": "B",
+      "internal_note": "Provided a general outline of tasks but lacked detail on specific steps and criteria for algorithm comparison."
+    },
+    {
+      "criterion_name": "Algorithm Selection Consideration",
+      "score": "C",
+      "internal_note": "Did not specify criteria for selecting an alternative algorithm, which is crucial for effective comparison."
+    }
+  ],
+  "strengths": [
+    "The student correctly identified the need to compare the current algorithm with another one.",
+    "The timeline was clearly outlined, providing a structured approach to the task."
+  ],
+  "refinements_correctly_selected": [
+    "Requirements",
+    "Timeline"
+  ],
+  "refinements_missed": [
+    "Specific performance metrics to investigate",
+    "Criteria for algorithm selection"
+  ],
+  "unnecessary_selections": []
+}

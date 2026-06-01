@@ -1,0 +1,69 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is considering launching a new product in the competitive beverage market. Conduct a thorough analysis of the potential demand for this product, including identifying key factors that could influence its success. Based on your analysis, design a pricing strategy that maximizes revenue while ensuring market penetration. Your report should include both qualitative and quantitative assessments, but do not focus on external market research data. Determine how you will present your findings to upper management, specifying what kind of visual aids or metrics you might use. The final output should be a detailed document outlining your approach and strategy.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the new beverage product, including its unique selling propositions (USPs) and target demographic. Specify the type of beverage (e.g., energy drink, health-focused beverage, etc.) and the intended market segment (e.g., millennials, health-conscious consumers).\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Identify key factors influencing demand, such as consumer preferences, trends in health and wellness, and competitive pricing. Develop a framework to analyze these factors, including surveys, focus groups, and historical sales data of similar products. Consider the elasticity of demand for the beverage category.\"}, {\"section_type\": \"Market Segmentation\", \"content\": \"Segment the market based on demographics, psychographics, and behavioral characteristics. Analyze the potential size of each segment and their specific needs. This will help tailor the product features and marketing strategies to maximize appeal.\"}, {\"section_type\": \"Pricing Strategy Development\", \"content\": \"Outline a pricing strategy that includes cost-plus pricing, value-based pricing, and competitive pricing analysis. Consider psychological pricing strategies that may enhance perceived value. Include scenarios for penetration pricing versus skimming pricing based on market entry strategy.\"}, {\"section_type\": \"Revenue Maximization\", \"content\": \"Develop a model to project revenue based on different pricing strategies and demand forecasts. Include break-even analysis and sensitivity analysis to understand how changes in price or demand affect overall revenue.\"}, {\"section_type\": \"Presentation Strategy\", \"content\": \"Specify the format of the final report and presentation to upper management. Outline the use of visual aids such as graphs, charts, and infographics to illustrate demand trends, pricing strategies, and revenue projections. Include metrics such as projected market share, customer acquisition costs, and return on investment (ROI) to support recommendations.\"}, {\"section_type\": \"Conclusion and Recommendations\", \"content\": \"Summarize the key findings from the analysis and provide actionable recommendations for product launch, pricing, and marketing strategies. Highlight potential risks and mitigation strategies to ensure a successful market entry.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Key Variables",
+          "description": "Student correctly identifies and defines the key variables relevant to the supply and demand problem.",
+          "excellent_indicator": "All relevant variables are identified and clearly defined, showing a deep understanding of their roles in the market.",
+          "poor_indicator": "Key variables are either missing or poorly defined, leading to confusion about their relevance."
+        },
+        {
+          "name": "Articulation of the Problem Context",
+          "description": "Student effectively describes the context and background of the problem, including market conditions and stakeholder impacts.",
+          "excellent_indicator": "The context is thoroughly articulated, providing a clear picture of the market dynamics involved.",
+          "poor_indicator": "The context is vague or incomplete, lacking essential details that affect the understanding of the problem."
+        },
+        {
+          "name": "Clarity of the Well-Defined Task",
+          "description": "Student translates the ill-defined problem into a clear, actionable task that can be analyzed using microeconomic principles.",
+          "excellent_indicator": "The task is well-structured and explicitly aligns with microeconomic analysis methods and terminology.",
+          "poor_indicator": "The task is unclear or misaligned with microeconomic analysis, making it difficult to approach systematically."
+        }
+      ],
+      "typical_errors": [
+        "Failing to identify all key variables affecting supply and demand.",
+        "Describing the context in overly simplistic terms without considering market complexities.",
+        "Formulating a task that lacks specificity or measurable outcomes."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing does a good job of outlining various aspects of the problem, but there are some areas that need improvement. For example, while the 'Problem Definition' section specifies the need to define the beverage's unique selling propositions and target demographic, it lacks a clear mention of how these factors directly influence demand and pricing strategy. Additionally, the 'Demand Analysis' section suggests using surveys and focus groups but doesn't clarify how these methods will quantitatively assess demand without relying on external market research data, as specified in the raw problem.",
+  "better_alternative": "A stronger framing would explicitly connect the identified key variables, such as consumer preferences and competitive pricing, to the development of the pricing strategy. It would also clearly articulate how qualitative methods like focus groups can be used to derive quantitative insights without external data. Additionally, the framing could benefit from a more detailed explanation of how market segmentation will directly inform pricing and marketing strategies, ensuring alignment with the microeconomic principles of supply and demand.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Key Variables",
+      "score": "B",
+      "internal_note": "The student identifies several key variables such as consumer preferences and competitive pricing, but misses a clear link to how these influence the pricing strategy."
+    },
+    {
+      "criterion_name": "Articulation of the Problem Context",
+      "score": "B",
+      "internal_note": "The context is outlined with some depth, but lacks a thorough exploration of market dynamics and stakeholder impacts."
+    },
+    {
+      "criterion_name": "Clarity of the Well-Defined Task",
+      "score": "B",
+      "internal_note": "The task is generally clear but could be better aligned with microeconomic principles, particularly in how qualitative assessments translate to quantitative outcomes."
+    }
+  ],
+  "strengths": [
+    "The student clearly defines the target demographic and unique selling propositions in the 'Problem Definition' section.",
+    "The use of various pricing strategies and market segmentation is well-considered."
+  ],
+  "refinements_correctly_selected": [
+    "Demand Analysis",
+    "Pricing Strategy Development",
+    "Market Segmentation"
+  ],
+  "refinements_missed": [
+    "Articulation of the Problem Context"
+  ],
+  "unnecessary_selections": []
+}

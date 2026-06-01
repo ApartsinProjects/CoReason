@@ -1,0 +1,70 @@
+{
+  "_vars": {
+    "raw_problem": "Our company has recently launched a new product, and we want to assess its market performance. Please design a hypothesis test to determine if the average sales of this product exceed a certain benchmark that we have in mind. The test should evaluate the data collected from our sales team over the past three months. Additionally, prepare a report that discusses your method, findings, and any recommendations based on the results. Ensure to highlight any assumptions you make during your analysis and how they might affect your conclusions.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the product in question and the specific benchmark for average sales that needs to be exceeded. This includes identifying the time frame for the sales data collection, which is three months, and specifying the exact sales figures or metrics that constitute the benchmark.\"}, {\"section_type\": \"Hypothesis Formulation\", \"content\": \"Formulate the null hypothesis (H0) as 'The average sales of the new product do not exceed the benchmark.' Conversely, the alternative hypothesis (H1) will be 'The average sales of the new product exceed the benchmark.' Clearly state the significance level (alpha) to be used for the hypothesis test, commonly set at 0.05.\"}, {\"section_type\": \"Data Collection\", \"content\": \"Detail the data collection process from the sales team, ensuring that data is gathered consistently over the specified three-month period. Specify the method of data collection, such as whether it is through sales reports or direct input from sales personnel, and ensure that it captures all relevant sales transactions.\"}, {\"section_type\": \"Statistical Methodology\", \"content\": \"Select an appropriate statistical test for the hypothesis, such as a one-sample t-test if the sales data is normally distributed or a non-parametric test if it is not. Justify the choice of test based on the characteristics of the data.\"}, {\"section_type\": \"Assumptions\", \"content\": \"List and discuss the assumptions made during the analysis, including normality of sales data, independence of observations, and the appropriateness of the chosen statistical test. Explain how violations of these assumptions could affect the validity of the test results.\"}, {\"section_type\": \"Analysis Plan\", \"content\": \"Outline the steps for conducting the hypothesis test, including data preprocessing, conducting the test, calculating the p-value, and making a decision regarding the null hypothesis based on the p-value and the significance level.\"}, {\"section_type\": \"Report Structure\", \"content\": \"Provide a clear structure for the report that includes an introduction to the problem, methodology, results of the hypothesis test, interpretation of findings, and actionable recommendations based on the results. Ensure that visual aids such as graphs or tables are included to enhance understanding.\"}, {\"section_type\": \"Limitations and Future Research\", \"content\": \"Discuss the limitations of the current analysis, such as sample size or external market factors that could influence sales. Suggest areas for future research to further assess market performance or to refine the product offering.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Variables",
+          "description": "Clearly identifies dependent and independent variables relevant to the hypothesis.",
+          "excellent_indicator": "All relevant variables are identified with clear definitions and their roles in the hypothesis.",
+          "poor_indicator": "Misses key variables or misidentifies their roles in the hypothesis."
+        },
+        {
+          "name": "Clarity of Hypothesis",
+          "description": "Formulates a clear and testable hypothesis based on the problem statement.",
+          "excellent_indicator": "The hypothesis is concise, specific, and directly addresses the problem.",
+          "poor_indicator": "The hypothesis is vague, overly broad, or does not relate to the problem."
+        },
+        {
+          "name": "Contextual Understanding",
+          "description": "Demonstrates a strong understanding of the context in which the hypothesis is framed.",
+          "excellent_indicator": "Provides a thorough explanation of the context and its relevance to the hypothesis.",
+          "poor_indicator": "Fails to explain the context or demonstrates a misunderstanding of its relevance."
+        }
+      ],
+      "typical_errors": [
+        "Confusing dependent and independent variables.",
+        "Formulating a hypothesis that cannot be tested statistically.",
+        "Neglecting to provide context or background information for the hypothesis."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing does a good job of outlining the steps necessary for hypothesis testing, but it lacks a clear identification of the dependent and independent variables. Additionally, while the hypothesis is formulated correctly, there is a missed opportunity to provide more context about the product and market environment, which would enhance the understanding of the problem.",
+  "better_alternative": "A stronger framing would explicitly identify the dependent variable as the average sales of the new product and the independent variable as the benchmark sales figure. Additionally, it would provide more context about the product, such as its features, target market, and any external factors that might influence sales. This would help in understanding the relevance of the hypothesis to the company's goals.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Variables",
+      "score": "B",
+      "internal_note": "The student did not explicitly identify the dependent and independent variables, which are crucial for hypothesis testing."
+    },
+    {
+      "criterion_name": "Clarity of Hypothesis",
+      "score": "A",
+      "internal_note": "The hypothesis is clear and testable, directly addressing the problem statement."
+    },
+    {
+      "criterion_name": "Contextual Understanding",
+      "score": "B",
+      "internal_note": "The student did not provide sufficient context about the product or market, which is important for understanding the hypothesis."
+    }
+  ],
+  "strengths": [
+    "The student clearly defined the hypothesis and outlined the statistical methodology.",
+    "The steps for conducting the hypothesis test are well-structured and detailed."
+  ],
+  "refinements_correctly_selected": [
+    "Hypothesis Formulation",
+    "Statistical Methodology",
+    "Analysis Plan"
+  ],
+  "refinements_missed": [
+    "Identification of Variables",
+    "Contextual Understanding"
+  ],
+  "unnecessary_selections": []
+}

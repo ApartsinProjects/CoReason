@@ -614,6 +614,19 @@ that the large +2.00 was specific to gpt-4o's strict adherence to the seeded-iss
 than a property of the construct; the separation holds, and in fact becomes more balanced across the
 three skills, under a second backend. (Steering's own-effect remains the weakest, +0.10 here,
 consistent with the Proposition-P2 confound discussed below rather than absence of the construct.)</p>
+<p><strong>Dependence on ground-truth scaffolding.</strong> To probe how much the instrument's discrimination relies on
+the seeded ground truth (the gold framing supplied to the framing evaluator and the known seeded issues
+supplied to the judging evaluator) versus the model's own judgment, we re-graded the transcripts with
+that scaffolding removed. The effect is sharply skill-specific. Framing discrimination is essentially
+unaffected (own-effect +0.75 without the gold reference, versus +0.60 with it): the rubric and the
+model's own judgment carry it. Judging discrimination, by contrast, largely collapses (+2.00 to +0.45):
+without the known issues the grader has no recall-precision anchor and can barely separate strong from
+weak judging. Steering falls in between (+0.50 to +0.25). Separability itself survives (the skills still
+dissociate, ratio 29), but the result clarifies what each grade measures: Framing and Steering are
+scored largely by rubric-guided model judgment, whereas Judging <em>as instrumented here</em> is close to a
+measurement of agreement with a known answer key. This both explains Judging's by-construction +2.00
+and bounds its transfer to open-ended settings where no such key exists, an important caveat for any
+deployment that scores judging without seeded ground truth.</p>
 <p><strong>Scope and caveats.</strong> These results establish feasibility, not validity. (i) Judging's dissociation is
 partly built in: its competence is operationalized by a controlled selection over ground-truth issues,
 so its clean diagonal (+2.00, with zero cross-effects) confirms the grader correctly rewards

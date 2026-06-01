@@ -1,0 +1,72 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is experiencing performance issues with a sorting algorithm used in our data analysis application. I need you to analyze the current implementation and optimize it. Please ensure that the output retains the correct order of elements after sorting and can handle large datasets efficiently. You should also provide a comparison with at least one alternative algorithm to demonstrate the improvements. Be prepared to present your findings in a report, including any assumptions made during your analysis. Time is of the essence, as we need this resolved in the next two weeks.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the specific sorting algorithm currently in use, including its time and space complexity. Identify the type of data being sorted (e.g., integers, strings, custom objects) and the expected input size to understand the performance bottlenecks.\"}, {\"section_type\": \"Performance Metrics\", \"content\": \"Establish criteria for measuring performance improvements, such as execution time, memory usage, and scalability with increasing dataset sizes. Define thresholds for acceptable performance.\"}, {\"section_type\": \"Algorithm Analysis\", \"content\": \"Conduct a thorough analysis of the current implementation, including profiling to identify slow points in the algorithm. Consider edge cases and how they affect performance.\"}, {\"section_type\": \"Alternative Algorithms\", \"content\": \"Research and select at least one alternative sorting algorithm that is suitable for the dataset characteristics. Provide a rationale for the choice based on complexity, stability, and adaptability to large datasets.\"}, {\"section_type\": \"Implementation Plan\", \"content\": \"Outline a step-by-step plan for optimizing the current sorting algorithm, including any necessary code changes, testing procedures, and validation methods to ensure the output remains correct.\"}, {\"section_type\": \"Reporting\", \"content\": \"Prepare a comprehensive report that includes the analysis of the current algorithm, the proposed optimizations, a comparison with the alternative algorithm, and any assumptions made during the evaluation process. Include visual aids such as graphs or tables to illustrate performance comparisons.\"}, {\"section_type\": \"Timeline Management\", \"content\": \"Create a detailed timeline for the project, breaking down tasks into manageable segments to ensure completion within the two-week deadline. Include milestones for analysis, implementation, testing, and reporting.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Clearly identifies and articulates the key components of the ill-defined problem, including input and output specifications.",
+          "excellent_indicator": "Accurately describes the problem with all necessary components and constraints, using appropriate terminology.",
+          "poor_indicator": "Fails to identify crucial components of the problem or misinterprets the problem requirements."
+        },
+        {
+          "name": "Task Specification",
+          "description": "Translates the ill-defined problem into a well-defined task with clear objectives and steps to solve it.",
+          "excellent_indicator": "Defines a comprehensive and clear task that outlines a logical approach to solving the problem.",
+          "poor_indicator": "Provides an ambiguous or incomplete task definition that lacks clarity or logical structure."
+        },
+        {
+          "name": "Algorithm Selection Consideration",
+          "description": "Considers appropriate algorithms for sorting or searching based on the problem context and requirements.",
+          "excellent_indicator": "Selects an optimal algorithm that is well-suited for the specific problem characteristics and justifies the choice effectively.",
+          "poor_indicator": "Chooses a suboptimal or irrelevant algorithm without proper justification."
+        }
+      ],
+      "typical_errors": [
+        "Misunderstanding the problem requirements leading to incorrect task framing.",
+        "Neglecting to specify input and output clearly, resulting in ambiguity.",
+        "Selecting an inappropriate algorithm based on the problem context."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing does a good job in identifying and articulating the key components of the problem, such as the specific sorting algorithm and its complexities. However, the student's approach could benefit from more explicit consideration of the constraints and requirements, such as the need to handle large datasets efficiently within the two-week deadline. Additionally, while the student mentions researching alternative algorithms, the rationale for their selection could be more detailed to ensure the chosen algorithm is optimal for the specific problem context.",
+  "better_alternative": "A stronger framing would include a detailed analysis of the current algorithm's limitations in handling large datasets, explicitly state the constraints such as time and space complexity, and provide a more thorough justification for the choice of alternative algorithms. It would also benefit from a clearer breakdown of how each step in the implementation plan addresses specific performance issues and aligns with the project's timeline constraints.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Identification",
+      "score": "B",
+      "internal_note": "Identifies key components but lacks explicit mention of constraints like dataset size."
+    },
+    {
+      "criterion_name": "Task Specification",
+      "score": "A",
+      "internal_note": "Provides a comprehensive and clear task with logical steps."
+    },
+    {
+      "criterion_name": "Algorithm Selection Consideration",
+      "score": "B",
+      "internal_note": "Mentions alternative algorithms but lacks detailed justification for their selection."
+    }
+  ],
+  "strengths": [
+    "Clearly defines the current sorting algorithm and its complexities.",
+    "Establishes performance metrics and criteria for improvement.",
+    "Outlines a comprehensive implementation plan and timeline."
+  ],
+  "refinements_correctly_selected": [
+    "Problem Definition",
+    "Performance Metrics",
+    "Algorithm Analysis",
+    "Alternative Algorithms",
+    "Implementation Plan",
+    "Reporting",
+    "Timeline Management"
+  ],
+  "refinements_missed": [],
+  "unnecessary_selections": []
+}

@@ -1,0 +1,3168 @@
+[
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "A",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies key components but lacks explicit mention of constraints like dataset size."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "A",
+        "internal_note": "Provides a comprehensive and clear task with logical steps."
+      },
+      {
+        "criterion_name": "Algorithm Selection Consideration",
+        "score": "B",
+        "internal_note": "Mentions alternative algorithms but lacks detailed justification for their selection."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified some key issues but missed several important ones and flagged a non-issue."
+      },
+      {
+        "criterion_name": "Complexity Analysis",
+        "score": "C",
+        "internal_note": "Did not provide a thorough analysis of the proposed solutions' complexity."
+      },
+      {
+        "criterion_name": "Correctness of Output",
+        "score": "C",
+        "internal_note": "Overlooked significant inaccuracies in how the output met the task requirements."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were generally clear but lacked specific details on some aspects, such as trade-offs in the in-place merge."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "A",
+        "internal_note": "Demonstrated a clear progression in improving the AI output based on feedback."
+      },
+      {
+        "criterion_name": "Algorithmic Insight",
+        "score": "A",
+        "internal_note": "Effectively used algorithmic principles to guide the AI towards a more efficient solution."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed plan for in-place sorting implementation.",
+      "No clear comparison with other potential algorithms beyond QuickSort and MergeSort.",
+      "Absence of detailed plan for parallel sorting implementation.",
+      "Did not address the requirement to prepare a report with assumptions and findings."
+    ],
+    "false_positives": [
+      "Fails to consider edge cases where the dataset may contain duplicate elements affecting the performance of QuickSort."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the specific sorting algorithm currently in use, including its time and space complexity. Identify the type of data being sorted (e.g., integers, strings, custom objects) and the expected input size to understand the performance bottlenecks.\"}, {\"section_type\": \"Performance Metrics\", \"content\": \"Establish criteria for measuring performance improvements, such as execution time, memory usage, and scalability with increasing dataset",
+    "steering_cmds": [
+      "Confirm the current sorting algorithm used in the application before proceeding with optimizations to ensure the analysis is accurate.",
+      "Provide a detailed explanation of how the in-place merge will be implemented, including its potential impact on time complexity and any trade-offs involved.",
+      "Elaborate on the parallel sorting strategy, including specific techniques for implementation and how it will maintain stability during the sorting process.",
+      "Address edge cases, particularly how the presence of duplicate elements in the dataset could affect the performance of QuickSort and the overall sorting strategy."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies key performance metrics but lacks detailed input/output specifications."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "Defines a clear task but could benefit from more explicit connections between analysis and optimization goals."
+      },
+      {
+        "criterion_name": "Algorithm Selection Consideration",
+        "score": "B",
+        "internal_note": "Mentions alternative algorithms but lacks detailed justification for their selection based on problem-specific needs."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified some errors but missed a critical issue regarding the lack of detailed comparison with an alternative algorithm."
+      },
+      {
+        "criterion_name": "Complexity Analysis",
+        "score": "B",
+        "internal_note": "The student addressed some complexity concerns but did not fully explore the implications of the AI's assumptions."
+      },
+      {
+        "criterion_name": "Correctness of Output",
+        "score": "C",
+        "internal_note": "The student did not adequately assess whether the AI's output met all the specified requirements, particularly the need for a comparison with an alternative algorithm."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "The commands were generally clear but lacked depth in some areas, such as parallel sorting details."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "The solution improved, but further iterations could have refined the remaining issues."
+      },
+      {
+        "criterion_name": "Algorithmic Insight",
+        "score": "B",
+        "internal_note": "The student demonstrated understanding but could have provided more detailed insights into algorithmic complexities."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed comparison with an alternative algorithm as required by the original problem."
+    ],
+    "false_positives": [
+      "Fails to consider edge cases where the dataset may contain duplicate elements affecting the performance of QuickSort."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary issue is the performance inefficiency of the current sorting algorithm within our data analysis application. To define the problem more clearly, we need to identify the specific performance metrics that are lacking, such as time complexity, space complexity, and scalability with respect to large datasets.\"}, {\"section_type\": \"Current Implementation Analysis\", \"content\": \"Conduct a thorough analysis of the current sorting algorithm, ",
+    "steering_cmds": [
+      "Check if the current sorting algorithm is definitely MergeSort before assuming it.",
+      "Explain how the in-place merge would work and what the time complexity changes might be.",
+      "Provide more details on how to implement parallel sorting and how it might affect stability.",
+      "Consider how duplicates in the dataset could impact the performance of QuickSort and suggest ways to handle this."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "The student identifies key components but misses explicit mention of handling large datasets efficiently."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The task is well-defined, but lacks specifics on profiling tools and report structure."
+      },
+      {
+        "criterion_name": "Algorithm Selection Consideration",
+        "score": "B",
+        "internal_note": "The student suggests algorithms but does not provide a strong rationale for their selection based on dataset characteristics."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified a critical issue regarding assumptions but incorrectly flagged stability as an issue."
+      },
+      {
+        "criterion_name": "Complexity Analysis",
+        "score": "C",
+        "internal_note": "The student did not analyze the complexity of the proposed solutions thoroughly."
+      },
+      {
+        "criterion_name": "Correctness of Output",
+        "score": "B",
+        "internal_note": "The student recognized a significant assumption issue but missed other critical evaluation aspects."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "The student provided clear corrections regarding stability and trade-offs but missed confirming the sorting algorithm and specifying performance metrics."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was some improvement in addressing stability and trade-offs, but critical issues remained unresolved."
+      },
+      {
+        "criterion_name": "Algorithmic Insight",
+        "score": "B",
+        "internal_note": "The student demonstrated understanding of algorithm stability but did not confirm the algorithm or define performance metrics effectively."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed comparison with alternative algorithms",
+      "Need for comprehensive performance analysis",
+      "Potential issues with parallel sorting implementation"
+    ],
+    "false_positives": [
+      "The hybrid approach will make the sorting algorithm unstable, altering the order of equal elements, which is incorrect because both MergeSort and InsertionSort are stable sorting methods."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary issue is the performance degradation of the current sorting algorithm utilized in our data analysis application. This problem needs to be clearly defined in terms of specific performance metrics (e.g., time complexity, space complexity) and the nature of the datasets being sorted (e.g., size, data type, distribution).\"}, {\"section_type\": \"Current Implementation Analysis\", \"content\": \"A thorough analysis of the existing sorting algor",
+    "steering_cmds": [
+      "Confirm the current sorting algorithm used in the application before proceeding with optimization.",
+      "Revise the hybrid approach to ensure it maintains stability, as both MergeSort and InsertionSort are stable algorithms. Consider using a stable variant of QuickSort or a different strategy that retains stability.",
+      "Provide a more detailed analysis of the time complexity implications of the in-place merge approach, including potential edge cases.",
+      "Include a discussion on the trade-offs between execution time and memory usage for the proposed optimizations, particularly in relation to very large datasets.",
+      "Ensure that the performance metrics are clearly defined and measurable, outlining specific methods for data collection and analysis."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies key components but lacks specificity in input/output requirements."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "Provides a structured task but misses clarity on certain objectives like stability."
+      },
+      {
+        "criterion_name": "Algorithm Selection Consideration",
+        "score": "B",
+        "internal_note": "Considers alternative algorithms but lacks detailed justification for selection."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified the assumption about MergeSort but incorrectly flagged the stability issue."
+      },
+      {
+        "criterion_name": "Complexity Analysis",
+        "score": "C",
+        "internal_note": "Did not provide a detailed complexity analysis of the proposed solutions."
+      },
+      {
+        "criterion_name": "Correctness of Output",
+        "score": "B",
+        "internal_note": "Correctly noted the assumption issue but misjudged the impact on stability."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "The corrections were somewhat clear but could have been more precise in addressing the assumption issue."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was some improvement, but the critical issue of algorithm verification was not fully resolved."
+      },
+      {
+        "criterion_name": "Algorithmic Insight",
+        "score": "B",
+        "internal_note": "The student demonstrated some understanding of algorithmic principles but did not fully apply them to ensure a correct solution."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed complexity analysis for the proposed optimizations.",
+      "No discussion on the effectiveness of parallel sorting for large datasets."
+    ],
+    "false_positives": [
+      "The hybrid approach will make the sorting algorithm unstable, altering the order of equal elements, which is incorrect because both MergeSort and InsertionSort are stable sorting methods."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the performance issues associated with the current sorting algorithm. Specify the metrics for performance evaluation, such as time complexity, space complexity, and stability of the algorithm. Identify the specific datasets that are causing performance degradation and the expected size of these datasets.\"}, {\"section_type\": \"Current Implementation Analysis\", \"content\": \"Conduct a thorough analysis of the existing sorting algorith",
+    "steering_cmds": [
+      "Check if the current sorting algorithm is actually MergeSort before assuming it.",
+      "Make sure the hybrid approach maintains stability since both MergeSort and InsertionSort are stable."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "The student identifies the problem of inefficiency with large datasets but lacks detail on specific performance issues."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The objectives are clear, but the task could be more detailed in terms of specific analysis steps and verification of assumptions."
+      },
+      {
+        "criterion_name": "Algorithm Selection Consideration",
+        "score": "C",
+        "internal_note": "The student mentions comparing with another algorithm but does not specify or justify any particular algorithm choices."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified some errors but missed a critical issue regarding the lack of detailed comparison with an alternative algorithm."
+      },
+      {
+        "criterion_name": "Complexity Analysis",
+        "score": "B",
+        "internal_note": "The student addressed some complexity concerns but did not fully explore the implications of the AI's assumptions."
+      },
+      {
+        "criterion_name": "Correctness of Output",
+        "score": "C",
+        "internal_note": "The student did not adequately assess whether the AI's output met all the specified requirements, particularly the need for a comparison with an alternative algorithm."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were mostly clear but lacked full specificity in some areas, particularly regarding the in-place merge."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was some improvement, but further iterations could have addressed unresolved issues more thoroughly."
+      },
+      {
+        "criterion_name": "Algorithmic Insight",
+        "score": "B",
+        "internal_note": "The student demonstrated a reasonable understanding of sorting algorithms but could have provided more detailed guidance on implementation specifics."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed comparison with an alternative algorithm as required by the original problem."
+    ],
+    "false_positives": [
+      "Fails to consider edge cases where the dataset may contain duplicate elements affecting the performance of QuickSort."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The problem is that the current sorting algorithm in our application is slow and not efficient with large datasets. We need to analyze why it's slow and how we can make it faster.\"}, {\"section_type\": \"Objectives\", \"content\": \"1. Analyze the current sorting algorithm to understand its performance issues. 2. Optimize the algorithm so that it runs faster and can handle large datasets. 3. Ensure that the sorting still keeps the correct order of ele",
+    "steering_cmds": [
+      "Confirm the current sorting algorithm used in the application before proceeding with optimization strategies to ensure accuracy.",
+      "Provide a detailed explanation of how the in-place merge will be implemented, including its potential impact on time complexity and edge cases.",
+      "Expand on the parallel sorting recommendation by detailing specific libraries or frameworks that can be used, as well as how to maintain stability during parallel execution.",
+      "Address edge cases, particularly focusing on how duplicate elements in the dataset may affect the performance of QuickSort and suggest modifications to handle them effectively."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "The student identifies the problem but lacks specificity in describing performance issues and constraints."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The tasks are outlined but lack detailed steps and clarity on how to achieve the objectives."
+      },
+      {
+        "criterion_name": "Algorithm Selection Consideration",
+        "score": "C",
+        "internal_note": "The student mentions comparing with another algorithm but does not justify the choice or specify criteria for comparison."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified some errors but missed a critical issue regarding the lack of detailed comparison with an alternative algorithm."
+      },
+      {
+        "criterion_name": "Complexity Analysis",
+        "score": "B",
+        "internal_note": "The student addressed some complexity concerns but did not fully explore the implications of the AI's assumptions."
+      },
+      {
+        "criterion_name": "Correctness of Output",
+        "score": "C",
+        "internal_note": "The student did not adequately assess whether the AI's output met all the specified requirements, particularly the need for a comparison with an alternative algorithm."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were specific but lacked depth in addressing all critical issues."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was observed, but not all issues were resolved."
+      },
+      {
+        "criterion_name": "Algorithmic Insight",
+        "score": "B",
+        "internal_note": "Demonstrated understanding of algorithmic principles but did not fully apply them to resolve all issues."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed comparison with an alternative algorithm as required by the original problem."
+    ],
+    "false_positives": [
+      "Fails to consider edge cases where the dataset may contain duplicate elements affecting the performance of QuickSort."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The company has a sorting algorithm that is not working well for sorting data. I need to figure out what is wrong with it and how to make it better.\"}, {\"section_type\": \"Goals\", \"content\": \"I need to make sure the sorting still works correctly and can sort big amounts of data quickly. Also, I have to compare it with another sorting method.\"}, {\"section_type\": \"Tasks\", \"content\": \"1. Look at the current sorting algorithm and see how it works.",
+    "steering_cmds": [
+      "Check if the current sorting algorithm is really MergeSort before making assumptions.",
+      "Explain how the in-place merge will be done and how it might affect time complexity.",
+      "Provide more details on how to implement parallel sorting and its effect on stability.",
+      "Consider edge cases like duplicate elements when discussing QuickSort's performance."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identified the need to determine specific performance issues, but lacked clarity on what those issues might be."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "Provided a general outline of tasks but lacked detail on specific steps and criteria for algorithm comparison."
+      },
+      {
+        "criterion_name": "Algorithm Selection Consideration",
+        "score": "C",
+        "internal_note": "Did not specify criteria for selecting an alternative algorithm, which is crucial for effective comparison."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified a critical issue regarding assumptions but incorrectly flagged stability as an issue."
+      },
+      {
+        "criterion_name": "Complexity Analysis",
+        "score": "C",
+        "internal_note": "The student did not analyze the complexity of the proposed solutions thoroughly."
+      },
+      {
+        "criterion_name": "Correctness of Output",
+        "score": "B",
+        "internal_note": "The student recognized a significant assumption issue but missed other critical evaluation aspects."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were generally clear but lacked specificity in implementation details."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was seen, but the solution did not fully converge due to missing details."
+      },
+      {
+        "criterion_name": "Algorithmic Insight",
+        "score": "B",
+        "internal_note": "Demonstrated understanding of stability and algorithm selection, but lacked depth in implementation guidance."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed comparison with alternative algorithms",
+      "Need for comprehensive performance analysis",
+      "Potential issues with parallel sorting implementation"
+    ],
+    "false_positives": [
+      "The hybrid approach will make the sorting algorithm unstable, altering the order of equal elements, which is incorrect because both MergeSort and InsertionSort are stable sorting methods."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The company has a sorting algorithm that is not performing well, but it's not clear what specific issues it has. We need to find out if it's slow, uses too much memory, or has bugs.\"}, {\"section_type\": \"Requirements\", \"content\": \"The algorithm must sort data correctly and be able to handle large datasets. We also need to compare it with another sorting algorithm.\"}, {\"section_type\": \"Output Expectations\", \"content\": \"The report should includ",
+    "steering_cmds": [
+      "Confirm the current sorting algorithm being used before proceeding with optimizations, as assuming it is MergeSort may lead to inappropriate recommendations.",
+      "Revise the hybrid approach to ensure that stability is maintained; both MergeSort and InsertionSort are stable, but if QuickSort is included, it may compromise stability.",
+      "Provide a more detailed explanation of the in-place merge strategy, including potential trade-offs in terms of time complexity and implementation complexity.",
+      "Include specific performance benchmarks for the proposed optimizations, such as expected improvements in execution time and memory usage compared to the original implementation.",
+      "Clarify the conditions under which the hybrid approach should switch from QuickSort to InsertionSort to ensure optimal performance."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "The student identifies the problem but lacks detail on specific performance issues and constraints."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The task is outlined but lacks specificity in objectives and steps, particularly concerning optimization criteria."
+      },
+      {
+        "criterion_name": "Algorithm Selection Consideration",
+        "score": "C",
+        "internal_note": "The student does not specify criteria for selecting an alternative algorithm, missing a key consideration for comparison."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified a critical issue regarding assumptions but incorrectly flagged stability as an issue."
+      },
+      {
+        "criterion_name": "Complexity Analysis",
+        "score": "C",
+        "internal_note": "The student did not analyze the complexity of the proposed solutions thoroughly."
+      },
+      {
+        "criterion_name": "Correctness of Output",
+        "score": "B",
+        "internal_note": "The student recognized a significant assumption issue but missed other critical evaluation aspects."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "The student provided some clear commands, but missed addressing the need for real data."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "The student made some improvements, but did not fully resolve all critical issues."
+      },
+      {
+        "criterion_name": "Algorithmic Insight",
+        "score": "B",
+        "internal_note": "The student demonstrated some understanding of algorithmic principles but did not fully apply them effectively."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed comparison with alternative algorithms",
+      "Need for comprehensive performance analysis",
+      "Potential issues with parallel sorting implementation"
+    ],
+    "false_positives": [
+      "The hybrid approach will make the sorting algorithm unstable, altering the order of equal elements, which is incorrect because both MergeSort and InsertionSort are stable sorting methods."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The problem is about a sorting algorithm that is not performing well in our data analysis application. We need to find out why it is slow and how to make it faster.\"}, {\"section_type\": \"Objectives\", \"content\": \"1. Analyze the current sorting algorithm. 2. Optimize the algorithm to improve performance. 3. Ensure that the sorting keeps elements in the correct order. 4. Compare it with another sorting algorithm.\"}, {\"section_type\": \"Data Requireme",
+    "steering_cmds": [
+      "Check if the current sorting algorithm is actually MergeSort before making assumptions.",
+      "Explain how the hybrid approach can still maintain stability when using InsertionSort.",
+      "Provide more details on how in-place sorting will work and its impact on performance.",
+      "Include examples of execution time results and memory usage for better comparison.",
+      "Clarify the importance of stability in sorting for our specific application."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "B",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Key Variables",
+        "score": "B",
+        "internal_note": "The student identifies several important variables like consumer preferences and pricing sensitivity but misses a deeper exploration of competitive dynamics."
+      },
+      {
+        "criterion_name": "Articulation of the Problem Context",
+        "score": "C",
+        "internal_note": "The context is not fully articulated; it lacks a comprehensive view of the market conditions and competitive landscape."
+      },
+      {
+        "criterion_name": "Clarity of the Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is generally clear but could be better aligned with microeconomic principles, particularly in terms of linking pricing strategies to market segments."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Evaluation of AI Output Accuracy",
+        "score": "B",
+        "internal_note": "The student identified some inaccuracies but missed others and provided limited explanations."
+      },
+      {
+        "criterion_name": "Identification of Economic Concepts",
+        "score": "B",
+        "internal_note": "Relevant economic concepts were identified, but the analysis lacked depth in critiquing these concepts."
+      },
+      {
+        "criterion_name": "Critical Analysis of Assumptions",
+        "score": "B",
+        "internal_note": "The student critiqued some assumptions but missed others and did not fully explore their implications."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were generally clear but missed addressing some critical details."
+      },
+      {
+        "criterion_name": "Relevance of Suggested Changes",
+        "score": "B",
+        "internal_note": "Suggested changes were relevant but did not cover all critical aspects."
+      },
+      {
+        "criterion_name": "Iterative Improvement Process",
+        "score": "C",
+        "internal_note": "The process lacked full iteration, as not all issues were addressed before marking done."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed qualitative assessments.",
+      "Absence of a comprehensive analysis of competition."
+    ],
+    "false_positives": [
+      "The tiered pricing strategy may not account for the potential backlash from price increases after the introductory phase."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the new beverage product, including its type (e.g., soft drink, energy drink, health beverage), target demographic (age, lifestyle, preferences), and unique selling propositions (USPs) that differentiate it from existing products in the market.\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Identify and analyze key factors influencing demand, such as consumer preferences, trends in health and wellness, pricing sensitivity, an",
+    "steering_cmds": [
+      "Expand the target market demographics to include older consumers who may also be interested in health beverages, such as Generation X and baby boomers.",
+      "Revise the revenue target for the first year to include a detailed breakdown of production costs, marketing expenses, and other overheads to ensure it is realistic and achievable.",
+      "Incorporate an analysis of external economic factors, such as inflation rates and shifts in consumer spending habits, that could impact demand for the beverage.",
+      "Reassess the tiered pricing strategy to include potential consumer reactions to price increases after the introductory phase, and consider a more gradual pricing adjustment to maintain customer loyalty."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "B",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Key Variables",
+        "score": "B",
+        "internal_note": "Student identifies some key variables but lacks depth in defining them, especially in the SWOT analysis."
+      },
+      {
+        "criterion_name": "Articulation of the Problem Context",
+        "score": "B",
+        "internal_note": "The context is described but lacks depth in terms of market conditions and stakeholder impacts."
+      },
+      {
+        "criterion_name": "Clarity of the Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is structured but could be more explicitly aligned with microeconomic principles and include measurable outcomes."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Evaluation of AI Output Accuracy",
+        "score": "B",
+        "internal_note": "The student identified some inaccuracies but missed others and provided limited explanations."
+      },
+      {
+        "criterion_name": "Identification of Economic Concepts",
+        "score": "B",
+        "internal_note": "Relevant economic concepts were identified, but the analysis lacked depth in critiquing these concepts."
+      },
+      {
+        "criterion_name": "Critical Analysis of Assumptions",
+        "score": "B",
+        "internal_note": "The student critiqued some assumptions but missed others and did not fully explore their implications."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were generally clear and specific, but could have been more comprehensive."
+      },
+      {
+        "criterion_name": "Relevance of Suggested Changes",
+        "score": "B",
+        "internal_note": "Suggested changes were relevant but did not cover all critical issues."
+      },
+      {
+        "criterion_name": "Iterative Improvement Process",
+        "score": "C",
+        "internal_note": "The process lacked full iteration, as not all issues were addressed before marking 'done'."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed qualitative assessments.",
+      "Absence of a comprehensive analysis of competition."
+    ],
+    "false_positives": [
+      "The tiered pricing strategy may not account for the potential backlash from price increases after the introductory phase."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly articulate the specific beverage product being considered for launch, including its unique selling propositions (USPs) and target demographic. This will help in understanding the market segment and tailoring the analysis accordingly.\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Identify and analyze key factors influencing demand, such as consumer preferences, trends in health and wellness, seasonality, and competitive landscape. C",
+    "steering_cmds": [
+      "Consider including a broader target market beyond just millennials and Gen Z to capture other potential consumers.",
+      "Reevaluate the revenue target of $500,000 in the first year and factor in production costs to make it more realistic.",
+      "Include a discussion on external economic factors like inflation or changes in consumer spending that might influence demand for the beverage.",
+      "Think about the potential customer reactions to price increases after the introductory phase and adjust the pricing strategy accordingly."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Key Variables",
+        "score": "B",
+        "internal_note": "Identified several key variables but missed regulatory factors and potential barriers to entry."
+      },
+      {
+        "criterion_name": "Articulation of the Problem Context",
+        "score": "B",
+        "internal_note": "The context is described, but lacks depth in market dynamics and external influences."
+      },
+      {
+        "criterion_name": "Clarity of the Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is generally clear but could benefit from more explicit alignment with microeconomic principles."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Evaluation of AI Output Accuracy",
+        "score": "B",
+        "internal_note": "The student identified a critical issue but missed others related to the prompt's requirements."
+      },
+      {
+        "criterion_name": "Identification of Economic Concepts",
+        "score": "C",
+        "internal_note": "The student did not address the economic concepts or pricing strategies in the AI output."
+      },
+      {
+        "criterion_name": "Critical Analysis of Assumptions",
+        "score": "B",
+        "internal_note": "The student critiqued the demographic assumption but did not delve into other assumptions made by the AI."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "A",
+        "internal_note": "The commands were clear and specific, addressing the issues identified."
+      },
+      {
+        "criterion_name": "Relevance of Suggested Changes",
+        "score": "B",
+        "internal_note": "The changes were relevant but did not address all critical issues."
+      },
+      {
+        "criterion_name": "Iterative Improvement Process",
+        "score": "B",
+        "internal_note": "The process showed improvement but lacked addressing all critical issues for full convergence."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of consideration for external market research data as instructed in the prompt.",
+      "Insufficient critique of the economic concepts and pricing strategies proposed."
+    ],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the new beverage product, including its unique selling propositions (USPs) and target market demographics. Specify the competitive landscape, identifying direct competitors and their offerings.\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Outline the methodology for assessing potential demand, including factors such as consumer preferences, price elasticity of demand, and market trends. Develop a framework for qualitative a",
+    "steering_cmds": [
+      "Expand the target market demographics to include older consumers, such as Generation X and Baby Boomers, who are also increasingly health-conscious and may have disposable income to invest in health beverages.",
+      "Incorporate a broader analysis of the competitive landscape by including insights on how established brands are positioning their health beverages to attract a wider audience.",
+      "Consider additional demand factors such as environmental sustainability and ethical sourcing, which are becoming increasingly important to consumers of all ages.",
+      "Include a section on potential distribution channels that could reach a more diverse consumer base, such as online sales, health food stores, and supermarkets.",
+      "Revise the pricing strategy to include options for bulk purchases or subscription models that could appeal to a wider range of consumers, not just the initial target demographic."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Key Variables",
+        "score": "B",
+        "internal_note": "The student identifies several key variables such as consumer preferences and competitive pricing, but misses a clear link to how these influence the pricing strategy."
+      },
+      {
+        "criterion_name": "Articulation of the Problem Context",
+        "score": "B",
+        "internal_note": "The context is outlined with some depth, but lacks a thorough exploration of market dynamics and stakeholder impacts."
+      },
+      {
+        "criterion_name": "Clarity of the Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is generally clear but could be better aligned with microeconomic principles, particularly in how qualitative assessments translate to quantitative outcomes."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Evaluation of AI Output Accuracy",
+        "score": "B",
+        "internal_note": "The student identified a key issue but missed other inaccuracies related to data analysis and competitive strategy."
+      },
+      {
+        "criterion_name": "Identification of Economic Concepts",
+        "score": "C",
+        "internal_note": "The student did not address economic concepts like pricing elasticity or market competition adequately."
+      },
+      {
+        "criterion_name": "Critical Analysis of Assumptions",
+        "score": "B",
+        "internal_note": "The student critiqued the demographic assumption but did not fully explore other underlying assumptions."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but lacked detail in certain areas."
+      },
+      {
+        "criterion_name": "Relevance of Suggested Changes",
+        "score": "B",
+        "internal_note": "Changes were relevant to identified issues but missed addressing all critical concerns."
+      },
+      {
+        "criterion_name": "Iterative Improvement Process",
+        "score": "C",
+        "internal_note": "Process lacked full iteration, with premature completion and unresolved issues."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of quantitative data analysis.",
+      "Insufficient consideration of pricing elasticity beyond demographics.",
+      "Absence of a detailed competitive analysis."
+    ],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the new beverage product, including its unique selling propositions (USPs) and target demographic. Specify the type of beverage (e.g., energy drink, health-focused beverage, etc.) and the intended market segment (e.g., millennials, health-conscious consumers).\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Identify key factors influencing demand, such as consumer preferences, trends in health and wellness, and competitive pri",
+    "steering_cmds": [
+      "Consider including other demographics like older adults who are also health-conscious.",
+      "Expand on the potential appeal of the beverage beyond just millennials and Gen Z.",
+      "Mention how different lifestyles or health trends might affect a broader audience.",
+      "Add more details on how to conduct the SWOT analysis effectively."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Key Variables",
+        "score": "B",
+        "internal_note": "Some key variables are identified, but the analysis lacks depth and misses critical factors like brand loyalty and distribution channels."
+      },
+      {
+        "criterion_name": "Articulation of the Problem Context",
+        "score": "B",
+        "internal_note": "The context is partially articulated, but lacks specificity regarding market dynamics and competitive landscape."
+      },
+      {
+        "criterion_name": "Clarity of the Well-Defined Task",
+        "score": "C",
+        "internal_note": "The task is not clearly aligned with microeconomic principles, lacking specific methods and measurable outcomes."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Evaluation of AI Output Accuracy",
+        "score": "B",
+        "internal_note": "The student identified some inaccuracies but missed others and provided limited explanations."
+      },
+      {
+        "criterion_name": "Identification of Economic Concepts",
+        "score": "B",
+        "internal_note": "Relevant economic concepts were identified, but the analysis lacked depth in critiquing these concepts."
+      },
+      {
+        "criterion_name": "Critical Analysis of Assumptions",
+        "score": "B",
+        "internal_note": "The student critiqued some assumptions but missed others and did not fully explore their implications."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were generally clear but lacked specificity in addressing some remaining issues."
+      },
+      {
+        "criterion_name": "Relevance of Suggested Changes",
+        "score": "A",
+        "internal_note": "Suggested changes were relevant and addressed key issues identified in the AI output."
+      },
+      {
+        "criterion_name": "Iterative Improvement Process",
+        "score": "B",
+        "internal_note": "There was a logical progression in corrections, but not all critical issues were addressed, and the process was prematurely concluded."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed qualitative assessments.",
+      "Absence of a comprehensive analysis of competition."
+    ],
+    "false_positives": [
+      "The tiered pricing strategy may not account for the potential backlash from price increases after the introductory phase."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to understand what the new product is and what kind of beverage it is. Is it alcoholic or non-alcoholic? Also, we should clarify what 'competitive beverage market' means. Does it include all drinks or just a specific category like juices or energy drinks?\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"We should think about who the target customers are for this beverage. Are we focusing on young people, health-conscious consumers, or",
+    "steering_cmds": [
+      "Expand the target market demographics to include older consumers and those with varying income levels to capture a broader audience.",
+      "Revise the revenue target to include a detailed breakdown of production costs and profit margins to ensure realistic expectations.",
+      "Incorporate an analysis of external economic factors such as inflation rates and shifts in consumer spending habits that could impact demand for the product.",
+      "Reassess the tiered pricing strategy to include potential consumer reactions to price increases after the introductory phase, possibly suggesting a gradual increase or maintaining promotional pricing longer."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Key Variables",
+        "score": "B",
+        "internal_note": "Some key variables identified, but lacks comprehensiveness."
+      },
+      {
+        "criterion_name": "Articulation of the Problem Context",
+        "score": "C",
+        "internal_note": "Context is vague and lacks detail on market dynamics."
+      },
+      {
+        "criterion_name": "Clarity of the Well-Defined Task",
+        "score": "B",
+        "internal_note": "Task is somewhat clear but lacks specificity and alignment with microeconomic principles."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Evaluation of AI Output Accuracy",
+        "score": "B",
+        "internal_note": "The student identified some inaccuracies but missed others and provided limited explanations."
+      },
+      {
+        "criterion_name": "Identification of Economic Concepts",
+        "score": "B",
+        "internal_note": "Relevant economic concepts were identified, but the analysis lacked depth in critiquing these concepts."
+      },
+      {
+        "criterion_name": "Critical Analysis of Assumptions",
+        "score": "B",
+        "internal_note": "The student critiqued some assumptions but missed others and did not fully explore their implications."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "A",
+        "internal_note": "The student provided clear and specific instructions for most of the identified issues."
+      },
+      {
+        "criterion_name": "Relevance of Suggested Changes",
+        "score": "B",
+        "internal_note": "Most suggested changes were relevant, but some critical issues like the competitive landscape were not addressed."
+      },
+      {
+        "criterion_name": "Iterative Improvement Process",
+        "score": "B",
+        "internal_note": "The process showed improvement but was incomplete due to premature marking as 'done' and missing some critical issues."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed qualitative assessments.",
+      "Absence of a comprehensive analysis of competition."
+    ],
+    "false_positives": [
+      "The tiered pricing strategy may not account for the potential backlash from price increases after the introductory phase."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to understand how many people might want our new beverage product and what factors affect their choices.\"}, {\"section_type\": \"Key Factors Identification\", \"content\": \"Identify things that might make our product successful, like flavor, packaging, price, and marketing.\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Look at how much of our product people might buy at different prices.\"}, {\"section_type\": \"Pricing Strategy Development\"",
+    "steering_cmds": [
+      "Consider including other target demographics beyond millennials and Gen Z to capture a broader market.",
+      "Reevaluate the revenue target of $500,000 in the first year to make sure it accounts for production costs and market realities.",
+      "Add a section discussing external economic factors like inflation that might influence demand for the beverage.",
+      "Think about how to handle potential customer reactions to price increases after the introductory phase and if there are better strategies."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Key Variables",
+        "score": "C",
+        "internal_note": "The student identified some basic variables like taste and price but missed critical ones like consumer demographics and distribution channels."
+      },
+      {
+        "criterion_name": "Articulation of the Problem Context",
+        "score": "C",
+        "internal_note": "The context is too simplistic, lacking details on market dynamics, economic conditions, and regulatory factors."
+      },
+      {
+        "criterion_name": "Clarity of the Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is somewhat clear but lacks alignment with microeconomic principles and measurable outcomes."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Evaluation of AI Output Accuracy",
+        "score": "B",
+        "internal_note": "The student identified a key issue but missed other inaccuracies related to data analysis and competitive strategy."
+      },
+      {
+        "criterion_name": "Identification of Economic Concepts",
+        "score": "C",
+        "internal_note": "The student did not address economic concepts like pricing elasticity or market competition adequately."
+      },
+      {
+        "criterion_name": "Critical Analysis of Assumptions",
+        "score": "B",
+        "internal_note": "The student critiqued the demographic assumption but did not fully explore other underlying assumptions."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "A",
+        "internal_note": "The commands were clear and specific, directly addressing the identified issue of demographic expansion."
+      },
+      {
+        "criterion_name": "Relevance of Suggested Changes",
+        "score": "B",
+        "internal_note": "The changes were relevant to the identified issues but did not fully cover all critical aspects, such as regional preferences."
+      },
+      {
+        "criterion_name": "Iterative Improvement Process",
+        "score": "B",
+        "internal_note": "The process showed improvement in demographic focus but lacked further iterations to address remaining issues."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of quantitative data analysis.",
+      "Insufficient consideration of pricing elasticity beyond demographics.",
+      "Absence of a detailed competitive analysis."
+    ],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to figure out if people will want to buy our new drink and what might make them want to buy it. We should think about things like trends in drinks, what people like, and what makes a drink popular.\"}, {\"section_type\": \"Key Factors\", \"content\": \"Identify things that could affect how well our drink sells, such as taste, price, packaging, and advertising. Also consider the competition and what they are doing.\"}, {\"section_type\": \"Demand An",
+    "steering_cmds": [
+      "Expand the target market demographics to include older consumers, such as Generation X and Baby Boomers, who are also increasingly health-conscious and likely to invest in health-oriented products.",
+      "Incorporate a broader analysis of consumer behavior across different age groups to ensure a comprehensive understanding of potential demand.",
+      "Include qualitative assessments on how lifestyle choices and health awareness vary among different demographics, not just millennials and Gen Z.",
+      "Consider the impact of regional preferences and cultural factors on beverage consumption, which could influence demand beyond the specified age groups."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Key Variables",
+        "score": "C",
+        "internal_note": "The student identified some variables but missed several crucial ones like pricing elasticity and distribution channels."
+      },
+      {
+        "criterion_name": "Articulation of the Problem Context",
+        "score": "B",
+        "internal_note": "The context is partially articulated but lacks depth in describing market dynamics and competitive landscape."
+      },
+      {
+        "criterion_name": "Clarity of the Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is somewhat clear but lacks alignment with specific microeconomic principles and methodologies."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Evaluation of AI Output Accuracy",
+        "score": "B",
+        "internal_note": "The student identified a key issue but missed other inaccuracies related to data analysis and competitive strategy."
+      },
+      {
+        "criterion_name": "Identification of Economic Concepts",
+        "score": "C",
+        "internal_note": "The student did not address economic concepts like pricing elasticity or market competition adequately."
+      },
+      {
+        "criterion_name": "Critical Analysis of Assumptions",
+        "score": "B",
+        "internal_note": "The student critiqued the demographic assumption but did not fully explore other underlying assumptions."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were clear but lacked specificity in addressing all critical issues."
+      },
+      {
+        "criterion_name": "Relevance of Suggested Changes",
+        "score": "B",
+        "internal_note": "Suggested changes were relevant but did not cover all necessary areas, such as quantitative analysis."
+      },
+      {
+        "criterion_name": "Iterative Improvement Process",
+        "score": "B",
+        "internal_note": "Some iterative improvement was evident, but the process was not fully comprehensive or systematic."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of quantitative data analysis.",
+      "Insufficient consideration of pricing elasticity beyond demographics.",
+      "Absence of a detailed competitive analysis."
+    ],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Introduction\", \"content\": \"Explain what the beverage market is and why launching a new product is important for the company.\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Identify what demand is and how it can be measured. Discuss factors that might affect demand for the new beverage, like taste preferences or health trends.\"}, {\"section_type\": \"Competition Analysis\", \"content\": \"Look at competitors in the beverage market. Mention how their products might influence our pr",
+    "steering_cmds": [
+      "Consider including other age demographics that might be interested in health beverages, like older adults.",
+      "Mention how different income levels could affect the potential demand for the product.",
+      "Add some basic examples of marketing strategies that could appeal to a broader audience.",
+      "Think about including a section on potential distribution channels for the product.",
+      "Suggest some ways to gather customer feedback to improve the product after launch."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "B",
+    "steering_grade": "A",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies key components but lacks explicit mention of bias-variance tradeoff."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "Defines objectives but could be clearer on how metrics relate to overfitting."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "B",
+        "internal_note": "Aligns with best practices but misses some contemporary challenges like bias-variance tradeoff."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified several key issues but missed some critical aspects related to generalization and the impact of class imbalance on AUC-ROC."
+      },
+      {
+        "criterion_name": "Use of Evaluation Metrics",
+        "score": "B",
+        "internal_note": "The student correctly identified issues with the use of metrics but did not fully explore their implications, especially regarding generalization."
+      },
+      {
+        "criterion_name": "Critical Analysis",
+        "score": "B",
+        "internal_note": "The analysis was solid but could have been more comprehensive in connecting identified issues to overall model performance and improvement strategies."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "A",
+        "internal_note": "The student provided clear and specific commands that addressed the identified issues effectively."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "The student made significant improvements but did not fully iterate on all issues."
+      },
+      {
+        "criterion_name": "Feedback Relevance",
+        "score": "A",
+        "internal_note": "The feedback was relevant and directly addressed the identified issues."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of discussion on the model's ability to generalize to new data beyond the metrics provided.",
+      "No connection made between class imbalance and its potential impact on AUC-ROC."
+    ],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define customer churn and the specific metrics that will be used to quantify it. Establish the time frame for historical data and specify the target variable in the predictive model.\"}, {\"section_type\": \"Data Description\", \"content\": \"Provide a comprehensive overview of the historical sales and interaction data, including the sources, types of data (e.g., numerical, categorical), and any preprocessing steps taken prior to model training",
+    "steering_cmds": [
+      "Include an analysis of the model's complexity to determine if it contributes to overfitting, such as examining the number of features relative to the number of observations.",
+      "Specify which regularization method (L1 or L2) is more appropriate based on the model type used, and provide a rationale for the choice.",
+      "Address potential class imbalance in the dataset by suggesting techniques such as SMOTE or class weighting, and discuss their impact on precision and recall metrics.",
+      "Recommend the inclusion of a validation set for hyperparameter tuning to ensure that the model's performance is not overly optimistic due to the testing set being used for tuning.",
+      "Provide a more comprehensive analysis of the AUC-ROC curve, including a discussion on how it reflects the model's ability to distinguish between classes."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies key components but lacks explicit connection to model evaluation task."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "Defines objectives but could be clearer in connecting them to the evaluation process."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "B",
+        "internal_note": "Generally aligns with best practices but could better emphasize practical application in context."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified some relevant issues but missed critical aspects and flagged some false issues."
+      },
+      {
+        "criterion_name": "Use of Evaluation Metrics",
+        "score": "B",
+        "internal_note": "Recognized the significance of performance metrics but did not fully connect them to overfitting detection."
+      },
+      {
+        "criterion_name": "Critical Analysis",
+        "score": "B",
+        "internal_note": "Provided a reasonable analysis but lacked depth in connecting errors to model performance and recommendations."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were clear but missed some critical details."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was made, but not all issues were resolved."
+      },
+      {
+        "criterion_name": "Feedback Relevance",
+        "score": "B",
+        "internal_note": "Feedback was relevant but did not cover all necessary aspects."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The importance of comparing training and testing performance for overfitting detection.",
+      "Evaluating the appropriateness of the suggested recommendations for the specific model type."
+    ],
+    "false_positives": [
+      "The recommendation for regularization does not specify which regularization method may be more suitable for the specific model type used.",
+      "It assumes the split of data into training and testing sets is sufficient without considering a validation set for hyperparameter tuning."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define customer churn in the context of our business. Specify the time frame for historical data to be used, the definition of a churned customer, and the target variable for the predictive model.\"}, {\"section_type\": \"Data Description\", \"content\": \"Provide a comprehensive overview of the historical sales and interaction data, including the types of features available (e.g., demographic, transactional, behavioral), their formats, and any",
+    "steering_cmds": [
+      "Check if the model complexity is too high, as that might be causing overfitting.",
+      "Specify which regularization method to use for the model, like L1 or L2.",
+      "Look into class imbalance in the dataset and how it might affect precision and recall.",
+      "Consider adding a validation set for better hyperparameter tuning."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies key components but lacks depth in connecting metrics to overfitting."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "Defines objectives but could be clearer on how to achieve them, particularly in improvement strategies."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "B",
+        "internal_note": "Generally aligns with best practices but misses discussing bias-variance tradeoff."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "C",
+        "internal_note": "The student missed critical issues related to overfitting already addressed by the AI and identified irrelevant issues."
+      },
+      {
+        "criterion_name": "Use of Evaluation Metrics",
+        "score": "C",
+        "internal_note": "The student misjudged the appropriateness of the accuracy metric, expecting an unrealistic threshold."
+      },
+      {
+        "criterion_name": "Critical Analysis",
+        "score": "C",
+        "internal_note": "The analysis was superficial and did not connect identified issues to model performance effectively."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were mostly clear and actionable, but some were overly ambitious or limited in scope."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "The student made improvements, but there was room for further refinement, especially regarding accuracy targets and class imbalance solutions."
+      },
+      {
+        "criterion_name": "Feedback Relevance",
+        "score": "A",
+        "internal_note": "Feedback was relevant and directly addressed identified issues, though some suggestions could have been more practical."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The AI output already addresses the potential overfitting issue by comparing training and testing accuracy.",
+      "The AI output provides a comprehensive set of recommendations to address overfitting, which the student did not acknowledge or critique."
+    ],
+    "false_positives": [
+      "The model's accuracy is too low for any practical use, as it should be at least 95% to be considered effective."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define customer churn in the context of our business, specifying the criteria for determining whether a customer is considered to have churned. Establish the time frame for historical data to be used in the model and clarify the target variable.\"}, {\"section_type\": \"Data Description\", \"content\": \"Provide a comprehensive overview of the historical sales and interaction data being utilized. Include details on the data sources, variables i",
+    "steering_cmds": [
+      "Expand the analysis of model complexity by discussing the relationship between the model's complexity and its performance metrics to better assess overfitting.",
+      "Increase the threshold for acceptable accuracy to align with industry standards, suggesting that a target accuracy of at least 95% is necessary for practical application.",
+      "Include a discussion on the importance of the confusion matrix to provide deeper insights into the model's performance, particularly in terms of false positives and false negatives.",
+      "Suggest additional performance metrics such as Matthews correlation coefficient (MCC) and Cohen's kappa to provide a more comprehensive evaluation of the model's effectiveness.",
+      "Consider the impact of class imbalance on the model's performance metrics and recommend techniques such as SMOTE (Synthetic Minority Over-sampling Technique) to address this issue."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies key components but lacks explicit connection between customer churn definition and model evaluation."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "Provides clear objectives but could be more specific in linking dataset characteristics to model evaluation."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "A",
+        "internal_note": "Aligns well with established methodologies and best practices in model evaluation."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "C",
+        "internal_note": "The student missed critical issues related to overfitting already addressed by the AI and identified irrelevant issues."
+      },
+      {
+        "criterion_name": "Use of Evaluation Metrics",
+        "score": "C",
+        "internal_note": "The student misjudged the appropriateness of the accuracy metric, expecting an unrealistic threshold."
+      },
+      {
+        "criterion_name": "Critical Analysis",
+        "score": "C",
+        "internal_note": "The analysis was superficial and did not connect identified issues to model performance effectively."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were somewhat clear but lacked specificity to effectively guide the AI."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was seen, but the iteration was limited due to premature completion."
+      },
+      {
+        "criterion_name": "Feedback Relevance",
+        "score": "B",
+        "internal_note": "Feedback was relevant but overly focused on accuracy without considering other critical metrics."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The AI output already addresses the potential overfitting issue by comparing training and testing accuracy.",
+      "The AI output provides a comprehensive set of recommendations to address overfitting, which the student did not acknowledge or critique."
+    ],
+    "false_positives": [
+      "The model's accuracy is too low for any practical use, as it should be at least 95% to be considered effective."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define customer churn and its implications for the business. Specify the time frame for historical sales and interaction data to be analyzed. Establish the target variable for the predictive model and the features to be included in the analysis.\"}, {\"section_type\": \"Data Description\", \"content\": \"Provide a comprehensive overview of the dataset, including the size, structure, and types of data available. Identify any missing values, outl",
+    "steering_cmds": [
+      "Look into the model's complexity and how it might relate to overfitting.",
+      "Check if there are other metrics we should consider besides accuracy, like the confusion matrix.",
+      "Make sure to explain why 95% accuracy is important for practical use.",
+      "Maybe add some examples of how to implement regularization and hyperparameter tuning.",
+      "Consider discussing the importance of the training and testing data split more clearly."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "B",
+    "steering_grade": "A",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identified key components like customer churn and model evaluation metrics but missed specifics about the model type."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "Provided a general outline but lacked specific objectives and constraints related to the model type and overfitting detection."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "C",
+        "internal_note": "Did not align the task with best practices such as discussing the bias-variance tradeoff and the use of validation sets."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified some relevant issues but missed critical aspects and flagged some false issues."
+      },
+      {
+        "criterion_name": "Use of Evaluation Metrics",
+        "score": "B",
+        "internal_note": "Recognized the significance of performance metrics but did not fully connect them to overfitting detection."
+      },
+      {
+        "criterion_name": "Critical Analysis",
+        "score": "B",
+        "internal_note": "Provided a reasonable analysis but lacked depth in connecting errors to model performance and recommendations."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "The student provided clear corrections but lacked specificity in some areas, such as regularization methods."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "A",
+        "internal_note": "The student effectively refined the AI output through thoughtful iterations, addressing key issues."
+      },
+      {
+        "criterion_name": "Feedback Relevance",
+        "score": "A",
+        "internal_note": "Feedback was relevant and directly tied to the identified issues, contributing to improved AI output."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The importance of comparing training and testing performance for overfitting detection.",
+      "Evaluating the appropriateness of the suggested recommendations for the specific model type."
+    ],
+    "false_positives": [
+      "The recommendation for regularization does not specify which regularization method may be more suitable for the specific model type used.",
+      "It assumes the split of data into training and testing sets is sufficient without considering a validation set for hyperparameter tuning."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what customer churn is and why it's important for businesses. I should learn about the predictive model we're using and what historical sales and interaction data means.\"}, {\"section_type\": \"Model Evaluation Metrics\", \"content\": \"I should find out what performance metrics are used to evaluate the model, like accuracy, precision, recall, and F1 score. I need to know how to calculate these metrics.\"}, {\"section_type\": \"Ove",
+    "steering_cmds": [
+      "Include an analysis of the model's complexity to determine if it contributes to overfitting, such as examining the number of parameters relative to the size of the training dataset.",
+      "Specify which regularization method (L1, L2, or Elastic Net) would be most appropriate based on the model type (e.g., logistic regression, decision trees) and the nature of the data.",
+      "Address potential class imbalance in the dataset by evaluating the distribution of classes and considering techniques such as SMOTE or class weighting to improve precision and recall metrics.",
+      "Incorporate a validation set in the model evaluation process to fine-tune hyperparameters and validate model performance before testing on the unseen data.",
+      "Provide a deeper analysis of the AUC-ROC curve to understand the trade-offs between sensitivity and specificity, and how it relates to the chosen threshold for classification."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "The student identifies key components like customer churn and overfitting but lacks depth in understanding their significance."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The objectives are mentioned but not clearly defined or measurable. The student should specify how each task contributes to the overall goal."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "C",
+        "internal_note": "The student mentions techniques like cross-validation but does not fully connect them to the task's context or current best practices."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified some relevant issues but missed critical aspects and flagged some false issues."
+      },
+      {
+        "criterion_name": "Use of Evaluation Metrics",
+        "score": "B",
+        "internal_note": "Recognized the significance of performance metrics but did not fully connect them to overfitting detection."
+      },
+      {
+        "criterion_name": "Critical Analysis",
+        "score": "B",
+        "internal_note": "Provided a reasonable analysis but lacked depth in connecting errors to model performance and recommendations."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were generally clear but could have been more detailed, especially regarding regularization."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was made, but the student marked 'done' prematurely, missing further refinement opportunities."
+      },
+      {
+        "criterion_name": "Feedback Relevance",
+        "score": "A",
+        "internal_note": "Feedback was relevant and directly addressed identified issues, though not all were fully resolved."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The importance of comparing training and testing performance for overfitting detection.",
+      "Evaluating the appropriateness of the suggested recommendations for the specific model type."
+    ],
+    "false_positives": [
+      "The recommendation for regularization does not specify which regularization method may be more suitable for the specific model type used.",
+      "It assumes the split of data into training and testing sets is sufficient without considering a validation set for hyperparameter tuning."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what customer churn means and why it's important. Also, I should learn how predictive models work and what overfitting is.\"}, {\"section_type\": \"Data Requirements\", \"content\": \"I need to know what historical sales and interaction data is available. It would be helpful to get a description of the data set and its features.\"}, {\"section_type\": \"Model Evaluation Metrics\", \"content\": \"I should figure out what performance metr",
+    "steering_cmds": [
+      "Check if the model complexity is causing overfitting and mention how that can be assessed.",
+      "Specify which type of regularization (L1 or L2) might be better depending on the model used.",
+      "Consider discussing class imbalance in the dataset and how it might affect the metrics like precision and recall.",
+      "Suggest adding a validation set for hyperparameter tuning to improve model evaluation."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "The student identifies some components of the problem but misses the connection between customer churn and model evaluation."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The objectives are mentioned but lack specificity and measurable criteria."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "C",
+        "internal_note": "The student does not adequately align the task with best practices in model evaluation, particularly regarding overfitting and generalization."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "C",
+        "internal_note": "The student missed critical issues related to overfitting already addressed by the AI and identified irrelevant issues."
+      },
+      {
+        "criterion_name": "Use of Evaluation Metrics",
+        "score": "C",
+        "internal_note": "The student misjudged the appropriateness of the accuracy metric, expecting an unrealistic threshold."
+      },
+      {
+        "criterion_name": "Critical Analysis",
+        "score": "C",
+        "internal_note": "The analysis was superficial and did not connect identified issues to model performance effectively."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were mostly clear and actionable but missed addressing the assumption of model type."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "A",
+        "internal_note": "The student effectively improved the AI output through thoughtful iterations."
+      },
+      {
+        "criterion_name": "Feedback Relevance",
+        "score": "B",
+        "internal_note": "Feedback was relevant but missed addressing some critical assumptions and context-specific issues."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The AI output already addresses the potential overfitting issue by comparing training and testing accuracy.",
+      "The AI output provides a comprehensive set of recommendations to address overfitting, which the student did not acknowledge or critique."
+    ],
+    "false_positives": [
+      "The model's accuracy is too low for any practical use, as it should be at least 95% to be considered effective."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what customer churn is and why it matters for businesses. It seems like we need to predict when customers might stop buying from us.\"}, {\"section_type\": \"Data Requirements\", \"content\": \"I should figure out what historical sales and interaction data we have. This might include things like how much customers bought and how often they interacted with us.\"}, {\"section_type\": \"Model Evaluation Criteria\", \"content\": \"I need to",
+    "steering_cmds": [
+      "Expand the analysis to include the model's complexity, such as the number of features and the type of model used, to assess overfitting more accurately.",
+      "Include a comparison of the model's performance metrics against industry benchmarks to determine if the accuracy is indeed sufficient for practical application.",
+      "Suggest additional performance metrics such as confusion matrix analysis and precision-recall curves to provide a more comprehensive evaluation of the model's performance.",
+      "Discuss the potential impact of class imbalance on the model's performance metrics and recommend techniques such as SMOTE or class weighting to address this issue.",
+      "Consider the implications of the model's deployment in a real-world scenario, including the cost of false positives and false negatives, to better contextualize the performance metrics."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies some key components but lacks depth in connecting customer churn to model evaluation."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "C",
+        "internal_note": "Objectives are vague and lack specificity in how to evaluate the model and address overfitting."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "B",
+        "internal_note": "Mentions relevant concepts like cross-validation but does not fully align with best practices or provide detailed methodologies."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "C",
+        "internal_note": "The student missed critical issues related to overfitting already addressed by the AI and identified irrelevant issues."
+      },
+      {
+        "criterion_name": "Use of Evaluation Metrics",
+        "score": "C",
+        "internal_note": "The student misjudged the appropriateness of the accuracy metric, expecting an unrealistic threshold."
+      },
+      {
+        "criterion_name": "Critical Analysis",
+        "score": "C",
+        "internal_note": "The analysis was superficial and did not connect identified issues to model performance effectively."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Clarity",
+        "score": "B",
+        "internal_note": "Commands were somewhat clear but lacked precision in addressing advanced topics like regularization."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was some improvement, but critical issues remained unaddressed."
+      },
+      {
+        "criterion_name": "Feedback Relevance",
+        "score": "B",
+        "internal_note": "Feedback was relevant but sometimes unrealistic or insufficiently detailed."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The AI output already addresses the potential overfitting issue by comparing training and testing accuracy.",
+      "The AI output provides a comprehensive set of recommendations to address overfitting, which the student did not acknowledge or critique."
+    ],
+    "false_positives": [
+      "The model's accuracy is too low for any practical use, as it should be at least 95% to be considered effective."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what customer churn means and how it relates to our model. I should also learn about historical sales and interaction data.\"}, {\"section_type\": \"Model Evaluation\", \"content\": \"I need to figure out how to evaluate the model's performance. This might include understanding accuracy, precision, recall, and maybe F1 score.\"}, {\"section_type\": \"Overfitting Explanation\", \"content\": \"I should look up what overfitting is and why ",
+    "steering_cmds": [
+      "The analysis seems good, but it should mention the model's complexity and how that might affect overfitting.",
+      "The accuracy might be too low for a real application, so it should suggest aiming for at least 95%.",
+      "It could explain more about how regularization works and why it's important for overfitting.",
+      "The report should clarify what AUC-ROC means and why it's a useful metric.",
+      "It might be helpful to add examples of what features could be irrelevant or redundant."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student defines the problem with a focus on query types and performance metrics but lacks mention of the database system in use."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "B",
+        "internal_note": "The student identifies relevant data characteristics but does not explicitly connect these to the specific database system."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The task is broken down into clear sections, but lacks specific measurable goals for performance improvements."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified several key issues but missed some critical ones related to expression indexes and data integrity."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was generally relevant to the problem but lacked focus on some specific indexing implications."
+      },
+      {
+        "criterion_name": "Depth of Analysis",
+        "score": "B",
+        "internal_note": "The analysis showed some depth but could have been more comprehensive in evaluating the trade-offs and implications of different indexing strategies."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Corrective Commands",
+        "score": "B",
+        "internal_note": "Commands were specific and actionable but missed addressing some remaining issues."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was clear improvement, but some issues remained unresolved."
+      },
+      {
+        "criterion_name": "Conceptual Clarity",
+        "score": "A",
+        "internal_note": "Commands reflected a strong understanding of indexing and optimization principles."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Potential impact of expression indexes on both read and write operations.",
+      "Need for a more detailed discussion on maintaining data integrity with the proposed indexes."
+    ],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the specific queries that are experiencing slow performance. Identify the types of queries (e.g., SELECT, JOIN, UPDATE) and their frequency of execution. Determine the acceptable response time for these queries and the current performance metrics.\"}, {\"section_type\": \"Current Indexing Strategy Analysis\", \"content\": \"Conduct a thorough analysis of the existing indexing strategy, including the types of indexes currently in use (e.g",
+    "steering_cmds": [
+      "Revise the rationale for composite indexes to include a detailed analysis of the trade-offs associated with index maintenance on write operations, emphasizing that while they can improve read performance, they may also increase the cost of updates and inserts.",
+      "Incorporate specific metrics or benchmarks for measuring performance improvements, such as average query response time before and after implementation, to provide a clearer evaluation framework for the proposed indexing strategy.",
+      "Address the potential drawbacks of partial indexes by discussing the importance of ensuring that the indexed subset accurately reflects the distribution of data in the database, and consider scenarios where this may not hold true.",
+      "Include a detailed methodology for analyzing query patterns, suggesting the implementation of query logging and performance monitoring tools to systematically identify slow queries and their frequency, which would better inform the indexing strategy."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The problem is identified but lacks specificity regarding the types of queries affected and exact performance metrics."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "B",
+        "internal_note": "The context is generally relevant but could be improved by specifying the database management system and its indexing capabilities."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "A",
+        "internal_note": "The task is well-defined with clear objectives and expected outcomes."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified some relevant issues but missed critical aspects of the indexing strategy."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was generally relevant but lacked focus on critical aspects of the indexing strategy."
+      },
+      {
+        "criterion_name": "Depth of Analysis",
+        "score": "C",
+        "internal_note": "Analysis was somewhat superficial, lacking detailed exploration of the indexing strategies and their implications."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Corrective Commands",
+        "score": "B",
+        "internal_note": "Commands were specific but not exhaustive; they addressed some issues but missed others."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was noted, but not all critical issues were resolved."
+      },
+      {
+        "criterion_name": "Conceptual Clarity",
+        "score": "B",
+        "internal_note": "Commands showed a reasonable understanding of indexing principles but lacked depth in certain areas."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overall effectiveness of the proposed indexing strategies.",
+      "Balance between read and write operations."
+    ],
+    "false_positives": [
+      "Overlooking potential negative impact of partial indexes on query performance when the indexed subset is not representative of the overall data distribution.",
+      "Failure to address how to analyze query patterns effectively and the potential need for query logging to identify slow queries accurately."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary issue is the slow query performance in the customer database, which contains over a million records. We need to define the specific queries that are underperforming, the current indexing strategy in use, and the performance metrics that indicate slowness. This will help in understanding the context and the scope of the problem.\"}, {\"section_type\": \"Data Analysis\", \"content\": \"Conduct a thorough analysis of the current database schem",
+    "steering_cmds": [
+      "Consider the impact of index maintenance on write operations more clearly.",
+      "Provide specific metrics for how performance improvements will be measured.",
+      "Discuss the risks of using partial indexes if they don't represent the overall data well.",
+      "Explain better how to analyze query patterns, maybe suggest using query logging."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The problem is somewhat defined, but lacks explicit connection to the company's specific query issues."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "C",
+        "internal_note": "Missing specific database characteristics that impact indexing."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "A",
+        "internal_note": "Clear objectives and tasks are outlined with measurable goals."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified some relevant issues but missed other critical aspects."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was somewhat relevant but lacked focus on specific indexing strategies."
+      },
+      {
+        "criterion_name": "Depth of Analysis",
+        "score": "C",
+        "internal_note": "Analysis was superficial and lacked depth in considering different indexing strategies."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Corrective Commands",
+        "score": "B",
+        "internal_note": "Commands were specific but did not address all critical issues, such as specific examples and detailed storage strategies."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was seen, but critical issues remained unaddressed, limiting full convergence."
+      },
+      {
+        "criterion_name": "Conceptual Clarity",
+        "score": "B",
+        "internal_note": "Commands reflected a good understanding of indexing principles but lacked depth in addressing all necessary aspects."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Lack of detailed analysis on specific query patterns.",
+      "Absence of discussion on trade-offs between read and write performance."
+    ],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the specific queries that are experiencing performance issues, including their frequency and complexity. Identify the key metrics for measuring query performance, such as response time and resource utilization.\"}, {\"section_type\": \"Current Indexing Strategy Analysis\", \"content\": \"Conduct a thorough analysis of the existing indexing strategy, including the types of indexes currently in use (e.g., B-tree, hash, full-text), their di",
+    "steering_cmds": [
+      "Revise the analysis of composite indexes to include a discussion on the potential negative impact on write operations due to increased maintenance overhead and storage requirements.",
+      "Provide a more detailed justification for the use of partial indexes, including specific criteria for their implementation and how they will balance performance with storage efficiency.",
+      "Expand on the implications of increased storage requirements for the proposed indexing strategy and suggest ways to mitigate these concerns, such as periodic index review and optimization.",
+      "Include a section on monitoring and evaluating the effectiveness of the new indexing strategy post-implementation to ensure that performance improvements are realized without compromising write performance."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The problem is defined with a focus on KPIs and benchmarks, but lacks specificity about the exact queries and current performance metrics."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "B",
+        "internal_note": "The context is relevant, discussing current indexing strategies, but could benefit from more specific details about the database schema and query patterns."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The task is specified with objectives like performance improvements and trade-offs, but lacks detailed measurable goals and a clear testing methodology."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified a relevant issue but lacked depth in explanation."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was somewhat relevant but did not fully address the core aspects of the task."
+      },
+      {
+        "criterion_name": "Depth of Analysis",
+        "score": "C",
+        "internal_note": "Analysis lacked depth and did not consider multiple perspectives or trade-offs."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Corrective Commands",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but did not fully address all critical issues."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was seen, but critical issues remained unaddressed."
+      },
+      {
+        "criterion_name": "Conceptual Clarity",
+        "score": "B",
+        "internal_note": "Commands showed a reasonable understanding of indexing but lacked depth in addressing all necessary aspects."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Potential impact of partial and expression indexes on write performance and storage.",
+      "Lack of detailed analysis on how query patterns were analyzed and how they informed the proposed strategy.",
+      "Considerations for ongoing maintenance and monitoring of index performance."
+    ],
+    "false_positives": [
+      "The proposed indexing strategy will drastically increase storage requirements, leading to inefficient use of database resources."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the scope of the slow query performance issue, including specific queries that exhibit poor performance, the frequency of these queries, and the average response times compared to acceptable benchmarks. Identify the key performance indicators (KPIs) that will be used to measure the success of the indexing strategy.\"}, {\"section_type\": \"Current Indexing Strategy Analysis\", \"content\": \"Conduct a thorough analysis of the existing in",
+    "steering_cmds": [
+      "Consider explaining how the composite indexes might affect storage and whether they are always beneficial.",
+      "Add more details about how partial indexes work and their specific benefits.",
+      "Mention the potential downsides of having too many indexes, like increased complexity in query planning.",
+      "Explain what regular maintenance tasks involve and why they are important for data integrity."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies the need to understand slow query performance and indexing but lacks specificity in defining the problem."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "B",
+        "internal_note": "The student mentions the need to understand the current indexing and query types but does not provide specific context or database characteristics."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The student outlines tasks but lacks measurable objectives or specific performance metrics to assess success."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified some relevant issues but missed critical aspects of the indexing strategy."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was generally relevant but lacked focus on critical aspects of the indexing strategy."
+      },
+      {
+        "criterion_name": "Depth of Analysis",
+        "score": "C",
+        "internal_note": "Analysis was somewhat superficial, lacking detailed exploration of the indexing strategies and their implications."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Corrective Commands",
+        "score": "B",
+        "internal_note": "Commands were specific and addressed critical issues, but lacked some quantitative detail and specific tool recommendations."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was clear improvement, but further iterations could have refined the solution more."
+      },
+      {
+        "criterion_name": "Conceptual Clarity",
+        "score": "A",
+        "internal_note": "Commands reflected a strong understanding of indexing principles and effectively guided the AI."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overall effectiveness of the proposed indexing strategies.",
+      "Balance between read and write operations."
+    ],
+    "false_positives": [
+      "Overlooking potential negative impact of partial indexes on query performance when the indexed subset is not representative of the overall data distribution.",
+      "Failure to address how to analyze query patterns effectively and the potential need for query logging to identify slow queries accurately."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what slow query performance means and how it affects the customer database. I should look into what indexing is and why it is important for query performance.\"}, {\"section_type\": \"Current Situation\", \"content\": \"The database has over a million records, so I need to find out how many indexes are currently in use and what kind of queries are running slowly.\"}, {\"section_type\": \"Indexing Strategy\", \"content\": \"I should lear",
+    "steering_cmds": [
+      "Revise the assumption regarding composite indexes to include a detailed analysis of their maintenance costs on write operations, including potential scenarios where they may not lead to performance gains.",
+      "Incorporate specific metrics for measuring performance improvements, such as average query response time before and after index implementation, and establish benchmarks for success evaluation.",
+      "Address the potential downsides of partial indexes by discussing how to ensure the indexed subset accurately reflects the overall data distribution, and consider scenarios where this might not hold true.",
+      "Include a methodology for effectively analyzing query patterns, such as implementing query logging or using performance monitoring tools to systematically identify and prioritize slow queries."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies the problem of slow queries but lacks specific terminology related to indexing and query performance."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "C",
+        "internal_note": "The context is too generic and does not reference specific database schemas or data characteristics."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "B",
+        "internal_note": "The task is defined but lacks measurable goals and specific desired outcomes for performance."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified some relevant issues but missed critical aspects of the indexing strategy."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was generally relevant but lacked focus on critical aspects of the indexing strategy."
+      },
+      {
+        "criterion_name": "Depth of Analysis",
+        "score": "C",
+        "internal_note": "Analysis was somewhat superficial, lacking detailed exploration of the indexing strategies and their implications."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Corrective Commands",
+        "score": "B",
+        "internal_note": "Commands were generally specific and addressed key issues but missed some critical aspects."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was seen, but the solution did not fully converge due to unresolved issues."
+      },
+      {
+        "criterion_name": "Conceptual Clarity",
+        "score": "B",
+        "internal_note": "Commands reflected a reasonable understanding of indexing principles but lacked depth in some areas."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overall effectiveness of the proposed indexing strategies.",
+      "Balance between read and write operations."
+    ],
+    "false_positives": [
+      "Overlooking potential negative impact of partial indexes on query performance when the indexed subset is not representative of the overall data distribution.",
+      "Failure to address how to analyze query patterns effectively and the potential need for query logging to identify slow queries accurately."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The company has a customer database with over a million records, and queries are slow. I need to find out why this is happening and how to fix it.\"}, {\"section_type\": \"Current Situation\", \"content\": \"I should look at how the database is currently set up, especially how it uses indexes. I need to check what types of queries are slow.\"}, {\"section_type\": \"Goals\", \"content\": \"The goal is to make the queries faster by changing the indexing strat",
+    "steering_cmds": [
+      "Consider how composite indexes might slow down writes and not just improve reads.",
+      "Add some specific examples of metrics to measure performance improvements like query execution time before and after indexing.",
+      "Think about how partial indexes might not always help if the data is not evenly distributed.",
+      "Explain better how to analyze query patterns, maybe mention using query logs or tools to find slow queries."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies the need to understand slow queries but lacks specific terms related to indexing and query performance."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "C",
+        "internal_note": "The student does not provide relevant background information or context that influences the indexing strategy."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "C",
+        "internal_note": "The student does not translate the problem into a well-defined task with clear, measurable objectives."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified a relevant issue but lacked depth in explanation."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was somewhat relevant but did not fully address the core aspects of the task."
+      },
+      {
+        "criterion_name": "Depth of Analysis",
+        "score": "C",
+        "internal_note": "Analysis lacked depth and did not consider multiple perspectives or trade-offs."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Corrective Commands",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but missed addressing all critical issues."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was noted, but not all issues were resolved."
+      },
+      {
+        "criterion_name": "Conceptual Clarity",
+        "score": "B",
+        "internal_note": "Commands showed understanding of indexing principles but lacked depth in addressing all issues."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Potential impact of partial and expression indexes on write performance and storage.",
+      "Lack of detailed analysis on how query patterns were analyzed and how they informed the proposed strategy.",
+      "Considerations for ongoing maintenance and monitoring of index performance."
+    ],
+    "false_positives": [
+      "The proposed indexing strategy will drastically increase storage requirements, leading to inefficient use of database resources."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The company has a customer database with over a million records, and queries are running slowly. I need to understand what kind of queries are slow and why they are slow.\"}, {\"section_type\": \"Indexing Strategy Analysis\", \"content\": \"I will look at how the current indexing is set up. This means checking which fields are indexed and if they are the right ones for the queries being run.\"}, {\"section_type\": \"Proposed Solution\", \"content\": \"I nee",
+    "steering_cmds": [
+      "Reassess the assumption that composite indexes will always lead to improved performance; provide a detailed analysis of the potential trade-offs in index maintenance costs versus query performance gains.",
+      "Include a thorough evaluation of the increased storage requirements resulting from the proposed indexing strategy; suggest methods to mitigate this impact, such as index compression or periodic index review.",
+      "Discuss the implications of adding multiple indexes on overall database performance, including potential contention during write operations and how to balance read and write performance effectively.",
+      "Consider the impact of indexing on database backup and restore processes; outline strategies to ensure that backups remain efficient with the new indexing strategy in place."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies the problem of slow queries and mentions indexing, but lacks specificity about query types and indexing methods."
+      },
+      {
+        "criterion_name": "Contextual Relevance",
+        "score": "B",
+        "internal_note": "The student mentions the need to understand current indexing and query performance but does not connect this to specific database characteristics or schemas."
+      },
+      {
+        "criterion_name": "Task Specification",
+        "score": "C",
+        "internal_note": "The task lacks measurable objectives and clear performance metrics, making it difficult to assess progress."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified a relevant issue but lacked depth in explanation."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was somewhat relevant but did not fully address the core aspects of the task."
+      },
+      {
+        "criterion_name": "Depth of Analysis",
+        "score": "C",
+        "internal_note": "Analysis lacked depth and did not consider multiple perspectives or trade-offs."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Corrective Commands",
+        "score": "B",
+        "internal_note": "Commands were generally clear but lacked specificity in certain areas, such as monitoring tools."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was seen, but the lack of specificity limited full convergence."
+      },
+      {
+        "criterion_name": "Conceptual Clarity",
+        "score": "B",
+        "internal_note": "Commands reflected a basic understanding of indexing but could have been more detailed and conceptually robust."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Potential impact of partial and expression indexes on write performance and storage.",
+      "Lack of detailed analysis on how query patterns were analyzed and how they informed the proposed strategy.",
+      "Considerations for ongoing maintenance and monitoring of index performance."
+    ],
+    "false_positives": [
+      "The proposed indexing strategy will drastically increase storage requirements, leading to inefficient use of database resources."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The problem is about slow queries in a customer database with many records. I need to understand what types of queries are slow and which indexes are currently used.\"}, {\"section_type\": \"Data Collection\", \"content\": \"I should find out what the current indexing strategy is and gather data on the specific queries that are performing slowly. This might involve looking at query execution times and the database schema.\"}, {\"section_type\": \"Indexi",
+    "steering_cmds": [
+      "Explain how the new indexes might slow down write operations more clearly.",
+      "Provide more details on how much storage the new indexes will require.",
+      "Mention specific types of queries that might benefit from the proposed changes.",
+      "Discuss how to monitor the impact on performance after implementing the new indexes."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "B",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Variables",
+        "score": "B",
+        "internal_note": "The student hints at variables but does not explicitly define them as dependent and independent."
+      },
+      {
+        "criterion_name": "Clarity of Hypothesis",
+        "score": "A",
+        "internal_note": "The hypothesis is clear and testable, directly addressing the problem."
+      },
+      {
+        "criterion_name": "Contextual Understanding",
+        "score": "B",
+        "internal_note": "The student provides some context but could enhance it by explaining the relevance of the benchmark."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified several key issues but also flagged a non-issue regarding sample size."
+      },
+      {
+        "criterion_name": "Statistical Reasoning",
+        "score": "B",
+        "internal_note": "Demonstrated good reasoning but missed discussing the significance level and independence assumptions."
+      },
+      {
+        "criterion_name": "Use of Terminology",
+        "score": "A",
+        "internal_note": "Used appropriate statistical terminology accurately."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Corrections",
+        "score": "B",
+        "internal_note": "The corrections were mostly clear and actionable, but lacked specificity in some areas, such as handling missing data."
+      },
+      {
+        "criterion_name": "Relevance of Corrections",
+        "score": "A",
+        "internal_note": "Corrections were relevant to the identified issues and aimed at improving the AI's output."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "C",
+        "internal_note": "There was limited iterative improvement as the student marked 'done' early, leaving some issues unresolved."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The choice of significance level and its implications on the hypothesis test.",
+      "The assumption of data independence and its potential impact on the validity of the test."
+    ],
+    "false_positives": [
+      "The sample size of 30 is mentioned as sufficient for applying the Central Limit Theorem, but it does not take into account potential violations of independence or distribution requirements."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the benchmark for average sales that we want to test against. This could be based on historical data, industry standards, or projected sales figures. Establish the specific time frame for the analysis, which is the past three months, and clarify the type of data collected (e.g., total sales, number of units sold, revenue generated).\"}, {\"section_type\": \"Hypothesis Formulation\", \"content\": \"Formulate the null hypothesis (H0) as 'T",
+    "steering_cmds": [
+      "Revise the assumption of normality, acknowledging that if the sales data is skewed or contains outliers, a non-parametric test such as the Wilcoxon signed-rank test may be more appropriate.",
+      "Provide a clear justification for the selection of the benchmark value of $10,000, potentially referencing historical sales data or market analysis to support its relevance.",
+      "Discuss the implications of the sample size of 30 in relation to the Central Limit Theorem, emphasizing the need for both independence and distribution requirements to be met for valid conclusions.",
+      "Include a method for handling missing data and outliers in the sales figures, such as imputation techniques or robust statistical methods that minimize their impact on the analysis.",
+      "Consider conducting a power analysis to determine if the sample size is adequate to detect a meaningful difference between the average sales and the benchmark."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Variables",
+        "score": "B",
+        "internal_note": "The student did not explicitly identify the dependent and independent variables, which are critical for hypothesis testing."
+      },
+      {
+        "criterion_name": "Clarity of Hypothesis",
+        "score": "B",
+        "internal_note": "The hypothesis is clear but lacks specificity in terms of the benchmark value."
+      },
+      {
+        "criterion_name": "Contextual Understanding",
+        "score": "C",
+        "internal_note": "The student did not provide sufficient context about the product or market conditions."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified several critical issues but missed some key points regarding the statistical test's appropriateness."
+      },
+      {
+        "criterion_name": "Statistical Reasoning",
+        "score": "B",
+        "internal_note": "The student demonstrated good reasoning but could have improved by discussing the test's power and alternative methods."
+      },
+      {
+        "criterion_name": "Use of Terminology",
+        "score": "A",
+        "internal_note": "The student used appropriate statistical terminology throughout their evaluation."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Corrections",
+        "score": "B",
+        "internal_note": "Corrections were mostly clear but could have been more detailed in certain areas."
+      },
+      {
+        "criterion_name": "Relevance of Corrections",
+        "score": "A",
+        "internal_note": "Corrections were relevant to the identified issues and improved the AI's output."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was improvement, but further iterations could have addressed remaining issues more thoroughly."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Appropriateness of using a one-sample t-test given the data distribution and sample size.",
+      "Potential impact of small sample size on the power of the test."
+    ],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the objective of the hypothesis test: to determine if the average sales of the newly launched product exceed a specific benchmark. Specify the benchmark value, which should be based on historical sales data or industry standards.\"}, {\"section_type\": \"Hypothesis Formulation\", \"content\": \"Formulate the null hypothesis (H0) and the alternative hypothesis (H1). For instance, H0: μ ≤ benchmark (the average sales do not exceed the benc",
+    "steering_cmds": [
+      "Make sure to explain why the benchmark of $10,000 was chosen and if it's based on anything specific.",
+      "Consider discussing what to do if the sales data is not normally distributed, like using a different test.",
+      "Add more details on how to handle missing data or outliers in the sales figures.",
+      "Clarify what independence of observations means in this context and why it's important."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Variables",
+        "score": "B",
+        "internal_note": "The student did not explicitly identify the dependent and independent variables, which are crucial for hypothesis testing."
+      },
+      {
+        "criterion_name": "Clarity of Hypothesis",
+        "score": "A",
+        "internal_note": "The hypothesis is clear and testable, directly addressing the problem statement."
+      },
+      {
+        "criterion_name": "Contextual Understanding",
+        "score": "B",
+        "internal_note": "The student did not provide sufficient context about the product or market, which is important for understanding the hypothesis."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "Identified the issue with normality but incorrectly flagged the sample size as too small for CLT."
+      },
+      {
+        "criterion_name": "Statistical Reasoning",
+        "score": "B",
+        "internal_note": "Demonstrated understanding of normality concerns but misapplied the CLT concept."
+      },
+      {
+        "criterion_name": "Use of Terminology",
+        "score": "A",
+        "internal_note": "Used correct terminology when discussing statistical concepts."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Corrections",
+        "score": "B",
+        "internal_note": "Corrections were mostly clear but could have been more detailed, especially regarding outliers."
+      },
+      {
+        "criterion_name": "Relevance of Corrections",
+        "score": "A",
+        "internal_note": "Corrections were relevant to the identified issues such as normality and sample size."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was some improvement, but not all issues were fully addressed, particularly outliers."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Potential impact of outliers on the analysis",
+      "Assumption of independence of observations not explicitly verified"
+    ],
+    "false_positives": [
+      "The sample size of 30 is too small to apply the Central Limit Theorem, making the results unreliable."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the product in question and the specific benchmark for average sales that needs to be exceeded. This includes identifying the time frame for the sales data collection, which is three months, and specifying the exact sales figures or metrics that constitute the benchmark.\"}, {\"section_type\": \"Hypothesis Formulation\", \"content\": \"Formulate the null hypothesis (H0) as 'The average sales of the new product do not exceed the benchmark",
+    "steering_cmds": [
+      "Revise the assumption of normality, considering the possibility of non-normality in sales data, and suggest using non-parametric tests like the Wilcoxon signed-rank test if normality is violated.",
+      "Increase the sample size beyond 30 to ensure more reliable results and better applicability of the Central Limit Theorem.",
+      "Include a detailed analysis of potential outliers in the sales data and their impact on the hypothesis test results.",
+      "Discuss the implications of using a one-tailed test versus a two-tailed test in the context of the hypothesis being tested."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "B",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Variables",
+        "score": "B",
+        "internal_note": "The student identifies 'average sales' but does not explicitly define it as the dependent variable or mention any independent variables."
+      },
+      {
+        "criterion_name": "Clarity of Hypothesis",
+        "score": "A",
+        "internal_note": "The hypothesis is clearly formulated and testable, with a specific focus on comparing average sales to a benchmark."
+      },
+      {
+        "criterion_name": "Contextual Understanding",
+        "score": "B",
+        "internal_note": "The student does not provide sufficient context about the significance of the benchmark or the implications of the hypothesis test."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified a valid issue regarding normality but incorrectly flagged the sample size as an issue."
+      },
+      {
+        "criterion_name": "Statistical Reasoning",
+        "score": "B",
+        "internal_note": "The student demonstrated some understanding of statistical concepts but incorrectly applied the Central Limit Theorem."
+      },
+      {
+        "criterion_name": "Use of Terminology",
+        "score": "A",
+        "internal_note": "The student used appropriate statistical terminology in their evaluation."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Corrections",
+        "score": "B",
+        "internal_note": "Corrections were somewhat clear but lacked detailed guidance on implementation."
+      },
+      {
+        "criterion_name": "Relevance of Corrections",
+        "score": "A",
+        "internal_note": "Corrections were relevant to the identified issues."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "C",
+        "internal_note": "Limited improvement due to marking 'done' early and not addressing all issues."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Independence of observations is a critical assumption for the validity of the t-test."
+    ],
+    "false_positives": [
+      "The sample size of 30 is too small to apply the Central Limit Theorem, making the results unreliable."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to assess whether the average sales of the newly launched product exceed a predetermined benchmark. This involves formulating a clear null hypothesis (H0) and an alternative hypothesis (H1) based on the benchmark value. For instance, if the benchmark average sales are $X, then H0: μ ≤ X and H1: μ > X, where μ represents the true average sales of the product.\"}, {\"section_type\": \"Data Collection\", \"content\": \"Data should",
+    "steering_cmds": [
+      "Make sure to check if the sales data is actually normal, because if it's not, it could mess up the results.",
+      "Consider using a larger sample size if possible, since 30 might not be enough for the Central Limit Theorem to work well.",
+      "Add more details about how to collect the data from the sales team, so it's clearer.",
+      "Maybe explain what a p-value is, since it could help understand the conclusions better."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Variables",
+        "score": "C",
+        "internal_note": "The student did not clearly identify or define the dependent and independent variables."
+      },
+      {
+        "criterion_name": "Clarity of Hypothesis",
+        "score": "B",
+        "internal_note": "The hypothesis is somewhat clear but lacks specificity regarding the benchmark."
+      },
+      {
+        "criterion_name": "Contextual Understanding",
+        "score": "B",
+        "internal_note": "The student shows some understanding of the context but lacks depth in explaining the relevance of the statistical test."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified several key issues but also flagged a non-issue regarding sample size."
+      },
+      {
+        "criterion_name": "Statistical Reasoning",
+        "score": "B",
+        "internal_note": "Demonstrated good reasoning but missed discussing the significance level and independence assumptions."
+      },
+      {
+        "criterion_name": "Use of Terminology",
+        "score": "A",
+        "internal_note": "Used appropriate statistical terminology accurately."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Corrections",
+        "score": "B",
+        "internal_note": "Corrections were generally clear but could have been more detailed, especially regarding missing data and outliers."
+      },
+      {
+        "criterion_name": "Relevance of Corrections",
+        "score": "A",
+        "internal_note": "Corrections were relevant and addressed the identified issues effectively."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was improvement, but further iterations could have refined the handling of missing data and outliers."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The choice of significance level and its implications on the hypothesis test.",
+      "The assumption of data independence and its potential impact on the validity of the test."
+    ],
+    "false_positives": [
+      "The sample size of 30 is mentioned as sufficient for applying the Central Limit Theorem, but it does not take into account potential violations of independence or distribution requirements."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"We need to figure out if our new product is selling better than a certain amount we think is good. This means we need to compare the average sales of our product to this benchmark. I guess we have to look at the sales data from the last three months.\"}, {\"section_type\": \"Data Collection\", \"content\": \"We should gather the sales data from our sales team for the last three months. This data will help us know how much of the product was sold dur",
+    "steering_cmds": [
+      "Revise the assumption of normality by conducting tests such as the Shapiro-Wilk test or visual inspections (e.g., Q-Q plots) to assess the distribution of the sales data before applying the t-test.",
+      "Provide a clear justification for the selection of the benchmark value of $10,000, including historical sales data or market analysis that supports this figure as a valid reference point.",
+      "Address potential violations of independence and distribution requirements more thoroughly by discussing methods to check for autocorrelation or using non-parametric tests if assumptions are violated.",
+      "Include a detailed plan for handling missing data and outliers, such as using imputation techniques for missing values and robust statistical methods to mitigate the influence of outliers on the mean and standard deviation calculations.",
+      "Incorporate a discussion on the power of the test and the effect size to understand the practical significance of the results, beyond just the p-value."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "B",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Variables",
+        "score": "B",
+        "internal_note": "The student mentions average sales and a benchmark but does not clearly define these as the dependent and independent variables."
+      },
+      {
+        "criterion_name": "Clarity of Hypothesis",
+        "score": "A",
+        "internal_note": "The hypothesis is clear and testable, with a null and alternative hypothesis properly formulated."
+      },
+      {
+        "criterion_name": "Contextual Understanding",
+        "score": "C",
+        "internal_note": "The student does not provide sufficient context or explain the relevance of the hypothesis to the market performance."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified several key issues but also flagged a non-issue regarding sample size."
+      },
+      {
+        "criterion_name": "Statistical Reasoning",
+        "score": "B",
+        "internal_note": "Demonstrated good reasoning but missed discussing the significance level and independence assumptions."
+      },
+      {
+        "criterion_name": "Use of Terminology",
+        "score": "A",
+        "internal_note": "Used appropriate statistical terminology accurately."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Corrections",
+        "score": "B",
+        "internal_note": "The corrections were somewhat clear but lacked detailed guidance on implementation."
+      },
+      {
+        "criterion_name": "Relevance of Corrections",
+        "score": "A",
+        "internal_note": "The corrections were relevant to the identified issues."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "C",
+        "internal_note": "There was limited iterative improvement, as the student marked the task done prematurely."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The choice of significance level and its implications on the hypothesis test.",
+      "The assumption of data independence and its potential impact on the validity of the test."
+    ],
+    "false_positives": [
+      "The sample size of 30 is mentioned as sufficient for applying the Central Limit Theorem, but it does not take into account potential violations of independence or distribution requirements."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"We want to find out if the average sales of our new product are higher than a specific number we have in mind. This will help us know if the product is doing well in the market.\"}, {\"section_type\": \"Hypothesis Formulation\", \"content\": \"We need to create two statements. One is the null hypothesis, which says that the average sales are not greater than the benchmark. The other is the alternative hypothesis, which says that the average sales are g",
+    "steering_cmds": [
+      "Check if the assumption of normality is really true for the sales data, because that could change the results.",
+      "Make sure to explain how the benchmark was chosen and if there's any evidence that it's a good one.",
+      "Discuss what to do if there are any missing sales data or outliers, since they can change the average a lot.",
+      "Maybe mention what happens if the sample size isn't enough for the Central Limit Theorem to apply."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Variables",
+        "score": "C",
+        "internal_note": "Variables are not clearly identified or defined."
+      },
+      {
+        "criterion_name": "Clarity of Hypothesis",
+        "score": "B",
+        "internal_note": "Hypothesis is clear but lacks specificity in terms of the benchmark value."
+      },
+      {
+        "criterion_name": "Contextual Understanding",
+        "score": "C",
+        "internal_note": "Fails to provide context or explain its relevance to the hypothesis."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified a valid issue regarding normality but incorrectly flagged the sample size as an issue."
+      },
+      {
+        "criterion_name": "Statistical Reasoning",
+        "score": "B",
+        "internal_note": "The student demonstrated some understanding of statistical concepts but incorrectly applied the Central Limit Theorem."
+      },
+      {
+        "criterion_name": "Use of Terminology",
+        "score": "A",
+        "internal_note": "The student used appropriate statistical terminology in their evaluation."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Corrections",
+        "score": "B",
+        "internal_note": "The corrections were generally clear but lacked detailed guidance in some areas."
+      },
+      {
+        "criterion_name": "Relevance of Corrections",
+        "score": "A",
+        "internal_note": "The corrections were relevant to the identified issues and aimed at improving the AI's output."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was some iterative improvement, but the solution did not fully address all critical issues."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Independence of observations is a critical assumption for the validity of the t-test."
+    ],
+    "false_positives": [
+      "The sample size of 30 is too small to apply the Central Limit Theorem, making the results unreliable."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to figure out if our new product is selling well compared to a specific sales target. This means we have to compare the average sales from the last three months to this target.\"}, {\"section_type\": \"Hypothesis Formulation\", \"content\": \"We should state two hypotheses. The null hypothesis (H0) could be that the average sales are less than or equal to the benchmark. The alternative hypothesis (H1) would be that the average sales are greater",
+    "steering_cmds": [
+      "Revise the assumption of normality, considering the possibility of skewness or outliers in the sales data. Recommend using non-parametric tests such as the Wilcoxon signed-rank test if the normality assumption is violated.",
+      "Increase the sample size beyond 30 if feasible, or conduct a power analysis to determine the adequacy of the sample size for the desired significance level and effect size.",
+      "Include a discussion on the potential impact of seasonality or external factors on sales performance during the three-month period, as these could influence the results.",
+      "Suggest conducting a residual analysis after the t-test to check for any violations of assumptions and to better understand the distribution of the sales data."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "B",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Variables",
+        "score": "B",
+        "internal_note": "Variables are implied but not explicitly identified or defined."
+      },
+      {
+        "criterion_name": "Clarity of Hypothesis",
+        "score": "A",
+        "internal_note": "The hypothesis is clear and testable, with a null and alternative hypothesis well formulated."
+      },
+      {
+        "criterion_name": "Contextual Understanding",
+        "score": "B",
+        "internal_note": "Some context is provided, but it lacks depth and does not fully explore the relevance of assumptions."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified a valid issue regarding normality but incorrectly flagged the sample size as an issue."
+      },
+      {
+        "criterion_name": "Statistical Reasoning",
+        "score": "B",
+        "internal_note": "The student demonstrated some understanding of statistical concepts but incorrectly applied the Central Limit Theorem."
+      },
+      {
+        "criterion_name": "Use of Terminology",
+        "score": "A",
+        "internal_note": "The student used appropriate statistical terminology in their evaluation."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Corrections",
+        "score": "B",
+        "internal_note": "Corrections were clear but lacked depth in addressing potential issues with normality."
+      },
+      {
+        "criterion_name": "Relevance of Corrections",
+        "score": "A",
+        "internal_note": "Corrections were relevant to the identified issues, focusing on normality and sample size."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was seen, but critical issues were not fully resolved in subsequent iterations."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Independence of observations is a critical assumption for the validity of the t-test."
+    ],
+    "false_positives": [
+      "The sample size of 30 is too small to apply the Central Limit Theorem, making the results unreliable."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"We need to find out if our new product is selling better than a specific number we have in mind, called a benchmark. This means we are trying to compare the average sales of our product to this benchmark.\"}, {\"section_type\": \"Data Collection\", \"content\": \"We should gather the sales data from the past three months. This means looking at how many units were sold each month and then calculating the average sales for this period.\"}, {\"section_ty",
+    "steering_cmds": [
+      "Check if the sales data is normally distributed before doing the test.",
+      "Consider increasing the sample size for more reliable results.",
+      "Look for outliers in the sales data that might affect the average.",
+      "Make sure to explain what a p-value is for clarity."
+    ]
+  }
+]

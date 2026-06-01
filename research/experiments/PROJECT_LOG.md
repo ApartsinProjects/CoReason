@@ -131,3 +131,11 @@ Framing +0.62 [0.46,0.77], Judging +2.00, Steering +0.43 [0.20,0.65]; diag +1.02
 Correlations: F-J rho=-0.03 (ns), F-S rho=-0.12 (ns), J-S rho=+0.25 (p=0.02, significant = the P2
 ceiling, now visible with power). 1st PC 43%. Own-effects positive in 9/10 subjects (F & S). Figures
 regenerated at N=80. ALL reviewer-raised compute items now closed; only the human-rater study remains.
+
+## C9 (2026-06-01): E4 ground-truth ablation — skill-specific dependence
+Re-graded 40 transcripts with gold-framing + seeded-issue ground truth STRIPPED from evaluators.
+Own-effects with->without GT: Framing +0.60->+0.75 (UNAFFECTED; rubric+LLM carry it), Judging
++2.00->+0.45 (COLLAPSES; loses recall/precision anchor), Steering +0.50->+0.25 (partial). Dissociation
+survives (ratio 29; contrasts decouple). Finding: Framing/Steering = rubric-guided model judgment;
+Judging-as-instrumented ~ agreement with an answer key (explains +2.00, bounds transfer to keyless
+settings). Integrated into Sec 8. **Empirical program complete; only human-rater study remains.**

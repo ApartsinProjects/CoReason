@@ -1,0 +1,72 @@
+{
+  "_vars": {
+    "raw_problem": "Our company has recently launched a new product, and we want to assess its market performance. Please design a hypothesis test to determine if the average sales of this product exceed a certain benchmark that we have in mind. The test should evaluate the data collected from our sales team over the past three months. Additionally, prepare a report that discusses your method, findings, and any recommendations based on the results. Ensure to highlight any assumptions you make during your analysis and how they might affect your conclusions.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to assess whether the average sales of the newly launched product exceed a predetermined benchmark. This involves formulating a clear null hypothesis (H0) and an alternative hypothesis (H1) based on the benchmark value. For instance, if the benchmark average sales are $X, then H0: μ ≤ X and H1: μ > X, where μ represents the true average sales of the product.\"}, {\"section_type\": \"Data Collection\", \"content\": \"Data should be collected from the sales team's records over the past three months, ensuring that the dataset is representative and free from biases. This includes total sales figures, the number of units sold, and any relevant demographic information about the customers that could influence sales.\"}, {\"section_type\": \"Statistical Methodology\", \"content\": \"To conduct the hypothesis test, I will utilize a one-sample t-test if the sample size is small (n < 30) and the population standard deviation is unknown, or a z-test if the sample size is large (n ≥ 30). The significance level (α) will be set at 0.05. It is crucial to check for normality in the sales data, as this will affect the choice of test. If the data is not normally distributed, a non-parametric test such as the Wilcoxon signed-rank test may be appropriate.\"}, {\"section_type\": \"Assumptions\", \"content\": \"Key assumptions include: (1) the sales data is independent and identically distributed, (2) the sample size is sufficiently large for the Central Limit Theorem to apply if using a z-test, and (3) the sales figures are normally distributed if using a t-test. Any violations of these assumptions should be addressed, as they can lead to incorrect conclusions.\"}, {\"section_type\": \"Analysis and Interpretation\", \"content\": \"After conducting the hypothesis test, I will calculate the p-value and compare it to the significance level. If the p-value is less than α, we will reject the null hypothesis, indicating that the average sales exceed the benchmark. The confidence interval for the mean sales will also be computed to provide a range of plausible values for the true average sales.\"}, {\"section_type\": \"Reporting\", \"content\": \"The final report will include a detailed methodology section, results of the hypothesis test, interpretation of findings, and recommendations based on the analysis. It will also discuss the implications of the results for future marketing strategies and product adjustments, if necessary. Any limitations of the study and suggestions for further research will also be included.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Variables",
+          "description": "Clearly identifies dependent and independent variables relevant to the hypothesis.",
+          "excellent_indicator": "All relevant variables are identified with clear definitions and their roles in the hypothesis.",
+          "poor_indicator": "Misses key variables or misidentifies their roles in the hypothesis."
+        },
+        {
+          "name": "Clarity of Hypothesis",
+          "description": "Formulates a clear and testable hypothesis based on the problem statement.",
+          "excellent_indicator": "The hypothesis is concise, specific, and directly addresses the problem.",
+          "poor_indicator": "The hypothesis is vague, overly broad, or does not relate to the problem."
+        },
+        {
+          "name": "Contextual Understanding",
+          "description": "Demonstrates a strong understanding of the context in which the hypothesis is framed.",
+          "excellent_indicator": "Provides a thorough explanation of the context and its relevance to the hypothesis.",
+          "poor_indicator": "Fails to explain the context or demonstrates a misunderstanding of its relevance."
+        }
+      ],
+      "typical_errors": [
+        "Confusing dependent and independent variables.",
+        "Formulating a hypothesis that cannot be tested statistically.",
+        "Neglecting to provide context or background information for the hypothesis."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's response does a good job of outlining the hypothesis and the statistical methods to be used, but it lacks a clear identification of the dependent and independent variables. The response mentions 'average sales' but does not explicitly define it as the dependent variable or identify any potential independent variables that might affect sales, such as marketing efforts or seasonal trends. Additionally, while the hypothesis is clear and testable, the student could have provided more context about why exceeding the benchmark is important for the company.",
+  "better_alternative": "A stronger framing would explicitly define the dependent variable as the average sales of the product and identify potential independent variables that could influence sales, such as marketing campaigns or seasonal factors. It would also provide a brief explanation of the business context, such as why the benchmark is significant and how exceeding it would impact business decisions. This would help in understanding the broader implications of the hypothesis test.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Variables",
+      "score": "B",
+      "internal_note": "The student identifies 'average sales' but does not explicitly define it as the dependent variable or mention any independent variables."
+    },
+    {
+      "criterion_name": "Clarity of Hypothesis",
+      "score": "A",
+      "internal_note": "The hypothesis is clearly formulated and testable, with a specific focus on comparing average sales to a benchmark."
+    },
+    {
+      "criterion_name": "Contextual Understanding",
+      "score": "B",
+      "internal_note": "The student does not provide sufficient context about the significance of the benchmark or the implications of the hypothesis test."
+    }
+  ],
+  "strengths": [
+    "The student formulated a clear and testable hypothesis.",
+    "The statistical methodology is well outlined, with consideration for different sample sizes and distribution assumptions."
+  ],
+  "refinements_correctly_selected": [
+    "Problem Definition",
+    "Statistical Methodology",
+    "Assumptions",
+    "Analysis and Interpretation",
+    "Reporting"
+  ],
+  "refinements_missed": [
+    "Identification of Variables",
+    "Contextual Understanding"
+  ],
+  "unnecessary_selections": []
+}

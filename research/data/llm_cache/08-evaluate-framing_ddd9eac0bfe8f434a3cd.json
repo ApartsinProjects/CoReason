@@ -1,0 +1,71 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is considering launching a new product in the competitive beverage market. Conduct a thorough analysis of the potential demand for this product, including identifying key factors that could influence its success. Based on your analysis, design a pricing strategy that maximizes revenue while ensuring market penetration. Your report should include both qualitative and quantitative assessments, but do not focus on external market research data. Determine how you will present your findings to upper management, specifying what kind of visual aids or metrics you might use. The final output should be a detailed document outlining your approach and strategy.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to understand how many people might want our new beverage product and what factors affect their choices.\"}, {\"section_type\": \"Key Factors Identification\", \"content\": \"Identify things that might make our product successful, like flavor, packaging, price, and marketing.\"}, {\"section_type\": \"Demand Analysis\", \"content\": \"Look at how much of our product people might buy at different prices.\"}, {\"section_type\": \"Pricing Strategy Development\", \"content\": \"Think about how we can set a price that makes money but also gets people to buy our product.\"}, {\"section_type\": \"Presentation Planning\", \"content\": \"Decide how to show our findings to management, maybe using charts or graphs to make it clear.\"}, {\"section_type\": \"Document Outline\", \"content\": \"Create a structure for our detailed document that includes an introduction, analysis, pricing strategy, and conclusion.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Key Variables",
+          "description": "Student correctly identifies and defines the key variables relevant to the supply and demand problem.",
+          "excellent_indicator": "All relevant variables are identified and clearly defined, showing a deep understanding of their roles in the market.",
+          "poor_indicator": "Key variables are either missing or poorly defined, leading to confusion about their relevance."
+        },
+        {
+          "name": "Articulation of the Problem Context",
+          "description": "Student effectively describes the context and background of the problem, including market conditions and stakeholder impacts.",
+          "excellent_indicator": "The context is thoroughly articulated, providing a clear picture of the market dynamics involved.",
+          "poor_indicator": "The context is vague or incomplete, lacking essential details that affect the understanding of the problem."
+        },
+        {
+          "name": "Clarity of the Well-Defined Task",
+          "description": "Student translates the ill-defined problem into a clear, actionable task that can be analyzed using microeconomic principles.",
+          "excellent_indicator": "The task is well-structured and explicitly aligns with microeconomic analysis methods and terminology.",
+          "poor_indicator": "The task is unclear or misaligned with microeconomic analysis, making it difficult to approach systematically."
+        }
+      ],
+      "typical_errors": [
+        "Failing to identify all key variables affecting supply and demand.",
+        "Describing the context in overly simplistic terms without considering market complexities.",
+        "Formulating a task that lacks specificity or measurable outcomes."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks depth in identifying key variables. For example, while they mention factors like flavor and packaging, they do not consider other crucial variables such as consumer demographics or competitor analysis. Additionally, the context of the problem is not fully articulated; the student does not address the competitive nature of the beverage market or potential consumer trends. The task is somewhat vague, particularly in the 'Demand Analysis' section, where there is no mention of specific methods or metrics to be used in the analysis.",
+  "better_alternative": "A stronger framing would include a comprehensive list of key variables such as consumer demographics, competitor pricing, and distribution channels. The context should be expanded to include a discussion of current market trends and potential barriers to entry. For clarity, the task should specify the use of particular microeconomic models or metrics, such as elasticity of demand or break-even analysis, to guide the analysis and pricing strategy.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Key Variables",
+      "score": "B",
+      "internal_note": "Some key variables identified, but lacks comprehensiveness."
+    },
+    {
+      "criterion_name": "Articulation of the Problem Context",
+      "score": "C",
+      "internal_note": "Context is vague and lacks detail on market dynamics."
+    },
+    {
+      "criterion_name": "Clarity of the Well-Defined Task",
+      "score": "B",
+      "internal_note": "Task is somewhat clear but lacks specificity and alignment with microeconomic principles."
+    }
+  ],
+  "strengths": [
+    "The student correctly identified some key factors like flavor and packaging.",
+    "The student outlined a basic structure for the document."
+  ],
+  "refinements_correctly_selected": [
+    "Key Factors Identification",
+    "Pricing Strategy Development"
+  ],
+  "refinements_missed": [
+    "Identification of Key Variables",
+    "Articulation of the Problem Context"
+  ],
+  "unnecessary_selections": [
+    "Document Outline"
+  ]
+}

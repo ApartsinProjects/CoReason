@@ -1,0 +1,75 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is experiencing performance issues with a sorting algorithm used in our data analysis application. I need you to analyze the current implementation and optimize it. Please ensure that the output retains the correct order of elements after sorting and can handle large datasets efficiently. You should also provide a comparison with at least one alternative algorithm to demonstrate the improvements. Be prepared to present your findings in a report, including any assumptions made during your analysis. Time is of the essence, as we need this resolved in the next two weeks.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary issue is the performance degradation of the current sorting algorithm utilized in our data analysis application. This problem needs to be clearly defined in terms of specific performance metrics (e.g., time complexity, space complexity) and the nature of the datasets being sorted (e.g., size, data type, distribution).\"}, {\"section_type\": \"Current Implementation Analysis\", \"content\": \"A thorough analysis of the existing sorting algorithm should be conducted, including its time and space complexity, the algorithm's behavior with various dataset sizes, and any potential bottlenecks in the implementation. Profiling tools should be employed to gather empirical performance data.\"}, {\"section_type\": \"Optimization Goals\", \"content\": \"Define specific optimization goals, such as reducing the average-case time complexity, improving worst-case performance, and ensuring stability in sorting (maintaining the relative order of equal elements). Additionally, consider the scalability of the algorithm when handling large datasets.\"}, {\"section_type\": \"Alternative Algorithms Selection\", \"content\": \"Identify at least one alternative sorting algorithm for comparison, such as QuickSort or MergeSort. The selection should be based on their theoretical performance and practical applicability to the dataset characteristics.\"}, {\"section_type\": \"Evaluation Criteria\", \"content\": \"Establish clear evaluation criteria for comparing the current implementation with the alternative algorithm. This should include metrics such as execution time, memory usage, and the correctness of the sorted output. Consider edge cases and large datasets in the evaluation.\"}, {\"section_type\": \"Assumptions and Constraints\", \"content\": \"Document any assumptions made during the analysis, such as the nature of the input data and the environment in which the algorithm will run. Identify any constraints, such as memory limits or time restrictions, that could impact the optimization process.\"}, {\"section_type\": \"Reporting Findings\", \"content\": \"Prepare a comprehensive report that includes the analysis of the current implementation, the optimization strategy employed, a comparison with the alternative algorithm, and any assumptions made. The report should be structured clearly, with sections for introduction, methodology, results, and conclusions, and should be ready for presentation within the two-week deadline.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Clearly identifies and articulates the key components of the ill-defined problem, including input and output specifications.",
+          "excellent_indicator": "Accurately describes the problem with all necessary components and constraints, using appropriate terminology.",
+          "poor_indicator": "Fails to identify crucial components of the problem or misinterprets the problem requirements."
+        },
+        {
+          "name": "Task Specification",
+          "description": "Translates the ill-defined problem into a well-defined task with clear objectives and steps to solve it.",
+          "excellent_indicator": "Defines a comprehensive and clear task that outlines a logical approach to solving the problem.",
+          "poor_indicator": "Provides an ambiguous or incomplete task definition that lacks clarity or logical structure."
+        },
+        {
+          "name": "Algorithm Selection Consideration",
+          "description": "Considers appropriate algorithms for sorting or searching based on the problem context and requirements.",
+          "excellent_indicator": "Selects an optimal algorithm that is well-suited for the specific problem characteristics and justifies the choice effectively.",
+          "poor_indicator": "Chooses a suboptimal or irrelevant algorithm without proper justification."
+        }
+      ],
+      "typical_errors": [
+        "Misunderstanding the problem requirements leading to incorrect task framing.",
+        "Neglecting to specify input and output clearly, resulting in ambiguity.",
+        "Selecting an inappropriate algorithm based on the problem context."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing does a good job of breaking down the problem into specific areas such as problem definition, current implementation analysis, and optimization goals. However, it lacks explicit mention of the need to handle large datasets efficiently, which is a crucial aspect of the original problem. Additionally, while the student mentions profiling tools, they do not specify which tools might be appropriate or how they would be used to gather performance data. The section on alternative algorithms is somewhat generic, as it suggests QuickSort or MergeSort without a clear rationale for their selection based on the dataset characteristics.",
+  "better_alternative": "A stronger framing would explicitly state the need to handle large datasets by mentioning specific dataset sizes or characteristics and the importance of scalability. It should also provide a rationale for selecting alternative algorithms, considering the specific dataset properties, and suggest specific profiling tools for empirical analysis. Additionally, it would be beneficial to include a brief plan for how the findings will be structured in the report to ensure clarity and comprehensiveness.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Identification",
+      "score": "B",
+      "internal_note": "The student identifies key components but misses explicit mention of handling large datasets efficiently."
+    },
+    {
+      "criterion_name": "Task Specification",
+      "score": "B",
+      "internal_note": "The task is well-defined, but lacks specifics on profiling tools and report structure."
+    },
+    {
+      "criterion_name": "Algorithm Selection Consideration",
+      "score": "B",
+      "internal_note": "The student suggests algorithms but does not provide a strong rationale for their selection based on dataset characteristics."
+    }
+  ],
+  "strengths": [
+    "The student clearly breaks down the problem into distinct sections.",
+    "There is a logical flow from problem identification to reporting findings.",
+    "The student considers both theoretical and practical aspects of algorithm selection."
+  ],
+  "refinements_correctly_selected": [
+    "Problem Definition",
+    "Current Implementation Analysis",
+    "Optimization Goals",
+    "Alternative Algorithms Selection",
+    "Evaluation Criteria",
+    "Assumptions and Constraints",
+    "Reporting Findings"
+  ],
+  "refinements_missed": [
+    "Explicit mention of handling large datasets efficiently",
+    "Specific profiling tools for empirical analysis"
+  ],
+  "unnecessary_selections": []
+}

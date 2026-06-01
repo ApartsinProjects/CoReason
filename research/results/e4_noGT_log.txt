@@ -1,0 +1,66 @@
+Building 5 challenges...
+  ch0 [Algorithms > Sorting & Searching] 4 issues
+  ch1 [Microeconomics > Supply & Demand] 4 issues
+  ch2 [ML > Model Evaluation & Overfitting] 4 issues
+  ch3 [Databases > Indexing & Query Optimization] 4 issues
+  ch4 [Statistics > Hypothesis Testing] 4 issues
+
+8 profiles x 5 challenges = 40 learners
+  [1/40] ch0 F:e->B J:e->C S:e->A
+  [2/40] ch0 F:e->B J:e->C S:n->B
+  [3/40] ch0 F:e->B J:n->C S:e->B
+  [4/40] ch0 F:e->B J:n->C S:n->B
+  [5/40] ch0 F:n->C J:e->C S:e->B
+  [6/40] ch0 F:n->C J:e->C S:n->B
+  [7/40] ch0 F:n->C J:n->C S:e->B
+  [8/40] ch0 F:n->C J:n->C S:n->B
+  [9/40] ch1 F:e->C J:e->B S:e->C
+  [10/40] ch1 F:e->B J:e->B S:n->C
+  [11/40] ch1 F:e->B J:n->C S:e->B
+  [12/40] ch1 F:e->B J:n->C S:n->C
+  [13/40] ch1 F:n->C J:e->B S:e->B
+  [14/40] ch1 F:n->C J:e->B S:n->B
+  [15/40] ch1 F:n->C J:n->C S:e->B
+  [16/40] ch1 F:n->C J:n->C S:n->B
+  [17/40] ch2 F:e->B J:e->B S:e->A
+  [18/40] ch2 F:e->B J:e->B S:n->B
+  [19/40] ch2 F:e->B J:n->C S:e->B
+  [20/40] ch2 F:e->B J:n->C S:n->B
+  [21/40] ch2 F:n->C J:e->B S:e->A
+  [22/40] ch2 F:n->C J:e->B S:n->B
+  [23/40] ch2 F:n->C J:n->C S:e->B
+  [24/40] ch2 F:n->C J:n->C S:n->B
+  [25/40] ch3 F:e->B J:e->B S:e->B
+  [26/40] ch3 F:e->B J:e->C S:n->B
+  [27/40] ch3 F:e->C J:n->C S:e->B
+  [28/40] ch3 F:e->B J:n->C S:n->B
+  [29/40] ch3 F:n->B J:e->C S:e->B
+  [30/40] ch3 F:n->C J:e->C S:n->B
+  [31/40] ch3 F:n->C J:n->C S:e->B
+  [32/40] ch3 F:n->C J:n->C S:n->B
+  [33/40] ch4 F:e->B J:e->B S:e->C
+  [34/40] ch4 F:e->C J:e->B S:n->B
+  [35/40] ch4 F:e->B J:n->B S:e->B
+  [36/40] ch4 F:e->B J:n->B S:n->C
+  [37/40] ch4 F:n->C J:e->B S:e->B
+  [38/40] ch4 F:n->C J:e->B S:n->C
+  [39/40] ch4 F:n->C J:n->B S:e->B
+  [40/40] ch4 F:n->B J:n->B S:n->B
+
+=== OWN-EFFECT vs CROSS-EFFECTS (grade delta strong-minus-weak, A=3..C=1) ===
+grade of   |  F-level  J-level  S-level
+framing    |    +0.75    -0.05    -0.05   <- own-effect should dominate the diagonal
+judging    |    +0.05    +0.45    +0.05
+steering   |    -0.15    +0.05    +0.25
+
+mean DIAGONAL (own-skill) effect : +0.48
+mean OFF-DIAGONAL (cross) effect : -0.02
+DISSOCIATION RATIO (diag/|offdiag|): 29.0   (>>1 = skills separable)
+
+=== DESIGNED CONTRASTS (mean grade profile) ===
+  strong-framer/weak-judge              : F=2.00 J=1.20 S=1.60
+  weak-framer/strong-judge              : F=1.00 J=1.60 S=1.80
+  weak-framer/weak-judge/strong-steer   : F=1.00 J=1.20 S=2.00
+
+grader provider mix: {'openai': 221}
+Saved E:\Projects\CoReason\research\results\e3_dissociation_grades.csv

@@ -1,0 +1,74 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is experiencing slow query performance in our customer database, which has over a million records. I need you to analyze the current indexing strategy and propose an optimized solution to improve the query response time. Please design a new indexing approach that you believe would resolve this issue, and provide a detailed explanation of your rationale. Additionally, include the potential impact on write operations and any considerations for data integrity. Your final output should be a report outlining your proposed indexing strategy, expected performance improvements, and any trade-offs involved.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the specific queries that are experiencing slow performance. Identify the types of queries (e.g., SELECT, JOIN, UPDATE) and their frequency of execution. Determine the acceptable response time for these queries and the current performance metrics.\"}, {\"section_type\": \"Current Indexing Strategy Analysis\", \"content\": \"Conduct a thorough analysis of the existing indexing strategy, including the types of indexes currently in use (e.g., B-tree, hash, composite), their configurations, and the fields they index. Evaluate the effectiveness of these indexes by examining query execution plans and identifying any missing indexes or unused indexes.\"}, {\"section_type\": \"Data Characteristics Assessment\", \"content\": \"Examine the characteristics of the data in the customer database, such as data distribution, cardinality, and the frequency of updates. This will help in understanding which fields are most critical for indexing and how they may impact performance.\"}, {\"section_type\": \"Proposed Indexing Strategy\", \"content\": \"Design a new indexing strategy that may include the creation of new indexes, modifications to existing ones, or the removal of redundant indexes. Justify the choice of index types based on the query patterns and data characteristics identified earlier.\"}, {\"section_type\": \"Impact on Write Operations\", \"content\": \"Analyze how the proposed indexing strategy will affect write operations, including INSERT, UPDATE, and DELETE statements. Discuss the trade-offs between read and write performance and how to mitigate any negative impacts on write operations.\"}, {\"section_type\": \"Data Integrity Considerations\", \"content\": \"Address potential data integrity issues that may arise from the new indexing strategy, such as index fragmentation or stale indexes. Propose strategies for maintaining data integrity during and after the implementation of the new indexing approach.\"}, {\"section_type\": \"Expected Performance Improvements\", \"content\": \"Estimate the expected performance improvements based on benchmarking and testing of the proposed indexing strategy. Include metrics such as query response time reduction and overall database performance enhancements.\"}, {\"section_type\": \"Trade-offs and Recommendations\", \"content\": \"Discuss the trade-offs involved in implementing the new indexing strategy, including the balance between read and write performance, storage costs, and maintenance overhead. Provide recommendations for monitoring and adjusting the indexing strategy over time.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Definition",
+          "description": "Clearly defines the indexing and query optimization problem based on given data.",
+          "excellent_indicator": "The problem is articulated with specific terms related to indexing and query performance, outlining key objectives.",
+          "poor_indicator": "The problem is vaguely defined with little to no reference to indexing or query optimization concepts."
+        },
+        {
+          "name": "Contextual Relevance",
+          "description": "Identifies relevant background information and context that influences the indexing strategy.",
+          "excellent_indicator": "Context is well-researched, referencing specific database schemas or data characteristics that impact indexing.",
+          "poor_indicator": "Context is missing or irrelevant, failing to connect to the indexing and query optimization challenge."
+        },
+        {
+          "name": "Task Specification",
+          "description": "Translates the ill-defined problem into a well-defined task with clear objectives.",
+          "excellent_indicator": "The task includes measurable goals, specifying desired outcomes for indexing and query performance.",
+          "poor_indicator": "The task lacks clarity and measurable objectives, making it difficult to assess progress."
+        }
+      ],
+      "typical_errors": [
+        "Confusing indexing with other database concepts like normalization.",
+        "Neglecting to consider the specific database management system in use.",
+        "Failing to outline the performance metrics relevant to the problem."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing does a good job of breaking down the problem into specific sections, but it could be improved in a few areas. Firstly, in the 'Problem Definition' section, while the student identifies the need to define specific queries and their performance metrics, they do not explicitly mention the need to consider the database management system in use, which could significantly impact the indexing strategy. Secondly, the 'Current Indexing Strategy Analysis' section could benefit from more explicit mention of how to identify unused indexes, which are a common issue in query performance. Lastly, the 'Expected Performance Improvements' section lacks specific metrics that would help quantify the improvements, such as percentage reduction in query time or improvement in throughput.",
+  "better_alternative": "A stronger framing would include a more explicit mention of the database management system being used, as different systems have different indexing capabilities and limitations. In the 'Problem Definition' section, the student could specify the database system and its version, which would provide context for the indexing strategy. Additionally, in the 'Expected Performance Improvements' section, the student could include specific metrics such as expected percentage reduction in query response time or expected increase in throughput, which would provide measurable objectives for the task.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Definition",
+      "score": "B",
+      "internal_note": "The student defines the problem with a focus on query types and performance metrics but lacks mention of the database system in use."
+    },
+    {
+      "criterion_name": "Contextual Relevance",
+      "score": "B",
+      "internal_note": "The student identifies relevant data characteristics but does not explicitly connect these to the specific database system."
+    },
+    {
+      "criterion_name": "Task Specification",
+      "score": "B",
+      "internal_note": "The task is broken down into clear sections, but lacks specific measurable goals for performance improvements."
+    }
+  ],
+  "strengths": [
+    "The student clearly breaks down the problem into specific sections, each addressing a key aspect of the task.",
+    "The framing includes considerations for data integrity and the impact on write operations, which are important for a comprehensive indexing strategy."
+  ],
+  "refinements_correctly_selected": [
+    "Problem Definition",
+    "Current Indexing Strategy Analysis",
+    "Data Characteristics Assessment",
+    "Proposed Indexing Strategy",
+    "Impact on Write Operations",
+    "Data Integrity Considerations",
+    "Expected Performance Improvements",
+    "Trade-offs and Recommendations"
+  ],
+  "refinements_missed": [
+    "Consideration of the specific database management system in use"
+  ],
+  "unnecessary_selections": []
+}

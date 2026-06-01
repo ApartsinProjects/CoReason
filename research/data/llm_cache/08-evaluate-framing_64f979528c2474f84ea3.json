@@ -1,0 +1,69 @@
+{
+  "_vars": {
+    "raw_problem": "Our company has recently launched a new product, and we want to assess its market performance. Please design a hypothesis test to determine if the average sales of this product exceed a certain benchmark that we have in mind. The test should evaluate the data collected from our sales team over the past three months. Additionally, prepare a report that discusses your method, findings, and any recommendations based on the results. Ensure to highlight any assumptions you make during your analysis and how they might affect your conclusions.",
+    "student_framing": "[{\"section_type\": \"Problem Understanding\", \"content\": \"We need to figure out if our new product is selling better than a certain amount we think is good. This means we need to compare the average sales of our product to this benchmark. I guess we have to look at the sales data from the last three months.\"}, {\"section_type\": \"Data Collection\", \"content\": \"We should gather the sales data from our sales team for the last three months. This data will help us know how much of the product was sold during this time.\"}, {\"section_type\": \"Hypothesis Formulation\", \"content\": \"I think we need to create two statements: one that says the average sales are higher than the benchmark (this is the alternative hypothesis), and one that says the average sales are not higher (this is the null hypothesis). I need to find out what the benchmark number is.\"}, {\"section_type\": \"Test Selection\", \"content\": \"I think we should use a t-test because we are comparing the average of our sales to a single number (the benchmark). But I'm not sure how to do this correctly.\"}, {\"section_type\": \"Assumptions\", \"content\": \"We have to make some assumptions like the sales data is normally distributed. I think we should also check if the data has outliers because they might change the results.\"}, {\"section_type\": \"Report Preparation\", \"content\": \"Finally, I need to write a report that explains what we did, what we found, and what we recommend based on the test results. I should also mention any assumptions we made and how they could affect what we conclude.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Variables",
+          "description": "Clearly identifies dependent and independent variables relevant to the hypothesis.",
+          "excellent_indicator": "All relevant variables are identified with clear definitions and their roles in the hypothesis.",
+          "poor_indicator": "Misses key variables or misidentifies their roles in the hypothesis."
+        },
+        {
+          "name": "Clarity of Hypothesis",
+          "description": "Formulates a clear and testable hypothesis based on the problem statement.",
+          "excellent_indicator": "The hypothesis is concise, specific, and directly addresses the problem.",
+          "poor_indicator": "The hypothesis is vague, overly broad, or does not relate to the problem."
+        },
+        {
+          "name": "Contextual Understanding",
+          "description": "Demonstrates a strong understanding of the context in which the hypothesis is framed.",
+          "excellent_indicator": "Provides a thorough explanation of the context and its relevance to the hypothesis.",
+          "poor_indicator": "Fails to explain the context or demonstrates a misunderstanding of its relevance."
+        }
+      ],
+      "typical_errors": [
+        "Confusing dependent and independent variables.",
+        "Formulating a hypothesis that cannot be tested statistically.",
+        "Neglecting to provide context or background information for the hypothesis."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks clarity in identifying the dependent and independent variables. While they mention comparing average sales to a benchmark, they do not explicitly define what these variables are. Additionally, the hypothesis formulation is somewhat vague; it lacks specificity about the benchmark value. Furthermore, the student acknowledges uncertainty in selecting the correct statistical test, indicating a gap in understanding the application of a t-test in this context.",
+  "better_alternative": "A stronger framing would clearly define the dependent variable as the average sales of the product and the independent variable as the benchmark sales figure. The hypothesis should be explicitly stated, such as: 'The average sales of the product over the past three months are greater than the benchmark value of X units.' Additionally, the student should demonstrate confidence in selecting a t-test by explaining why it is appropriate for comparing a sample mean to a known value, given assumptions about normal distribution and sample size.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Variables",
+      "score": "C",
+      "internal_note": "The student did not clearly identify or define the dependent and independent variables."
+    },
+    {
+      "criterion_name": "Clarity of Hypothesis",
+      "score": "B",
+      "internal_note": "The hypothesis is somewhat clear but lacks specificity regarding the benchmark."
+    },
+    {
+      "criterion_name": "Contextual Understanding",
+      "score": "B",
+      "internal_note": "The student shows some understanding of the context but lacks depth in explaining the relevance of the statistical test."
+    }
+  ],
+  "strengths": [
+    "The student correctly identifies the need to compare average sales to a benchmark.",
+    "They recognize the importance of assumptions in hypothesis testing."
+  ],
+  "refinements_correctly_selected": [
+    "Hypothesis Formulation",
+    "Assumptions",
+    "Report Preparation"
+  ],
+  "refinements_missed": [
+    "Identification of Variables"
+  ],
+  "unnecessary_selections": []
+}

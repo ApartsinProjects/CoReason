@@ -1,0 +1,75 @@
+{
+  "_vars": {
+    "raw_problem": "Our company is experiencing slow query performance in our customer database, which has over a million records. I need you to analyze the current indexing strategy and propose an optimized solution to improve the query response time. Please design a new indexing approach that you believe would resolve this issue, and provide a detailed explanation of your rationale. Additionally, include the potential impact on write operations and any considerations for data integrity. Your final output should be a report outlining your proposed indexing strategy, expected performance improvements, and any trade-offs involved.",
+    "student_framing": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what slow query performance means and how it affects the customer database. I should look into what indexing is and why it is important for query performance.\"}, {\"section_type\": \"Current Situation\", \"content\": \"The database has over a million records, so I need to find out how many indexes are currently in use and what kind of queries are running slowly.\"}, {\"section_type\": \"Indexing Strategy\", \"content\": \"I should learn about different types of indexing strategies, like single-column indexes or multi-column indexes, to see which one would work best for improving performance.\"}, {\"section_type\": \"Impact on Write Operations\", \"content\": \"I need to consider how changing the indexing strategy might affect write operations, like adding or updating records. I should find out if more indexes slow down writes.\"}, {\"section_type\": \"Data Integrity Considerations\", \"content\": \"I have to think about how the new indexing strategy could affect data integrity, especially if there are concurrent writes happening while queries are running.\"}, {\"section_type\": \"Expected Outcomes\", \"content\": \"I should try to estimate how much faster the queries will be after implementing the new indexing strategy and think about any trade-offs that come with it.\"}, {\"section_type\": \"Report Structure\", \"content\": \"I need to outline what my report will include: an introduction to the problem, analysis of the current indexing, proposed strategy, expected performance improvements, and trade-offs.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Definition",
+          "description": "Clearly defines the indexing and query optimization problem based on given data.",
+          "excellent_indicator": "The problem is articulated with specific terms related to indexing and query performance, outlining key objectives.",
+          "poor_indicator": "The problem is vaguely defined with little to no reference to indexing or query optimization concepts."
+        },
+        {
+          "name": "Contextual Relevance",
+          "description": "Identifies relevant background information and context that influences the indexing strategy.",
+          "excellent_indicator": "Context is well-researched, referencing specific database schemas or data characteristics that impact indexing.",
+          "poor_indicator": "Context is missing or irrelevant, failing to connect to the indexing and query optimization challenge."
+        },
+        {
+          "name": "Task Specification",
+          "description": "Translates the ill-defined problem into a well-defined task with clear objectives.",
+          "excellent_indicator": "The task includes measurable goals, specifying desired outcomes for indexing and query performance.",
+          "poor_indicator": "The task lacks clarity and measurable objectives, making it difficult to assess progress."
+        }
+      ],
+      "typical_errors": [
+        "Confusing indexing with other database concepts like normalization.",
+        "Neglecting to consider the specific database management system in use.",
+        "Failing to outline the performance metrics relevant to the problem."
+      ]
+    },
+    "best_framing": "(not provided)",
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks specificity in defining what constitutes 'slow query performance' and does not reference specific performance metrics that could guide the analysis. Additionally, while the student mentions learning about different indexing strategies, they do not specify which strategies are currently in use or how they might be evaluated. The section on data integrity considerations is vague and does not address specific data integrity issues that might arise with concurrent writes.",
+  "better_alternative": "A stronger framing would include a clear definition of 'slow query performance' using specific metrics such as query response time or throughput. It would also identify the current indexing strategies in use and analyze their effectiveness. The student could specify which types of queries are most affected by slow performance and how different indexing strategies could address these issues. Additionally, the framing should detail specific data integrity concerns related to the database's current architecture and how they might be mitigated.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Definition",
+      "score": "B",
+      "internal_note": "The student identifies the need to understand slow query performance and indexing but lacks specificity in defining the problem."
+    },
+    {
+      "criterion_name": "Contextual Relevance",
+      "score": "B",
+      "internal_note": "The student mentions the need to understand the current indexing and query types but does not provide specific context or database characteristics."
+    },
+    {
+      "criterion_name": "Task Specification",
+      "score": "B",
+      "internal_note": "The student outlines tasks but lacks measurable objectives or specific performance metrics to assess success."
+    }
+  ],
+  "strengths": [
+    "The student recognizes the importance of understanding both the current indexing strategy and the types of queries that are slow.",
+    "The framing includes consideration of the impact on write operations and data integrity."
+  ],
+  "refinements_correctly_selected": [
+    "Problem Understanding",
+    "Current Situation",
+    "Indexing Strategy",
+    "Impact on Write Operations",
+    "Data Integrity Considerations",
+    "Expected Outcomes",
+    "Report Structure"
+  ],
+  "refinements_missed": [
+    "Specific performance metrics for slow queries",
+    "Current indexing strategies in use",
+    "Specific data integrity issues related to concurrent writes"
+  ],
+  "unnecessary_selections": []
+}
