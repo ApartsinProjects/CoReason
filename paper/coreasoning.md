@@ -142,6 +142,28 @@ error modes and different instructional remedies. A learner can frame impeccably
 energetically toward the wrong target). Collapsing both into "prompting" hides exactly the
 distinctions an educator needs.
 
+### 3.3 Distinguishing Judging from Steering
+
+Because Judging and Steering both occur after generation and in a tight loop, their boundary needs
+stating precisely. **Judging is assessment; Steering is action.** Judging produces a *representation
+of what is wrong* with the current output, an internal or articulated list of detected flaws, gaps,
+and risks, and a calibrated sense of how much to trust the output. It is evaluative and its output is
+a diagnosis. Steering consumes that diagnosis and produces a *corrective instruction* aimed at
+changing the next output: it is generative and directive, and its quality depends on prioritization
+(addressing the most critical flaw first), specificity (an actionable command rather than "improve
+this"), and effectiveness (whether the output actually converges). In the monitor-control terms of
+Section 3.1, Judging is the monitor's *read-out* and Steering is the controller's *write*. The two
+dissociate because the competencies differ: a learner may diagnose accurately yet communicate the fix
+poorly (good Judging, weak Steering), or issue fluent, confident commands that target the wrong thing
+because the diagnosis was wrong (weak Judging propagating into misdirected Steering, the failure mode
+Proposition P2 predicts). This last point also reconciles an apparent tension: P2 (Judging bounds
+Steering) implies the two grades will be *positively correlated* in the aggregate, while P3 claims they
+*dissociate*. Both hold. P2 is a ceiling relation (Steering cannot exceed the quality its Judging
+permits), which induces correlation without identity; P3 is the claim that the off-diagonal is well
+below the reliability ceiling, so the skills are not interchangeable. We therefore test dissociation
+pairwise and report whether each skill's grade responds to its own manipulated competence while
+remaining comparatively flat in the others, rather than relying on a single global factor model.
+
 ## 4. Theoretical grounding
 
 Each skill is anchored in established theory, and the anchors are mutually consistent because they
@@ -247,6 +269,23 @@ the "Cyborg" mode of continuous push-back-and-validate (Randazzo et al., 2025) a
 skill-dependence of AI's value at the competence frontier (Dell'Acqua et al., 2023). These describe the
 behaviour; CoReasoning supplies the assessable skill decomposition that underlies it.
 
+Table 1 makes the boundary explicit by mapping each nearest prior framework's constructs onto
+Framing, Judging, and Steering. The recurring pattern is that prior frameworks either (i) omit a
+construct, or (ii) *fuse* Framing and Steering into one "prompting/iteration" skill.
+
+**Table 1. Where prior frameworks place the three CoReasoning skills.**
+
+| Prior framework | Framing (pre-generation) | Judging | Steering (post-generation) |
+|---|---|---|---|
+| 4D AI Fluency (Dakan & Feller, 2025) | Delegation + part of Description | Discernment | *fused into* Description |
+| Metacognitive demands (Tankelevitch et al., 2024) | "prompting" (as a demand, not a skill) | "evaluating outputs" | "workflow iteration" |
+| Prompt literacy / CLEAR (Lo, 2023) | *fused into* "prompting" | weakly present | *fused into* "iterative refinement" |
+| AI literacy (Long & Magerko, 2020; UNESCO, 2024) | absent | diffuse "critical evaluation" | absent |
+| Cyborg/Centaur modes (Randazzo et al., 2025) | "directed" mode (described, not assessed) | "push back / validate" | "continuous dialogue" |
+
+No prior column cleanly separates the pre-generation and post-generation skills *and* treats all
+three as independently scored competencies. That conjunction is the contribution.
+
 **One-line novelty.** CoReasoning is, to our knowledge, the first theoretically-grounded decomposition
 of productive generative-AI use into three independently-assessable competencies that separates
 pre-generation Framing from post-generation Steering, with feasibility evidence that the three skills
@@ -317,9 +356,14 @@ and falsely flagged); and Steering is evaluated against the trajectory of the ou
 rewarding corrections that demonstrably move the solution toward correctness. This is why the skills
 are measured *apart*: each evaluator interrogates a different referent.
 
-The instrument used in this paper is the engine of a deployed prototype (CoReasoning Lab); for the
-present work we exercise its sixteen prompts directly over controlled inputs so that the measurements
-are reproducible and the ground truth is known.
+The instrument used in this paper is the engine of a deployed prototype (CoReasoning Lab), a library
+of sixteen prompts spanning challenge construction, AI generation, and evaluation. Scoring a single
+learner exercises the relevant subset, the three skill evaluators and the generic grader, over
+controlled inputs, so that the measurements are reproducible and the ground truth is known. A
+methodological caveat applies throughout: the grader is itself a fallible language model, so the
+feasibility results below speak to the *internal* behavior of the instrument (does it separate
+controlled competence levels and dissociate the skills?), not to agreement with human experts, which
+is the separate validity question addressed by the prepared study in Section 10.
 
 ## 8. Feasibility demonstration
 

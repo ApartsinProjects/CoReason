@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "screens",
+      "runtimeExecutable": "C:/Python314/python",
+      "runtimeArgs": ["-m", "http.server", "8123", "--directory", "E:/Projects/CoReason/screens"],
+      "port": 8123
+    },
+    {
+      "name": "coreason",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server/index.js"],
+      "cwd": "E:/Projects/CoReason/code",
+      "port": 3000,
+      "autoPort": false
+    }
+  ]
+}
