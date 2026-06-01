@@ -196,7 +196,10 @@ this internally and externally coherent?). Barzilai and Chinn's (2018) account o
 performance adds the criteria-for-good-knowledge dimension that a learner must hold to judge well, and
 the human-automation literature supplies the calibration target: reliance matched to actual
 reliability (Lee & See, 2004), the failure of which is the over-reliance documented in AI-assisted
-decision-making (Bansal et al., 2021; Buçinca et al., 2021).
+decision-making (Bansal et al., 2021; Buçinca et al., 2021). That Judging is a trainable skill rather
+than an automatic byproduct of competence is underscored by recent evidence that metacognitive
+monitoring can decouple from performance in human-AI reasoning (Fernandes et al., 2024), and by recent
+work in Computers & Education: AI on whether learners can evaluate AI output quality as experts do.
 
 **Steering** is metacognitive control (Nelson & Narens, 1990): acting on the monitoring signal to
 change the object-level process. Pedagogically it is an inversion of cognitive-apprenticeship coaching
