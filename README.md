@@ -9,6 +9,21 @@ CoReasoning Lab trains three core skills:
 - Judging: critique AI output and spot gaps, risks, and mistakes.
 - Steering: guide AI iteratively toward better results.
 
+## 📄 Research paper (open-source, MIT)
+
+**"Framing, Judging, Steering: An Assessable Competency Model for Reasoning With Generative AI"** — a
+theoretically-grounded competency model with a proof-of-concept instrument and a feasibility
+demonstration that the three skills *dissociate* (own-skill grade effects dominate cross-skill effects
+≈60:1, N=40).
+
+- 📖 **Read it (HTML + KaTeX):** <https://apartsinprojects.github.io/CoReason/>
+- 📝 Source: [`paper/coreasoning.md`](paper/coreasoning.md) · Bibliography: [`paper/references.bib`](paper/references.bib) (50 refs, validated)
+- 🔬 Experiments + reproducible harness: [`research/`](research/README.md) · registry: [`research/experiments/PROJECT_LOG.md`](research/experiments/PROJECT_LOG.md)
+- 🧑‍🤝‍🧑 Human-rater validation package: [`human-study/`](human-study/CODEBOOK.md)
+
+Everything in this repository (system design, the sixteen-prompt instrument, the controlled-generation
+harness, data, and figures) is open-source under the [MIT License](LICENSE).
+
 ## Why This Project Exists
 
 Most AI-in-education products optimize for speed-to-answer.

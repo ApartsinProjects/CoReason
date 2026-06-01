@@ -56,13 +56,15 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 </style>
 </head>
 <body>
+<a class="docxlink" href="https://github.com/ApartsinProjects/CoReason" style="right:140px;background:#24292f">&#9733; GitHub</a>
 <a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx</a>
 <div class="banner"><strong>Working preprint draft.</strong> Conceptual / position paper with a
 proof-of-concept feasibility demonstration.</div>
 {body}
 <footer>
 Generated from <code>paper/coreasoning.md</code>. Math rendered with KaTeX.
-Source &amp; experiment registry in this repository.
+Open-source (MIT) &mdash; system, instrument, data, and figures at
+<a href="https://github.com/ApartsinProjects/CoReason">github.com/ApartsinProjects/CoReason</a>.
 </footer>
 </body>
 </html>

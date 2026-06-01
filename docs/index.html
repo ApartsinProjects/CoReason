@@ -45,6 +45,7 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 </style>
 </head>
 <body>
+<a class="docxlink" href="https://github.com/ApartsinProjects/CoReason" style="right:140px;background:#24292f">&#9733; GitHub</a>
 <a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx</a>
 <div class="banner"><strong>Working preprint draft.</strong> Conceptual / position paper with a
 proof-of-concept feasibility demonstration.</div>
@@ -128,6 +129,9 @@ three distinct skills, each independently assessable:</p>
 </ol>
 <p>We make no learning-outcome claims; the empirical material is a feasibility demonstration of
 <em>construct separability and measurability</em>, not an efficacy study.</p>
+<p><strong>Availability.</strong> The CoReasoning Lab system, the sixteen-prompt instrument, the controlled-generation
+harness, the experiment data and figures, and the human-rater study package are open-source under the
+MIT license at <a href="https://github.com/ApartsinProjects/CoReason">https://github.com/ApartsinProjects/CoReason</a>.</p>
 <h2 id="2-the-problem-with-current-ai-literacy-assessment">2. The problem with current AI-literacy assessment</h2>
 <p>Existing instruments for assessing how students work with AI are not wrong so much as
 under-resolved. Knowledge-oriented frameworks such as Long and Magerko (2020) and the UNESCO (2024)
@@ -594,11 +598,23 @@ the framework's central claim that productive AI use is not one skill but three.
 <p><img alt="Figure A1. A CoReasoning Lab challenge run." src="assets/system-mockup.svg" /></p>
 <p><em>Figure A1. The learner experience: Framing (Phase 1), the Judge–Steer cycle (Phase 2), and the
 per-skill report. Each skill is scored and given feedback independently.</em></p>
+<p>The platform exposes role-specific interfaces beyond the challenge run (Figure A2). Students see a
+dashboard of pending challenges and courses and a personal results view that trends Framing, Judging,
+and Steering separately over time. Instructors author challenges (the system auto-generates the
+ill-defined problem and the three per-skill rubrics) and read course analytics that break grade
+distributions down by rubric and by student. In every view the three skills remain distinct columns,
+which is the design commitment the framework makes visible.</p>
+<p><img alt="Figure A2. CoReasoning Lab role interfaces." src="assets/interface-gallery.svg" /></p>
+<p><em>Figure A2. Role interfaces. Top: the student dashboard and the instructor challenge-authoring screen.
+Bottom: the student trend report (per-skill grades over time) and the instructor course analytics
+(grade distribution by rubric and per-student results). All views report Framing, Judging, and
+Steering independently.</em></p>
 <h2 id="references">References</h2>
 <p>[Rendered from <code>references.bib</code> (43 entries, validated). See the repository for the BibTeX source.]</p>
 <footer>
 Generated from <code>paper/coreasoning.md</code>. Math rendered with KaTeX.
-Source &amp; experiment registry in this repository.
+Open-source (MIT) &mdash; system, instrument, data, and figures at
+<a href="https://github.com/ApartsinProjects/CoReason">github.com/ApartsinProjects/CoReason</a>.
 </footer>
 </body>
 </html>

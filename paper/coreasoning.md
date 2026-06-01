@@ -87,6 +87,10 @@ three distinct skills, each independently assessable:
 We make no learning-outcome claims; the empirical material is a feasibility demonstration of
 *construct separability and measurability*, not an efficacy study.
 
+**Availability.** The CoReasoning Lab system, the sixteen-prompt instrument, the controlled-generation
+harness, the experiment data and figures, and the human-rater study package are open-source under the
+MIT license at <https://github.com/ApartsinProjects/CoReason>.
+
 ## 2. The problem with current AI-literacy assessment
 
 Existing instruments for assessing how students work with AI are not wrong so much as
@@ -566,6 +570,20 @@ the framework's central claim that productive AI use is not one skill but three.
 
 *Figure A1. The learner experience: Framing (Phase 1), the Judge–Steer cycle (Phase 2), and the
 per-skill report. Each skill is scored and given feedback independently.*
+
+The platform exposes role-specific interfaces beyond the challenge run (Figure A2). Students see a
+dashboard of pending challenges and courses and a personal results view that trends Framing, Judging,
+and Steering separately over time. Instructors author challenges (the system auto-generates the
+ill-defined problem and the three per-skill rubrics) and read course analytics that break grade
+distributions down by rubric and by student. In every view the three skills remain distinct columns,
+which is the design commitment the framework makes visible.
+
+![Figure A2. CoReasoning Lab role interfaces.](assets/interface-gallery.svg)
+
+*Figure A2. Role interfaces. Top: the student dashboard and the instructor challenge-authoring screen.
+Bottom: the student trend report (per-skill grades over time) and the instructor course analytics
+(grade distribution by rubric and per-student results). All views report Framing, Judging, and
+Steering independently.*
 
 ## References
 [Rendered from `references.bib` (43 entries, validated). See the repository for the BibTeX source.]
