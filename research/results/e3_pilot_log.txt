@@ -3,3 +3,43 @@ Building challenges...
   ch1 [Microeconomics > Supply & Demand]: 4 real issues, 4 distractors
   ch2 [ML > Model Evaluation & Overfitting]: 4 real issues, 4 distractors
 Grading learners for ch0...
+Traceback (most recent call lGrading learners for ch2...
+Traceback (most recent call last):
+  File "E:\Projects\CoReason\research\scripts\e3_pilot.py", line 172, in <module>
+    print(f"{lv:12} {st.mean(fs):>8.2f} {st.mean(js):>8.2f} {st.mean(ss):>8.2f}")
+    ^^
+  File "E:\Projects\CoReason\research\scripts\e3_pilot.py", line 139, in main
+    challenges = list(ex.map(build_challenge, SPECS))
+                  ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 639, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 311, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 450, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 395, in __get_result
+    raise self._exception
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "E:\Projects\CoReason\research\scripts\e3_pilot.py", line 139, in <lambda>
+    challenges = list(ex.map(build_challenge, SPECS))
+                                         ^^^^^^^^^^^^
+  File "E:\Projects\CoReason\research\scripts\e3_pilot.py", line 80, in grade_one
+        lv = levels
+         ^^^^^^^^^^
+    seed = stable_seed(rp[:60], lv["framing"], lv["judging"], lv["steering"])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    # ---- FRAMING ----
+    ^^^^^^^^^^^^^^^^^^^
+  File "E:\Projects\CoReason\research\scripts\harness.py", line 151, in run_prompt
+    system = p["system_prompt"] + (
+             ~^^^^^^^^^^^^^^^^^
+  File "E:\Projects\CoReason\research\scripts\harness.py", line 72, in _extract_json
+    # salvage TRUNCATED json: drop trailing partial token, close open string + braces
+ValueError: no JSON parsed:
+{"criticism": "The student's framing response demonstrates a good understanding of the problem but could be improved in a few areas. For instance, in the 'Problem Definition' section, the student could have more explicitly outlined the key elements of model evaluation and overfitting that will be addressed. Additionally, while the student mentions the importance of handling class imbalance in the 

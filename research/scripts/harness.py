@@ -69,13 +69,25 @@ def _extract_json(text):
                 if depth == 0:
                     try: return json.loads(text[start:i+1])
                     except Exception: break
+        # salvage TRUNCATED json: drop trailing partial token, close open string + braces
+        frag = text[start:]
+        cut = max(frag.rfind('",'), frag.rfind('],'), frag.rfind('},'), frag.rfind('": '))
+        if cut > 0:
+            for tail in ('"}', '}', ']}', '"]}', '"}}'):
+                try: return json.loads(frag[:cut] + tail)
+                except Exception: continue
     raise ValueError("no JSON parsed:\n" + text[:400])
 
 # grader provider chain: llama via OpenRouter primary (deployed-engine fidelity), with retries;
 # OpenAI gpt-4o-mini as a reliability fallback; Groq llama last (free-tier TPD often exhausted).
-_GRADER_CHAIN = [(_openrouter, "openrouter", "meta-llama/llama-3.3-70b-instruct", 7),
-                 (_openai, "openai", "gpt-4o-mini", 3),
-                 (_groq, "groq", MODEL, 2)]
+# Override with COREASON_GRADER=openai:gpt-4o (reliable single-provider grading for big runs).
+_grader_env = os.environ.get("COREASON_GRADER", "")
+if _grader_env.startswith("openai:"):
+    _GRADER_CHAIN = [(_openai, "openai", _grader_env.split(":", 1)[1], 4)]
+else:
+    _GRADER_CHAIN = [(_openrouter, "openrouter", "meta-llama/llama-3.3-70b-instruct", 7),
+                     (_openai, "openai", "gpt-4o-mini", 3),
+                     (_groq, "groq", MODEL, 2)]
 _provider_use = {}
 
 def _chat(system, user, temperature, max_tokens, seed, json_mode=False):
@@ -136,10 +148,13 @@ def run_prompt(stem, vars, temperature=None, max_tokens=None, seed=None, use_cac
     # Append the output_schema as an explicit JSON directive (production harness did this;
     # prompts 01/02/11/14 omit the inline 'respond with JSON' line that 03/08/09/10 carry).
     schema = p.get("output_schema", {})
+    keys = list(schema.get("properties", {}).keys()) if schema else []
     system = p["system_prompt"] + (
-        "\n\nYou MUST respond with ONLY a single valid JSON object matching this schema "
-        "(no markdown fences, no prose outside the JSON):\n" + json.dumps(schema)
-        if schema else "")
+        "\n\nReturn ONLY a single JSON object that CONFORMS to the schema below by FILLING IT WITH "
+        "ACTUAL CONTENT. Do NOT echo or return the schema definition itself; do NOT include the words "
+        '"type", "properties", or "items" as top-level keys. The object MUST have exactly these top-level '
+        "keys: " + ", ".join(keys) + ". No markdown fences, no prose outside the JSON.\nSchema:\n"
+        + json.dumps(schema) if schema else "")
     user = _render(p["user_prompt"], vars)
     key = hashlib.sha256(json.dumps(
         {"stem": stem, "system": system, "user": user, "temp": temp, "mt": mt, "seed": seed},
@@ -148,7 +163,23 @@ def run_prompt(stem, vars, temperature=None, max_tokens=None, seed=None, use_cac
     if use_cache and cf.exists():
         return json.load(open(cf, encoding="utf-8"))
     raw = _chat(system, user, temp, mt, seed, json_mode=bool(schema))
-    parsed = _extract_json(raw)
+    try:
+        parsed = _extract_json(raw)
+    except ValueError:
+        raw = _chat(system + "\n\nReturn a JSON OBJECT only.", user, temp, mt, None, json_mode=bool(schema))
+        try:
+            parsed = _extract_json(raw)
+        except ValueError:
+            # last resort: model returned prose -> wrap into the primary string field
+            prim = next((k for k, v in schema.get("properties", {}).items()
+                         if v.get("type") == "string"), None)
+            if prim: parsed = {prim: raw.strip()}
+            else: raise
+    # guard: model echoed the schema instead of filling it -> retry once, fresh
+    if keys and not any(k in parsed for k in keys):
+        raw = _chat(system + "\n\nIMPORTANT: return REAL DATA filling the keys, NOT the schema.",
+                    user, temp, mt, None, json_mode=bool(schema))
+        parsed = _extract_json(raw)
     with _lock:
         json.dump({"_vars": vars, "_temp": temp, **parsed}, open(cf, "w", encoding="utf-8"),
                   ensure_ascii=False, indent=2)

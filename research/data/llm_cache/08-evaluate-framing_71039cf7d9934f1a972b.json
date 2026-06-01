@@ -1,0 +1,205 @@
+{
+  "_vars": {
+    "raw_problem": "Design a pricing strategy for a new restaurant in a downtown area, considering the existing competition and consumer preferences. The restaurant will serve a mix of local and international cuisine, and the target audience includes both locals and tourists. The goal is to maximize profits while maintaining a competitive edge. Provide a detailed plan, including the pricing structure and any promotional offers.",
+    "student_framing": "[{\"section_type\": \"Overview\", \"content\": \"We need to figure out how to price food at the new restaurant.\"}, {\"section_type\": \"Competition Analysis\", \"content\": \"Look at what other restaurants charge, but I don’t know which ones.\"}, {\"section_type\": \"Consumer Preferences\", \"content\": \"Think about what people like to eat, but it could be anything.\"}, {\"section_type\": \"Pricing Strategy\", \"content\": \"Just set prices that sound okay.\"}, {\"section_type\": \"Promotional Offers\", \"content\": \"Maybe have some deals, but I’m not sure what.\"}, {\"section_type\": \"Goal\", \"content\": \"Make money and be better than other places.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Definition",
+          "description": "Clearly defines the economic problem and identifies key variables",
+          "excellent_indicator": "Specifies the market, goods or services, and relevant stakeholders",
+          "poor_indicator": "Fails to identify key variables or stakeholders"
+        },
+        {
+          "name": "Assumptions and Constraints",
+          "description": "Recognizes and states assumptions and constraints relevant to the problem",
+          "excellent_indicator": "Explicitly states assumptions about market structure, consumer behavior, and production costs",
+          "poor_indicator": "Ignores or fails to acknowledge critical assumptions"
+        },
+        {
+          "name": "Economic Concepts Application",
+          "description": "Applies relevant microeconomic concepts to the problem",
+          "excellent_indicator": "Correctly applies concepts such as supply and demand, opportunity cost, and market equilibrium",
+          "poor_indicator": "Misapplies or fails to apply relevant microeconomic concepts"
+        }
+      ],
+      "typical_errors": [
+        "Omitting critical variables or stakeholders",
+        "Failing to consider opportunity costs",
+        "Misunderstanding market structures"
+      ]
+    },
+    "best_framing": {
+      "_vars": {
+        "course_name": "Microeconomics",
+        "subject_path": "Microeconomics > Supply & Demand",
+        "raw_problem": "Design a pricing strategy for a new restaurant in a downtown area, considering the existing competition and consumer preferences. The restaurant will serve a mix of local and international cuisine, and the target audience includes both locals and tourists. The goal is to maximize profits while maintaining a competitive edge. Provide a detailed plan, including the pricing structure and any promotional offers.",
+        "framing_rubric": {
+          "criteria": [
+            {
+              "name": "Problem Definition",
+              "description": "Clearly defines the economic problem and identifies key variables",
+              "excellent_indicator": "Specifies the market, goods or services, and relevant stakeholders",
+              "poor_indicator": "Fails to identify key variables or stakeholders"
+            },
+            {
+              "name": "Assumptions and Constraints",
+              "description": "Recognizes and states assumptions and constraints relevant to the problem",
+              "excellent_indicator": "Explicitly states assumptions about market structure, consumer behavior, and production costs",
+              "poor_indicator": "Ignores or fails to acknowledge critical assumptions"
+            },
+            {
+              "name": "Economic Concepts Application",
+              "description": "Applies relevant microeconomic concepts to the problem",
+              "excellent_indicator": "Correctly applies concepts such as supply and demand, opportunity cost, and market equilibrium",
+              "poor_indicator": "Misapplies or fails to apply relevant microeconomic concepts"
+            }
+          ],
+          "typical_errors": [
+            "Omitting critical variables or stakeholders",
+            "Failing to consider opportunity costs",
+            "Misunderstanding market structures"
+          ]
+        },
+        "internal_gaps": [
+          "specific target audience demographics",
+          "existing competition pricing and market share",
+          "restaurant operating costs and revenue projections"
+        ],
+        "language": "English"
+      },
+      "_temp": 0.4,
+      "base": "Design a pricing strategy for a new restaurant in a downtown area, considering the existing competition and consumer preferences. The restaurant will serve a mix of local and international cuisine, and the target audience includes both locals and tourists. The goal is to maximize profits while maintaining a competitive edge. Provide a detailed plan, including the pricing structure and any promotional offers.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Market Structure",
+              "description": "We assume the downtown area restaurant market is monopolistically competitive, with many firms offering differentiated products. This structure allows for some price flexibility but also intense competition.",
+              "addresses_gap": "Existing competition"
+            },
+            {
+              "title": "Consumer Behavior",
+              "description": "Consumers are assumed to be rational, making decisions based on their preferences for local and international cuisine, price sensitivity, and perceived quality of the dining experience.",
+              "addresses_gap": "Consumer preferences"
+            },
+            {
+              "title": "Production Costs",
+              "description": "We assume that the restaurant's average and marginal costs are typical for the industry, with economies of scale achievable through efficient management and supply chain optimization.",
+              "addresses_gap": "Restaurant operating costs"
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Budget Constraint",
+              "description": "The restaurant has a limited budget for marketing and operational costs, necessitating a pricing strategy that balances revenue goals with expenditure limitations.",
+              "addresses_gap": "Restaurant operating costs and revenue projections"
+            },
+            {
+              "title": "Regulatory Environment",
+              "description": "The restaurant must comply with all local health and safety regulations, as well as any zoning or licensing requirements, which could impact operational costs and pricing flexibility.",
+              "addresses_gap": "General business environment"
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Target Audience",
+              "description": "The target audience is further defined as individuals and small groups seeking a unique dining experience, with a focus on young professionals and tourists looking for local flavors and international cuisine options.",
+              "addresses_gap": "Specific target audience demographics"
+            },
+            {
+              "title": "Competitor Analysis",
+              "description": "Existing competition includes high-end restaurants, casual eateries, and ethnic food establishments. A detailed analysis of competitors' pricing strategies, market share, and customer base is necessary.",
+              "addresses_gap": "Existing competition pricing and market share"
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Profit Margin",
+              "description": "The primary success metric is the achievement of a minimum profit margin of 15% within the first year of operation, indicating the pricing strategy's effectiveness.",
+              "addresses_gap": "Maximize profits"
+            },
+            {
+              "title": "Customer Retention",
+              "description": "A secondary metric is customer retention, with a goal of at least 20% of customers returning within a 3-month period, reflecting customer satisfaction and loyalty.",
+              "addresses_gap": "Maintaining a competitive edge"
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "Geographical Scope",
+              "description": "The pricing strategy focuses on the downtown area, considering local consumer preferences, competitor activity, and the area's tourist traffic.",
+              "addresses_gap": "General business environment"
+            },
+            {
+              "title": "Product Scope",
+              "description": "The strategy encompasses the menu offerings, including both local and international cuisine options, but excludes catering services or merchandise sales.",
+              "addresses_gap": "Restaurant services"
+            }
+          ]
+        },
+        {
+          "section_type": "Domain Context",
+          "entries": [
+            {
+              "title": "Market Trends",
+              "description": "Current trends in the restaurant industry include a shift towards sustainable and locally sourced ingredients, as well as an increased demand for unique dining experiences. The pricing strategy should account for these trends.",
+              "addresses_gap": "Consumer preferences and market trends"
+            },
+            {
+              "title": "Economic Conditions",
+              "description": "The local economy's health, including factors like unemployment rates, disposable income levels, and tourist influx, will influence consumer spending habits and, consequently, the restaurant's pricing strategy.",
+              "addresses_gap": "General economic conditions"
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all criteria of the rubric by clearly defining the economic problem, identifying key variables, and applying relevant microeconomic concepts such as supply and demand, opportunity cost, and market equilibrium. It also recognizes and states assumptions and constraints, and provides a detailed plan for the pricing strategy, including promotional offers, to maximize profits while maintaining a competitive edge."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks specificity and depth in several areas. For instance, in the 'Competition Analysis' section, the student mentions looking at what other restaurants charge but fails to identify which specific restaurants or how their pricing strategies will be analyzed. Similarly, the 'Consumer Preferences' section is overly broad, stating that people like to eat 'anything' without providing insights into the target audience's preferences, dietary restrictions, or trends that could influence pricing decisions. The 'Pricing Strategy' section is also vague, suggesting to 'set prices that sound okay' without considering factors like production costs, market equilibrium, or the elasticity of demand. Furthermore, the 'Promotional Offers' section lacks concrete ideas, merely suggesting 'some deals' without specifying what these deals could entail or how they would be tailored to the target audience.",
+  "better_alternative": "A stronger framing would involve a more detailed analysis of the competition, including specific competitors, their market share, pricing strategies, and how these factors will influence the new restaurant's pricing decisions. It would also delve deeper into consumer preferences, identifying specific trends, such as the demand for sustainable or locally sourced food, and how these trends can be leveraged in the pricing strategy. Additionally, a well-defined pricing strategy should consider economic concepts like supply and demand, opportunity costs, and the elasticity of demand to set prices that are competitive yet profitable. Promotional offers should be tailored to the target audience, such as discounts for locals, special deals for tourists, or loyalty programs to encourage repeat business. By addressing these aspects, the student could develop a comprehensive pricing strategy that effectively balances profitability with competitiveness.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Definition",
+      "score": "C",
+      "internal_note": "The student's framing does not clearly define the economic problem or identify key variables such as the target market, competitors, or consumer preferences."
+    },
+    {
+      "criterion_name": "Assumptions and Constraints",
+      "score": "C",
+      "internal_note": "The framing lacks explicit assumptions about market structure, consumer behavior, or production costs, and does not acknowledge critical constraints such as budget limitations or regulatory requirements."
+    },
+    {
+      "criterion_name": "Economic Concepts Application",
+      "score": "C",
+      "internal_note": "The student fails to apply relevant microeconomic concepts such as supply and demand, opportunity cost, or market equilibrium to the problem."
+    }
+  ],
+  "strengths": [
+    "The student recognizes the need for a pricing strategy and mentions the importance of considering competition and consumer preferences."
+  ],
+  "refinements_correctly_selected": [],
+  "refinements_missed": [
+    "Specific target audience demographics",
+    "Existing competition pricing and market share",
+    "Restaurant operating costs and revenue projections"
+  ],
+  "unnecessary_selections": []
+}

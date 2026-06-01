@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Databases",
+    "subject_path": "Databases > Indexing & Query Optimization",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Definition Clarity",
+        "description": "The student clearly defines the problem by identifying key elements such as query type, data structure, and performance goals.",
+        "excellent_indicator": "The student identifies all relevant elements and articulates a clear, precise task.",
+        "poor_indicator": "The student misses key elements or provides a vague task definition."
+      },
+      {
+        "name": "Understanding of Indexing Concepts",
+        "description": "The student demonstrates an understanding of indexing concepts as they relate to the problem.",
+        "excellent_indicator": "The student accurately applies indexing concepts to frame the problem.",
+        "poor_indicator": "The student shows confusion about indexing concepts."
+      },
+      {
+        "name": "Query Optimization Considerations",
+        "description": "The student considers query optimization techniques relevant to the problem.",
+        "excellent_indicator": "The student identifies and incorporates relevant optimization techniques.",
+        "poor_indicator": "The student fails to consider any optimization techniques."
+      }
+    ],
+    "typical_errors": [
+      "Misidentifying the type of query operation involved.",
+      "Failing to specify the performance metrics or goals.",
+      "Overlooking the role of indexes in query performance."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification in Index Selection",
+        "description": "The student correctly identifies errors or inefficiencies in the AI's index selection.",
+        "excellent_indicator": "The student identifies all errors and inefficiencies accurately.",
+        "poor_indicator": "The student fails to identify major errors or inefficiencies."
+      },
+      {
+        "name": "Recognition of Query Plan Flaws",
+        "description": "The student recognizes flaws or suboptimal choices in the AI-generated query execution plan.",
+        "excellent_indicator": "The student accurately identifies all flaws in the query execution plan.",
+        "poor_indicator": "The student overlooks significant flaws in the execution plan."
+      },
+      {
+        "name": "Understanding of Execution Cost",
+        "description": "The student demonstrates an understanding of the execution cost implications of the AI's output.",
+        "excellent_indicator": "The student accurately assesses the execution cost and its impact on performance.",
+        "poor_indicator": "The student misjudges the execution cost or its implications."
+      }
+    ],
+    "typical_errors": [
+      "Overlooking the impact of missing or incorrect indexes.",
+      "Misinterpreting the execution plan's cost metrics.",
+      "Failing to recognize unnecessary table scans."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Effective Correction Commands",
+        "description": "The student provides clear and effective commands to correct AI errors.",
+        "excellent_indicator": "The student issues precise commands that effectively correct all identified errors.",
+        "poor_indicator": "The student's commands are vague or fail to address the errors."
+      },
+      {
+        "name": "Appropriate Indexing Recommendations",
+        "description": "The student recommends appropriate indexing strategies to improve performance.",
+        "excellent_indicator": "The student suggests effective indexing strategies that significantly enhance performance.",
+        "poor_indicator": "The student suggests inappropriate or ineffective indexing strategies."
+      },
+      {
+        "name": "Optimization Strategy Adjustment",
+        "description": "The student adjusts optimization strategies to steer AI towards better performance.",
+        "excellent_indicator": "The student makes well-justified adjustments that improve query performance.",
+        "poor_indicator": "The student makes adjustments that do not lead to performance improvements."
+      }
+    ],
+    "typical_errors": [
+      "Providing correction commands that are too general or irrelevant.",
+      "Suggesting indexes that do not align with the query type or data distribution.",
+      "Failing to adjust optimization strategies in response to identified issues."
+    ]
+  }
+}

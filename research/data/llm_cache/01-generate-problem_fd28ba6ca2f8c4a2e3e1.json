@@ -1,0 +1,22 @@
+{
+  "_vars": {
+    "course_name": "Databases",
+    "subject_path": "Databases > Indexing & Query Optimization",
+    "language": "English"
+  },
+  "_temp": 0.8,
+  "type": "object",
+  "properties": {
+    "problem_text": {
+      "type": "string",
+      "description": "The raw, ill-defined problem statement"
+    },
+    "internal_gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of intentional gaps/ambiguities (stored internally, never shown to student)"
+    }
+  }
+}

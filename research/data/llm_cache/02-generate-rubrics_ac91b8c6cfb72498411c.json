@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Machine Learning",
+    "subject_path": "ML > Model Evaluation & Overfitting",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Definition Clarity",
+        "description": "The student clearly defines the problem by identifying the specific model evaluation and overfitting issues present.",
+        "excellent_indicator": "The student provides a detailed explanation of the evaluation metrics and overfitting concerns, distinguishing between training and validation phases.",
+        "poor_indicator": "The student provides a vague or incomplete explanation, failing to differentiate between evaluation metrics or overfitting concerns."
+      },
+      {
+        "name": "Metric Selection Justification",
+        "description": "The student selects appropriate evaluation metrics relevant to the problem context.",
+        "excellent_indicator": "The student selects metrics that are directly applicable to the problem and justifies their choices based on the model's objectives and data characteristics.",
+        "poor_indicator": "The student selects metrics arbitrarily without justification or relevance to the model's objectives."
+      },
+      {
+        "name": "Overfitting Identification",
+        "description": "The student identifies signs of overfitting in the model's performance.",
+        "excellent_indicator": "The student correctly identifies overfitting by comparing training and validation performance and explains how it impacts the model's generalizability.",
+        "poor_indicator": "The student fails to identify overfitting or incorrectly attributes it to unrelated factors."
+      }
+    ],
+    "typical_errors": [
+      "Confusing overfitting with underfitting",
+      "Using inappropriate metrics for the model type",
+      "Ignoring differences between training and validation performance"
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Detection in AI Output",
+        "description": "The student accurately identifies errors or gaps in the AI's evaluation of the model.",
+        "excellent_indicator": "The student identifies specific instances where the AI's evaluation metrics are incorrect or misinterpreted, providing clear examples.",
+        "poor_indicator": "The student overlooks significant errors or fails to recognize misinterpretations in the AI's output."
+      },
+      {
+        "name": "Overfitting Analysis",
+        "description": "The student assesses whether the AI correctly identifies overfitting issues.",
+        "excellent_indicator": "The student accurately judges whether the AI's analysis of overfitting is valid, providing evidence from the data.",
+        "poor_indicator": "The student accepts invalid AI analysis without questioning or evidence."
+      },
+      {
+        "name": "Metric Evaluation",
+        "description": "The student evaluates the appropriateness of the AI-selected metrics.",
+        "excellent_indicator": "The student correctly assesses the suitability of the metrics used by the AI for the given model and context.",
+        "poor_indicator": "The student fails to recognize when inappropriate metrics are used by the AI."
+      }
+    ],
+    "typical_errors": [
+      "Failing to identify incorrect metric interpretation",
+      "Accepting AI output without questioning",
+      "Misjudging overfitting evidence"
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Correction Commands Precision",
+        "description": "The student provides precise correction commands to address identified errors in AI output.",
+        "excellent_indicator": "The student gives clear, specific commands that directly address and correct the identified issues in the AI's evaluation.",
+        "poor_indicator": "The student provides vague or incorrect commands that do not resolve the identified errors."
+      },
+      {
+        "name": "Guidance on Overfitting Mitigation",
+        "description": "The student suggests strategies to the AI for mitigating overfitting.",
+        "excellent_indicator": "The student recommends effective techniques such as regularization, cross-validation, or data augmentation to reduce overfitting.",
+        "poor_indicator": "The student suggests irrelevant or ineffective techniques that do not address overfitting."
+      },
+      {
+        "name": "Metric Adjustment Suggestions",
+        "description": "The student provides suggestions for adjusting evaluation metrics to better fit the model context.",
+        "excellent_indicator": "The student suggests appropriate alternative metrics or adjustments that enhance the model's evaluation.",
+        "poor_indicator": "The student suggests inappropriate or irrelevant metrics without improving the model's evaluation."
+      }
+    ],
+    "typical_errors": [
+      "Providing irrelevant correction commands",
+      "Suggesting ineffective overfitting solutions",
+      "Failing to propose meaningful metric adjustments"
+    ]
+  }
+}

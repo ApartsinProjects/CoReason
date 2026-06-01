@@ -1,0 +1,619 @@
+[
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "A",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies key elements but lacks specific details about dataset size and distribution."
+      },
+      {
+        "criterion_name": "Relevance to Sorting & Searching",
+        "score": "A",
+        "internal_note": "The student effectively connects the problem to sorting and searching algorithms."
+      },
+      {
+        "criterion_name": "Well-Defined Task",
+        "score": "B",
+        "internal_note": "While the task is generally well-defined, it could benefit from more precise constraints and assumptions."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "A",
+        "internal_note": "The student correctly identified all known issues in the AI output."
+      },
+      {
+        "criterion_name": "Analysis of AI Output",
+        "score": "B",
+        "internal_note": "The student demonstrated a good understanding of the AI output, but their analysis could have been more detailed and nuanced."
+      },
+      {
+        "criterion_name": "Relevance to Problem",
+        "score": "A",
+        "internal_note": "The student effectively evaluated the AI output in the context of the original problem, considering all key elements and constraints."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were clear and relevant but missed addressing some critical complexities."
+      },
+      {
+        "criterion_name": "Sorting & Searching Concepts",
+        "score": "B",
+        "internal_note": "Demonstrated understanding but did not fully explore trade-offs in data structure transitions."
+      },
+      {
+        "criterion_name": "Iteration and Refining",
+        "score": "C",
+        "internal_note": "Did not iterate sufficiently to address all identified issues."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary goal is to design a sorting algorithm that efficiently organizes a large dataset of customer records. The dataset will include fields such as name, email, and phone number, and the algorithm must support frequent search operations on these fields.\"}, {\"section_type\": \"Constraints\", \"content\": \"1. Efficiency: The sorting algorithm should have a time complexity of O(n log n) or better for the initial sort. 2. Memory Usage: The algorit",
+    "steering_cmds": [
+      "Incorporate a strategy to handle data skewness, such as implementing a bucketing technique or adaptive partitioning to ensure balanced sorting and searching performance.",
+      "Enhance the locking mechanism to include optimistic concurrency control or versioning to better manage concurrent updates and reduce the likelihood of conflicts.",
+      "Reassess the reliance on hash tables by considering alternative data structures like tries or suffix trees for more efficient search functionality, especially for prefix-based queries.",
+      "Ensure compliance with data protection regulations by integrating data anonymization techniques and implementing access controls to protect sensitive customer information during sorting and searching processes."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies key elements but lacks specific details about dataset size and characteristics."
+      },
+      {
+        "criterion_name": "Relevance to Sorting & Searching",
+        "score": "B",
+        "internal_note": "The student demonstrates an understanding of sorting and searching but does not fully justify the choice of data structures."
+      },
+      {
+        "criterion_name": "Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is generally well-defined but could benefit from more detailed constraints and assumptions."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "A",
+        "internal_note": "The student correctly identified all known issues in the AI output."
+      },
+      {
+        "criterion_name": "Analysis of AI Output",
+        "score": "B",
+        "internal_note": "The student demonstrated a good understanding of the AI output, but their analysis could have been more detailed and nuanced."
+      },
+      {
+        "criterion_name": "Relevance to Problem",
+        "score": "A",
+        "internal_note": "The student effectively evaluated the AI output in the context of the original problem, considering all key elements and constraints."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were clear and relevant but missed addressing some critical inefficiencies."
+      },
+      {
+        "criterion_name": "Sorting & Searching Concepts",
+        "score": "B",
+        "internal_note": "Demonstrated a good understanding of sorting and searching concepts but overlooked some algorithm limitations."
+      },
+      {
+        "criterion_name": "Iteration and Refining",
+        "score": "B",
+        "internal_note": "Refined the solution well in the first cycle but did not iterate further to address remaining issues."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The goal is to design an efficient sorting algorithm tailored for a large dataset of customer records. The algorithm must prioritize not only the sorting process but also facilitate frequent searches by name, email, and phone number. Additionally, it should minimize memory usage and maintain performance under high concurrency during updates.\"}, {\"section_type\": \"Requirements Analysis\", \"content\": \"1. Sorting Efficiency: The algorithm should ide",
+    "steering_cmds": [
+      "Consider how data skewness might affect the sorting process and if there are better algorithms for unevenly distributed data.",
+      "Think about how to better manage conflicts that happen when many updates are happening at the same time.",
+      "Maybe use more than just hash tables for searching, like adding different types of indexes.",
+      "Remember to mention data protection laws when dealing with customer information."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "A",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "A",
+        "internal_note": "The student accurately defines the problem, identifying key elements such as input, output, and constraints."
+      },
+      {
+        "criterion_name": "Relevance to Sorting & Searching",
+        "score": "B",
+        "internal_note": "The student demonstrates an understanding of the problem's relation to sorting and searching but could better articulate how these concepts are applied to solve the problem."
+      },
+      {
+        "criterion_name": "Well-Defined Task",
+        "score": "A",
+        "internal_note": "The student translates the ill-defined problem into a well-defined task with clear objectives and requirements."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but also incorrectly flagged a correct aspect as erroneous."
+      },
+      {
+        "criterion_name": "Analysis of AI Output",
+        "score": "C",
+        "internal_note": "The student demonstrated a misunderstanding of Timsort's capabilities and did not fully analyze the AI output."
+      },
+      {
+        "criterion_name": "Relevance to Problem",
+        "score": "B",
+        "internal_note": "The student considered the problem context to some extent but missed several key constraints and elements."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were relevant and addressed critical issues but lacked specificity in implementation details."
+      },
+      {
+        "criterion_name": "Sorting & Searching Concepts",
+        "score": "A",
+        "internal_note": "Demonstrated a strong understanding of sorting and searching concepts and their limitations."
+      },
+      {
+        "criterion_name": "Iteration and Refining",
+        "score": "B",
+        "internal_note": "Effectively iterated and refined the solution, but marking 'done' early limited further refinement."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Inadequate handling of concurrent update conflicts",
+      "Overreliance on hash tables for search functionality",
+      "Lack of consideration for data protection regulations"
+    ],
+    "false_positives": [
+      "The Timsort algorithm is not suitable for large datasets because it can only handle small amounts of data efficiently."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to design an efficient sorting algorithm tailored for a large dataset of customer records. The dataset will contain fields such as name, email, and phone number, which will be frequently searched. The algorithm must not only sort the records efficiently but also facilitate rapid searches, particularly by the specified fields.\"}, {\"section_type\": \"Constraints\", \"content\": \"1. **Efficiency**: The algorithm should ideally ",
+    "steering_cmds": [
+      "Address the issue of data skewness by incorporating a strategy to detect and handle skewed distributions, potentially using bucket sorting or adaptive algorithms that can better manage unevenly distributed data.",
+      "Reassess the choice of Timsort for large datasets; consider alternative algorithms like external merge sort or radix sort that are specifically designed for handling large volumes of data efficiently.",
+      "Implement a mechanism to dynamically adjust the chunk size based on the characteristics of the data to optimize memory usage further.",
+      "Enhance the locking mechanism for concurrent updates by exploring lock-free data structures or optimistic concurrency control to reduce contention and improve throughput.",
+      "Provide a clearer evaluation metric for the sorting algorithm's performance, including edge cases and worst-case scenarios to ensure robustness under varying conditions."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student defines the problem well but lacks specific details on dataset size and concurrent update volume."
+      },
+      {
+        "criterion_name": "Relevance to Sorting & Searching",
+        "score": "A",
+        "internal_note": "The student effectively connects the problem to sorting and searching algorithms, though could explore impacts further."
+      },
+      {
+        "criterion_name": "Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is generally well-defined, but lacks specific performance targets for concurrency and memory usage."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but also incorrectly flagged a correct aspect as erroneous."
+      },
+      {
+        "criterion_name": "Analysis of AI Output",
+        "score": "C",
+        "internal_note": "The student demonstrated a misunderstanding of Timsort's capabilities and did not fully analyze the AI output."
+      },
+      {
+        "criterion_name": "Relevance to Problem",
+        "score": "B",
+        "internal_note": "The student considered the problem context to some extent but missed several key constraints and elements."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were relevant but lacked depth and specificity in some areas."
+      },
+      {
+        "criterion_name": "Sorting & Searching Concepts",
+        "score": "B",
+        "internal_note": "Demonstrated understanding of sorting concepts but did not fully explore alternative algorithms."
+      },
+      {
+        "criterion_name": "Iteration and Refining",
+        "score": "C",
+        "internal_note": "Did not iterate or refine commands beyond the first cycle."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Inadequate handling of concurrent update conflicts",
+      "Overreliance on hash tables for search functionality",
+      "Lack of consideration for data protection regulations"
+    ],
+    "false_positives": [
+      "The Timsort algorithm is not suitable for large datasets because it can only handle small amounts of data efficiently."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The objective is to design a sorting algorithm that efficiently organizes a large dataset of customer records, which includes fields such as name, email, and phone number. The algorithm must support frequent searches on these fields and be optimized for minimal memory usage. Additionally, it should be capable of handling a high volume of concurrent updates without significant performance degradation.\"}, {\"section_type\": \"Constraints Identificat",
+    "steering_cmds": [
+      "Consider adding more details about how to handle data skewness in the dataset.",
+      "Explain why Timsort might not be the best choice for very large datasets.",
+      "Suggest other sorting algorithms that could work better for large datasets.",
+      "Provide more information on how the locking mechanism will affect performance during updates."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies key elements but lacks specific details about dataset size and constraints."
+      },
+      {
+        "criterion_name": "Relevance to Sorting & Searching",
+        "score": "B",
+        "internal_note": "The student acknowledges the need for sorting and searching but does not fully explore how these concepts apply to the problem."
+      },
+      {
+        "criterion_name": "Well-Defined Task",
+        "score": "C",
+        "internal_note": "The task is not fully well-defined due to lack of specific metrics and constraints."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "A",
+        "internal_note": "The student correctly identified all known issues in the AI output."
+      },
+      {
+        "criterion_name": "Analysis of AI Output",
+        "score": "B",
+        "internal_note": "The student demonstrated a good understanding of the AI output, but their analysis could have been more detailed and nuanced."
+      },
+      {
+        "criterion_name": "Relevance to Problem",
+        "score": "A",
+        "internal_note": "The student effectively evaluated the AI output in the context of the original problem, considering all key elements and constraints."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands",
+        "score": "B",
+        "internal_note": "The commands were generally clear and relevant, but missed addressing some complexities."
+      },
+      {
+        "criterion_name": "Sorting & Searching Concepts",
+        "score": "A",
+        "internal_note": "Demonstrated a strong understanding of sorting and searching concepts."
+      },
+      {
+        "criterion_name": "Iteration and Refining",
+        "score": "B",
+        "internal_note": "The student iterated effectively but marked 'done' prematurely, leaving some issues unresolved."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Understanding the Problem\", \"content\": \"I need to sort a large dataset of customer records. This means organizing the records in a certain order. I also have to think about how people will search for these records by name, email, and phone number.\"}, {\"section_type\": \"Requirements\", \"content\": \"The algorithm should be efficient, which probably means it needs to be fast. I also need to worry about memory usage, so it shouldn't use too much space. Plus, it should handle many upd",
+    "steering_cmds": [
+      "Incorporate a strategy to handle data skewness by implementing a partitioning scheme that can dynamically adjust based on the distribution of customer records, ensuring that sorting and searching remain efficient even with uneven data distribution.",
+      "Enhance the locking mechanism for concurrent updates by exploring optimistic concurrency control to reduce contention and increase throughput, allowing for more seamless updates without significantly impacting sorting performance.",
+      "Reassess the reliance on hash tables for search functionality; consider implementing a composite index that combines multiple fields (name, email, phone number) to improve search efficiency and reduce the potential for hash collisions.",
+      "Integrate data protection regulations into the design by ensuring that the sorting and searching processes comply with relevant laws such as GDPR, including mechanisms for data anonymization and secure access controls."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies key elements but lacks specificity in constraints and assumptions."
+      },
+      {
+        "criterion_name": "Relevance to Sorting & Searching",
+        "score": "B",
+        "internal_note": "The student understands the relevance but does not fully connect sorting and searching performance metrics to the problem."
+      },
+      {
+        "criterion_name": "Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is generally well-defined but lacks precise metrics and assumptions needed for a complete solution."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "A",
+        "internal_note": "The student correctly identified all known issues in the AI output."
+      },
+      {
+        "criterion_name": "Analysis of AI Output",
+        "score": "B",
+        "internal_note": "The student demonstrated a good understanding of the AI output, but their analysis could have been more detailed and nuanced."
+      },
+      {
+        "criterion_name": "Relevance to Problem",
+        "score": "A",
+        "internal_note": "The student effectively evaluated the AI output in the context of the original problem, considering all key elements and constraints."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were generally clear and relevant, but lacked specificity in some areas."
+      },
+      {
+        "criterion_name": "Sorting & Searching Concepts",
+        "score": "B",
+        "internal_note": "Demonstrated understanding but could have been more specific in suggesting alternative data structures."
+      },
+      {
+        "criterion_name": "Iteration and Refining",
+        "score": "B",
+        "internal_note": "Some iteration was evident, but marking 'done' early limited further refinement."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The problem is about sorting a large dataset of customer records. The records need to be sorted in a way that makes it easy to search for information like name, email, and phone number.\"}, {\"section_type\": \"Requirements\", \"content\": \"We need to sort the records efficiently, meaning it should not take too long. Also, it should use as little memory as possible. The system should be able to handle many updates at the same time without crashing.",
+    "steering_cmds": [
+      "Consider how data skewness might affect sorting performance.",
+      "Think about better ways to handle conflicts during concurrent updates.",
+      "Maybe use other data structures besides hash tables for searching.",
+      "Don't forget about data protection laws and how they apply to customer records."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies key elements but lacks specific details about dataset size and concurrent updates."
+      },
+      {
+        "criterion_name": "Relevance to Sorting & Searching",
+        "score": "A",
+        "internal_note": "The student effectively relates the problem to sorting and searching algorithms."
+      },
+      {
+        "criterion_name": "Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is generally well-defined but could benefit from more precise constraints and metrics."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but also incorrectly flagged a correct aspect as erroneous."
+      },
+      {
+        "criterion_name": "Analysis of AI Output",
+        "score": "C",
+        "internal_note": "The student demonstrated a misunderstanding of Timsort's capabilities and did not fully analyze the AI output."
+      },
+      {
+        "criterion_name": "Relevance to Problem",
+        "score": "B",
+        "internal_note": "The student considered the problem context to some extent but missed several key constraints and elements."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were specific and targeted key issues, but missed addressing some critical aspects."
+      },
+      {
+        "criterion_name": "Sorting & Searching Concepts",
+        "score": "A",
+        "internal_note": "Demonstrated a good understanding of sorting and searching concepts."
+      },
+      {
+        "criterion_name": "Iteration and Refining",
+        "score": "B",
+        "internal_note": "Effectively refined the solution, but missed some critical issues that needed further iteration."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Inadequate handling of concurrent update conflicts",
+      "Overreliance on hash tables for search functionality",
+      "Lack of consideration for data protection regulations"
+    ],
+    "false_positives": [
+      "The Timsort algorithm is not suitable for large datasets because it can only handle small amounts of data efficiently."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"We need to create a sorting algorithm for customer records. These records might include names, emails, and phone numbers. The sorting needs to be efficient, which means it should work quickly. Also, we will have many searches and updates happening at the same time.\"}, {\"section_type\": \"Requirements\", \"content\": \"1. The algorithm should sort customer records by name, email, and phone number. 2. It should be efficient, meaning it should take l",
+    "steering_cmds": [
+      "Address the insufficient consideration of data skewness by implementing a strategy to detect and handle skewed distributions, potentially using bucket sort or radix sort for specific cases where data is heavily skewed.",
+      "Reassess the use of Timsort for large datasets, as it may not be optimal due to its reliance on in-memory operations. Consider alternative algorithms like external merge sort, which are designed specifically for handling large datasets that exceed memory limits.",
+      "Incorporate a more robust locking mechanism that allows for optimistic concurrency control, which can reduce contention and improve throughput for concurrent updates.",
+      "Specify the method for chunking the data more clearly, including how to determine the optimal chunk size based on the dataset's characteristics and available system resources.",
+      "Clarify the evaluation metrics for both sorting and searching, ensuring they are measurable and achievable within the constraints of the system's architecture and workload."
+    ]
+  },
+  {
+    "challenge": 0,
+    "subject": "Algorithms > Sorting & Searching",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition",
+        "score": "B",
+        "internal_note": "The student identifies key elements like dataset size and memory constraints, but could better integrate these into a cohesive problem statement."
+      },
+      {
+        "criterion_name": "Relevance to Sorting & Searching",
+        "score": "B",
+        "internal_note": "The student acknowledges the need for sorting and searching but does not fully explore how these concepts apply to the problem."
+      },
+      {
+        "criterion_name": "Well-Defined Task",
+        "score": "B",
+        "internal_note": "The task is partially defined with relevant constraints, but lacks specific algorithmic direction and integration of sorting and searching strategies."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but also incorrectly flagged a correct aspect as erroneous."
+      },
+      {
+        "criterion_name": "Analysis of AI Output",
+        "score": "C",
+        "internal_note": "The student demonstrated a misunderstanding of Timsort's capabilities and did not fully analyze the AI output."
+      },
+      {
+        "criterion_name": "Relevance to Problem",
+        "score": "B",
+        "internal_note": "The student considered the problem context to some extent but missed several key constraints and elements."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were relevant but lacked precision and depth in some areas."
+      },
+      {
+        "criterion_name": "Sorting & Searching Concepts",
+        "score": "B",
+        "internal_note": "Demonstrated understanding but could have better addressed trade-offs and specific algorithm suitability."
+      },
+      {
+        "criterion_name": "Iteration and Refining",
+        "score": "C",
+        "internal_note": "Limited iteration and refinement; marked done too early with unresolved issues."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Inadequate handling of concurrent update conflicts",
+      "Overreliance on hash tables for search functionality",
+      "Lack of consideration for data protection regulations"
+    ],
+    "false_positives": [
+      "The Timsort algorithm is not suitable for large datasets because it can only handle small amounts of data efficiently."
+    ],
+    "framing_text": "[{\"section_type\": \"clarification\", \"content\": \"What kind of sorting do we need? Are we sorting by name, email, or phone number?\"}, {\"section_type\": \"scope\", \"content\": \"How large is the dataset? Is it in the millions or thousands? This affects the algorithm choice.\"}, {\"section_type\": \"constraints\", \"content\": \"What is the maximum memory we can use? Are there specific limits we need to be aware of?\"}, {\"section_type\": \"requirements\", \"content\": \"Do we need to maintain the order of records that h",
+    "steering_cmds": [
+      "Consider how data skewness can affect sorting performance and maybe suggest a different algorithm that handles it better.",
+      "Reevaluate the claim that Timsort is not suitable for large datasets, since it might still be effective with proper chunking.",
+      "Add more details on how the locking mechanism will work for concurrent updates."
+    ]
+  }
+]

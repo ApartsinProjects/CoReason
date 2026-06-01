@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Microeconomics",
+    "subject_path": "Microeconomics > Supply & Demand",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Identification of Economic Agents",
+        "description": "Ability to identify and define the economic agents involved in the problem, such as consumers, producers, and government.",
+        "excellent_indicator": "Correctly identifies all relevant economic agents and clearly defines their roles in the context of supply and demand.",
+        "poor_indicator": "Fails to identify key economic agents or provides vague and incorrect definitions."
+      },
+      {
+        "name": "Clarification of Economic Context",
+        "description": "Ability to translate the problem into a context involving supply and demand, specifying relevant markets and commodities.",
+        "excellent_indicator": "Accurately frames the problem within a specific market, detailing the supply and demand dynamics.",
+        "poor_indicator": "Provides an unclear or incorrect context, failing to relate the problem to a specific market or commodity."
+      },
+      {
+        "name": "Specification of Constraints and Assumptions",
+        "description": "Ability to specify the constraints and assumptions necessary to structure the problem, such as price ceilings, market equilibrium, or elasticities.",
+        "excellent_indicator": "Clearly specifies all relevant constraints and assumptions that are realistic and applicable to the problem.",
+        "poor_indicator": "Misses critical constraints or assumptions, or includes unrealistic or irrelevant ones."
+      }
+    ],
+    "typical_errors": [
+      "Confusing the roles of consumers and producers.",
+      "Misidentifying the relevant market or commodity.",
+      "Ignoring important constraints like price controls."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Accuracy of Error Identification",
+        "description": "Ability to accurately identify errors or gaps in AI-generated supply and demand analysis.",
+        "excellent_indicator": "Correctly identifies all major errors and gaps in the AI's analysis, such as incorrect equilibrium points or miscalculated elasticities.",
+        "poor_indicator": "Fails to identify significant errors or incorrectly diagnoses errors that do not exist."
+      },
+      {
+        "name": "Understanding of Supply and Demand Curves",
+        "description": "Ability to judge the AI's representation and interpretation of supply and demand curves.",
+        "excellent_indicator": "Accurately assesses the AI's graphical representation and interpretation of curves, noting any inaccurate shifts or intersections.",
+        "poor_indicator": "Overlooks incorrect graphical representations or misinterprets the curves' meanings."
+      },
+      {
+        "name": "Evaluation of Market Dynamics",
+        "description": "Ability to evaluate the AI's analysis of market dynamics, such as shifts in supply and demand due to external factors.",
+        "excellent_indicator": "Correctly evaluates how well the AI accounts for factors affecting market dynamics, such as consumer preferences or technological changes.",
+        "poor_indicator": "Misses key factors affecting market dynamics or misinterprets their impact."
+      }
+    ],
+    "typical_errors": [
+      "Failing to recognize incorrect equilibrium calculations.",
+      "Misinterpreting the direction of curve shifts.",
+      "Overlooking the impact of external factors on market dynamics."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Clarity of Correction Commands",
+        "description": "Ability to provide clear and precise correction commands to the AI to address identified errors.",
+        "excellent_indicator": "Provides specific and actionable commands that effectively guide the AI to correct its errors.",
+        "poor_indicator": "Issues vague or overly broad commands that do not directly address the errors."
+      },
+      {
+        "name": "Relevance of Feedback",
+        "description": "Ability to ensure feedback is directly relevant to the errors identified in the AI's analysis.",
+        "excellent_indicator": "Feedback is directly relevant and helps the AI improve its analysis of supply and demand.",
+        "poor_indicator": "Feedback is irrelevant or does not help correct the AI's errors."
+      },
+      {
+        "name": "Use of Economic Terminology",
+        "description": "Ability to use appropriate economic terminology when steering the AI.",
+        "excellent_indicator": "Consistently uses correct economic terms, enhancing the AI's understanding and ability to adjust its analysis.",
+        "poor_indicator": "Misuses economic terminology, leading to potential confusion in AI adjustments."
+      }
+    ],
+    "typical_errors": [
+      "Providing feedback that is too general or not actionable.",
+      "Using incorrect economic terms, leading to misunderstanding.",
+      "Failing to connect feedback to specific identified errors."
+    ]
+  }
+}

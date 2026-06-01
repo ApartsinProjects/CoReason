@@ -62,6 +62,24 @@ Decontaminated gate result (1 challenge): expert F=B/J=A/S=B vs careless F=C/J=C
 survives cross-model decontamination**. Grader mix: 5 OpenRouter-llama, 1 OpenAI fallback.
 Infra: Groq free-tier daily token limit (100k TPD) exhausted; OpenRouter primary + OpenAI fallback.
 
+## C4 (2026-06-01): DISSOCIATION experiment (reviewer's central ask) + bug sweep
+Reviewer round 1 = Major Revision. Central point: uniform-competence personas (expert->careless)
+canNOT show dissociation (P3) — monotone-on-all-skills is consistent with ONE competence factor.
+Fix = CROSSED per-skill profiles (full 2^3 factorial: each skill independently strong/weak).
+Smoke (1 challenge, 8 profiles, sim=gpt-4o-mini, grade=gpt-4o):
+  own-effect (grade delta strong-weak) diagonal mean = +0.92; off-diagonal (cross) = -0.08;
+  **DISSOCIATION RATIO = 11.0**. Judging dissociates perfectly (+2.00 own / 0.00 cross — but note
+  judging selection is PROGRAMMATIC, so this is the controlled anchor). Framing/steering own-effects
+  positive but noisier at n=1 (LLM-graded). Designed contrasts: strong-framer/weak-judge -> F=B,J=C;
+  weak-framer/strong-judge -> F=B,J=A (skills decouple as designed).
+Sanity (per standing directive): judging_grade clean by level (expert->A, novice->C); framing varies
+  realistically (expert [B,B,A,B] vs novice [C,B,B,B]); NO cross-skill leakage path. No bug.
+Bugs fixed this cycle (4): (1) prompt 04 JSON TRUNCATION at max_tokens -> raised to 3500 + JSON
+  salvage + faithful-steering try/except fail-safe. (2) schema-ECHO (model returned the schema, not
+  data) -> augmentation now demands content+lists keys + echo-retry guard. (3) PROSE fallback (llama
+  ignores json_mode on prompt 01) -> wrap prose into primary string field. (4) provider None-guard.
+Full run (5 challenges x 8 profiles = 40 learners, gpt-4o grader) launched for stable estimates + CIs.
+
 ## Current standing + next
 - E1-on-DB abandoned (data invalid). E1 re-scoped to run on E3-generated controlled data.
 - BLOCKER/GATE: all remaining experiments need the Groq API (llama-3.3-70b). Next action: verify the key works; if dead, fall back to OpenRouter/OpenAI (keys present).

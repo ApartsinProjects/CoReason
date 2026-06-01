@@ -254,7 +254,39 @@ dissociate. The defensible claim is not that any single skill is new, but that t
 both theoretically motivated (monitor-control plus an upstream task definition) and empirically
 consequential (the skills can be measured apart).
 
-## 7. Operationalization: a proof-of-concept instrument
+## 7. The CoReasoning Lab system
+
+The framework is instantiated in a deployed web platform, *CoReasoning Lab*, which we describe here so
+that the abstract skills map onto a concrete learner experience. The platform is role-based (student,
+instructor, administrator) and bilingual (English and Hebrew), and supports both practice and
+assessment modes and both multiple-choice and open-ended response formats per phase.
+
+**Authoring flow (instructor).** An instructor defines a challenge by choosing a course and subject
+path; the system then generates the ill-defined problem, the three per-skill rubrics, the gold-standard
+framing, and the seeded-flaw solution that the learner will critique (Section 7.2). Challenges are
+organized into courses and can be assigned to cohorts.
+
+**Learner flow (student).** From a dashboard of assigned challenges (Figure 2), a student enters a
+challenge run that walks through the framework's two phases (Figure 3):
+
+1. *Phase 1 — Framing.* The student is shown the raw, ill-defined problem and adds refinement sections
+   (assumptions, constraints, clarifications, success metrics) or selects refinements in
+   multiple-choice mode, then submits. The platform returns rubric-driven Framing feedback and a grade.
+2. *AI generation.* The system produces a plausible but deliberately flawed solution to the framed task.
+3. *Phase 2 — Judge/Steer cycles.* In each cycle the student first **judges** the current output
+   (flagging issues it contains) and then **steers** the AI (issuing correction commands); the AI
+   returns an updated output. The student repeats this up to a configured maximum number of cycles and
+   marks the task complete when satisfied.
+4. *Per-skill feedback and grades.* Framing, Judging, and Steering are scored separately, each with its
+   own rubric-driven feedback, and surfaced in a per-challenge report and in longitudinal student
+   analytics (Figure 4) that track the three skills independently over time.
+
+This separation in the interface, distinct phases, distinct feedback channels, and distinct grade
+columns, is the framework's central claim made operational: a learner sees, and is scored on, three
+different things they did, not one undifferentiated "AI use." The remainder of this section describes
+the instrument that produces those scores.
+
+## 7.1 Operationalization: a proof-of-concept instrument
 
 To show that the three constructs are not only conceptually distinct but practically measurable, we
 describe a working instrument that scores each skill from a learner's transcript. The instrument is a

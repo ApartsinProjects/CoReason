@@ -70,12 +70,17 @@ def remaining_after_steering(issues, level):
     if level == "novice":      return issues[max(1, round(0.4*n)):]
     return issues  # careless: nothing fixed
 
-def grade_one(ch, level):
+def grade_one(ch, levels):
     spec, lang = ch["spec"], ch["lang"]
     rub = ch["rubrics"]; rp = ch["raw_problem"]
-    seed = stable_seed(rp[:60], level)   # deterministic per (challenge, level)
+    # levels may be a single string (uniform competence) or a per-skill dict (crossed profile)
+    if isinstance(levels, str):
+        lv = {"framing": levels, "judging": levels, "steering": levels}
+    else:
+        lv = levels
+    seed = stable_seed(rp[:60], lv["framing"], lv["judging"], lv["steering"])
     # ---- FRAMING ----
-    fram = simulate_framing(rp, spec["subject_path"], level, lang, seed=seed)
+    fram = simulate_framing(rp, spec["subject_path"], lv["framing"], lang, seed=seed)
     student_framing = json.dumps(fram.get("refinement_sections", []), ensure_ascii=False)
     fe = run_prompt("08-evaluate-framing", {
         "raw_problem": rp, "student_framing": student_framing, "response_type": "open_ended_sections",
@@ -83,7 +88,7 @@ def grade_one(ch, level):
     fg = run_prompt("11-grade", {"dimension": "Framing",
         "per_criterion_scores": fe.get("per_criterion_scores", []), "language": lang})
     # ---- JUDGING (programmatic) ----
-    flagged, (real, false) = judging_selection(ch["internal_issues"], ch["distractors"], level)
+    flagged, (real, false) = judging_selection(ch["internal_issues"], ch["distractors"], lv["judging"])
     je = run_prompt("09-evaluate-judging", {
         "raw_problem": rp, "ai_outputs_per_cycle": [ch["ai_solution"]],
         "judging_responses_per_cycle": [{"flagged_issues": flagged}],
@@ -93,16 +98,20 @@ def grade_one(ch, level):
     jg = run_prompt("11-grade", {"dimension": "Judging",
         "per_criterion_scores": je.get("per_criterion_scores", []), "language": lang})
     # ---- STEERING ----
-    steer = simulate_steering(rp, ch["ai_solution"], flagged, level, lang, seed=seed)
+    steer = simulate_steering(rp, ch["ai_solution"], flagged, lv["steering"], lang, seed=seed)
     cmds = steer.get("commands", [])
-    # FAITHFUL steering: actually run the AI-update prompt on the student's commands; whatever
-    # issues remain (per the model) become the ground truth for steering eval (removes circularity).
-    upd = run_prompt("04-generate-ai-updated-output", {
-        "raw_problem": rp, "student_framing": student_framing,
-        "previous_output": ch["ai_solution"], "steering_history": "[]",
-        "steering_command": cmds, "cycle_number": "1", "max_cycles": "3", "language": lang})
-    rem = upd.get("internal_issues", [])
-    ai_after = upd.get("updated_output", ch["ai_solution"])
+    # FAITHFUL steering: re-run the AI-update prompt on the student's commands; remaining issues
+    # become the ground truth for steering eval. Fail-safe: on truncation/error, assume nothing fixed.
+    try:
+        upd = run_prompt("04-generate-ai-updated-output", {
+            "raw_problem": rp, "student_framing": student_framing,
+            "previous_output": ch["ai_solution"], "steering_history": "[]",
+            "steering_command": cmds, "cycle_number": "1", "max_cycles": "3", "language": lang},
+            max_tokens=3500)
+        rem = upd.get("internal_issues", ch["internal_issues"])
+        ai_after = upd.get("updated_output", ch["ai_solution"])
+    except Exception:
+        rem = ch["internal_issues"]; ai_after = ch["ai_solution"]
     se = run_prompt("10-evaluate-steering", {
         "raw_problem": rp, "student_framing": student_framing,
         "ai_outputs_per_cycle": [ch["ai_solution"], ai_after],
@@ -113,7 +122,8 @@ def grade_one(ch, level):
         "done_at_cycle": "1", "max_cycles": "3", "language": lang})
     sg = run_prompt("11-grade", {"dimension": "Steering",
         "per_criterion_scores": se.get("per_criterion_scores", []), "language": lang})
-    return {"level": level,
+    return {"level": lv["framing"] if lv["framing"]==lv["judging"]==lv["steering"] else "crossed",
+            "framing_level": lv["framing"], "judging_level": lv["judging"], "steering_level": lv["steering"],
             "framing_grade": fg["grade"], "judging_grade": jg["grade"], "steering_grade": sg["grade"],
             "framing_percrit": fe.get("per_criterion_scores", []),
             "judging_percrit": je.get("per_criterion_scores", []),

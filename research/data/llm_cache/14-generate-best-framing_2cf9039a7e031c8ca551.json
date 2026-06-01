@@ -1,0 +1,100 @@
+{
+  "_vars": {
+    "course_name": "Databases",
+    "subject_path": "Databases > Indexing & Query Optimization",
+    "raw_problem": "As a database consultant, you have been hired by a mid-sized e-commerce company to optimize their database performance. The primary focus is on reducing query response times, which have become a bottleneck during peak shopping periods. You are tasked with designing a new indexing strategy. The database predominantly handles product listings, customer orders, and user reviews. Your output should include a proposed set of indexes, accompanied by a rationale for each choice. Additionally, analyze the impact of your proposed indexes on both read and write operations. There is no current documentation of the database schema, and the company is uncertain about the proportion of read versus write operations during peak times.",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Definition Clarity",
+          "description": "The student clearly defines the problem by identifying key elements such as query type, data structure, and performance goals.",
+          "excellent_indicator": "The student identifies all relevant elements and articulates a clear, precise task.",
+          "poor_indicator": "The student misses key elements or provides a vague task definition."
+        },
+        {
+          "name": "Understanding of Indexing Concepts",
+          "description": "The student demonstrates an understanding of indexing concepts as they relate to the problem.",
+          "excellent_indicator": "The student accurately applies indexing concepts to frame the problem.",
+          "poor_indicator": "The student shows confusion about indexing concepts."
+        },
+        {
+          "name": "Query Optimization Considerations",
+          "description": "The student considers query optimization techniques relevant to the problem.",
+          "excellent_indicator": "The student identifies and incorporates relevant optimization techniques.",
+          "poor_indicator": "The student fails to consider any optimization techniques."
+        }
+      ],
+      "typical_errors": [
+        "Misidentifying the type of query operation involved.",
+        "Failing to specify the performance metrics or goals.",
+        "Overlooking the role of indexes in query performance."
+      ]
+    },
+    "internal_gaps": [
+      "No database schema provided",
+      "Unclear read vs. write operation proportions",
+      "Unspecified current indexing strategy or lack thereof"
+    ],
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "base": "As a database consultant, you have been hired by a mid-sized e-commerce company to optimize their database performance. The primary focus is on reducing query response times, which have become a bottleneck during peak shopping periods. You are tasked with designing a new indexing strategy. The database predominantly handles product listings, customer orders, and user reviews. Your output should include a proposed set of indexes, accompanied by a rationale for each choice. Additionally, analyze the impact of your proposed indexes on both read and write operations. There is no current documentation of the database schema, and the company is uncertain about the proportion of read versus write operations during peak times.",
+  "refinement_sections": [
+    {
+      "section_type": "Assumptions",
+      "entries": [
+        {
+          "title": "Database Schema Assumption",
+          "description": "Assume a typical e-commerce database schema with tables for products, orders, and reviews. Each table likely contains several fields, such as product ID, order ID, customer ID, timestamps, and review ratings.",
+          "addresses_gap": "No database schema provided"
+        },
+        {
+          "title": "Read vs. Write Operation Proportion Assumption",
+          "description": "Assume that read operations are significantly higher than write operations during peak shopping periods, as customers are more likely to browse products than to make purchases or leave reviews.",
+          "addresses_gap": "Unclear read vs. write operation proportions"
+        }
+      ]
+    },
+    {
+      "section_type": "Constraints",
+      "entries": [
+        {
+          "title": "Indexing Overhead Constraint",
+          "description": "Consider the overhead of maintaining indexes during write operations, ensuring that the performance gain in read operations justifies any potential slowdown in write operations.",
+          "addresses_gap": "Analyze the impact of proposed indexes on both read and write operations"
+        }
+      ]
+    },
+    {
+      "section_type": "Clarifications",
+      "entries": [
+        {
+          "title": "Focus on Query Response Time",
+          "description": "The primary goal is to reduce query response times, particularly during peak periods, which implies a focus on optimizing read-heavy operations.",
+          "addresses_gap": "Primary focus is on reducing query response times"
+        }
+      ]
+    },
+    {
+      "section_type": "Success Metrics",
+      "entries": [
+        {
+          "title": "Query Response Time Reduction",
+          "description": "Success is measured by a significant reduction in average query response times during peak periods, ideally by at least 50%.",
+          "addresses_gap": "Primary focus is on reducing query response times"
+        }
+      ]
+    },
+    {
+      "section_type": "Scope Boundaries",
+      "entries": [
+        {
+          "title": "Scope Limited to Indexing Strategy",
+          "description": "The task is limited to designing an indexing strategy and does not include other optimization techniques such as query rewriting or hardware upgrades.",
+          "addresses_gap": "Designing a new indexing strategy"
+        }
+      ]
+    }
+  ],
+  "coverage_notes": "This framing addresses all rubric criteria by clearly defining the problem, incorporating indexing concepts, and considering query optimization techniques. It ensures clarity in problem definition and assumptions, aligns with indexing and query optimization knowledge, and sets clear success metrics."
+}

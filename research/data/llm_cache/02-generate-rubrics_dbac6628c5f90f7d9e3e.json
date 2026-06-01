@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Algorithms",
+    "subject_path": "Algorithms > Sorting & Searching",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Translation",
+        "description": "Ability to translate the ill-defined problem into a clear, well-defined task with specific objectives related to sorting and searching algorithms.",
+        "excellent_indicator": "Clearly identifies and articulates the sorting or searching problem, breaking it down into specific tasks such as choosing an appropriate algorithm based on input size and constraints.",
+        "poor_indicator": "Fails to clearly define the problem or selects irrelevant objectives not related to sorting or searching."
+      },
+      {
+        "name": "Algorithm Selection",
+        "description": "Appropriateness of the selected algorithm for the problem context, considering factors like time complexity and input characteristics.",
+        "excellent_indicator": "Selects an algorithm that is optimal for the problem constraints, such as using merge sort for large datasets requiring stable sorting.",
+        "poor_indicator": "Selects an inappropriate algorithm, such as using bubble sort for large datasets where performance is critical."
+      },
+      {
+        "name": "Constraint Identification",
+        "description": "Identifies constraints and requirements specific to the sorting or searching task, such as stability, memory usage, or time complexity.",
+        "excellent_indicator": "Accurately identifies all relevant constraints, including stability requirements and resource limitations.",
+        "poor_indicator": "Overlooks key constraints, leading to an incomplete or incorrect problem definition."
+      }
+    ],
+    "typical_errors": [
+      "Misidentifying the type of sorting required (e.g., stable vs. unstable).",
+      "Choosing a sorting algorithm without considering time complexity.",
+      "Ignoring specific constraints like memory limitations or input size."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification",
+        "description": "Ability to identify errors or inefficiencies in the AI-generated sorting or searching solution.",
+        "excellent_indicator": "Accurately identifies all errors or inefficiencies, such as misordered elements or suboptimal time complexity.",
+        "poor_indicator": "Fails to recognize significant errors or inefficiencies, such as incorrect ordering or unnecessary operations."
+      },
+      {
+        "name": "Gap Analysis",
+        "description": "Skill in identifying missing elements or steps in the AI's solution that are critical for correctness or efficiency.",
+        "excellent_indicator": "Identifies all missing steps or elements, such as initialization of variables or handling edge cases.",
+        "poor_indicator": "Overlooks missing steps that lead to incorrect or incomplete solutions."
+      },
+      {
+        "name": "Algorithmic Consistency",
+        "description": "Evaluates whether the AI's solution maintains consistency with the chosen algorithm's principles.",
+        "excellent_indicator": "Ensures that the AI's solution adheres strictly to the principles and steps of the selected algorithm.",
+        "poor_indicator": "Allows deviations from the algorithm's principles that compromise solution integrity."
+      }
+    ],
+    "typical_errors": [
+      "Failing to detect incorrect element comparisons or swaps.",
+      "Missing critical steps in the algorithm execution, like partitioning in quicksort.",
+      "Overlooking inconsistencies with algorithm principles."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Corrective Commands",
+        "description": "Effectiveness of the commands given to correct the AI's errors or omissions.",
+        "excellent_indicator": "Provides precise and actionable commands that directly address identified errors or omissions, improving the AI's output.",
+        "poor_indicator": "Issues vague or ineffective commands that do not resolve the identified issues."
+      },
+      {
+        "name": "Feedback Integration",
+        "description": "Ability to integrate AI feedback into subsequent corrections and improvements.",
+        "excellent_indicator": "Seamlessly incorporates AI feedback into iterative improvements, demonstrating adaptive learning.",
+        "poor_indicator": "Ignores or misinterprets AI feedback, resulting in repeated errors."
+      },
+      {
+        "name": "Efficiency Optimization",
+        "description": "Commands focus on optimizing the efficiency of the AI's solution in terms of time and space complexity.",
+        "excellent_indicator": "Successfully refines the AI's approach to optimize both time and space complexity, such as reducing unnecessary iterations.",
+        "poor_indicator": "Fails to address inefficiencies, resulting in suboptimal performance."
+      }
+    ],
+    "typical_errors": [
+      "Providing commands that do not address the root cause of the error.",
+      "Ignoring AI feedback that could improve the next iteration.",
+      "Neglecting to optimize for efficiency, leading to unnecessarily complex solutions."
+    ]
+  }
+}
