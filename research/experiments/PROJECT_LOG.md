@@ -37,6 +37,18 @@ empirical data), with the compute experiments repurposed as a **feasibility demo
   task-definition=Framing), epistemic vigilance + critical thinking (Judging), productive struggle
   (anti-speed stance). See paper/FRAMEWORK_DESIGN.md.
 
+## C2 (2026-06-01): E3 discrimination GATE — PASSED
+Minimal synchronous gate (1 challenge, expert vs careless), OpenRouter llama-3.3-70b:
+| learner | Framing | Judging | Steering | judging recall/precision |
+|---------|:---:|:---:|:---:|---|
+| expert   | B | A | B | 4/4 real flagged, 0 false |
+| careless | C | C | C | 0/4 real, 2 false |
+Every skill drops expert→careless; judging behaves exactly per design (perfect recall/precision→A;
+zero recall + false positives→C). **The instrument discriminates competence** => feasibility signal
+for the conceptual paper secured. Infra note: Groq free-tier TPM unusable (calls hang/timeout);
+OpenRouter primary fixes it (~10s/call, ~85s for the 8-call per-learner chain). Keys moved out of
+repo to ~/.config/coreason/.env.all (git history verified clean).
+
 ## Current standing + next
 - E1-on-DB abandoned (data invalid). E1 re-scoped to run on E3-generated controlled data.
 - BLOCKER/GATE: all remaining experiments need the Groq API (llama-3.3-70b). Next action: verify the key works; if dead, fall back to OpenRouter/OpenAI (keys present).
