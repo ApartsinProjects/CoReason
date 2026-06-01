@@ -82,9 +82,14 @@ def grade_one(ch, levels):
     # ---- FRAMING ----
     fram = simulate_framing(rp, spec["subject_path"], lv["framing"], lang, seed=seed)
     student_framing = json.dumps(fram.get("refinement_sections", []), ensure_ascii=False)
+    # E4 ablation: strip the ground-truth scaffolding (gold best_framing, seeded issues) to measure
+    # how much the instrument's discrimination depends on it vs. raw LLM judgment.
+    NO_GT = bool(os.environ.get("COREASON_NO_GT"))
+    best_framing = "(not provided)" if NO_GT else ch["best_framing"]
+    known_issues = "(not provided)" if NO_GT else [ch["internal_issues"]]
     fe = run_prompt("08-evaluate-framing", {
         "raw_problem": rp, "student_framing": student_framing, "response_type": "open_ended_sections",
-        "framing_rubric": rub["framing_rubric"], "best_framing": ch["best_framing"], "language": lang})
+        "framing_rubric": rub["framing_rubric"], "best_framing": best_framing, "language": lang})
     fg = run_prompt("11-grade", {"dimension": "Framing",
         "per_criterion_scores": fe.get("per_criterion_scores", []), "language": lang})
     # ---- JUDGING (programmatic) ----
@@ -93,7 +98,7 @@ def grade_one(ch, levels):
         "raw_problem": rp, "ai_outputs_per_cycle": [ch["ai_solution"]],
         "judging_responses_per_cycle": [{"flagged_issues": flagged}],
         "response_type": "open_ended_gaps",
-        "known_issues_per_cycle": [ch["internal_issues"]],
+        "known_issues_per_cycle": known_issues,
         "judging_rubric": rub["judging_rubric"], "num_cycles": "1", "language": lang})
     jg = run_prompt("11-grade", {"dimension": "Judging",
         "per_criterion_scores": je.get("per_criterion_scores", []), "language": lang})
