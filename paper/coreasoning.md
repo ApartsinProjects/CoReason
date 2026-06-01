@@ -104,7 +104,10 @@ specify the task badly, so that the model solved the wrong problem; did they fai
 in an otherwise plausible output; or did they see the flaws but issue corrections too vague to fix
 them? These are three different failures with three different remedies, teaching problem
 specification, teaching critical evaluation, and teaching corrective communication, and an instrument
-that cannot separate them cannot guide instruction. A diagnostic competency model must therefore
+that cannot separate them cannot guide instruction. Integrative reviews of AI literacy after
+generative AI confirm that the field still lacks a scheme isolating distinct, independently-assessable
+reasoning competencies (Gu & Ericson, 2025), even as syntheses document generative AI's mixed effects
+on critical and creative thinking (Li et al., 2026). A diagnostic competency model must therefore
 decompose the human-AI loop into the distinct operations that can each break, and must show that those
 operations are in fact separable in learners. That is the gap CoReasoning addresses.
 
@@ -264,9 +267,19 @@ demanding; our framework makes each one measurable.
 
 **Prompt-literacy frameworks.** Prompt-literacy models such as CLEAR (Lo, 2023) and the broader
 prompt-literacy literature define competence as constructing a precise prompt and iteratively refining
-it. This definition fuses Framing and Steering into a single "prompting" skill, exactly the conflation
-CoReasoning rejects. Treating them separately is not a cosmetic relabeling: it predicts, and our
-feasibility demonstration supports, that a learner's Framing and Steering grades can diverge.
+it. The most developed recent decomposition, an operationalization of prompt literacy into formulate,
+interpret, and refine sub-practices (Tour & Zadorozhnyy, 2025), is the closest competitor to our
+triad; but it bundles task specification and iterative refinement under "prompting" and does not treat
+the sub-practices as separately graded, dissociable competencies. This fusion of Framing and Steering
+into a single "prompting" skill is exactly the conflation CoReasoning rejects. Treating them
+separately is not a cosmetic relabeling: it predicts, and our feasibility demonstration supports, that
+a learner's Framing and Steering grades can diverge.
+
+**Metric frameworks for human-AI cognition.** A distinct 2026 line proposes named multi-metric schemes
+for working with AI, for instance a cognitive-amplification-versus-delegation framework with dependency
+and drift metrics (Di Santi, 2026). These measure the *sustainability* of reliance rather than
+teachable framing, judging, and steering competencies, and so are complementary to, not competitive
+with, an assessable-skill decomposition.
 
 **Knowledge-oriented AI-literacy frameworks.** Field-defining competency sets such as Long & Magerko
 (2020) and the UNESCO (2024) student framework define AI literacy primarily as understanding AI
@@ -312,7 +325,9 @@ decomposition that a future validated instrument could operationalize.
 execution, the durable human skill shifts from prompt crafting to *problem formulation*, identifying,
 analyzing, and delineating the problem worth solving (Acar, 2023). This is precisely our Framing
 construct, and classroom work has begun to assess it directly, for example through "prompt problems"
-that require students to specify and evaluate rather than merely prompt (Denny et al., 2024). That
+that require students to specify and evaluate rather than merely prompt (Denny et al., 2024), and
+through instruments that treat question formulation (Kim et al., 2025) and problem decomposition
+(Srinath et al., 2025) as independently measurable, trainable skills in generative-AI settings. That
 Framing is a distinct competency is further supported by the older problem-finding literature, which
 established problem finding as empirically separable from problem solving (Runco & Chand, 1995). We
 build on this strand by placing Framing in a measured loop with Judging and Steering.
@@ -438,7 +453,11 @@ grade responds to its own skill and is essentially flat in the others (Figure 2)
 The designed-contrast personas make the separation concrete (Figure 3). A *weak-framer / strong-judge*
 learner scores Framing C but Judging A; a *strong-framer / weak-judge* learner inverts this to Framing
 B, Judging C; a *weak / weak / strong-steerer* elevates only Steering. A single underlying "AI-use
-ability" cannot produce these crossed profiles.
+ability" cannot produce these crossed profiles. Converging evidence comes from outside our synthetic
+setting: an intervention study finds that students' *behavioral* regulation of LLM use (reformulating
+queries, checking correctness) predicts effective use, whereas self-rated AI expertise does not
+(Clerc et al., 2026), consistent with the skill of working with AI being distinct from, and not
+reducible to, a general self-assessed competence.
 
 ![Figure 2. Own-competence effects dominate cross-competence effects on every skill's grade.](assets/fig_dissociation_heatmap.png)
 
