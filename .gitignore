@@ -7,6 +7,10 @@ node_modules/
 **/.env.all
 *.key
 *.pem
+# session cookies / tokens (leftover prototype debug artifacts)
+cookies*.txt
+**/cookies*.txt
+*.cookies
 
 # Databases / runtime data dumps
 *.sqlite3
