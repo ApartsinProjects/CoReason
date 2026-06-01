@@ -1,127 +1,95 @@
-# CoReasoning Lab
+# CoReasoning
 
-![CoReasoning Lab hero](docs/assets/hero-gemini-coreasoning.png)
+![CoReasoning hero](docs/assets/hero-gemini-coreasoning.png)
 
-An AI-native learning platform where students do not just get answers from AI, they learn to reason with it.
+**Teaching and assessing the skill of working with generative AI**, decomposed into three
+independently-assessable competencies: **Framing**, **Judging**, and **Steering**.
 
-CoReasoning Lab trains three core skills:
-- Framing: turn ambiguous problems into precise, solvable tasks.
-- Judging: critique AI output and spot gaps, risks, and mistakes.
-- Steering: guide AI iteratively toward better results.
+> Most AI-in-education tools optimize for speed-to-answer. CoReasoning optimizes for
+> quality-of-thinking: learners improve intentionally imperfect AI output through structured reasoning
+> loops, and the three skills are scored separately.
 
-## 📄 Research paper (open-source, MIT)
+## 📄 Paper (open-source, MIT)
 
-**"Framing, Judging, Steering: An Assessable Competency Model for Reasoning With Generative AI"** — a
-theoretically-grounded competency model with a proof-of-concept instrument and a feasibility
-demonstration that the three skills *dissociate* (own-skill grade effects dominate cross-skill effects
-≈60:1, N=40).
+**"Framing, Judging, Steering: An Assessable Competency Model for Teaching Students to Reason With
+Generative AI"** — Alexander Apartsin (Holon Institute of Technology) and Yehudit Aperstein (Afeka
+College of Engineering).
+
+A theoretically-grounded competency model with a proof-of-concept instrument and a feasibility
+demonstration that the three skills **dissociate**: own-skill grade effects average +1.02 versus +0.01
+for cross-skill effects (N=80 across 10 subjects; the cleanest pair, Framing and Judging, is
+uncorrelated, ρ=−0.03 ns), the result replicates across grader backends, and the grader is 92%
+self-consistent. No learning-outcome claims are made; a human-rater validation study is prepared.
 
 - 📖 **Read it (HTML + KaTeX):** <https://apartsinprojects.github.io/CoReason/>
-- 📝 Source: [`paper/coreasoning.md`](paper/coreasoning.md) · Bibliography: [`paper/references.bib`](paper/references.bib) (50 refs, validated)
-- 🔬 Experiments + reproducible harness: [`research/`](research/README.md) · registry: [`research/experiments/PROJECT_LOG.md`](research/experiments/PROJECT_LOG.md)
-- 🧑‍🤝‍🧑 Human-rater validation package: [`human-study/`](human-study/CODEBOOK.md)
+- 📝 **Word:** [`docs/coreasoning.docx`](docs/coreasoning.docx) · **Source:** [`paper/coreasoning.md`](paper/coreasoning.md)
+- 📚 **Bibliography:** [`paper/references.bib`](paper/references.bib) (55 entries, validated)
+- ✉️ **Submission package:** [`paper/SUBMISSION/`](paper/SUBMISSION/) (cover letter + anticipated reviewer response)
 
-Everything in this repository (system design, the sixteen-prompt instrument, the controlled-generation
-harness, data, and figures) is open-source under the [MIT License](LICENSE).
+## The framework
 
-## Why This Project Exists
+- **Framing** — turn an ill-defined problem into a well-specified task *before* invoking AI.
+- **Judging** — critically evaluate AI output for errors, gaps, unstated assumptions, and risk.
+- **Steering** — iteratively redirect the AI toward a better solution across cycles.
 
-Most AI-in-education products optimize for speed-to-answer.
-CoReasoning Lab optimizes for quality-of-thinking.
+The defining move is separating the *pre-generation* skill (Framing) from the *post-generation*
+corrective skill (Steering), which prior frameworks fuse under "prompting." Each skill is grounded in
+established theory (metacognitive monitoring and control, self-regulated learning, epistemic vigilance,
+productive struggle), and the model states five testable propositions about how the skills relate.
 
-Learners interact with intentionally imperfect AI outputs, then improve them through structured reasoning loops. The platform measures progress across separate cognitive skills instead of a single score.
+## The instrument and CoReasoning Lab
 
-## Learning Flow
+CoReasoning Lab is a prototype learning platform that auto-generates ill-defined problems with seeded
+flaws, presents deliberately-imperfect AI output, runs judge-and-steer cycles, and scores the three
+skills with rubric-driven LLM evaluators. **What this repository releases and evaluates is the scoring
+engine**: the sixteen prompts at `code/artifacts/prompt-debug/originals/*.yaml` plus the
+controlled-generation harness in `research/`. The interface figures in the paper are representative
+mockups; static UI mockups live in `screens/`.
 
-1. Framing phase: student refines a raw problem with assumptions, constraints, and clarifications.
-2. AI generates an initial solution (with realistic issues to inspect).
-3. Judge + Steer cycles: student evaluates quality, then sends targeted corrections.
-4. Platform grades Framing, Judging, and Steering independently with feedback.
-
-## Feature Snapshot
-
-- Challenge modes: practice and assessment.
-- Response modes: multiple-choice or open-ended per phase.
-- LLM-backed generation and evaluation with fallback behavior.
-- Multi-language content and UI assets (`en`, `he`, `fr`, `de`, `es`).
-- Role-based workflows: student, instructor, admin.
-- Course/challenge management, analytics, and PDF reporting.
-- Bulk YAML import for institutions, users, courses, and challenges.
-
-## Tech Stack
-
-- Runtime: Node.js 20+
-- Backend: Express, Knex, Zod, Passport
-- DB: SQLite (dev/test) and PostgreSQL (production)
-- AI: OpenAI/Groq integrations with pluggable provider config
-- Testing: Jest, Supertest, Playwright
-- Deployment: Docker and Render blueprint
-
-## Architecture At A Glance
+## Repository map
 
 ```text
-Static Client (HTML/CSS/JS)
-        |
-        v
-Express API Routes (/api/v1/*)
-        |
-        v
-Service Layer (business logic)
-        |
-  +-----+------------------+
-  |                        |
-  v                        v
-LLM Service + Prompt      Database (Knex)
-Engine (YAML prompts)     SQLite / PostgreSQL
+paper/            manuscript (coreasoning.md), references.bib, figures, build_html.py, SUBMISSION/, reviews/
+docs/             rendered site: index.html (KaTeX), coreasoning.docx, assets/  — served via GitHub Pages
+research/
+  scripts/        reproducible harness: harness.py, e3_dissociation.py, e3_expand.py,
+                  e2_reliability.py, e1_analysis.py, make_figures.py, render_bib.py, batch_openai.py
+  results/        grades CSVs + analysis JSONs (N=80 + ablations + robustness)
+  experiments/    registry: PROJECT_LOG.md, INDEX.md
+  DATASHEET.md    dataset documentation (Gebru-style)
+human-study/      prepared human-rater study: CODEBOOK.md, score_agreement.py
+code/artifacts/prompt-debug/originals/   the sixteen-prompt scoring instrument (YAML)
+screens/          static UI mockups of the prototype
 ```
 
-## Quick Start (Repo Root)
+## Reproduce
 
-Set environment variables in `code/.env.all` (copy from `.env.example` and fill required keys).
+API keys live outside the repo (never committed). Provide them in `~/.config/coreason/.env.all` (or set
+`COREASON_ENV_FILE`), with `OPENAI_API_KEY` and/or `OPENROUTER_API_KEY` / `GROQ_API_KEY`.
 
 ```bash
-npm install
-npm run build
-npm run db:migrate
-npm run db:seed
-npm run dev
+# dissociation (N=80 across 10 subjects) + analyses
+COREASON_GRADER=openai:gpt-4o python research/scripts/e3_dissociation.py 5   # 5 subjects
+COREASON_GRADER=openai:gpt-4o python research/scripts/e3_expand.py           # +5 subjects -> N=80
+python research/scripts/e1_analysis.py research/results/e3_dissociation_grades.csv
+COREASON_GRADER=openai:gpt-4o python research/scripts/e2_reliability.py      # grader test-retest
+python research/scripts/make_figures.py                                     # regenerate figures
+python paper/build_html.py                                                  # rebuild docs/index.html
 ```
 
-Then open:
-- App: `http://localhost:3000`
-- Health check: `http://localhost:3000/api/health`
+A deterministic disk cache (`research/data/llm_cache/`) makes runs reproducible and free on re-run.
+See [`research/README.md`](research/README.md) and [`research/experiments/INDEX.md`](research/experiments/INDEX.md)
+for the full experiment list.
 
-## Useful Commands
+## Status
 
-```bash
-npm run test:unit
-npm run test:integration
-npm run test:e2e
-npm run test:all
-npm run lint
-npm run docker:dev
-```
+The conceptual paper and the feasibility demonstration (E1 construct validity, E2 reliability, E3
+dissociation at N=80, E4 ground-truth ablation, grader-backend robustness, a harsher-steering ablation,
+and per-subject breakdowns) are complete. The one open item is the **human-rater agreement study**,
+fully prepared in [`human-study/`](human-study/CODEBOOK.md) and requiring human graders. No
+learning-outcome claims are made.
 
-## Project Map
+## License
 
-```text
-code/
-  client/        static web UI
-  server/        API routes, services, middleware, DB, auth
-  prompts/       LLM prompt templates
-  content/       i18n source data
-  tests/         unit/integration/e2e tests
-docs/            concept of operations, spec, audits
-scenarios/       course scenario content
-```
-
-## Deep Docs
-
-- Product concept: [`docs/CONOPS.md`](docs/CONOPS.md)
-- System spec: [`docs/spec/SPEC.md`](docs/spec/SPEC.md)
-- Full technical README: [`code/README.md`](code/README.md)
-- Developer guide: [`code/docs/developer-guide.md`](code/docs/developer-guide.md)
-
-## Notes
-
-- The hero image in this README was generated with Google Gemini Image API.
+[MIT](LICENSE). The system design, the instrument, the harness, the data, and the figures are
+open-source. The hero image was generated with the Google Gemini Image API.
