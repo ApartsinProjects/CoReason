@@ -64,10 +64,6 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 <a class="docxlink" href="https://github.com/ApartsinProjects/CoReason" style="right:140px;background:#24292f">&#9733; GitHub</a>
 <a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx</a>
 {body}
-<footer>
-Open-source (MIT): system, instrument, data, and figures at
-<a href="https://github.com/ApartsinProjects/CoReason">github.com/ApartsinProjects/CoReason</a>.
-</footer>
 </body>
 </html>
 """

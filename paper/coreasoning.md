@@ -6,9 +6,6 @@
 ¹ Holon Institute of Technology  ·  ² Afeka College of Engineering
 {: .affil }
 
-An open-source learning platform and instrument: [github.com/ApartsinProjects/CoReason](https://github.com/ApartsinProjects/CoReason)
-{: .availability }
-
 ## Abstract
 
 Generative AI makes it trivial to obtain an answer and difficult to obtain understanding. As large
@@ -26,7 +23,7 @@ frameworks is the *separation of the pre-generation skill (Framing) from the pos
 corrective skill (Steering)*, with Judging as the epistemic gate between them. We ground each skill
 in established theory (metacognitive monitoring and control; self-regulated learning; epistemic
 vigilance and critical thinking; productive struggle), and state five testable propositions about how
-the skills relate. We instantiate the model in **CoReasoning Lab**, an open-source learning platform
+the skills relate. We instantiate the model in **CoReasoning Lab**, a learning platform
 that generates ill-defined problems, confronts students with deliberately flawed AI output to improve
 across judge-and-steer cycles, and scores the three skills independently with rubric-driven feedback.
 Using the platform's instrument we report a feasibility demonstration that the three skills *dissociate*
@@ -34,8 +31,7 @@ Using the platform's instrument we report a feasibility demonstration that the t
 correlations) and that the automated grader is 92% self-consistent, with simulated learners generated
 and graded by different models to avoid self-grading. We make no learning-outcome claims; the evidence
 establishes that the constructs are separable and automatically measurable, and we close with the
-tensions a mature account must resolve and a concrete validation agenda. The system, instrument, data,
-and a prepared human-rater study are released under an open-source license.
+tensions a mature account must resolve and a concrete validation agenda.
 
 ## 1. Introduction
 
@@ -107,10 +103,6 @@ three distinct skills, each independently assessable:
 
 We make no learning-outcome claims; the empirical material is a feasibility demonstration of
 *construct separability and measurability*, not an efficacy study.
-
-**Availability.** The CoReasoning Lab system, the sixteen-prompt instrument, the controlled-generation
-harness, the experiment data and figures, and the human-rater study package are open-source under the
-MIT license at <https://github.com/ApartsinProjects/CoReason>.
 
 ## 2. The problem with current AI-literacy assessment
 
