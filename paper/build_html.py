@@ -31,7 +31,8 @@ h1{font-size:2.0rem;line-height:1.2;margin:0 0 .4rem}
 .subtitle{color:var(--muted);font-style:italic;margin:0 0 1.2rem}
 h2{font-size:1.4rem;margin:2.6rem 0 .8rem;padding-top:.6rem;border-top:1px solid var(--line)}
 h3{font-size:1.13rem;margin:1.8rem 0 .5rem;color:#222}
-p{margin:0 0 1rem}
+p{margin:0 0 1rem;text-align:justify;hyphens:auto}
+li{text-align:justify}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 code{font-family:'SF Mono',Consolas,monospace;font-size:.86em;background:#f4f4f4;padding:.1em .35em;border-radius:3px}
 pre{background:#f7f7f7;border:1px solid var(--line);border-radius:6px;padding:1rem;overflow:auto;font-size:.85em}

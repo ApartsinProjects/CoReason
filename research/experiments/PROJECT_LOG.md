@@ -49,6 +49,19 @@ for the conceptual paper secured. Infra note: Groq free-tier TPM unusable (calls
 OpenRouter primary fixes it (~10s/call, ~85s for the 8-call per-learner chain). Keys moved out of
 repo to ~/.config/coreason/.env.all (git history verified clean).
 
+## C3 (2026-06-01): Sanity/bug audit + DECONTAMINATION
+Bugs found & fixed: (1) `_chat` returned None content unguarded -> crash; now retries/failovers.
+(2) Demo crashed mid-run on a transient OpenRouter error falling through to TPD-exhausted Groq;
+fixed with provider chain [OpenRouter-llama x7, OpenAI gpt-4o-mini x3 fallback, Groq x2].
+Validity improvements: (a) **DECONTAMINATION** — learners now simulated by gpt-4o-mini (OpenAI),
+graded by llama-3.3-70b (different model) -> removes self-grading bias. (b) **Faithful steering**:
+replaced hand-coded remaining-issues with actually re-running prompt 04 on the student's commands.
+Grader sanity (cache inspection): per-criterion notes reference the student's actual text; judging
+recall/precision logic operates; justifications specific; confidence varies; NO competence-label leakage.
+Decontaminated gate result (1 challenge): expert F=B/J=A/S=B vs careless F=C/J=C/S=C — **discrimination
+survives cross-model decontamination**. Grader mix: 5 OpenRouter-llama, 1 OpenAI fallback.
+Infra: Groq free-tier daily token limit (100k TPD) exhausted; OpenRouter primary + OpenAI fallback.
+
 ## Current standing + next
 - E1-on-DB abandoned (data invalid). E1 re-scoped to run on E3-generated controlled data.
 - BLOCKER/GATE: all remaining experiments need the Groq API (llama-3.3-70b). Next action: verify the key works; if dead, fall back to OpenRouter/OpenAI (keys present).

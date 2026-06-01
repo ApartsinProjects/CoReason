@@ -20,7 +20,8 @@ h1{font-size:2.0rem;line-height:1.2;margin:0 0 .4rem}
 .subtitle{color:var(--muted);font-style:italic;margin:0 0 1.2rem}
 h2{font-size:1.4rem;margin:2.6rem 0 .8rem;padding-top:.6rem;border-top:1px solid var(--line)}
 h3{font-size:1.13rem;margin:1.8rem 0 .5rem;color:#222}
-p{margin:0 0 1rem}
+p{margin:0 0 1rem;text-align:justify;hyphens:auto}
+li{text-align:justify}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 code{font-family:'SF Mono',Consolas,monospace;font-size:.86em;background:#f4f4f4;padding:.1em .35em;border-radius:3px}
 pre{background:#f7f7f7;border:1px solid var(--line);border-radius:6px;padding:1rem;overflow:auto;font-size:.85em}
@@ -39,7 +40,7 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 <body>
 <div class="banner"><strong>Working preprint draft.</strong> Conceptual / position paper with a
 proof-of-concept feasibility demonstration. Sections marked &ldquo;forthcoming&rdquo; are in progress.</div>
-<h1 id="coreasoning-a-theoretically-grounded-competency-model-for-productive-work-with-generative-ai">CoReasoning: A Theoretically-Grounded Competency Model for Productive Work with Generative AI</h1>
+<h1 id="framing-judging-steering-an-assessable-competency-model-for-reasoning-with-generative-ai">Framing, Judging, Steering: An Assessable Competency Model for Reasoning With Generative AI</h1>
 <p><em>Working draft — arXiv preprint. Target: Computers &amp; Education: AI (Position Paper) / AIED Blue Sky / IJAIED.</em></p>
 <h2 id="abstract">Abstract</h2>
 <p>Generative AI makes it trivial to obtain an answer and difficult to obtain understanding. As large
@@ -96,13 +97,29 @@ three distinct skills, each independently assessable:</p>
   output measurably closer to an adequate solution. Steering is a control skill exercised <em>after</em>
   generation, in a loop with Judging.</li>
 </ul>
-<p>Our contribution is conceptual. We (i) define the three skills and the cognitive architecture that
-unifies them; (ii) ground each in established educational and cognitive theory; (iii) state five
-testable propositions about their relationships; (iv) position CoReasoning precisely against the
-nearest prior frameworks, isolating what is genuinely new; and (v) report a proof-of-concept
-rubric-driven instrument with a feasibility demonstration that the three skills dissociate and can be
-scored automatically. We make no learning-outcome claims; the empirical material is a feasibility
-demonstration of <em>construct separability and measurability</em>, not an efficacy study.</p>
+<p><strong>Contributions.</strong> This paper makes the following contributions:</p>
+<ol>
+<li><strong>A competency model</strong> that decomposes productive work with generative AI into three temporally and
+   cognitively distinct, independently-assessable skills, Framing, Judging, and Steering, whose
+   defining novelty is the separation of the pre-generation skill (Framing) from the post-generation
+   corrective skill (Steering) that prior frameworks fuse.</li>
+<li><strong>A theoretical grounding</strong> that maps each skill to established theory (metacognitive monitoring and
+   control, self-regulated learning, epistemic vigilance and critical thinking, productive struggle)
+   under a single unifying monitor-control architecture, so the decomposition is principled rather
+   than ad hoc.</li>
+<li><strong>Five testable propositions</strong> about how the skills relate (framing gates the loop; judging gates
+   steering; the skills dissociate; judging transfers less than framing; the model inverts cognitive
+   offloading), turning a taxonomy into a framework with empirical commitments.</li>
+<li><strong>A precise novelty positioning</strong> against the nearest prior frameworks (AI-fluency, metacognitive-
+   demands, prompt-literacy, and AI-literacy models), stating exactly what is and is not new.</li>
+<li><strong>A proof-of-concept instrument and feasibility demonstration</strong>, with cross-model controls, showing
+   that the three skills can be scored automatically and that they dissociate, the central evidence
+   against the charge that the decomposition merely relabels "prompting."</li>
+<li><strong>A reproducible, released artifact</strong> (the prompt-based instrument, a controlled-generation harness,
+   and data) together with a fully prepared human-rater validation protocol for the community to run.</li>
+</ol>
+<p>We make no learning-outcome claims; the empirical material is a feasibility demonstration of
+<em>construct separability and measurability</em>, not an efficacy study.</p>
 <h2 id="2-the-problem-with-current-ai-literacy-assessment">2. The problem with current AI-literacy assessment</h2>
 <p>Existing instruments for assessing how students work with AI are not wrong so much as
 under-resolved. Knowledge-oriented frameworks such as Long and Magerko (2020) and the UNESCO (2024)
@@ -277,16 +294,29 @@ are measured <em>apart</em>: each evaluator interrogates a different referent.</
 present work we exercise its sixteen prompts directly over controlled inputs so that the measurements
 are reproducible and the ground truth is known.</p>
 <h2 id="8-feasibility-demonstration">8. Feasibility demonstration</h2>
-<p>[To be filled from experiments. Claims, scoped strictly to feasibility:
-- <strong>Discrimination (E3):</strong> simulated learners of graded competence (expert→careless) receive grades
-  monotone in competence on each skill — the instrument has signal.
-- <strong>Dissociation (E1):</strong> across the generated population, inter-skill grade correlations are modest
-  and the grade matrix does not collapse to a single factor — the three constructs are separable
-  (supports P3).
-- <strong>Reliability (E2):</strong> grader test-retest at production temperatures; grade-flip rate and
-  per-criterion variance, addressing LLM-judge self-inconsistency.
-NO learning-outcome claims. Simulated learners are labeled as apparatus; the human-rater validation
-study (Section 10) is presented as prepared, not completed.]</p>
+<p>We exercise the instrument over controlled inputs to test three feasibility claims: that it
+<em>discriminates</em> competence, that the three skills <em>dissociate</em>, and that it is <em>reliable</em> enough to
+report. We make no learning-outcome claims. The "learners" are simulated personas of controlled
+competence (expert, proficient, novice, careless), generated by a separate model instructed to write
+exactly as a student of that level would; they are experimental apparatus, not human participants. The
+validation against human expert graders is prepared but not yet run (Section 10).</p>
+<p><strong>Discrimination.</strong> Grading a held-out challenge with an expert and a careless persona yields the
+expected separation on every skill: the expert receives Framing B, Judging A, Steering B, while the
+careless persona receives C on all three. The judging signal is mechanistically transparent: the
+expert flags all four seeded issues with no false alarms (perfect recall and precision), and the
+careless persona flags none of the four while raising two false issues, which the grader maps to A and
+C respectively. [Full four-level results across multiple challenges, showing grades monotone in
+competence per skill, are reported in Table X; data and code accompany the paper.]</p>
+<p><strong>Dissociation.</strong> [Across the generated population we report inter-skill grade correlations and a
+factor analysis; the central claim, supporting Proposition P3, is that the three grades do not
+collapse to a single factor, so a persona can score differently across skills. Numbers forthcoming
+from the scaled run.]</p>
+<p><strong>Reliability.</strong> [We re-grade fixed transcripts repeatedly at the production temperatures and report
+the grade-flip rate and per-criterion variance per skill, addressing the documented self-inconsistency
+of LLM judges. Numbers forthcoming.]</p>
+<p>These results establish feasibility only: the constructs are separable and can be scored
+automatically. Whether the automated grades agree with expert human judgment is the subject of the
+validation study in Section 10.</p>
 <h2 id="9-tensions-and-boundary-conditions">9. Tensions and boundary conditions</h2>
 <p>A mature account must confront four tensions rather than paper over them.</p>
 <p><em>Offloading versus productive struggle.</em> Evidence that AI use can depress critical thinking through

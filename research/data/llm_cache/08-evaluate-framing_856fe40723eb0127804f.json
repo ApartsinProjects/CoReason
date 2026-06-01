@@ -1,0 +1,196 @@
+{
+  "_vars": {
+    "raw_problem": "Design an efficient sorting algorithm for a large dataset of customer records, considering the need for frequent searches by name, email, and phone number, while minimizing memory usage and ensuring the system can handle a high volume of concurrent updates.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"The task is to design a sorting algorithm specifically tailored for a large dataset of customer records. These records will be frequently searched using three key attributes: name, email, and phone number. The algorithm must prioritize efficiency in both time and space complexity, especially given the constraints of high memory usage and the need for concurrent updates.\"}, {\"section_type\": \"Constraints Identification\", \"content\": \"1. The dataset size can be in the millions of records, requiring the algorithm to handle large volumes efficiently.\\n2. The algorithm must support frequent searches, which implies that the sorting mechanism should facilitate quick retrieval of records based on the specified attributes.\\n3. Memory usage must be minimized to ensure the system can operate effectively on machines with limited resources.\\n4. The algorithm must accommodate a high volume of concurrent updates, necessitating a design that allows for efficient insertion and re-sorting of data.\"}, {\"section_type\": \"Performance Metrics\", \"content\": \"1. Time Complexity: The algorithm should ideally have a time complexity of O(n log n) for sorting operations, with O(log n) for search operations.\\n2. Space Complexity: The algorithm should aim for O(1) additional space for in-place sorting or O(n) for external sorting methods, depending on the dataset size.\\n3. Scalability: The solution must be scalable to handle increased data volume and concurrent user requests without significant degradation in performance.\"}, {\"section_type\": \"Algorithm Selection Criteria\", \"content\": \"1. The sorting algorithm must be stable to maintain the relative order of records with equal keys, which is important for searches by name, email, and phone number.\\n2. It should support incremental sorting to allow for efficient updates as new records are added.\\n3. The algorithm should be adaptable to different data structures, such as arrays or linked lists, depending on the implementation needs.\"}, {\"section_type\": \"Implementation Considerations\", \"content\": \"1. Evaluate existing sorting algorithms (e.g., Merge Sort, Quick Sort, Heap Sort) for their suitability based on the defined constraints and performance metrics.\\n2. Consider the use of data structures like hash tables or balanced trees to optimize search operations post-sorting.\\n3. Implement concurrency control mechanisms (e.g., locks, versioning) to ensure data integrity during concurrent updates.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Definition",
+          "description": "The student accurately defines the problem, identifying key elements such as input, output, and constraints.",
+          "excellent_indicator": "Clearly states the problem, including all necessary parameters and constraints.",
+          "poor_indicator": "Fails to identify key elements of the problem or misinterprets the problem statement."
+        },
+        {
+          "name": "Relevance to Sorting & Searching",
+          "description": "The student demonstrates an understanding of how the problem relates to sorting and searching algorithms.",
+          "excellent_indicator": "Effectively explains how sorting and searching concepts apply to the problem.",
+          "poor_indicator": "Fails to recognize or explain the connection between the problem and sorting and searching algorithms."
+        },
+        {
+          "name": "Well-Defined Task",
+          "description": "The student translates the ill-defined problem into a well-defined task with clear objectives and requirements.",
+          "excellent_indicator": "Produces a well-defined task that is solvable using sorting and searching algorithms.",
+          "poor_indicator": "Fails to create a solvable task or defines a task that is not relevant to the problem."
+        }
+      ],
+      "typical_errors": [
+        "Misinterpreting the problem statement",
+        "Failing to consider constraints",
+        "Not recognizing the relevance of sorting and searching algorithms"
+      ]
+    },
+    "best_framing": {
+      "_vars": {
+        "course_name": "Algorithms",
+        "subject_path": "Algorithms > Sorting & Searching",
+        "raw_problem": "Design an efficient sorting algorithm for a large dataset of customer records, considering the need for frequent searches by name, email, and phone number, while minimizing memory usage and ensuring the system can handle a high volume of concurrent updates.",
+        "framing_rubric": {
+          "criteria": [
+            {
+              "name": "Problem Definition",
+              "description": "The student accurately defines the problem, identifying key elements such as input, output, and constraints.",
+              "excellent_indicator": "Clearly states the problem, including all necessary parameters and constraints.",
+              "poor_indicator": "Fails to identify key elements of the problem or misinterprets the problem statement."
+            },
+            {
+              "name": "Relevance to Sorting & Searching",
+              "description": "The student demonstrates an understanding of how the problem relates to sorting and searching algorithms.",
+              "excellent_indicator": "Effectively explains how sorting and searching concepts apply to the problem.",
+              "poor_indicator": "Fails to recognize or explain the connection between the problem and sorting and searching algorithms."
+            },
+            {
+              "name": "Well-Defined Task",
+              "description": "The student translates the ill-defined problem into a well-defined task with clear objectives and requirements.",
+              "excellent_indicator": "Produces a well-defined task that is solvable using sorting and searching algorithms.",
+              "poor_indicator": "Fails to create a solvable task or defines a task that is not relevant to the problem."
+            }
+          ],
+          "typical_errors": [
+            "Misinterpreting the problem statement",
+            "Failing to consider constraints",
+            "Not recognizing the relevance of sorting and searching algorithms"
+          ]
+        },
+        "internal_gaps": [
+          "dataset size and distribution",
+          "specific memory constraints",
+          "definition of 'high volume' of concurrent updates"
+        ],
+        "language": "English"
+      },
+      "_temp": 0.4,
+      "base": "Design an efficient sorting algorithm for a large dataset of customer records, considering the need for frequent searches by name, email, and phone number, while minimizing memory usage and ensuring the system can handle a high volume of concurrent updates.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Dataset Size",
+              "description": "The dataset contains approximately 1 million customer records, with each record consisting of name, email, phone number, and additional demographic information.",
+              "addresses_gap": "dataset size and distribution"
+            },
+            {
+              "title": "Data Distribution",
+              "description": "The data is uniformly distributed across different names, emails, and phone numbers, with no significant skewness that could affect the sorting algorithm's performance.",
+              "addresses_gap": "dataset size and distribution"
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Memory Constraint",
+              "description": "The system has a maximum of 16 GB of RAM available for the sorting algorithm, and the goal is to minimize memory usage while maintaining efficiency.",
+              "addresses_gap": "specific memory constraints"
+            },
+            {
+              "title": "Concurrent Updates",
+              "description": "The system expects to handle up to 100 concurrent updates per second, with each update potentially affecting the sorting order.",
+              "addresses_gap": "definition of 'high volume' of concurrent updates"
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Search Requirements",
+              "description": "Frequent searches by name, email, and phone number require an average response time of less than 1 second, with a maximum response time of 2 seconds for 99% of searches.",
+              "addresses_gap": "need for frequent searches"
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Sorting Efficiency",
+              "description": "The sorting algorithm's efficiency will be measured by its ability to sort the dataset within 10 minutes, with a maximum of 5% increase in memory usage during the sorting process.",
+              "addresses_gap": "efficient sorting algorithm"
+            },
+            {
+              "title": "Search Performance",
+              "description": "The search performance will be evaluated based on the average response time for searches by name, email, and phone number, with a target average response time of less than 500 milliseconds.",
+              "addresses_gap": "frequent searches"
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "In-Scope Requirements",
+              "description": "The sorting algorithm must be designed to handle the specified dataset size, distribution, and search requirements, while minimizing memory usage and handling concurrent updates.",
+              "addresses_gap": "problem definition"
+            },
+            {
+              "title": "Out-of-Scope Requirements",
+              "description": "The design of the user interface, data visualization, and other non-algorithmic aspects are outside the scope of this problem.",
+              "addresses_gap": "problem definition"
+            }
+          ]
+        },
+        {
+          "section_type": "Domain Context",
+          "entries": [
+            {
+              "title": "Customer Records",
+              "description": "Customer records contain sensitive information and must be handled in accordance with relevant data protection regulations, such as GDPR or CCPA.",
+              "addresses_gap": "dataset context"
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all the criteria in the provided rubric, including Problem Definition, Relevance to Sorting & Searching, and Well-Defined Task. It also covers the known internal gaps in the problem, such as dataset size and distribution, specific memory constraints, and definition of 'high volume' of concurrent updates."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing response demonstrates a good understanding of the problem, but there are areas that require improvement. For instance, in the 'Problem Definition' section, the student accurately identifies the key elements of the problem, including the need for efficient sorting and searching of customer records. However, the student could have further clarified the constraints and objectives of the problem. Additionally, in the 'Constraints Identification' section, the student lists several important constraints, such as dataset size and memory usage, but does not provide a detailed analysis of how these constraints impact the design of the sorting algorithm.",
+  "better_alternative": "A stronger framing would involve a more detailed analysis of the problem constraints and objectives. For example, the student could have explored the trade-offs between different sorting algorithms, such as Merge Sort and Quick Sort, in terms of time and space complexity. Additionally, the student could have discussed the implications of the dataset size and distribution on the choice of sorting algorithm and the potential need for data structures like hash tables or balanced trees to optimize search operations. Furthermore, the student could have provided more specific metrics for evaluating the performance of the sorting algorithm, such as average response time for searches and maximum memory usage during the sorting process.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Definition",
+      "score": "B",
+      "internal_note": "The student accurately identifies the key elements of the problem, but could have further clarified the constraints and objectives."
+    },
+    {
+      "criterion_name": "Relevance to Sorting & Searching",
+      "score": "B",
+      "internal_note": "The student demonstrates a good understanding of how the problem relates to sorting and searching algorithms, but could have provided more specific examples and analysis."
+    },
+    {
+      "criterion_name": "Well-Defined Task",
+      "score": "B",
+      "internal_note": "The student translates the ill-defined problem into a well-defined task, but could have provided more specific metrics for evaluating the performance of the sorting algorithm."
+    }
+  ],
+  "strengths": [
+    "The student accurately identifies the key elements of the problem, including the need for efficient sorting and searching of customer records.",
+    "The student demonstrates a good understanding of how the problem relates to sorting and searching algorithms.",
+    "The student translates the ill-defined problem into a well-defined task with clear objectives and requirements."
+  ],
+  "refinements_correctly_selected": [
+    "The student correctly identifies the need for efficient sorting and searching of customer records.",
+    "The student recognizes the importance of minimizing memory usage and handling concurrent updates."
+  ],
+  "refinements_missed": [
+    "The student could have further clarified the constraints and objectives of the problem, such as the specific memory constraints and the definition of 'high volume' of concurrent updates.",
+    "The student could have provided more specific metrics for evaluating the performance of the sorting algorithm, such as average response time for searches and maximum memory usage during the sorting process."
+  ],
+  "unnecessary_selections": [
+    "The student mentions the use of data structures like hash tables or balanced trees, but does not provide a detailed analysis of how these data structures would be used to optimize search operations."
+  ]
+}

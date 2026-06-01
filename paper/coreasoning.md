@@ -1,4 +1,4 @@
-# CoReasoning: A Theoretically-Grounded Competency Model for Productive Work with Generative AI
+# Framing, Judging, Steering: An Assessable Competency Model for Reasoning With Generative AI
 
 *Working draft — arXiv preprint. Target: Computers & Education: AI (Position Paper) / AIED Blue Sky / IJAIED.*
 
@@ -63,13 +63,29 @@ three distinct skills, each independently assessable:
   output measurably closer to an adequate solution. Steering is a control skill exercised *after*
   generation, in a loop with Judging.
 
-Our contribution is conceptual. We (i) define the three skills and the cognitive architecture that
-unifies them; (ii) ground each in established educational and cognitive theory; (iii) state five
-testable propositions about their relationships; (iv) position CoReasoning precisely against the
-nearest prior frameworks, isolating what is genuinely new; and (v) report a proof-of-concept
-rubric-driven instrument with a feasibility demonstration that the three skills dissociate and can be
-scored automatically. We make no learning-outcome claims; the empirical material is a feasibility
-demonstration of *construct separability and measurability*, not an efficacy study.
+**Contributions.** This paper makes the following contributions:
+
+1. **A competency model** that decomposes productive work with generative AI into three temporally and
+   cognitively distinct, independently-assessable skills, Framing, Judging, and Steering, whose
+   defining novelty is the separation of the pre-generation skill (Framing) from the post-generation
+   corrective skill (Steering) that prior frameworks fuse.
+2. **A theoretical grounding** that maps each skill to established theory (metacognitive monitoring and
+   control, self-regulated learning, epistemic vigilance and critical thinking, productive struggle)
+   under a single unifying monitor-control architecture, so the decomposition is principled rather
+   than ad hoc.
+3. **Five testable propositions** about how the skills relate (framing gates the loop; judging gates
+   steering; the skills dissociate; judging transfers less than framing; the model inverts cognitive
+   offloading), turning a taxonomy into a framework with empirical commitments.
+4. **A precise novelty positioning** against the nearest prior frameworks (AI-fluency, metacognitive-
+   demands, prompt-literacy, and AI-literacy models), stating exactly what is and is not new.
+5. **A proof-of-concept instrument and feasibility demonstration**, with cross-model controls, showing
+   that the three skills can be scored automatically and that they dissociate, the central evidence
+   against the charge that the decomposition merely relabels "prompting."
+6. **A reproducible, released artifact** (the prompt-based instrument, a controlled-generation harness,
+   and data) together with a fully prepared human-rater validation protocol for the community to run.
+
+We make no learning-outcome claims; the empirical material is a feasibility demonstration of
+*construct separability and measurability*, not an efficacy study.
 
 ## 2. The problem with current AI-literacy assessment
 

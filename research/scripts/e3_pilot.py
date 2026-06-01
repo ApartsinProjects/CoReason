@@ -95,10 +95,17 @@ def grade_one(ch, level):
     # ---- STEERING ----
     steer = simulate_steering(rp, ch["ai_solution"], flagged, level, lang, seed=seed)
     cmds = steer.get("commands", [])
-    rem = remaining_after_steering(ch["internal_issues"], level)
+    # FAITHFUL steering: actually run the AI-update prompt on the student's commands; whatever
+    # issues remain (per the model) become the ground truth for steering eval (removes circularity).
+    upd = run_prompt("04-generate-ai-updated-output", {
+        "raw_problem": rp, "student_framing": student_framing,
+        "previous_output": ch["ai_solution"], "steering_history": "[]",
+        "steering_command": cmds, "cycle_number": "1", "max_cycles": "3", "language": lang})
+    rem = upd.get("internal_issues", [])
+    ai_after = upd.get("updated_output", ch["ai_solution"])
     se = run_prompt("10-evaluate-steering", {
         "raw_problem": rp, "student_framing": student_framing,
-        "ai_outputs_per_cycle": [ch["ai_solution"]],
+        "ai_outputs_per_cycle": [ch["ai_solution"], ai_after],
         "steering_commands_per_cycle": [cmds],
         "judging_responses_per_cycle": [{"flagged_issues": flagged}],
         "response_type": "open_ended_instructions", "final_remaining_issues": rem,

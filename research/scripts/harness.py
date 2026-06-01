@@ -30,6 +30,8 @@ _groq = OpenAI(api_key=_load_key("GROQ_API_KEY"), base_url="https://api.groq.com
                timeout=45.0, max_retries=0)
 _openrouter = OpenAI(api_key=_load_key("OPENROUTER_API_KEY"), base_url="https://openrouter.ai/api/v1",
                      timeout=45.0, max_retries=0)
+_openai = OpenAI(api_key=_load_key("OPENAI_API_KEY"), timeout=45.0, max_retries=0)
+SIM_MODEL = "gpt-4o-mini"   # learners simulated by a DIFFERENT model than the grader (decontamination)
 _lock = threading.Lock()
 
 # ---- prompt loading ----
@@ -69,13 +71,17 @@ def _extract_json(text):
                     except Exception: break
     raise ValueError("no JSON parsed:\n" + text[:400])
 
+# grader provider chain: llama via OpenRouter primary (deployed-engine fidelity), with retries;
+# OpenAI gpt-4o-mini as a reliability fallback; Groq llama last (free-tier TPD often exhausted).
+_GRADER_CHAIN = [(_openrouter, "openrouter", "meta-llama/llama-3.3-70b-instruct", 7),
+                 (_openai, "openai", "gpt-4o-mini", 3),
+                 (_groq, "groq", MODEL, 2)]
+_provider_use = {}
+
 def _chat(system, user, temperature, max_tokens, seed, json_mode=False):
     last = None
-    # OpenRouter primary (higher throughput / paid credits); Groq free-tier as fallback.
-    # Same underlying model (llama-3.3-70b) on both, preserving engine fidelity.
-    for client, name in ((_openrouter, "openrouter"), (_groq, "groq")):
-        model = "meta-llama/llama-3.3-70b-instruct" if name == "openrouter" else MODEL
-        for attempt in range(5):
+    for client, name, model, tries in _GRADER_CHAIN:
+        for attempt in range(tries):
             try:
                 kw = dict(model=model,
                           messages=[{"role": "system", "content": system},
@@ -84,19 +90,42 @@ def _chat(system, user, temperature, max_tokens, seed, json_mode=False):
                 if seed is not None: kw["seed"] = seed
                 if json_mode: kw["response_format"] = {"type": "json_object"}
                 r = client.chat.completions.create(**kw)
-                return r.choices[0].message.content
+                content = r.choices[0].message.content
+                if not content or not content.strip():   # guard: some providers return null content
+                    raise RuntimeError(f"empty content (finish={r.choices[0].finish_reason})")
+                with _lock:
+                    _provider_use[name] = _provider_use.get(name, 0) + 1
+                return content
             except Exception as e:
                 last = e
                 msg = str(e)
                 if "429" in msg or "rate" in msg.lower():
-                    # respect Groq's "try again in 12.34s" hint when present
                     m = re.search(r"try again in ([\d.]+)s", msg)
-                    wait = float(m.group(1)) + 1 if m else 8 * (attempt + 1)
-                    time.sleep(min(wait, 30))
+                    wait = float(m.group(1)) + 1 if m else 6 * (attempt + 1)
+                    time.sleep(min(wait, 25))
                 else:
-                    time.sleep(2 * (attempt + 1))
+                    time.sleep(1.5 * (attempt + 1))
         # fall through to next provider
     raise RuntimeError(f"all providers failed: {last}")
+
+def _chat_openai(system, user, temperature, max_tokens, model=SIM_MODEL, json_mode=False):
+    """Separate path for the learner SIMULATOR (different model than the grader)."""
+    last = None
+    for attempt in range(4):
+        try:
+            kw = dict(model=model,
+                      messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
+                      temperature=temperature, max_tokens=max_tokens)
+            if json_mode: kw["response_format"] = {"type": "json_object"}
+            r = _openai.chat.completions.create(**kw)
+            content = r.choices[0].message.content
+            if not content or not content.strip():
+                raise RuntimeError("empty content")
+            return content
+        except Exception as e:
+            last = e
+            time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"openai sim failed: {last}")
 
 def run_prompt(stem, vars, temperature=None, max_tokens=None, seed=None, use_cache=True):
     """Run a production prompt YAML with variable substitution. Returns parsed dict."""
@@ -162,13 +191,14 @@ expert: precise, targets each critical issue. novice: vague/generic. careless: "
     return _sim(SIM_SYS, user, level, seed)
 
 def _sim(system, user, level, seed):
+    # Learners simulated by SIM_MODEL (OpenAI), graded by llama-3.3-70b -> no self-grading bias.
     temp = {"expert": 0.4, "proficient": 0.5, "novice": 0.6, "careless": 0.7}.get(level, 0.5)
-    key = hashlib.sha256(json.dumps({"sim": True, "system": system, "user": user,
+    key = hashlib.sha256(json.dumps({"sim": True, "model": SIM_MODEL, "system": system, "user": user,
                                      "temp": temp, "seed": seed}, sort_keys=True).encode()).hexdigest()[:20]
     cf = CACHE_DIR / f"sim_{level}_{key}.json"
     if cf.exists():
         return json.load(open(cf, encoding="utf-8"))
-    raw = _chat(system, user, temp, 900, seed)
+    raw = _chat_openai(system, user, temp, 900, json_mode=True)
     parsed = _extract_json(raw)
     with _lock:
         json.dump(parsed, open(cf, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
