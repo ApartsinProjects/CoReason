@@ -40,7 +40,16 @@ img[src$=".png"]{border:1px solid var(--line);border-radius:6px}
   padding:.4rem .8rem;border-radius:6px;font-size:.8rem;font-family:Arial,sans-serif;
   text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:100}
 .docxlink:hover{text-decoration:none;background:#1e4a94}
-@media print{.docxlink,.banner{display:none}}
+@media print{
+  .docxlink,.banner{display:none}
+  body{max-width:none;font-size:11pt;padding:0;color:#000}
+  @page{margin:2cm}
+  h2,h3{break-after:avoid}
+  img,table,figure{break-inside:avoid;page-break-inside:avoid}
+  pre,blockquote{break-inside:avoid}
+  .references p{break-inside:avoid}
+  a{color:#000;text-decoration:none}
+}
 .authors{text-align:center;font-size:1.1rem;margin:.6rem 0 .2rem}
 .affil{text-align:center;color:#666;font-size:.92rem;margin:.1rem 0}
 .availability{text-align:center;font-size:.85rem;margin:.3rem 0 1.6rem}
