@@ -15,8 +15,8 @@ mismatch between what education assesses and what students now do: our examinati
 with capable AI, is to produce good work *with* it, by framing an ill-defined task, judging the output,
 and steering the model toward something better. This ability to work with AI is neither taught nor
 assessed as a competency in its own right; where it is measured at all, it is folded into a single
-"prompting" score that cannot diagnose *why* a given learner's AI use succeeds or fails, whether they
-specified the task poorly, missed the flaws in the output, or failed to correct them. We treat it
+"prompting" score that cannot diagnose *why* a given learner's AI use succeeds or fails (whether they
+specified the task poorly, missed the flaws in the output, or failed to correct them). We treat it
 instead as a teachable, assessable competency that can be named, decomposed, and measured. We propose
 **CoReasoning**, a competency model that factors productive work with
 generative AI into three temporally and cognitively distinct, independently-assessable skills:
@@ -58,9 +58,9 @@ time, field studies of professional AI use show that the benefit of AI is sharpl
 user's skill in directing it: assistance helps inside a model's competence frontier and *harms*
 outside it (Dell'Acqua et al., 2023), and the most effective users adopt an iterative, critical
 "push-back-and-validate" mode rather than wholesale delegation (Randazzo et al., 2025). Meta-analytic
-evidence is sobering: human-AI teams frequently underperform the better of the human or the AI alone
-(Vaccaro et al., 2024), which makes the human's skill in directing the system, not mere access to it,
-the decisive variable.
+evidence underscores the stakes: human-AI teams frequently underperform the better of the human or the
+AI alone (Vaccaro et al., 2024), which makes the human's skill in directing the system, not mere access
+to it, the decisive variable.
 
 These findings share a structure. The difference between productive and counterproductive AI use is
 not access to AI; it is a *competency* that some learners exercise and others do not. This echoes the
@@ -88,7 +88,7 @@ three distinct skills, each independently assessable:
 **Contributions.** This paper makes the following contributions:
 
 1. **A competency model** that decomposes productive work with generative AI into three temporally and
-   cognitively distinct, independently-assessable skills, Framing, Judging, and Steering, whose
+   cognitively distinct, independently-assessable skills (Framing, Judging, and Steering), whose
    defining novelty is the separation of the pre-generation skill (Framing) from the post-generation
    corrective skill (Steering) that prior frameworks fuse.
 2. **A theoretical grounding** that maps each skill to established theory (metacognitive monitoring and
@@ -125,8 +125,8 @@ The cost of this coarse resolution is diagnostic. When a learner's AI use produc
 single prompting score cannot tell an instructor *which* cognitive operation failed: did the learner
 specify the task badly, so that the model solved the wrong problem; did they fail to detect the flaws
 in an otherwise plausible output; or did they see the flaws but issue corrections too vague to fix
-them? These are three different failures with three different remedies, teaching problem
-specification, teaching critical evaluation, and teaching corrective communication, and an instrument
+them? These are three different failures with three different remedies (teaching problem
+specification, teaching critical evaluation, and teaching corrective communication), and an instrument
 that cannot separate them cannot guide instruction. Integrative reviews of AI literacy after
 generative AI confirm that the field still lacks a scheme isolating distinct, independently-assessable
 reasoning competencies (Gu & Ericson, 2025), even as syntheses document generative AI's mixed effects
@@ -394,7 +394,7 @@ results come from the released prompt engine, not from platform usage logs.
 
 **Authoring flow (instructor).** An instructor defines a challenge by choosing a course and subject
 path; the system then generates the ill-defined problem, the three per-skill rubrics, the gold-standard
-framing, and the seeded-flaw solution that the learner will critique (Section 7.2). Challenges are
+framing, and the seeded-flaw solution that the learner will critique (Section 7.1). Challenges are
 organized into courses and can be assigned to cohorts.
 
 **Learner flow (student).** From a dashboard of assigned challenges (Figure A2), a student enters a
@@ -489,14 +489,14 @@ whether it is *insensitive* to the other skills' competence (dissociation).
 
 **Discrimination.** Grades move monotonically with competence: the all-weak profile averages C on every
 skill, the all-strong profile averages between B and A, and each skill's grade rises when that skill is
-set to strong. The judging signal is mechanistically transparent: a strong judge flags all four seeded
+set to strong. The judging signal is mechanistically transparent: a strong judge flags all of the seeded
 issues with no false alarms and is graded A; a weak judge flags none and raises false issues and is
 graded C.
 
 **Dissociation (the central result).** Table 2 reports, for each graded skill, the change in its mean
 grade (on a 3-point scale, A=3..C=1) when each skill in turn is moved from weak to strong. The diagonal
 (the effect of a skill's own competence on its own grade) averages **+1.02**; the off-diagonal (the
-effect of the *other* skills' competence) averages **+0.008**. Judging's own-effect (+2.00) is fixed by
+effect of the *other* skills' competence) averages **+0.01**. Judging's own-effect (+2.00) is fixed by
 construction, since its competence is operationalized by a controlled selection over ground-truth
 issues; the decisive evidence is therefore the two *blind-graded* skills, Framing and Steering, whose
 free-text responses the grader scores without knowing the intended competence. Each shows a clear
@@ -530,9 +530,10 @@ The own-skill effects are directionally consistent across subjects: broken down 
 areas (eight learners each), Framing and Steering each show a positive own-competence effect in nine of
 ten subjects, with the two exceptions (Framing in statistics, Steering in microeconomics) reflecting
 the small per-subject sample rather than a sign reversal; Judging is fixed by construction in every
-subject. The designed-contrast personas make the separation concrete (Figure 3). A *weak-framer / strong-judge*
-learner scores Framing C but Judging A; a *strong-framer / weak-judge* learner inverts this to Framing
-B, Judging C; a *weak / weak / strong-steerer* elevates only Steering. A single underlying "AI-use
+subject. The designed-contrast personas make the separation concrete (Figure 3, which plots five
+profiles). Three are especially telling: a *weak-framer / strong-judge* learner scores Framing C but
+Judging A; a *strong-framer / weak-judge* learner inverts this to Framing B, Judging C; and a
+*weak / weak / strong-steerer* elevates only Steering. A single underlying "AI-use
 ability" cannot produce these crossed profiles. Converging evidence comes from outside our synthetic
 setting. In an intervention study, students' *behavioral* regulation of LLM use (reformulating queries,
 checking correctness) predicts effective use, whereas self-rated AI expertise does not (Clerc et al.,
@@ -563,9 +564,10 @@ is near 0.12.
 deployed prototype used a different engine (llama-3.3-70b). To probe whether the dissociation is an
 artifact of one grader, we re-graded the identical 40 transcripts (challenges and learner responses
 held fixed) with a different model, gpt-4o-mini. The dissociation replicates: own-skill effects again
-dominate cross-skill effects (diagonal +0.47 versus off-diagonal +0.07). Notably, under the weaker
-grader Judging's own-effect falls from +2.00 to +0.65, comparable to Framing's +0.65, which confirms
-that the large +2.00 was specific to gpt-4o's strict adherence to the seeded-issue selection rather
+dominate cross-skill effects (diagonal +0.47 versus off-diagonal +0.07). Notably, under this weaker
+grader Judging's own-effect falls from +2.00 to +0.65, comparable to Framing's own-effect under the
+same grader (also +0.65), which confirms that the large +2.00 was specific to gpt-4o's strict
+adherence to the seeded-issue selection rather
 than a property of the construct; the separation holds, and in fact becomes more balanced across the
 three skills, under a second backend. (Steering's own-effect is smallest, +0.10 here, consistent with
 the Proposition-P2 ceiling relation discussed below rather than absence of the construct.)
@@ -587,10 +589,10 @@ deployment that scores judging without seeded ground truth.
 
 **Scope and caveats.** These results establish feasibility, not validity. (i) Judging's dissociation is
 partly built in: its competence is operationalized by a controlled selection over ground-truth issues,
-so its clean diagonal (+2.00, with zero cross-effects) confirms the grader correctly rewards
-recall/precision but is not, by itself, a discovered separation. Framing and Steering responses are
-free-text and blind-graded, so their positive own-effects (+0.62, +0.43) with near-zero cross-effects
-are the stronger evidence. (ii) The grader is a single model family; whether the dissociation replicates
+so its clean diagonal (+2.00, with zero cross-effects) is a controlled check that the grader correctly
+rewards recall and precision. Independent evidence of separation comes from the free-text, blind-graded
+skills, Framing and Steering, whose positive own-effects (+0.62, +0.43) with near-zero cross-effects
+carry the result. (ii) The grader is a single model family; whether the dissociation replicates
 across grader backends, and whether the automated grades agree with human experts, are the validity
 questions deferred to Section 10. (iii) As noted above, with three indicators a factor model is
 under-identified, so the separability evidence rests on the manipulation-based effect matrix and the
