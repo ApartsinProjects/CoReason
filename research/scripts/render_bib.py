@@ -12,6 +12,21 @@ MD = ROOT / "paper/coreasoning.md"
 db = bibtexparser.load(open(BIB, encoding="utf-8"))
 entries = db.entries
 
+_LATEX = {
+    r"{\c{c}}": "ç", r"{\c c}": "ç", r"{\v{s}}": "š", r"{\v{z}}": "ž", r"{\v{c}}": "č",
+    r"{\'e}": "é", r"{\'c}": "ć", r"{\'o}": "ó", r"{\'a}": "á", r"{\'\i}": "í",
+    r'{\"a}': "ä", r'{\"o}': "ö", r'{\"u}': "ü", r'{\"e}': "ë",
+    r"{\`e}": "è", r"{\`a}": "à", r"{\^o}": "ô", r"{\~n}": "ñ", r"{\ss}": "ß",
+    r"{\o}": "ø", r"{\aa}": "å",
+}
+def _delatex(s):
+    for k, v in _LATEX.items():
+        s = s.replace(k, v)
+    s = s.replace(r"\&", "&").replace(r"\%", "%").replace(r"\_", "_").replace(r"\$", "$")
+    # strip corporate-author / capitalization braces, leftover backslash-accents
+    s = re.sub(r"\\[a-zA-Z]+", "", s)
+    return s.replace("{", "").replace("}", "")
+
 def first_surname(author):
     # author field is "Surname, First and Surname2, First2 and ..."
     first = author.split(" and ")[0].strip()
@@ -92,7 +107,7 @@ def render(e):
     if e.get("pages"): s += f", {e['pages'].replace('--','–')}"
     s += "."
     if e.get("doi"): s += f" https://doi.org/{e['doi']}"
-    return re.sub(r"\s+", " ", s).replace(" .", ".")
+    return _delatex(re.sub(r"\s+", " ", s).replace(" .", "."))
 
 ordered = sorted(entries, key=lambda e: (first_surname(e.get("author", e["ID"])).lower(), e.get("year", "")))
 out_lines = [render(e) for e in ordered]

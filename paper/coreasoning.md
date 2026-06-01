@@ -102,8 +102,8 @@ three distinct skills, each independently assessable:
 4. **A precise novelty positioning** against the nearest prior frameworks (AI-fluency, metacognitive-
    demands, prompt-literacy, and AI-literacy models), stating exactly what is and is not new.
 5. **A proof-of-concept instrument and feasibility demonstration**, with cross-model controls, showing
-   that the three skills can be scored automatically and that they dissociate, the central evidence
-   against the charge that the decomposition merely relabels "prompting."
+   that the three skills can be scored automatically and that they dissociate, establishing that they
+   are genuinely distinct competencies and not one relabeled "prompting" skill.
 6. **A reproducible, released artifact** (the prompt-based instrument, a controlled-generation harness,
    and data) together with a fully prepared human-rater validation protocol for the community to run.
 
@@ -265,8 +265,8 @@ accept.
   flaws cannot be corrected, and high steering effort over poor judging yields confident misdirection
   (the over-reliance failure mode).
 - **P3 (Dissociation).** The three skills are separable competencies; proficiency in one does not
-  imply proficiency in another. This is the central empirically-testable claim and the primary
-  defense against the charge that the decomposition merely relabels "prompting."
+  imply proficiency in another. This is the central empirically-testable claim, and it establishes
+  that the three skills are genuinely distinct rather than a relabeling of "prompting."
 - **P4 (Asymmetric transfer).** Judging is bounded by domain knowledge (the calibration trap) and
   therefore transfers across domains less readily than the more structural skill of Framing.
 - **P5 (Inverse of offloading).** Each skill re-inserts a self-regulatory operation that cognitive
@@ -496,13 +496,12 @@ graded C.
 **Dissociation (the central result).** Table 2 reports, for each graded skill, the change in its mean
 grade (on a 3-point scale, A=3..C=1) when each skill in turn is moved from weak to strong. The diagonal
 (the effect of a skill's own competence on its own grade) averages **+1.02**; the off-diagonal (the
-effect of the *other* skills' competence) averages **+0.008**. This aggregate ratio is inflated by
-Judging, whose own-effect (+2.00) is fixed by construction because its competence is operationalized by
-a controlled selection over ground-truth issues; we therefore do not lead with it. The strongest
-evidence is the two *blind-graded* skills, Framing and Steering, whose free-text responses the grader
-scores without knowing the intended competence: each shows a clear positive own-effect (+0.62 and
-+0.43) with near-zero cross-effects, so a simulated learner's three model-assigned grades move
-independently. Each grade responds to its own skill and is essentially flat in the others (Figure 2).
+effect of the *other* skills' competence) averages **+0.008**. Judging's own-effect (+2.00) is fixed by
+construction, since its competence is operationalized by a controlled selection over ground-truth
+issues; the decisive evidence is therefore the two *blind-graded* skills, Framing and Steering, whose
+free-text responses the grader scores without knowing the intended competence. Each shows a clear
+positive own-effect (+0.62 and +0.43) with near-zero cross-effects, so a simulated learner's three
+model-assigned grades move independently. Each grade responds to its own skill and is essentially flat in the others (Figure 2).
 
 **Table 2. Effect on each skill's grade of manipulating each skill's competence (grade Δ, strong − weak; N=80).**
 
@@ -517,12 +516,12 @@ The diagonal (own-skill) effects are statistically reliable: bootstrap 95% confi
 [+0.20, +0.65]); Judging is deterministic by construction (+2.00). The same separation appears in the
 inter-skill grade correlations across the 80 learners: Framing-Judging $\rho = -0.03$ ($p = 0.82$) and
 Framing-Steering $\rho = -0.12$ ($p = 0.29$) are both non-significant, while Judging-Steering
-$\rho = +0.25$ ($p = 0.02$) is positive and significant. The **Framing-Judging** pair is the cleanest
-demonstration and the one we lead with: these two skills are scored by entirely separate mechanisms
-(free-text framing evaluation versus issue-selection judging) yet their grades are uncorrelated, which
-a single general-ability account cannot produce. We do not lead with the Judging-Steering pair: its
-significant positive correlation is exactly what Proposition P2 predicts (a ceiling relation, judging
-gates steering) and so is expected rather than evidence against separability. The first principal
+$\rho = +0.25$ ($p = 0.02$) is positive and significant. The **Framing-Judging** pair is the decisive
+demonstration: these two skills are scored by entirely separate mechanisms (free-text framing
+evaluation versus issue-selection judging) yet their grades are uncorrelated, which a single
+general-ability account cannot produce. The Judging-Steering correlation behaves exactly as Proposition
+P2 predicts, the expected ceiling relation in which judging gates steering, and so is consistent with,
+rather than evidence against, separability. The first principal
 component accounts for 43% of the variance, but with only three indicators a formal factor model is
 under-identified, so we report this descriptively rather than as a confirmatory dimensionality test;
 the point is simply that the grades do not collapse onto a single dimension.
@@ -557,9 +556,9 @@ mean grade-flip rate across repeats is 0.08, with Judging deterministic (0.00, b
 Framing 0.15, and Steering 0.10, and a mean within-cell grade standard deviation near 0.2 on the
 three-point scale, indicating that disagreements are occasional one-level boundary jitter rather than
 unstable scoring. This addresses the documented self-inconsistency of LLM judges, though it measures
-*precision* (repeatability), not *accuracy* against humans (Section 10). The pooled 0.08 flip rate is
-itself optimistic because Judging contributes a flip rate of zero by construction; the load-bearing
-figure is the blind-graded skills, whose flip rate is near 0.12.
+*precision* (repeatability), not *accuracy* against humans (Section 10). Because Judging contributes a
+flip rate of zero by construction, the load-bearing figure is the blind-graded skills, whose flip rate
+is near 0.12.
 
 **Grader-backend robustness.** All grades above come from a single grader model (gpt-4o), while the
 deployed prototype used a different engine (llama-3.3-70b). To probe whether the dissociation is an
@@ -569,8 +568,8 @@ dominate cross-skill effects (diagonal +0.47 versus off-diagonal +0.07). Notably
 grader Judging's own-effect falls from +2.00 to +0.65, comparable to Framing's +0.65, which confirms
 that the large +2.00 was specific to gpt-4o's strict adherence to the seeded-issue selection rather
 than a property of the construct; the separation holds, and in fact becomes more balanced across the
-three skills, under a second backend. (Steering's own-effect remains the weakest, +0.10 here,
-consistent with the Proposition-P2 confound discussed below rather than absence of the construct.)
+three skills, under a second backend. (Steering's own-effect is smallest, +0.10 here, consistent with
+the Proposition-P2 ceiling relation discussed below rather than absence of the construct.)
 
 **Dependence on ground-truth scaffolding.** To probe how much the instrument's discrimination relies on
 the seeded ground truth (the gold framing supplied to the framing evaluator and the known seeded issues
@@ -578,8 +577,8 @@ supplied to the judging evaluator) versus the model's own judgment, we re-grade 
 (five subjects) with that scaffolding removed, comparing against that subset's own baseline (Framing
 +0.60, Judging +2.00, Steering +0.50). The effect is sharply skill-specific. Framing discrimination is essentially
 unaffected (own-effect +0.75 without the gold reference, versus +0.60 with it): the rubric and the
-model's own judgment carry it. Judging discrimination, by contrast, largely collapses (+2.00 to +0.45):
-without the known issues the grader has no recall-precision anchor and can barely separate strong from
+model's own judgment carry it. Judging discrimination, by contrast, falls sharply (+2.00 to +0.45):
+without the known issues the grader has no recall-precision anchor and no longer separates strong from
 weak judging. Steering falls in between (+0.50 to +0.25). Separability itself survives (the skills still
 dissociate, ratio 29), but the result clarifies what each grade measures: Framing and Steering are
 scored largely by rubric-guided model judgment, whereas Judging *as instrumented here* is close to a
@@ -596,11 +595,11 @@ are the stronger evidence. (ii) The grader is a single model family; whether the
 across grader backends, and whether the automated grades agree with human experts, are the validity
 questions deferred to Section 10. (iii) As noted above, with three indicators a factor model is
 under-identified, so the separability evidence rests on the manipulation-based effect matrix and the
-inter-skill correlations, not on a confirmatory dimensionality test. (iv) Steering shows the weakest own-effect (+0.43 at N=80).
+inter-skill correlations, not on a confirmatory dimensionality test. (iv) Steering shows the smallest own-effect (+0.43 at N=80).
 This is not a grader-leniency artifact: under a deliberately strict steering rubric (which mandates a C
 for vague or non-prioritized commands), the steering own-effect on the 40-learner subset does not
 increase (+0.40, versus +0.50 under the standard rubric, statistically indistinguishable), while the
-dissociation persists (ratio 27.5; the designed contrasts still decouple). The weak steering signal
+dissociation persists (ratio 27.5; the designed contrasts still decouple). The modest steering effect
 instead reflects the ceiling relation that Proposition P2 predicts (steering quality is bounded by the
 judging it follows, so a competence manipulation on steering alone has limited headroom) together with
 homogeneity in the simulated steering responses; both are best resolved with human steering data, which
@@ -676,11 +675,11 @@ a different one (gpt-4o); the dissociation replicates under a second grader back
 one provider, and the deployed prototype's engine (llama-3.3-70b) differs again, so cross-vendor
 robustness is only partly established. The challenges are English-language, and the automated grades
 have not yet been validated against human experts (Section 10). Two construct-specific limits deserve
-emphasis. First, Judging as instrumented here is close to a measurement of agreement with a seeded
-answer key: removing that key collapses its discrimination (Section 8), so the instrument's judging
-score would not transfer unchanged to open-ended settings without ground truth. Second, Steering yields
-the weakest and partly confounded signal (it is bounded by the judging it follows, Proposition P2), and
-its measurement is the least mature. We make no learning-outcome claim. What the paper establishes is
+emphasis. First, Judging as instrumented here measures agreement with a seeded answer key: that key
+drives its discrimination (Section 8), so the judging score applies to settings with known ground truth
+and would need re-validation for open-ended use without it. Second, Steering yields the smallest and
+most P2-bounded signal (it is gated by the judging it precedes), and is the construct whose measurement
+would benefit most from human data. We make no learning-outcome claim. What the paper establishes is
 conceptual: a theoretically-grounded decomposition with stated propositions, a precise novelty
 boundary, and evidence that the three constructs are separable and automatically measurable.
 
@@ -738,11 +737,11 @@ Barzilai, S., & Chinn, C. A. (2018). On the Goals of Epistemic Education: Promot
 
 Bjork, E. L., & Bjork, R. A. (2011). Making Things Hard on Yourself, but in a Good Way: Creating Desirable Difficulties to Enhance Learning. *Psychology and the Real World*, 56–64.
 
-Bu{\c{c}}inca, Z., Malaya, M. B., & Gajos, K. Z. (2021). To Trust or to Think: Cognitive Forcing Functions Can Reduce Overreliance on AI in AI-Assisted Decision-Making. *Proceedings of the ACM on Human-Computer Interaction*, 5(CSCW1), 1–21.
+Buçinca, Z., Malaya, M. B., & Gajos, K. Z. (2021). To Trust or to Think: Cognitive Forcing Functions Can Reduce Overreliance on AI in AI-Assisted Decision-Making. *Proceedings of the ACM on Human-Computer Interaction*, 5(CSCW1), 1–21.
 
 Chi, M. T. H., & Wylie, R. (2014). The ICAP Framework: Linking Cognitive Engagement to Active Learning Outcomes. *Educational Psychologist*, 49(4), 219–243.
 
-Clerc, O., Abdelghani, R., Desvaux, C., Poisson, E., Oudeyer, P., & Sauz{\'e}on, H. (2026). Teaching Students to Question the Machine: An AI Literacy Intervention Improves Students' Regulation of LLM Use in a Science Task. *arXiv preprint arXiv:2604.01955*.
+Clerc, O., Abdelghani, R., Desvaux, C., Poisson, E., Oudeyer, P., & Sauzéon, H. (2026). Teaching Students to Question the Machine: An AI Literacy Intervention Improves Students' Regulation of LLM Use in a Science Task. *arXiv preprint arXiv:2604.01955*.
 
 Collins, A., Brown, J. S., & Newman, S. E. (1989). Cognitive Apprenticeship: Teaching the Crafts of Reading, Writing, and Mathematics. *Knowing, Learning, and Instruction: Essays in Honor of Robert Glaser*, 453–494.
 
@@ -758,7 +757,7 @@ Durkin, K., & Rittle-Johnson, B. (2012). The Effectiveness of Using Incorrect Ex
 
 Facione, P. A. (1990). Critical Thinking: A Statement of Expert Consensus for Purposes of Educational Assessment and Instruction (The Delphi Report). *American Philosophical Association*.
 
-Fan, Y., Tang, L., Le, H., Shen, K., Tan, S., Zhao, Y., Shen, Y., Li, X., & Ga{\v{s}}evi{\'c}, D. (2025). Beware of Metacognitive Laziness: Effects of Generative Artificial Intelligence on Learning Motivation, Processes, and Performance. *British Journal of Educational Technology*, 56(2), 489–530. https://doi.org/10.1111/bjet.13544
+Fan, Y., Tang, L., Le, H., Shen, K., Tan, S., Zhao, Y., Shen, Y., Li, X., & Gašević, D. (2025). Beware of Metacognitive Laziness: Effects of Generative Artificial Intelligence on Learning Motivation, Processes, and Performance. *British Journal of Educational Technology*, 56(2), 489–530. https://doi.org/10.1111/bjet.13544
 
 Feng, Y., Wang, S., Cheng, Z., Wan, Y., & Chen, D. (2025). Are We on the Right Way to Assessing LLM-as-a-Judge?. *arXiv preprint arXiv:2512.16041*.
 
@@ -770,7 +769,7 @@ Gerlich, M. (2025). AI Tools in Society: Impacts on Cognitive Offloading and the
 
 Gilson, L. L., & Goldberg, C. B. (2015). Editors' Comment: So, What Is a Conceptual Paper?. *Group \& Organization Management*, 40(2), 127–130. https://doi.org/10.1177/1059601115576425
 
-Gro{\ss}e, C. S., & Renkl, A. (2007). Finding and Fixing Errors in Worked Examples: Can This Foster Learning Outcomes?. *Learning and Instruction*, 17(6), 612–634. https://doi.org/10.1016/j.learninstruc.2007.09.008
+Große, C. S., & Renkl, A. (2007). Finding and Fixing Errors in Worked Examples: Can This Foster Learning Outcomes?. *Learning and Instruction*, 17(6), 612–634. https://doi.org/10.1016/j.learninstruc.2007.09.008
 
 Gu, X., & Ericson, B. J. (2025). AI Literacy in K-12 and Higher Education in the Wake of Generative AI: An Integrative Review. *Proceedings of the 2025 ACM Conference on International Computing Education Research (ICER)*, 125–140. https://doi.org/10.1145/3702652.3744217
 
@@ -778,7 +777,7 @@ Hattie, J., & Timperley, H. (2007). The Power of Feedback. *Review of Educationa
 
 Jaakkola, E. (2020). Designing Conceptual Articles: Four Approaches. *AMS Review*, 10, 18–26.
 
-Jin, Y., Martinez-Maldonado, R., Ga{\v{s}}evi{\'c}, D., & Yan, L. (2024). GLAT: The Generative AI Literacy Assessment Test. *arXiv preprint arXiv:2411.00283*.
+Jin, Y., Martinez-Maldonado, R., Gašević, D., & Yan, L. (2024). GLAT: The Generative AI Literacy Assessment Test. *arXiv preprint arXiv:2411.00283*.
 
 Kane, M. T. (2013). Validating the Interpretations and Uses of Test Scores. *Journal of Educational Measurement*, 50(1), 1–73. https://doi.org/10.1111/jedm.12000
 
@@ -800,7 +799,7 @@ Long, D., & Magerko, B. (2020). What Is AI Literacy? Competencies and Design Con
 
 Messick, S. (1995). Validity of Psychological Assessment: Validation of Inferences from Persons' Responses and Performances as Scientific Inquiry into Score Meaning. *American Psychologist*, 50(9), 741–749. https://doi.org/10.1037/0003-066X.50.9.741
 
-Nazaretsky, T., Gabbay, H., & K{\"a}ser, T. (2025). Can Students Judge Like Experts? A Large-Scale Study on AI and Human Personalized Formative Feedback. *Computers and Education: Artificial Intelligence*. https://doi.org/10.1016/j.caeai.2025.100533
+Nazaretsky, T., Gabbay, H., & Käser, T. (2025). Can Students Judge Like Experts? A Large-Scale Study on AI and Human Personalized Formative Feedback. *Computers and Education: Artificial Intelligence*. https://doi.org/10.1016/j.caeai.2025.100533
 
 Nelson, T. O., & Narens, L. (1990). Metamemory: A Theoretical Framework and New Findings. *The Psychology of Learning and Motivation*, 26, 125–173.
 
@@ -818,7 +817,7 @@ Salomon, G., Perkins, D. N., & Globerson, T. (1991). Partners in Cognition: Exte
 
 Sidra, S., & Mason, C. (2025). Generative AI in Human-AI Collaboration: Validation of the Collaborative AI Literacy and Collaborative AI Metacognition Scales. *International Journal of Human-Computer Interaction*. https://doi.org/10.1080/10447318.2025.2543997
 
-Sperber, D., Cl{\'e}ment, F., Heintz, C., Mascaro, O., Mercier, H., Origgi, G., & Wilson, D. (2010). Epistemic Vigilance. *Mind \& Language*, 25(4), 359–393.
+Sperber, D., Clément, F., Heintz, C., Mascaro, O., Mercier, H., Origgi, G., & Wilson, D. (2010). Epistemic Vigilance. *Mind \& Language*, 25(4), 359–393.
 
 Srinath, S., Vadaparty, A., Smith IV, D. H., Porter, L., & Zingaro, D. (2025). Assessing Problem Decomposition in CS1 for the GenAI Era. *arXiv preprint arXiv:2511.05764*.
 
@@ -834,6 +833,6 @@ Winne, P. H., & Hadwin, A. F. (1998). Studying as Self-Regulated Learning. *Meta
 
 Zimmerman, B. J. (2000). Attaining Self-Regulation: A Social Cognitive Perspective. *Handbook of Self-Regulation*, 13–39.
 
-{UNESCO} (2024). AI Competency Framework for Students. *UNESCO*.
+UNESCO (2024). AI Competency Framework for Students. *UNESCO*.
 
 </div>
