@@ -146,10 +146,10 @@ In CoReasoning, the learner's meta level supervises an object level that is *ext
 generative process, rather than the learner's own cognition. This is a deliberate extension of the
 Nelson-Narens architecture from intrapersonal monitoring to what we term *exo-directed* monitoring and
 control, and it is the framework's central theoretical move: the same metacognitive machinery is turned
-outward onto a fallible cognitive artifact. The extension is non-trivial because exo-directed monitoring
-adds an epistemic-vigilance burden absent from self-monitoring (the learner must model the reliability
-of a source whose competence differs from, and is opaque to, their own), which is exactly why Judging
-is bounded by domain knowledge (Proposition P4). With that caveat stated, the mapping is direct:
+outward onto a fallible cognitive artifact. This extension is non-trivial. Exo-directed monitoring adds
+an epistemic-vigilance burden that self-monitoring does not have: the learner must judge the reliability
+of a source whose competence differs from, and is hidden from, their own. This is exactly why Judging is
+bounded by domain knowledge (Proposition P4). With that point made, the mapping is direct:
 
 - **Judging is monitoring.** The learner compares AI output against an internal model of an adequate
   solution and registers discrepancies.
@@ -236,11 +236,11 @@ monitoring can decouple from performance in human-AI reasoning (Fernandes et al.
 work on whether learners can evaluate AI output quality as experts do (Nazaretsky et al., 2025).
 
 **Steering** is metacognitive control (Nelson & Narens, 1990): acting on the monitoring signal to
-change the object-level process. Pedagogically it is an inversion of cognitive-apprenticeship coaching
-and scaffolding (Collins, Brown & Newman, 1989), in which the learner, rather than the master, supplies
-the corrective guidance; its quality depends on the learner monitoring the work against held standards
-(Sadler, 1989) and is well described by feed-forward, the "where to next"
-component of effective feedback (Hattie & Timperley, 2007).
+change the object-level process. Pedagogically it inverts cognitive-apprenticeship coaching and
+scaffolding (Collins, Brown & Newman, 1989): the learner, not the master, supplies the corrective
+guidance. Its quality depends on the learner monitoring the work against held standards (Sadler, 1989),
+and is well described by feed-forward, the "where to next" component of effective feedback
+(Hattie & Timperley, 2007).
 
 **The loop and its positioning.** The Judge-Steer cycle is designed to push learners into the
 Interactive mode of the ICAP framework (Chi & Wylie, 2014), in which knowledge is co-constructed
@@ -387,10 +387,10 @@ The framework was instantiated in a prototype web platform, *CoReasoning Lab*, w
 that the abstract skills map onto a concrete learner experience. The platform is role-based (student,
 instructor, administrator) and bilingual (English and Hebrew), and supports both practice and
 assessment modes and both multiple-choice and open-ended response formats per phase. The reusable
-artifact we release and evaluate is the platform's *scoring engine*, a library of sixteen prompts plus
-a controlled-generation harness (Section 7.1); the interface figures in this paper (Figures A1–A2) are
-representative mockups of that prototype rather than screenshots of a running deployment, and all
-quantitative results come from the released prompt engine, not from platform usage logs.
+artifact we release and evaluate is the platform's *scoring engine*: a library of sixteen prompts plus
+a controlled-generation harness (Section 7.1). The interface figures in this paper (Figures A1 and A2)
+are representative mockups of the prototype, not screenshots of a running deployment. All quantitative
+results come from the released prompt engine, not from platform usage logs.
 
 **Authoring flow (instructor).** An instructor defines a challenge by choosing a course and subject
 path; the system then generates the ill-defined problem, the three per-skill rubrics, the gold-standard
@@ -534,10 +534,9 @@ subject. The designed-contrast personas make the separation concrete (Figure 3).
 learner scores Framing C but Judging A; a *strong-framer / weak-judge* learner inverts this to Framing
 B, Judging C; a *weak / weak / strong-steerer* elevates only Steering. A single underlying "AI-use
 ability" cannot produce these crossed profiles. Converging evidence comes from outside our synthetic
-setting: an intervention study finds that students' *behavioral* regulation of LLM use (reformulating
-queries, checking correctness) predicts effective use, whereas self-rated AI expertise does not
-(Clerc et al., 2026), consistent with the skill of working with AI being distinct from, and not
-reducible to, a general self-assessed competence.
+setting. In an intervention study, students' *behavioral* regulation of LLM use (reformulating queries,
+checking correctness) predicts effective use, whereas self-rated AI expertise does not (Clerc et al.,
+2026). The skill of working with AI is thus distinct from a general, self-assessed competence.
 
 ![Figure 2. Own-competence effects dominate cross-competence effects on every skill's grade.](assets/fig_dissociation_heatmap.png)
 
