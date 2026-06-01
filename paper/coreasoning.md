@@ -767,7 +767,7 @@ Flavell, J. H. (1979). Metacognition and Cognitive Monitoring: A New Area of Cog
 
 Gerlich, M. (2025). AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking. *Societies*, 15(1), 6.
 
-Gilson, L. L., & Goldberg, C. B. (2015). Editors' Comment: So, What Is a Conceptual Paper?. *Group \& Organization Management*, 40(2), 127–130. https://doi.org/10.1177/1059601115576425
+Gilson, L. L., & Goldberg, C. B. (2015). Editors' Comment: So, What Is a Conceptual Paper?. *Group & Organization Management*, 40(2), 127–130. https://doi.org/10.1177/1059601115576425
 
 Große, C. S., & Renkl, A. (2007). Finding and Fixing Errors in Worked Examples: Can This Foster Learning Outcomes?. *Learning and Instruction*, 17(6), 612–634. https://doi.org/10.1016/j.learninstruc.2007.09.008
 
@@ -817,13 +817,13 @@ Salomon, G., Perkins, D. N., & Globerson, T. (1991). Partners in Cognition: Exte
 
 Sidra, S., & Mason, C. (2025). Generative AI in Human-AI Collaboration: Validation of the Collaborative AI Literacy and Collaborative AI Metacognition Scales. *International Journal of Human-Computer Interaction*. https://doi.org/10.1080/10447318.2025.2543997
 
-Sperber, D., Clément, F., Heintz, C., Mascaro, O., Mercier, H., Origgi, G., & Wilson, D. (2010). Epistemic Vigilance. *Mind \& Language*, 25(4), 359–393.
+Sperber, D., Clément, F., Heintz, C., Mascaro, O., Mercier, H., Origgi, G., & Wilson, D. (2010). Epistemic Vigilance. *Mind & Language*, 25(4), 359–393.
 
 Srinath, S., Vadaparty, A., Smith IV, D. H., Porter, L., & Zingaro, D. (2025). Assessing Problem Decomposition in CS1 for the GenAI Era. *arXiv preprint arXiv:2511.05764*.
 
 Tankelevitch, L., Kewenig, V., Simkute, A., Scott, A. E., Sarkar, A., Sellen, A., & Rintel, S. (2024). The Metacognitive Demands and Opportunities of Generative AI. *Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems*.
 
-Tour, E., & Zadorozhnyy, A. (2025). Conceptualizing and Operationalizing Prompt Literacy for English Language Learners. *Journal of Adolescent \& Adult Literacy*. https://doi.org/10.1002/jaal.70020
+Tour, E., & Zadorozhnyy, A. (2025). Conceptualizing and Operationalizing Prompt Literacy for English Language Learners. *Journal of Adolescent & Adult Literacy*. https://doi.org/10.1002/jaal.70020
 
 Vaccaro, M., Almaatouq, A., & Malone, T. (2024). When Combinations of Humans and AI Are Useful: A Systematic Review and Meta-Analysis. *Nature Human Behaviour*, 8, 2293–2303.
 
