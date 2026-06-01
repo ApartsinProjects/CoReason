@@ -41,6 +41,9 @@ img[src$=".png"]{border:1px solid var(--line);border-radius:6px}
   text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:100}
 .docxlink:hover{text-decoration:none;background:#1e4a94}
 @media print{.docxlink,.banner{display:none}}
+.authors{text-align:center;font-size:1.1rem;margin:.6rem 0 .2rem}
+.affil{text-align:center;color:#666;font-size:.92rem;margin:.1rem 0}
+.availability{text-align:center;font-size:.85rem;margin:.3rem 0 1.6rem}
 .references{font-size:.86rem;line-height:1.5}
 .references p{padding-left:2em;text-indent:-2em;margin:0 0 .55rem}
 footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
@@ -49,10 +52,10 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 <body>
 <a class="docxlink" href="https://github.com/ApartsinProjects/CoReason" style="right:140px;background:#24292f">&#9733; GitHub</a>
 <a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx</a>
-<div class="banner">Preprint &middot; conceptual/position paper with a proof-of-concept feasibility
-demonstration &middot; open-source (MIT).</div>
-<h1 id="framing-judging-steering-an-assessable-competency-model-for-reasoning-with-generative-ai">Framing, Judging, Steering: An Assessable Competency Model for Reasoning With Generative AI</h1>
-<p><em>Preprint. Open-source (MIT): <a href="https://github.com/ApartsinProjects/CoReason">github.com/ApartsinProjects/CoReason</a></em></p>
+<h1 id="framing-judging-steering-an-assessable-competency-model-for-teaching-students-to-reason-with-generative-ai">Framing, Judging, Steering: An Assessable Competency Model for Teaching Students to Reason With Generative AI</h1>
+<p class="authors"><strong>Alexander Apartsin</strong>¹ and <strong>Yehudit Aperstein</strong>²</p>
+<p class="affil">¹ Holon Institute of Technology  ·  ² Afeka College of Engineering</p>
+<p class="availability">An open-source learning platform and instrument: <a href="https://github.com/ApartsinProjects/CoReason">github.com/ApartsinProjects/CoReason</a></p>
 <h2 id="abstract">Abstract</h2>
 <p>Generative AI makes it trivial to obtain an answer and difficult to obtain understanding. As large
 language models are absorbed into education, the dominant design objective has been speed-to-answer,
@@ -68,17 +71,24 @@ central structural claim that distinguishes CoReasoning from existing AI- and pr
 frameworks is the <em>separation of the pre-generation skill (Framing) from the post-generation
 corrective skill (Steering)</em>, with Judging as the epistemic gate between them. We ground each skill
 in established theory (metacognitive monitoring and control; self-regulated learning; epistemic
-vigilance and critical thinking; productive struggle), state five testable propositions about how
-the skills relate, position the model against the nearest prior frameworks, and report a
-proof-of-concept instrument together with a feasibility demonstration that the three skills
-dissociate and can be measured automatically. We close with the tensions a mature account must
-resolve and a concrete assessment-validation agenda.</p>
+vigilance and critical thinking; productive struggle), and state five testable propositions about how
+the skills relate. We instantiate the model in <strong>CoReasoning Lab</strong>, an open-source learning platform
+that generates ill-defined problems, confronts students with deliberately flawed AI output to improve
+across judge-and-steer cycles, and scores the three skills independently with rubric-driven feedback.
+Using the platform's instrument we report a feasibility demonstration that the three skills <em>dissociate</em>
+(own-skill grade effects exceed cross-skill effects by roughly sixty to one, with near-zero inter-skill
+correlations) and that the automated grader is 92% self-consistent, with simulated learners generated
+and graded by different models to avoid self-grading. We make no learning-outcome claims; the evidence
+establishes that the constructs are separable and automatically measurable, and we close with the
+tensions a mature account must resolve and a concrete validation agenda. The system, instrument, data,
+and a prepared human-rater study are released under an open-source license.</p>
 <h2 id="1-introduction">1. Introduction</h2>
-<p>The introduction of generative AI into learning environments has, by default, optimized for the
-wrong variable. Most AI-in-education tools shorten the path from question to answer. Yet the answer
-was never the point of education: the cognitive work of specifying a problem, evaluating a candidate
-solution, and improving it is where learning happens. When that work is delegated wholesale to a
-machine, the learner is left with a correct artifact and an unchanged mind.</p>
+<p>Most AI-in-education tools optimize for the wrong variable. They shorten the path from question to
+answer, when the answer was never the point of education. The cognitive work of specifying a problem,
+evaluating a candidate solution, and improving it is where learning happens; when that work is
+delegated wholesale to a machine, the learner walks away with a correct artifact and an unchanged mind.
+The educational opportunity of generative AI is therefore not to deliver answers faster, but to make
+the reasoning around them visible, practiced, and assessable.</p>
 <p>Recent evidence makes the stakes concrete. Frequent, uncritical AI use correlates with lower
 critical-thinking performance, an effect mediated by cognitive offloading and most pronounced in
 younger users (Gerlich, 2025). Controlled studies of AI-assisted writing report "metacognitive
@@ -713,8 +723,7 @@ Steering independently.</em></p>
 <p>{UNESCO} (2024). AI Competency Framework for Students. <em>UNESCO</em>.</p>
 </div>
 <footer>
-Generated from <code>paper/coreasoning.md</code>. Math rendered with KaTeX.
-Open-source (MIT) &mdash; system, instrument, data, and figures at
+Open-source (MIT): system, instrument, data, and figures at
 <a href="https://github.com/ApartsinProjects/CoReason">github.com/ApartsinProjects/CoReason</a>.
 </footer>
 </body>

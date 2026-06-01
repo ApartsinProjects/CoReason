@@ -52,6 +52,9 @@ img[src$=".png"]{border:1px solid var(--line);border-radius:6px}
   text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:100}
 .docxlink:hover{text-decoration:none;background:#1e4a94}
 @media print{.docxlink,.banner{display:none}}
+.authors{text-align:center;font-size:1.1rem;margin:.6rem 0 .2rem}
+.affil{text-align:center;color:#666;font-size:.92rem;margin:.1rem 0}
+.availability{text-align:center;font-size:.85rem;margin:.3rem 0 1.6rem}
 .references{font-size:.86rem;line-height:1.5}
 .references p{padding-left:2em;text-indent:-2em;margin:0 0 .55rem}
 footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
@@ -60,12 +63,9 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 <body>
 <a class="docxlink" href="https://github.com/ApartsinProjects/CoReason" style="right:140px;background:#24292f">&#9733; GitHub</a>
 <a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx</a>
-<div class="banner">Preprint &middot; conceptual/position paper with a proof-of-concept feasibility
-demonstration &middot; open-source (MIT).</div>
 {body}
 <footer>
-Generated from <code>paper/coreasoning.md</code>. Math rendered with KaTeX.
-Open-source (MIT) &mdash; system, instrument, data, and figures at
+Open-source (MIT): system, instrument, data, and figures at
 <a href="https://github.com/ApartsinProjects/CoReason">github.com/ApartsinProjects/CoReason</a>.
 </footer>
 </body>

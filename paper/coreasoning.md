@@ -1,6 +1,13 @@
-# Framing, Judging, Steering: An Assessable Competency Model for Reasoning With Generative AI
+# Framing, Judging, Steering: An Assessable Competency Model for Teaching Students to Reason With Generative AI
 
-*Preprint. Open-source (MIT): [github.com/ApartsinProjects/CoReason](https://github.com/ApartsinProjects/CoReason)*
+**Alexander Apartsin**¹ and **Yehudit Aperstein**²
+{: .authors }
+
+¹ Holon Institute of Technology  ·  ² Afeka College of Engineering
+{: .affil }
+
+An open-source learning platform and instrument: [github.com/ApartsinProjects/CoReason](https://github.com/ApartsinProjects/CoReason)
+{: .availability }
 
 ## Abstract
 
@@ -18,19 +25,26 @@ central structural claim that distinguishes CoReasoning from existing AI- and pr
 frameworks is the *separation of the pre-generation skill (Framing) from the post-generation
 corrective skill (Steering)*, with Judging as the epistemic gate between them. We ground each skill
 in established theory (metacognitive monitoring and control; self-regulated learning; epistemic
-vigilance and critical thinking; productive struggle), state five testable propositions about how
-the skills relate, position the model against the nearest prior frameworks, and report a
-proof-of-concept instrument together with a feasibility demonstration that the three skills
-dissociate and can be measured automatically. We close with the tensions a mature account must
-resolve and a concrete assessment-validation agenda.
+vigilance and critical thinking; productive struggle), and state five testable propositions about how
+the skills relate. We instantiate the model in **CoReasoning Lab**, an open-source learning platform
+that generates ill-defined problems, confronts students with deliberately flawed AI output to improve
+across judge-and-steer cycles, and scores the three skills independently with rubric-driven feedback.
+Using the platform's instrument we report a feasibility demonstration that the three skills *dissociate*
+(own-skill grade effects exceed cross-skill effects by roughly sixty to one, with near-zero inter-skill
+correlations) and that the automated grader is 92% self-consistent, with simulated learners generated
+and graded by different models to avoid self-grading. We make no learning-outcome claims; the evidence
+establishes that the constructs are separable and automatically measurable, and we close with the
+tensions a mature account must resolve and a concrete validation agenda. The system, instrument, data,
+and a prepared human-rater study are released under an open-source license.
 
 ## 1. Introduction
 
-The introduction of generative AI into learning environments has, by default, optimized for the
-wrong variable. Most AI-in-education tools shorten the path from question to answer. Yet the answer
-was never the point of education: the cognitive work of specifying a problem, evaluating a candidate
-solution, and improving it is where learning happens. When that work is delegated wholesale to a
-machine, the learner is left with a correct artifact and an unchanged mind.
+Most AI-in-education tools optimize for the wrong variable. They shorten the path from question to
+answer, when the answer was never the point of education. The cognitive work of specifying a problem,
+evaluating a candidate solution, and improving it is where learning happens; when that work is
+delegated wholesale to a machine, the learner walks away with a correct artifact and an unchanged mind.
+The educational opportunity of generative AI is therefore not to deliver answers faster, but to make
+the reasoning around them visible, practiced, and assessable.
 
 Recent evidence makes the stakes concrete. Frequent, uncritical AI use correlates with lower
 critical-thinking performance, an effect mediated by cognitive offloading and most pronounced in
