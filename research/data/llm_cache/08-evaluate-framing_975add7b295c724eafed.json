@@ -1,0 +1,133 @@
+{
+  "_vars": {
+    "raw_problem": "Design an indexing strategy for a database that stores customer information and order history for an e-commerce platform, ensuring efficient query performance for frequent queries such as retrieving customer details and order status, and minimizing storage overhead. The database is expected to handle a large volume of transactions and queries from various departments. Provide a detailed plan for index creation and maintenance.",
+    "student_framing": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what indexing is and why it's important for databases. Indexing helps speed up the retrieval of data, but I need to learn how to choose which fields to index.\"}, {\"section_type\": \"Key Requirements\", \"content\": \"The problem mentions efficient query performance for retrieving customer details and order status. I should identify what specific queries are common and how they are structured.\"}, {\"section_type\": \"Database Volume\", \"content\": \"I need to consider how large the database might get and how many transactions will happen. This will help me think about how many indexes might be needed.\"}, {\"section_type\": \"Storage Overhead\", \"content\": \"I should look into how indexing can take up space and how I can minimize this while still keeping performance high.\"}, {\"section_type\": \"Index Creation Plan\", \"content\": \"I need to outline a basic plan for creating indexes. This might include which fields to index, like customer ID and order status.\"}, {\"section_type\": \"Maintenance of Indexes\", \"content\": \"I should mention how to keep the indexes updated when new data is added or existing data is changed, although I'm not sure how this works yet.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Clarification",
+          "description": "Ability to clearly define the problem in terms of database indexing and query optimization.",
+          "excellent_indicator": "Student articulates a clear, specific problem statement related to indexing and query optimization, identifying relevant aspects like query types or indexing methods.",
+          "poor_indicator": "Student provides a vague or overly broad problem statement that lacks focus on indexing or query optimization specifics."
+        },
+        {
+          "name": "Objective Identification",
+          "description": "Ability to identify the objectives or goals of optimizing the database query.",
+          "excellent_indicator": "Student clearly identifies objectives such as reducing query execution time or optimizing index usage.",
+          "poor_indicator": "Student fails to specify clear objectives, or objectives are unrelated to query optimization."
+        },
+        {
+          "name": "Assumption Articulation",
+          "description": "Ability to articulate assumptions about the database environment or query constraints.",
+          "excellent_indicator": "Student effectively identifies and articulates assumptions, such as data distribution or query frequency.",
+          "poor_indicator": "Student overlooks key assumptions or makes incorrect assumptions about the database environment."
+        }
+      ],
+      "typical_errors": [
+        "Ignoring the role of indexing in query performance.",
+        "Failing to mention specific query optimization techniques.",
+        "Misunderstanding the impact of data distribution on indexing."
+      ]
+    },
+    "best_framing": {
+      "base": "Design an indexing strategy for a database that stores customer information and order history for an e-commerce platform, ensuring efficient query performance for frequent queries such as retrieving customer details and order status, and minimizing storage overhead. The database is expected to handle a large volume of transactions and queries from various departments. Provide a detailed plan for index creation and maintenance.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Database Management System",
+              "description": "Assume the database management system (DBMS) being used is PostgreSQL, which supports various indexing methods such as B-tree, hash, and GiST. This assumption is necessary to tailor the indexing strategy to the capabilities and limitations of a specific DBMS.",
+              "addresses_gap": "specific database management system"
+            },
+            {
+              "title": "Query Patterns and Frequencies",
+              "description": "Assume that the most frequent queries involve retrieving customer details by customer ID and checking order status by order ID. These queries are executed multiple times per second, especially during peak hours. This assumption helps in prioritizing which queries to optimize for.",
+              "addresses_gap": "query patterns and frequencies"
+            },
+            {
+              "title": "Data Distribution",
+              "description": "Assume that customer IDs and order IDs are uniformly distributed, which affects the choice of indexing strategy to ensure balanced index trees and efficient query performance.",
+              "addresses_gap": "Assumption Articulation"
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Storage Limitations",
+              "description": "The indexing strategy must minimize storage overhead, implying that the number of indexes should be limited to essential ones only, and composite indexes should be used judiciously.",
+              "addresses_gap": "available storage and computational resources"
+            },
+            {
+              "title": "Transaction Volume",
+              "description": "The database should efficiently handle a high volume of transactions, which means that index maintenance should not significantly degrade write performance.",
+              "addresses_gap": "Assumption Articulation"
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Scope of Indexing Strategy",
+              "description": "The indexing strategy should focus on improving read performance for the specified frequent queries while balancing the impact on write operations. It should not cover database normalization or schema design, which are outside the scope of this task.",
+              "addresses_gap": "Scope Boundaries"
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Query Performance Improvement",
+              "description": "Success will be measured by a reduction in query execution time for the specified frequent queries by at least 50% compared to the current state.",
+              "addresses_gap": "Objective Identification"
+            },
+            {
+              "title": "Storage Efficiency",
+              "description": "Success will also be measured by the ability to maintain or reduce current storage usage while implementing the new indexing strategy.",
+              "addresses_gap": "Objective Identification"
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by clearly defining the problem in terms of indexing and query optimization, identifying specific objectives like reducing query execution time, and articulating assumptions about the database environment and query constraints. It also addresses known internal gaps such as the specific DBMS, query patterns, and storage constraints."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks specificity in defining the problem related to indexing and query optimization. For example, the section on 'Problem Understanding' mentions the need to understand indexing but does not articulate the specific problem of optimizing query performance. Additionally, the 'Key Requirements' section identifies the need to understand common queries but does not specify what those queries are or how they relate to indexing strategies. The 'Assumption Articulation' is weak, as the student does not clearly state assumptions about the database environment, such as data distribution or query frequency, which are crucial for developing an effective indexing strategy.",
+  "better_alternative": "A stronger framing would clearly define the problem by specifying the types of queries that need optimization, such as retrieving customer details by customer ID and order status by order ID. It would also identify objectives like reducing query execution time and optimizing index usage. Additionally, it would articulate assumptions about the database environment, such as the use of a specific DBMS like PostgreSQL, query patterns, and data distribution. This would provide a focused and actionable plan for index creation and maintenance.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Clarification",
+      "score": "C",
+      "internal_note": "The problem statement is vague and lacks focus on specific indexing and query optimization aspects."
+    },
+    {
+      "criterion_name": "Objective Identification",
+      "score": "B",
+      "internal_note": "The student identifies the need for efficient query performance but does not clearly specify objectives related to query optimization."
+    },
+    {
+      "criterion_name": "Assumption Articulation",
+      "score": "C",
+      "internal_note": "The student does not effectively articulate assumptions about the database environment or query constraints."
+    }
+  ],
+  "strengths": [
+    "The student recognizes the importance of understanding common queries and storage overhead in the context of indexing."
+  ],
+  "refinements_correctly_selected": [
+    "Key Requirements",
+    "Storage Overhead"
+  ],
+  "refinements_missed": [
+    "Assumption Articulation",
+    "Objective Identification"
+  ],
+  "unnecessary_selections": []
+}

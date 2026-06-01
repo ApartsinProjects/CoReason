@@ -1,0 +1,135 @@
+{
+  "_vars": {
+    "raw_problem": "Your team has developed a machine learning model intended to predict customer churn for a subscription-based service. You are tasked with evaluating the model’s performance and making improvements if necessary to ensure its efficacy in real-world scenarios. Deliver a report that includes an analysis of the model's performance metrics, an assessment of overfitting, and recommendations for any changes. The client has not specified which performance metrics are most important, nor have they indicated acceptable thresholds for these metrics. Additionally, the data used to test the model’s performance has not been provided. Determine how you will obtain or simulate the necessary data for testing, and choose appropriate metrics that align with typical business objectives for a subscription-based service.",
+    "student_framing": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The problem is about evaluating a machine learning model for predicting customer churn. Churn means when customers stop using a service. We need to find out how well this model works and if it can be improved.\"}, {\"section_type\": \"Data Acquisition\", \"content\": \"Since we don’t have the data to test the model, we need to figure out how to get it. We could ask the client for the data they used or try to find similar datasets online. If that's not possible, we might have to create some fake data that looks like what we think the real data would be.\"}, {\"section_type\": \"Performance Metrics\", \"content\": \"We need to decide which performance metrics to use because the client didn’t say. Some common metrics for this kind of problem are accuracy, precision, recall, and F1 score. We should choose a few of these to include in our report.\"}, {\"section_type\": \"Overfitting Assessment\", \"content\": \"To check for overfitting, we should compare how the model performs on the training data versus the testing data. If it does really well on training data but poorly on testing data, it’s probably overfitting.\"}, {\"section_type\": \"Recommendations\", \"content\": \"After analyzing the metrics and checking for overfitting, we should suggest what changes could be made to improve the model. This could include using different algorithms, adding more data, or tuning the model's parameters.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Definition Clarity",
+          "description": "The student clearly defines the problem by identifying the specific model evaluation and overfitting issues present.",
+          "excellent_indicator": "The student provides a detailed explanation of the evaluation metrics and overfitting concerns, distinguishing between training and validation phases.",
+          "poor_indicator": "The student provides a vague or incomplete explanation, failing to differentiate between evaluation metrics or overfitting concerns."
+        },
+        {
+          "name": "Metric Selection Justification",
+          "description": "The student selects appropriate evaluation metrics relevant to the problem context.",
+          "excellent_indicator": "The student selects metrics that are directly applicable to the problem and justifies their choices based on the model's objectives and data characteristics.",
+          "poor_indicator": "The student selects metrics arbitrarily without justification or relevance to the model's objectives."
+        },
+        {
+          "name": "Overfitting Identification",
+          "description": "The student identifies signs of overfitting in the model's performance.",
+          "excellent_indicator": "The student correctly identifies overfitting by comparing training and validation performance and explains how it impacts the model's generalizability.",
+          "poor_indicator": "The student fails to identify overfitting or incorrectly attributes it to unrelated factors."
+        }
+      ],
+      "typical_errors": [
+        "Confusing overfitting with underfitting",
+        "Using inappropriate metrics for the model type",
+        "Ignoring differences between training and validation performance"
+      ]
+    },
+    "best_framing": {
+      "base": "Your team has developed a machine learning model intended to predict customer churn for a subscription-based service. You are tasked with evaluating the model’s performance and making improvements if necessary to ensure its efficacy in real-world scenarios. Deliver a report that includes an analysis of the model's performance metrics, an assessment of overfitting, and recommendations for any changes. The client has not specified which performance metrics are most important, nor have they indicated acceptable thresholds for these metrics. Additionally, the data used to test the model’s performance has not been provided. Determine how you will obtain or simulate the necessary data for testing, and choose appropriate metrics that align with typical business objectives for a subscription-based service.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Business Objectives",
+              "description": "Assume that the primary business objective is to minimize customer churn, which typically involves maximizing retention rates and minimizing false negatives (customers predicted to stay but actually leave).",
+              "addresses_gap": "Assumptions about business objectives for choosing metrics"
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Data Privacy",
+              "description": "Ensure that any simulated or obtained data complies with data privacy regulations such as GDPR or CCPA.",
+              "addresses_gap": "Test data for model evaluation is missing"
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Performance Metrics",
+              "description": "Clarify that the performance metrics should include accuracy, precision, recall, F1-score, and AUC-ROC, as these metrics are typically relevant for classification problems like churn prediction. Additionally, these metrics should be evaluated on both training and validation datasets to assess overfitting.",
+              "addresses_gap": "Performance metrics importance and thresholds are unspecified"
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Model Performance Thresholds",
+              "description": "Define success as achieving at least 80% accuracy, a precision of 75%, recall of 70%, and an F1-score of 72% on the validation dataset. These thresholds are based on typical industry standards for churn prediction models.",
+              "addresses_gap": "Performance metrics importance and thresholds are unspecified"
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "Model Evaluation Scope",
+              "description": "Limit the evaluation to the current model without considering alternative models or architectures. Focus on improving the existing model's performance through hyperparameter tuning and feature selection.",
+              "addresses_gap": "Assumptions about business objectives for choosing metrics"
+            }
+          ]
+        },
+        {
+          "section_type": "Domain Context",
+          "entries": [
+            {
+              "title": "Subscription-Based Service Characteristics",
+              "description": "Consider that subscription-based services often prioritize customer retention and lifetime value, which should influence the choice of metrics and the interpretation of results.",
+              "addresses_gap": "Assumptions about business objectives for choosing metrics"
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by defining the problem clearly, selecting and justifying appropriate metrics, and identifying overfitting through comparison of training and validation performance. It also resolves the known internal gaps by specifying assumptions, constraints, and clarifications."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks clarity in defining the problem, particularly in distinguishing between evaluation metrics and overfitting concerns. The explanation of overfitting is too simplistic, merely stating that overfitting occurs when the model performs well on training data but poorly on testing data, without further elaboration on how to identify or address it. Additionally, the student lists common metrics like accuracy, precision, recall, and F1 score but does not justify why these metrics are chosen or how they align with the business objectives of minimizing churn.",
+  "better_alternative": "A stronger framing would include a detailed explanation of why specific performance metrics are chosen, such as precision and recall, which are crucial for churn prediction as they help minimize false negatives and maximize retention. The student should also provide a more comprehensive approach to identifying overfitting, such as using cross-validation techniques and discussing potential strategies to mitigate it, like regularization or data augmentation. Furthermore, the student could incorporate assumptions about the business objectives to guide metric selection and clarify data privacy considerations when acquiring or simulating data.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Definition Clarity",
+      "score": "B",
+      "internal_note": "The student identifies the need to evaluate the model and check for overfitting but lacks depth in explaining these concepts."
+    },
+    {
+      "criterion_name": "Metric Selection Justification",
+      "score": "C",
+      "internal_note": "The student lists metrics without justification or alignment with business objectives."
+    },
+    {
+      "criterion_name": "Overfitting Identification",
+      "score": "B",
+      "internal_note": "The student mentions comparing training and testing performance but does not elaborate on identifying or addressing overfitting effectively."
+    }
+  ],
+  "strengths": [
+    "The student correctly identifies the need to evaluate the model and check for overfitting.",
+    "The student acknowledges the lack of data and suggests potential solutions for data acquisition."
+  ],
+  "refinements_correctly_selected": [
+    "Data Acquisition",
+    "Overfitting Assessment"
+  ],
+  "refinements_missed": [
+    "Assumptions about Business Objectives",
+    "Constraints regarding Data Privacy",
+    "Clarifications on Performance Metrics"
+  ],
+  "unnecessary_selections": []
+}

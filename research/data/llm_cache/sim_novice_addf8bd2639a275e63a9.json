@@ -1,0 +1,8 @@
+{
+  "commands": [
+    "Consider how composite indexes might actually slow down write performance and provide examples of when this might happen.",
+    "Discuss the importance of understanding data distribution and how it can affect indexing choices in real-world applications.",
+    "Mention how having fewer indexes could impact read performance during high concurrency, especially when many queries are happening at the same time.",
+    "Explain the potential drawbacks of frequently using `REINDEX` in a busy database and suggest alternatives that might be less disruptive."
+  ]
+}

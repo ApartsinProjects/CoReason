@@ -1,0 +1,8 @@
+{
+  "commands": [
+    "Conduct a thorough analysis of the impact of composite indexes on write performance, especially in high-transaction scenarios, to ensure that the proposed indexing strategy does not degrade overall system performance.",
+    "Evaluate the distribution of data within the indexed columns to avoid performance issues that may arise from non-uniform data distributions, which could lead to inefficient index usage.",
+    "Incorporate a discussion on the trade-offs between read and write performance when using fewer indexes in high concurrency environments, particularly during peak loads, to ensure balanced performance across all operations.",
+    "Provide a more detailed assessment of the complexity and overhead associated with frequent `REINDEX` operations in high-transaction environments, and suggest alternative strategies for index maintenance that minimize disruption."
+  ]
+}

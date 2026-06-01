@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Databases",
+    "subject_path": "Databases > Indexing & Query Optimization",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Clarification",
+        "description": "Ability to clearly define the problem in terms of database indexing and query optimization.",
+        "excellent_indicator": "Student articulates a clear, specific problem statement related to indexing and query optimization, identifying relevant aspects like query types or indexing methods.",
+        "poor_indicator": "Student provides a vague or overly broad problem statement that lacks focus on indexing or query optimization specifics."
+      },
+      {
+        "name": "Objective Identification",
+        "description": "Ability to identify the objectives or goals of optimizing the database query.",
+        "excellent_indicator": "Student clearly identifies objectives such as reducing query execution time or optimizing index usage.",
+        "poor_indicator": "Student fails to specify clear objectives, or objectives are unrelated to query optimization."
+      },
+      {
+        "name": "Assumption Articulation",
+        "description": "Ability to articulate assumptions about the database environment or query constraints.",
+        "excellent_indicator": "Student effectively identifies and articulates assumptions, such as data distribution or query frequency.",
+        "poor_indicator": "Student overlooks key assumptions or makes incorrect assumptions about the database environment."
+      }
+    ],
+    "typical_errors": [
+      "Ignoring the role of indexing in query performance.",
+      "Failing to mention specific query optimization techniques.",
+      "Misunderstanding the impact of data distribution on indexing."
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Detection",
+        "description": "Ability to detect errors or inefficiencies in AI-generated indexing strategies.",
+        "excellent_indicator": "Student accurately identifies inefficiencies or incorrect index usage in AI-generated solutions.",
+        "poor_indicator": "Student overlooks significant errors in index choice or fails to recognize inefficiencies."
+      },
+      {
+        "name": "Relevance Assessment",
+        "description": "Ability to assess the relevance of AI-generated query optimization suggestions.",
+        "excellent_indicator": "Student correctly evaluates the relevance of suggestions based on query patterns and database schema.",
+        "poor_indicator": "Student accepts irrelevant or ineffective optimization suggestions without critical evaluation."
+      },
+      {
+        "name": "Performance Impact Analysis",
+        "description": "Ability to analyze the impact of proposed indexing or optimization strategies on query performance.",
+        "excellent_indicator": "Student provides a well-reasoned analysis of how the strategies will affect query performance metrics.",
+        "poor_indicator": "Student fails to analyze or incorrectly assesses the performance impact of the strategies."
+      }
+    ],
+    "typical_errors": [
+      "Missing indexing errors that lead to full table scans.",
+      "Misjudging the relevance of an optimization technique for a given query.",
+      "Neglecting to consider index maintenance costs in performance analysis."
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Correction Command Precision",
+        "description": "Ability to provide precise and actionable correction commands to the AI.",
+        "excellent_indicator": "Student gives clear, specific commands that effectively guide the AI to improve indexing or optimization strategies.",
+        "poor_indicator": "Student provides vague or non-actionable commands that do not help refine the AI's approach."
+      },
+      {
+        "name": "Iterative Improvement",
+        "description": "Ability to iteratively refine AI output based on performance feedback.",
+        "excellent_indicator": "Student successfully iterates on AI suggestions, showing a clear trajectory of improvement in query performance.",
+        "poor_indicator": "Student fails to make meaningful improvements or does not iterate based on feedback."
+      },
+      {
+        "name": "Contextual Adaptation",
+        "description": "Ability to adapt commands based on specific database contexts or constraints.",
+        "excellent_indicator": "Student adapts commands considering database size, query complexity, or specific constraints.",
+        "poor_indicator": "Student issues generic commands without considering the specific context or constraints."
+      }
+    ],
+    "typical_errors": [
+      "Providing overly broad corrections that do not target specific issues.",
+      "Failing to adjust commands based on feedback from previous iterations.",
+      "Ignoring specific database constraints when steering AI."
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "_vars": {
+    "course_name": "Statistics",
+    "subject_path": "Statistics > Hypothesis Testing",
+    "language": "English"
+  },
+  "_temp": 0.6,
+  "framing_rubric": {
+    "criteria": [
+      {
+        "name": "Problem Identification",
+        "description": "Ability to clearly identify the statistical problem or question from the given ill-defined scenario.",
+        "excellent_indicator": "Accurately identifies the null and alternative hypotheses, variables involved, and the type of test required.",
+        "poor_indicator": "Fails to distinguish between null and alternative hypotheses or misidentifies the variables and test type."
+      },
+      {
+        "name": "Assumptions Recognition",
+        "description": "Understanding and listing the assumptions related to the statistical test being considered.",
+        "excellent_indicator": "Correctly identifies all necessary assumptions for the chosen hypothesis test (e.g., normality, independence, sample size).",
+        "poor_indicator": "Overlooks key assumptions or lists irrelevant assumptions for the test."
+      },
+      {
+        "name": "Data Requirements",
+        "description": "Ability to specify the type and amount of data needed for the hypothesis test.",
+        "excellent_indicator": "Clearly defines the data type (e.g., continuous, categorical) and the sample size needed for the test.",
+        "poor_indicator": "Provides vague or incorrect data requirements, or fails to mention sample size."
+      }
+    ],
+    "typical_errors": [
+      "Confusing null and alternative hypotheses",
+      "Ignoring or misidentifying test assumptions",
+      "Failure to specify sample size or data type"
+    ]
+  },
+  "judging_rubric": {
+    "criteria": [
+      {
+        "name": "Error Identification in AI Output",
+        "description": "Ability to identify errors or gaps in the AI-generated hypothesis testing output.",
+        "excellent_indicator": "Correctly identifies all statistical errors and logical inconsistencies in the AI output.",
+        "poor_indicator": "Misses key errors or incorrectly identifies correct information as erroneous."
+      },
+      {
+        "name": "Statistical Validity Assessment",
+        "description": "Judging the validity of the statistical methods and results presented by the AI.",
+        "excellent_indicator": "Accurately evaluates the appropriateness of statistical tests and the correctness of results.",
+        "poor_indicator": "Accepts incorrect statistical methods or results without question."
+      },
+      {
+        "name": "Assumption Verification",
+        "description": "Checking if the AI output adheres to the statistical assumptions outlined in the framing phase.",
+        "excellent_indicator": "Thoroughly verifies that all necessary assumptions are met or appropriately addressed.",
+        "poor_indicator": "Fails to check for assumption adherence or overlooks violations."
+      }
+    ],
+    "typical_errors": [
+      "Missing logical inconsistencies in hypothesis tests",
+      "Accepting incorrect p-values or conclusions",
+      "Overlooking assumption violations"
+    ]
+  },
+  "steering_rubric": {
+    "criteria": [
+      {
+        "name": "Feedback Clarity",
+        "description": "Providing clear and precise feedback to the AI to correct errors or improve output.",
+        "excellent_indicator": "Feedback is specific, actionable, and directly addresses identified errors.",
+        "poor_indicator": "Feedback is vague, overly general, or fails to address the specific issues."
+      },
+      {
+        "name": "Statistical Guidance",
+        "description": "Ability to guide the AI towards using appropriate statistical methods and interpretations.",
+        "excellent_indicator": "Suggests correct statistical procedures and interpretations to improve AI output.",
+        "poor_indicator": "Provides incorrect or irrelevant statistical guidance."
+      },
+      {
+        "name": "Iterative Improvement",
+        "description": "Effectively steering the AI through iterative cycles to refine the hypothesis testing output.",
+        "excellent_indicator": "Demonstrates a clear strategy for iterative improvement and successfully refines the output.",
+        "poor_indicator": "Fails to improve the output across iterations or repeats the same feedback without progress."
+      }
+    ],
+    "typical_errors": [
+      "Providing feedback that is too vague to implement",
+      "Suggesting inappropriate statistical methods",
+      "Repeating ineffective feedback without iteration"
+    ]
+  }
+}

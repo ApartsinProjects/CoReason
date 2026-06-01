@@ -1,0 +1,129 @@
+{
+  "_vars": {
+    "raw_problem": "You have been hired by a logistics company to optimize their package sorting process in a large warehouse. They currently use a simple algorithm that sorts packages based on a single attribute, leading to inefficiencies. Your task is to design a new sorting algorithm that improves efficiency. The company has provided data on package dimensions, weight, and priority, but has not specified the criteria or weights for sorting based on these attributes. You are also told that the company's goal is to minimize the time packages spend in the sorting system, but they have not defined what 'minimize' precisely means or how it should be measured. Deliver a report detailing your proposed algorithm, including assumptions made, the sorting criteria chosen, and an analysis of its expected efficiency improvements over the current system.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to develop a new sorting algorithm that enhances the efficiency of the package sorting process in a warehouse. This involves clearly defining the criteria for sorting packages based on the provided attributes: dimensions, weight, and priority. Additionally, we need to establish a precise metric for measuring efficiency, specifically how to quantify the time packages spend in the sorting system.\"}, {\"section_type\": \"Criteria Specification\", \"content\": \"We will analyze the attributes of the packages—dimensions, weight, and priority—to determine their relevance in the sorting process. This includes: 1) Defining how dimensions affect sorting (e.g., size categories), 2) Establishing weight limits for different sorting paths, and 3) Prioritizing packages based on urgency or delivery deadlines. Each attribute will be assigned a weight based on its importance to the overall efficiency.\"}, {\"section_type\": \"Efficiency Measurement\", \"content\": \"To minimize the time packages spend in the sorting system, we must define what 'minimize' means in quantifiable terms. This could involve metrics such as average sorting time per package, total time spent in the sorting system, and the throughput rate of packages. We will also consider the impact of the new algorithm on these metrics compared to the existing system.\"}, {\"section_type\": \"Algorithm Design\", \"content\": \"The new sorting algorithm will be designed to incorporate multi-attribute sorting, allowing for a more nuanced approach than the current single-attribute method. This may involve techniques such as weighted scoring systems, decision trees, or machine learning models to dynamically adjust sorting based on real-time data. The algorithm will be detailed with pseudocode and flowcharts to illustrate its functionality.\"}, {\"section_type\": \"Assumptions and Limitations\", \"content\": \"We will outline the assumptions made during the design process, such as the uniformity of package dimensions and weights, and the consistency of priority designations. Additionally, we will identify potential limitations of the proposed algorithm, including scenarios where the algorithm may underperform or require further refinement.\"}, {\"section_type\": \"Expected Outcomes\", \"content\": \"The report will include an analysis of the expected improvements in efficiency, supported by simulations or theoretical calculations. This will involve comparing the new algorithm's performance against the current system, highlighting reductions in sorting time and improvements in throughput.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Translation",
+          "description": "Ability to translate the ill-defined problem into a clear, well-defined task with specific objectives related to sorting and searching algorithms.",
+          "excellent_indicator": "Clearly identifies and articulates the sorting or searching problem, breaking it down into specific tasks such as choosing an appropriate algorithm based on input size and constraints.",
+          "poor_indicator": "Fails to clearly define the problem or selects irrelevant objectives not related to sorting or searching."
+        },
+        {
+          "name": "Algorithm Selection",
+          "description": "Appropriateness of the selected algorithm for the problem context, considering factors like time complexity and input characteristics.",
+          "excellent_indicator": "Selects an algorithm that is optimal for the problem constraints, such as using merge sort for large datasets requiring stable sorting.",
+          "poor_indicator": "Selects an inappropriate algorithm, such as using bubble sort for large datasets where performance is critical."
+        },
+        {
+          "name": "Constraint Identification",
+          "description": "Identifies constraints and requirements specific to the sorting or searching task, such as stability, memory usage, or time complexity.",
+          "excellent_indicator": "Accurately identifies all relevant constraints, including stability requirements and resource limitations.",
+          "poor_indicator": "Overlooks key constraints, leading to an incomplete or incorrect problem definition."
+        }
+      ],
+      "typical_errors": [
+        "Misidentifying the type of sorting required (e.g., stable vs. unstable).",
+        "Choosing a sorting algorithm without considering time complexity.",
+        "Ignoring specific constraints like memory limitations or input size."
+      ]
+    },
+    "best_framing": {
+      "base": "You have been hired by a logistics company to optimize their package sorting process in a large warehouse. They currently use a simple algorithm that sorts packages based on a single attribute, leading to inefficiencies. Your task is to design a new sorting algorithm that improves efficiency. The company has provided data on package dimensions, weight, and priority, but has not specified the criteria or weights for sorting based on these attributes. You are also told that the company's goal is to minimize the time packages spend in the sorting system, but they have not defined what 'minimize' precisely means or how it should be measured. Deliver a report detailing your proposed algorithm, including assumptions made, the sorting criteria chosen, and an analysis of its expected efficiency improvements over the current system.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Sorting Criteria and Weights",
+              "description": "Assume that the sorting criteria will prioritize package priority first, followed by weight, and then dimensions. Weights for these criteria are assumed to be: priority (50%), weight (30%), and dimensions (20%). This assumption is based on typical logistics priorities where urgency often outweighs other factors.",
+              "addresses_gap": "No specific sorting criteria or attribute weights provided"
+            },
+            {
+              "title": "Definition of 'Minimize Time'",
+              "description": "Assume that 'minimize time' refers to reducing the average time a package spends from arrival to being sorted and ready for dispatch. This includes both processing time and waiting time in the queue.",
+              "addresses_gap": "Ambiguity in how 'minimize time' should be measured"
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Stability Requirement",
+              "description": "The sorting algorithm must be stable, meaning that packages with equal sorting criteria should maintain their relative order from the input. This is important to ensure that packages with the same priority, weight, and dimensions are handled consistently.",
+              "addresses_gap": "Implicit requirement for stable sorting given multiple attributes"
+            },
+            {
+              "title": "Time Complexity",
+              "description": "The algorithm should have a time complexity of O(n log n) or better to handle large volumes of packages efficiently, given the scale of operations in a large warehouse.",
+              "addresses_gap": "Need for efficient sorting due to large dataset size"
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Efficiency Improvement",
+              "description": "Measure the efficiency improvement by comparing the average time packages spend in the sorting system before and after implementing the new algorithm. An improvement of at least 20% in processing time will be considered successful.",
+              "addresses_gap": "Unclear efficiency goals or metrics for improvement"
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "In-Scope Attributes",
+              "description": "The scope of the sorting algorithm is limited to the provided attributes: dimensions, weight, and priority. Other potential attributes such as destination or handling requirements are out of scope for this task.",
+              "addresses_gap": "Clarification on which data attributes are relevant to the task"
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by clearly defining the problem, selecting appropriate algorithms, and identifying constraints. It clarifies sorting criteria and measures of success, ensuring alignment with the logistics company's goals."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing does a good job of breaking down the problem into specific sections, but it lacks clarity in some areas. For instance, while they mention the need to define sorting criteria and weights, they do not specify how these weights will be determined or justified. Additionally, the section on algorithm design suggests several techniques but does not clearly justify why one might be more suitable than others given the problem constraints. The framing also lacks a detailed discussion on the constraints related to memory usage or potential scalability issues.",
+  "better_alternative": "A stronger framing would include a more detailed justification for the chosen sorting criteria and weights, perhaps by analyzing the logistics company's operational priorities or historical data. It would also benefit from a more focused discussion on algorithm selection, explicitly comparing the pros and cons of different approaches like decision trees versus machine learning models in this context. Furthermore, a detailed analysis of constraints, including memory and scalability considerations, would provide a more comprehensive problem definition.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Translation",
+      "score": "B",
+      "internal_note": "The student identifies the main objective and breaks it down into tasks but lacks specificity in defining sorting criteria and weights."
+    },
+    {
+      "criterion_name": "Algorithm Selection",
+      "score": "B",
+      "internal_note": "The student suggests several techniques but does not provide a clear rationale for selecting a specific algorithm."
+    },
+    {
+      "criterion_name": "Constraint Identification",
+      "score": "C",
+      "internal_note": "The student mentions some constraints but overlooks important aspects like memory usage and scalability."
+    }
+  ],
+  "strengths": [
+    "The student clearly articulates the need to define sorting criteria and efficiency metrics.",
+    "The framing is well-structured, covering multiple relevant aspects of the problem."
+  ],
+  "refinements_correctly_selected": [
+    "Problem Definition",
+    "Criteria Specification",
+    "Efficiency Measurement",
+    "Algorithm Design",
+    "Assumptions and Limitations",
+    "Expected Outcomes"
+  ],
+  "refinements_missed": [
+    "Detailed justification for sorting criteria and weights",
+    "In-depth analysis of algorithm selection",
+    "Comprehensive discussion on constraints like memory and scalability"
+  ],
+  "unnecessary_selections": []
+}

@@ -1,0 +1,32 @@
+{
+  "_vars": {
+    "raw_problem": "Our client, a regional health organization, has conducted a survey to investigate the effectiveness of new wellness programs in reducing employee stress levels. They need a statistical analysis to determine if the programs have a significant impact. You are tasked with designing and conducting a hypothesis test based on the survey data. \n\nThe survey collected data from various departments, but it is unclear how these departments differ in their baseline stress levels. Additionally, the distribution of the data and assumptions about variance across groups are not provided. You should choose an appropriate statistical test and justify your choice, ensuring it suits the data characteristics and research question. Provide a clear explanation of your hypothesis test design, including any assumptions you make and the conclusions you draw.",
+    "student_framing": "[{\"section_type\": \"Assumptions\", \"entries\": [{\"title\": \"Normality of Data\", \"description\": \"Assume that the data collected from the survey follows a normal distribution, or if not, that the Central Limit Theorem applies due to a sufficiently large sample size.\", \"addresses_gap\": \"Unspecified data distribution and variance assumptions\"}, {\"title\": \"Homogeneity of Variance\", \"description\": \"Assume equal variances across different departments unless evidence from the data suggests otherwise. This is crucial for tests like ANOVA.\", \"addresses_gap\": \"Unspecified data distribution and variance assumptions\"}, {\"title\": \"Independence of Observations\", \"description\": \"Assume that the stress level measurements from different employees are independent of each other.\", \"addresses_gap\": \"Unspecified data distribution and variance assumptions\"}]}, {\"section_type\": \"Constraints\", \"entries\": [{\"title\": \"Significance Level\", \"description\": \"Use a standard significance level of 0.05 for the hypothesis test unless otherwise specified by the client.\", \"addresses_gap\": \"No information on appropriate significance level for the hypothesis test\"}]}, {\"section_type\": \"Clarifications\", \"entries\": [{\"title\": \"Departmental Baseline Differences\", \"description\": \"Clarify whether the baseline stress levels differ significantly across departments, as this may affect the choice of statistical test (e.g., ANOVA vs. t-test).\", \"addresses_gap\": \"Lack of clarity on department differences in baseline stress levels\"}]}, {\"section_type\": \"Success Metrics\", \"entries\": [{\"title\": \"Statistical Significance\", \"description\": \"The success of the hypothesis test is measured by whether the p-value is below the significance level, indicating a statistically significant impact of the wellness programs.\", \"addresses_gap\": \"No information on appropriate significance level for the hypothesis test\"}]}, {\"section_type\": \"Scope Boundaries\", \"entries\": [{\"title\": \"Focus on Stress Reduction\", \"description\": \"The analysis should focus solely on the impact of wellness programs on stress levels, excluding other potential benefits or impacts of the programs.\", \"addresses_gap\": \"Lack of clarity on department differences in baseline stress levels\"}]}]",
+    "subject_path": "Statistics > Hypothesis Testing",
+    "language": "English"
+  },
+  "_temp": 0.7,
+  "solution_text": "To determine the effectiveness of the new wellness programs on reducing employee stress levels, we will perform a statistical hypothesis test. Given the assumptions about data normality and homogeneity of variance, we will use Analysis of Variance (ANOVA) as the primary statistical test. Here is the detailed design and reasoning for the hypothesis test:\n\n1. **Hypothesis Formulation**:\n   - Null Hypothesis (H0): The wellness programs have no effect on stress levels across different departments, i.e., there is no difference in mean stress levels between groups.\n   - Alternative Hypothesis (H1): The wellness programs have a significant effect on stress levels, indicating differences in mean stress levels between groups.\n\n2. **Assumptions**:\n   - **Normality**: We assume that the data follows a normal distribution or that the Central Limit Theorem applies due to a sufficiently large sample size.\n   - **Homogeneity of Variance**: We assume equal variances across departments unless the Levene’s test indicates otherwise.\n   - **Independence**: Each employee’s stress level measurement is independent of others.\n\n3. **Test Selection**:\n   - ANOVA is suitable as it compares the means across multiple groups and is robust to the assumption of normality with large samples.\n   - If the assumptions are violated, a non-parametric test like the Kruskal-Wallis test may be considered.\n\n4. **Data Analysis**:\n   - Conduct ANOVA to compare stress levels across departments.\n   - If the p-value from the ANOVA is less than 0.05, we will reject the null hypothesis, suggesting that the wellness programs significantly affect stress levels.\n\n5. **Interpretation**:\n   - A significant result would indicate that at least one department's stress levels differ from the others, potentially due to the wellness programs.\n   - If results are not significant, it suggests no strong evidence of the programs' impact on stress reduction.\n\n6. **Conclusion**:\n   - Based on the p-value obtained, we will conclude whether the wellness programs have a statistically significant impact on reducing stress levels among employees.\n\nThis approach ensures a comprehensive analysis of the effectiveness of the wellness programs while considering the assumptions and constraints provided.",
+  "internal_issues": [
+    {
+      "issue": "Assumes ANOVA is appropriate without checking baseline differences between departments.",
+      "location": "Test Selection",
+      "severity": "moderate"
+    },
+    {
+      "issue": "Does not address potential non-normality of data in small sample groups.",
+      "location": "Assumptions",
+      "severity": "minor"
+    },
+    {
+      "issue": "Overlooks post-hoc tests for identifying specific group differences.",
+      "location": "Interpretation",
+      "severity": "moderate"
+    },
+    {
+      "issue": "Assumes Levene’s test will always correctly identify variance issues without considering its limitations.",
+      "location": "Assumptions",
+      "severity": "minor"
+    }
+  ]
+}

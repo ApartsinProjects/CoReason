@@ -1,0 +1,8 @@
+{
+  "commands": [
+    "Include a thorough analysis of the impact of composite indexes on write performance, particularly in high-transaction environments, to ensure that the benefits outweigh the costs.",
+    "Address the potential variability in data distribution and how it may affect index performance, suggesting strategies for dealing with skewed data.",
+    "Discuss the trade-offs between read and write performance in high concurrency scenarios, especially how fewer indexes might affect query times under peak loads.",
+    "Evaluate the implications of frequent `REINDEX` operations, considering alternative strategies such as using `CONCURRENTLY` to minimize locking and impact on transaction throughput."
+  ]
+}

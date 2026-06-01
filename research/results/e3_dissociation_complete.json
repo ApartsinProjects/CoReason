@@ -8,56 +8,56 @@
     "steering_level": "expert",
     "framing_grade": "B",
     "judging_grade": "A",
-    "steering_grade": "C",
+    "steering_grade": "B",
     "framing_percrit": [
       {
-        "criterion_name": "Problem Definition",
-        "score": "B",
-        "internal_note": "The student identifies key elements but lacks specific details about dataset size and distribution."
-      },
-      {
-        "criterion_name": "Relevance to Sorting & Searching",
+        "criterion_name": "Problem Translation",
         "score": "A",
-        "internal_note": "The student effectively connects the problem to sorting and searching algorithms."
+        "internal_note": "The student clearly defines the problem and objectives, focusing on minimizing sorting time and identifying key attributes."
       },
       {
-        "criterion_name": "Well-Defined Task",
+        "criterion_name": "Algorithm Selection",
         "score": "B",
-        "internal_note": "While the task is generally well-defined, it could benefit from more precise constraints and assumptions."
+        "internal_note": "The student suggests a multi-criteria sorting algorithm but lacks a clear justification for the choice of specific algorithms like quicksort."
+      },
+      {
+        "criterion_name": "Constraint Identification",
+        "score": "B",
+        "internal_note": "The student identifies key constraints such as the need for a weighting system and performance metrics but could further specify computational constraints and stability requirements."
       }
     ],
     "judging_percrit": [
       {
         "criterion_name": "Error Identification",
         "score": "A",
-        "internal_note": "The student correctly identified all known issues in the AI output."
+        "internal_note": "The student correctly identified all critical errors in the AI's output."
       },
       {
-        "criterion_name": "Analysis of AI Output",
-        "score": "B",
-        "internal_note": "The student demonstrated a good understanding of the AI output, but their analysis could have been more detailed and nuanced."
-      },
-      {
-        "criterion_name": "Relevance to Problem",
+        "criterion_name": "Gap Analysis",
         "score": "A",
-        "internal_note": "The student effectively evaluated the AI output in the context of the original problem, considering all key elements and constraints."
+        "internal_note": "The student identified all missing elements that could affect the solution's efficiency and correctness."
+      },
+      {
+        "criterion_name": "Algorithmic Consistency",
+        "score": "A",
+        "internal_note": "The student ensured that the AI's solution adhered to the principles of the proposed algorithm, identifying inconsistencies where they existed."
       }
     ],
     "steering_percrit": [
       {
-        "criterion_name": "Correction Commands",
+        "criterion_name": "Corrective Commands",
         "score": "B",
-        "internal_note": "Commands were clear and relevant but missed addressing some critical complexities."
+        "internal_note": "Commands were generally effective but lacked specificity in methods for validation."
       },
       {
-        "criterion_name": "Sorting & Searching Concepts",
+        "criterion_name": "Feedback Integration",
         "score": "B",
-        "internal_note": "Demonstrated understanding but did not fully explore trade-offs in data structure transitions."
+        "internal_note": "Student integrated feedback well but did not fully address the need for detailed validation methods."
       },
       {
-        "criterion_name": "Iteration and Refining",
-        "score": "C",
-        "internal_note": "Did not iterate sufficiently to address all identified issues."
+        "criterion_name": "Efficiency Optimization",
+        "score": "B",
+        "internal_note": "Addressed key efficiency issues but did not optimize the validation process for weights and dimensions."
       }
     ],
     "judging_real_flagged": 4,
@@ -65,12 +65,12 @@
     "judging_total_real": 4,
     "issues_missed": [],
     "false_positives": [],
-    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary goal is to design a sorting algorithm that efficiently organizes a large dataset of customer records. The dataset will include fields such as name, email, and phone number, and the algorithm must support frequent search operations on these fields.\"}, {\"section_type\": \"Constraints\", \"content\": \"1. Efficiency: The sorting algorithm should have a time complexity of O(n log n) or better for the initial sort. 2. Memory Usage: The algorit",
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the problem by specifying the goals of the sorting process. The primary goal is to minimize the time packages spend in the sorting system. This can be quantified by measuring the average time taken from the moment a package enters the sorting area until it is dispatched to its next destination.\"}, {\"section_type\": \"Criteria Identification\", \"content\": \"Identify and prioritize the attributes that will influence the sorting algorit",
     "steering_cmds": [
-      "Incorporate a strategy to handle data skewness, such as implementing a bucketing technique or adaptive partitioning to ensure balanced sorting and searching performance.",
-      "Enhance the locking mechanism to include optimistic concurrency control or versioning to better manage concurrent updates and reduce the likelihood of conflicts.",
-      "Reassess the reliance on hash tables by considering alternative data structures like tries or suffix trees for more efficient search functionality, especially for prefix-based queries.",
-      "Ensure compliance with data protection regulations by integrating data anonymization techniques and implementing access controls to protect sensitive customer information during sorting and searching processes."
+      "Revise the assumption that lighter packages should be sorted first; consider that heavier packages may require more handling time or specific routing.",
+      "Validate the chosen weights of 50%, 30%, and 20% for priority, weight, and dimensions respectively, through data analysis or stakeholder input to ensure they reflect operational realities.",
+      "Reassess the importance of dimensions in the sorting criteria; incorporate space constraints and handling requirements to determine their true impact on sorting efficiency.",
+      "Conduct a detailed analysis of historical data to establish a realistic benchmark for expected efficiency improvements, rather than assuming a 20% reduction without empirical support."
     ]
   },
   {
@@ -82,56 +82,56 @@
     "steering_level": "novice",
     "framing_grade": "B",
     "judging_grade": "A",
-    "steering_grade": "B",
+    "steering_grade": "C",
     "framing_percrit": [
       {
-        "criterion_name": "Problem Definition",
-        "score": "B",
-        "internal_note": "The student identifies key elements but lacks specific details about dataset size and characteristics."
+        "criterion_name": "Problem Translation",
+        "score": "A",
+        "internal_note": "The student clearly identifies the problem and breaks it into specific tasks, such as defining sorting criteria and measuring efficiency."
       },
       {
-        "criterion_name": "Relevance to Sorting & Searching",
+        "criterion_name": "Algorithm Selection",
         "score": "B",
-        "internal_note": "The student demonstrates an understanding of sorting and searching but does not fully justify the choice of data structures."
+        "internal_note": "The student suggests a multi-criteria approach but lacks specificity in discussing which algorithms are suitable and why."
       },
       {
-        "criterion_name": "Well-Defined Task",
+        "criterion_name": "Constraint Identification",
         "score": "B",
-        "internal_note": "The task is generally well-defined but could benefit from more detailed constraints and assumptions."
+        "internal_note": "The student identifies some constraints, such as the need for efficiency and stability, but could expand on other potential constraints like memory usage."
       }
     ],
     "judging_percrit": [
       {
         "criterion_name": "Error Identification",
         "score": "A",
-        "internal_note": "The student correctly identified all known issues in the AI output."
+        "internal_note": "The student accurately identified all errors and inefficiencies."
       },
       {
-        "criterion_name": "Analysis of AI Output",
-        "score": "B",
-        "internal_note": "The student demonstrated a good understanding of the AI output, but their analysis could have been more detailed and nuanced."
-      },
-      {
-        "criterion_name": "Relevance to Problem",
+        "criterion_name": "Gap Analysis",
         "score": "A",
-        "internal_note": "The student effectively evaluated the AI output in the context of the original problem, considering all key elements and constraints."
+        "internal_note": "The student identified all missing elements and assumptions in the AI's solution."
+      },
+      {
+        "criterion_name": "Algorithmic Consistency",
+        "score": "A",
+        "internal_note": "The student ensured that the AI's solution adhered to algorithmic principles, identifying deviations accurately."
       }
     ],
     "steering_percrit": [
       {
-        "criterion_name": "Correction Commands",
+        "criterion_name": "Corrective Commands",
         "score": "B",
-        "internal_note": "Commands were clear and relevant but missed addressing some critical inefficiencies."
+        "internal_note": "Commands were generally effective but lacked precision in addressing all critical issues."
       },
       {
-        "criterion_name": "Sorting & Searching Concepts",
+        "criterion_name": "Feedback Integration",
         "score": "B",
-        "internal_note": "Demonstrated a good understanding of sorting and searching concepts but overlooked some algorithm limitations."
+        "internal_note": "Some feedback was integrated well, but key issues remained unaddressed."
       },
       {
-        "criterion_name": "Iteration and Refining",
-        "score": "B",
-        "internal_note": "Refined the solution well in the first cycle but did not iterate further to address remaining issues."
+        "criterion_name": "Efficiency Optimization",
+        "score": "C",
+        "internal_note": "Did not fully optimize for efficiency, as detailed metrics and historical data were not incorporated."
       }
     ],
     "judging_real_flagged": 4,
@@ -139,12 +139,12 @@
     "judging_total_real": 4,
     "issues_missed": [],
     "false_positives": [],
-    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The goal is to design an efficient sorting algorithm tailored for a large dataset of customer records. The algorithm must prioritize not only the sorting process but also facilitate frequent searches by name, email, and phone number. Additionally, it should minimize memory usage and maintain performance under high concurrency during updates.\"}, {\"section_type\": \"Requirements Analysis\", \"content\": \"1. Sorting Efficiency: The algorithm should ide",
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to develop a new sorting algorithm for a logistics company's warehouse that optimizes the package sorting process. This includes identifying key attributes (dimensions, weight, priority) and establishing a multi-criteria sorting approach that addresses the limitations of the current single-attribute algorithm.\"}, {\"section_type\": \"Criteria Specification\", \"content\": \"The criteria for sorting packages must be clearly def",
     "steering_cmds": [
-      "Consider how data skewness might affect the sorting process and if there are better algorithms for unevenly distributed data.",
-      "Think about how to better manage conflicts that happen when many updates are happening at the same time.",
-      "Maybe use more than just hash tables for searching, like adding different types of indexes.",
-      "Remember to mention data protection laws when dealing with customer information."
+      "Reconsider the assumption that lighter packages should be sorted first because it might not always be true.",
+      "Provide justification for the weight distribution of 50%, 30%, and 20% because it seems random.",
+      "Consider how dimensions might be more important based on space constraints in the warehouse.",
+      "Analyze if a 20% reduction in sorting time is realistic based on the provided data."
     ]
   },
   {
@@ -154,78 +154,77 @@
     "framing_level": "expert",
     "judging_level": "novice",
     "steering_level": "expert",
-    "framing_grade": "A",
+    "framing_grade": "C",
     "judging_grade": "C",
-    "steering_grade": "B",
+    "steering_grade": "C",
     "framing_percrit": [
       {
-        "criterion_name": "Problem Definition",
-        "score": "A",
-        "internal_note": "The student accurately defines the problem, identifying key elements such as input, output, and constraints."
-      },
-      {
-        "criterion_name": "Relevance to Sorting & Searching",
+        "criterion_name": "Problem Translation",
         "score": "B",
-        "internal_note": "The student demonstrates an understanding of the problem's relation to sorting and searching but could better articulate how these concepts are applied to solve the problem."
+        "internal_note": "The student identifies the main objective and breaks it down into tasks but lacks specificity in defining sorting criteria and weights."
       },
       {
-        "criterion_name": "Well-Defined Task",
-        "score": "A",
-        "internal_note": "The student translates the ill-defined problem into a well-defined task with clear objectives and requirements."
+        "criterion_name": "Algorithm Selection",
+        "score": "B",
+        "internal_note": "The student suggests several techniques but does not provide a clear rationale for selecting a specific algorithm."
+      },
+      {
+        "criterion_name": "Constraint Identification",
+        "score": "C",
+        "internal_note": "The student mentions some constraints but overlooks important aspects like memory usage and scalability."
       }
     ],
     "judging_percrit": [
       {
         "criterion_name": "Error Identification",
         "score": "B",
-        "internal_note": "The student identified one critical issue but also incorrectly flagged a correct aspect as erroneous."
+        "internal_note": "The student identified a critical error but also incorrectly flagged a non-existent issue."
       },
       {
-        "criterion_name": "Analysis of AI Output",
+        "criterion_name": "Gap Analysis",
         "score": "C",
-        "internal_note": "The student demonstrated a misunderstanding of Timsort's capabilities and did not fully analyze the AI output."
+        "internal_note": "The student missed several critical gaps in the AI's solution."
       },
       {
-        "criterion_name": "Relevance to Problem",
+        "criterion_name": "Algorithmic Consistency",
         "score": "B",
-        "internal_note": "The student considered the problem context to some extent but missed several key constraints and elements."
+        "internal_note": "The student incorrectly flagged an issue with priority handling, which was consistent in the AI's solution."
       }
     ],
     "steering_percrit": [
       {
-        "criterion_name": "Correction Commands",
+        "criterion_name": "Corrective Commands",
         "score": "B",
-        "internal_note": "Commands were relevant and addressed critical issues but lacked specificity in implementation details."
+        "internal_note": "Commands were generally effective but lacked specificity in implementation details."
       },
       {
-        "criterion_name": "Sorting & Searching Concepts",
-        "score": "A",
-        "internal_note": "Demonstrated a strong understanding of sorting and searching concepts and their limitations."
+        "criterion_name": "Feedback Integration",
+        "score": "B",
+        "internal_note": "Student integrated feedback but did not fully resolve all issues."
       },
       {
-        "criterion_name": "Iteration and Refining",
-        "score": "B",
-        "internal_note": "Effectively iterated and refined the solution, but marking 'done' early limited further refinement."
+        "criterion_name": "Efficiency Optimization",
+        "score": "C",
+        "internal_note": "Did not adequately address the efficiency implications of dimension sorting."
       }
     ],
     "judging_real_flagged": 1,
     "judging_false_flagged": 1,
     "judging_total_real": 4,
     "issues_missed": [
-      "Inadequate handling of concurrent update conflicts",
-      "Overreliance on hash tables for search functionality",
-      "Lack of consideration for data protection regulations"
+      "Over-simplified assumption of weights (50%, 30%, 20%) without validation.",
+      "Assuming dimensions are less important without considering space constraints.",
+      "Assumption that a 20% reduction is feasible without data analysis."
     ],
     "false_positives": [
-      "The Timsort algorithm is not suitable for large datasets because it can only handle small amounts of data efficiently."
+      "The algorithm doesn't account for priority at all, leading to delays in dispatching high-priority packages."
     ],
-    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to design an efficient sorting algorithm tailored for a large dataset of customer records. The dataset will contain fields such as name, email, and phone number, which will be frequently searched. The algorithm must not only sort the records efficiently but also facilitate rapid searches, particularly by the specified fields.\"}, {\"section_type\": \"Constraints\", \"content\": \"1. **Efficiency**: The algorithm should ideally ",
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to develop a new sorting algorithm that enhances the efficiency of the package sorting process in a warehouse. This involves clearly defining the criteria for sorting packages based on the provided attributes: dimensions, weight, and priority. Additionally, we need to establish a precise metric for measuring efficiency, specifically how to quantify the time packages spend in the sorting system.\"}, {\"section_type\": \"Crit",
     "steering_cmds": [
-      "Address the issue of data skewness by incorporating a strategy to detect and handle skewed distributions, potentially using bucket sorting or adaptive algorithms that can better manage unevenly distributed data.",
-      "Reassess the choice of Timsort for large datasets; consider alternative algorithms like external merge sort or radix sort that are specifically designed for handling large volumes of data efficiently.",
-      "Implement a mechanism to dynamically adjust the chunk size based on the characteristics of the data to optimize memory usage further.",
-      "Enhance the locking mechanism for concurrent updates by exploring lock-free data structures or optimistic concurrency control to reduce contention and improve throughput.",
-      "Provide a clearer evaluation metric for the sorting algorithm's performance, including edge cases and worst-case scenarios to ensure robustness under varying conditions."
+      "Revise the assumption regarding weight sorting; instead of sorting lighter packages first, prioritize high-priority packages regardless of weight.",
+      "Incorporate a mechanism to ensure that high-priority packages are dispatched first, even if they are heavier than lower-priority packages.",
+      "Clarify the definition of 'minimize' in the context of sorting time, potentially by establishing a specific target reduction percentage or time threshold.",
+      "Include a detailed analysis of how the proposed sorting algorithm will handle edge cases, such as packages with identical attributes across all criteria."
     ]
   },
   {
@@ -240,72 +239,73 @@
     "steering_grade": "C",
     "framing_percrit": [
       {
-        "criterion_name": "Problem Definition",
+        "criterion_name": "Problem Translation",
         "score": "B",
-        "internal_note": "The student defines the problem well but lacks specific details on dataset size and concurrent update volume."
+        "internal_note": "The student identifies the need to clarify 'minimize' but lacks specificity in how this affects the algorithm."
       },
       {
-        "criterion_name": "Relevance to Sorting & Searching",
-        "score": "A",
-        "internal_note": "The student effectively connects the problem to sorting and searching algorithms, though could explore impacts further."
+        "criterion_name": "Algorithm Selection",
+        "score": "B",
+        "internal_note": "Suggests advanced techniques but lacks justification for their use given constraints."
       },
       {
-        "criterion_name": "Well-Defined Task",
+        "criterion_name": "Constraint Identification",
         "score": "B",
-        "internal_note": "The task is generally well-defined, but lacks specific performance targets for concurrency and memory usage."
+        "internal_note": "Identifies some constraints but could be more thorough in exploring how these impact algorithm design."
       }
     ],
     "judging_percrit": [
       {
         "criterion_name": "Error Identification",
         "score": "B",
-        "internal_note": "The student identified one critical issue but also incorrectly flagged a correct aspect as erroneous."
+        "internal_note": "The student identified one critical error but missed others."
       },
       {
-        "criterion_name": "Analysis of AI Output",
+        "criterion_name": "Gap Analysis",
         "score": "C",
-        "internal_note": "The student demonstrated a misunderstanding of Timsort's capabilities and did not fully analyze the AI output."
+        "internal_note": "The student overlooked several important gaps in the AI's solution."
       },
       {
-        "criterion_name": "Relevance to Problem",
+        "criterion_name": "Algorithmic Consistency",
         "score": "B",
-        "internal_note": "The student considered the problem context to some extent but missed several key constraints and elements."
+        "internal_note": "The student incorrectly flagged a consistency issue regarding priority handling."
       }
     ],
     "steering_percrit": [
       {
-        "criterion_name": "Correction Commands",
+        "criterion_name": "Corrective Commands",
         "score": "B",
-        "internal_note": "Commands were relevant but lacked depth and specificity in some areas."
+        "internal_note": "Commands addressed some issues but lacked precision and specificity."
       },
       {
-        "criterion_name": "Sorting & Searching Concepts",
+        "criterion_name": "Feedback Integration",
         "score": "B",
-        "internal_note": "Demonstrated understanding of sorting concepts but did not fully explore alternative algorithms."
+        "internal_note": "Integrated some feedback but missed addressing all critical issues."
       },
       {
-        "criterion_name": "Iteration and Refining",
+        "criterion_name": "Efficiency Optimization",
         "score": "C",
-        "internal_note": "Did not iterate or refine commands beyond the first cycle."
+        "internal_note": "Did not adequately address efficiency or complexity in the sorting algorithm."
       }
     ],
     "judging_real_flagged": 1,
     "judging_false_flagged": 1,
     "judging_total_real": 4,
     "issues_missed": [
-      "Inadequate handling of concurrent update conflicts",
-      "Overreliance on hash tables for search functionality",
-      "Lack of consideration for data protection regulations"
+      "Over-simplified assumption of weights (50%, 30%, 20%) without validation.",
+      "Assuming dimensions are less important without considering space constraints.",
+      "Assumption that a 20% reduction is feasible without data analysis."
     ],
     "false_positives": [
-      "The Timsort algorithm is not suitable for large datasets because it can only handle small amounts of data efficiently."
+      "The algorithm doesn't account for priority at all, leading to delays in dispatching high-priority packages."
     ],
-    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The objective is to design a sorting algorithm that efficiently organizes a large dataset of customer records, which includes fields such as name, email, and phone number. The algorithm must support frequent searches on these fields and be optimized for minimal memory usage. Additionally, it should be capable of handling a high volume of concurrent updates without significant performance degradation.\"}, {\"section_type\": \"Constraints Identificat",
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary goal is to optimize the package sorting process in a warehouse to minimize the time packages spend in the sorting system. This involves developing a new sorting algorithm that takes into account multiple attributes of the packages, including dimensions, weight, and priority. The definition of 'minimize' needs to be clarified in terms of measurable metrics such as average sorting time, maximum delay, and throughput rate.\"}, {\"section",
     "steering_cmds": [
-      "Consider adding more details about how to handle data skewness in the dataset.",
-      "Explain why Timsort might not be the best choice for very large datasets.",
-      "Suggest other sorting algorithms that could work better for large datasets.",
-      "Provide more information on how the locking mechanism will affect performance during updates."
+      "Change the assumption that lighter packages should be sorted first because it might not be the best idea.",
+      "Make sure to really focus on how to sort high-priority packages first to avoid delays.",
+      "Add more details about how to measure the time saved in the sorting process.",
+      "Consider including examples of how the sorting would work with different packages.",
+      "Explain a bit more about why using Merge Sort is good for this situation."
     ]
   },
   {
@@ -320,53 +320,53 @@
     "steering_grade": "B",
     "framing_percrit": [
       {
-        "criterion_name": "Problem Definition",
+        "criterion_name": "Problem Translation",
         "score": "B",
-        "internal_note": "The student identifies key elements but lacks specific details about dataset size and constraints."
+        "internal_note": "The student identifies the problem and its limitations but lacks specificity in defining objectives and metrics."
       },
       {
-        "criterion_name": "Relevance to Sorting & Searching",
-        "score": "B",
-        "internal_note": "The student acknowledges the need for sorting and searching but does not fully explore how these concepts apply to the problem."
-      },
-      {
-        "criterion_name": "Well-Defined Task",
+        "criterion_name": "Algorithm Selection",
         "score": "C",
-        "internal_note": "The task is not fully well-defined due to lack of specific metrics and constraints."
+        "internal_note": "The student does not address algorithm selection or appropriateness for the problem."
+      },
+      {
+        "criterion_name": "Constraint Identification",
+        "score": "B",
+        "internal_note": "The student identifies some constraints but misses key aspects like stability and time complexity."
       }
     ],
     "judging_percrit": [
       {
         "criterion_name": "Error Identification",
         "score": "A",
-        "internal_note": "The student correctly identified all known issues in the AI output."
+        "internal_note": "The student correctly identified all critical errors in the AI's output."
       },
       {
-        "criterion_name": "Analysis of AI Output",
-        "score": "B",
-        "internal_note": "The student demonstrated a good understanding of the AI output, but their analysis could have been more detailed and nuanced."
-      },
-      {
-        "criterion_name": "Relevance to Problem",
+        "criterion_name": "Gap Analysis",
         "score": "A",
-        "internal_note": "The student effectively evaluated the AI output in the context of the original problem, considering all key elements and constraints."
+        "internal_note": "The student identified all missing elements that could affect the solution's efficiency and correctness."
+      },
+      {
+        "criterion_name": "Algorithmic Consistency",
+        "score": "A",
+        "internal_note": "The student ensured that the AI's solution adhered to the principles of the proposed algorithm, identifying inconsistencies where they existed."
       }
     ],
     "steering_percrit": [
       {
-        "criterion_name": "Correction Commands",
+        "criterion_name": "Corrective Commands",
         "score": "B",
-        "internal_note": "The commands were generally clear and relevant, but missed addressing some complexities."
+        "internal_note": "Commands were specific and addressed critical issues but lacked detailed implementation guidance."
       },
       {
-        "criterion_name": "Sorting & Searching Concepts",
-        "score": "A",
-        "internal_note": "Demonstrated a strong understanding of sorting and searching concepts."
+        "criterion_name": "Feedback Integration",
+        "score": "B",
+        "internal_note": "Student effectively integrated feedback but did not fully resolve all issues."
       },
       {
-        "criterion_name": "Iteration and Refining",
+        "criterion_name": "Efficiency Optimization",
         "score": "B",
-        "internal_note": "The student iterated effectively but marked 'done' prematurely, leaving some issues unresolved."
+        "internal_note": "Commands improved efficiency but did not fully optimize due to lack of specific data validation steps."
       }
     ],
     "judging_real_flagged": 4,
@@ -374,12 +374,12 @@
     "judging_total_real": 4,
     "issues_missed": [],
     "false_positives": [],
-    "framing_text": "[{\"section_type\": \"Understanding the Problem\", \"content\": \"I need to sort a large dataset of customer records. This means organizing the records in a certain order. I also have to think about how people will search for these records by name, email, and phone number.\"}, {\"section_type\": \"Requirements\", \"content\": \"The algorithm should be efficient, which probably means it needs to be fast. I also need to worry about memory usage, so it shouldn't use too much space. Plus, it should handle many upd",
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly state what the current sorting algorithm does and identify its limitations. Mention that it only sorts by one attribute which is not effective for the variety of packages.\"}, {\"section_type\": \"Criteria for Sorting\", \"content\": \"List the attributes provided: package dimensions, weight, and priority. Explain that we need to decide how to use these attributes for sorting.\"}, {\"section_type\": \"Goals and Measurements\", \"content\": \"Discuss th",
     "steering_cmds": [
-      "Incorporate a strategy to handle data skewness by implementing a partitioning scheme that can dynamically adjust based on the distribution of customer records, ensuring that sorting and searching remain efficient even with uneven data distribution.",
-      "Enhance the locking mechanism for concurrent updates by exploring optimistic concurrency control to reduce contention and increase throughput, allowing for more seamless updates without significantly impacting sorting performance.",
-      "Reassess the reliance on hash tables for search functionality; consider implementing a composite index that combines multiple fields (name, email, phone number) to improve search efficiency and reduce the potential for hash collisions.",
-      "Integrate data protection regulations into the design by ensuring that the sorting and searching processes comply with relevant laws such as GDPR, including mechanisms for data anonymization and secure access controls."
+      "Revise the assumption that lighter packages should be sorted first; consider the impact of weight on handling time and operational constraints.",
+      "Validate the chosen weights of 50%, 30%, and 20% through data analysis or stakeholder consultation to ensure they reflect the company's priorities accurately.",
+      "Reassess the importance of dimensions in the sorting criteria, taking into account space constraints and how package size may affect sorting efficiency and handling.",
+      "Conduct a thorough analysis of historical data to determine if a 20% reduction in sorting time is realistic and achievable, and adjust expectations accordingly."
     ]
   },
   {
@@ -389,58 +389,58 @@
     "framing_level": "novice",
     "judging_level": "expert",
     "steering_level": "novice",
-    "framing_grade": "B",
+    "framing_grade": "C",
     "judging_grade": "A",
-    "steering_grade": "B",
+    "steering_grade": "C",
     "framing_percrit": [
       {
-        "criterion_name": "Problem Definition",
+        "criterion_name": "Problem Translation",
         "score": "B",
-        "internal_note": "The student identifies key elements but lacks specificity in constraints and assumptions."
+        "internal_note": "The student identified the need to improve sorting efficiency but did not clearly define the specific tasks or objectives."
       },
       {
-        "criterion_name": "Relevance to Sorting & Searching",
-        "score": "B",
-        "internal_note": "The student understands the relevance but does not fully connect sorting and searching performance metrics to the problem."
+        "criterion_name": "Algorithm Selection",
+        "score": "C",
+        "internal_note": "The student did not propose a specific algorithm or discuss its appropriateness for the given constraints."
       },
       {
-        "criterion_name": "Well-Defined Task",
+        "criterion_name": "Constraint Identification",
         "score": "B",
-        "internal_note": "The task is generally well-defined but lacks precise metrics and assumptions needed for a complete solution."
+        "internal_note": "The student mentioned the need to understand 'minimize' but did not identify other constraints like stability or time complexity."
       }
     ],
     "judging_percrit": [
       {
         "criterion_name": "Error Identification",
         "score": "A",
-        "internal_note": "The student correctly identified all known issues in the AI output."
+        "internal_note": "The student correctly identified all critical errors in the AI's output."
       },
       {
-        "criterion_name": "Analysis of AI Output",
-        "score": "B",
-        "internal_note": "The student demonstrated a good understanding of the AI output, but their analysis could have been more detailed and nuanced."
-      },
-      {
-        "criterion_name": "Relevance to Problem",
+        "criterion_name": "Gap Analysis",
         "score": "A",
-        "internal_note": "The student effectively evaluated the AI output in the context of the original problem, considering all key elements and constraints."
+        "internal_note": "The student identified all missing elements that could affect the solution's efficiency and correctness."
+      },
+      {
+        "criterion_name": "Algorithmic Consistency",
+        "score": "A",
+        "internal_note": "The student ensured that the AI's solution adhered to the principles of the proposed algorithm, identifying inconsistencies where they existed."
       }
     ],
     "steering_percrit": [
       {
-        "criterion_name": "Correction Commands",
+        "criterion_name": "Corrective Commands",
         "score": "B",
-        "internal_note": "Commands were generally clear and relevant, but lacked specificity in some areas."
+        "internal_note": "Commands addressed some issues but lacked specificity and did not fully resolve all identified problems."
       },
       {
-        "criterion_name": "Sorting & Searching Concepts",
+        "criterion_name": "Feedback Integration",
         "score": "B",
-        "internal_note": "Demonstrated understanding but could have been more specific in suggesting alternative data structures."
+        "internal_note": "The student integrated some feedback but did not fully adapt to address all critical issues."
       },
       {
-        "criterion_name": "Iteration and Refining",
-        "score": "B",
-        "internal_note": "Some iteration was evident, but marking 'done' early limited further refinement."
+        "criterion_name": "Efficiency Optimization",
+        "score": "C",
+        "internal_note": "The commands did not sufficiently optimize the solution's efficiency, particularly in terms of data validation and company-specific criteria."
       }
     ],
     "judging_real_flagged": 4,
@@ -448,12 +448,12 @@
     "judging_total_real": 4,
     "issues_missed": [],
     "false_positives": [],
-    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The problem is about sorting a large dataset of customer records. The records need to be sorted in a way that makes it easy to search for information like name, email, and phone number.\"}, {\"section_type\": \"Requirements\", \"content\": \"We need to sort the records efficiently, meaning it should not take too long. Also, it should use as little memory as possible. The system should be able to handle many updates at the same time without crashing.",
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The logistics company wants to improve how they sort packages in their warehouse. Right now, they only look at one thing, which is not very efficient. I need to figure out how to sort packages better, but I don't know exactly what factors to consider.\"}, {\"section_type\": \"Criteria Identification\", \"content\": \"The company has data on package dimensions, weight, and priority. I need to decide which of these factors are the most important for s",
     "steering_cmds": [
-      "Consider how data skewness might affect sorting performance.",
-      "Think about better ways to handle conflicts during concurrent updates.",
-      "Maybe use other data structures besides hash tables for searching.",
-      "Don't forget about data protection laws and how they apply to customer records."
+      "Re-evaluate the assumption that lighter packages should be sorted first as it might not be the best approach.",
+      "Consider adjusting the weight percentages for priority, weight, and dimensions based on more research or data.",
+      "Think about how dimensions might affect sorting and not just assume they are less important.",
+      "Look into how the 20% reduction in sorting time can be realistically achieved with actual data and analysis."
     ]
   },
   {
@@ -463,78 +463,77 @@
     "framing_level": "novice",
     "judging_level": "novice",
     "steering_level": "expert",
-    "framing_grade": "B",
+    "framing_grade": "C",
     "judging_grade": "C",
     "steering_grade": "B",
     "framing_percrit": [
       {
-        "criterion_name": "Problem Definition",
+        "criterion_name": "Problem Translation",
         "score": "B",
-        "internal_note": "The student identifies key elements but lacks specific details about dataset size and concurrent updates."
+        "internal_note": "The student identifies the need to improve sorting efficiency but lacks clarity in defining specific objectives and criteria."
       },
       {
-        "criterion_name": "Relevance to Sorting & Searching",
-        "score": "A",
-        "internal_note": "The student effectively relates the problem to sorting and searching algorithms."
+        "criterion_name": "Algorithm Selection",
+        "score": "C",
+        "internal_note": "The student suggests a multi-attribute sorting method but does not specify which algorithm would be most suitable given the problem constraints."
       },
       {
-        "criterion_name": "Well-Defined Task",
+        "criterion_name": "Constraint Identification",
         "score": "B",
-        "internal_note": "The task is generally well-defined but could benefit from more precise constraints and metrics."
+        "internal_note": "The student identifies the need to define 'minimize time' but misses other potential constraints such as stability or time complexity."
       }
     ],
     "judging_percrit": [
       {
         "criterion_name": "Error Identification",
         "score": "B",
-        "internal_note": "The student identified one critical issue but also incorrectly flagged a correct aspect as erroneous."
+        "internal_note": "The student identified one critical error but missed others."
       },
       {
-        "criterion_name": "Analysis of AI Output",
+        "criterion_name": "Gap Analysis",
         "score": "C",
-        "internal_note": "The student demonstrated a misunderstanding of Timsort's capabilities and did not fully analyze the AI output."
+        "internal_note": "The student overlooked several important gaps in the AI's solution."
       },
       {
-        "criterion_name": "Relevance to Problem",
+        "criterion_name": "Algorithmic Consistency",
         "score": "B",
-        "internal_note": "The student considered the problem context to some extent but missed several key constraints and elements."
+        "internal_note": "The student incorrectly flagged a consistency issue regarding priority handling."
       }
     ],
     "steering_percrit": [
       {
-        "criterion_name": "Correction Commands",
+        "criterion_name": "Corrective Commands",
         "score": "B",
-        "internal_note": "Commands were specific and targeted key issues, but missed addressing some critical aspects."
+        "internal_note": "Commands were generally effective but lacked specificity in some areas, such as dynamic weight adjustment."
       },
       {
-        "criterion_name": "Sorting & Searching Concepts",
+        "criterion_name": "Feedback Integration",
         "score": "A",
-        "internal_note": "Demonstrated a good understanding of sorting and searching concepts."
+        "internal_note": "The student effectively integrated feedback, particularly in prioritizing high-priority packages."
       },
       {
-        "criterion_name": "Iteration and Refining",
+        "criterion_name": "Efficiency Optimization",
         "score": "B",
-        "internal_note": "Effectively refined the solution, but missed some critical issues that needed further iteration."
+        "internal_note": "While the student addressed prioritization effectively, the explanation of dynamic weight adjustment was vague, and initial weights were not thoroughly justified."
       }
     ],
     "judging_real_flagged": 1,
     "judging_false_flagged": 1,
     "judging_total_real": 4,
     "issues_missed": [
-      "Inadequate handling of concurrent update conflicts",
-      "Overreliance on hash tables for search functionality",
-      "Lack of consideration for data protection regulations"
+      "Over-simplified assumption of weights (50%, 30%, 20%) without validation.",
+      "Assuming dimensions are less important without considering space constraints.",
+      "Assumption that a 20% reduction is feasible without data analysis."
     ],
     "false_positives": [
-      "The Timsort algorithm is not suitable for large datasets because it can only handle small amounts of data efficiently."
+      "The algorithm doesn't account for priority at all, leading to delays in dispatching high-priority packages."
     ],
-    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"We need to create a sorting algorithm for customer records. These records might include names, emails, and phone numbers. The sorting needs to be efficient, which means it should work quickly. Also, we will have many searches and updates happening at the same time.\"}, {\"section_type\": \"Requirements\", \"content\": \"1. The algorithm should sort customer records by name, email, and phone number. 2. It should be efficient, meaning it should take l",
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The logistics company wants to improve their package sorting process. Currently, they use a simple algorithm that only sorts by one factor, which isn't very efficient. They have data on package size, weight, and priority, but they haven’t said how to use this data for sorting. Also, they want to reduce the time packages take in sorting, but they haven’t explained what that means exactly.\"}, {\"section_type\": \"Sorting Criteria\", \"content\": \"I ",
     "steering_cmds": [
-      "Address the insufficient consideration of data skewness by implementing a strategy to detect and handle skewed distributions, potentially using bucket sort or radix sort for specific cases where data is heavily skewed.",
-      "Reassess the use of Timsort for large datasets, as it may not be optimal due to its reliance on in-memory operations. Consider alternative algorithms like external merge sort, which are designed specifically for handling large datasets that exceed memory limits.",
-      "Incorporate a more robust locking mechanism that allows for optimistic concurrency control, which can reduce contention and improve throughput for concurrent updates.",
-      "Specify the method for chunking the data more clearly, including how to determine the optimal chunk size based on the dataset's characteristics and available system resources.",
-      "Clarify the evaluation metrics for both sorting and searching, ensuring they are measurable and achievable within the constraints of the system's architecture and workload."
+      "Revise the assumption regarding weight sorting; instead of sorting lighter packages first, ensure that high-priority packages are always dispatched first regardless of weight.",
+      "Incorporate a clear definition of how priority affects sorting, ensuring that high-priority packages are processed before all others, regardless of their weight or dimensions.",
+      "Consider adding a mechanism to dynamically adjust the weights of the sorting criteria based on real-time data or historical performance metrics to further optimize the sorting process.",
+      "Include a detailed explanation of how the sorting algorithm will handle ties in priority, weight, and dimensions to avoid any potential delays in dispatching packages."
     ]
   },
   {
@@ -544,76 +543,2552 @@
     "framing_level": "novice",
     "judging_level": "novice",
     "steering_level": "novice",
-    "framing_grade": "B",
+    "framing_grade": "C",
     "judging_grade": "C",
     "steering_grade": "C",
     "framing_percrit": [
       {
-        "criterion_name": "Problem Definition",
+        "criterion_name": "Problem Translation",
         "score": "B",
-        "internal_note": "The student identifies key elements like dataset size and memory constraints, but could better integrate these into a cohesive problem statement."
+        "internal_note": "The student identifies the need to understand the current algorithm and improve it but lacks specificity in defining objectives and criteria."
       },
       {
-        "criterion_name": "Relevance to Sorting & Searching",
-        "score": "B",
-        "internal_note": "The student acknowledges the need for sorting and searching but does not fully explore how these concepts apply to the problem."
+        "criterion_name": "Algorithm Selection",
+        "score": "C",
+        "internal_note": "The student does not mention any specific algorithm or discuss its appropriateness for the problem context."
       },
       {
-        "criterion_name": "Well-Defined Task",
+        "criterion_name": "Constraint Identification",
         "score": "B",
-        "internal_note": "The task is partially defined with relevant constraints, but lacks specific algorithmic direction and integration of sorting and searching strategies."
+        "internal_note": "The student identifies some constraints, such as the need to prioritize attributes, but misses others like stability and time complexity."
       }
     ],
     "judging_percrit": [
       {
         "criterion_name": "Error Identification",
         "score": "B",
-        "internal_note": "The student identified one critical issue but also incorrectly flagged a correct aspect as erroneous."
+        "internal_note": "The student identified one critical error but missed others."
       },
       {
-        "criterion_name": "Analysis of AI Output",
+        "criterion_name": "Gap Analysis",
         "score": "C",
-        "internal_note": "The student demonstrated a misunderstanding of Timsort's capabilities and did not fully analyze the AI output."
+        "internal_note": "The student overlooked several important gaps in the AI's solution."
       },
       {
-        "criterion_name": "Relevance to Problem",
+        "criterion_name": "Algorithmic Consistency",
         "score": "B",
-        "internal_note": "The student considered the problem context to some extent but missed several key constraints and elements."
+        "internal_note": "The student incorrectly flagged a consistency issue regarding priority handling."
       }
     ],
     "steering_percrit": [
       {
-        "criterion_name": "Correction Commands",
+        "criterion_name": "Corrective Commands",
         "score": "B",
-        "internal_note": "Commands were relevant but lacked precision and depth in some areas."
+        "internal_note": "Commands were somewhat effective but lacked precision in addressing all critical issues."
       },
       {
-        "criterion_name": "Sorting & Searching Concepts",
+        "criterion_name": "Feedback Integration",
         "score": "B",
-        "internal_note": "Demonstrated understanding but could have better addressed trade-offs and specific algorithm suitability."
+        "internal_note": "The student integrated some feedback but missed addressing all identified issues."
       },
       {
-        "criterion_name": "Iteration and Refining",
+        "criterion_name": "Efficiency Optimization",
         "score": "C",
-        "internal_note": "Limited iteration and refinement; marked done too early with unresolved issues."
+        "internal_note": "The student did not fully optimize for efficiency, as assumptions about package weight prioritization were not universally optimal."
       }
     ],
     "judging_real_flagged": 1,
     "judging_false_flagged": 1,
     "judging_total_real": 4,
     "issues_missed": [
-      "Inadequate handling of concurrent update conflicts",
-      "Overreliance on hash tables for search functionality",
-      "Lack of consideration for data protection regulations"
+      "Over-simplified assumption of weights (50%, 30%, 20%) without validation.",
+      "Assuming dimensions are less important without considering space constraints.",
+      "Assumption that a 20% reduction is feasible without data analysis."
     ],
     "false_positives": [
-      "The Timsort algorithm is not suitable for large datasets because it can only handle small amounts of data efficiently."
+      "The algorithm doesn't account for priority at all, leading to delays in dispatching high-priority packages."
     ],
-    "framing_text": "[{\"section_type\": \"clarification\", \"content\": \"What kind of sorting do we need? Are we sorting by name, email, or phone number?\"}, {\"section_type\": \"scope\", \"content\": \"How large is the dataset? Is it in the millions or thousands? This affects the algorithm choice.\"}, {\"section_type\": \"constraints\", \"content\": \"What is the maximum memory we can use? Are there specific limits we need to be aware of?\"}, {\"section_type\": \"requirements\", \"content\": \"Do we need to maintain the order of records that h",
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what the current sorting algorithm does and why it is not efficient. I should look at how packages are currently sorted by one attribute and think about how that could be improved.\"}, {\"section_type\": \"Defining Objectives\", \"content\": \"The goal is to minimize the time packages spend in the sorting system. But I need to figure out how to measure that. Maybe I can look at how long it takes to sort packages now and compare ",
     "steering_cmds": [
-      "Consider how data skewness can affect sorting performance and maybe suggest a different algorithm that handles it better.",
-      "Reevaluate the claim that Timsort is not suitable for large datasets, since it might still be effective with proper chunking.",
-      "Add more details on how the locking mechanism will work for concurrent updates."
+      "Change the assumption about sorting lighter packages first, as it might not be the best way to handle priority.",
+      "Make sure the algorithm really focuses on high-priority packages first to avoid delays.",
+      "Consider how to measure the efficiency improvements more clearly, like using specific time metrics.",
+      "Add more details on how the sorting will work in practice, maybe with examples.",
+      "Explain better why the weights for sorting criteria were chosen."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Economic Agents",
+        "score": "B",
+        "internal_note": "The student did not explicitly identify economic agents such as consumers and producers."
+      },
+      {
+        "criterion_name": "Clarification of Economic Context",
+        "score": "B",
+        "internal_note": "The student provided a general context but lacked specificity in linking assumptions and constraints to the organic vegetable market."
+      },
+      {
+        "criterion_name": "Specification of Constraints and Assumptions",
+        "score": "A",
+        "internal_note": "The student specified assumptions and constraints well, though they could be more directly tied to the economic context."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Accuracy of Error Identification",
+        "score": "A",
+        "internal_note": "The student accurately identified all major errors and gaps in the AI's analysis."
+      },
+      {
+        "criterion_name": "Understanding of Supply and Demand Curves",
+        "score": "B",
+        "internal_note": "While the student identified issues related to assumptions, they could have further analyzed the implications on supply and demand curves."
+      },
+      {
+        "criterion_name": "Evaluation of Market Dynamics",
+        "score": "A",
+        "internal_note": "The student correctly evaluated the factors affecting market dynamics, including external factors such as new market entrants and economic conditions."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were generally clear but could have been more detailed, especially regarding specific data sources."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was relevant but overemphasized certain issues like economic downturns."
+      },
+      {
+        "criterion_name": "Use of Economic Terminology",
+        "score": "A",
+        "internal_note": "Economic terminology was used appropriately and effectively throughout the steering process."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the objectives of the pricing strategy adjustment for the agricultural cooperative, including specific goals such as maximizing revenue, maintaining market share, or enhancing customer loyalty.\"}, {\"section_type\": \"Data Requirements\", \"content\": \"Identify the specific data needed for a thorough analysis, including current pricing structures, historical sales data, consumer demand elasticity estimates, supply chain costs, and pote",
+    "steering_cmds": [
+      "Refine the assumption on demand elasticity by incorporating potential consumer behavior data from market research or surveys to enhance accuracy in demand predictions.",
+      "Expand the analysis of supply chain disruptions by developing contingency plans for severe disruptions, including strategies for sourcing from diverse suppliers or increasing local partnerships.",
+      "Include an assessment of potential new market entrants and their impact on competitive dynamics, suggesting strategies to differentiate the cooperative's offerings.",
+      "Reevaluate the assumption of stable consumer income levels by analyzing economic indicators and trends that could affect purchasing power, and adjust pricing strategies accordingly."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "A",
+    "steering_grade": "A",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Economic Agents",
+        "score": "B",
+        "internal_note": "The response lacks explicit identification of economic agents like consumers and producers."
+      },
+      {
+        "criterion_name": "Clarification of Economic Context",
+        "score": "B",
+        "internal_note": "The response does not clearly specify the organic vegetable market or relate it to supply and demand dynamics."
+      },
+      {
+        "criterion_name": "Specification of Constraints and Assumptions",
+        "score": "A",
+        "internal_note": "The student clearly outlines assumptions and constraints, addressing gaps in the problem."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Accuracy of Error Identification",
+        "score": "A",
+        "internal_note": "The student accurately identified all major errors and gaps in the AI's analysis."
+      },
+      {
+        "criterion_name": "Understanding of Supply and Demand Curves",
+        "score": "B",
+        "internal_note": "While the student identified issues related to assumptions, they could have further analyzed the implications on supply and demand curves."
+      },
+      {
+        "criterion_name": "Evaluation of Market Dynamics",
+        "score": "A",
+        "internal_note": "The student correctly evaluated the factors affecting market dynamics, including external factors such as new market entrants and economic conditions."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "A",
+        "internal_note": "Commands were clear and specific, effectively guiding the AI to address key issues."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "A",
+        "internal_note": "Feedback was directly relevant to the identified issues and helped improve the AI's analysis."
+      },
+      {
+        "criterion_name": "Use of Economic Terminology",
+        "score": "B",
+        "internal_note": "Economic terminology was used correctly, but more detailed economic analysis could have been suggested."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the objectives of the pricing strategy adjustment for the cooperative, including goals such as maximizing revenue, maintaining market share, and ensuring sustainability in pricing.\"}, {\"section_type\": \"Data Requirements\", \"content\": \"Identify and specify the types of data needed for a thorough analysis, including current pricing structures, historical sales data, consumer demand trends, elasticity of demand for organic vegetables",
+    "steering_cmds": [
+      "Consider adding more specific examples of consumer behavior that could affect demand elasticity.",
+      "Include a discussion on how to prepare for severe supply chain disruptions, not just minor ones.",
+      "Mention the possibility of new competitors entering the market and how that could change pricing strategy.",
+      "Address how changes in the economy could impact consumer purchasing power and how to adjust prices accordingly."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Economic Agents",
+        "score": "B",
+        "internal_note": "The student identifies some economic agents but lacks specificity in defining their roles."
+      },
+      {
+        "criterion_name": "Clarification of Economic Context",
+        "score": "A",
+        "internal_note": "The student accurately frames the problem within the organic vegetable market, detailing supply and demand dynamics."
+      },
+      {
+        "criterion_name": "Specification of Constraints and Assumptions",
+        "score": "B",
+        "internal_note": "The student specifies some assumptions but could include more detailed constraints relevant to the pricing strategy."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Accuracy of Error Identification",
+        "score": "B",
+        "internal_note": "The student identified one major issue but missed several others and flagged a non-existent issue."
+      },
+      {
+        "criterion_name": "Understanding of Supply and Demand Curves",
+        "score": "C",
+        "internal_note": "There was no assessment of supply and demand curves as the student focused on demand elasticity and competitor pricing."
+      },
+      {
+        "criterion_name": "Evaluation of Market Dynamics",
+        "score": "B",
+        "internal_note": "The student partially evaluated market dynamics by identifying the elasticity issue but missed other key dynamics such as new entrants and income stability."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "A",
+        "internal_note": "The commands were clear and specific, guiding the AI effectively to improve its analysis."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was mostly relevant but missed addressing some critical issues like economic trends and regulatory changes."
+      },
+      {
+        "criterion_name": "Use of Economic Terminology",
+        "score": "A",
+        "internal_note": "Economic terminology was used appropriately, enhancing the AI's understanding."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overlooks potential long-term impacts of supply chain disruptions, assuming minor disruptions without contingency plans for severe disruptions.",
+      "Fails to consider the impact of potential new market entrants, which could significantly alter competitive dynamics.",
+      "Assumes consumer income levels remain stable, ignoring potential economic downturns or shifts that could affect purchasing power."
+    ],
+    "false_positives": [
+      "The strategy fails to account for competitor pricing, leaving the cooperative at a disadvantage in the market."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the objectives of the pricing strategy adjustment for the agricultural cooperative, focusing on maximizing revenue while ensuring sustainability and competitiveness in the organic vegetable market.\"}, {\"section_type\": \"Contextual Analysis\", \"content\": \"Examine the current market landscape for organic vegetables, including trends in consumer preferences, pricing of competitors, and overall market growth. Identify key external fact",
+    "steering_cmds": [
+      "Incorporate specific consumer behavior data to refine the demand elasticity assumption, ensuring predictions are more accurate and reflective of actual market conditions.",
+      "Conduct a thorough competitive analysis to understand competitor pricing strategies and incorporate this information into the pricing recommendations to avoid leaving the cooperative at a disadvantage.",
+      "Suggest implementing a pricing sensitivity analysis to better understand how changes in pricing might affect consumer purchasing decisions, particularly in the context of organic produce.",
+      "Consider the impact of seasonal fluctuations in both supply and demand more explicitly in the short-term strategy, providing a clearer framework for pricing adjustments during peak and off-peak seasons.",
+      "Include potential scenarios for supply chain disruptions and their specific impacts on pricing, allowing for a more robust contingency plan."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Economic Agents",
+        "score": "B",
+        "internal_note": "The response mentions consumer demographics and market competition but lacks explicit identification of all economic agents."
+      },
+      {
+        "criterion_name": "Clarification of Economic Context",
+        "score": "B",
+        "internal_note": "The context of the organic vegetable market is implied but not explicitly detailed in terms of supply and demand dynamics."
+      },
+      {
+        "criterion_name": "Specification of Constraints and Assumptions",
+        "score": "A",
+        "internal_note": "The assumptions are well-articulated, but the connection to constraints could be stronger."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Accuracy of Error Identification",
+        "score": "B",
+        "internal_note": "The student identified one critical issue correctly but missed several others and incorrectly flagged an issue that was not present."
+      },
+      {
+        "criterion_name": "Understanding of Supply and Demand Curves",
+        "score": "C",
+        "internal_note": "There was no specific assessment of supply and demand curves, so no errors were identified in this area."
+      },
+      {
+        "criterion_name": "Evaluation of Market Dynamics",
+        "score": "B",
+        "internal_note": "The student identified a relevant issue regarding demand elasticity but missed other key factors affecting market dynamics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but did not fully address all critical issues."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was relevant but did not cover all necessary aspects to improve the AI's analysis."
+      },
+      {
+        "criterion_name": "Use of Economic Terminology",
+        "score": "A",
+        "internal_note": "Economic terminology was used appropriately and did not lead to confusion."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overlooks potential long-term impacts of supply chain disruptions, assuming minor disruptions without contingency plans for severe disruptions.",
+      "Fails to consider the impact of potential new market entrants, which could significantly alter competitive dynamics.",
+      "Assumes consumer income levels remain stable, ignoring potential economic downturns or shifts that could affect purchasing power."
+    ],
+    "false_positives": [
+      "The strategy fails to account for competitor pricing, leaving the cooperative at a disadvantage in the market."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the objectives of the pricing strategy adjustment. This includes understanding the cooperative's current market position, target consumer demographics, and the specific goals for the upcoming season—whether it is to increase market share, maintain profitability, or respond to competitive pressures.\"}, {\"section_type\": \"Data Requirements\", \"content\": \"Identify the specific data needed to conduct a thorough analysis. This includes ",
+    "steering_cmds": [
+      "Consider including specific examples of competitor pricing to better understand the market position.",
+      "Add a section discussing potential consumer behavior trends that could affect demand elasticity instead of just assuming it is moderate.",
+      "Suggest ways to gather more data on current pricing and consumer preferences to support the analysis.",
+      "Mention the importance of seasonal trends in organic vegetable pricing and how they could impact both short-term and long-term strategies."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "A",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Economic Agents",
+        "score": "B",
+        "internal_note": "Identifies the cooperative and consumers but lacks detailed roles and dynamics."
+      },
+      {
+        "criterion_name": "Clarification of Economic Context",
+        "score": "B",
+        "internal_note": "Mentions demand and supply but does not fully articulate the market context."
+      },
+      {
+        "criterion_name": "Specification of Constraints and Assumptions",
+        "score": "C",
+        "internal_note": "Assumptions are broad and lack specificity; constraints are not well-defined."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Accuracy of Error Identification",
+        "score": "A",
+        "internal_note": "The student accurately identified all major errors and gaps in the AI's analysis."
+      },
+      {
+        "criterion_name": "Understanding of Supply and Demand Curves",
+        "score": "B",
+        "internal_note": "While the student identified issues related to assumptions, they could have further analyzed the implications on supply and demand curves."
+      },
+      {
+        "criterion_name": "Evaluation of Market Dynamics",
+        "score": "A",
+        "internal_note": "The student correctly evaluated the factors affecting market dynamics, including external factors such as new market entrants and economic conditions."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "A",
+        "internal_note": "Commands were specific and actionable, effectively guiding the AI."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was mostly relevant but did not fully address all identified errors, particularly economic downturn impacts."
+      },
+      {
+        "criterion_name": "Use of Economic Terminology",
+        "score": "A",
+        "internal_note": "Appropriate economic terminology was used effectively in the commands."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what the cooperative does and why they want to change prices. They grow organic vegetables and are worried about demand and supply chain issues. I guess this means they might not know how much people will want to buy or if they can get their vegetables to market.\"}, {\"section_type\": \"Data Collection\", \"content\": \"I will need to figure out what kind of data is important for this analysis. Since there is no specific data p",
+    "steering_cmds": [
+      "Revise the demand elasticity assumption to include a sensitivity analysis based on potential consumer behavior data, highlighting how varying elasticity could impact pricing decisions.",
+      "Expand the discussion on supply chain disruptions by incorporating contingency plans for severe disruptions, including potential partnerships with multiple suppliers and strategies for inventory management during crises.",
+      "Add an analysis of the potential impact of new market entrants on pricing strategy, including how increased competition may necessitate adjustments to maintain market share.",
+      "Incorporate economic forecasts to assess potential changes in consumer income levels, and adjust pricing strategies accordingly to account for economic downturns or shifts in purchasing power."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Economic Agents",
+        "score": "B",
+        "internal_note": "Identified some agents but lacked detailed roles."
+      },
+      {
+        "criterion_name": "Clarification of Economic Context",
+        "score": "C",
+        "internal_note": "The market context is not clearly defined."
+      },
+      {
+        "criterion_name": "Specification of Constraints and Assumptions",
+        "score": "B",
+        "internal_note": "Some assumptions are made but lack specificity and realism."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Accuracy of Error Identification",
+        "score": "A",
+        "internal_note": "The student accurately identified all major errors and gaps in the AI's analysis."
+      },
+      {
+        "criterion_name": "Understanding of Supply and Demand Curves",
+        "score": "B",
+        "internal_note": "While the student identified issues related to assumptions, they could have further analyzed the implications on supply and demand curves."
+      },
+      {
+        "criterion_name": "Evaluation of Market Dynamics",
+        "score": "A",
+        "internal_note": "The student correctly evaluated the factors affecting market dynamics, including external factors such as new market entrants and economic conditions."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were specific, but lacked actionable steps for obtaining necessary data."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was relevant but did not fully address critical assumptions about supply chain disruptions."
+      },
+      {
+        "criterion_name": "Use of Economic Terminology",
+        "score": "A",
+        "internal_note": "Economic terminology was used correctly and effectively."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The problem involves advising a cooperative on pricing for organic vegetables. I need to understand what they currently charge and how much people want to buy at those prices. I should also think about how supply chain issues might change how much they can sell.\"}, {\"section_type\": \"Key Factors to Consider\", \"content\": \"I should consider consumer demand, which means how much people want to buy. I also need to think about supply chain disrupt",
+    "steering_cmds": [
+      "Consider adding more specific data or examples related to consumer behavior to better understand demand elasticity.",
+      "Include a discussion on contingency plans for severe supply chain disruptions rather than just assuming they will be minor.",
+      "Mention the potential risks of new competitors entering the market and how that could affect pricing strategies.",
+      "Address how fluctuations in consumer income levels might impact purchasing power and demand for organic vegetables."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Economic Agents",
+        "score": "B",
+        "internal_note": "Identified the cooperative and consumers but did not clearly define their roles in supply and demand."
+      },
+      {
+        "criterion_name": "Clarification of Economic Context",
+        "score": "B",
+        "internal_note": "Mentioned the organic vegetable market but lacked detail on supply and demand dynamics."
+      },
+      {
+        "criterion_name": "Specification of Constraints and Assumptions",
+        "score": "C",
+        "internal_note": "Assumptions were vague, lacking specifics on demand elasticity and current pricing levels."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Accuracy of Error Identification",
+        "score": "B",
+        "internal_note": "The student identified one critical issue correctly but missed several others and incorrectly flagged an issue that was not present."
+      },
+      {
+        "criterion_name": "Understanding of Supply and Demand Curves",
+        "score": "C",
+        "internal_note": "There was no specific assessment of supply and demand curves, so no errors were identified in this area."
+      },
+      {
+        "criterion_name": "Evaluation of Market Dynamics",
+        "score": "B",
+        "internal_note": "The student identified a relevant issue regarding demand elasticity but missed other key factors affecting market dynamics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but lacked depth and actionable details."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was relevant but not fully detailed, limiting its effectiveness."
+      },
+      {
+        "criterion_name": "Use of Economic Terminology",
+        "score": "A",
+        "internal_note": "Appropriate economic terminology was used throughout the commands."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overlooks potential long-term impacts of supply chain disruptions, assuming minor disruptions without contingency plans for severe disruptions.",
+      "Fails to consider the impact of potential new market entrants, which could significantly alter competitive dynamics.",
+      "Assumes consumer income levels remain stable, ignoring potential economic downturns or shifts that could affect purchasing power."
+    ],
+    "false_positives": [
+      "The strategy fails to account for competitor pricing, leaving the cooperative at a disadvantage in the market."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The problem is about how to help a local agricultural cooperative with their pricing strategy for organic vegetables. They are worried about changes in customer demand and supply issues.\"}, {\"section_type\": \"Key Factors to Analyze\", \"content\": \"1. Consumer demand: How much do people want to buy organic vegetables? 2. Supply chain disruptions: What might prevent the cooperative from getting their vegetables to market? 3. Current pricing: We need",
+    "steering_cmds": [
+      "Incorporate a more detailed analysis of consumer behavior data to refine the assumption of demand elasticity, potentially using market research or surveys to gauge consumer sensitivity to price changes.",
+      "Include a competitive analysis section that examines current pricing strategies of direct competitors in the organic vegetable market, allowing for a more informed pricing strategy that positions the cooperative effectively against them."
+    ]
+  },
+  {
+    "challenge": 1,
+    "subject": "Microeconomics > Supply & Demand",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Identification of Economic Agents",
+        "score": "B",
+        "internal_note": "The student mentions consumers and supply chain issues but does not clearly define the roles of all relevant economic agents."
+      },
+      {
+        "criterion_name": "Clarification of Economic Context",
+        "score": "B",
+        "internal_note": "The student frames the problem in terms of consumer demand and supply chain issues but does not fully detail the market dynamics."
+      },
+      {
+        "criterion_name": "Specification of Constraints and Assumptions",
+        "score": "C",
+        "internal_note": "The student lists some assumptions but misses critical constraints like market competition and consumer income levels."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Accuracy of Error Identification",
+        "score": "B",
+        "internal_note": "The student identified one critical issue correctly but missed several others and incorrectly flagged an issue that was not present."
+      },
+      {
+        "criterion_name": "Understanding of Supply and Demand Curves",
+        "score": "C",
+        "internal_note": "There was no specific assessment of supply and demand curves, so no errors were identified in this area."
+      },
+      {
+        "criterion_name": "Evaluation of Market Dynamics",
+        "score": "B",
+        "internal_note": "The student identified a relevant issue regarding demand elasticity but missed other key factors affecting market dynamics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Clarity of Correction Commands",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but could have been more targeted towards critical issues."
+      },
+      {
+        "criterion_name": "Relevance of Feedback",
+        "score": "B",
+        "internal_note": "Feedback was relevant but did not fully address all flagged issues, particularly regarding demand elasticity."
+      },
+      {
+        "criterion_name": "Use of Economic Terminology",
+        "score": "A",
+        "internal_note": "The student used appropriate economic terminology in their feedback."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overlooks potential long-term impacts of supply chain disruptions, assuming minor disruptions without contingency plans for severe disruptions.",
+      "Fails to consider the impact of potential new market entrants, which could significantly alter competitive dynamics.",
+      "Assumes consumer income levels remain stable, ignoring potential economic downturns or shifts that could affect purchasing power."
+    ],
+    "false_positives": [
+      "The strategy fails to account for competitor pricing, leaving the cooperative at a disadvantage in the market."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The problem is about helping a local agricultural cooperative decide on how to change their prices for organic vegetables. They are worried about how many people want to buy their products and if there will be any issues getting their vegetables to market.\"}, {\"section_type\": \"Key Factors\", \"content\": \"We need to look at two main things: consumer demand (how much people want to buy) and supply chain issues (any problems getting the vegetables f",
+    "steering_cmds": [
+      "Consider adding more details about how to analyze competitor pricing specifically.",
+      "Include a discussion on how consumer behavior can vary with different demographics or regions.",
+      "Suggest more specific short-term promotions that could attract customers during peak seasons.",
+      "Mention potential risks of relying too heavily on alternative suppliers without proper evaluation.",
+      "Expand on how to measure the success of the loyalty programs and their impact on pricing strategy."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition Clarity",
+        "score": "B",
+        "internal_note": "The student defines the problem but lacks explicit connection to evaluation and overfitting issues."
+      },
+      {
+        "criterion_name": "Metric Selection Justification",
+        "score": "B",
+        "internal_note": "Metrics are listed but not sufficiently justified or contextualized with thresholds."
+      },
+      {
+        "criterion_name": "Overfitting Identification",
+        "score": "B",
+        "internal_note": "The student outlines methods for assessing overfitting but lacks detailed interpretation guidance."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection in AI Output",
+        "score": "A",
+        "internal_note": "The student successfully identified all the critical issues in the AI output."
+      },
+      {
+        "criterion_name": "Overfitting Analysis",
+        "score": "A",
+        "internal_note": "The student correctly pointed out the lack of thorough statistical tests to confirm minimal overfitting."
+      },
+      {
+        "criterion_name": "Metric Evaluation",
+        "score": "A",
+        "internal_note": "The student accurately identified the subjectivity in the evaluation of the AUC-ROC score."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands Precision",
+        "score": "B",
+        "internal_note": "Commands were generally specific but could have included more detail in certain areas."
+      },
+      {
+        "criterion_name": "Guidance on Overfitting Mitigation",
+        "score": "B",
+        "internal_note": "Suggested thorough analysis but lacked specifics on methods."
+      },
+      {
+        "criterion_name": "Metric Adjustment Suggestions",
+        "score": "A",
+        "internal_note": "Provided clear suggestions for clarifying AUC-ROC criteria."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the problem of customer churn prediction for a subscription-based service. Specify the business implications of churn, such as revenue loss and customer lifetime value, to contextualize the importance of accurate predictions.\"}, {\"section_type\": \"Performance Metrics Selection\", \"content\": \"Identify and justify appropriate performance metrics for evaluating the model. Common metrics include accuracy, precision, recall, F1-score, a",
+    "steering_cmds": [
+      "Expand on the limitations of the simulated dataset, detailing specific characteristics that may not reflect real-world complexities, such as customer demographics, behavior patterns, and seasonality effects.",
+      "Include a thorough statistical analysis to assess overfitting, such as cross-validation techniques or learning curves, to provide a more robust evaluation of model generalization.",
+      "Clarify the criteria used to define an 'impressive' AUC-ROC score, and reference industry benchmarks or literature to substantiate the performance claims.",
+      "Detail how data privacy regulations like GDPR and CCPA specifically influenced the design and parameters of the simulated dataset, including any anonymization techniques or data generation methods employed."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "A",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition Clarity",
+        "score": "B",
+        "internal_note": "The student defines the problem well but lacks differentiation between training and validation phases."
+      },
+      {
+        "criterion_name": "Metric Selection Justification",
+        "score": "B",
+        "internal_note": "Metrics are relevant but lack a detailed justification tied to business objectives."
+      },
+      {
+        "criterion_name": "Overfitting Identification",
+        "score": "A",
+        "internal_note": "The student correctly identifies overfitting and discusses methodologies to assess it."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection in AI Output",
+        "score": "A",
+        "internal_note": "The student accurately identified all the critical errors and gaps in the AI's evaluation."
+      },
+      {
+        "criterion_name": "Overfitting Analysis",
+        "score": "A",
+        "internal_note": "The student correctly questioned the AI's minimal overfitting assumption, noting the lack of statistical tests."
+      },
+      {
+        "criterion_name": "Metric Evaluation",
+        "score": "A",
+        "internal_note": "The student appropriately evaluated the AI's choice of metrics, highlighting the subjective nature of the AUC-ROC score."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands Precision",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but missed critical details on overfitting and data privacy."
+      },
+      {
+        "criterion_name": "Guidance on Overfitting Mitigation",
+        "score": "C",
+        "internal_note": "Did not adequately address how to implement cross-validation."
+      },
+      {
+        "criterion_name": "Metric Adjustment Suggestions",
+        "score": "B",
+        "internal_note": "Provided context for metrics but did not suggest new metrics or adjustments."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the objective of the machine learning model, which is to predict customer churn in a subscription-based service. Specify that the goal is to minimize false negatives (losing customers) while maintaining an acceptable level of false positives (unnecessary retention efforts).\"}, {\"section_type\": \"Data Acquisition\", \"content\": \"Identify the need for a comprehensive dataset that includes historical customer data, such as subscription",
+    "steering_cmds": [
+      "Add more details about how the simulated data was created and what characteristics it has.",
+      "Explain why the chosen performance metrics are important for a subscription-based service.",
+      "Include more information on what specific statistical tests could be used to confirm overfitting.",
+      "Clarify what the industry benchmarks are for AUC-ROC scores to give context to the 'impressive' rating.",
+      "Mention specific data privacy regulations that might impact the simulation process in a clearer way."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition Clarity",
+        "score": "B",
+        "internal_note": "The student identifies customer churn but does not clearly connect it to model evaluation and overfitting issues."
+      },
+      {
+        "criterion_name": "Metric Selection Justification",
+        "score": "B",
+        "internal_note": "Appropriate metrics are selected, but the justification for their relevance to business objectives is lacking."
+      },
+      {
+        "criterion_name": "Overfitting Identification",
+        "score": "B",
+        "internal_note": "The student mentions overfitting assessment techniques but does not clearly explain how to identify overfitting through training and validation performance comparison."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection in AI Output",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but missed others and included a false positive."
+      },
+      {
+        "criterion_name": "Overfitting Analysis",
+        "score": "C",
+        "internal_note": "The student did not address the lack of statistical evidence for overfitting analysis."
+      },
+      {
+        "criterion_name": "Metric Evaluation",
+        "score": "C",
+        "internal_note": "The student did not question the subjective nature of the AUC-ROC threshold or the choice of metrics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands Precision",
+        "score": "B",
+        "internal_note": "Commands were mostly precise but lacked depth in addressing bias analysis."
+      },
+      {
+        "criterion_name": "Guidance on Overfitting Mitigation",
+        "score": "A",
+        "internal_note": "Effectively suggested cross-validation techniques."
+      },
+      {
+        "criterion_name": "Metric Adjustment Suggestions",
+        "score": "B",
+        "internal_note": "Provided a good discussion on performance metrics but could have included more on business outcomes."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The analysis assumes minimal overfitting without thorough statistical tests to confirm it.",
+      "The threshold for an 'impressive' AUC-ROC score is subjective and might not align with industry benchmarks.",
+      "There is no mention of how data privacy regulations specifically influenced the simulation process."
+    ],
+    "false_positives": [
+      "The dataset used for evaluation is not compliant with data privacy regulations like GDPR and CCPA."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the problem of customer churn in the context of subscription-based services. Identify the key factors that contribute to churn and the importance of accurately predicting it for business sustainability and growth.\"}, {\"section_type\": \"Data Acquisition\", \"content\": \"Outline a strategy for obtaining the necessary data for testing the model. This may include reaching out to the client for historical customer data, conducting surveys",
+    "steering_cmds": [
+      "Enhance the data simulation process to incorporate more realistic customer behavior patterns and churn triggers, ensuring it reflects the complexities of real-world scenarios.",
+      "Include a thorough analysis of potential biases in the simulated dataset that could affect model evaluation and performance metrics.",
+      "Ensure that the simulated dataset adheres strictly to data privacy regulations, providing a clear outline of how compliance is maintained throughout the simulation process.",
+      "Consider conducting sensitivity analysis to understand how variations in input features affect model predictions and performance metrics.",
+      "Incorporate cross-validation techniques to further validate the model's performance and robustness against overfitting.",
+      "Provide a more detailed discussion on the implications of the performance metrics chosen, particularly in relation to business outcomes and customer retention strategies."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition Clarity",
+        "score": "B",
+        "internal_note": "The student defines the objective and business context well but lacks explicit mention of overfitting evaluation."
+      },
+      {
+        "criterion_name": "Metric Selection Justification",
+        "score": "B",
+        "internal_note": "Metrics are appropriate, but the justification for their selection in relation to business objectives is weak."
+      },
+      {
+        "criterion_name": "Overfitting Identification",
+        "score": "B",
+        "internal_note": "The plan to assess overfitting is included, but the initial problem definition does not highlight overfitting concerns."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection in AI Output",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but missed others and included a false positive."
+      },
+      {
+        "criterion_name": "Overfitting Analysis",
+        "score": "C",
+        "internal_note": "The student did not address the lack of statistical evidence for overfitting analysis."
+      },
+      {
+        "criterion_name": "Metric Evaluation",
+        "score": "C",
+        "internal_note": "The student did not question the subjective nature of the AUC-ROC threshold or the choice of metrics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands Precision",
+        "score": "B",
+        "internal_note": "Commands were somewhat precise but lacked depth in addressing all critical issues."
+      },
+      {
+        "criterion_name": "Guidance on Overfitting Mitigation",
+        "score": "B",
+        "internal_note": "The student addressed overfitting but did not suggest specific advanced techniques."
+      },
+      {
+        "criterion_name": "Metric Adjustment Suggestions",
+        "score": "C",
+        "internal_note": "The student did not provide new metric adjustments or deepen the analysis of existing metrics."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The analysis assumes minimal overfitting without thorough statistical tests to confirm it.",
+      "The threshold for an 'impressive' AUC-ROC score is subjective and might not align with industry benchmarks.",
+      "There is no mention of how data privacy regulations specifically influenced the simulation process."
+    ],
+    "false_positives": [
+      "The dataset used for evaluation is not compliant with data privacy regulations like GDPR and CCPA."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the objective of the machine learning model, which is to predict customer churn for a subscription-based service. Establish the importance of understanding customer behavior and retention in the context of business sustainability.\"}, {\"section_type\": \"Performance Metrics Identification\", \"content\": \"Identify key performance metrics relevant to customer churn prediction, such as Accuracy, Precision, Recall, F1 Score, ROC-AUC, and ",
+    "steering_cmds": [
+      "Make sure to check if the simulated data really matches real customer behavior.",
+      "Explain more about how the metrics are important for predicting churn.",
+      "Add some examples of how overfitting can affect the model in real situations.",
+      "Suggest looking into more advanced techniques for data simulation.",
+      "Mention the importance of compliance with data privacy laws in more detail."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition Clarity",
+        "score": "B",
+        "internal_note": "The student understands the general problem but lacks specific details on evaluation metrics and overfitting."
+      },
+      {
+        "criterion_name": "Metric Selection Justification",
+        "score": "C",
+        "internal_note": "The student lists metrics but does not justify their selection or relevance to the business objectives."
+      },
+      {
+        "criterion_name": "Overfitting Identification",
+        "score": "C",
+        "internal_note": "The student mentions overfitting but does not explain how to identify it or its impact on model performance."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection in AI Output",
+        "score": "A",
+        "internal_note": "The student accurately identified all the critical errors and gaps in the AI's evaluation."
+      },
+      {
+        "criterion_name": "Overfitting Analysis",
+        "score": "A",
+        "internal_note": "The student correctly questioned the AI's minimal overfitting assumption, noting the lack of statistical tests."
+      },
+      {
+        "criterion_name": "Metric Evaluation",
+        "score": "A",
+        "internal_note": "The student appropriately evaluated the AI's choice of metrics, highlighting the subjective nature of the AUC-ROC score."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands Precision",
+        "score": "B",
+        "internal_note": "Commands were generally precise but could have included more specific details, such as the number of folds for cross-validation."
+      },
+      {
+        "criterion_name": "Guidance on Overfitting Mitigation",
+        "score": "B",
+        "internal_note": "The suggestion to use cross-validation was appropriate, but lacked detail on implementation specifics."
+      },
+      {
+        "criterion_name": "Metric Adjustment Suggestions",
+        "score": "A",
+        "internal_note": "The student effectively suggested clarifying AUC-ROC thresholds with industry benchmarks."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what customer churn means and why it's important for a subscription-based service. Customer churn is when customers stop using a service, and it's bad for business because it means losing revenue.\"}, {\"section_type\": \"Data Requirements\", \"content\": \"I need to find out what kind of data is necessary to evaluate the model. This might include customer demographics, usage patterns, and reasons for leaving. Since the data isn",
+    "steering_cmds": [
+      "Expand the section on data simulation to include specific methodologies used to generate the dataset, ensuring it reflects the complexities of real-world customer behavior and churn patterns.",
+      "Incorporate statistical tests such as cross-validation or bootstrapping to provide a more rigorous assessment of overfitting, rather than relying solely on performance metrics.",
+      "Clarify the thresholds for AUC-ROC scores by referencing industry standards or benchmarks to substantiate the claim of 'impressive' performance.",
+      "Detail how data privacy regulations like GDPR and CCPA influenced the data simulation process, including any anonymization techniques or synthetic data generation methods employed."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition Clarity",
+        "score": "B",
+        "internal_note": "The student defined customer churn but did not fully clarify the evaluation metrics and overfitting concerns."
+      },
+      {
+        "criterion_name": "Metric Selection Justification",
+        "score": "C",
+        "internal_note": "The student listed metrics without justifying their relevance to the problem context."
+      },
+      {
+        "criterion_name": "Overfitting Identification",
+        "score": "B",
+        "internal_note": "The student identified the need to compare training and test performance but did not suggest how to address overfitting."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection in AI Output",
+        "score": "A",
+        "internal_note": "The student accurately identified all the critical errors and gaps in the AI's evaluation."
+      },
+      {
+        "criterion_name": "Overfitting Analysis",
+        "score": "A",
+        "internal_note": "The student correctly questioned the AI's minimal overfitting assumption, noting the lack of statistical tests."
+      },
+      {
+        "criterion_name": "Metric Evaluation",
+        "score": "A",
+        "internal_note": "The student appropriately evaluated the AI's choice of metrics, highlighting the subjective nature of the AUC-ROC score."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands Precision",
+        "score": "B",
+        "internal_note": "Commands were generally precise but lacked full specificity in some areas, such as data privacy compliance."
+      },
+      {
+        "criterion_name": "Guidance on Overfitting Mitigation",
+        "score": "A",
+        "internal_note": "The student effectively suggested statistical tests to assess overfitting more thoroughly."
+      },
+      {
+        "criterion_name": "Metric Adjustment Suggestions",
+        "score": "B",
+        "internal_note": "The student attempted to clarify the AUC-ROC evaluation but did not fully resolve the subjectivity issue."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to understand what customer churn means for the subscription service. Customer churn is when customers stop using the service. We should define how we will identify churned customers.\"}, {\"section_type\": \"Data Requirements\", \"content\": \"We need data to test the model. This includes historical data on customer subscriptions, like when they joined, when they left, and any interactions they had with the service. If we can't get real data, ",
+    "steering_cmds": [
+      "Add more details about how the simulated dataset was created and what features it includes.",
+      "Include specific examples of data privacy regulations and how they were applied in the simulation.",
+      "Clarify what is meant by 'impressive' AUC-ROC and provide some context or benchmarks for comparison.",
+      "Suggest specific statistical tests to assess overfitting more thoroughly."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "A",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition Clarity",
+        "score": "B",
+        "internal_note": "The student identifies the need to evaluate the model and check for overfitting but lacks depth in explaining these concepts."
+      },
+      {
+        "criterion_name": "Metric Selection Justification",
+        "score": "C",
+        "internal_note": "The student lists metrics without justification or alignment with business objectives."
+      },
+      {
+        "criterion_name": "Overfitting Identification",
+        "score": "B",
+        "internal_note": "The student mentions comparing training and testing performance but does not elaborate on identifying or addressing overfitting effectively."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection in AI Output",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but missed others and included a false positive."
+      },
+      {
+        "criterion_name": "Overfitting Analysis",
+        "score": "C",
+        "internal_note": "The student did not address the lack of statistical evidence for overfitting analysis."
+      },
+      {
+        "criterion_name": "Metric Evaluation",
+        "score": "C",
+        "internal_note": "The student did not question the subjective nature of the AUC-ROC threshold or the choice of metrics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands Precision",
+        "score": "B",
+        "internal_note": "Commands were mostly precise but lacked specific details in some areas."
+      },
+      {
+        "criterion_name": "Guidance on Overfitting Mitigation",
+        "score": "A",
+        "internal_note": "Cross-validation was suggested, which is effective for overfitting."
+      },
+      {
+        "criterion_name": "Metric Adjustment Suggestions",
+        "score": "A",
+        "internal_note": "Suggested MCC and Confusion Matrix, which are relevant and enhance evaluation."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The analysis assumes minimal overfitting without thorough statistical tests to confirm it.",
+      "The threshold for an 'impressive' AUC-ROC score is subjective and might not align with industry benchmarks.",
+      "There is no mention of how data privacy regulations specifically influenced the simulation process."
+    ],
+    "false_positives": [
+      "The dataset used for evaluation is not compliant with data privacy regulations like GDPR and CCPA."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The problem is about evaluating a machine learning model for predicting customer churn. Churn means when customers stop using a service. We need to find out how well this model works and if it can be improved.\"}, {\"section_type\": \"Data Acquisition\", \"content\": \"Since we don’t have the data to test the model, we need to figure out how to get it. We could ask the client for the data they used or try to find similar datasets online. If that's n",
+    "steering_cmds": [
+      "Ensure that the simulated dataset includes a wider range of customer behaviors and demographics to better reflect real-world scenarios, as this will enhance the model's evaluation accuracy.",
+      "Conduct a thorough review of the data generation process to confirm compliance with GDPR and CCPA, ensuring that no personally identifiable information is included, even in simulated data.",
+      "Consider incorporating additional performance metrics such as Matthews Correlation Coefficient (MCC) or Confusion Matrix analysis to provide a more comprehensive evaluation of the model's performance.",
+      "Implement cross-validation techniques to further assess the model's robustness and reduce the risk of overfitting, providing a more reliable estimate of its performance on unseen data."
+    ]
+  },
+  {
+    "challenge": 2,
+    "subject": "ML > Model Evaluation & Overfitting",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Definition Clarity",
+        "score": "B",
+        "internal_note": "The student identified the need to evaluate the model and understand customer churn but did not clearly define the distinction between training and validation phases."
+      },
+      {
+        "criterion_name": "Metric Selection Justification",
+        "score": "C",
+        "internal_note": "The student listed common metrics but did not justify their relevance to the problem context or business objectives."
+      },
+      {
+        "criterion_name": "Overfitting Identification",
+        "score": "C",
+        "internal_note": "The student mentioned overfitting but did not provide a method for identifying it through performance comparison between training and validation datasets."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection in AI Output",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but missed others and included a false positive."
+      },
+      {
+        "criterion_name": "Overfitting Analysis",
+        "score": "C",
+        "internal_note": "The student did not address the lack of statistical evidence for overfitting analysis."
+      },
+      {
+        "criterion_name": "Metric Evaluation",
+        "score": "C",
+        "internal_note": "The student did not question the subjective nature of the AUC-ROC threshold or the choice of metrics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Commands Precision",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but lacked full precision in addressing all critical issues."
+      },
+      {
+        "criterion_name": "Guidance on Overfitting Mitigation",
+        "score": "B",
+        "internal_note": "The student did not specifically address overfitting mitigation in the commands, though it was mentioned in the report."
+      },
+      {
+        "criterion_name": "Metric Adjustment Suggestions",
+        "score": "A",
+        "internal_note": "The student effectively suggested explaining the importance of metrics for business objectives."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "The analysis assumes minimal overfitting without thorough statistical tests to confirm it.",
+      "The threshold for an 'impressive' AUC-ROC score is subjective and might not align with industry benchmarks.",
+      "There is no mention of how data privacy regulations specifically influenced the simulation process."
+    ],
+    "false_positives": [
+      "The dataset used for evaluation is not compliant with data privacy regulations like GDPR and CCPA."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"We need to figure out what exactly we want to evaluate about the machine learning model. This includes understanding customer churn and why it matters for a subscription service.\"}, {\"section_type\": \"Data Acquisition\", \"content\": \"Since we don't have the testing data, we should think about how to get some. We might ask the client for data or look for publicly available datasets that have similar characteristics.\"}, {\"section_type\": \"Choosing Me",
+    "steering_cmds": [
+      "Make sure the simulated dataset is more realistic and captures more complexities of real-world data.",
+      "Check if the simulated dataset really follows data privacy regulations like GDPR and CCPA.",
+      "Add more details about how the simulation of data was done.",
+      "Maybe explain why each performance metric is important for the business objectives.",
+      "Include some examples of how changes in the model could impact customer retention."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Clarification",
+        "score": "A",
+        "internal_note": "The student clearly defines the problem, focusing on indexing and query optimization, and identifies relevant aspects like query types."
+      },
+      {
+        "criterion_name": "Objective Identification",
+        "score": "B",
+        "internal_note": "Objectives such as reducing query execution time and optimizing index usage are identified, but could benefit from more specific metrics."
+      },
+      {
+        "criterion_name": "Assumption Articulation",
+        "score": "C",
+        "internal_note": "Assumptions about the database environment, such as the DBMS used, are not explicitly articulated, which is a key oversight."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection",
+        "score": "A",
+        "internal_note": "The student accurately identified all known inefficiencies and potential problems in the AI-generated solution."
+      },
+      {
+        "criterion_name": "Relevance Assessment",
+        "score": "A",
+        "internal_note": "The student correctly evaluated the relevance of the AI's suggestions, identifying potential issues with the proposed indexing strategy."
+      },
+      {
+        "criterion_name": "Performance Impact Analysis",
+        "score": "B",
+        "internal_note": "While the student identified the issues, the analysis lacked depth in explaining the specific impact on performance metrics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Command Precision",
+        "score": "B",
+        "internal_note": "Commands were specific but could have included more actionable details or examples."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was noted, but the solution did not fully converge to address all issues."
+      },
+      {
+        "criterion_name": "Contextual Adaptation",
+        "score": "B",
+        "internal_note": "Commands considered specific database contexts but lacked adaptation in suggesting alternative strategies."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary goal is to design an indexing strategy for a relational database that efficiently manages customer information and order history for an e-commerce platform. This includes optimizing for frequent queries such as retrieving customer details and order status while minimizing storage overhead. The database must support a high volume of transactions and concurrent queries from multiple departments, necessitating a robust indexing approac",
+    "steering_cmds": [
+      "Conduct a thorough analysis of the impact of composite indexes on write performance, especially in high-transaction scenarios, to ensure that the proposed indexing strategy does not degrade overall system performance.",
+      "Evaluate the distribution of data within the indexed columns to avoid performance issues that may arise from non-uniform data distributions, which could lead to inefficient index usage.",
+      "Incorporate a discussion on the trade-offs between read and write performance when using fewer indexes in high concurrency environments, particularly during peak loads, to ensure balanced performance across all operations.",
+      "Provide a more detailed assessment of the complexity and overhead associated with frequent `REINDEX` operations in high-transaction environments, and suggest alternative strategies for index maintenance that minimize disruption."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Clarification",
+        "score": "B",
+        "internal_note": "The student defines the problem well but could improve by specifying the scope and assumptions more clearly."
+      },
+      {
+        "criterion_name": "Objective Identification",
+        "score": "B",
+        "internal_note": "Objectives are identified but could be more specific, such as defining success metrics for query performance improvement."
+      },
+      {
+        "criterion_name": "Assumption Articulation",
+        "score": "C",
+        "internal_note": "The student does not articulate key assumptions about the DBMS or data distribution, which are crucial for strategy development."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection",
+        "score": "A",
+        "internal_note": "The student accurately identified all known inefficiencies and potential problems in the AI-generated solution."
+      },
+      {
+        "criterion_name": "Relevance Assessment",
+        "score": "A",
+        "internal_note": "The student correctly evaluated the relevance of the AI's suggestions, identifying potential issues with the proposed indexing strategy."
+      },
+      {
+        "criterion_name": "Performance Impact Analysis",
+        "score": "B",
+        "internal_note": "While the student identified the issues, the analysis lacked depth in explaining the specific impact on performance metrics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Command Precision",
+        "score": "B",
+        "internal_note": "Commands were specific but lacked examples for some suggestions."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was made, but further iteration was needed."
+      },
+      {
+        "criterion_name": "Contextual Adaptation",
+        "score": "B",
+        "internal_note": "Commands were adapted to context but missed deeper exploration of certain issues."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary goal is to develop an indexing strategy for a relational database that efficiently manages customer information and order history for an e-commerce platform. This includes defining the types of queries that will be frequently executed, such as retrieving customer details (e.g., name, contact information) and checking order status (e.g., pending, shipped, delivered). The database must support high transaction volumes while ensuring q",
+    "steering_cmds": [
+      "Consider how composite indexes might actually slow down write performance and provide examples of when this might happen.",
+      "Discuss the importance of understanding data distribution and how it can affect indexing choices in real-world applications.",
+      "Mention how having fewer indexes could impact read performance during high concurrency, especially when many queries are happening at the same time.",
+      "Explain the potential drawbacks of frequently using `REINDEX` in a busy database and suggest alternatives that might be less disruptive."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Clarification",
+        "score": "B",
+        "internal_note": "The student defines the problem well but lacks specificity in terms of database assumptions."
+      },
+      {
+        "criterion_name": "Objective Identification",
+        "score": "B",
+        "internal_note": "Objectives are identified but could benefit from more precise success metrics."
+      },
+      {
+        "criterion_name": "Assumption Articulation",
+        "score": "C",
+        "internal_note": "The student does not articulate specific assumptions about the database environment or data distribution."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but missed others."
+      },
+      {
+        "criterion_name": "Relevance Assessment",
+        "score": "B",
+        "internal_note": "The student incorrectly flagged the complexity of the indexing strategy as an issue."
+      },
+      {
+        "criterion_name": "Performance Impact Analysis",
+        "score": "C",
+        "internal_note": "The student did not fully analyze the performance impact of the proposed strategies, missing several key issues."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Command Precision",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but lacked depth in certain areas like performance metrics."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement in strategy simplification but lacked full convergence due to missing detailed analysis."
+      },
+      {
+        "criterion_name": "Contextual Adaptation",
+        "score": "B",
+        "internal_note": "Commands considered context but did not fully adapt to specific database constraints and performance metrics."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overlooks potential issues with uniform data distribution assumption, which may not hold in real-world scenarios.",
+      "Does not account for read performance trade-offs with fewer indexes in high concurrency scenarios, especially under peak loads.",
+      "May underestimate complexity and overhead introduced by frequent `REINDEX` operations in high-transaction environments."
+    ],
+    "false_positives": [
+      "The indexing strategy is too complex and will lead to decreased performance due to overhead, when in reality, the suggested primary and composite indexes are standard practice for optimizing common queries."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to design an indexing strategy for a database that efficiently supports queries related to customer information and order history in an e-commerce platform. This includes identifying the types of queries that are most frequent, understanding the data structure, and defining the performance metrics for success.\"}, {\"section_type\": \"Query Analysis\", \"content\": \"Conduct a thorough analysis of the types of queries that will",
+    "steering_cmds": [
+      "Reassess the impact of composite indexes on write performance, as they can introduce overhead that might not be justified without empirical analysis of the specific workload.",
+      "Simplify the indexing strategy by focusing solely on primary indexes initially, and only introduce composite indexes after monitoring query patterns and identifying specific needs.",
+      "Provide a clearer rationale for each index choice, including expected query patterns and performance metrics, to ensure that the strategy is data-driven rather than based on assumptions.",
+      "Incorporate a plan for periodic review of index effectiveness, including specific metrics to evaluate performance improvements and storage overhead, to adapt the strategy as necessary."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "B",
+    "judging_grade": "C",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Clarification",
+        "score": "B",
+        "internal_note": "The student defined the problem well but could have been more specific about indexing and query optimization."
+      },
+      {
+        "criterion_name": "Objective Identification",
+        "score": "A",
+        "internal_note": "Objectives such as query response time and storage efficiency were clearly identified."
+      },
+      {
+        "criterion_name": "Assumption Articulation",
+        "score": "B",
+        "internal_note": "Assumptions were implied but not explicitly articulated, which could lead to gaps in understanding."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection",
+        "score": "B",
+        "internal_note": "Identified one critical issue but missed others."
+      },
+      {
+        "criterion_name": "Relevance Assessment",
+        "score": "B",
+        "internal_note": "Correctly assessed one issue but flagged standard practices as overly complex without justification."
+      },
+      {
+        "criterion_name": "Performance Impact Analysis",
+        "score": "C",
+        "internal_note": "Failed to analyze the impact of other known issues on performance."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Command Precision",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but lacked detailed actionable guidance."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was made, but critical issues remained unaddressed."
+      },
+      {
+        "criterion_name": "Contextual Adaptation",
+        "score": "C",
+        "internal_note": "Commands were generic and did not fully consider specific database constraints or contexts."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overlooks potential issues with uniform data distribution assumption, which may not hold in real-world scenarios.",
+      "Does not account for read performance trade-offs with fewer indexes in high concurrency scenarios, especially under peak loads.",
+      "May underestimate complexity and overhead introduced by frequent `REINDEX` operations in high-transaction environments."
+    ],
+    "false_positives": [
+      "The indexing strategy is too complex and will lead to decreased performance due to overhead, when in reality, the suggested primary and composite indexes are standard practice for optimizing common queries."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The goal is to design an indexing strategy for a relational database that efficiently manages customer information and order history for an e-commerce platform. The database must support high transaction volumes and provide quick access to frequently queried data, such as customer details and order statuses, while also minimizing storage overhead. Key performance indicators (KPIs) include query response time, index maintenance time, and storage",
+    "steering_cmds": [
+      "Simplify the indexing strategy to focus only on the most important indexes.",
+      "Consider the impact of composite indexes on write performance more carefully.",
+      "Limit the number of indexes to avoid complexity and overhead.",
+      "Make sure to explain how to monitor index performance more clearly.",
+      "Suggest using only primary indexes at first and add others later if needed."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Clarification",
+        "score": "B",
+        "internal_note": "The student identifies the main goals but does not delve into specific indexing methods or query optimization techniques."
+      },
+      {
+        "criterion_name": "Objective Identification",
+        "score": "A",
+        "internal_note": "The student clearly identifies objectives related to query performance and storage reduction."
+      },
+      {
+        "criterion_name": "Assumption Articulation",
+        "score": "C",
+        "internal_note": "The student does not articulate specific assumptions about the database environment or query constraints, such as the DBMS or data distribution."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection",
+        "score": "A",
+        "internal_note": "The student accurately identified all known inefficiencies and potential problems in the AI-generated solution."
+      },
+      {
+        "criterion_name": "Relevance Assessment",
+        "score": "A",
+        "internal_note": "The student correctly evaluated the relevance of the AI's suggestions, identifying potential issues with the proposed indexing strategy."
+      },
+      {
+        "criterion_name": "Performance Impact Analysis",
+        "score": "B",
+        "internal_note": "While the student identified the issues, the analysis lacked depth in explaining the specific impact on performance metrics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Command Precision",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but could have been more precise in addressing simpler index solutions and data distribution."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was some improvement, but the solution did not fully converge due to unresolved issues."
+      },
+      {
+        "criterion_name": "Contextual Adaptation",
+        "score": "B",
+        "internal_note": "Commands considered high concurrency scenarios but lacked specificity in handling data distribution and simpler index solutions."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The problem is about creating an indexing strategy for a database that holds customer and order data for an online store. The main goals are to make sure that common queries run quickly and that we don’t use too much storage.\"}, {\"section_type\": \"Key Objectives\", \"content\": \"1. Improve query performance for getting customer details. 2. Improve query performance for checking order status. 3. Reduce the amount of storage used by the database.\"",
+    "steering_cmds": [
+      "Include a thorough analysis of the impact of composite indexes on write performance, particularly in high-transaction environments, to ensure that the benefits outweigh the costs.",
+      "Address the potential variability in data distribution and how it may affect index performance, suggesting strategies for dealing with skewed data.",
+      "Discuss the trade-offs between read and write performance in high concurrency scenarios, especially how fewer indexes might affect query times under peak loads.",
+      "Evaluate the implications of frequent `REINDEX` operations, considering alternative strategies such as using `CONCURRENTLY` to minimize locking and impact on transaction throughput."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Clarification",
+        "score": "C",
+        "internal_note": "The problem statement is vague and lacks focus on specific indexing and query optimization aspects."
+      },
+      {
+        "criterion_name": "Objective Identification",
+        "score": "B",
+        "internal_note": "The student identifies the need for efficient query performance but does not clearly specify objectives related to query optimization."
+      },
+      {
+        "criterion_name": "Assumption Articulation",
+        "score": "C",
+        "internal_note": "The student does not effectively articulate assumptions about the database environment or query constraints."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection",
+        "score": "A",
+        "internal_note": "The student accurately identified all known inefficiencies and potential problems in the AI-generated solution."
+      },
+      {
+        "criterion_name": "Relevance Assessment",
+        "score": "A",
+        "internal_note": "The student correctly evaluated the relevance of the AI's suggestions, identifying potential issues with the proposed indexing strategy."
+      },
+      {
+        "criterion_name": "Performance Impact Analysis",
+        "score": "B",
+        "internal_note": "While the student identified the issues, the analysis lacked depth in explaining the specific impact on performance metrics."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Command Precision",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but lacked depth in addressing all critical issues."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was noted, but key areas were left unexplored, limiting full convergence."
+      },
+      {
+        "criterion_name": "Contextual Adaptation",
+        "score": "B",
+        "internal_note": "Commands considered some context but missed addressing specific query and database constraints."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to understand what indexing is and why it's important for databases. Indexing helps speed up the retrieval of data, but I need to learn how to choose which fields to index.\"}, {\"section_type\": \"Key Requirements\", \"content\": \"The problem mentions efficient query performance for retrieving customer details and order status. I should identify what specific queries are common and how they are structured.\"}, {\"section_type\": \"Database Volu",
+    "steering_cmds": [
+      "Consider how composite indexes might affect write performance more carefully.",
+      "Think about the distribution of data and how it might not always be uniform in real situations.",
+      "Look into how fewer indexes can impact read performance when many users are accessing the database at once.",
+      "Be aware that frequent `REINDEX` operations can add extra complexity and overhead in busy environments."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Clarification",
+        "score": "B",
+        "internal_note": "The student identifies the need for an indexing strategy but lacks focus on query optimization and storage overhead."
+      },
+      {
+        "criterion_name": "Objective Identification",
+        "score": "C",
+        "internal_note": "Objectives related to query performance and storage are not clearly identified or quantified."
+      },
+      {
+        "criterion_name": "Assumption Articulation",
+        "score": "C",
+        "internal_note": "The student does not articulate assumptions about the database environment or query constraints."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but missed others."
+      },
+      {
+        "criterion_name": "Relevance Assessment",
+        "score": "B",
+        "internal_note": "The student incorrectly flagged the complexity of the indexing strategy as an issue."
+      },
+      {
+        "criterion_name": "Performance Impact Analysis",
+        "score": "C",
+        "internal_note": "The student did not fully analyze the performance impact of the proposed strategies, missing several key issues."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Command Precision",
+        "score": "B",
+        "internal_note": "Commands were somewhat precise but lacked complete specificity regarding query patterns and testing."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Some improvement was made, but not all issues were fully addressed."
+      },
+      {
+        "criterion_name": "Contextual Adaptation",
+        "score": "B",
+        "internal_note": "Commands considered the impact of indexes but did not fully adapt to all potential database contexts."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overlooks potential issues with uniform data distribution assumption, which may not hold in real-world scenarios.",
+      "Does not account for read performance trade-offs with fewer indexes in high concurrency scenarios, especially under peak loads.",
+      "May underestimate complexity and overhead introduced by frequent `REINDEX` operations in high-transaction environments."
+    ],
+    "false_positives": [
+      "The indexing strategy is too complex and will lead to decreased performance due to overhead, when in reality, the suggested primary and composite indexes are standard practice for optimizing common queries."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The problem is about creating an indexing strategy for a database that holds customer and order information for an online store. I need to make sure that the database can quickly find customer details and order statuses.\"}, {\"section_type\": \"Key Queries\", \"content\": \"I think the important queries to consider are: getting customer information by their ID, checking the status of an order, and maybe searching for customers by their names or ema",
+    "steering_cmds": [
+      "Reassess the impact of composite indexes on write performance by conducting a thorough analysis of the specific workload and query patterns before implementation.",
+      "Simplify the indexing strategy by focusing on essential indexes only, as the current complexity may introduce unnecessary overhead that could degrade overall performance.",
+      "Include a detailed explanation of when to use partial indexes to further optimize storage and performance based on query usage.",
+      "Emphasize the importance of testing the indexing strategy in a staging environment to evaluate its effectiveness under realistic load conditions before deploying it in production."
+    ]
+  },
+  {
+    "challenge": 3,
+    "subject": "Databases > Indexing & Query Optimization",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Clarification",
+        "score": "C",
+        "internal_note": "The student provides a vague understanding of indexing without clearly defining the problem in terms of query optimization."
+      },
+      {
+        "criterion_name": "Objective Identification",
+        "score": "C",
+        "internal_note": "The student fails to specify clear objectives related to query optimization."
+      },
+      {
+        "criterion_name": "Assumption Articulation",
+        "score": "C",
+        "internal_note": "The student does not articulate any assumptions about the database environment or query constraints."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Detection",
+        "score": "B",
+        "internal_note": "The student identified one critical issue but missed others."
+      },
+      {
+        "criterion_name": "Relevance Assessment",
+        "score": "B",
+        "internal_note": "The student incorrectly flagged the complexity of the indexing strategy as an issue."
+      },
+      {
+        "criterion_name": "Performance Impact Analysis",
+        "score": "C",
+        "internal_note": "The student did not fully analyze the performance impact of the proposed strategies, missing several key issues."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Correction Command Precision",
+        "score": "B",
+        "internal_note": "Commands were somewhat specific but lacked actionable detail on query examples and review processes."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was some improvement, but the student did not fully iterate on all feedback."
+      },
+      {
+        "criterion_name": "Contextual Adaptation",
+        "score": "B",
+        "internal_note": "Commands were adapted to focus on essentials but did not fully consider the specific context of query justification."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Overlooks potential issues with uniform data distribution assumption, which may not hold in real-world scenarios.",
+      "Does not account for read performance trade-offs with fewer indexes in high concurrency scenarios, especially under peak loads.",
+      "May underestimate complexity and overhead introduced by frequent `REINDEX` operations in high-transaction environments."
+    ],
+    "false_positives": [
+      "The indexing strategy is too complex and will lead to decreased performance due to overhead, when in reality, the suggested primary and composite indexes are standard practice for optimizing common queries."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"I need to figure out what an indexing strategy is and why it's important for a database. I think it has to do with how fast we can find information in the database.\"}, {\"section_type\": \"Key Components\", \"content\": \"The main parts I should consider are customer information and order history since those are the data types we need to index.\"}, {\"section_type\": \"Queries to Optimize\", \"content\": \"I should identify the specific queries we often ru",
+    "steering_cmds": [
+      "Simplify the indexing strategy to focus only on essential indexes for customer_id and order_id.",
+      "Avoid suggesting composite indexes unless they are clearly justified with examples of frequent queries.",
+      "Mention the potential impact of indexes on write performance more clearly.",
+      "Recommend fewer indexes to reduce complexity and improve write performance.",
+      "Emphasize the need for regular review of indexes but without suggesting specific monitoring tools."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "expert",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "A",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "The student identifies the research question and hypotheses well but could improve by specifying the variables more clearly."
+      },
+      {
+        "criterion_name": "Assumptions Recognition",
+        "score": "B",
+        "internal_note": "The student lists some assumptions but lacks detail on how to verify or handle violations."
+      },
+      {
+        "criterion_name": "Data Requirements",
+        "score": "C",
+        "internal_note": "The framing does not clearly specify data type or sample size, which is crucial for hypothesis testing."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification in AI Output",
+        "score": "A",
+        "internal_note": "The student correctly identified all known issues in the AI output."
+      },
+      {
+        "criterion_name": "Statistical Validity Assessment",
+        "score": "A",
+        "internal_note": "The student accurately assessed the appropriateness of the statistical methods used."
+      },
+      {
+        "criterion_name": "Assumption Verification",
+        "score": "A",
+        "internal_note": "The student thoroughly checked for assumption adherence and identified potential violations."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Feedback Clarity",
+        "score": "A",
+        "internal_note": "Feedback was specific and actionable, addressing key issues effectively."
+      },
+      {
+        "criterion_name": "Statistical Guidance",
+        "score": "B",
+        "internal_note": "Guidance was mostly appropriate but lacked exploration of outlier handling and broader non-parametric methods."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "A",
+        "internal_note": "The student demonstrated effective iterative improvement, significantly refining the AI's output."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The initial problem requires a statistical analysis to evaluate the effectiveness of wellness programs in reducing employee stress levels based on survey data. To refine this, we must clearly define the research question: 'Do the new wellness programs significantly reduce employee stress levels across different departments within the organization?' This question will guide our hypothesis testing.\"}, {\"section_type\": \"Data Characteristics\", \"con",
+    "steering_cmds": [
+      "Before applying ANOVA, conduct a preliminary analysis to check for baseline differences in stress levels across departments using descriptive statistics and visualizations.",
+      "Evaluate the normality of the data using tests such as the Shapiro-Wilk test or Q-Q plots, especially for smaller sample sizes, to ensure the assumption of normality is met.",
+      "Include a discussion on the implications of non-normal data and consider using a non-parametric test like the Kruskal-Wallis test if normality cannot be assumed.",
+      "Incorporate post-hoc tests, such as Tukey's HSD, to identify which specific departments differ significantly from each other if the ANOVA results are significant.",
+      "Clarify the interpretation of Levene’s test results and the potential consequences of its limitations on the analysis of variance assumptions."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "The student identifies the null and alternative hypotheses well but could improve by specifying the data type and sample size more explicitly."
+      },
+      {
+        "criterion_name": "Assumptions Recognition",
+        "score": "B",
+        "internal_note": "The student lists relevant assumptions but could provide more detail on how these assumptions impact the choice of statistical test."
+      },
+      {
+        "criterion_name": "Data Requirements",
+        "score": "C",
+        "internal_note": "The student mentions the need for exploratory data analysis but does not clearly define the data type or sample size requirements."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification in AI Output",
+        "score": "A",
+        "internal_note": "The student correctly identified all known issues in the AI output."
+      },
+      {
+        "criterion_name": "Statistical Validity Assessment",
+        "score": "A",
+        "internal_note": "The student accurately assessed the appropriateness of the statistical methods used."
+      },
+      {
+        "criterion_name": "Assumption Verification",
+        "score": "A",
+        "internal_note": "The student thoroughly checked for assumption adherence and identified potential violations."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Feedback Clarity",
+        "score": "B",
+        "internal_note": "Feedback was somewhat specific but could have been clearer in addressing all critical issues."
+      },
+      {
+        "criterion_name": "Statistical Guidance",
+        "score": "B",
+        "internal_note": "Guidance was generally appropriate but missed some critical aspects like data stratification and broader post-hoc analysis."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "C",
+        "internal_note": "Improvement was limited due to premature marking of 'done' and unresolved critical issues."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to evaluate the effectiveness of new wellness programs implemented by a regional health organization in reducing employee stress levels. The survey data collected from various departments serves as the foundation for this analysis. The problem is ill-defined due to the lack of clarity on baseline stress levels across departments, the distribution characteristics of the data, and assumptions regarding variance. Therefore",
+    "steering_cmds": [
+      "Check if the departments have different baseline stress levels before using ANOVA.",
+      "Consider testing for normality in smaller sample groups since the assumption may not hold.",
+      "Include post-hoc tests to find out which specific groups differ after ANOVA.",
+      "Be cautious about relying solely on Levene's test for variance; explain its limitations."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identified variables and hypotheses but did not specify the type of test initially."
+      },
+      {
+        "criterion_name": "Assumptions Recognition",
+        "score": "B",
+        "internal_note": "Listed relevant assumptions but missed specific mention of sample size assumptions."
+      },
+      {
+        "criterion_name": "Data Requirements",
+        "score": "C",
+        "internal_note": "Did not specify sample size or data type clearly."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification in AI Output",
+        "score": "B",
+        "internal_note": "The student identified one key issue but missed several others and incorrectly flagged ANOVA's purpose."
+      },
+      {
+        "criterion_name": "Statistical Validity Assessment",
+        "score": "C",
+        "internal_note": "The student demonstrated a misunderstanding of ANOVA's applicability to multiple groups."
+      },
+      {
+        "criterion_name": "Assumption Verification",
+        "score": "C",
+        "internal_note": "The student failed to address several assumption-related issues, such as non-normality and post-hoc testing."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Feedback Clarity",
+        "score": "A",
+        "internal_note": "Feedback was clear and specific, addressing key issues effectively."
+      },
+      {
+        "criterion_name": "Statistical Guidance",
+        "score": "B",
+        "internal_note": "Guidance was mostly appropriate, but missed detailing post-hoc tests and reinforcing independence assumption."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "There was improvement, but marking done early prevented addressing all issues."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Does not address potential non-normality of data in small sample groups.",
+      "Overlooks post-hoc tests for identifying specific group differences.",
+      "Assumes Levene’s test will always correctly identify variance issues without considering its limitations."
+    ],
+    "false_positives": [
+      "The use of ANOVA is inappropriate because it can only compare two groups, not multiple groups. In reality, ANOVA is specifically designed to compare means across more than two groups."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective of this analysis is to assess whether the wellness programs implemented by the regional health organization have a statistically significant effect on employee stress levels. We will define the key variables: the independent variable is the participation in the wellness programs (binary: participated vs. not participated), and the dependent variable is the measured stress levels of employees, quantified through a standardi",
+    "steering_cmds": [
+      "Clarify the baseline differences in stress levels between departments before selecting ANOVA as the test.",
+      "Conduct preliminary tests, such as Levene's test, to assess the homogeneity of variances across groups before proceeding with ANOVA.",
+      "Ensure that the assumption of normality is validated through tests like the Shapiro-Wilk test or by examining Q-Q plots.",
+      "If baseline differences are significant, consider using a post-hoc test after ANOVA to identify which specific groups differ.",
+      "If the data does not meet ANOVA assumptions, explicitly state the rationale for choosing a non-parametric alternative, such as the Kruskal-Wallis test, and under what conditions it would be used."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "expert",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "A",
+        "internal_note": "The student accurately identifies the null and alternative hypotheses and the general type of test required."
+      },
+      {
+        "criterion_name": "Assumptions Recognition",
+        "score": "B",
+        "internal_note": "The student lists some assumptions, but could be more detailed, especially on independence and potential data transformations."
+      },
+      {
+        "criterion_name": "Data Requirements",
+        "score": "C",
+        "internal_note": "The student does not specify data type or sample size, which are crucial for hypothesis testing."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification in AI Output",
+        "score": "B",
+        "internal_note": "The student identified one key issue but missed several others and incorrectly flagged ANOVA's purpose."
+      },
+      {
+        "criterion_name": "Statistical Validity Assessment",
+        "score": "C",
+        "internal_note": "The student demonstrated a misunderstanding of ANOVA's applicability to multiple groups."
+      },
+      {
+        "criterion_name": "Assumption Verification",
+        "score": "C",
+        "internal_note": "The student failed to address several assumption-related issues, such as non-normality and post-hoc testing."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Feedback Clarity",
+        "score": "B",
+        "internal_note": "Feedback was actionable but lacked detail in some areas."
+      },
+      {
+        "criterion_name": "Statistical Guidance",
+        "score": "B",
+        "internal_note": "Guidance was generally correct but could have been more specific."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Improvement was made, but some issues remained unaddressed."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Does not address potential non-normality of data in small sample groups.",
+      "Overlooks post-hoc tests for identifying specific group differences.",
+      "Assumes Levene’s test will always correctly identify variance issues without considering its limitations."
+    ],
+    "false_positives": [
+      "The use of ANOVA is inappropriate because it can only compare two groups, not multiple groups. In reality, ANOVA is specifically designed to compare means across more than two groups."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Definition\", \"content\": \"The primary objective is to assess the effectiveness of new wellness programs implemented by a regional health organization in reducing employee stress levels. This involves determining whether there is a statistically significant difference in stress levels before and after the implementation of these programs.\"}, {\"section_type\": \"Data Characteristics\", \"content\": \"The survey data consists of stress level measurements from employees across va",
+    "steering_cmds": [
+      "Check if the baseline stress levels differ between departments before using ANOVA.",
+      "Clarify that ANOVA can compare means across multiple groups, not just two.",
+      "Consider including how to check normality and homogeneity of variance before deciding on ANOVA.",
+      "Mention what to do if the assumptions for ANOVA are violated, like using a non-parametric test.",
+      "Explain why it's important to analyze the data distribution before choosing a test."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies the need for a hypothesis test but lacks clarity on test selection and hypothesis formulation."
+      },
+      {
+        "criterion_name": "Assumptions Recognition",
+        "score": "B",
+        "internal_note": "Mentions key assumptions but lacks detail on how to verify or address them."
+      },
+      {
+        "criterion_name": "Data Requirements",
+        "score": "C",
+        "internal_note": "Does not specify data type or sample size needed for the test."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification in AI Output",
+        "score": "A",
+        "internal_note": "The student correctly identified all known issues in the AI output."
+      },
+      {
+        "criterion_name": "Statistical Validity Assessment",
+        "score": "A",
+        "internal_note": "The student accurately assessed the appropriateness of the statistical methods used."
+      },
+      {
+        "criterion_name": "Assumption Verification",
+        "score": "A",
+        "internal_note": "The student thoroughly checked for assumption adherence and identified potential violations."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Feedback Clarity",
+        "score": "B",
+        "internal_note": "Feedback was generally clear and actionable but lacked specificity in some areas, such as baseline analysis methods."
+      },
+      {
+        "criterion_name": "Statistical Guidance",
+        "score": "A",
+        "internal_note": "Provided appropriate statistical guidance, addressing key issues like normality, variance, and post-hoc analysis."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "The solution improved across cycles, but marking 'done' was premature as some issues remained unresolved."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Description\", \"content\": \"Our client is a health organization that wants to find out if their new wellness programs help reduce stress among employees. They did a survey but we need to figure out how to analyze the data they collected.\"}, {\"section_type\": \"Understanding the Data\", \"content\": \"The survey has responses from different departments, but we don't know how stressed employees were before these programs started. We need to look at if stress levels are different",
+    "steering_cmds": [
+      "Before proceeding with ANOVA, conduct an analysis to assess baseline differences in stress levels between departments to ensure comparability.",
+      "Include a preliminary check for normality (e.g., Shapiro-Wilk test) and consider transformations or non-parametric alternatives if normality is violated, especially in smaller samples.",
+      "Incorporate post-hoc tests (e.g., Tukey's HSD) after ANOVA to identify which specific departments differ significantly from each other if the null hypothesis is rejected.",
+      "Acknowledge the limitations of Levene’s test and consider using alternative methods or robust statistical techniques if variances are not equal."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "expert",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "A",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies the general problem but lacks explicit hypotheses and rationale for test selection."
+      },
+      {
+        "criterion_name": "Assumptions Recognition",
+        "score": "C",
+        "internal_note": "Mentions some assumptions but misses key statistical assumptions like normality and variance homogeneity."
+      },
+      {
+        "criterion_name": "Data Requirements",
+        "score": "B",
+        "internal_note": "Acknowledges missing data but does not specify the type or amount needed for analysis."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification in AI Output",
+        "score": "A",
+        "internal_note": "The student correctly identified all known issues in the AI output."
+      },
+      {
+        "criterion_name": "Statistical Validity Assessment",
+        "score": "A",
+        "internal_note": "The student accurately assessed the appropriateness of the statistical methods used."
+      },
+      {
+        "criterion_name": "Assumption Verification",
+        "score": "A",
+        "internal_note": "The student thoroughly checked for assumption adherence and identified potential violations."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Feedback Clarity",
+        "score": "B",
+        "internal_note": "Feedback was generally clear but missed addressing critical data collection issues."
+      },
+      {
+        "criterion_name": "Statistical Guidance",
+        "score": "A",
+        "internal_note": "Provided appropriate statistical guidance regarding ANOVA assumptions and post-hoc tests."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Made progress in refining the output, but critical data issues were not resolved, limiting full improvement."
+      }
+    ],
+    "judging_real_flagged": 4,
+    "judging_false_flagged": 0,
+    "judging_total_real": 4,
+    "issues_missed": [],
+    "false_positives": [],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The client wants to know if their wellness programs help reduce stress for employees. We need to look at survey data from different departments, but we don't know how stress levels differ between these departments before the programs started.\"}, {\"section_type\": \"Data Collection Issues\", \"content\": \"The survey data is not clear about how many people from each department were surveyed or what their stress levels were before the programs began",
+    "steering_cmds": [
+      "Check if the departments have different baseline stress levels before using ANOVA.",
+      "Consider if the data might not be normal, especially with smaller samples.",
+      "Add post-hoc tests to find out which specific groups are different if ANOVA shows significance.",
+      "Be cautious about relying solely on Levene’s test for variance issues, as it might not always be accurate."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "crossed",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "expert",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "B",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "The student identifies the need for a hypothesis test and the general problem but lacks specificity in defining variables and test types."
+      },
+      {
+        "criterion_name": "Assumptions Recognition",
+        "score": "B",
+        "internal_note": "The student lists some assumptions but does not discuss how to verify them or consider alternatives if assumptions are violated."
+      },
+      {
+        "criterion_name": "Data Requirements",
+        "score": "C",
+        "internal_note": "The student does not specify the data type or sample size needed, which is crucial for hypothesis testing."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification in AI Output",
+        "score": "B",
+        "internal_note": "The student identified one key issue but missed several others and incorrectly flagged ANOVA's purpose."
+      },
+      {
+        "criterion_name": "Statistical Validity Assessment",
+        "score": "C",
+        "internal_note": "The student demonstrated a misunderstanding of ANOVA's applicability to multiple groups."
+      },
+      {
+        "criterion_name": "Assumption Verification",
+        "score": "C",
+        "internal_note": "The student failed to address several assumption-related issues, such as non-normality and post-hoc testing."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Feedback Clarity",
+        "score": "B",
+        "internal_note": "Feedback was generally clear but lacked detail in some areas."
+      },
+      {
+        "criterion_name": "Statistical Guidance",
+        "score": "B",
+        "internal_note": "Guidance was mostly correct but initially misunderstood ANOVA's purpose."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "B",
+        "internal_note": "Improvement was evident, but more iterations could have addressed remaining issues."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Does not address potential non-normality of data in small sample groups.",
+      "Overlooks post-hoc tests for identifying specific group differences.",
+      "Assumes Levene’s test will always correctly identify variance issues without considering its limitations."
+    ],
+    "false_positives": [
+      "The use of ANOVA is inappropriate because it can only compare two groups, not multiple groups. In reality, ANOVA is specifically designed to compare means across more than two groups."
+    ],
+    "framing_text": "[{\"section_type\": \"Problem Understanding\", \"content\": \"The problem is about analyzing survey data from a health organization to see if wellness programs help reduce employee stress. But I need to understand what the data looks like and how to test if the programs work.\"}, {\"section_type\": \"Data Description\", \"content\": \"The survey data comes from different departments, but we don't know how stress levels vary between them. I need to find out if there are different starting points for stress in e",
+    "steering_cmds": [
+      "Check for baseline differences in stress levels between departments before applying ANOVA, as this could affect the validity of the results.",
+      "Clarify that ANOVA is indeed appropriate for comparing more than two groups, but ensure that the assumptions of normality and homogeneity of variance are verified first.",
+      "Consider conducting a post-hoc test if ANOVA results are significant to identify which specific departments differ from one another.",
+      "Include a discussion on the implications of violating the assumptions of ANOVA and how that might affect the conclusions drawn from the analysis."
+    ]
+  },
+  {
+    "challenge": 4,
+    "subject": "Statistics > Hypothesis Testing",
+    "level": "novice",
+    "framing_level": "novice",
+    "judging_level": "novice",
+    "steering_level": "novice",
+    "framing_grade": "C",
+    "judging_grade": "C",
+    "steering_grade": "C",
+    "framing_percrit": [
+      {
+        "criterion_name": "Problem Identification",
+        "score": "B",
+        "internal_note": "Identifies the general problem but lacks specific hypotheses."
+      },
+      {
+        "criterion_name": "Assumptions Recognition",
+        "score": "B",
+        "internal_note": "Mentions normality and variance but lacks detail on verification and handling violations."
+      },
+      {
+        "criterion_name": "Data Requirements",
+        "score": "C",
+        "internal_note": "Does not specify data type or sample size needed for the test."
+      }
+    ],
+    "judging_percrit": [
+      {
+        "criterion_name": "Error Identification in AI Output",
+        "score": "B",
+        "internal_note": "The student identified one key issue but missed several others and incorrectly flagged ANOVA's purpose."
+      },
+      {
+        "criterion_name": "Statistical Validity Assessment",
+        "score": "C",
+        "internal_note": "The student demonstrated a misunderstanding of ANOVA's applicability to multiple groups."
+      },
+      {
+        "criterion_name": "Assumption Verification",
+        "score": "C",
+        "internal_note": "The student failed to address several assumption-related issues, such as non-normality and post-hoc testing."
+      }
+    ],
+    "steering_percrit": [
+      {
+        "criterion_name": "Feedback Clarity",
+        "score": "B",
+        "internal_note": "Feedback was somewhat clear but lacked specific methods for examining baseline differences."
+      },
+      {
+        "criterion_name": "Statistical Guidance",
+        "score": "B",
+        "internal_note": "Guidance was generally correct but did not include specific methods for baseline checks."
+      },
+      {
+        "criterion_name": "Iterative Improvement",
+        "score": "C",
+        "internal_note": "There was limited iterative improvement, as some critical issues remained unaddressed."
+      }
+    ],
+    "judging_real_flagged": 1,
+    "judging_false_flagged": 1,
+    "judging_total_real": 4,
+    "issues_missed": [
+      "Does not address potential non-normality of data in small sample groups.",
+      "Overlooks post-hoc tests for identifying specific group differences.",
+      "Assumes Levene’s test will always correctly identify variance issues without considering its limitations."
+    ],
+    "false_positives": [
+      "The use of ANOVA is inappropriate because it can only compare two groups, not multiple groups. In reality, ANOVA is specifically designed to compare means across more than two groups."
+    ],
+    "framing_text": "[{\"section_type\": \"Clarification of Problem\", \"content\": \"The client wants to know if the new wellness programs help reduce stress. We need to check if the survey data shows a clear difference in stress levels before and after the programs.\"}, {\"section_type\": \"Identification of Variables\", \"content\": \"We need to define what we mean by 'stress levels' and how they were measured in the survey. Also, we should identify which departments are included in the survey and if there are any important dif",
+    "steering_cmds": [
+      "Check if the departments have different baseline stress levels before using ANOVA.",
+      "Explain why ANOVA is chosen even if we don't know how departments differ initially.",
+      "Clarify that ANOVA can compare means across multiple groups, not just two.",
+      "Consider including a way to check for normality and variance before running ANOVA."
     ]
   }
 ]

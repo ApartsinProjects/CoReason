@@ -1,0 +1,142 @@
+{
+  "_vars": {
+    "raw_problem": "Your team is tasked with advising a local agricultural cooperative on how they might adjust their produce pricing strategy for the upcoming season. The cooperative specializes in organic vegetables and is concerned about changes in both consumer demand and potential supply chain disruptions. Analyze the potential impact of these factors on the cooperative's pricing strategy. Provide a detailed report outlining your recommended pricing adjustments, considering both short-term and long-term implications. The cooperative has not provided specific data on current pricing, demand elasticity, or supply constraints, so you'll need to outline what assumptions you're making and how they influence your analysis. Additionally, consider any external market factors that might affect your recommendations.",
+    "student_framing": "[{\"section_type\": \"Problem Definition\", \"content\": \"Clearly define the objectives of the pricing strategy adjustment. This includes understanding the cooperative's current market position, target consumer demographics, and the specific goals for the upcoming season—whether it is to increase market share, maintain profitability, or respond to competitive pressures.\"}, {\"section_type\": \"Data Requirements\", \"content\": \"Identify the specific data needed to conduct a thorough analysis. This includes current pricing information, historical sales data, consumer demand trends, elasticity of demand for organic vegetables, and potential supply chain disruptions. Outline methods for obtaining this data, such as surveys, market research reports, or collaboration with local agricultural economists.\"}, {\"section_type\": \"Assumptions\", \"content\": \"List the assumptions that will be made in the absence of specific data. For example, assume a certain level of demand elasticity based on industry benchmarks, or project supply chain disruptions based on recent trends in logistics and transportation. Clearly state how these assumptions will impact the analysis and recommendations.\"}, {\"section_type\": \"Market Analysis\", \"content\": \"Conduct a thorough analysis of external market factors that could influence pricing strategies, such as economic conditions, consumer preferences for organic products, competition from non-organic produce, and seasonal variations in supply and demand. This should also include an assessment of potential regulatory changes affecting organic farming.\"}, {\"section_type\": \"Short-term vs Long-term Strategy\", \"content\": \"Differentiate between short-term pricing adjustments (e.g., promotional pricing, discounts) and long-term strategies (e.g., value-based pricing, premium pricing for unique offerings). Analyze how each strategy aligns with the cooperative's overall goals and market conditions.\"}, {\"section_type\": \"Impact Assessment\", \"content\": \"Evaluate the potential impacts of recommended pricing adjustments on various stakeholders, including farmers within the cooperative, consumers, and the cooperative's financial health. Consider both quantitative impacts (e.g., revenue projections) and qualitative impacts (e.g., brand perception).\"}, {\"section_type\": \"Implementation Plan\", \"content\": \"Outline a step-by-step implementation plan for the recommended pricing strategy, including timelines, responsible parties, and metrics for success. This should also address potential risks and mitigation strategies.\"}, {\"section_type\": \"Review and Feedback\", \"content\": \"Propose a mechanism for ongoing review and feedback on the pricing strategy, allowing for adjustments based on real-time data and changing market conditions. This could include regular meetings with cooperative members and consumer feedback surveys.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Identification of Economic Agents",
+          "description": "Ability to identify and define the economic agents involved in the problem, such as consumers, producers, and government.",
+          "excellent_indicator": "Correctly identifies all relevant economic agents and clearly defines their roles in the context of supply and demand.",
+          "poor_indicator": "Fails to identify key economic agents or provides vague and incorrect definitions."
+        },
+        {
+          "name": "Clarification of Economic Context",
+          "description": "Ability to translate the problem into a context involving supply and demand, specifying relevant markets and commodities.",
+          "excellent_indicator": "Accurately frames the problem within a specific market, detailing the supply and demand dynamics.",
+          "poor_indicator": "Provides an unclear or incorrect context, failing to relate the problem to a specific market or commodity."
+        },
+        {
+          "name": "Specification of Constraints and Assumptions",
+          "description": "Ability to specify the constraints and assumptions necessary to structure the problem, such as price ceilings, market equilibrium, or elasticities.",
+          "excellent_indicator": "Clearly specifies all relevant constraints and assumptions that are realistic and applicable to the problem.",
+          "poor_indicator": "Misses critical constraints or assumptions, or includes unrealistic or irrelevant ones."
+        }
+      ],
+      "typical_errors": [
+        "Confusing the roles of consumers and producers.",
+        "Misidentifying the relevant market or commodity.",
+        "Ignoring important constraints like price controls."
+      ]
+    },
+    "best_framing": {
+      "base": "Your team is tasked with advising a local agricultural cooperative on how they might adjust their produce pricing strategy for the upcoming season. The cooperative specializes in organic vegetables and is concerned about changes in both consumer demand and potential supply chain disruptions. Analyze the potential impact of these factors on the cooperative's pricing strategy. Provide a detailed report outlining your recommended pricing adjustments, considering both short-term and long-term implications. The cooperative has not provided specific data on current pricing, demand elasticity, or supply constraints, so you'll need to outline what assumptions you're making and how they influence your analysis. Additionally, consider any external market factors that might affect your recommendations.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Current Pricing Levels",
+              "description": "Assume that current pricing levels are aligned with the average market price for organic vegetables in the region. This assumption is necessary due to the lack of specific pricing data provided by the cooperative.",
+              "addresses_gap": "No specific data on current pricing is provided"
+            },
+            {
+              "title": "Demand Elasticity",
+              "description": "Assume a moderate demand elasticity for organic vegetables, reflecting a consumer base that values organic produce but is sensitive to price changes. This assumption helps in analyzing how price changes might impact demand.",
+              "addresses_gap": "Demand elasticity is not specified"
+            },
+            {
+              "title": "Supply Chain Stability",
+              "description": "Assume potential minor disruptions in the supply chain due to seasonal variability and external factors such as weather or transportation issues. This assumption is made to address the ambiguity around supply constraints.",
+              "addresses_gap": "Supply constraints are ambiguous"
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Market Competition",
+              "description": "The cooperative operates in a competitive market with several other organic vegetable producers. This constraint limits the extent to which prices can be increased without losing market share.",
+              "addresses_gap": "No specific constraints were initially provided, but market competition is a realistic factor that influences pricing strategy."
+            },
+            {
+              "title": "Consumer Income Levels",
+              "description": "Assume that consumer income levels remain stable, which influences their purchasing power and demand for organic produce.",
+              "addresses_gap": "No explicit mention of consumer income levels, which affect demand."
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Scope of Pricing Strategy",
+              "description": "The pricing strategy should consider both short-term adjustments to respond to immediate market changes and long-term strategies for sustained competitiveness.",
+              "addresses_gap": "The problem asks for short-term and long-term implications but does not clarify the scope of each."
+            },
+            {
+              "title": "External Market Factors",
+              "description": "Include factors such as regional economic conditions, trends in organic food consumption, and potential regulatory changes affecting organic farming.",
+              "addresses_gap": "The problem mentions external market factors but does not specify which ones to consider."
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Profitability",
+              "description": "Measure success by the cooperative's ability to maintain or increase profitability while adjusting prices, considering both cost and revenue changes.",
+              "addresses_gap": "No specific criteria for measuring the success of the pricing strategy are provided."
+            },
+            {
+              "title": "Market Share",
+              "description": "Evaluate the ability to maintain or grow market share in the organic vegetable sector as a result of pricing adjustments.",
+              "addresses_gap": "Success metrics related to market presence are not specified."
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by identifying economic agents (consumers and producers), clarifying the economic context (organic vegetable market), and specifying necessary assumptions and constraints (pricing data, demand elasticity, supply chain stability). It ensures a comprehensive understanding of the problem, allowing for a structured analysis and solution."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing lacks a clear identification of the economic agents involved. While the response mentions consumer demographics and market competition, it does not explicitly define the roles of consumers, producers, and other stakeholders in the context of supply and demand. Additionally, the framing could better specify the economic context by detailing the specific market dynamics of organic vegetables. The assumptions section is well-structured but could include more realistic constraints and a clearer connection to the cooperative's goals.",
+  "better_alternative": "A stronger framing would explicitly identify the economic agents, such as the cooperative members as producers, consumers of organic vegetables, and any relevant regulatory bodies. It would also provide a detailed description of the organic vegetable market, including supply and demand dynamics. The assumptions should be realistic and directly tied to the cooperative's strategic goals, such as maintaining profitability or increasing market share. Including specific constraints like price ceilings or market saturation would enhance the analysis.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Identification of Economic Agents",
+      "score": "B",
+      "internal_note": "The response mentions consumer demographics and market competition but lacks explicit identification of all economic agents."
+    },
+    {
+      "criterion_name": "Clarification of Economic Context",
+      "score": "B",
+      "internal_note": "The context of the organic vegetable market is implied but not explicitly detailed in terms of supply and demand dynamics."
+    },
+    {
+      "criterion_name": "Specification of Constraints and Assumptions",
+      "score": "A",
+      "internal_note": "The assumptions are well-articulated, but the connection to constraints could be stronger."
+    }
+  ],
+  "strengths": [
+    "The student clearly outlines assumptions and their impacts on the analysis.",
+    "The framing includes a comprehensive market analysis considering external factors."
+  ],
+  "refinements_correctly_selected": [
+    "Assumptions",
+    "Market Analysis",
+    "Short-term vs Long-term Strategy"
+  ],
+  "refinements_missed": [
+    "Identification of Economic Agents",
+    "Clarification of Economic Context"
+  ],
+  "unnecessary_selections": [
+    "Review and Feedback"
+  ]
+}

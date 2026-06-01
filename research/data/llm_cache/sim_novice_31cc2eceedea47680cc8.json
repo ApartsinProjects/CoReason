@@ -1,0 +1,8 @@
+{
+  "commands": [
+    "Consider how composite indexes might affect write performance more carefully.",
+    "Think about the distribution of data and how it might not always be uniform in real situations.",
+    "Look into how fewer indexes can impact read performance when many users are accessing the database at once.",
+    "Be aware that frequent `REINDEX` operations can add extra complexity and overhead in busy environments."
+  ]
+}

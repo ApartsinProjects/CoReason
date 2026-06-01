@@ -45,12 +45,20 @@ blockquote{border-left:3px solid var(--accent);margin:1rem 0;padding:.3rem 1rem;
 .abstract{background:#f7f9fc;border:1px solid var(--line);border-radius:8px;padding:1.2rem 1.5rem;margin:1.5rem 0}
 .abstract h2{border:none;margin:0 0 .5rem;padding:0;font-size:1.1rem}
 hr{border:none;border-top:1px solid var(--line);margin:2rem 0}
+img{max-width:100%;display:block;margin:1.6rem auto 0.4rem}
+img[src$=".png"]{border:1px solid var(--line);border-radius:6px}
+.docxlink{position:fixed;top:14px;right:16px;background:var(--accent);color:#fff;
+  padding:.4rem .8rem;border-radius:6px;font-size:.8rem;font-family:Arial,sans-serif;
+  text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:100}
+.docxlink:hover{text-decoration:none;background:#1e4a94}
+@media print{.docxlink,.banner{display:none}}
 footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
+<a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx</a>
 <div class="banner"><strong>Working preprint draft.</strong> Conceptual / position paper with a
-proof-of-concept feasibility demonstration. Sections marked &ldquo;forthcoming&rdquo; are in progress.</div>
+proof-of-concept feasibility demonstration.</div>
 {body}
 <footer>
 Generated from <code>paper/coreasoning.md</code>. Math rendered with KaTeX.

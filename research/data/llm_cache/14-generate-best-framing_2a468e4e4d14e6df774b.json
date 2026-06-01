@@ -1,0 +1,105 @@
+{
+  "_vars": {
+    "course_name": "Statistics",
+    "subject_path": "Statistics > Hypothesis Testing",
+    "raw_problem": "Our client, a regional health organization, has conducted a survey to investigate the effectiveness of new wellness programs in reducing employee stress levels. They need a statistical analysis to determine if the programs have a significant impact. You are tasked with designing and conducting a hypothesis test based on the survey data. \n\nThe survey collected data from various departments, but it is unclear how these departments differ in their baseline stress levels. Additionally, the distribution of the data and assumptions about variance across groups are not provided. You should choose an appropriate statistical test and justify your choice, ensuring it suits the data characteristics and research question. Provide a clear explanation of your hypothesis test design, including any assumptions you make and the conclusions you draw.",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Ability to clearly identify the statistical problem or question from the given ill-defined scenario.",
+          "excellent_indicator": "Accurately identifies the null and alternative hypotheses, variables involved, and the type of test required.",
+          "poor_indicator": "Fails to distinguish between null and alternative hypotheses or misidentifies the variables and test type."
+        },
+        {
+          "name": "Assumptions Recognition",
+          "description": "Understanding and listing the assumptions related to the statistical test being considered.",
+          "excellent_indicator": "Correctly identifies all necessary assumptions for the chosen hypothesis test (e.g., normality, independence, sample size).",
+          "poor_indicator": "Overlooks key assumptions or lists irrelevant assumptions for the test."
+        },
+        {
+          "name": "Data Requirements",
+          "description": "Ability to specify the type and amount of data needed for the hypothesis test.",
+          "excellent_indicator": "Clearly defines the data type (e.g., continuous, categorical) and the sample size needed for the test.",
+          "poor_indicator": "Provides vague or incorrect data requirements, or fails to mention sample size."
+        }
+      ],
+      "typical_errors": [
+        "Confusing null and alternative hypotheses",
+        "Ignoring or misidentifying test assumptions",
+        "Failure to specify sample size or data type"
+      ]
+    },
+    "internal_gaps": [
+      "Lack of clarity on department differences in baseline stress levels",
+      "Unspecified data distribution and variance assumptions",
+      "No information on appropriate significance level for the hypothesis test"
+    ],
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "base": "Our client, a regional health organization, has conducted a survey to investigate the effectiveness of new wellness programs in reducing employee stress levels. They need a statistical analysis to determine if the programs have a significant impact. You are tasked with designing and conducting a hypothesis test based on the survey data. \n\nThe survey collected data from various departments, but it is unclear how these departments differ in their baseline stress levels. Additionally, the distribution of the data and assumptions about variance across groups are not provided. You should choose an appropriate statistical test and justify your choice, ensuring it suits the data characteristics and research question. Provide a clear explanation of your hypothesis test design, including any assumptions you make and the conclusions you draw.",
+  "refinement_sections": [
+    {
+      "section_type": "Assumptions",
+      "entries": [
+        {
+          "title": "Normality of Data",
+          "description": "Assume that the data collected from the survey follows a normal distribution, or if not, that the Central Limit Theorem applies due to a sufficiently large sample size.",
+          "addresses_gap": "Unspecified data distribution and variance assumptions"
+        },
+        {
+          "title": "Homogeneity of Variance",
+          "description": "Assume equal variances across different departments unless evidence from the data suggests otherwise. This is crucial for tests like ANOVA.",
+          "addresses_gap": "Unspecified data distribution and variance assumptions"
+        },
+        {
+          "title": "Independence of Observations",
+          "description": "Assume that the stress level measurements from different employees are independent of each other.",
+          "addresses_gap": "Unspecified data distribution and variance assumptions"
+        }
+      ]
+    },
+    {
+      "section_type": "Constraints",
+      "entries": [
+        {
+          "title": "Significance Level",
+          "description": "Use a standard significance level of 0.05 for the hypothesis test unless otherwise specified by the client.",
+          "addresses_gap": "No information on appropriate significance level for the hypothesis test"
+        }
+      ]
+    },
+    {
+      "section_type": "Clarifications",
+      "entries": [
+        {
+          "title": "Departmental Baseline Differences",
+          "description": "Clarify whether the baseline stress levels differ significantly across departments, as this may affect the choice of statistical test (e.g., ANOVA vs. t-test).",
+          "addresses_gap": "Lack of clarity on department differences in baseline stress levels"
+        }
+      ]
+    },
+    {
+      "section_type": "Success Metrics",
+      "entries": [
+        {
+          "title": "Statistical Significance",
+          "description": "The success of the hypothesis test is measured by whether the p-value is below the significance level, indicating a statistically significant impact of the wellness programs.",
+          "addresses_gap": "No information on appropriate significance level for the hypothesis test"
+        }
+      ]
+    },
+    {
+      "section_type": "Scope Boundaries",
+      "entries": [
+        {
+          "title": "Focus on Stress Reduction",
+          "description": "The analysis should focus solely on the impact of wellness programs on stress levels, excluding other potential benefits or impacts of the programs.",
+          "addresses_gap": "Lack of clarity on department differences in baseline stress levels"
+        }
+      ]
+    }
+  ],
+  "coverage_notes": "This framing addresses all rubric criteria by clarifying the problem identification through hypothesis formulation, recognizing necessary assumptions, specifying data types and requirements, and setting clear success metrics and constraints."
+}

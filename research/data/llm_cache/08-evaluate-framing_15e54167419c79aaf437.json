@@ -1,0 +1,134 @@
+{
+  "_vars": {
+    "raw_problem": "Our client, a regional health organization, has conducted a survey to investigate the effectiveness of new wellness programs in reducing employee stress levels. They need a statistical analysis to determine if the programs have a significant impact. You are tasked with designing and conducting a hypothesis test based on the survey data. \n\nThe survey collected data from various departments, but it is unclear how these departments differ in their baseline stress levels. Additionally, the distribution of the data and assumptions about variance across groups are not provided. You should choose an appropriate statistical test and justify your choice, ensuring it suits the data characteristics and research question. Provide a clear explanation of your hypothesis test design, including any assumptions you make and the conclusions you draw.",
+    "student_framing": "[{\"section_type\": \"Clarification of Problem\", \"content\": \"The client wants to know if the new wellness programs help reduce stress. We need to check if the survey data shows a clear difference in stress levels before and after the programs.\"}, {\"section_type\": \"Identification of Variables\", \"content\": \"We need to define what we mean by 'stress levels' and how they were measured in the survey. Also, we should identify which departments are included in the survey and if there are any important differences between them.\"}, {\"section_type\": \"Data Analysis Plan\", \"content\": \"We need to decide how to analyze the data. This could involve looking at the average stress levels before and after the programs and comparing them. We might need to use a t-test or ANOVA if there are multiple departments.\"}, {\"section_type\": \"Assumptions\", \"content\": \"We should consider if the data is normally distributed and if the variances are similar across departments. This will help us choose the right test.\"}, {\"section_type\": \"Conclusion\", \"content\": \"After conducting the analysis, we will summarize whether the wellness programs appear to significantly reduce stress levels based on the statistical results.\"}]",
+    "response_type": "open_ended_sections",
+    "framing_rubric": {
+      "criteria": [
+        {
+          "name": "Problem Identification",
+          "description": "Ability to clearly identify the statistical problem or question from the given ill-defined scenario.",
+          "excellent_indicator": "Accurately identifies the null and alternative hypotheses, variables involved, and the type of test required.",
+          "poor_indicator": "Fails to distinguish between null and alternative hypotheses or misidentifies the variables and test type."
+        },
+        {
+          "name": "Assumptions Recognition",
+          "description": "Understanding and listing the assumptions related to the statistical test being considered.",
+          "excellent_indicator": "Correctly identifies all necessary assumptions for the chosen hypothesis test (e.g., normality, independence, sample size).",
+          "poor_indicator": "Overlooks key assumptions or lists irrelevant assumptions for the test."
+        },
+        {
+          "name": "Data Requirements",
+          "description": "Ability to specify the type and amount of data needed for the hypothesis test.",
+          "excellent_indicator": "Clearly defines the data type (e.g., continuous, categorical) and the sample size needed for the test.",
+          "poor_indicator": "Provides vague or incorrect data requirements, or fails to mention sample size."
+        }
+      ],
+      "typical_errors": [
+        "Confusing null and alternative hypotheses",
+        "Ignoring or misidentifying test assumptions",
+        "Failure to specify sample size or data type"
+      ]
+    },
+    "best_framing": {
+      "base": "Our client, a regional health organization, has conducted a survey to investigate the effectiveness of new wellness programs in reducing employee stress levels. They need a statistical analysis to determine if the programs have a significant impact. You are tasked with designing and conducting a hypothesis test based on the survey data. \n\nThe survey collected data from various departments, but it is unclear how these departments differ in their baseline stress levels. Additionally, the distribution of the data and assumptions about variance across groups are not provided. You should choose an appropriate statistical test and justify your choice, ensuring it suits the data characteristics and research question. Provide a clear explanation of your hypothesis test design, including any assumptions you make and the conclusions you draw.",
+      "refinement_sections": [
+        {
+          "section_type": "Assumptions",
+          "entries": [
+            {
+              "title": "Normality of Data",
+              "description": "Assume that the data collected from the survey follows a normal distribution, or if not, that the Central Limit Theorem applies due to a sufficiently large sample size.",
+              "addresses_gap": "Unspecified data distribution and variance assumptions"
+            },
+            {
+              "title": "Homogeneity of Variance",
+              "description": "Assume equal variances across different departments unless evidence from the data suggests otherwise. This is crucial for tests like ANOVA.",
+              "addresses_gap": "Unspecified data distribution and variance assumptions"
+            },
+            {
+              "title": "Independence of Observations",
+              "description": "Assume that the stress level measurements from different employees are independent of each other.",
+              "addresses_gap": "Unspecified data distribution and variance assumptions"
+            }
+          ]
+        },
+        {
+          "section_type": "Constraints",
+          "entries": [
+            {
+              "title": "Significance Level",
+              "description": "Use a standard significance level of 0.05 for the hypothesis test unless otherwise specified by the client.",
+              "addresses_gap": "No information on appropriate significance level for the hypothesis test"
+            }
+          ]
+        },
+        {
+          "section_type": "Clarifications",
+          "entries": [
+            {
+              "title": "Departmental Baseline Differences",
+              "description": "Clarify whether the baseline stress levels differ significantly across departments, as this may affect the choice of statistical test (e.g., ANOVA vs. t-test).",
+              "addresses_gap": "Lack of clarity on department differences in baseline stress levels"
+            }
+          ]
+        },
+        {
+          "section_type": "Success Metrics",
+          "entries": [
+            {
+              "title": "Statistical Significance",
+              "description": "The success of the hypothesis test is measured by whether the p-value is below the significance level, indicating a statistically significant impact of the wellness programs.",
+              "addresses_gap": "No information on appropriate significance level for the hypothesis test"
+            }
+          ]
+        },
+        {
+          "section_type": "Scope Boundaries",
+          "entries": [
+            {
+              "title": "Focus on Stress Reduction",
+              "description": "The analysis should focus solely on the impact of wellness programs on stress levels, excluding other potential benefits or impacts of the programs.",
+              "addresses_gap": "Lack of clarity on department differences in baseline stress levels"
+            }
+          ]
+        }
+      ],
+      "coverage_notes": "This framing addresses all rubric criteria by clarifying the problem identification through hypothesis formulation, recognizing necessary assumptions, specifying data types and requirements, and setting clear success metrics and constraints."
+    },
+    "language": "English"
+  },
+  "_temp": 0.4,
+  "criticism": "The student's framing provides a good start by identifying the need to assess stress levels before and after the programs. However, it lacks specificity in defining the null and alternative hypotheses, which are crucial for a hypothesis test. Additionally, while the student mentions considering normality and variance, they do not specify how these assumptions will be verified or what steps will be taken if the assumptions do not hold. The data analysis plan is vague, as it does not clearly define the data type or sample size needed for the test.",
+  "better_alternative": "A stronger framing would explicitly state the null hypothesis (e.g., 'The wellness programs have no effect on stress levels') and the alternative hypothesis (e.g., 'The wellness programs reduce stress levels'). It would also detail the data type (e.g., continuous stress scores) and specify the sample size required for reliable results. The student should outline how they will check for normality and equal variances, such as using statistical tests or visual inspections like Q-Q plots, and mention potential adjustments if assumptions are violated, such as using non-parametric tests.",
+  "per_criterion_scores": [
+    {
+      "criterion_name": "Problem Identification",
+      "score": "B",
+      "internal_note": "Identifies the general problem but lacks specific hypotheses."
+    },
+    {
+      "criterion_name": "Assumptions Recognition",
+      "score": "B",
+      "internal_note": "Mentions normality and variance but lacks detail on verification and handling violations."
+    },
+    {
+      "criterion_name": "Data Requirements",
+      "score": "C",
+      "internal_note": "Does not specify data type or sample size needed for the test."
+    }
+  ],
+  "strengths": [
+    "The student correctly identifies the need to compare stress levels before and after the programs.",
+    "They recognize the importance of considering normality and variance assumptions."
+  ],
+  "refinements_correctly_selected": [
+    "Assumptions"
+  ],
+  "refinements_missed": [
+    "Clarification of Problem",
+    "Data Analysis Plan",
+    "Identification of Variables"
+  ],
+  "unnecessary_selections": []
+}
