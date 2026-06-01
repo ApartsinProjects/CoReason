@@ -93,6 +93,17 @@ J~S=+0.17 (all p>0.17); 1st principal factor = 42% variance (=> separable). Boot
 diagonal own-effects: Framing +0.60 [+0.38,+0.81], Steering +0.50 [+0.18,+0.82], Judging +2.00 (det).
 E2 grader reliability run in progress (re-grade fixed transcripts N=5, bypass cache on 08/09/10/11).
 
+## C6 (2026-06-01): Review round 3 = ACCEPT (with one production fix, now applied)
+Round 3: "effectively Accept; science is done, no new computation needed." 4/5 round-2 must-dos fully
+resolved; the one BLOCKER (B-1): figures referenced `assets/...` but lived only in `docs/assets/`
+(raw-markdown/source links broken). FIXED: figures now also in `paper/assets/` (markdown source +
+docx resolve from paper/; HTML uses docs/assets); make_figures.py writes both; docx regenerated with
+--resource-path=paper (central evidence PNGs embed; 3 SVG diagrams show alt-text in docx only, a
+no-cairo tooling limit, HTML renders them natively). Non-blocking polish applied: ratio stated precisely
+(diag +1.03 / offdiag -0.017 ~ 60:1); 255-call decomposition added; bib note says 50.
+E2 reliability (92% self-consistent) + inter-skill correlations + bootstrap CIs all verified internally
+consistent by the reviewer. **Review loop converged at Accept.**
+
 ## Current standing + next
 - E1-on-DB abandoned (data invalid). E1 re-scoped to run on E3-generated controlled data.
 - BLOCKER/GATE: all remaining experiments need the Groq API (llama-3.3-70b). Next action: verify the key works; if dead, fall back to OpenRouter/OpenAI (keys present).

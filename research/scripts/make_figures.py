@@ -11,6 +11,14 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 CSV = ROOT / "research/results/e3_dissociation_grades.csv"
 OUT = ROOT / "docs/assets"; OUT.mkdir(parents=True, exist_ok=True)
+OUT2 = ROOT / "paper/assets"; OUT2.mkdir(parents=True, exist_ok=True)  # figures live in both trees
+
+def _save(fig_path_stem):
+    """Save current matplotlib figure as png+svg into both asset dirs."""
+    import shutil
+    plt.savefig(OUT / (fig_path_stem + ".png"), dpi=160)
+    plt.savefig(OUT / (fig_path_stem + ".svg"))
+    shutil.copy(OUT / (fig_path_stem + ".png"), OUT2 / (fig_path_stem + ".png"))
 GMAP = {"A": 3, "B": 2, "C": 1}
 SKILLS = ["framing", "judging", "steering"]
 STRONG, WEAK = "expert", "novice"
@@ -39,8 +47,7 @@ for i in range(3):
 ax.set_title("Effect of manipulating each skill's competence\non each skill's grade (A=3..C=1)", fontsize=10)
 fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04, label="grade Δ (strong − weak)")
 plt.tight_layout()
-plt.savefig(OUT/"fig_dissociation_heatmap.png", dpi=160)
-plt.savefig(OUT/"fig_dissociation_heatmap.svg")
+_save("fig_dissociation_heatmap")
 plt.close()
 
 # Figure 2: designed-contrast grade profiles
@@ -68,8 +75,7 @@ ax.set_title("Per-skill grades dissociate by competence profile", fontsize=11)
 ax.legend(loc="upper right", fontsize=9, ncol=3)
 ax.axhline(2, color="#eee", zorder=0)
 plt.tight_layout()
-plt.savefig(OUT/"fig_contrasts.png", dpi=160)
-plt.savefig(OUT/"fig_contrasts.svg")
+_save("fig_contrasts")
 plt.close()
 
 # numbers for the paper
