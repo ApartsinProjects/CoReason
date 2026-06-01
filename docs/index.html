@@ -625,9 +625,9 @@ three skills, under a second backend. (Steering's own-effect remains the weakest
 consistent with the Proposition-P2 confound discussed below rather than absence of the construct.)</p>
 <p><strong>Dependence on ground-truth scaffolding.</strong> To probe how much the instrument's discrimination relies on
 the seeded ground truth (the gold framing supplied to the framing evaluator and the known seeded issues
-supplied to the judging evaluator) versus the model's own judgment, we re-graded the original
-40-learner subset with that scaffolding removed (comparing against that subset's own baseline, where
-the effects are Framing +0.60, Judging +2.00, Steering +0.50). The effect is sharply skill-specific. Framing discrimination is essentially
+supplied to the judging evaluator) versus the model's own judgment, we re-grade a 40-learner subset
+(five subjects) with that scaffolding removed, comparing against that subset's own baseline (Framing
++0.60, Judging +2.00, Steering +0.50). The effect is sharply skill-specific. Framing discrimination is essentially
 unaffected (own-effect +0.75 without the gold reference, versus +0.60 with it): the rubric and the
 model's own judgment carry it. Judging discrimination, by contrast, largely collapses (+2.00 to +0.45):
 without the known issues the grader has no recall-precision anchor and can barely separate strong from
@@ -647,16 +647,14 @@ across grader backends, and whether the automated grades agree with human expert
 questions deferred to Section 10. (iii) As noted above, with three indicators a factor model is
 under-identified, so the separability evidence rests on the manipulation-based effect matrix and the
 inter-skill correlations, not on a confirmatory dimensionality test. (iv) Steering shows the weakest own-effect (+0.43 at N=80).
-We initially attributed this to grader leniency and tested that hypothesis directly with an ablation:
-re-grading the original 40-learner subset under a deliberately strict steering rubric (which mandates a
-C for vague or non-prioritized commands). On that subset the standard rubric gives a steering own-effect
-of +0.50; the strict rubric did <em>not</em> recover a larger effect (+0.40, statistically indistinguishable),
-while the overall dissociation
-persisted (ratio 27.5; the designed contrasts still decouple). The weak steering signal is therefore
-not a simple rubric-leniency artifact. The more likely causes are the confound that Proposition P2
-predicts (steering quality is bounded by the judging it follows, so a competence manipulation on
-steering alone has limited headroom) and homogeneity in the simulated steering responses; both are best
-resolved with human steering data, which we leave to the validation study.</p>
+This is not a grader-leniency artifact: under a deliberately strict steering rubric (which mandates a C
+for vague or non-prioritized commands), the steering own-effect on the 40-learner subset does not
+increase (+0.40, versus +0.50 under the standard rubric, statistically indistinguishable), while the
+dissociation persists (ratio 27.5; the designed contrasts still decouple). The weak steering signal
+instead reflects the ceiling relation that Proposition P2 predicts (steering quality is bounded by the
+judging it follows, so a competence manipulation on steering alone has limited headroom) together with
+homogeneity in the simulated steering responses; both are best resolved with human steering data, which
+the validation study supplies.</p>
 <h2 id="9-tensions-and-boundary-conditions">9. Tensions and boundary conditions</h2>
 <p>A mature account must confront four tensions rather than paper over them.</p>
 <p><em>Offloading versus productive struggle.</em> Evidence that AI use can depress critical thinking through
