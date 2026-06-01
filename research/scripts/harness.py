@@ -12,7 +12,9 @@ ROOT = Path(__file__).resolve().parents[2]
 PROMPT_DIR = ROOT / "code/artifacts/prompt-debug/originals"
 CACHE_DIR = ROOT / "research/data/llm_cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
-ENV = ROOT / "code/.env.all"
+# Keys live OUTSIDE the repo (never committed). Override with COREASON_ENV_FILE.
+ENV = Path(os.environ.get("COREASON_ENV_FILE",
+                          Path.home() / ".config" / "coreason" / ".env.all"))
 
 GMAP = {"A": 3, "B": 2, "C": 1}
 MODEL = "llama-3.3-70b-versatile"
@@ -24,8 +26,10 @@ def _load_key(name):
             return line.split("=", 1)[1].strip().strip('"').strip("'")
     return None
 
-_groq = OpenAI(api_key=_load_key("GROQ_API_KEY"), base_url="https://api.groq.com/openai/v1")
-_openrouter = OpenAI(api_key=_load_key("OPENROUTER_API_KEY"), base_url="https://openrouter.ai/api/v1")
+_groq = OpenAI(api_key=_load_key("GROQ_API_KEY"), base_url="https://api.groq.com/openai/v1",
+               timeout=45.0, max_retries=0)
+_openrouter = OpenAI(api_key=_load_key("OPENROUTER_API_KEY"), base_url="https://openrouter.ai/api/v1",
+                     timeout=45.0, max_retries=0)
 _lock = threading.Lock()
 
 # ---- prompt loading ----
@@ -67,8 +71,10 @@ def _extract_json(text):
 
 def _chat(system, user, temperature, max_tokens, seed, json_mode=False):
     last = None
-    for client, name in ((_groq, "groq"), (_openrouter, "openrouter")):
-        model = MODEL if name == "groq" else "meta-llama/llama-3.3-70b-instruct"
+    # OpenRouter primary (higher throughput / paid credits); Groq free-tier as fallback.
+    # Same underlying model (llama-3.3-70b) on both, preserving engine fidelity.
+    for client, name in ((_openrouter, "openrouter"), (_groq, "groq")):
+        model = "meta-llama/llama-3.3-70b-instruct" if name == "openrouter" else MODEL
         for attempt in range(5):
             try:
                 kw = dict(model=model,

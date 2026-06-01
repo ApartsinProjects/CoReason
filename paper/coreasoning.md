@@ -240,10 +240,38 @@ consequential (the skills can be measured apart).
 
 ## 7. Operationalization: a proof-of-concept instrument
 
-[The deliberately-imperfect-output design (cognitive apprenticeship inverted: the learner coaches a
-fallible model); per-skill rubrics generated per challenge; the rubric-driven LLM grader (evaluate →
-grade), with judging scored against seeded ground-truth issues (recall/precision) and steering scored
-by convergence across cycles. Describe the surviving 16-prompt engine as the instantiation.]
+To show that the three constructs are not only conceptually distinct but practically measurable, we
+describe a working instrument that scores each skill from a learner's transcript. The instrument is a
+pipeline of large-language-model prompts; we use it here as an existence proof that automated,
+rubric-driven scoring of Framing, Judging, and Steering is feasible, not as a validated assessment.
+
+**Challenge construction.** Each challenge begins with a deliberately ill-defined problem generated to
+contain two or three unstated gaps, recorded internally but never shown. A per-challenge set of three
+rubrics, one each for Framing, Judging, and Steering, is generated for the subject area, each with
+three to five measurable criteria and explicit excellent and poor indicators. A gold-standard "best
+framing" is generated as an internal reference. The design instantiates an inverted cognitive
+apprenticeship: rather than observing an expert, the learner is given a fallible artifact to repair.
+
+**The deliberately-imperfect output.** After the learner frames the task, the model produces a
+plausible, professional-looking solution that is required to embed two to four non-trivial issues,
+wrong-but-reasonable assumptions, missing edge cases, or subtle logical errors, each recorded
+internally with a severity label and none flagged to the learner. Across steering cycles, updates
+address the learner's commands but may introduce new minor issues, so that difficulty adapts to the
+quality of steering rather than collapsing to a perfect answer.
+
+**Scoring.** Each skill is scored in two stages. A skill-specific evaluator assesses the learner's
+response against the (internal) rubric and produces per-criterion ratings on a three-point scale; a
+generic grading stage then aggregates those ratings into a final grade, weighting critical criteria
+more heavily rather than averaging. Crucially, the three evaluators differ in what they compare
+against: Framing is evaluated against the gold framing and the rubric; Judging is evaluated against the
+seeded ground-truth issues, yielding a recall/precision signal (issues correctly identified, missed,
+and falsely flagged); and Steering is evaluated against the trajectory of the output across cycles,
+rewarding corrections that demonstrably move the solution toward correctness. This is why the skills
+are measured *apart*: each evaluator interrogates a different referent.
+
+The instrument used in this paper is the engine of a deployed prototype (CoReasoning Lab); for the
+present work we exercise its sixteen prompts directly over controlled inputs so that the measurements
+are reproducible and the ground truth is known.
 
 ## 8. Feasibility demonstration
 
@@ -260,29 +288,71 @@ study (Section 10) is presented as prepared, not completed.]
 
 ## 9. Tensions and boundary conditions
 
-[1) Offloading vs productive struggle, resolved via ZPD internalization (mediation toward
-independence). 2) The calibration trap: Judging is bounded by domain knowledge. 3) Interactive ≠
-productive: Steering counts only when corrections are knowledge-generating. 4) Standards regress when
-the AI out-performs the learner.]
+A mature account must confront four tensions rather than paper over them.
+
+*Offloading versus productive struggle.* Evidence that AI use can depress critical thinking through
+cognitive offloading (Gerlich, 2025; Kosmyna et al., 2025) appears to threaten any framework that
+puts learners in close partnership with AI. The resolution is in the zone-of-proximal-development
+stance: CoReasoning treats the AI as a mediating tool whose purpose is the learner's eventual
+*independence*, and it offloads execution while deliberately retaining the cognitive work of
+specifying, evaluating, and correcting. The framework is, in this sense, the designed inverse of
+metacognitive laziness (Proposition P5).
+
+*The calibration trap.* Judging is metacognitive monitoring, and monitoring is only useful when
+calibrated. A learner who lacks the domain knowledge to recognize an error cannot detect that error
+in AI output, however vigilant. Judging is therefore bounded by domain competence, and the framework
+should be read as describing a skill that develops *with* domain knowledge, not as a substitute for it
+(Proposition P4).
+
+*Interactive is not automatically productive.* ICAP predicts that interactive engagement yields the
+most learning, but rapid AI dialogue can be voluminous and shallow, a sequence of re-rolls rather than
+reasoning. Steering counts as genuine metacognitive control only when corrections are
+knowledge-generating, which is why the instrument rewards targeted, convergent corrections rather than
+mere repetition.
+
+*Standards can regress.* Judging and Steering presuppose that the learner holds standards adequate to
+evaluate the output. When the AI is more competent in the domain than the learner, the standards the
+learner applies may be inferior to the artifact under review, a reversal that classical
+formative-assessment theory does not anticipate and that bounds the framework's applicability at the
+expert frontier.
 
 ## 10. A validation and assessment agenda
 
-[The prepared human-rater agreement study (blind raters re-grade a sample per skill; report Cohen's
-κ / Krippendorff's α against the LLM grader; target the field bar of κ ≈ 0.3–0.8). A classroom path
-to test P1–P5 with real learners. Multi-model grader robustness.]
+The feasibility demonstration shows that the constructs are separable and measurable; it does not
+establish that the automated grades match expert human judgment, nor that exercising the skills
+improves learning. We therefore specify the validation program the framework invites.
+
+First, an instrument-validity study: a stratified sample of transcripts is re-graded by multiple
+blind human experts using the per-skill rubrics, and agreement with the automated grader is reported
+as Cohen's $\kappa$, Fleiss' $\kappa$, and ordinal Krippendorff's $\alpha$, per skill, against the
+field-typical bar of $\kappa \approx 0.3$ to $0.8$. We have prepared this study (codebook, blinded
+rater task files, and scoring scripts) so that it can be run directly. Second, a construct-validity
+study at scale to test Propositions P1 through P4 with real learners, examining whether Framing,
+Judging, and Steering dissociate across a learner population and whether the proposed gating relations
+hold. Third, a grader-robustness study across multiple model backends to separate the framework's
+signal from any single model's idiosyncrasies. Only an efficacy study with real learners can test
+Proposition P5 and any learning claim; that is explicitly outside the present scope.
 
 ## 11. Limitations
 
-[Conceptual contribution; proof-of-concept instrument only. Synthetic learners; single grader model
-(llama-3.3-70b); English-first; no learning-gain data. The feasibility demo establishes separability
-and measurability, not efficacy.]
+This is a conceptual contribution accompanied by a proof-of-concept instrument, not an efficacy study.
+The feasibility demonstration uses simulated learners of controlled competence, which establish that
+the grader has signal and that the skills can be measured apart, but which are not human learners. The
+instrument is exercised with a single model family (llama-3.3-70b) on English-language challenges, and
+the automated grades have not yet been validated against human experts (Section 10). We make no
+learning-outcome claim. What the paper establishes is conceptual: a theoretically-grounded
+decomposition with stated propositions, a precise novelty boundary, and evidence that the three
+constructs are separable and automatically measurable.
 
 ## 12. Conclusion
 
-[Education's task in the age of generative AI is to cultivate critical collaborators, not faster
-answer-getters. Naming the competency, decomposing it into Framing, Judging, and Steering, and making
-each assessable is a precondition for teaching it. CoReasoning offers that decomposition, grounded in
-theory and shown to be feasibly measurable.]
+The task of education in the age of generative AI is not to produce faster answer-getters but to
+cultivate critical collaborators: learners who can specify a problem worth solving, judge what a
+machine returns, and steer it toward something better. That capability is teachable only if it can be
+named and assessed. CoReasoning offers a decomposition of it into three theoretically-grounded,
+independently-assessable skills, Framing, Judging, and Steering, separates the pre-generation skill
+from the post-generation one in a way prior frameworks do not, and shows that the three can be
+measured apart. We offer it as a foundation for the assessment and instruction the moment demands.
 
 ## References
 [Compiled in references.bib — see paper/references working set.]
