@@ -573,7 +573,11 @@ per-learner level for the two skills with the widest grade range (mean pairwise 
 for Framing and +0.67 for Judging across the 40 shared transcripts), while *different* skills stay near
 zero, the convergent-high / discriminant-low pattern a valid measure should show; Steering's narrower
 range under the P2 ceiling yields a lower cross-method correlation (+0.21), a restriction of variance
-rather than a separate construct. Second, the instrument is faithful to the population's dependence
+rather than a separate construct. Laid out as the full multitrait-multimethod matrix, the convergent
+correlations (same skill across graders, mean +0.49) exceed both the heterotrait-monomethod correlations
+(different skills within one grader, mean +0.08) and the heterotrait-heteromethod correlations (mean
++0.06); no grader shows halo (within-grader cross-skill mean $|\rho|$ of 0.13, 0.18, 0.13 for the three
+backends), so all three Campbell-Fiske criteria hold. Second, the instrument is faithful to the population's dependence
 structure: on learners whose three competences are set *independently* (the full crossed design) the
 inter-skill grade correlations are near zero (mean $|\rho| = 0.13$; Framing-Judging $\rho = -0.03$),
 whereas on the 20 learners whose three competences are all set strong or all set weak (a single shared
