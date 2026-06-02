@@ -805,9 +805,11 @@ the framework's central claim that productive AI use is not one skill but three.
 
 ![Figure A1. A CoReasoning Lab challenge run.](assets/system-challenge-run.png)
 
-*Figure A1. Screenshot of the running platform: a learner's challenge run, with the two-phase structure
-made explicit in the interface, Phase 1 (Framing) and Phase 2 (the Judge-Steer cycle). Each skill is
-scored and given feedback independently.*
+*Figure A1. Screenshot of the running platform: a learner's challenge run at the Framing phase. The
+engine has generated an ill-defined problem (here, an AI hiring-screening task), and the learner
+specifies refinements before any solution is produced. The two-phase structure is explicit in the
+interface, Phase 1 (Framing) and Phase 2 (the Judge-Steer cycle), and each skill is scored and given
+feedback independently.*
 
 The platform exposes role-specific interfaces beyond the challenge run (Figure A2). Students see a
 dashboard of pending challenges and courses and a personal results view that trends Framing, Judging,
