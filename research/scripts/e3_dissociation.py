@@ -28,6 +28,11 @@ SPECS = [
 ]
 
 def main():
+    # Result-preservation guard: never overwrite an existing untagged result file.
+    out_path = OUT / f"e3_dissociation_grades{TAG}.csv"
+    if not TAG and out_path.exists():
+        sys.exit(f"Refusing to overwrite {out_path.name} (would clobber a prior run). "
+                 "Set COREASON_TAG=_yourrun to write a fresh tagged file and preserve all results.")
     n_ch = int(sys.argv[1]) if len(sys.argv) > 1 else len(SPECS)
     specs = SPECS[:n_ch]
     print(f"Building {len(specs)} challenges...", flush=True)
