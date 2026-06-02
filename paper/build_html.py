@@ -47,12 +47,7 @@ blockquote{border-left:3px solid var(--accent);margin:1rem 0;padding:.3rem 1rem;
 hr{border:none;border-top:1px solid var(--line);margin:2rem 0}
 img{max-width:100%;display:block;margin:1.6rem auto 0.4rem}
 img[src$=".png"]{border:1px solid var(--line);border-radius:6px}
-.docxlink{position:fixed;top:14px;right:16px;background:var(--accent);color:#fff;
-  padding:.4rem .8rem;border-radius:6px;font-size:.8rem;font-family:Arial,sans-serif;
-  text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:100}
-.docxlink:hover{text-decoration:none;background:#1e4a94}
 @media print{
-  .docxlink,.banner{display:none}
   body{max-width:none;font-size:11pt;padding:0;color:#000}
   @page{margin:2cm}
   h2,h3{break-after:avoid}
@@ -70,8 +65,6 @@ footer{margin-top:4rem;padding-top:1rem;border-top:1px solid var(--line);color:v
 </style>
 </head>
 <body>
-<a class="docxlink" href="https://github.com/ApartsinProjects/CoReason" style="right:140px;background:#24292f">&#9733; GitHub</a>
-<a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx</a>
 {body}
 </body>
 </html>
