@@ -775,16 +775,20 @@ signal from any single model's idiosyncrasies. Only an efficacy study with real 
 Proposition P5 and any learning claim; that is explicitly outside the present scope.
 
 Beyond validity, the framework opens a research program, and one strand can begin before the human
-studies: external validity can be probed by scoring released corpora of real student-AI dialogue with
-the per-skill instrument, testing whether Framing, Judging, and Steering are detectable and separable
-outside the controlled challenge format. Four further directions follow from the propositions: a
-longitudinal study of whether the three skills develop and persist with practice; an
-instructional-intervention study testing whether targeted teaching of each skill improves it, building
-on evidence that students' behavioral regulation of LLM use is trainable (Clerc et al., 2026); a
-transfer study testing P4's prediction that Framing, the more structural skill, transfers across domains
-more readily than the domain-bound Judging; and a mediation study testing whether metacognitive
-monitoring accuracy predicts Judging, which would tie the construct directly to its monitor-control
-grounding.
+studies: external validity can be probed by scoring a released corpus of real student-LLM dialogue, the
+StudyChat dataset of 16,851 student-ChatGPT interactions from a university course (McNichols et al.,
+2025), with the per-skill instrument, testing whether Framing, Judging, and Steering are detectable and
+separable outside the controlled challenge format; StudyChat's own dialogue-act labels (questioning,
+verification, and editing) align with the three skills and supply an external anchor. Four further
+directions follow from the propositions: a longitudinal study of whether the three skills develop and
+persist with practice; an instructional-intervention study testing whether targeted teaching of each
+skill improves it, building on evidence that students' behavioral regulation of LLM use is trainable
+(Clerc et al., 2026); a transfer study testing P4's prediction that Framing, the more structural skill,
+transfers across domains more readily than the domain-bound Judging, a question made tractable by
+evidence that metacognitive regulation can show far transfer (Wirth et al., 2025); and a mediation study
+testing whether metacognitive monitoring accuracy predicts Judging, extending findings that calibration
+predicts subsequent strategy use in computer-based learning (Lee & Bosch, 2025) and tying the construct
+to its monitor-control grounding.
 
 ## 11. Scope and boundary conditions
 
@@ -920,6 +924,8 @@ Kim, P., Wang, W., & Bonk, C. J. (2025). Generative AI as a Coach to Help Studen
 
 Kosmyna, N., Hauptmann, E., Yuan, Y. T., Situ, J., Liao, X., Beresnitzky, A. V., Braunstein, I., & Maes, P. (2025). Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task. *arXiv preprint arXiv:2506.08872*.
 
+Lee, H., & Bosch, N. (2025). Calibration Discrepancy Predicts Students' Subsequent Metacognitive Strategy Use in Computer-Based Learning Environments. *International Journal of Artificial Intelligence in Education*, 35(6), 3746–3779. https://doi.org/10.1007/s40593-025-00514-5
+
 Lee, J. D., & See, K. A. (2004). Trust in Automation: Designing for Appropriate Reliance. *Human Factors*, 46(1), 50–80.
 
 Lee, S. C., Baby, T., Vongvit, R., Lee, J., Kim, Y., Min, C., & Yoon, S. H. (2025). Development and Validation of a Generative AI Competence Scale. *Technology in Society*. https://doi.org/10.1016/j.techsoc.2025.103059
@@ -929,6 +935,8 @@ Li, C., Cui, H., & Hagedorn, L. S. (2026). The Cognitive Impact of ChatGPT in Hi
 Lo, L. S. (2023). The CLEAR Path: A Framework for Enhancing Information Literacy through Prompt Engineering. *The Journal of Academic Librarianship*, 49(4).
 
 Long, D., & Magerko, B. (2020). What Is AI Literacy? Competencies and Design Considerations. *Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems*, 1–16.
+
+McNichols, H., Ikram, F., & Lan, A. (2025). The StudyChat Dataset: Student Dialogues With ChatGPT in an Artificial Intelligence Course. *arXiv preprint arXiv:2503.07928*. https://doi.org/10.48550/arXiv.2503.07928
 
 Messick, S. (1995). Validity of Psychological Assessment: Validation of Inferences from Persons' Responses and Performances as Scientific Inquiry into Score Meaning. *American Psychologist*, 50(9), 741–749. https://doi.org/10.1037/0003-066X.50.9.741
 
@@ -967,6 +975,8 @@ Walton, J., Bearman, M., Crawford, N., Tai, J., & Boud, D. (2025). How Universit
 Wingerter, T. L., Straub, T., & Schweitzer, S. (2025). Mitigating Automation Bias in Generative AI through Nudges: A Cognitive Reflection Test Study. *Procedia Computer Science*, 270, 2106–2114. https://doi.org/10.1016/j.procs.2025.09.331
 
 Winne, P. H., & Hadwin, A. F. (1998). Studying as Self-Regulated Learning. *Metacognition in Educational Theory and Practice*, 277–304.
+
+Wirth, J., Weber-Reuter, X.-L., Schuster, C., Fleischer, J., Leutner, D., & Stebner, F. (2025). Far Transfer of Metacognitive Regulation: From Cognitive Learning Strategy Use to Mental Effort Regulation. *Educational Psychology Review*, 37(1), 7. https://doi.org/10.1007/s10648-024-09983-x
 
 Yao, G., & Fan, L. (2025). Cognitive Load Scale for AI-Assisted L2 Writing: Scale Development and Validation. *Frontiers in Psychology*, 16, 1666974. https://doi.org/10.3389/fpsyg.2025.1666974
 
