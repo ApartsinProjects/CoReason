@@ -14,11 +14,19 @@ dataset and contains **no human-subject data**.
 - **Simulated learners**: responses generated at controlled per-skill competence (`expert`/`novice`)
   by `gpt-4o-mini` (`sim_*` cache). Judging responses are programmatic selections over ground-truth
   seeded issues. These are **apparatus, not people**.
-- **Grades**:
-  - `results/e3_dissociation_grades.csv` — 40 learners (8 crossed per-skill profiles × 5 challenges),
+- **Grades** (every run kept under a unique name; never overwritten):
+  - `results/e3_dissociation_grades.csv` — N=80 learners (8 crossed per-skill profiles × 10 subjects),
     each with per-skill competence level and A/B/C grade. Grader: `gpt-4o`.
+  - Robustness/ablation re-grades of the same transcripts: `_gpt4omini.csv` (within-family backend),
+    `_xvendor.csv` (Meta `llama-3.3-70b`, cross-vendor / second provider), `_noGT.csv` (ground-truth
+    ablation), `_strictsteer.csv` (strict steering rubric), `_n40.csv` (5-subject subset).
   - `results/e2_reliability.csv` — grader test-retest (N=5 repeats per cell, 4 profiles).
   - `results/e1_construct_validity.json` — inter-skill correlations + factor summary.
+- **Validity analyses** (scripts; recompute from the grades): `e6_validity.py` (convergent/discriminant),
+  `e7_mtmm.py` (Campbell-Fiske multitrait-multimethod across the three grader backends).
+- **External data, not redistributed here**: `e8_studychat.py` analyzes the separately-licensed StudyChat
+  corpus (McNichols et al., 2025; CC BY 4.0, gated on HuggingFace) for real-student behavior prevalence;
+  StudyChat itself is not included in this repository.
 - **Instrument**: the 16 production prompts at `code/artifacts/prompt-debug/originals/*.yaml`.
 
 ## Collection process
