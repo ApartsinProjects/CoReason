@@ -186,7 +186,7 @@ bounded by domain knowledge (Proposition P4). With that point made, the mapping 
   applied to a human-AI loop: it sets the referent that makes Judging and Steering well-posed.
 
 The Judge→Steer cycle is therefore a monitor→control loop seeded by a task definition. This is the
-structural spine of the framework and the reason the three skills cohere rather than merely coexist
+structural spine of the framework and the reason the three skills cohere rather than coexist by stipulation
 (Figure 2).
 
 ![Figure 2. The CoReasoning architecture.](assets/coreasoning-architecture.svg)
@@ -391,7 +391,7 @@ decomposition that a future validated instrument could operationalize.
 execution, the durable human skill shifts from prompt crafting to *problem formulation*, identifying,
 analyzing, and delineating the problem worth solving (Acar, 2023). This is precisely our Framing
 construct, and classroom work has begun to assess it directly, for example through "prompt problems"
-that require students to specify and evaluate rather than merely prompt (Denny et al., 2024), and
+that require students to specify and evaluate rather than only prompt (Denny et al., 2024), and
 through instruments that treat question formulation (Kim et al., 2025) and problem decomposition
 (Srinath et al., 2025) as independently measurable, trainable skills in generative-AI settings. That
 Framing is a distinct competency is further supported by the older problem-finding literature, which
@@ -575,7 +575,21 @@ whereas on learners whose competences share a single latent level the same instr
 correlations (mean $\rho = +0.41$; Framing-Judging $\rho = +0.52$). The instrument therefore does not
 manufacture dissociation: it recovers independence when the competences are independent and correlation
 when they are shared, which is what licenses reading the crossed-design separation as a property of the
-skills rather than of the scoring.
+skills rather than of the scoring (Table 3).
+
+**Table 3. Multitrait-multimethod validity.** Panel A: convergent agreement of the same skill across
+the three grader backends (mean pairwise per-learner rank correlation on the 40 shared transcripts).
+Panel B: inter-skill grade correlation by population, showing the instrument recovers the population's
+dependence structure (discriminant when competences are independent, convergent when they are shared).
+
+| Panel A: cross-grader convergent ($\rho$, 3 backends) | Framing | Judging | Steering |
+|---|---|---|---|
+| same skill across gpt-4o, gpt-4o-mini, llama-3.3-70b | **+0.57** | **+0.67** | +0.21 |
+
+| Panel B: inter-skill $\rho$ by population | F-J | F-S | J-S | summary |
+|---|---|---|---|---|
+| independent (crossed) competences | −0.03 | −0.12 | +0.25 | mean $\lvert\rho\rvert$ = 0.13 |
+| shared single-ability level | **+0.52** | +0.14 | **+0.56** | mean $\rho$ = +0.41 |
 
 The own-skill effects are directionally consistent across subjects: broken down by the ten subject
 areas (eight learners each), Framing and Steering each show a positive own-competence effect in nine of
