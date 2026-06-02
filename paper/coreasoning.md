@@ -37,9 +37,11 @@ different one to avoid self-grading), the three skills *dissociate*. The result 
 *blind-graded* skills, Framing and Steering, whose free-text responses the grader scores without
 knowing the intended competence: each moves with its own manipulated competence while staying flat in
 the others, and the cleanest pair (Framing and Judging) is uncorrelated despite being scored by
-entirely separate mechanisms. The separation holds under independent grader backends spanning two
-providers, and the grader is highly self-consistent on repeat. The constructs are therefore separable
-and automatically scoreable; agreement with human raters and learning outcomes are the defined next
+entirely separate mechanisms. The same instrument returns *correlated* grades when a single competence
+is shared across the three skills, so the separation reflects the learners rather than the scoring
+(convergent and discriminant validity). The separation holds under three grader backends spanning two
+providers, which also agree on each skill at the per-learner level, and the grader is highly
+self-consistent on repeat. The constructs are therefore separable and automatically scoreable; agreement with human raters and learning outcomes are the defined next
 steps of the program, for which we release a prepared validation protocol alongside the instrument and
 data.
 
@@ -122,9 +124,10 @@ three distinct skills, each independently assessable:
    relationships among constructs (Gilson & Goldberg, 2015; Jaakkola, 2020).
 4. **A precise novelty positioning** against the nearest prior frameworks (AI-fluency, metacognitive-
    demands, prompt-literacy, and AI-literacy models), stating exactly what is and is not new.
-5. **A proof-of-concept instrument and feasibility demonstration**, with cross-model controls, showing
-   that the three skills can be scored automatically and that they dissociate, establishing that they
-   are genuinely distinct competencies and not one relabeled "prompting" skill.
+5. **A proof-of-concept instrument and feasibility demonstration** showing that the three skills can be
+   scored automatically, with a multitrait-multimethod validity analysis (three grader backends across
+   two vendors; shared- versus independent-competence populations) giving convergent and discriminant
+   evidence that the skills are separately measurable, not one relabeled "prompting" skill.
 6. **A reproducible, released artifact** (the assessment instrument and the experiment data) together
    with a fully prepared human-rater validation protocol for the community to run.
 
@@ -529,10 +532,9 @@ move independently. Judging's own-effect (**+2.00**) is large but *fixed by cons
 competence is operationalized by a controlled selection over the challenge's seeded issues, and those
 seeded issues are themselves machine-generated and not yet human-verified (Section 11). We therefore
 read Judging's clean diagonal as a controlled check that the grader correctly rewards recall and
-precision, not as independent evidence that the skills separate. Pooling all three, the diagonal
-(own-skill) effect averages +1.02 against an off-diagonal of +0.01, but that pooled figure is lifted by
-Judging's built-in component and should be interpreted through the two blind-graded effects above. Each
-grade responds to its own skill and is essentially flat in the others (Figure 3).
+precision, not as independent evidence that the skills separate. The off-diagonal (cross-skill) effects
+average +0.01 across the matrix, so each grade responds to its own skill and is essentially flat in the
+others (Figure 3).
 
 **Table 2. Effect on each skill's grade of manipulating each skill's competence (grade Δ, strong − weak; N=80).**
 
@@ -555,6 +557,25 @@ P2 predicts, the expected ceiling relation in which judging gates steering, and 
 rather than evidence against, separability. With only three indicators a formal factor model is
 under-identified, so we rest the separability evidence on the manipulation-based effect matrix and the
 inter-skill correlations rather than on a confirmatory dimensionality test.
+
+**Convergent and discriminant validity (a multitrait-multimethod view).** The result so far is a
+*discriminant*-validity finding: three skills (traits) separate. Construct validity also requires the
+complementary *convergent* property, that the same skill measured by different methods agrees, and that
+the instrument reports correlation when the underlying competence really is shared (Campbell & Fiske,
+1959). Two analyses supply it. First, treating the three grader backends as independent methods, the
+same skill graded by gpt-4o, gpt-4o-mini, and the independent-vendor llama-3.3-70b agrees at the
+per-learner level for the two skills with the widest grade range (mean pairwise rank correlation +0.57
+for Framing and +0.67 for Judging across the 40 shared transcripts), while *different* skills stay near
+zero, the convergent-high / discriminant-low pattern a valid measure should show; Steering's narrower
+range under the P2 ceiling yields a lower cross-method correlation (+0.21), a restriction of variance
+rather than a separate construct. Second, the instrument is faithful to the population's dependence
+structure: on learners whose three competences are set *independently* (the full crossed design) the
+inter-skill grade correlations are near zero (mean $|\rho| = 0.13$; Framing-Judging $\rho = -0.03$),
+whereas on learners whose competences share a single latent level the same instrument returns *positive*
+correlations (mean $\rho = +0.41$; Framing-Judging $\rho = +0.52$). The instrument therefore does not
+manufacture dissociation: it recovers independence when the competences are independent and correlation
+when they are shared, which is what licenses reading the crossed-design separation as a property of the
+skills rather than of the scoring.
 
 The own-skill effects are directionally consistent across subjects: broken down by the ten subject
 areas (eight learners each), Framing and Steering each show a positive own-competence effect in nine of
@@ -606,8 +627,11 @@ both gpt-4o-mini and the independent-vendor llama it settles to +0.65 and +0.75,
 (+0.65 and +0.80), so the separation is balanced across all three skills, not propped up by the built-in
 Judging diagonal. Second, every backend reproduces the designed contrast profiles (a strong-framer /
 weak-judge learner scores high Framing and low Judging, and the inverse for a weak-framer / strong-judge
-learner), which a single general-ability account cannot produce. Cross-vendor replication is therefore
-established, not deferred.
+learner), which a single general-ability account cannot produce. Because the result holds across three
+independently-versioned models from two vendors (gpt-4o, gpt-4o-mini, and Meta's llama-3.3-70b), it does
+not hinge on a single model snapshot; the released harness pins the model identifiers so the run
+reproduces, and the cross-backend agreement is the evidence that it generalizes beyond any one of them.
+Cross-vendor replication is therefore established, not deferred.
 
 **Dependence on ground-truth scaffolding.** To probe how much the instrument's discrimination relies on
 the seeded ground truth (the gold framing supplied to the framing evaluator and the known seeded issues
@@ -781,6 +805,8 @@ Barzilai, S., & Chinn, C. A. (2018). On the Goals of Epistemic Education: Promot
 Bjork, E. L., & Bjork, R. A. (2011). Making Things Hard on Yourself, but in a Good Way: Creating Desirable Difficulties to Enhance Learning. *Psychology and the Real World*, 56–64.
 
 Buçinca, Z., Malaya, M. B., & Gajos, K. Z. (2021). To Trust or to Think: Cognitive Forcing Functions Can Reduce Overreliance on AI in AI-Assisted Decision-Making. *Proceedings of the ACM on Human-Computer Interaction*, 5(CSCW1), 1–21.
+
+Campbell, D. T., & Fiske, D. W. (1959). Convergent and Discriminant Validation by the Multitrait-Multimethod Matrix. *Psychological Bulletin*, 56(2), 81–105.
 
 Chi, M. T. H., & Wylie, R. (2014). The ICAP Framework: Linking Cognitive Engagement to Active Learning Outcomes. *Educational Psychologist*, 49(4), 219–243.
 
