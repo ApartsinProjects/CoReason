@@ -482,7 +482,7 @@ database, practice and assessment modes, multiple-choice and open-ended response
 a five-language content library (English, Hebrew, German, Spanish, French). Its full source, the web
 application, the database schema, the content library, and the <em>scoring engine</em> of sixteen prompts
 (Section 7.1), is released, alongside a pedagogical-foundations document mapping the design to learning
-theory. Figures A1 and A2 render the platform's interface. All challenges evaluated in this paper are
+theory. Figures A1 and A2 are screenshots of the running platform. All challenges evaluated in this paper are
 English-language (Section 11), and the quantitative results come from the scoring engine over controlled
 inputs rather than from production usage logs.</p>
 <p>Because challenge generation, rubric generation, and scoring are themselves prompt-defined, the engine
@@ -857,20 +857,21 @@ solution. In Phase 2 the learner judges that output (flagging real issues while 
 and steers the AI with a targeted correction; the output converges across cycles. The final report
 returns three independent grades with per-skill diagnostic feedback, the interface-level expression of
 the framework's central claim that productive AI use is not one skill but three.</p>
-<p><img alt="Figure A1. A CoReasoning Lab challenge run." src="assets/system-mockup.svg" /></p>
-<p><em>Figure A1. The learner experience: Framing (Phase 1), the Judge-Steer cycle (Phase 2), and the
-per-skill report. Each skill is scored and given feedback independently.</em></p>
+<p><img alt="Figure A1. A CoReasoning Lab challenge run." src="assets/system-challenge-run.png" /></p>
+<p><em>Figure A1. Screenshot of the running platform: a learner's challenge run, with the two-phase structure
+made explicit in the interface, Phase 1 (Framing) and Phase 2 (the Judge-Steer cycle). Each skill is
+scored and given feedback independently.</em></p>
 <p>The platform exposes role-specific interfaces beyond the challenge run (Figure A2). Students see a
 dashboard of pending challenges and courses and a personal results view that trends Framing, Judging,
 and Steering separately over time. Instructors author challenges (the system auto-generates the
 ill-defined problem and the three per-skill rubrics) and read course analytics that break grade
 distributions down by rubric and by student. In every view the three skills remain distinct columns,
 which is the design commitment the framework makes visible.</p>
-<p><img alt="Figure A2. CoReasoning Lab role interfaces." src="assets/interface-gallery.svg" /></p>
-<p><em>Figure A2. Role interfaces. Top: the student dashboard and the instructor challenge-authoring screen.
-Bottom: the student trend report (per-skill grades over time) and the instructor course analytics
-(grade distribution by rubric and per-student results). All views report Framing, Judging, and
-Steering independently.</em></p>
+<p><img alt="Figure A2. CoReasoning Lab instructor course analytics." src="assets/system-instructor-analytics.png" /></p>
+<p><em>Figure A2. Screenshot of the running platform: the instructor course-analytics view. Grade
+distribution is broken out into separate Framing, Judging, and Steering panels, and the per-student
+results list the three skills as distinct columns, the interface-level expression of the framework's
+central claim that productive AI use is not one skill but three.</em></p>
 <h2 id="appendix-b-robustness-and-ablations">Appendix B. Robustness and ablations</h2>
 <p><strong>Reliability.</strong> To check that the grades are not noise, we hold four learner transcripts fixed and
 re-run the evaluation-and-grading prompts five times each, an independent sample each time at the

@@ -437,7 +437,7 @@ database, practice and assessment modes, multiple-choice and open-ended response
 a five-language content library (English, Hebrew, German, Spanish, French). Its full source, the web
 application, the database schema, the content library, and the *scoring engine* of sixteen prompts
 (Section 7.1), is released, alongside a pedagogical-foundations document mapping the design to learning
-theory. Figures A1 and A2 render the platform's interface. All challenges evaluated in this paper are
+theory. Figures A1 and A2 are screenshots of the running platform. All challenges evaluated in this paper are
 English-language (Section 11), and the quantitative results come from the scoring engine over controlled
 inputs rather than from production usage logs.
 
@@ -794,10 +794,11 @@ and steers the AI with a targeted correction; the output converges across cycles
 returns three independent grades with per-skill diagnostic feedback, the interface-level expression of
 the framework's central claim that productive AI use is not one skill but three.
 
-![Figure A1. A CoReasoning Lab challenge run.](assets/system-mockup.svg)
+![Figure A1. A CoReasoning Lab challenge run.](assets/system-challenge-run.png)
 
-*Figure A1. The learner experience: Framing (Phase 1), the Judge-Steer cycle (Phase 2), and the
-per-skill report. Each skill is scored and given feedback independently.*
+*Figure A1. Screenshot of the running platform: a learner's challenge run, with the two-phase structure
+made explicit in the interface, Phase 1 (Framing) and Phase 2 (the Judge-Steer cycle). Each skill is
+scored and given feedback independently.*
 
 The platform exposes role-specific interfaces beyond the challenge run (Figure A2). Students see a
 dashboard of pending challenges and courses and a personal results view that trends Framing, Judging,
@@ -806,12 +807,12 @@ ill-defined problem and the three per-skill rubrics) and read course analytics t
 distributions down by rubric and by student. In every view the three skills remain distinct columns,
 which is the design commitment the framework makes visible.
 
-![Figure A2. CoReasoning Lab role interfaces.](assets/interface-gallery.svg)
+![Figure A2. CoReasoning Lab instructor course analytics.](assets/system-instructor-analytics.png)
 
-*Figure A2. Role interfaces. Top: the student dashboard and the instructor challenge-authoring screen.
-Bottom: the student trend report (per-skill grades over time) and the instructor course analytics
-(grade distribution by rubric and per-student results). All views report Framing, Judging, and
-Steering independently.*
+*Figure A2. Screenshot of the running platform: the instructor course-analytics view. Grade
+distribution is broken out into separate Framing, Judging, and Steering panels, and the per-student
+results list the three skills as distinct columns, the interface-level expression of the framework's
+central claim that productive AI use is not one skill but three.*
 
 ## Appendix B. Robustness and ablations
 
