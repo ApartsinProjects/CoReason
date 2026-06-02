@@ -444,7 +444,14 @@ inputs rather than from production usage logs.
 Because challenge generation, rubric generation, and scoring are themselves prompt-defined, the engine
 extends to a new subject, language, or grader backend by substitution rather than redesign: the
 feasibility demonstration exercises it unchanged across ten subjects (Section 8) and two grader models,
-and the released artifact lets others add their own. The monitor-control scaffold is likewise open to
+and the released artifact lets others add their own. The platform is therefore **domain-general**: it is
+not a computing-education tool but a generic instrument for any discipline in which a learner must
+specify an ill-defined task, judge a fallible solution, and steer it toward a better one. The released
+content already spans **twelve disciplines** across STEM, the social sciences, the humanities, law, and
+professional and education fields, from algorithms and classical mechanics to constitutional law,
+applied ethics, and instructional design (Appendix C). An educator in any of these fields authors a
+challenge by naming a subject; the system generates the ill-defined problem, the three per-skill
+rubrics, and the seeded-flaw solution. The monitor-control scaffold is likewise open to
 additional skills where a setting calls for them; the three are a deliberately small decomposition that
 separates pre-generation, evaluative, and post-generation control. The released instrument is therefore
 usable as a starting point for others to extend, not only to reproduce.
@@ -781,8 +788,9 @@ from the post-generation one in a way prior frameworks do not, and shows that th
 measured apart. Because the decomposition tracks what a person must contribute rather than what today's
 models cannot yet do, it does not lapse as the models improve: the more capable the system, the more
 the assessable skill is the framing, judging, and steering of it. We release the model, the instrument,
-and the validation protocol as a foundation to build on, for the assessment and instruction the moment
-demands.
+and the validation protocol as a foundation to build on: an open, domain-general platform with which an
+educator in any discipline, from algorithms to applied ethics, can assess and train this skill, for the
+assessment and instruction the moment demands.
 
 ## Appendix A. System walkthrough
 
@@ -859,6 +867,40 @@ scored largely by rubric-guided model judgment, whereas Judging *as instrumented
 with a known answer key. This both explains Judging's by-construction +2.00 and locates the Judging
 score precisely: it applies where ground truth is known, and open-ended judging without a key is the
 distinct instrumentation Section 10 specifies.
+
+## Appendix C. Cross-disciplinary challenge showcase
+
+The framework and the platform are domain-general. An ill-defined problem with seeded flaws, three
+per-skill rubrics, and a deliberately-imperfect AI solution can be generated for any subject, because
+each is produced by a prompt that an educator parameterizes with a course and topic. The released
+platform ships challenge content across twelve disciplines (Table C1) spanning STEM, the social
+sciences, the humanities, law, and professional and education fields. CoReasoning Lab is in this sense
+not a computing-education tool but a generic instrument for any discipline in which a learner must
+specify an ill-defined task, judge a fallible solution, and steer it toward a better one.
+
+**Table C1. Disciplines covered by the released challenge content.**
+
+| Area | Disciplines |
+|---|---|
+| STEM | Computer Science (algorithms); Physics (classical mechanics); Mathematics (linear algebra); Electrical Engineering (signal processing); Biology (molecular biology) |
+| Social sciences | Economics (microeconomics); Political Science (international relations); Psychology (cognitive psychology) |
+| Humanities and law | Philosophy (applied ethics); Law (constitutional law) |
+| Professional and education | Business (organizational behavior); Education (educational technology) |
+
+The four examples below are real ill-defined problems the platform generated, in applied ethics,
+physics, instructional design, and computing, each of which a learner must Frame before the AI produces
+a flawed solution to Judge and Steer:
+
+- **Applied ethics.** "As a member of the AI Ethics Committee at a technology company, you have been tasked with developing a set of ethical guidelines for the deployment of a new AI system."
+- **Physics.** "As part of a project for a local amusement park, design a new ride that involves a projectile-motion component, and analyze the outcomes."
+- **Instructional design (education).** "Our organization is developing a new training program on effective communication skills. Design a backward lesson plan."
+- **Computer science.** "Our company is building a navigation app. Design an algorithm that computes the shortest path between two locations on a road network with varying travel speeds, possible road closures, and concurrent route requests."
+
+The deliberate gaps differ by discipline (a missing fairness criterion in the ethics task, an unstated
+launch or safety constraint in the physics task, undefined learning objectives in the lesson-plan task),
+but the learner's work is identical across all of them: specify the task (Framing), evaluate the AI's
+flawed solution (Judging), and redirect it toward an adequate one (Steering). Full per-discipline session
+logs ship with the platform.
 
 ## References
 <div class="references" markdown="1">
