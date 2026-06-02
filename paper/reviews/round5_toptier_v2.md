@@ -30,6 +30,17 @@ validation) which are out of scope for an automated pass.
 | m12 | Section 10 lacks sample sizes/power | no | FIXED: added target N (~150-200 transcripts, >=3 experts/skill; >=200 learners) and power framing. |
 | M1a, M5a, M3-core | run human agreement study; human-verify seeded issues; expert accuracy | YES | DEFERRED: require human raters; specified in Section 10 with the prepared study package. |
 
-## Note
-The cross-vendor (Gemini Flash) re-grade was run to convert m6/M3-partial from an open
-item into a result, replacing the earlier within-family-only framing.
+## Update: cross-vendor replication obtained (m6 / M3-partial now CLOSED)
+A third grader backend from an independent vendor, Meta's llama-3.3-70b (the prototype's own
+engine), re-graded the identical 40 transcripts. The dissociation replicates with a stronger
+margin: own-effects Framing +0.80, Judging +0.75, Steering +0.40 vs mean cross-effect +0.02
+(diagonal/off-diagonal ratio 39). Judging's own-effect settles to +0.75 (level with Framing),
+confirming the gpt-4o +2.00 was grader-specific and that the separation is balanced across all
+three skills under an independent vendor. Section 8's grader-robustness paragraph now reports
+three backends spanning two providers; the abstract, Section 8 Scope, and Section 11 state
+"spanning two providers" as an established result, not a deferred item. Artifacts:
+research/results/e3_dissociation_grades_xvendor.csv (+ _complete json).
+
+Per the "Weakness Is The Starting Point" rule, the conditional Steering-by-judging analysis
+(+0.30 judging-strong vs +0.55 judging-weak) was inconclusive and is kept as a private
+diagnostic, not added to the paper.
