@@ -407,16 +407,16 @@ consequential (the skills can be measured apart).
 
 ## 7. The CoReasoning Lab system
 
-The framework was instantiated in a prototype web platform, *CoReasoning Lab*, which we describe here so
-that the abstract skills map onto a concrete learner experience. The platform is role-based (student,
-instructor, administrator) and its interface is bilingual (English and Hebrew), and it supports both
-practice and assessment modes and both multiple-choice and open-ended response formats per phase. All
-challenges evaluated in this paper are English-language (Section 11); the bilingual interface is not a
-claim of validated cross-language scoring. The reusable
-artifact we release and evaluate is the platform's *scoring engine*: a library of sixteen prompts plus
-a controlled-generation harness (Section 7.1). The interface figures in this paper (Figures A1 and A2)
-are representative mockups of the prototype, not screenshots of a running deployment. All quantitative
-results come from the released prompt engine, not from platform usage logs.
+The framework is instantiated in *CoReasoning Lab*, a runnable open-source web platform, which we
+describe here so that the abstract skills map onto a concrete learner experience. The platform is a
+Node/Express application with role-based access (student, instructor, administrator), a challenge
+database, practice and assessment modes, multiple-choice and open-ended response formats per phase, and
+a five-language content library (English, Hebrew, German, Spanish, French). Its full source, the web
+application, the database schema, the content library, and the *scoring engine* of sixteen prompts
+(Section 7.1), is released, alongside a pedagogical-foundations document mapping the design to learning
+theory. Figures A1 and A2 render the platform's interface. All challenges evaluated in this paper are
+English-language (Section 11), and the quantitative results come from the scoring engine over controlled
+inputs rather than from production usage logs.
 
 Because challenge generation, rubric generation, and scoring are themselves prompt-defined, the engine
 extends to a new subject, language, or grader backend by substitution rather than redesign: the
@@ -487,11 +487,13 @@ and falsely flagged); and Steering is evaluated against the trajectory of the ou
 rewarding corrections that demonstrably move the solution toward correctness. This is why the skills
 are measured *apart*: each evaluator interrogates a different referent.
 
-The instrument used in this paper is the scoring engine of the CoReasoning Lab prototype, a library
-of sixteen prompts spanning challenge construction, AI generation, and evaluation. These prompts are
-run verbatim: the surrounding experiment harness (simulated-learner generation, the crossed factorial,
-and the analysis) is research orchestration around that fixed engine, not a reimplementation of it, so
-the measurements characterize the instrument itself. Scoring a single
+The instrument used in this paper is the scoring engine of the CoReasoning Lab platform, a library
+of sixteen prompts spanning challenge construction, AI generation, and evaluation. The released library
+carries the platform's evaluation logic verbatim, the same rubrics, criteria, and system prompts as the
+deployed application; the only adaptation is that JSON output formatting is supplied by the research
+harness rather than embedded in each prompt. The surrounding harness (simulated-learner generation, the
+crossed factorial, and the analysis) is research orchestration around that fixed evaluation logic, not a
+reimplementation of it, so the measurements characterize the instrument itself. Scoring a single
 learner exercises the relevant subset, the three skill evaluators and the generic grader, over
 controlled inputs, so that the measurements are reproducible and the ground truth is known. A
 scope note: the grader is a language model, so the results below characterize the *internal* behavior
@@ -574,8 +576,9 @@ range under the P2 ceiling yields a lower cross-method correlation (+0.21), a re
 rather than a separate construct. Second, the instrument is faithful to the population's dependence
 structure: on learners whose three competences are set *independently* (the full crossed design) the
 inter-skill grade correlations are near zero (mean $|\rho| = 0.13$; Framing-Judging $\rho = -0.03$),
-whereas on learners whose competences share a single latent level the same instrument returns *positive*
-correlations (mean $\rho = +0.41$; Framing-Judging $\rho = +0.52$). The instrument therefore does not
+whereas on the 20 learners whose three competences are all set strong or all set weak (a single shared
+ability level) the same instrument returns *positive* correlations (mean $\rho = +0.41$;
+Framing-Judging $\rho = +0.52$). The instrument therefore does not
 manufacture dissociation: it recovers independence when the competences are independent and correlation
 when they are shared, which is what licenses reading the crossed-design separation as a property of the
 skills rather than of the scoring (Table 3).
@@ -583,7 +586,8 @@ skills rather than of the scoring (Table 3).
 **Table 3. Multitrait-multimethod validity.** Panel A: convergent agreement of the same skill across
 the three grader backends (mean pairwise per-learner rank correlation on the 40 shared transcripts).
 Panel B: inter-skill grade correlation by population, showing the instrument recovers the population's
-dependence structure (discriminant when competences are independent, convergent when they are shared).
+dependence structure (discriminant on the full crossed design, convergent on the n=20 all-strong and
+all-weak learners whose three competences share one level).
 
 | Panel A: cross-grader convergent ($\rho$, 3 backends) | Framing | Judging | Steering |
 |---|---|---|---|

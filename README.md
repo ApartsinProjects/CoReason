@@ -41,12 +41,20 @@ productive struggle), and the model states five testable propositions about how 
 
 ## The instrument and CoReasoning Lab
 
-CoReasoning Lab is a prototype learning platform that auto-generates ill-defined problems with seeded
-flaws, presents deliberately-imperfect AI output, runs judge-and-steer cycles, and scores the three
-skills with rubric-driven LLM evaluators. **What this repository releases and evaluates is the scoring
-engine**: the sixteen prompts at `code/artifacts/prompt-debug/originals/*.yaml` plus the
-controlled-generation harness in `research/`. The interface figures in the paper are representative
-mockups; static UI mockups live in `screens/`.
+CoReasoning Lab is a **runnable open-source learning platform** that auto-generates ill-defined problems
+with seeded flaws, presents deliberately-imperfect AI output, runs judge-and-steer cycles, and scores
+the three skills with rubric-driven LLM evaluators.
+
+- **Full platform** (Node/Express + SQLite/Postgres, Knex migrations, Passport auth, Docker, Playwright
+  e2e, a five-language content library) is on the [`staging`](../../tree/staging) branch:
+  `npm install && npm run db:setup && npm start` (or `npm run docker:dev`).
+- **System documentation** (on this branch): [`docs/CONOPS.md`](docs/CONOPS.md) (concept of operations),
+  [`docs/spec/SPEC.md`](docs/spec/SPEC.md) + 12 flow specs, 7 personas, and UX audits; the
+  `staging` branch adds instructor/student/developer guides, a `pedagogy.md` learning-theory mapping,
+  and real session logs.
+- **The scoring engine** evaluated in the paper is the sixteen prompts at
+  `code/artifacts/prompt-debug/originals/*.yaml` (the deployed app's evaluation logic), exercised by the
+  harness in `research/`.
 
 **Educators can run it now, no web app needed.** `code/run_session.py` scores a real student's
 Framing, Judging, and Steering over the real engine and returns three rubric-driven grades with
@@ -68,9 +76,11 @@ research/
   results/        grades CSVs + analysis JSONs (N=80 + ablations + robustness)
   experiments/    registry: PROJECT_LOG.md, INDEX.md
   DATASHEET.md    dataset documentation (Gebru-style)
-human-study/      prepared human-rater study: CODEBOOK.md, score_agreement.py
+human-study/      prepared 3-rater study: README, CODEBOOK, seeded samplers + scorers, task files
+code/run_session.py   educator runner: score a real student over the engine (README_EDUCATORS.md)
 code/artifacts/prompt-debug/originals/   the sixteen-prompt scoring instrument (YAML)
-screens/          static UI mockups of the prototype
+docs/             CONOPS, SPEC + flow specs, personas, UX audits
+screens/          static UI renders; the full runnable app is on the `staging` branch
 ```
 
 ## Reproduce
