@@ -385,7 +385,10 @@ metacognition (Sidra & Mason, 2025) and includes an AI-evaluation
 sub-construct that overlaps Judging; we differ in separating the pre-generation and post-generation
 control skills and in demonstrating their dissociation rather than positing correlated factors.
 CoReasoning is complementary to this measurement program: it supplies the specific, theory-derived
-decomposition that a future validated instrument could operationalize.
+decomposition that a future validated instrument could operationalize. Rubric-based LLM grading studies
+report high agreement with human raters (intraclass correlation up to 0.97) yet systematic divergence on
+subjective criteria (Yavuz et al., 2025); the multitrait-multimethod design we use across three grader
+backends (Section 8) treats that grader-method variance as a measured term rather than a confound.
 
 **Problem formulation as the AI-era skill.** A prominent strand argues that, as models absorb
 execution, the durable human skill shifts from prompt crafting to *problem formulation*, identifying,
@@ -397,6 +400,22 @@ through instruments that treat question formulation (Kim et al., 2025) and probl
 Framing is a distinct competency is further supported by the older problem-finding literature, which
 established problem finding as empirically separable from problem solving (Runco & Chand, 1995). We
 build on this strand by placing Framing in a measured loop with Judging and Steering.
+
+**Evaluative judgement and named-competency frameworks.** The capacity to discern quality, *evaluative
+judgement*, has been argued to be the core human capability for the generative-AI era (Bearman et al.,
+2024), and students are observed to make continuous in-the-loop accept-and-reject judgements while
+working with AI on assessment tasks (Walton et al., 2025). Our Judging skill operationalizes evaluative
+judgement specifically for AI output; CoReasoning then departs from a unified-judgement account by
+separating it from the generative acts of Framing and Steering, treating evaluation as one of three
+independently-measurable skills rather than a single overarching disposition. Two findings reinforce
+that Judging is a separable, demanding construct: critical evaluation is the single highest-load
+activity in AI-assisted writing (Yao & Fan, 2025), and users default to uncritically accepting AI
+output absent intervention (Wingerter et al., 2025). Among named competency frameworks, the AI Quotient
+enumerates eight broad collaboration dimensions (Ganuthula & Balaraman, 2025); CoReasoning instead
+collapses to three minimal, independently-assessable skills and, crucially, splits the single
+prompt-engineering dimension that such frameworks leave fused into a pre-generation Framing skill and a
+post-generation Steering skill. Frameworks that partition coursework by assessment mode rather than by
+cognitive skill (Elshall & Badir, 2025) are orthogonal and complementary.
 
 **One-line novelty.** CoReasoning is, to our knowledge, the first theoretically-grounded decomposition
 of productive generative-AI use into three independently-assessable competencies that separates
@@ -829,6 +848,8 @@ Bansal, G., Wu, T., Zhou, J., Fok, R., Nushi, B., Kamar, E., Ribeiro, M. T., & W
 
 Barzilai, S., & Chinn, C. A. (2018). On the Goals of Epistemic Education: Promoting Apt Epistemic Performance. *Journal of the Learning Sciences*, 27(3), 353–389.
 
+Bearman, M., Tai, J., Dawson, P., Boud, D., & Ajjawi, R. (2024). Developing Evaluative Judgement for a Time of Generative Artificial Intelligence. *Assessment & Evaluation in Higher Education*, 49(6), 893–905. https://doi.org/10.1080/02602938.2024.2335321
+
 Bjork, E. L., & Bjork, R. A. (2011). Making Things Hard on Yourself, but in a Good Way: Creating Desirable Difficulties to Enhance Learning. *Psychology and the Real World*, 56–64.
 
 Buçinca, Z., Malaya, M. B., & Gajos, K. Z. (2021). To Trust or to Think: Cognitive Forcing Functions Can Reduce Overreliance on AI in AI-Assisted Decision-Making. *Proceedings of the ACM on Human-Computer Interaction*, 5(CSCW1), 1–21.
@@ -851,6 +872,8 @@ Di Santi, E. (2026). Cognitive Amplification vs Cognitive Delegation in Human-AI
 
 Durkin, K., & Rittle-Johnson, B. (2012). The Effectiveness of Using Incorrect Examples to Support Learning about Decimal Magnitude. *Learning and Instruction*, 22(3), 206–214. https://doi.org/10.1016/j.learninstruc.2011.11.001
 
+Elshall, A. S., & Badir, A. (2025). Balancing AI-Assisted Learning and Traditional Assessment: The FACT Assessment in Environmental Data Science Education. *Frontiers in Education*, 10, 1596462. https://doi.org/10.3389/feduc.2025.1596462
+
 Facione, P. A. (1990). Critical Thinking: A Statement of Expert Consensus for Purposes of Educational Assessment and Instruction (The Delphi Report). *American Philosophical Association*.
 
 Fan, Y., Tang, L., Le, H., Shen, K., Tan, S., Zhao, Y., Shen, Y., Li, X., & Gašević, D. (2025). Beware of Metacognitive Laziness: Effects of Generative Artificial Intelligence on Learning Motivation, Processes, and Performance. *British Journal of Educational Technology*, 56(2), 489–530. https://doi.org/10.1111/bjet.13544
@@ -860,6 +883,8 @@ Feng, Y., Wang, S., Cheng, Z., Wan, Y., & Chen, D. (2025). Are We on the Right W
 Fernandes, D., Villa, S., Nicholls, S., Haavisto, O., Buschek, D., Schmidt, A., Kosch, T., Shen, C., & Welsch, R. (2024). Performance and Metacognition Disconnect when Reasoning in Human-AI Interaction. *arXiv preprint arXiv:2409.16708*.
 
 Flavell, J. H. (1979). Metacognition and Cognitive Monitoring: A New Area of Cognitive-Developmental Inquiry. *American Psychologist*, 34(10), 906–911.
+
+Ganuthula, V. R. R., & Balaraman, K. K. (2025). Artificial Intelligence Quotient Framework for Measuring Human Collaboration with Artificial Intelligence. *Discover Artificial Intelligence*, 5, 268. https://doi.org/10.1007/s44163-025-00516-1
 
 Gerlich, M. (2025). AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking. *Societies*, 15(1), 6.
 
@@ -925,7 +950,15 @@ Vaccaro, M., Almaatouq, A., & Malone, T. (2024). When Combinations of Humans and
 
 Vygotsky, L. S. (1978). Mind in Society: The Development of Higher Psychological Processes. *Harvard University Press*.
 
+Walton, J., Bearman, M., Crawford, N., Tai, J., & Boud, D. (2025). How University Students Work on Assessment Tasks with Generative Artificial Intelligence: Matters of Judgement. *Assessment & Evaluation in Higher Education* (advance online publication). https://doi.org/10.1080/02602938.2025.2570328
+
+Wingerter, T. L., Straub, T., & Schweitzer, S. (2025). Mitigating Automation Bias in Generative AI through Nudges: A Cognitive Reflection Test Study. *Procedia Computer Science*, 270, 2106–2114. https://doi.org/10.1016/j.procs.2025.09.331
+
 Winne, P. H., & Hadwin, A. F. (1998). Studying as Self-Regulated Learning. *Metacognition in Educational Theory and Practice*, 277–304.
+
+Yao, G., & Fan, L. (2025). Cognitive Load Scale for AI-Assisted L2 Writing: Scale Development and Validation. *Frontiers in Psychology*, 16, 1666974. https://doi.org/10.3389/fpsyg.2025.1666974
+
+Yavuz, F., Çelik, Ö., & Yavaş Çelik, G. (2025). Utilizing Large Language Models for EFL Essay Grading: An Examination of Reliability and Validity in Rubric-Based Assessments. *British Journal of Educational Technology*, 56(4), 1–17. https://doi.org/10.1111/bjet.13494
 
 Zimmerman, B. J. (2000). Attaining Self-Regulation: A Social Cognitive Perspective. *Handbook of Self-Regulation*, 13–39.
 
