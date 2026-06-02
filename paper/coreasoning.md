@@ -518,7 +518,8 @@ rewarding corrections that demonstrably move the solution toward correctness. Th
 are measured *apart*: each evaluator interrogates a different referent.
 
 The instrument used in this paper is the scoring engine of the CoReasoning Lab platform, a library
-of sixteen prompts spanning challenge construction, AI generation, and evaluation. The released library
+of sixteen prompts spanning challenge construction, AI generation, and evaluation (Figure A3 traces the full
+generation-and-assessment pipeline). The released library
 carries the platform's evaluation logic verbatim, the same rubrics, criteria, and system prompts as the
 deployed application; the only adaptation is that JSON output formatting is supplied by the research
 harness rather than embedded in each prompt. The surrounding harness (simulated-learner generation, the
@@ -821,6 +822,17 @@ which is the design commitment the framework makes visible.
 distribution is broken out into separate Framing, Judging, and Steering panels, and the per-student
 results list the three skills as distinct columns, the interface-level expression of the framework's
 central claim that productive AI use is not one skill but three.*
+
+![Figure A3. Auto-generation and assessment pipeline of the CoReasoning Lab engine.](assets/system-pipeline.svg)
+
+*Figure A3. The sixteen-prompt engine in two phases. In authoring, the instructor names a subject and the
+engine generates the ill-defined problem (prompt 01), three per-skill rubrics and a gold framing (02, 14),
+and a deliberately flawed AI solution carrying seeded issues (03). In assessment, each learner response is
+scored against a different referent: Framing against the gold framing and rubric (08), Judging against the
+seeded issues (09), and Steering against the corrected trajectory after the output is re-run (04, 10); a
+single grader prompt (11) then assigns each skill its own grade, and the three feed the per-student report
+and course analytics. Because the three evaluation prompts interrogate different referents, the grades are
+produced independently rather than as one global impression.*
 
 ## Appendix B. Robustness and ablations
 

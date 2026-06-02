@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 660" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a2e"/>
+    </marker>
+    <filter id="s" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+  <rect width="980" height="660" fill="#ffffff"/>
+  <text x="490" y="34" text-anchor="middle" font-size="22" font-weight="700" fill="#1a1a2e">The CoReasoning Lab engine: auto-generation and assessment</text>
+  <text x="490" y="55" text-anchor="middle" font-size="13" font-style="italic" fill="#5a4a3a">arrows are labelled with the prompt that produces each artifact (sixteen-prompt library)</text>
+
+  <!-- ============ LANE A: AUTHORING / AUTO-GENERATION ============ -->
+  <rect x="34" y="74" width="912" height="170" rx="10" fill="#fafbfc" stroke="#1a1a2e" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="50" y="96" font-size="15" font-weight="700" fill="#5a4a3a">Authoring &#8212; the instructor names a subject; the engine generates the challenge</text>
+
+  <!-- chain boxes -->
+  <g font-size="12.5">
+    <g filter="url(#s)"><rect x="48" y="120" width="120" height="96" rx="8" fill="#eef4fa" stroke="#1a4078" stroke-width="2"/></g>
+    <text x="108" y="160" text-anchor="middle" font-size="14" font-weight="700" fill="#1a4078">Subject</text>
+    <text x="108" y="180" text-anchor="middle" fill="#5a4a3a">course + topic</text>
+
+    <g filter="url(#s)"><rect x="232" y="120" width="150" height="96" rx="8" fill="#eef4fa" stroke="#1a4078" stroke-width="2"/></g>
+    <text x="307" y="156" text-anchor="middle" font-size="14" font-weight="700" fill="#1a4078">Ill-defined</text>
+    <text x="307" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#1a4078">problem</text>
+    <text x="307" y="194" text-anchor="middle" fill="#5a4a3a">seeded gaps</text>
+
+    <g filter="url(#s)"><rect x="446" y="120" width="150" height="96" rx="8" fill="#fef3e0" stroke="#d4b96a" stroke-width="2"/></g>
+    <text x="521" y="156" text-anchor="middle" font-size="14" font-weight="700" fill="#9a7b1f">Three per-skill</text>
+    <text x="521" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#9a7b1f">rubrics</text>
+    <text x="521" y="194" text-anchor="middle" fill="#5a4a3a">+ gold framing</text>
+
+    <g filter="url(#s)"><rect x="660" y="120" width="160" height="96" rx="8" fill="#eef4fa" stroke="#1a4078" stroke-width="2"/></g>
+    <text x="740" y="156" text-anchor="middle" font-size="14" font-weight="700" fill="#1a4078">Flawed AI</text>
+    <text x="740" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#1a4078">solution</text>
+    <text x="740" y="194" text-anchor="middle" fill="#5a4a3a">seeded issues</text>
+
+    <g filter="url(#s)"><rect x="846" y="132" width="92" height="72" rx="8" fill="#ecf6ee" stroke="#1f7a3a" stroke-width="2"/></g>
+    <text x="892" y="164" text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a3a">Challenge</text>
+    <text x="892" y="182" text-anchor="middle" font-size="13" font-weight="700" fill="#1f7a3a">ready</text>
+  </g>
+  <!-- arrows with prompt numbers -->
+  <g font-size="11" font-style="italic" fill="#1f7a3a" text-anchor="middle">
+    <line x1="168" y1="168" x2="230" y2="168" stroke="#1a1a2e" stroke-width="2" marker-end="url(#a)"/><text x="199" y="160">01</text>
+    <line x1="382" y1="168" x2="444" y2="168" stroke="#1a1a2e" stroke-width="2" marker-end="url(#a)"/><text x="413" y="160">02</text>
+    <line x1="596" y1="168" x2="658" y2="168" stroke="#1a1a2e" stroke-width="2" marker-end="url(#a)"/><text x="627" y="160">03, 14</text>
+    <line x1="820" y1="168" x2="844" y2="168" stroke="#1a1a2e" stroke-width="2" marker-end="url(#a)"/>
+  </g>
+
+  <!-- ============ LANE B: LEARNER RUN / ASSESSMENT ============ -->
+  <rect x="34" y="262" width="912" height="330" rx="10" fill="#fafbfc" stroke="#1a1a2e" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="50" y="284" font-size="15" font-weight="700" fill="#5a4a3a">Assessment &#8212; each skill is scored apart, against a different referent</text>
+
+  <!-- three skill rows -->
+  <g font-size="12">
+    <!-- row template: response (blue) -> evaluator (green) -> grade (gold) -->
+    <!-- Framing -->
+    <g filter="url(#s)"><rect x="48" y="304" width="150" height="56" rx="8" fill="#eef4fa" stroke="#1a4078" stroke-width="2"/></g>
+    <text x="123" y="328" text-anchor="middle" font-weight="700" fill="#1a4078">Framing response</text>
+    <text x="123" y="346" text-anchor="middle" fill="#5a4a3a">vs gold + rubric</text>
+    <g filter="url(#s)"><rect x="300" y="304" width="150" height="56" rx="8" fill="#ecf6ee" stroke="#1f7a3a" stroke-width="2"/></g>
+    <text x="375" y="328" text-anchor="middle" font-weight="700" fill="#1f7a3a">Evaluate (08)</text>
+    <text x="375" y="346" text-anchor="middle" fill="#5a4a3a">per-criterion</text>
+    <g filter="url(#s)"><rect x="552" y="304" width="120" height="56" rx="8" fill="#ecf6ee" stroke="#1f7a3a" stroke-width="2"/></g>
+    <text x="612" y="336" text-anchor="middle" font-weight="700" fill="#1f7a3a">Grade (11)</text>
+    <g filter="url(#s)"><rect x="724" y="306" width="110" height="52" rx="8" fill="#fff5dc" stroke="#d4b96a" stroke-width="2"/></g>
+    <text x="779" y="338" text-anchor="middle" font-weight="700" fill="#9a7b1f">Framing grade</text>
+
+    <!-- Judging -->
+    <g filter="url(#s)"><rect x="48" y="386" width="150" height="56" rx="8" fill="#eef4fa" stroke="#1a4078" stroke-width="2"/></g>
+    <text x="123" y="410" text-anchor="middle" font-weight="700" fill="#1a4078">Judging response</text>
+    <text x="123" y="428" text-anchor="middle" fill="#5a4a3a">vs seeded issues</text>
+    <g filter="url(#s)"><rect x="300" y="386" width="150" height="56" rx="8" fill="#ecf6ee" stroke="#1f7a3a" stroke-width="2"/></g>
+    <text x="375" y="410" text-anchor="middle" font-weight="700" fill="#1f7a3a">Evaluate (09)</text>
+    <text x="375" y="428" text-anchor="middle" fill="#5a4a3a">recall / precision</text>
+    <g filter="url(#s)"><rect x="552" y="386" width="120" height="56" rx="8" fill="#ecf6ee" stroke="#1f7a3a" stroke-width="2"/></g>
+    <text x="612" y="418" text-anchor="middle" font-weight="700" fill="#1f7a3a">Grade (11)</text>
+    <g filter="url(#s)"><rect x="724" y="388" width="110" height="52" rx="8" fill="#fff5dc" stroke="#d4b96a" stroke-width="2"/></g>
+    <text x="779" y="420" text-anchor="middle" font-weight="700" fill="#9a7b1f">Judging grade</text>
+
+    <!-- Steering -->
+    <g filter="url(#s)"><rect x="48" y="468" width="150" height="56" rx="8" fill="#eef4fa" stroke="#1a4078" stroke-width="2"/></g>
+    <text x="123" y="492" text-anchor="middle" font-weight="700" fill="#1a4078">Steering response</text>
+    <text x="123" y="510" text-anchor="middle" fill="#5a4a3a">re-run output (04)</text>
+    <g filter="url(#s)"><rect x="300" y="468" width="150" height="56" rx="8" fill="#ecf6ee" stroke="#1f7a3a" stroke-width="2"/></g>
+    <text x="375" y="492" text-anchor="middle" font-weight="700" fill="#1f7a3a">Evaluate (10)</text>
+    <text x="375" y="510" text-anchor="middle" fill="#5a4a3a">vs trajectory</text>
+    <g filter="url(#s)"><rect x="552" y="468" width="120" height="56" rx="8" fill="#ecf6ee" stroke="#1f7a3a" stroke-width="2"/></g>
+    <text x="612" y="500" text-anchor="middle" font-weight="700" fill="#1f7a3a">Grade (11)</text>
+    <g filter="url(#s)"><rect x="724" y="470" width="110" height="52" rx="8" fill="#fff5dc" stroke="#d4b96a" stroke-width="2"/></g>
+    <text x="779" y="502" text-anchor="middle" font-weight="700" fill="#9a7b1f">Steering grade</text>
+
+    <!-- row arrows -->
+    <g stroke="#1a1a2e" stroke-width="2">
+      <line x1="198" y1="332" x2="298" y2="332" marker-end="url(#a)"/><line x1="450" y1="332" x2="550" y2="332" marker-end="url(#a)"/><line x1="672" y1="332" x2="722" y2="332" marker-end="url(#a)"/>
+      <line x1="198" y1="414" x2="298" y2="414" marker-end="url(#a)"/><line x1="450" y1="414" x2="550" y2="414" marker-end="url(#a)"/><line x1="672" y1="414" x2="722" y2="414" marker-end="url(#a)"/>
+      <line x1="198" y1="496" x2="298" y2="496" marker-end="url(#a)"/><line x1="450" y1="496" x2="550" y2="496" marker-end="url(#a)"/><line x1="672" y1="496" x2="722" y2="496" marker-end="url(#a)"/>
+    </g>
+
+    <!-- converge to report + analytics -->
+    <g filter="url(#s)"><rect x="858" y="386" width="86" height="56" rx="8" fill="#f4ecf7" stroke="#722f8a" stroke-width="2"/></g>
+    <text x="901" y="410" text-anchor="middle" font-weight="700" fill="#722f8a">Report</text>
+    <text x="901" y="428" text-anchor="middle" fill="#5a4a3a">+ analytics</text>
+    <g stroke="#722f8a" stroke-width="2">
+      <path d="M 834 332 C 850 332 856 386 857 410" fill="none" marker-end="url(#a)"/>
+      <line x1="834" y1="414" x2="856" y2="414" marker-end="url(#a)"/>
+      <path d="M 834 496 C 850 496 856 442 857 418" fill="none" marker-end="url(#a)"/>
+    </g>
+  </g>
+
+  <!-- challenge-ready feeds the run -->
+  <path d="M 892 204 C 892 232 123 240 123 302" fill="none" stroke="#1f7a3a" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#a)"/>
+  <text x="500" y="252" text-anchor="middle" font-size="11" font-style="italic" fill="#1f7a3a">the generated challenge is presented to the learner; the flawed AI solution is what they judge and steer</text>
+
+  <text x="490" y="624" text-anchor="middle" font-size="12" font-style="italic" fill="#5a4a3a">Generation prompts produce the challenge; evaluation prompts 08/09/10 each interrogate a different referent, so the three grades are produced independently.</text>
+</svg>
