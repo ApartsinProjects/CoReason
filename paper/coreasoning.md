@@ -706,22 +706,24 @@ three constructs separate), while the *extrapolation* inference (that the scores
 competency that transfers) and the *implication* inference (that the scores support instructional
 decisions) remain to be established by the studies below.
 
-First, an instrument-validity study: a stratified sample of transcripts (target on the order of 150 to
-200 transcripts spanning competence profiles and subjects) is re-graded by at least three blind human
-experts per skill using the per-skill rubrics, and agreement with the automated grader is reported
-as Cohen's $\kappa$, Fleiss' $\kappa$, and ordinal Krippendorff's $\alpha$, per skill, against the
-field-typical bar of $\kappa \approx 0.3$ to $0.8$; that sample size supports a reasonably precise
-agreement estimate (half-width on the order of $\pm 0.1$) and the detection of a $\kappa \geq 0.6$
-against the $0.3$ floor. This step is indispensable rather than a
+First, an instrument-validity study, built and ready to run. Three blind expert raters re-grade a
+stratified sample of 40 transcripts (covering all eight competence profiles) on the three skills using
+the per-skill rubrics; inter-rater reliability is reported as ordinal Krippendorff's $\alpha$ (primary,
+since the grades are ordinal), Fleiss' $\kappa$, and pairwise Cohen's $\kappa$, and agreement of the
+human majority with the automated grade as Cohen's $\kappa$ and ordinal $\alpha$ per skill, against the
+field-typical bar of $0.6$ to $0.8$. With all three raters scoring the same 40 items the agreement
+estimate has a bootstrap half-width on the order of $\pm 0.1$, enough to place each skill inside or
+outside that band. This step is indispensable rather than a
 formality: recent work shows that LLM-as-judge agreement with human experts is moderate and
 task-dependent, sometimes falling to Fleiss' $\kappa$ near $0.1$ to $0.3$ on hard rubric judgments
-(Feng et al., 2025), so automated grades must be validated against humans rather than assumed reliable.
-This exposes a recursive calibration threat, who grades the grader, that the framework must confront on
-two levels: the per-skill grades require human-rater agreement (above), and the Judging construct
-additionally rests on machine-seeded ground-truth issues, so a stratified subset of those seeded issues
-will be verified by human domain experts to confirm they are genuine, non-spurious flaws before the
-recall/precision signal can be trusted. We have prepared the agreement study (codebook, blinded
-rater task files, and scoring scripts) so that it can be run directly. Second, a construct-validity
+(Feng et al., 2025), so automated grades are validated against humans rather than assumed reliable.
+The package confronts the recursive calibration threat (who grades the grader) on a second level: because
+the Judging construct rests on machine-seeded ground-truth issues, a parallel task has the same three
+raters verify a balanced set of 40 seeded issues (20 real and 20 distractor controls) as genuine flaws,
+yielding a confirmation rate for the Judging ground truth before its recall/precision signal is trusted.
+The full package, codebook, per-rater shuffled task files with hidden ground truth, and seed-fixed
+agreement-scoring scripts, is released and reproducible, so the study runs directly once raters are
+recruited. Second, a construct-validity
 study at scale (target of at least 200 real learners) to test Propositions P1 through P4, examining
 whether Framing, Judging, and Steering dissociate across a learner population and whether the proposed
 gating relations hold. Third, a grader-robustness study across multiple model backends to separate the framework's
