@@ -28,6 +28,7 @@ async function startServer() {
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", "'unsafe-inline'"],  // Allow inline scripts for vanilla JS frontend
+        scriptSrcAttr: ["'unsafe-inline'"],         // Allow inline event handlers (onclick="...") the vanilla-JS UI relies on
         styleSrc: ["'self'", "'unsafe-inline'"],    // Allow inline styles
         imgSrc: ["'self'", "data:", "https:"],
         connectSrc: ["'self'"],
