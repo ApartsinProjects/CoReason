@@ -1,25 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 410" font-family="Georgia, 'Times New Roman', serif">
-  <rect width="820" height="410" fill="#ffffff"/>
-  <text x="410" y="36" text-anchor="middle" font-size="20" font-weight="bold" fill="#1a1a1a">Where competent work concentrates as models improve</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 440" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="ax" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+  <rect width="860" height="440" fill="#ffffff"/>
+  <text x="430" y="34" text-anchor="middle" font-size="21" font-weight="700" fill="#1a1a2e">Where competent work concentrates as models improve</text>
+  <text x="430" y="56" text-anchor="middle" font-size="13" font-style="italic" fill="#5a4a3a">schematic; the axes are conceptual, not quantitative</text>
 
-  <!-- execution region (lower): tall on the left, thin on the right -->
-  <polygon points="150,150 690,300 690,330 150,330" fill="#e7edf6" stroke="#b9c8e0" stroke-width="1"/>
-  <!-- Framing / Judging / Steering region (upper): thin on the left, tall on the right -->
-  <polygon points="150,88 690,88 690,300 150,150" fill="#2a5db0" fill-opacity="0.15" stroke="#2a5db0" stroke-width="1.5"/>
+  <!-- plot area: x 150..710, y 90..340 -->
+  <!-- Framing/Judging/Steering region (upper): thin left, tall right -->
+  <polygon points="150,92 710,92 710,300 150,150" fill="#f4ecf7" stroke="#722f8a" stroke-width="1.5"/>
+  <!-- Execution region (lower): tall left, thin right -->
+  <polygon points="150,150 710,300 710,340 150,340" fill="#f0f0f0" stroke="#9a8a7a" stroke-width="1"/>
   <!-- moving boundary -->
-  <line x1="150" y1="150" x2="690" y2="300" stroke="#2a5db0" stroke-width="2.5"/>
+  <line x1="150" y1="150" x2="710" y2="300" stroke="#722f8a" stroke-width="2.5"/>
 
   <!-- region labels -->
-  <text x="455" y="146" text-anchor="middle" font-size="18" font-weight="bold" fill="#1d4a91">Framing &#183; Judging &#183; Steering</text>
-  <text x="455" y="169" text-anchor="middle" font-size="13" fill="#3a5a86">the human contribution CoReasoning teaches and assesses</text>
-  <text x="285" y="288" text-anchor="middle" font-size="15" fill="#5a6a82">Execution, absorbed by the model</text>
+  <text x="470" y="150" text-anchor="middle" font-size="18" font-weight="700" fill="#722f8a">Framing &#183; Judging &#183; Steering</text>
+  <text x="470" y="173" text-anchor="middle" font-size="13" fill="#5a4a3a">the human contribution CoReasoning teaches and assesses</text>
+  <text x="300" y="295" text-anchor="middle" font-size="14.5" fill="#5a4a3a">Execution, absorbed by the model</text>
 
   <!-- axes -->
-  <line x1="150" y1="330" x2="150" y2="88" stroke="#8a8a8a" stroke-width="1"/>
-  <line x1="150" y1="350" x2="702" y2="350" stroke="#8a8a8a" stroke-width="1"/>
-  <polygon points="702,350 691,345 691,355" fill="#8a8a8a"/>
-  <text x="426" y="378" text-anchor="middle" font-size="14" fill="#444">Model capability</text>
-  <text x="152" y="370" text-anchor="start" font-size="11" fill="#777">today</text>
-  <text x="688" y="370" text-anchor="end" font-size="11" fill="#777">more capable</text>
-  <text x="134" y="209" text-anchor="middle" font-size="12" fill="#777" transform="rotate(-90 134 209)">share of the task a person must own</text>
+  <line x1="150" y1="340" x2="150" y2="88" stroke="#5a5a5a" stroke-width="1.2"/>
+  <line x1="150" y1="360" x2="722" y2="360" stroke="#5a5a5a" stroke-width="1.2" marker-end="url(#ax)"/>
+  <text x="436" y="390" text-anchor="middle" font-size="14" fill="#1a1a2e">Model capability</text>
+  <text x="152" y="380" text-anchor="start" font-size="11.5" fill="#5a4a3a">today</text>
+  <text x="700" y="380" text-anchor="end" font-size="11.5" fill="#5a4a3a">more capable</text>
+  <text x="132" y="214" text-anchor="middle" font-size="12.5" fill="#5a4a3a" transform="rotate(-90 132 214)">share of the task a person must own</text>
 </svg>

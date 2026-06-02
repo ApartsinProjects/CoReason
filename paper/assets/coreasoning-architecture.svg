@@ -1,78 +1,81 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 470" font-family="Georgia, 'Times New Roman', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" font-family="Georgia, 'Times New Roman', serif">
   <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#333"/>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a2e"/>
     </marker>
-    <marker id="arrowAccent" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#2a5db0"/>
-    </marker>
-    <style>
-      .skill{fill:#2a5db0;font-weight:bold;font-size:17px}
-      .lbl{fill:#444;font-size:12.5px}
-      .tier{fill:#888;font-size:13px;font-style:italic}
-      .box{fill:#f7f9fc;stroke:#2a5db0;stroke-width:1.6}
-      .obj{fill:#f4f4f4;stroke:#999;stroke-width:1.4}
-      .node{font-size:13.5px;fill:#1a1a1a}
-      .flow{stroke:#333;stroke-width:1.6;fill:none}
-      .ctrl{stroke:#2a5db0;stroke-width:1.8;fill:none}
-    </style>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.10"/>
+    </filter>
   </defs>
+  <rect width="920" height="540" fill="#ffffff"/>
+  <text x="460" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#1a1a2e">The CoReasoning loop: metacognitive monitor-control over a fallible AI</text>
 
-  <!-- tier bands -->
-  <text x="14" y="40" class="tier">META&#8209;LEVEL</text>
-  <text x="14" y="58" class="tier">(the learner)</text>
-  <text x="14" y="350" class="tier">OBJECT&#8209;LEVEL</text>
-  <text x="14" y="368" class="tier">(the AI)</text>
-  <line x1="150" y1="235" x2="806" y2="235" stroke="#ddd" stroke-width="1" stroke-dasharray="4 4"/>
+  <!-- META LEVEL panel -->
+  <rect x="50" y="64" width="820" height="190" rx="10" fill="#fafbfc" stroke="#1a1a2e" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="66" y="86" font-size="15" font-weight="700" fill="#5a4a3a">Meta level &#8212; the learner</text>
 
-  <!-- META-LEVEL skill boxes -->
-  <rect x="158" y="70" width="150" height="64" rx="8" class="box"/>
-  <text x="233" y="96" text-anchor="middle" class="skill">FRAMING</text>
-  <text x="233" y="116" text-anchor="middle" class="lbl">task definition</text>
-  <text x="233" y="130" text-anchor="middle" class="lbl">(SRL forethought)</text>
+  <!-- Framing (control: task definition) -->
+  <g filter="url(#sh)">
+    <rect x="78" y="108" width="220" height="120" rx="8" fill="#f4ecf7" stroke="#722f8a" stroke-width="2"/>
+  </g>
+  <text x="188" y="140" text-anchor="middle" font-size="17" font-weight="700" fill="#722f8a">Framing</text>
+  <text x="188" y="164" text-anchor="middle" font-size="12.5" fill="#5a4a3a">specify the ill-defined task;</text>
+  <text x="188" y="182" text-anchor="middle" font-size="12.5" fill="#5a4a3a">set the standards</text>
+  <text x="188" y="208" text-anchor="middle" font-size="11.5" font-style="italic" fill="#722f8a">pre-generation control</text>
 
-  <rect x="406" y="70" width="150" height="64" rx="8" class="box"/>
-  <text x="481" y="96" text-anchor="middle" class="skill">JUDGING</text>
-  <text x="481" y="116" text-anchor="middle" class="lbl">metacognitive</text>
-  <text x="481" y="130" text-anchor="middle" class="lbl">monitoring</text>
+  <!-- Judging (monitor) -->
+  <g filter="url(#sh)">
+    <rect x="360" y="108" width="200" height="120" rx="8" fill="#fef3e0" stroke="#d4b96a" stroke-width="2"/>
+  </g>
+  <text x="460" y="140" text-anchor="middle" font-size="17" font-weight="700" fill="#9a7b1f">Judging</text>
+  <text x="460" y="164" text-anchor="middle" font-size="12.5" fill="#5a4a3a">compare output to the</text>
+  <text x="460" y="182" text-anchor="middle" font-size="12.5" fill="#5a4a3a">standards; detect flaws</text>
+  <text x="460" y="208" text-anchor="middle" font-size="11.5" font-style="italic" fill="#9a7b1f">monitor (read-out)</text>
 
-  <rect x="620" y="70" width="150" height="64" rx="8" class="box"/>
-  <text x="695" y="96" text-anchor="middle" class="skill">STEERING</text>
-  <text x="695" y="116" text-anchor="middle" class="lbl">metacognitive</text>
-  <text x="695" y="130" text-anchor="middle" class="lbl">control</text>
+  <!-- Steering (control) -->
+  <g filter="url(#sh)">
+    <rect x="622" y="108" width="220" height="120" rx="8" fill="#f4ecf7" stroke="#722f8a" stroke-width="2"/>
+  </g>
+  <text x="732" y="140" text-anchor="middle" font-size="17" font-weight="700" fill="#722f8a">Steering</text>
+  <text x="732" y="164" text-anchor="middle" font-size="12.5" fill="#5a4a3a">issue targeted</text>
+  <text x="732" y="182" text-anchor="middle" font-size="12.5" fill="#5a4a3a">corrections</text>
+  <text x="732" y="208" text-anchor="middle" font-size="11.5" font-style="italic" fill="#722f8a">control (write)</text>
 
-  <!-- OBJECT-LEVEL boxes -->
-  <rect x="158" y="300" width="150" height="58" rx="8" class="obj"/>
-  <text x="233" y="326" text-anchor="middle" class="node">Ill-defined</text>
-  <text x="233" y="344" text-anchor="middle" class="node">problem</text>
+  <!-- Framing -> Judging (sets standards) -->
+  <line x1="298" y1="158" x2="358" y2="158" stroke="#722f8a" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="328" y="150" text-anchor="middle" font-size="11" font-style="italic" fill="#722f8a">standards</text>
+  <!-- Judging -> Steering (diagnosis) -->
+  <line x1="560" y1="158" x2="620" y2="158" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="590" y="150" text-anchor="middle" font-size="11" font-style="italic" fill="#5a4a3a">diagnosis</text>
 
-  <rect x="406" y="300" width="150" height="58" rx="8" class="obj"/>
-  <text x="481" y="326" text-anchor="middle" class="node">Imperfect AI</text>
-  <text x="481" y="344" text-anchor="middle" class="node">output (seeded flaws)</text>
+  <!-- OBJECT LEVEL panel -->
+  <rect x="50" y="344" width="820" height="160" rx="10" fill="#fafbfc" stroke="#1a1a2e" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="66" y="366" font-size="15" font-weight="700" fill="#5a4a3a">Object level &#8212; a fallible AI</text>
 
-  <rect x="620" y="300" width="150" height="58" rx="8" class="obj"/>
-  <text x="695" y="326" text-anchor="middle" class="node">Updated output</text>
-  <text x="695" y="344" text-anchor="middle" class="node">(converging)</text>
+  <!-- AI generative process -->
+  <g filter="url(#sh)">
+    <rect x="360" y="384" width="200" height="100" rx="8" fill="#ecf6ee" stroke="#1f7a3a" stroke-width="2"/>
+  </g>
+  <text x="460" y="424" text-anchor="middle" font-size="16" font-weight="700" fill="#1f7a3a">AI generation</text>
+  <text x="460" y="448" text-anchor="middle" font-size="12.5" fill="#5a4a3a">plausible but flawed</text>
 
-  <!-- flows -->
-  <!-- problem up into Framing -->
-  <path d="M233,300 L233,138" class="flow" marker-end="url(#arrow)"/>
-  <!-- Framing -> well-specified task -> AI generates (down to object, across to imperfect output) -->
-  <path d="M308,102 L360,102 L360,329 L402,329" class="flow" marker-end="url(#arrow)"/>
-  <text x="360" y="220" text-anchor="middle" class="lbl" transform="rotate(0)">specified</text>
-  <text x="360" y="234" text-anchor="middle" class="lbl">task &#8594; generate</text>
-  <!-- imperfect output up into Judging (monitoring) -->
-  <path d="M481,300 L481,138" class="ctrl" marker-end="url(#arrowAccent)"/>
-  <text x="494" y="220" class="lbl" fill="#2a5db0">monitor</text>
-  <!-- Judging -> Steering -->
-  <path d="M556,102 L616,102" class="flow" marker-end="url(#arrow)"/>
-  <!-- Steering down to updated output (control) -->
-  <path d="M695,138 L695,296" class="ctrl" marker-end="url(#arrowAccent)"/>
-  <text x="708" y="220" class="lbl" fill="#2a5db0">control</text>
-  <!-- loop: updated output back to Judging -->
-  <path d="M620,340 L585,395 L481,395 L481,360" class="flow" marker-end="url(#arrow)" stroke-dasharray="5 4"/>
-  <text x="545" y="412" text-anchor="middle" class="lbl">Judge&#8211;Steer cycle (repeat)</text>
+  <!-- AI output -->
+  <g filter="url(#sh)">
+    <rect x="622" y="384" width="220" height="100" rx="8" fill="#eef4fa" stroke="#1a4078" stroke-width="2"/>
+  </g>
+  <text x="732" y="424" text-anchor="middle" font-size="16" font-weight="700" fill="#1a4078">AI output</text>
+  <text x="732" y="448" text-anchor="middle" font-size="12.5" fill="#5a4a3a">the artifact under review</text>
 
-  <!-- title -->
-  <text x="410" y="450" text-anchor="middle" font-size="13.5" fill="#555" font-style="italic">The CoReasoning loop: an upstream task definition (Framing) seeds a metacognitive monitor&#8211;control cycle (Judging&#8211;Steering) over a fallible AI.</text>
+  <!-- AI -> output -->
+  <line x1="560" y1="434" x2="620" y2="434" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- CONTROL: Steering (meta) -> AI (object) -->
+  <path d="M 732 228 L 732 300 L 460 300 L 460 382" fill="none" stroke="#722f8a" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="596" y="292" text-anchor="middle" font-size="12" font-style="italic" fill="#722f8a">control: corrective command</text>
+
+  <!-- MONITOR: output (object) -> Judging (meta) -->
+  <path d="M 700 382 L 700 322 L 470 322 L 470 230" fill="none" stroke="#9a7b1f" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="560" y="338" text-anchor="middle" font-size="12" font-style="italic" fill="#9a7b1f">monitor: read the output</text>
+
+  <text x="460" y="524" text-anchor="middle" font-size="12" font-style="italic" fill="#5a4a3a">Framing seeds the loop; Judging (monitor) and Steering (control) cycle until the output meets the standards.</text>
 </svg>
