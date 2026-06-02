@@ -488,7 +488,10 @@ rewarding corrections that demonstrably move the solution toward correctness. Th
 are measured *apart*: each evaluator interrogates a different referent.
 
 The instrument used in this paper is the scoring engine of the CoReasoning Lab prototype, a library
-of sixteen prompts spanning challenge construction, AI generation, and evaluation. Scoring a single
+of sixteen prompts spanning challenge construction, AI generation, and evaluation. These prompts are
+run verbatim: the surrounding experiment harness (simulated-learner generation, the crossed factorial,
+and the analysis) is research orchestration around that fixed engine, not a reimplementation of it, so
+the measurements characterize the instrument itself. Scoring a single
 learner exercises the relevant subset, the three skill evaluators and the generic grader, over
 controlled inputs, so that the measurements are reproducible and the ground truth is known. A
 scope note: the grader is a language model, so the results below characterize the *internal* behavior
