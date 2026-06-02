@@ -13,7 +13,9 @@ use is increasingly linked to cognitive offloading and weakened critical thinkin
 mismatch between what education assesses and what students now do: our examinations still measure
 *unaided* performance, while the task graduates actually face, in classrooms and workplaces saturated
 with capable AI, is to produce good work *with* it, by framing an ill-defined task, judging the output,
-and steering the model toward something better. This ability to work with AI is neither taught nor
+and steering the model toward something better. As models absorb more of the execution, this
+collaborative work is the part of competent performance that stays with the person, which is precisely
+what assessment must now target. This ability to work with AI is neither taught nor
 assessed as a competency in its own right; where it is measured at all, it is folded into a single
 "prompting" score that cannot diagnose *why* a given learner's AI use succeeds or fails (whether they
 specified the task poorly, missed the flaws in the output, or failed to correct them). We treat it
@@ -70,6 +72,22 @@ competency can be named and decomposed, it can be taught and assessed. Current A
 can often tell us *that* a learner's AI use is unproductive but not *why*: whether they specified the
 task badly, failed to detect the flaws in the output, or knew the flaws but could not correct them.
 These are different failures with different remedies, and a single "prompting" score conflates them.
+
+This trajectory is not transient, and that is what raises the stakes for assessment. As models absorb
+more of the execution, the human contribution does not disappear; it concentrates in the operations a
+system cannot perform on its own behalf: choosing which problem is worth solving and specifying it,
+judging whether a fluent output is actually right, and redirecting the model when it is not. The field
+evidence that AI's value is conditional on the user's skill (Dell'Acqua et al., 2023; Vaccaro et al.,
+2024) implies that this conditioning tightens rather than loosens as systems improve, so the durable,
+assessable human skill shifts from executing a task to framing, judging, and steering it (Acar, 2023)
+(Figure 1). An assessment that still measures unaided execution therefore measures a shrinking part of
+what competent work will require.
+
+![Figure 1. As model capability rises, the human contribution concentrates in Framing, Judging, and Steering.](assets/forward-thesis.svg)
+
+*Figure 1. As models absorb execution, the part of a task a competent person must still own shifts from
+doing the work to framing, judging, and steering it. CoReasoning names and assesses that shifting
+locus.*
 
 We propose **CoReasoning**, a competency model that decomposes productive work with generative AI into
 three distinct skills, each independently assessable:
@@ -162,11 +180,11 @@ bounded by domain knowledge (Proposition P4). With that point made, the mapping 
 
 The Judge→Steer cycle is therefore a monitor→control loop seeded by a task definition. This is the
 structural spine of the framework and the reason the three skills cohere rather than merely coexist
-(Figure 1).
+(Figure 2).
 
-![Figure 1. The CoReasoning architecture.](assets/coreasoning-architecture.svg)
+![Figure 2. The CoReasoning architecture.](assets/coreasoning-architecture.svg)
 
-*Figure 1. The CoReasoning loop. An upstream task definition (Framing, a self-regulated-learning
+*Figure 2. The CoReasoning loop. An upstream task definition (Framing, a self-regulated-learning
 forethought activity) sets the standards against which a metacognitive monitor-control cycle (Judging
 then Steering) supervises a fallible AI at the object level. Judging is the monitor's read-out;
 Steering is the controller's write.*
@@ -391,6 +409,14 @@ a controlled-generation harness (Section 7.1). The interface figures in this pap
 are representative mockups of the prototype, not screenshots of a running deployment. All quantitative
 results come from the released prompt engine, not from platform usage logs.
 
+Because challenge generation, rubric generation, and scoring are themselves prompt-defined, the engine
+extends to a new subject, language, or grader backend by substitution rather than redesign: the
+feasibility demonstration exercises it unchanged across ten subjects (Section 8) and two grader models,
+and the released artifact lets others add their own. The monitor-control scaffold is likewise open to
+additional skills where a setting calls for them; the three are the minimal decomposition that
+separates pre-generation, evaluative, and post-generation control. We therefore release the instrument
+as infrastructure to extend rather than a fixed result to reproduce.
+
 **Authoring flow (instructor).** An instructor defines a challenge by choosing a course and subject
 path; the system then generates the ill-defined problem, the three per-skill rubrics, the gold-standard
 framing, and the seeded-flaw solution that the learner will critique (Section 7.1). Challenges are
@@ -497,7 +523,7 @@ construction, since its competence is operationalized by a controlled selection 
 issues; the decisive evidence is therefore the two *blind-graded* skills, Framing and Steering, whose
 free-text responses the grader scores without knowing the intended competence. Each shows a clear
 positive own-effect (+0.62 and +0.43) with near-zero cross-effects, so a simulated learner's three
-model-assigned grades move independently. Each grade responds to its own skill and is essentially flat in the others (Figure 2).
+model-assigned grades move independently. Each grade responds to its own skill and is essentially flat in the others (Figure 3).
 
 **Table 2. Effect on each skill's grade of manipulating each skill's competence (grade Δ, strong − weak; N=80).**
 
@@ -526,7 +552,7 @@ The own-skill effects are directionally consistent across subjects: broken down 
 areas (eight learners each), Framing and Steering each show a positive own-competence effect in nine of
 ten subjects, with the two exceptions (Framing in statistics, Steering in microeconomics) reflecting
 the small per-subject sample rather than a sign reversal; Judging is fixed by construction in every
-subject. The designed-contrast personas make the separation concrete (Figure 3, which plots five
+subject. The designed-contrast personas make the separation concrete (Figure 4, which plots five
 profiles). Three are especially telling: a *weak-framer / strong-judge* learner scores Framing C but
 Judging A; a *strong-framer / weak-judge* learner inverts this to Framing B, Judging C; and a
 *weak / weak / strong-steerer* elevates only Steering. A single underlying "AI-use
@@ -535,14 +561,14 @@ setting. In an intervention study, students' *behavioral* regulation of LLM use 
 checking correctness) predicts effective use, whereas self-rated AI expertise does not (Clerc et al.,
 2026). The skill of working with AI is thus distinct from a general, self-assessed competence.
 
-![Figure 2. Own-competence effects dominate cross-competence effects on every skill's grade.](assets/fig_dissociation_heatmap.png)
+![Figure 3. Own-competence effects dominate cross-competence effects on every skill's grade.](assets/fig_dissociation_heatmap.png)
 
-*Figure 2. Effect of manipulating each skill's competence (columns) on each skill's grade (rows). The
+*Figure 3. Effect of manipulating each skill's competence (columns) on each skill's grade (rows). The
 diagonal (own-skill effect) dominates; off-diagonal (cross-skill) effects are near zero.*
 
-![Figure 3. Per-skill grades dissociate by competence profile.](assets/fig_contrasts.png)
+![Figure 4. Per-skill grades dissociate by competence profile.](assets/fig_contrasts.png)
 
-*Figure 3. Mean per-skill grade for five competence profiles. Judging reaches A only when judging is
+*Figure 4. Mean per-skill grade for five competence profiles. Judging reaches A only when judging is
 strong, regardless of framing or steering; each skill responds to its own competence.*
 
 **Reliability.** To check that the grades are not noise, we hold four learner transcripts fixed and
@@ -688,7 +714,11 @@ machine returns, and steer it toward something better. That capability is teacha
 named and assessed. CoReasoning offers a decomposition of it into three theoretically-grounded,
 independently-assessable skills, Framing, Judging, and Steering, separates the pre-generation skill
 from the post-generation one in a way prior frameworks do not, and shows that the three can be
-measured apart. We offer it as a foundation for the assessment and instruction the moment demands.
+measured apart. Because the decomposition tracks what a person must contribute rather than what today's
+models cannot yet do, it does not lapse as the models improve: the more capable the system, the more
+the assessable skill is the framing, judging, and steering of it. We release the model, the instrument,
+and the validation protocol as a foundation to build on, for the assessment and instruction the moment
+demands.
 
 ## Appendix A. System walkthrough
 
