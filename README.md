@@ -1,5 +1,7 @@
 # CoReasoning
 
+### 📄 Read the paper: **[apartsinprojects.github.io/CoReason](https://apartsinprojects.github.io/CoReason/)**  ·  [Word (.docx)](docs/coreasoning.docx)  ·  [Markdown source](paper/coreasoning.md)
+
 ![CoReasoning hero](docs/assets/hero-gemini-coreasoning.png)
 
 **Teaching and assessing the skill of working with generative AI**, decomposed into three
