@@ -48,6 +48,15 @@ engine**: the sixteen prompts at `code/artifacts/prompt-debug/originals/*.yaml` 
 controlled-generation harness in `research/`. The interface figures in the paper are representative
 mockups; static UI mockups live in `screens/`.
 
+**Educators can run it now, no web app needed.** `code/run_session.py` scores a real student's
+Framing, Judging, and Steering over the real engine and returns three rubric-driven grades with
+per-criterion feedback. See [`code/README_EDUCATORS.md`](code/README_EDUCATORS.md):
+
+```bash
+python code/run_session.py --subject "Statistics > Hypothesis Testing" --interactive   # live with a student
+python code/run_session.py --subject "Algorithms > Sorting & Searching" --demo          # see it work
+```
+
 ## Repository map
 
 ```text
