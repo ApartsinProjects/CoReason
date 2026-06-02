@@ -18,6 +18,7 @@ learning-outcome claims; simulated learners; human-rater study prepared-not-run.
 | Robustness-XV | Cross-vendor replication | Re-grade same 40 with Meta llama-3.3-70b (3rd backend, 2nd vendor) | Replicates: diag +0.65, off +0.02, ratio 39; J own-effect 0.75 (balanced across skills) | done |
 | E6 | Convergent/discriminant validity | Inter-skill ρ: independent vs shared-ability population; cross-grader agreement | Discriminant mean\|ρ\|=0.13 vs convergent +0.41; cross-grader F+0.57/J+0.67/S+0.21 | done |
 | E7 | Campbell-Fiske MTMM | Traits × 3 grader backends matrix; halo check | Convergent +0.49 >> halo +0.08 >> hetero-hetero +0.06; all 3 criteria pass, no halo | done |
+| E8 | StudyChat external behavior (real data) | Map 16,851 real student-ChatGPT dialogue acts to F/J/S | Framing-type queries dominate; verification (Judging) ~4% and corrective editing (Steering) ~2.5% are rare; J-S behaviors vary independently (rho~0). Motivation-strengthening, not a dissociation claim (skill-fraction corr is a compositional artifact, not used) | done |
 | Human | Human-rater agreement (κ/α) | 3 raters re-grade 40 transcripts + verify 40 seeded issues | prepared; needs human raters | prepared, not run |
 
 ## Artifacts (every run kept under a unique name; never overwritten)

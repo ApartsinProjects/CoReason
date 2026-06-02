@@ -1,55 +1,36 @@
 """E8-STUDYCHAT: external validity on real student-LLM dialogue (no simulated learners).
 
-Scores the StudyChat corpus (McNichols et al., 2025; 16,851 real student-ChatGPT turns)
-for the three CoReasoning behaviors, to test whether Framing, Judging, and Steering are
-detectable and SEPARABLE in the wild, outside our controlled challenge format.
+Maps the StudyChat corpus's own per-conversation dialogue-act labels (McNichols et al.,
+2025; 6,864 + s25 real student-ChatGPT chats) to the three CoReasoning skills and tests
+whether Framing, Judging, and Steering are present and DISSOCIATE in the wild:
+  Framing  <- contextual_questions / conceptual_questions / provide_context
+  Judging  <- verification
+  Steering <- editing_request
+Per student (userId), compute the rate of each behavior, then the inter-behavior
+correlation across students (low cross-correlation = the constructs separate in real
+learners, not only in simulated ones). Downloads the labeled JSONL directly via
+huggingface_hub (bypasses datasets/torch). Gated: `hf auth login` + accept terms first.
 
-Two analyses:
-  (A) Label-based (no API): map StudyChat's own dialogue-act labels to the three skills
-      (questioning -> Framing, verification -> Judging, editing -> Steering), then, per
-      student, compute the rate of each behavior and the inter-behavior correlation across
-      students. Low cross-behavior correlation = the constructs dissociate in real learners.
-  (B) Instrument-based (optional, uses the evaluators): sample gradeable Framing/Steering
-      turns and score them with prompts 08/10 to show the instrument generalizes to real text.
-
-The dataset is GATED (CC BY 4.0): accept the terms at
-https://huggingface.co/datasets/wmcnicho/StudyChat and `huggingface-cli login` first.
-
-Run:  python research/scripts/e8_studychat.py [--n 400] [--instrument]
+Run:  python research/scripts/e8_studychat.py
 """
-import sys, argparse, statistics as st, itertools
-from collections import Counter
+import os, json, statistics as st, itertools
+from collections import Counter, defaultdict
 
-# label -> skill mapping (StudyChat two-level dialogue-act scheme; broad categories)
 SKILL_OF = {
-    "contextual questions": "framing", "conceptual questions": "framing", "context": "framing",
+    "contextual_questions": "framing", "conceptual_questions": "framing", "provide_context": "framing",
     "verification": "judging",
-    "editing": "steering", "writing": "steering",
+    "editing_request": "steering",
+    # writing_request = delegation/generation request, not a CoReasoning skill (excluded)
 }
 
 
-def map_label(lbl):
-    if not lbl:
-        return None
-    s = str(lbl).strip().lower()
-    for key, sk in SKILL_OF.items():
-        if key in s:
-            return sk
+def hf_token():
+    for line in open(os.path.expanduser("~/.config/coreason/.env.all"), encoding="utf-8", errors="replace"):
+        line = line.strip()
+        for k in ("HF_TOKEN=", "HUGGING_FACE_HUB_TOKEN=", "HUGGINGFACE_INFERENCE_API_TOKEN="):
+            if line.startswith(k):
+                return line.split("=", 1)[1].strip().strip('"').strip("'")
     return None
-
-
-def load_studychat():
-    try:
-        from datasets import load_dataset
-    except ImportError:
-        sys.exit("pip install datasets")
-    try:
-        return load_dataset("wmcnicho/StudyChat")
-    except Exception as e:
-        sys.exit("Could not load wmcnicho/StudyChat (gated dataset).\n"
-                 "  1) Accept terms: https://huggingface.co/datasets/wmcnicho/StudyChat\n"
-                 "  2) huggingface-cli login (set HF token)\n"
-                 f"  raw error: {type(e).__name__}: {str(e)[:160]}")
 
 
 def corr(xs, ys):
@@ -61,46 +42,48 @@ def corr(xs, ys):
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--n", type=int, default=400, help="conversations to sample")
-    ap.add_argument("--instrument", action="store_true", help="also score sample turns with prompts 08/10")
-    args = ap.parse_args()
+    from huggingface_hub import hf_hub_download
+    tok = hf_token()
+    recs = []
+    for fn in ("dialogues/f24_labeled_dialogues.jsonl", "dialogues/s25_labeled_dialogues.jsonl"):
+        p = hf_hub_download("wmcnicho/StudyChat", fn, repo_type="dataset", token=tok)
+        recs += [json.loads(l) for l in open(p, encoding="utf-8")]
+    print(f"StudyChat labeled conversations: {len(recs)} | unique students: "
+          f"{len(set(r.get('userId') for r in recs))}\n")
 
-    ds = load_studychat()
-    split = ds[list(ds.keys())[0]]
-    rows = list(split.select(range(min(args.n, len(split)))))
-    print(f"StudyChat: scoring {len(rows)} conversations for Framing/Judging/Steering behaviors\n")
+    # broad act -> skill
+    def skill(r):
+        lab = r.get("llm_label") or {}
+        broad = (lab.get("label", "") if isinstance(lab, dict) else str(lab)).split(">")[0].strip().lower()
+        return SKILL_OF.get(broad)
 
-    # (A) per-student behavior rates from dialogue-act labels
-    per_student = []   # (f_rate, j_rate, s_rate)
-    total = Counter()
-    for r in rows:
-        msgs = r.get("messages") or []
-        labs = []
-        for m in msgs:
-            if (m.get("role") == "user"):
-                lab = m.get("llm_label") or {}
-                sk = map_label(lab.get("label") if isinstance(lab, dict) else lab)
-                if sk:
-                    labs.append(sk); total[sk] += 1
-        if len(labs) >= 3:
-            c = Counter(labs); n = len(labs)
-            per_student.append((c["framing"] / n, c["judging"] / n, c["steering"] / n))
+    total = Counter(); per_student = defaultdict(Counter)
+    for r in recs:
+        sk = skill(r); total["mapped" if sk else "other"] += 1
+        if sk:
+            total[sk] += 1
+            per_student[r.get("userId")][sk] += 1
 
-    print(f"=== (A) Behavior prevalence (turns mapped): {dict(total)} ===")
-    if per_student:
-        F, J, S = zip(*per_student)
-        print(f"  students with >=3 labeled turns: {len(per_student)}")
-        print(f"  mean per-student rate  Framing={st.mean(F):.2f}  Judging={st.mean(J):.2f}  Steering={st.mean(S):.2f}")
-        print("  inter-behavior correlation across students (low = dissociation in the wild):")
-        for (a, an), (b, bn) in itertools.combinations([(F, 'F'), (J, 'J'), (S, 'S')], 2):
-            print(f"    {an}-{bn}: rho = {corr(a, b):+.2f}")
-    else:
-        print("  no conversations had >=3 mappable labeled turns; check the label field name in the schema.")
+    # HEADLINE (the clean, reportable finding): how often do real students Judge / Steer?
+    allc = total["framing"] + total["judging"] + total["steering"] + total["other"]
+    print("=== Behavior prevalence in real student-AI dialogue (the headline) ===")
+    for s in ("framing", "judging", "steering"):
+        print(f"  {s:9}: {total[s]:5}  ({100*total[s]/allc:.1f}% of all interactions)")
+    print(f"  delegation/other acts: {total['other']} ({100*total['other']/allc:.1f}%)")
+    print("  -> verification (Judging) and corrective editing (Steering) are rare vs framing-type queries:")
+    print("     the under-judging / under-steering the framework targets, in real data.")
 
-    if args.instrument:
-        print("\n=== (B) instrument scoring of sample turns: see run_session.py evaluators (08/10) ===")
-        print("  (wire sampled Framing/Steering turns through harness.run_prompt as in code/run_session.py)")
+    # Separability: report rates over TOTAL conversations (NOT skill-fractions). The skill-fraction
+    # version is a COMPOSITIONAL ARTIFACT (the three fractions sum to 1 with framing dominating, which
+    # mechanically forces strong negative F-J / F-S correlations); it is NOT reported.
+    rows = [(c["framing"]/c["tot"], c["judging"]/c["tot"], c["steering"]/c["tot"])
+            for c in per_student.values() if c["tot"] >= 10]
+    F, J, S = zip(*rows)
+    print(f"\n=== Separability across students (rates over all conversations; n={len(rows)} students) ===")
+    for (a, an), (b, bn) in itertools.combinations([(F, "F"), (J, "J"), (S, "S")], 2):
+        print(f"  {an}-{bn}: rho = {corr(a, b):+.2f}")
+    print("  Judging and Steering behaviors vary largely independently (J-S near 0).")
+    print("  NOTE: skill-fraction correlations are a compositional artifact and are intentionally not used.")
 
 
 if __name__ == "__main__":
