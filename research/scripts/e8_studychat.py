@@ -59,10 +59,13 @@ def main():
 
     total = Counter(); per_student = defaultdict(Counter)
     for r in recs:
-        sk = skill(r); total["mapped" if sk else "other"] += 1
+        sk = skill(r)
+        per_student[r.get("userId")]["tot"] += 1   # every conversation counts toward the student's total
         if sk:
             total[sk] += 1
             per_student[r.get("userId")][sk] += 1
+        else:
+            total["other"] += 1
 
     # HEADLINE (the clean, reportable finding): how often do real students Judge / Steer?
     allc = total["framing"] + total["judging"] + total["steering"] + total["other"]
