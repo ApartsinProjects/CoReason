@@ -1,6 +1,6 @@
 # CoReasoning
 
-### 📄 Read the paper: **[apartsinprojects.github.io/CoReason](https://apartsinprojects.github.io/CoReason/)**  ·  [Word (.docx)](docs/coreasoning.docx)  ·  [Markdown source](paper/coreasoning.md)
+### 📄 Read the paper: **[apartsinprojects.github.io/CoReason](https://apartsinprojects.github.io/CoReason/)**  ·  Word: [1-column](docs/coreasoning.docx) · [2-column](docs/coreasoning-2col.docx)  ·  [Markdown source](paper/coreasoning.md)
 
 ![CoReasoning hero](docs/assets/hero-gemini-coreasoning.png)
 
@@ -24,8 +24,8 @@ uncorrelated, ρ=−0.03 ns), the result replicates across grader backends, and 
 self-consistent. No learning-outcome claims are made; a human-rater validation study is prepared.
 
 - 📖 **Read it (HTML + KaTeX):** <https://apartsinprojects.github.io/CoReason/>
-- 📝 **Word:** [`docs/coreasoning.docx`](docs/coreasoning.docx) · **Source:** [`paper/coreasoning.md`](paper/coreasoning.md)
-- 📚 **Bibliography:** [`paper/references.bib`](paper/references.bib) (55 entries, validated)
+- 📝 **Word:** [`coreasoning.docx`](docs/coreasoning.docx) (1-column) · [`coreasoning-2col.docx`](docs/coreasoning-2col.docx) (arXiv-style two-column) · **Source:** [`paper/coreasoning.md`](paper/coreasoning.md)
+- 📚 **Bibliography:** [`paper/references.bib`](paper/references.bib) (66 entries, validated)
 - ✉️ **Submission package:** [`paper/SUBMISSION/`](paper/SUBMISSION/) (cover letter + anticipated reviewer response)
 
 ## The framework
@@ -41,9 +41,11 @@ productive struggle), and the model states five testable propositions about how 
 
 ## The instrument and CoReasoning Lab
 
-CoReasoning Lab is a **runnable open-source learning platform** that auto-generates ill-defined problems
-with seeded flaws, presents deliberately-imperfect AI output, runs judge-and-steer cycles, and scores
-the three skills with rubric-driven LLM evaluators.
+CoReasoning Lab is a **runnable, domain-general open-source learning platform** that auto-generates
+ill-defined problems with seeded flaws, presents deliberately-imperfect AI output, runs judge-and-steer
+cycles, and scores the three skills with rubric-driven LLM evaluators. An instructor names a subject and
+the engine builds the whole challenge; the released content spans **twelve disciplines** from algorithms
+to applied ethics (see the cross-disciplinary showcase in the paper's Appendix C).
 
 - **Full platform** (Node/Express + SQLite/Postgres, Knex migrations, Passport auth, Docker, Playwright
   e2e, a five-language content library) is on the [`staging`](../../tree/staging) branch:
