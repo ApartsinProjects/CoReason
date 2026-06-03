@@ -6,9 +6,13 @@
 ¹ Holon Institute of Technology  ·  ² Afeka College of Engineering
 {: .affil }
 
+<div class="abstract" markdown="1">
+
 ## Abstract
 
 Generative AI makes answers easy and understanding hard, and uncritical use invites cognitive offloading. Schools still measure *unaided* performance, yet the real task is to produce good work *with* AI: framing an ill-defined task, judging the output, and steering the model toward a better result. This ability is rarely assessed in its own right; where measured, it collapses into one "prompting" score that cannot diagnose *why* a learner's AI use succeeds or fails. We propose **CoReasoning**, a competency model factoring productive AI use into three assessable skills: **Framing** (specifying an ill-defined task before invoking AI), **Judging** (evaluating output for errors and unstated assumptions), and **Steering** (iteratively redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the skills in theory, state five testable propositions, and instantiate them in **CoReasoning Lab**, an open platform that presents flawed AI output and scores the three skills independently. Over simulated learners (generated and graded by different models), the skills dissociate: each tracks its own manipulated competence while flat in the others, and grades become correlated when one competence is shared across all three (convergent and discriminant validity), across grader backends from two providers. Human-rater agreement and outcomes are the next steps; we release the instrument, data, and protocol.
+
+</div>
 
 ## 1. Introduction
 

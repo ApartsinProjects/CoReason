@@ -69,7 +69,7 @@ blockquote{border-left:2px solid var(--accent);margin:1rem 0;padding:.2rem 1rem;
 hr{border:none;border-top:.5px solid var(--rule);margin:2rem 0}
 figure{margin:1.4rem auto;text-align:center;max-width:100%}
 img{max-width:100%;height:auto;display:block;margin:1.4rem auto .35rem;border:.5px solid var(--rule);border-radius:0}
-img+em,figcaption{display:block;font-size:9.5pt;color:var(--fg);text-align:justify;hyphens:auto;padding:0 .5rem}
+p:has(img)+p,figcaption{font-size:9.5pt;color:var(--fg-soft);text-align:justify;text-justify:inter-word;hyphens:auto;margin:.2rem 0 1rem;padding:0 .4rem}
 .references{font-size:9pt;line-height:1.45;color:var(--fg)}
 .references p{padding-left:1.4rem;text-indent:-1.4rem;margin:0 0 .45rem;text-align:left}
 .docxlinks{position:fixed;top:1rem;right:1rem;display:flex;flex-direction:column;gap:.4rem;align-items:flex-end;z-index:10}

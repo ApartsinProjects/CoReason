@@ -58,7 +58,7 @@ blockquote{border-left:2px solid var(--accent);margin:1rem 0;padding:.2rem 1rem;
 hr{border:none;border-top:.5px solid var(--rule);margin:2rem 0}
 figure{margin:1.4rem auto;text-align:center;max-width:100%}
 img{max-width:100%;height:auto;display:block;margin:1.4rem auto .35rem;border:.5px solid var(--rule);border-radius:0}
-img+em,figcaption{display:block;font-size:9.5pt;color:var(--fg);text-align:justify;hyphens:auto;padding:0 .5rem}
+p:has(img)+p,figcaption{font-size:9.5pt;color:var(--fg-soft);text-align:justify;text-justify:inter-word;hyphens:auto;margin:.2rem 0 1rem;padding:0 .4rem}
 .references{font-size:9pt;line-height:1.45;color:var(--fg)}
 .references p{padding-left:1.4rem;text-indent:-1.4rem;margin:0 0 .45rem;text-align:left}
 .docxlinks{position:fixed;top:1rem;right:1rem;display:flex;flex-direction:column;gap:.4rem;align-items:flex-end;z-index:10}
@@ -87,8 +87,10 @@ footer{margin-top:3rem;padding-top:.9rem;border-top:.5px solid var(--rule);font-
 <h1 id="framing-judging-steering-an-assessable-competency-model-for-teaching-students-to-reason-with-generative-ai">Framing, Judging, Steering: An Assessable Competency Model for Teaching Students to Reason With Generative AI</h1>
 <p class="authors"><strong>Alexander Apartsin</strong>¹ and <strong>Yehudit Aperstein</strong>²</p>
 <p class="affil">¹ Holon Institute of Technology  ·  ² Afeka College of Engineering</p>
+<div class="abstract">
 <h2 id="abstract">Abstract</h2>
 <p>Generative AI makes answers easy and understanding hard, and uncritical use invites cognitive offloading. Schools still measure <em>unaided</em> performance, yet the real task is to produce good work <em>with</em> AI: framing an ill-defined task, judging the output, and steering the model toward a better result. This ability is rarely assessed in its own right; where measured, it collapses into one "prompting" score that cannot diagnose <em>why</em> a learner's AI use succeeds or fails. We propose <strong>CoReasoning</strong>, a competency model factoring productive AI use into three assessable skills: <strong>Framing</strong> (specifying an ill-defined task before invoking AI), <strong>Judging</strong> (evaluating output for errors and unstated assumptions), and <strong>Steering</strong> (iteratively redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the skills in theory, state five testable propositions, and instantiate them in <strong>CoReasoning Lab</strong>, an open platform that presents flawed AI output and scores the three skills independently. Over simulated learners (generated and graded by different models), the skills dissociate: each tracks its own manipulated competence while flat in the others, and grades become correlated when one competence is shared across all three (convergent and discriminant validity), across grader backends from two providers. Human-rater agreement and outcomes are the next steps; we release the instrument, data, and protocol.</p>
+</div>
 <h2 id="1-introduction">1. Introduction</h2>
 <p>Most AI-in-education tools optimize for the wrong variable. They shorten the path from question to
 answer, when the answer was never the point of education. The cognitive work of specifying a problem,
