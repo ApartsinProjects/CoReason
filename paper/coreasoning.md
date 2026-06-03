@@ -10,7 +10,7 @@
 
 ## Abstract
 
-Generative AI makes answers easy and understanding hard, and uncritical use invites cognitive offloading. Schools still measure *unaided* performance, yet the real task is to produce good work *with* AI: framing an ill-defined task, judging the output, and steering the model toward a better result. This ability is rarely assessed in its own right; where measured, it collapses into one "prompting" score that cannot diagnose *why* a learner's AI use succeeds or fails. We propose **CoReasoning**, a competency model factoring productive AI use into three assessable skills: **Framing** (specifying an ill-defined task before invoking AI), **Judging** (evaluating output for errors and unstated assumptions), and **Steering** (iteratively redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the skills in theory, state five testable propositions, and instantiate them in **CoReasoning Lab**, an open platform that presents flawed AI output and scores the three skills independently. Over simulated learners (generated and graded by different models), the skills dissociate: each tracks its own manipulated competence while flat in the others, and grades become correlated when one competence is shared across all three (convergent and discriminant validity), across grader backends from two providers. Human-rater agreement and outcomes are the next steps; we release the instrument, data, and protocol.
+Generative AI makes answers easy and understanding hard, and uncritical use invites cognitive offloading. Schools still measure *unaided* performance, yet the real task is to produce good work *with* AI: framing an ill-defined task, judging the output, and steering the model toward a better result. This ability is rarely assessed in its own right; where measured, it collapses into one "prompting" score that cannot diagnose *why* AI use succeeds or fails. We propose **CoRe-3** (Co-Reasoning), a competency model factoring productive AI use into three assessable skills we abbreviate **FJS**: **Framing** (specifying an ill-defined task before invoking AI), **Judging** (evaluating output for errors and unstated assumptions), and **Steering** (iteratively redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the skills in theory, state five testable propositions, and instantiate them in **CoReasoningLab**, an open platform that presents flawed AI output and scores them independently. Over simulated learners (generated and graded by different models), the skills dissociate: each tracks its own manipulated competence while flat in the others, and grades become correlated when one competence is shared across all three (convergent and discriminant validity), across grader backends from two providers. Human-rater agreement and outcomes are next; we release the instrument, data, and protocol.
 
 </div>
 
@@ -65,11 +65,11 @@ a shrinking part of what competent work will require.
 
 *Figure 1 (schematic). As models absorb more of the execution, the part of a task a competent person
 must still own shifts from doing the work toward framing, judging, and steering it; the axes are
-conceptual, not quantitative. CoReasoning is a decomposition and assessment of that shifting
+conceptual, not quantitative. CoRe-3 is a decomposition and assessment of that shifting
 contribution.*
 
-We propose **CoReasoning**, a competency model that decomposes productive work with generative AI into
-three distinct skills, each independently assessable:
+We propose **CoRe-3** (Co-Reasoning), a competency model that decomposes productive work with generative AI into
+three distinct skills, each independently assessable and collectively abbreviated **FJS**:
 
 - **Framing.** Before invoking the AI, transform an ill-defined problem into a well-specified task:
   surface unstated assumptions, fix constraints and scope, and define what an adequate solution must
@@ -129,17 +129,17 @@ generative AI confirm that the field still lacks a scheme isolating distinct, in
 reasoning competencies (Gu & Ericson, 2025), even as syntheses document generative AI's mixed effects
 on critical and creative thinking (Li et al., 2026). A diagnostic competency model must therefore
 decompose the human-AI loop into the distinct operations that can each break, and must show that those
-operations are in fact separable in learners. That is the gap CoReasoning addresses.
+operations are in fact separable in learners. That is the gap CoRe-3 addresses.
 
-## 3. The CoReasoning framework
+## 3. The CoRe-3 framework
 
 ### 3.1 A monitor-control architecture with an upstream task-definition
 
-The three skills are not an arbitrary list; they instantiate a well-understood cognitive
+The three FJS skills are not an arbitrary list; they instantiate a well-understood cognitive
 architecture. Nelson and Narens (1990) describe metacognition as a two-level system: an object level
 (cognition itself) and a meta level (a dynamic model of the object level), linked by **monitoring**
 (information flowing from object to meta) and **control** (commands flowing from meta to object).
-In CoReasoning, the learner's meta level supervises an object level that is *external*, the AI's
+In CoRe-3, the learner's meta level supervises an object level that is *external*, the AI's
 generative process, rather than the learner's own cognition. This is a deliberate extension of the
 Nelson-Narens architecture from intrapersonal monitoring to what we term *exo-directed* monitoring and
 control, and it is the framework's central theoretical move: the same metacognitive machinery is turned
@@ -162,9 +162,9 @@ The Judge→Steer cycle is therefore a monitor→control loop seeded by a task d
 structural spine of the framework and the reason the three skills cohere rather than coexist by stipulation
 (Figure 2).
 
-![Figure 2. The CoReasoning architecture.](assets/coreasoning-architecture.svg)
+![Figure 2. The CoRe-3 architecture.](assets/coreasoning-architecture.svg)
 
-*Figure 2. The CoReasoning loop. An upstream task definition (Framing, a self-regulated-learning
+*Figure 2. The CoRe-3 loop. An upstream task definition (Framing, a self-regulated-learning
 forethought activity) sets the standards against which a metacognitive monitor-control cycle (Judging
 then Steering) supervises a fallible AI at the object level. Judging is the monitor's read-out;
 Steering is the controller's write.*
@@ -172,7 +172,7 @@ Steering is the controller's write.*
 ### 3.2 The temporal-separation claim (what makes the decomposition non-obvious)
 
 Existing frameworks treat "use the AI well" as one skill or, at most, pair "prompt" with "evaluate."
-CoReasoning's distinctive move is to separate two operations that prior models fuse: the
+CoRe-3's distinctive move is to separate two operations that prior models fuse: the
 *pre-generation* skill of structuring the task (Framing) and the *post-generation* skill of correcting
 the output (Steering). These are different cognitive acts at different points in time, with different
 error modes and different instructional remedies. A learner can frame impeccably and steer poorly
@@ -246,7 +246,7 @@ The framework casts the AI as a mediating cultural tool that extends the learner
 development (Vygotsky, 1978): the learner accomplishes with the model what they could not alone, while
 internalizing the Framing, Judging, and Steering moves for eventual independent use.
 
-**The pedagogical stance.** CoReasoning's rejection of speed-to-answer rests on the literature of
+**The pedagogical stance.** CoRe-3's rejection of speed-to-answer rests on the literature of
 productive struggle and desirable difficulties (Bjork & Bjork, 2011; Kapur, 2008): conditions that
 slow performance but deepen learning. The friction of specifying, evaluating, and correcting is not an
 obstacle to be engineered away but the very locus of learning, which is why the instructional design
@@ -280,17 +280,17 @@ signatures (for example, reduced post-task recall) documented in the cognitive-d
 
 ## 6. Relation to prior frameworks
 
-The constructs that compose CoReasoning are not individually new; what is new is their separation into
+The constructs that compose CoRe-3 are not individually new; what is new is their separation into
 three parallel, independently-assessable competencies anchored in a monitor-control architecture. We
 make the boundary explicit by confronting the nearest priors directly.
 
 **AI-fluency frameworks.** The closest practitioner framework is the 4D model of AI fluency (Dakan &
 Feller, 2025): Delegation, Description, Discernment, Diligence. Its Discernment maps cleanly onto
 Judging, but its Description bundles two operations we deliberately separate: crafting the initial
-specification and conducting the iterative back-and-forth. CoReasoning's contention is that these are
+specification and conducting the iterative back-and-forth. CoRe-3's contention is that these are
 distinct skills at distinct times, the pre-generation act of Framing and the post-generation act of
 Steering, with different error modes (a malformed task versus a mis-targeted correction) and different
-instructional remedies. CoReasoning also derives its skills from learning theory and an assessment
+instructional remedies. CoRe-3 also derives its skills from learning theory and an assessment
 rationale rather than from a fluency heuristic, and so yields rubrics and dissociation predictions
 that a checklist does not.
 
@@ -309,7 +309,7 @@ it. The most developed recent decomposition, an operationalization of prompt lit
 interpret, and refine sub-practices (Tour & Zadorozhnyy, 2025), is the closest competitor to our
 triad; but it bundles task specification and iterative refinement under "prompting" and does not treat
 the sub-practices as separately graded, dissociable competencies. This fusion of Framing and Steering
-into a single "prompting" skill is exactly the conflation CoReasoning rejects. Treating them
+into a single "prompting" skill is exactly the conflation CoRe-3 rejects. Treating them
 separately is not a cosmetic relabeling: it predicts, and our feasibility demonstration supports, that
 a simulated learner's model-assigned Framing and Steering grades can diverge.
 
@@ -323,19 +323,19 @@ with, an assessable-skill decomposition.
 (2020) and the UNESCO (2024) student framework define AI literacy primarily as understanding AI
 systems, their capabilities, limits, and ethics, rather than as executing tasks within a human-AI
 loop. They contain no Framing or Steering construct and only a diffuse notion of critical evaluation
-that partly overlaps Judging. CoReasoning is orthogonal: it specifies the task-execution competencies
+that partly overlaps Judging. CoRe-3 is orthogonal: it specifies the task-execution competencies
 these frameworks leave implicit.
 
 **Empirical accounts of AI-use modes.** Field studies describe how skilled users actually work with AI:
 the "Cyborg" mode of continuous push-back-and-validate (Randazzo et al., 2025) and the sharp
 skill-dependence of AI's value at the competence frontier (Dell'Acqua et al., 2023). These describe the
-behaviour; CoReasoning supplies the assessable skill decomposition that underlies it.
+behaviour; CoRe-3 supplies the assessable skill decomposition that underlies it.
 
 Table 1 makes the boundary explicit by mapping each nearest prior framework's constructs onto
 Framing, Judging, and Steering. The recurring pattern is that prior frameworks either (i) omit a
 construct, or (ii) *fuse* Framing and Steering into one "prompting/iteration" skill.
 
-**Table 1. Where prior frameworks place the three CoReasoning skills.**
+**Table 1. Where prior frameworks place the three FJS skills (Framing, Judging, Steering).**
 
 | Prior framework | Framing (pre-generation) | Judging | Steering (post-generation) |
 |---|---|---|---|
@@ -357,7 +357,7 @@ Judging, or Steering construct. The work closest to ours pairs AI-collaboration 
 metacognition (Sidra & Mason, 2025) and includes an AI-evaluation
 sub-construct that overlaps Judging; we differ in separating the pre-generation and post-generation
 control skills and in demonstrating their dissociation rather than positing correlated factors.
-CoReasoning is complementary to this measurement program: it supplies the specific, theory-derived
+CoRe-3 is complementary to this measurement program: it supplies the specific, theory-derived
 decomposition that a future validated instrument could operationalize. Rubric-based LLM grading studies
 report high agreement with human raters (intraclass correlation up to 0.97) yet systematic divergence on
 subjective criteria (Yavuz et al., 2025); the multitrait-multimethod design we use across three grader
@@ -378,28 +378,28 @@ build on this strand by placing Framing in a measured loop with Judging and Stee
 judgement*, has been argued to be the core human capability for the generative-AI era (Bearman et al.,
 2024), and students are observed to make continuous in-the-loop accept-and-reject judgements while
 working with AI on assessment tasks (Walton et al., 2025). Our Judging skill operationalizes evaluative
-judgement specifically for AI output; CoReasoning then departs from a unified-judgement account by
+judgement specifically for AI output; CoRe-3 then departs from a unified-judgement account by
 separating it from the generative acts of Framing and Steering, treating evaluation as one of three
 independently-measurable skills rather than a single overarching disposition. Two findings reinforce
 that Judging is a separable, demanding construct: critical evaluation is the single highest-load
 activity in AI-assisted writing (Yao & Fan, 2025), and users default to uncritically accepting AI
 output absent intervention (Wingerter et al., 2025). Among named competency frameworks, the AI Quotient
-enumerates eight broad collaboration dimensions (Ganuthula & Balaraman, 2025); CoReasoning instead
+enumerates eight broad collaboration dimensions (Ganuthula & Balaraman, 2025); CoRe-3 instead
 collapses to three minimal, independently-assessable skills and, crucially, splits the single
 prompt-engineering dimension that such frameworks leave fused into a pre-generation Framing skill and a
 post-generation Steering skill. Frameworks that partition coursework by assessment mode rather than by
 cognitive skill (Elshall & Badir, 2025) are orthogonal and complementary.
 
-**One-line novelty.** CoReasoning is, to our knowledge, the first theoretically-grounded decomposition
+**One-line novelty.** CoRe-3 is, to our knowledge, the first theoretically-grounded decomposition
 of productive generative-AI use into three independently-assessable competencies that separates
 pre-generation Framing from post-generation Steering, with feasibility evidence that the three skills
 dissociate. The defensible claim is not that any single skill is new, but that the *separation* is
 both theoretically motivated (monitor-control plus an upstream task definition) and empirically
 consequential (the skills can be measured apart).
 
-## 7. The CoReasoning Lab system
+## 7. The CoReasoningLab system
 
-The framework is instantiated in *CoReasoning Lab*, a runnable open-source web platform, which we
+The framework is instantiated in *CoReasoningLab*, a runnable open-source web platform, which we
 describe here so that the abstract skills map onto a concrete learner experience. The platform is a
 Node/Express application with role-based access (student, instructor, administrator), a challenge
 database, practice and assessment modes, multiple-choice and open-ended response formats per phase, and
@@ -467,7 +467,7 @@ apprenticeship: rather than observing an expert, the learner is given a fallible
 This connects the instrument to the instructional literature on learning from errors and erroneous
 examples, in which studying and correcting flawed solutions improves error detection and conceptual
 understanding relative to studying only correct ones (Große & Renkl, 2007; Durkin & Rittle-Johnson,
-2012); CoReasoning generalizes that paradigm from static worked examples to an interactive,
+2012); CoRe-3 generalizes that paradigm from static worked examples to an interactive,
 learner-driven repair loop over AI output.
 
 **The deliberately-imperfect output.** After the learner frames the task, the model produces a
@@ -487,7 +487,7 @@ and falsely flagged); and Steering is evaluated against the trajectory of the ou
 rewarding corrections that demonstrably move the solution toward correctness. This is why the skills
 are measured *apart*: each evaluator interrogates a different referent.
 
-The instrument used in this paper is the scoring engine of the CoReasoning Lab platform, a library
+The instrument used in this paper is the scoring engine of the CoReasoningLab platform, a library
 of sixteen prompts spanning challenge construction, AI generation, and evaluation (Figure A3 traces the full
 generation-and-assessment pipeline). The released library
 carries the platform's evaluation logic verbatim, the same rubrics, criteria, and system prompts as the
@@ -654,7 +654,7 @@ A mature account must confront four tensions rather than paper over them.
 *Offloading versus productive struggle.* Evidence that AI use can depress critical thinking through
 cognitive offloading (Gerlich, 2025; Kosmyna et al., 2025) appears to threaten any framework that
 puts learners in close partnership with AI. The resolution is in the zone-of-proximal-development
-stance: CoReasoning treats the AI as a mediating tool whose purpose is the learner's eventual
+stance: CoRe-3 treats the AI as a mediating tool whose purpose is the learner's eventual
 *independence*, and it offloads execution while deliberately retaining the cognitive work of
 specifying, evaluating, and correcting. The framework is, in this sense, the designed inverse of
 metacognitive laziness (Proposition P5). Whether exercising the loop actually reduces the offloading
@@ -753,7 +753,7 @@ efficacy study of learning outcomes is the next stage of the program.
 The task of education in the age of generative AI is not to produce faster answer-getters but to
 cultivate critical collaborators: learners who can specify a problem worth solving, judge what a
 machine returns, and steer it toward something better. That capability is teachable only if it can be
-named and assessed. CoReasoning offers a decomposition of it into three theoretically-grounded,
+named and assessed. CoRe-3 offers a decomposition of it into three theoretically-grounded,
 independently-assessable skills, Framing, Judging, and Steering, separates the pre-generation skill
 from the post-generation one in a way prior frameworks do not, and shows that the three can be
 measured apart. Because the decomposition tracks what a person must contribute rather than what today's
@@ -902,7 +902,7 @@ UNESCO (2024). AI Competency Framework for Students. *UNESCO*.
 
 ## Appendix A. System walkthrough
 
-Figure A1 shows a single challenge run in CoReasoning Lab, illustrating how the three skills appear as
+Figure A1 shows a single challenge run in CoReasoningLab, illustrating how the three skills appear as
 distinct, separately-scored stages of one continuous task. In Phase 1 the learner refines an
 ill-defined problem and receives a Framing grade. The system then produces a deliberately flawed
 solution. In Phase 2 the learner judges that output (flagging real issues while avoiding distractors)
@@ -910,7 +910,7 @@ and steers the AI with a targeted correction; the output converges across cycles
 returns three independent grades with per-skill diagnostic feedback, the interface-level expression of
 the framework's central claim that productive AI use is not one skill but three.
 
-![Figure A1. A CoReasoning Lab challenge run.](assets/system-challenge-run.png)
+![Figure A1. A CoReasoningLab challenge run.](assets/system-challenge-run.png)
 
 *Figure A1. Screenshot of the running platform: a learner's challenge run at the Framing phase. The
 engine has generated an ill-defined problem (here, an AI hiring-screening task), and the learner
@@ -925,14 +925,14 @@ ill-defined problem and the three per-skill rubrics) and read course analytics t
 distributions down by rubric and by student. In every view the three skills remain distinct columns,
 which is the design commitment the framework makes visible.
 
-![Figure A2. CoReasoning Lab instructor course analytics.](assets/system-instructor-analytics.png)
+![Figure A2. CoReasoningLab instructor course analytics.](assets/system-instructor-analytics.png)
 
 *Figure A2. Screenshot of the running platform: the instructor course-analytics view. Grade
 distribution is broken out into separate Framing, Judging, and Steering panels, and the per-student
 results list the three skills as distinct columns, the interface-level expression of the framework's
 central claim that productive AI use is not one skill but three.*
 
-![Figure A3. Auto-generation and assessment pipeline of the CoReasoning Lab engine.](assets/system-pipeline.svg)
+![Figure A3. Auto-generation and assessment pipeline of the CoReasoningLab engine.](assets/system-pipeline.svg)
 
 *Figure A3. The sixteen-prompt engine in two phases. In authoring, the instructor names a subject and the
 engine generates the ill-defined problem (prompt 01), three per-skill rubrics and a gold framing (02, 14),
@@ -995,7 +995,7 @@ The framework and the platform are domain-general. An ill-defined problem with s
 per-skill rubrics, and a deliberately-imperfect AI solution can be generated for any subject, because
 each is produced by a prompt that an educator parameterizes with a course and topic. The released
 platform ships challenge content across twelve disciplines (Table C1) spanning STEM, the social
-sciences, the humanities, law, and professional and education fields. CoReasoning Lab is in this sense
+sciences, the humanities, law, and professional and education fields. CoReasoningLab is in this sense
 not a computing-education tool but a generic instrument for any discipline in which a learner must
 specify an ill-defined task, judge a fallible solution, and steer it toward a better one.
 
