@@ -14,11 +14,11 @@ NODE_PATH="$SKILL/node_modules" node "$SKILL/scripts/katex_to_mathml.js" --input
 
 # 1-column (single-column journal) version -> coreasoning.docx
 python "$SKILL/scripts/convert_to_docx.py"      --input _mathml.html   --output _converted.docx --profile camera-ready-generic
-python "$SKILL/scripts/apply_academic_style.py" --input _converted.docx --output coreasoning.docx --profile camera-ready-generic
+python "$SKILL/scripts/apply_academic_style.py" --input _converted.docx --output coreasoning.docx --profile camera-ready-generic --font-family Georgia
 
 # 2-column (arXiv-style: full-width title/abstract, two-column body) version -> coreasoning-2col.docx
 python "$SKILL/scripts/convert_to_docx.py"      --input _mathml.html    --output _converted2.docx --profile two-column
-python "$SKILL/scripts/apply_academic_style.py" --input _converted2.docx --output coreasoning-2col.docx --profile two-column
+python "$SKILL/scripts/apply_academic_style.py" --input _converted2.docx --output coreasoning-2col.docx --profile two-column --font-family Georgia
 
 rm -f _mathml.html _converted.docx _converted2.docx
 echo "Built docs/coreasoning.docx (1-column) + docs/coreasoning-2col.docx (2-column); buttons stripped, SVG figures embedded, native Word equations"
