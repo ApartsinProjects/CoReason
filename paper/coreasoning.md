@@ -89,18 +89,18 @@ three distinct skills, each independently assessable and collectively abbreviate
    corrective skill (Steering) that prior frameworks fuse.
 2. **A theoretical grounding** that maps each skill to established theory (metacognitive monitoring and
    control, self-regulated learning, epistemic vigilance and critical thinking, productive struggle)
-   under a single unifying monitor-control architecture, so the decomposition is principled rather
-   than ad hoc.
+   under a single unifying monitor-control architecture, so each skill carries an explicit theoretical
+   warrant.
 3. **Five testable propositions** about how the skills relate (framing gates the loop; judging gates
    steering; the skills dissociate; judging transfers less than framing; the model inverts cognitive
-   offloading), which is what turns a taxonomy into a conceptual contribution that proposes new
-   relationships among constructs (Gilson & Goldberg, 2015; Jaakkola, 2020).
+   offloading), proposing new relationships among the constructs (Gilson & Goldberg, 2015;
+   Jaakkola, 2020).
 4. **A precise novelty positioning** against the nearest prior frameworks (AI-fluency, metacognitive-
-   demands, prompt-literacy, and AI-literacy models), stating exactly what is and is not new.
-5. **A proof-of-concept instrument and feasibility demonstration** showing that the three skills can be
+   demands, prompt-literacy, and AI-literacy models), delineating what the model contributes beyond each.
+5. **An instrument and feasibility demonstration** showing that the three skills can be
    scored automatically, with a multitrait-multimethod validity analysis (three grader backends across
    two vendors; shared- versus independent-competence populations) giving convergent and discriminant
-   evidence that the skills are separately measurable, not one relabeled "prompting" skill.
+   evidence that the three skills are separately measurable and genuinely distinct.
 6. **A reproducible, released artifact** (the assessment instrument and the experiment data) together
    with a fully prepared human-rater validation protocol for the community to run.
 
@@ -310,7 +310,7 @@ interpret, and refine sub-practices (Tour & Zadorozhnyy, 2025), is the closest c
 triad; but it bundles task specification and iterative refinement under "prompting" and does not treat
 the sub-practices as separately graded, dissociable competencies. This fusion of Framing and Steering
 into a single "prompting" skill is exactly the conflation CoRe-3 rejects. Treating them
-separately is not a cosmetic relabeling: it predicts, and our feasibility demonstration supports, that
+separately is consequential: it predicts, and our feasibility demonstration supports, that
 a simulated learner's model-assigned Framing and Steering grades can diverge.
 
 **Metric frameworks for human-AI cognition.** A distinct 2026 line proposes named multi-metric schemes
@@ -393,9 +393,9 @@ cognitive skill (Elshall & Badir, 2025) are orthogonal and complementary.
 **One-line novelty.** CoRe-3 is, to our knowledge, the first theoretically-grounded decomposition
 of productive generative-AI use into three independently-assessable competencies that separates
 pre-generation Framing from post-generation Steering, with feasibility evidence that the three skills
-dissociate. The defensible claim is not that any single skill is new, but that the *separation* is
-both theoretically motivated (monitor-control plus an upstream task definition) and empirically
-consequential (the skills can be measured apart).
+dissociate. The contribution is the *separation* itself, which is both theoretically motivated
+(monitor-control plus an upstream task definition) and empirically consequential (the skills can be
+measured apart).
 
 ## 7. The CoReasoningLab system
 
@@ -451,7 +451,7 @@ columns, is the framework's central claim made operational: a learner sees, and 
 different things they did, not one undifferentiated "AI use." The remainder of this section describes
 the instrument that produces those scores.
 
-## 7.1 Operationalization: a proof-of-concept instrument
+## 7.1 Operationalization: the assessment instrument
 
 To show that the three constructs are not only conceptually distinct but practically measurable, we
 describe a working instrument that scores each skill from a learner's transcript. The instrument is a
@@ -732,7 +732,7 @@ to its monitor-control grounding.
 
 ## 11. Scope and boundary conditions
 
-This is a conceptual contribution with a proof-of-concept instrument, and three boundary conditions
+This is a conceptual contribution with a working instrument, and three boundary conditions
 define where the present evidence applies. The feasibility demonstration uses simulated learners of
 controlled competence: they establish that the grader carries signal and that the skills separate, and
 they set up the human-learner studies of Section 10. To keep generation and grading independent,
