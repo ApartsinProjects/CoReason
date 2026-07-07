@@ -364,7 +364,7 @@ access (student, instructor, administrator), a challenge database, practice and 
 multiple-choice and open-ended response formats, and a five-language content library (English, Hebrew,
 German, Spanish, French). Its full source, the web application, the database schema, the content
 library, and the *scoring engine* of 16 prompts (Section 7.1), is released, alongside a
-pedagogical-foundations document; the Supplementary Material walks through the running system. All
+pedagogical-foundations document; the Additional file 1 walks through the running system. All
 challenges evaluated here are English-language (Section 9.2), and the quantitative results come from the
 scoring engine over controlled inputs, not production logs.
 
@@ -374,7 +374,7 @@ released artifact lets others add their own. The platform is therefore **domain-
 computing-education tool but a generic instrument for any discipline in which a learner must specify an
 ill-defined task, judge a fallible solution, and steer it toward a better one. Its released content
 already spans **12 disciplines** across STEM, the social sciences, the humanities, law, and
-professional fields (Supplementary Material). An educator authors a challenge by naming a subject; the
+professional fields (Additional file 1). An educator authors a challenge by naming a subject; the
 system generates the ill-defined problem, the three per-skill rubrics, and the seeded-flaw solution.
 
 **Authoring flow (instructor).** An instructor defines a challenge by choosing a course and subject
@@ -383,7 +383,7 @@ framing, and the seeded-flaw solution that the learner will critique (Section 7.
 organized into courses and can be assigned to cohorts.
 
 **Learner flow (student).** A student enters a challenge run with two phases, walked through step by
-step in the Supplementary Material. In Phase 1 (Framing) the student refines the raw ill-defined problem,
+step in the Additional file 1. In Phase 1 (Framing) the student refines the raw ill-defined problem,
 by writing refinement sections (assumptions, constraints, clarifications, success metrics) or selecting
 them in multiple-choice mode, and receives rubric-driven Framing feedback and a grade. The system then
 produces a plausible but deliberately flawed solution. In Phase 2 the student repeatedly **judges** the
@@ -557,7 +557,7 @@ intervention study, students' *behavioral* regulation of LLM use predicts effect
 self-rated AI expertise does not (Clerc et al., 2026), so the skill of working with AI is distinct from
 a general, self-assessed competence.
 
-**Robustness and ablations.** Three checks, reported in full in the Supplementary Material, support the result. First, the grader is **92% self-consistent** on repeat, a precision check, not accuracy against humans. Second, the dissociation replicates across three grader backends spanning two providers (gpt-4o, gpt-4o-mini, and Meta's llama-3.3-70b; diagonal-to-off-diagonal ratio 39), so it does not hinge on one model snapshot. Third, a ground-truth ablation shows Framing and Steering are scored by rubric-guided model judgment while Judging, as instrumented, tracks the seeded answer key, which locates the Judging score to settings with known ground truth (Section 9.3 specifies the open-ended variant).
+**Robustness and ablations.** Three checks, reported in full in the Additional file 1, support the result. First, the grader is **92% self-consistent** on repeat, a precision check, not accuracy against humans. Second, the dissociation replicates across three grader backends spanning two providers (gpt-4o, gpt-4o-mini, and Meta's llama-3.3-70b; diagonal-to-off-diagonal ratio 39), so it does not hinge on one model snapshot. Third, a ground-truth ablation shows Framing and Steering are scored by rubric-guided model judgment while Judging, as instrumented, tracks the seeded answer key, which locates the Judging score to settings with known ground truth (Section 9.3 specifies the open-ended variant).
 
 **Scope.** These results establish feasibility, with four qualifications. Judging's clean diagonal
 (+2.00, zero cross-effects) is a controlled check by design, so the independent separation evidence is
@@ -723,6 +723,10 @@ demonstration over model-generated simulated learners and involves no human part
 **Use of generative AI.** Generative AI is the assessment instrument evaluated in this paper (Section 7.1); no generative-AI tool was used to author the scholarly content of the manuscript.
 
 **Acknowledgements.** Not applicable.
+
+## Additional files
+
+**Additional file 1** — File format: DOCX (.docx). Title: Additional file 1, supplementary material. Description: a system walkthrough (screenshots of the running platform and the auto-generation-and-assessment pipeline), robustness and ablations (grader reliability, cross-vendor replication, and the ground-truth ablation), and a cross-disciplinary challenge showcase across twelve disciplines.
 
 ## References
 <div class="references" markdown="1">
