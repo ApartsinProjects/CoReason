@@ -692,6 +692,9 @@ assessment and instruction the moment demands.
 the experiment data, and the prepared human-rater validation protocol are released in a public
 repository (URL withheld to preserve anonymous review; available to the editors on request).
 
+**Code availability.** The scoring-engine source code (the 16-prompt instrument) is released in the same
+public repository as the data (URL withheld to preserve anonymous review; available to the editors on request).
+
 **Competing interests.** The authors declare that they have no competing interests.
 
 **Funding.** The authors received no specific grant from any funding agency in the public, commercial,
