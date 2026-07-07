@@ -26,17 +26,17 @@ $PY paper/build_html.py --src paper/coreasoning-blinded.md  --out docs/_blinded.
 
 # ---- DOCX via html2doc (KaTeX->MathML +SVG raster, ->OMML, ->academic style) ----
 cd "$ROOT/docs"
-conv () { # $1 = input html, $2 = output docx, $3 = profile (default camera-ready-generic)
-  P="${3:-camera-ready-generic}"
+conv () { # $1 = input html, $2 = output docx, $3 = profile (default camera-ready-generic), $4 = font (default Georgia)
+  P="${3:-camera-ready-generic}"; F="${4:-Georgia}"
   NODE_PATH="$SKILL/node_modules" node "$SKILL/scripts/katex_to_mathml.js" --input "$1" --output _m.html
   $PY "$SKILL/scripts/convert_to_docx.py"      --input _m.html --output _c.docx --profile "$P"
-  $PY "$SKILL/scripts/apply_academic_style.py" --input _c.docx --output "$2" --profile "$P" --font-family Georgia
+  $PY "$SKILL/scripts/apply_academic_style.py" --input _c.docx --output "$2" --profile "$P" --font-family "$F"
   rm -f _m.html _c.docx
 }
 conv _ms.html           coreasoning.docx
-# the anonymized manuscript is the submission file: ETHE quick-points require double
-# spacing + line/page numbering -> review-manuscript profile
-conv _blinded.html      coreasoning-blinded.docx review-manuscript
+# the anonymized manuscript is the submission file: ETHE review format -> review-manuscript
+# profile (Times New Roman 12 pt, double-spaced, line + page numbered).
+conv _blinded.html      coreasoning-blinded.docx review-manuscript "Times New Roman"
 conv supplementary.html supplementary.docx
 # The cover letter is a letter, not a paper: the academic styler would treat it as
 # all-front-matter. Convert the Markdown straight to a clean Word doc via pandoc.
