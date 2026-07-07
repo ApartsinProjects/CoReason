@@ -18,5 +18,5 @@ Thank you for considering our submission. We look forward to the reviewers' feed
 
 Sincerely,
 
-**Alexander Apartsin** (corresponding author), Holon Institute of Technology
-**Yehudit Aperstein**, Afeka College of Engineering
+**Alexander Apartsin**, Holon Institute of Technology
+**Dr. Yehudit Aperstein** (corresponding author), Afeka College of Engineering
