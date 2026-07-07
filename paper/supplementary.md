@@ -1,8 +1,8 @@
 # Supplementary Material
 
-*Supplementary Material for* "Framing, Judging, Steering: An Assessable Competency Model for Teaching University Students to Reason With Generative AI."
+*Supplementary Material for* "Beyond Prompting: Framing, Judging, and Steering as Assessable Competencies for Reasoning With Generative AI in Higher Education."
 
-## Appendix A. System walkthrough
+## 1. System walkthrough
 
 Figure A1 shows a single challenge run in CoReasoningLab, illustrating how the three skills appear as
 distinct, separately-scored stages of one continuous task. In Phase 1 the learner refines an
@@ -45,7 +45,7 @@ single grader prompt (11) then assigns each skill its own grade, and the three f
 and course analytics. Because the three evaluation prompts interrogate different referents, the grades are
 produced independently rather than as one global impression.*
 
-## Appendix B. Robustness and ablations
+## 2. Robustness and ablations
 
 **Reliability.** To check that the grades are not noise, we hold four learner transcripts fixed and
 re-run the evaluation-and-grading prompts five times each, an independent sample each time at the
@@ -91,7 +91,7 @@ with a known answer key. This both explains Judging's by-construction +2.00 and 
 score precisely: it applies where ground truth is known, and open-ended judging without a key is the
 distinct instrumentation Section 9.3 specifies.
 
-## Appendix C. Cross-disciplinary challenge showcase
+## 3. Cross-disciplinary challenge showcase
 
 The framework and the platform are domain-general. An ill-defined problem with seeded flaws, three
 per-skill rubrics, and a deliberately-imperfect AI solution can be generated for any subject, because

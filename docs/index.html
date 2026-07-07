@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoRe-3: A Competency Model for Productive Work with Generative AI</title>
+<title>CoRe-3: A Competency Model for Reasoning With Generative AI in Higher Education</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
   integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
@@ -12,8 +12,6 @@
   integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
   onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}]});"></script>
 <style>
-/* Typography modeled on a TMLR/JMLR/NeurIPS camera-ready: serif body, justified,
-   white background. Font stack and sizes matched to the SynSmith paper layout. */
 :root{
   --fg:#111418;--fg-soft:#2c3138;--muted:#5a626c;--accent:#14385c;
   --bg:#ffffff;--bg-soft:#fafafa;--rule:#d1d4d8;--line:#d1d4d8;
@@ -68,6 +66,7 @@ p:has(img)+p,figcaption{font-size:9.5pt;color:var(--fg-soft);text-align:justify;
   border:1px solid var(--accent);color:var(--accent);background:var(--bg);text-decoration:none;
   border-radius:3px;letter-spacing:.01em;white-space:nowrap;line-height:1;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .docxlink:hover{background:var(--accent);color:var(--bg);text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.backlink{display:inline-block;margin:0 0 1.5rem;font-size:10pt}
 footer{margin-top:3rem;padding-top:.9rem;border-top:.5px solid var(--rule);font-size:9pt;color:var(--muted);text-align:center;font-family:var(--font-body)}
 @media print{
   .docxlinks{display:none}
@@ -83,19 +82,23 @@ footer{margin-top:3rem;padding-top:.9rem;border-top:.5px solid var(--rule);font-
 </head>
 <body>
 <div class="docxlinks">
-<a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx (1-column)</a>
-<a class="docxlink" href="coreasoning-2col.docx" download>&#8595; Download .docx (2-column)</a>
+<a class="docxlink" href="coreasoning.docx" download>&#8595; Manuscript (.docx)</a>
+<a class="docxlink" href="coreasoning-blinded.docx" download>&#8595; Anonymized manuscript (.docx)</a>
+<a class="docxlink" href="supplementary.docx" download>&#8595; Supplementary Material (.docx)</a>
+<a class="docxlink" href="cover-letter.html">&#9993; Cover letter</a>
+<a class="docxlink" href="cover-letter.docx" download>&#8595; Cover letter (.docx)</a>
 </div>
-<h1 id="framing-judging-steering-an-assessable-competency-model-for-teaching-students-to-reason-with-generative-ai">Framing, Judging, Steering: An Assessable Competency Model for Teaching Students to Reason With Generative AI</h1>
+<h1 id="beyond-prompting-framing-judging-and-steering-as-assessable-competencies-for-reasoning-with-generative-ai-in-higher-education">Beyond Prompting: Framing, Judging, and Steering as Assessable Competencies for Reasoning With Generative AI in Higher Education</h1>
 <p class="authors"><strong>Alexander Apartsin</strong>¹ and <strong>Yehudit Aperstein</strong>²</p>
 <p class="affil">¹ Holon Institute of Technology  ·  ² Afeka College of Engineering</p>
 <div class="abstract">
 <h2 id="abstract">Abstract</h2>
-<p>Generative AI makes answers easy and understanding hard, and uncritical use invites cognitive offloading. Schools still measure <em>unaided</em> performance, yet the real task is to produce good work <em>with</em> AI: framing an ill-defined task, judging the output, and steering the model toward a better result. This ability is rarely assessed in its own right; where measured, it collapses into one "prompting" score that cannot diagnose <em>why</em> AI use succeeds or fails. We propose <strong>CoRe-3</strong> (Co-Reasoning), a competency model factoring productive AI use into three assessable skills we abbreviate <strong>FJS</strong>: <strong>Framing</strong> (specifying an ill-defined task before invoking AI), <strong>Judging</strong> (evaluating output for errors and unstated assumptions), and <strong>Steering</strong> (iteratively redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the skills in theory, state five testable propositions, and instantiate them in <strong>CoReasoningLab</strong>, an open platform that presents flawed AI output and scores them independently. Over simulated learners (generated and graded by different models), the skills dissociate: each tracks its own manipulated competence while staying flat in the others, and grades become correlated when one competence is shared across all three (convergent and discriminant validity), across grader backends from two providers. Human-rater agreement and outcomes are next; we release the instrument, data, and protocol.</p>
+<p>Generative AI makes answers cheap and understanding scarce: a university student can now produce fluent work without doing the thinking a degree is meant to develop. The competency that matters is therefore no longer solving a problem unaided, but working well with a fallible machine, framing an ill-defined task, judging what the model returns, and steering it toward something better. Yet this ability is rarely assessed in its own right, and where it is measured it collapses into a single "prompting" score that cannot say <em>why</em> a student's AI use succeeded or failed. We propose CoRe-3 (Co-Reasoning), a competency model that factors productive AI use into three assessable skills, which we abbreviate FJS: Framing (specifying an ill-defined task before invoking AI), Judging (evaluating the output for errors and unstated assumptions), and Steering (iteratively redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the three skills in metacognition and self-regulated learning theory, state five testable propositions, and instantiate them in an open web platform that presents deliberately flawed AI output and scores each skill independently. Over simulated learners of controlled competence, generated by one model and graded by another, the three grades dissociate: each tracks its own manipulated skill while staying flat in the others, and they become correlated only when a single ability is shared across all three. This convergent-and-discriminant pattern, the signature of a valid measure, replicates across grader backends from two vendors. The paper contributes a theoretically grounded, higher-education-ready decomposition of productive AI use, a feasibility demonstration that the three skills can be scored automatically, and a released instrument, dataset, and prepared human-rater protocol. Human-rater agreement and learning outcomes are the next steps.</p>
 </div>
+<p><strong>Keywords:</strong> generative AI; AI literacy; competency assessment; metacognition; self-regulated learning; higher education</p>
 <h2 id="1-introduction">1. Introduction</h2>
-<p>Most AI-in-education tools optimize for the wrong variable. They shorten the path from question to
-answer, when the answer was never the point of education. The cognitive work of specifying a problem,
+<p>Most tools bringing generative AI into higher education optimize for the wrong variable. They shorten the path from question to
+answer, when the answer was never the point of a university education. The cognitive work of specifying a problem,
 evaluating a candidate solution, and improving it is where learning happens; when that work is
 delegated wholesale to a machine, the learner walks away with a correct artifact and an unchanged mind.
 The educational opportunity of generative AI is therefore not to deliver answers faster, but to make
@@ -127,14 +130,13 @@ can often tell us <em>that</em> a learner's AI use is unproductive but not <em>w
 task badly, failed to detect the flaws in the output, or knew the flaws but could not correct them.
 These are different failures with different remedies, and a single "prompting" score conflates them.</p>
 <p>This trajectory is not transient, and that is what raises the stakes for assessment. As models absorb
-more of the execution, the human contribution does not disappear; it concentrates in the operations a
-system cannot perform on its own behalf: choosing which problem is worth solving and specifying it,
-judging whether a fluent output is actually right, and redirecting the model when it is not. The field
-evidence that AI's value is conditional on the user's skill (Dell'Acqua et al., 2023; Vaccaro et al.,
-2024) implies that this conditioning tightens rather than loosens as systems improve, so the durable,
-assessable human skill shifts from executing a task to framing, judging, and steering it (Acar, 2023;
-Denny et al., 2024) (Figure 1). An assessment that still measures unaided execution therefore measures
-a shrinking part of what competent work will require.</p>
+more of the execution, the human contribution concentrates in the operations a system cannot perform on
+its own behalf: specifying which problem is worth solving, judging whether a fluent output is right, and
+redirecting the model when it is not. Field evidence that AI's value is conditional on the user's skill
+(Dell'Acqua et al., 2023; Vaccaro et al., 2024) implies this conditioning tightens as systems improve,
+so the durable, assessable skill shifts from executing a task to framing, judging, and steering it
+(Acar, 2023; Denny et al., 2024; see Figure 1). An assessment that still measures unaided execution
+therefore measures a shrinking part of what competent work will require.</p>
 <p><img alt="Figure 1. As model capability rises, the human contribution concentrates in Framing, Judging, and Steering." src="assets/forward-thesis.svg" /></p>
 <p><em>Figure 1 (schematic). As models absorb more of the execution, the part of a task a competent person
 must still own shifts from doing the work toward framing, judging, and steering it; the axes are
@@ -179,7 +181,7 @@ three distinct skills, each independently assessable and collectively abbreviate
 <p>The empirical material is a feasibility demonstration of <em>construct separability and measurability</em>;
 the efficacy study that tests learning outcomes is the next stage of the program (Section 9.3).</p>
 <h2 id="2-the-problem-with-current-ai-literacy-assessment">2. The problem with current AI-literacy assessment</h2>
-<p>Existing instruments for assessing how students work with AI are not wrong so much as
+<p>Existing instruments for assessing how university students work with AI are not wrong so much as
 under-resolved. Knowledge-oriented frameworks such as Long and Magerko (2020) and the UNESCO (2024)
 student competency framework define AI literacy chiefly as <em>understanding AI systems</em>: what AI is,
 what it can and cannot do, how it works, and how it should be governed. These are necessary, but they
@@ -232,7 +234,7 @@ structural spine of the framework and the reason the three skills cohere rather 
 forethought activity) sets the standards against which a metacognitive monitor-control cycle (Judging
 then Steering) supervises a fallible AI at the object level. Judging is the monitor's read-out;
 Steering is the controller's write.</em></p>
-<h3 id="32-the-temporal-separation-claim-what-makes-the-decomposition-non-obvious">3.2 The temporal-separation claim (what makes the decomposition non-obvious)</h3>
+<h3 id="32-the-temporal-separation-claim">3.2 The temporal-separation claim</h3>
 <p>Existing frameworks treat "use the AI well" as one skill or, at most, pair "prompt" with "evaluate."
 CoRe-3's distinctive move is to separate two operations that prior models fuse: the
 <em>pre-generation</em> skill of structuring the task (Framing) and the <em>post-generation</em> skill of correcting
@@ -332,48 +334,26 @@ signatures (for example, reduced post-task recall) documented in the cognitive-d
 <h2 id="6-relation-to-prior-frameworks">6. Relation to prior frameworks</h2>
 <p>The constructs that compose CoRe-3 are not individually new; what is new is their separation into
 three parallel, independently-assessable competencies anchored in a monitor-control architecture. We
-make the boundary explicit by confronting the nearest priors directly.</p>
-<p><strong>AI-fluency frameworks.</strong> The closest practitioner framework is the 4D model of AI fluency (Dakan &amp;
-Feller, 2025): Delegation, Description, Discernment, Diligence. Its Discernment maps cleanly onto
-Judging, but its Description bundles two operations we deliberately separate: crafting the initial
-specification and conducting the iterative back-and-forth. CoRe-3's contention is that these are
-distinct skills at distinct times, the pre-generation act of Framing and the post-generation act of
-Steering, with different error modes (a malformed task versus a mis-targeted correction) and different
-instructional remedies. CoRe-3 also derives its skills from learning theory and an assessment
-rationale rather than from a fluency heuristic, and so yields rubrics and dissociation predictions
-that a checklist does not.</p>
-<p><strong>Metacognitive analyses of generative AI.</strong> The strongest construct-level neighbour is Tankelevitch
-et al. (2024), who analyse generative-AI use through the lens of metacognitive demands, naming
-prompting, output evaluation, and workflow iteration as sites of metacognitive monitoring and control.
-We share the metacognitive foundation but differ in goal: their contribution is a demands analysis (a
-cognitive-load lens that explains why GenAI is hard to use well), whereas ours is an assessable
-competency model with explicit rubrics, propositions, and feasibility evidence that the components
-dissociate. The two are complementary: their analysis motivates why each of our skills is cognitively
-demanding; our framework makes each one measurable.</p>
-<p><strong>Prompt-literacy frameworks.</strong> Prompt-literacy models such as CLEAR (Lo, 2023) and the broader
-prompt-literacy literature define competence as constructing a precise prompt and iteratively refining
-it. The most developed recent decomposition, an operationalization of prompt literacy into formulate,
-interpret, and refine sub-practices (Tour &amp; Zadorozhnyy, 2025), is the closest competitor to our
-triad; but it bundles task specification and iterative refinement under "prompting" and does not treat
-the sub-practices as separately graded, dissociable competencies. This fusion of Framing and Steering
-into a single "prompting" skill is exactly the conflation CoRe-3 rejects. Treating them
-separately is consequential: it predicts, and our feasibility demonstration supports, that
-a simulated learner's model-assigned Framing and Steering grades can diverge.</p>
-<p><strong>Metric frameworks for human-AI cognition.</strong> A distinct 2026 line proposes named multi-metric schemes
-for working with AI, for instance a cognitive-amplification-versus-delegation framework with dependency
-and drift metrics (Di Santi, 2026). These measure the <em>sustainability</em> of reliance rather than
-teachable framing, judging, and steering competencies, and so are complementary to, not competitive
-with, an assessable-skill decomposition.</p>
-<p><strong>Knowledge-oriented AI-literacy frameworks.</strong> Field-defining competency sets such as Long &amp; Magerko
-(2020) and the UNESCO (2024) student framework define AI literacy primarily as understanding AI
-systems, their capabilities, limits, and ethics, rather than as executing tasks within a human-AI
-loop. They contain no Framing or Steering construct and only a diffuse notion of critical evaluation
-that partly overlaps Judging. CoRe-3 is orthogonal: it specifies the task-execution competencies
-these frameworks leave implicit.</p>
-<p><strong>Empirical accounts of AI-use modes.</strong> Field studies describe how skilled users actually work with AI:
-the "Cyborg" mode of continuous push-back-and-validate (Randazzo et al., 2025) and the sharp
-skill-dependence of AI's value at the competence frontier (Dell'Acqua et al., 2023). These describe the
-behaviour; CoRe-3 supplies the assessable skill decomposition that underlies it.</p>
+make the boundary explicit against the nearest priors.</p>
+<p><strong>Fluency, metacognitive, and prompt-literacy frameworks.</strong> The 4D model of AI fluency (Dakan &amp;
+Feller, 2025) maps Discernment onto Judging but bundles the initial specification and the iterative
+back-and-forth into one "Description," exactly the pre- versus post-generation operations we separate.
+Tankelevitch et al. (2024) analyse generative-AI use as metacognitive demands (prompting, output
+evaluation, workflow iteration); we share that foundation but convert a demands analysis into an
+assessable model with rubrics, propositions, and dissociation evidence. Prompt-literacy models such as
+CLEAR (Lo, 2023), including the formulate-interpret-refine decomposition of Tour and Zadorozhnyy
+(2025), likewise fuse task specification and refinement under "prompting" and do not grade the
+sub-practices as dissociable competencies. This fusion of Framing and Steering is the conflation
+CoRe-3 rejects, and our feasibility demonstration shows the two grades can diverge.</p>
+<p><strong>Literacy, metric, and mode frameworks.</strong> Knowledge-oriented AI-literacy sets (Long &amp; Magerko, 2020;
+UNESCO, 2024) define literacy as understanding AI systems and contain no Framing or Steering construct,
+only a diffuse "critical evaluation"; CoRe-3 supplies the task-execution competencies they leave
+implicit. Metric schemes for human-AI cognition, such as a cognitive-amplification-versus-delegation
+framework with dependency and drift metrics (Di Santi, 2026), measure the <em>sustainability</em> of reliance
+rather than teachable skills. Field accounts of how skilled users work, the continuous
+push-back-and-validate "Cyborg" mode (Randazzo et al., 2025) and the skill-dependence of AI's value at
+the competence frontier (Dell'Acqua et al., 2023), describe the behaviour that CoRe-3 decomposes into
+assessable skills.</p>
 <p>Table 1 makes the boundary explicit by mapping each nearest prior framework's constructs onto
 Framing, Judging, and Steering. The recurring pattern is that prior frameworks either (i) omit a
 construct, or (ii) <em>fuse</em> Framing and Steering into one "prompting/iteration" skill.</p>
@@ -422,45 +402,27 @@ construct, or (ii) <em>fuse</em> Framing and Steering into one "prompting/iterat
 </table>
 <p>No prior column cleanly separates the pre-generation and post-generation skills <em>and</em> treats all
 three as independently scored competencies. That conjunction is the contribution.</p>
-<p><strong>Validated GenAI-competency instruments.</strong> A parallel line of work builds psychometric instruments
-for AI and generative-AI competence, including validated scales such as GenAIComp (Lee et al., 2025;
-with factors derived from digital-competence frameworks) and assessment tests such as GLAT
-(Jin et al., 2024). These establish that GenAI competence can be measured, but their factor structures
-are literacy-oriented (information literacy, ethics, content creation) and do not isolate a Framing,
-Judging, or Steering construct. The work closest to ours pairs AI-collaboration literacy with
-metacognition (Sidra &amp; Mason, 2025) and includes an AI-evaluation
-sub-construct that overlaps Judging; we differ in separating the pre-generation and post-generation
-control skills and in demonstrating their dissociation rather than positing correlated factors.
-CoRe-3 is complementary to this measurement program: it supplies the specific, theory-derived
-decomposition that a future validated instrument could operationalize. Rubric-based LLM grading studies
-report high agreement with human raters (intraclass correlation up to 0.97) yet systematic divergence on
-subjective criteria (Yavuz et al., 2025); the multitrait-multimethod design we use across three grader
-backends (Section 8) treats that grader-method variance as a measured term rather than a confound.</p>
-<p><strong>Problem formulation as the AI-era skill.</strong> A prominent strand argues that, as models absorb
-execution, the durable human skill shifts from prompt crafting to <em>problem formulation</em>, identifying,
-analyzing, and delineating the problem worth solving (Acar, 2023). This is precisely our Framing
-construct, and classroom work has begun to assess it directly, for example through "prompt problems"
-that require students to specify and evaluate rather than only prompt (Denny et al., 2024), and
-through instruments that treat question formulation (Kim et al., 2025) and problem decomposition
-(Srinath et al., 2025) as independently measurable, trainable skills in generative-AI settings. That
-Framing is a distinct competency is further supported by the older problem-finding literature, which
-established problem finding as empirically separable from problem solving (Runco &amp; Chand, 1995). We
-build on this strand by placing Framing in a measured loop with Judging and Steering.</p>
-<p><strong>Evaluative judgement and named-competency frameworks.</strong> The capacity to discern quality, <em>evaluative
-judgement</em>, has been argued to be the core human capability for the generative-AI era (Bearman et al.,
-2024), and students are observed to make continuous in-the-loop accept-and-reject judgements while
-working with AI on assessment tasks (Walton et al., 2025). Our Judging skill operationalizes evaluative
-judgement specifically for AI output; CoRe-3 then departs from a unified-judgement account by
-separating it from the generative acts of Framing and Steering, treating evaluation as one of three
-independently-measurable skills rather than a single overarching disposition. Two findings reinforce
-that Judging is a separable, demanding construct: critical evaluation is the single highest-load
-activity in AI-assisted writing (Yao &amp; Fan, 2025), and users default to uncritically accepting AI
-output absent intervention (Wingerter et al., 2025). Among named competency frameworks, the AI Quotient
-enumerates eight broad collaboration dimensions (Ganuthula &amp; Balaraman, 2025); CoRe-3 instead
-collapses to three minimal, independently-assessable skills and, crucially, splits the single
-prompt-engineering dimension that such frameworks leave fused into a pre-generation Framing skill and a
-post-generation Steering skill. Frameworks that partition coursework by assessment mode rather than by
-cognitive skill (Elshall &amp; Badir, 2025) are orthogonal and complementary.</p>
+<p><strong>Validated instruments and evaluative judgement.</strong> Psychometric GenAI-competence scales such as
+GenAIComp (Lee et al., 2025) and tests such as GLAT (Jin et al., 2024) establish that GenAI competence
+is measurable, but their factor structures are literacy-oriented and isolate no Framing, Judging, or
+Steering construct; the work closest to ours pairs AI-collaboration literacy with metacognition
+(Sidra &amp; Mason, 2025) yet posits correlated factors rather than demonstrating dissociation. Because
+rubric-based LLM grading can agree highly with humans yet diverge on subjective criteria
+(Yavuz et al., 2025), our multitrait-multimethod design across three grader backends (Section 8) treats
+grader-method variance as a measured term. Our Judging skill operationalizes the evaluative judgement
+argued to be the core human capability for the AI era (Bearman et al., 2024; Walton et al., 2025):
+critical evaluation is the highest-load activity in AI-assisted writing (Yao &amp; Fan, 2025) and users
+default to uncritical acceptance without intervention (Wingerter et al., 2025), which is why we treat
+it as one of three separable skills rather than one overarching disposition. Among named frameworks,
+the eight-dimension AI Quotient (Ganuthula &amp; Balaraman, 2025) leaves prompt-engineering fused, whereas
+CoRe-3 splits it into pre-generation Framing and post-generation Steering; assessment-mode partitions of
+coursework (Elshall &amp; Badir, 2025) are orthogonal and complementary.</p>
+<p><strong>Problem formulation as the AI-era skill.</strong> As models absorb execution, a prominent strand argues the
+durable human skill shifts to <em>problem formulation</em> (Acar, 2023), precisely our Framing construct;
+classroom work assesses it through prompt problems (Denny et al., 2024), question formulation
+(Kim et al., 2025), and problem decomposition (Srinath et al., 2025), and the older problem-finding
+literature established it as separable from problem solving (Runco &amp; Chand, 1995). We build on this
+strand by placing Framing in a measured loop with Judging and Steering.</p>
 <p><strong>One-line novelty.</strong> CoRe-3 is, to our knowledge, the first theoretically-grounded decomposition
 of productive generative-AI use into three independently-assessable competencies that separates
 pre-generation Framing from post-generation Steering, with feasibility evidence that the three skills
@@ -468,54 +430,39 @@ dissociate. The contribution is the <em>separation</em> itself, which is both th
 (monitor-control plus an upstream task definition) and empirically consequential (the skills can be
 measured apart).</p>
 <h2 id="7-the-coreasoninglab-system">7. The CoReasoningLab system</h2>
-<p>The framework is instantiated in <em>CoReasoningLab</em>, a runnable open-source web platform, which we
-describe here so that the abstract skills map onto a concrete learner experience. The platform is a
-Node/Express application with role-based access (student, instructor, administrator), a challenge
-database, practice and assessment modes, multiple-choice and open-ended response formats per phase, and
-a five-language content library (English, Hebrew, German, Spanish, French). Its full source, the web
-application, the database schema, the content library, and the <em>scoring engine</em> of sixteen prompts
-(Section 7.1), is released, alongside a pedagogical-foundations document mapping the design to learning
-theory. Figures A1 and A2 are screenshots of the running platform, and Appendix A walks through the
-system end to end. All challenges evaluated in this paper are
-English-language (Section 9.2), and the quantitative results come from the scoring engine over controlled
-inputs rather than from production usage logs.</p>
+<p>The framework is instantiated in <em>CoReasoningLab</em>, a runnable open-source web platform that maps the
+abstract skills onto a concrete learner experience. It is a Node/Express application with role-based
+access (student, instructor, administrator), a challenge database, practice and assessment modes,
+multiple-choice and open-ended response formats, and a five-language content library (English, Hebrew,
+German, Spanish, French). Its full source, the web application, the database schema, the content
+library, and the <em>scoring engine</em> of 16 prompts (Section 7.1), is released, alongside a
+pedagogical-foundations document; the Supplementary Material walks through the running system. All
+challenges evaluated here are English-language (Section 9.2), and the quantitative results come from the
+scoring engine over controlled inputs, not production logs.</p>
 <p>Because challenge generation, rubric generation, and scoring are themselves prompt-defined, the engine
-extends to a new subject, language, or grader backend by substitution rather than redesign: the
-feasibility demonstration exercises it unchanged across ten subjects (Section 8) and two grader models,
-and the released artifact lets others add their own. The platform is therefore <strong>domain-general</strong>: it is
-not a computing-education tool but a generic instrument for any discipline in which a learner must
-specify an ill-defined task, judge a fallible solution, and steer it toward a better one. The released
-content already spans <strong>twelve disciplines</strong> across STEM, the social sciences, the humanities, law, and
-professional and education fields, from algorithms and classical mechanics to constitutional law,
-applied ethics, and instructional design (Appendix C). An educator in any of these fields authors a
-challenge by naming a subject; the system generates the ill-defined problem, the three per-skill
-rubrics, and the seeded-flaw solution. The monitor-control scaffold is likewise open to
-additional skills where a setting calls for them; the three are a deliberately small decomposition that
-separates pre-generation, evaluative, and post-generation control. The released instrument is therefore
-usable as a starting point for others to extend, not only to reproduce.</p>
+extends to a new subject, language, or grader backend by substitution rather than redesign, and the
+released artifact lets others add their own. The platform is therefore <strong>domain-general</strong>: not a
+computing-education tool but a generic instrument for any discipline in which a learner must specify an
+ill-defined task, judge a fallible solution, and steer it toward a better one. Its released content
+already spans <strong>12 disciplines</strong> across STEM, the social sciences, the humanities, law, and
+professional fields (Supplementary Material). An educator authors a challenge by naming a subject; the
+system generates the ill-defined problem, the three per-skill rubrics, and the seeded-flaw solution.</p>
 <p><strong>Authoring flow (instructor).</strong> An instructor defines a challenge by choosing a course and subject
 path; the system then generates the ill-defined problem, the three per-skill rubrics, the gold-standard
 framing, and the seeded-flaw solution that the learner will critique (Section 7.1). Challenges are
 organized into courses and can be assigned to cohorts.</p>
-<p><strong>Learner flow (student).</strong> From a dashboard of assigned challenges, a student enters a
-challenge run that walks through the framework's two phases (Figure A1):</p>
-<ol>
-<li><em>Phase 1: Framing.</em> The student is shown the raw, ill-defined problem and adds refinement sections
-   (assumptions, constraints, clarifications, success metrics) or selects refinements in
-   multiple-choice mode, then submits. The platform returns rubric-driven Framing feedback and a grade.</li>
-<li><em>AI generation.</em> The system produces a plausible but deliberately flawed solution to the framed task.</li>
-<li><em>Phase 2: Judge/Steer cycles.</em> In each cycle the student first <strong>judges</strong> the current output
-   (flagging issues it contains) and then <strong>steers</strong> the AI (issuing correction commands); the AI
-   returns an updated output. The student repeats this up to a configured maximum number of cycles and
-   marks the task complete when satisfied.</li>
-<li><em>Per-skill feedback and grades.</em> Framing, Judging, and Steering are scored separately, each with its
-   own rubric-driven feedback, and surfaced in a per-challenge report and in longitudinal student
-   analytics that track the three skills independently over time.</li>
-</ol>
-<p>This separation in the interface, distinct phases, distinct feedback channels, and distinct grade
-columns, is the framework's central claim made operational: a learner sees, and is scored on, three
-different things they did, not one undifferentiated "AI use." The remainder of this section describes
-the instrument that produces those scores.</p>
+<p><strong>Learner flow (student).</strong> A student enters a challenge run with two phases, walked through step by
+step in the Supplementary Material. In Phase 1 (Framing) the student refines the raw ill-defined problem,
+by writing refinement sections (assumptions, constraints, clarifications, success metrics) or selecting
+them in multiple-choice mode, and receives rubric-driven Framing feedback and a grade. The system then
+produces a plausible but deliberately flawed solution. In Phase 2 the student repeatedly <strong>judges</strong> the
+current output (flagging its issues) and <strong>steers</strong> the AI (issuing correction commands), up to a
+configured maximum, and marks the task complete when satisfied. Framing, Judging, and Steering are
+scored separately, each with its own rubric-driven feedback, and surfaced in a per-challenge report and
+longitudinal analytics that track the three skills independently. This separation in the interface,
+distinct phases, feedback channels, and grade columns, is the framework's central claim made
+operational: a learner sees, and is scored on, three different things, not one undifferentiated
+"AI use." The remainder of this section describes the instrument that produces those scores.</p>
 <h3 id="71-operationalization-the-assessment-instrument">7.1 Operationalization: the assessment instrument</h3>
 <p>To show that the three constructs are not only conceptually distinct but practically measurable, we
 describe a working instrument that scores each skill from a learner's transcript. The instrument is a
@@ -547,20 +494,15 @@ seeded ground-truth issues, yielding a recall/precision signal (issues correctly
 and falsely flagged); and Steering is evaluated against the trajectory of the output across cycles,
 rewarding corrections that demonstrably move the solution toward correctness. This is why the skills
 are measured <em>apart</em>: each evaluator interrogates a different referent.</p>
-<p>The instrument used in this paper is the scoring engine of the CoReasoningLab platform, a library
-of sixteen prompts spanning challenge construction, AI generation, and evaluation (Figure A3 traces the full
-generation-and-assessment pipeline). The released library
-carries the platform's evaluation logic verbatim, the same rubrics, criteria, and system prompts as the
-deployed application; the only adaptation is that JSON output formatting is supplied by the research
-harness rather than embedded in each prompt. The surrounding harness (simulated-learner generation, the
-crossed factorial, and the analysis) is research orchestration around that fixed evaluation logic, not a
-reimplementation of it, so the measurements characterize the instrument itself. Scoring a single
-learner exercises the relevant subset, the three skill evaluators and the generic grader, over
-controlled inputs, so that the measurements are reproducible and the ground truth is known. A
-scope note: the grader is a language model, so the results below characterize the <em>internal</em> behavior
-of the instrument (whether it separates controlled competence levels and dissociates the skills);
-agreement with human experts is the separate validity question the prepared study in Section 9.3
-addresses.</p>
+<p>The instrument used here is the scoring engine of the CoReasoningLab platform, a library of 16
+prompts spanning challenge construction, AI generation, and evaluation (traced in the Supplementary
+Material). It carries the deployed application's evaluation logic verbatim, the same rubrics, criteria,
+and system prompts; the research harness (simulated-learner generation, the crossed factorial, and the
+analysis) only orchestrates that fixed logic over controlled inputs, so the measurements are
+reproducible and characterize the instrument itself. Because the grader is a language model, the results
+below characterize the instrument's <em>internal</em> behavior (whether it separates controlled competence
+levels and dissociates the skills); agreement with human experts is the separate validity question the
+prepared study in Section 9.3 addresses.</p>
 <h2 id="8-feasibility-demonstration">8. Feasibility demonstration</h2>
 <p>We exercise the instrument over controlled inputs to test three feasibility claims: that it
 <em>discriminates</em> competence, that the three skills <em>dissociate</em> (Proposition P3), and that the grader is
@@ -570,15 +512,13 @@ model grades its own output. These claims concern the instrument; the agreement 
 graders is prepared and is the next stage (Section 9.3).</p>
 <p><strong>Design.</strong> We use a crossed factorial: each of the three skills is independently set to a strong or
 weak competence level, giving $2^3 = 8$ profiles, crossed with ten challenges across ten distinct
-subjects (algorithms, microeconomics, machine learning, databases, statistics, operating systems,
-calculus, organic chemistry, linguistics, and corporate finance), for 80 simulated learners. Framing
-and Steering responses are generated by the competence-conditioned learner model; Judging is operationalized by a competence-conditioned
-selection over the challenge's ground-truth seeded issues (a strong judge flags all real issues and no
-false ones; a weak judge flags few real issues and some false ones). These seeded issues and the
-distractors are themselves machine-generated and not yet human-verified, so Judging's by-construction
-own-effect is explicitly contingent on that ground truth being correct. Because the manipulation is per skill,
-the design can separate whether each grade tracks its <em>own</em> skill's competence (discrimination) from
-whether it is <em>insensitive</em> to the other skills' competence (dissociation).</p>
+subjects (spanning STEM, the social sciences, and the humanities), for 80 simulated learners. Framing
+and Steering responses are generated by the competence-conditioned learner model; Judging is
+operationalized by a competence-conditioned selection over the challenge's ground-truth seeded issues (a
+strong judge flags all real issues and no false ones; a weak judge flags few and adds false ones), which
+are themselves machine-generated and not yet human-verified. Because the manipulation is per skill, the
+design separates whether each grade tracks its <em>own</em> skill's competence (discrimination) from whether it
+is <em>insensitive</em> to the others' (dissociation).</p>
 <p><strong>Discrimination.</strong> Grades move monotonically with competence: the all-weak profile averages C on every
 skill, the all-strong profile averages between B and A, and each skill's grade rises when that skill is
 set to strong. The judging signal is mechanistically transparent: a strong judge flags all of the seeded
@@ -649,28 +589,22 @@ rather than evidence against, separability. With only three indicators a formal 
 under-identified, so we rest the separability evidence on the manipulation-based effect matrix and the
 inter-skill correlations rather than on a confirmatory dimensionality test.</p>
 <p><strong>Convergent and discriminant validity (a multitrait-multimethod view).</strong> The result so far is a
-<em>discriminant</em>-validity finding: three skills (traits) separate. Construct validity also requires the
-complementary <em>convergent</em> property, that the same skill measured by different methods agrees, and that
-the instrument reports correlation when the underlying competence really is shared (Campbell &amp; Fiske,
-1959). Two analyses supply it. First, treating the three grader backends as independent methods, the
-same skill graded by gpt-4o, gpt-4o-mini, and the independent-vendor llama-3.3-70b agrees at the
-per-learner level for the two skills with the widest grade range (mean pairwise rank correlation +0.57
-for Framing and +0.67 for Judging across the 40 shared transcripts), while <em>different</em> skills stay near
-zero, the convergent-high / discriminant-low pattern a valid measure should show; Steering's narrower
-range under the P2 ceiling yields a lower cross-method correlation (+0.21), a restriction of variance
-rather than a separate construct. Laid out as the full multitrait-multimethod matrix, the convergent
-correlations (same skill across graders, mean +0.49) exceed both the heterotrait-monomethod correlations
-(different skills within one grader, mean +0.08) and the heterotrait-heteromethod correlations (different skills across different graders, mean
-+0.06); no grader shows halo (within-grader cross-skill mean $|\rho|$ of 0.13, 0.18, 0.13 for the three
-backends), so all three Campbell-Fiske criteria hold. Second, the instrument is faithful to the population's dependence
-structure: on learners whose three competences are set <em>independently</em> (the full crossed design) the
-inter-skill grade correlations are near zero (mean $|\rho| = 0.13$; Framing-Judging $\rho = -0.03$),
-whereas on the 20 learners whose three competences are all set strong or all set weak (a single shared
-ability level) the same instrument returns <em>positive</em> correlations (mean $\rho = +0.41$;
-Framing-Judging $\rho = +0.52$). The instrument therefore does not
-manufacture dissociation: it recovers independence when the competences are independent and correlation
-when they are shared, which is what licenses reading the crossed-design separation as a property of the
-skills rather than of the scoring (Table 3).</p>
+<em>discriminant</em>-validity finding: three traits separate. Construct validity also requires the convergent
+property, that the same skill measured by different methods agrees, and that the instrument reports
+correlation when the underlying competence really is shared (Campbell &amp; Fiske, 1959). Two analyses
+supply it. First, we treat the three grader backends (gpt-4o, gpt-4o-mini, and the independent-vendor
+llama-3.3-70b) as independent methods. For the two skills with the widest grade range, the same skill
+agrees across graders while <em>different</em> skills stay near zero (Table 3, Panel A), the convergent-high /
+discriminant-low pattern a valid measure should show. Steering's narrower range under the P2 ceiling
+gives a lower cross-method correlation, a restriction of variance rather than a separate construct.
+Across the full matrix the convergent correlations exceed both heterotrait terms and no grader shows
+halo, so all three Campbell-Fiske criteria hold. Second, the instrument is faithful to the population's
+dependence structure (Table 3, Panel B): on learners whose competences are set <em>independently</em> the
+inter-skill grade correlations are near zero, whereas on the 20 learners whose competences are all
+strong or all weak the same instrument returns <em>positive</em> correlations. It therefore does not
+manufacture dissociation, recovering independence when the competences are independent and correlation
+when they are shared, which licenses reading the crossed-design separation as a property of the skills
+rather than of the scoring.</p>
 <p><strong>Table 3. Multitrait-multimethod validity.</strong> Panel A: convergent agreement of the same skill across
 the three grader backends (mean pairwise per-learner rank correlation on the 40 shared transcripts).
 Panel B: inter-skill grade correlation by population, showing the instrument recovers the population's
@@ -721,35 +655,28 @@ all-weak learners whose three competences share one level).</p>
 </tr>
 </tbody>
 </table>
-<p>The own-skill effects are directionally consistent across subjects: broken down by the ten subject
-areas (eight learners each), Framing and Steering each show a positive own-competence effect in nine of
-ten subjects, with the two exceptions (Framing in statistics, Steering in microeconomics) reflecting
-the small per-subject sample rather than a sign reversal; Judging is fixed by construction in every
-subject. The own-competence effect is therefore not driven by any single domain; the pooled own-effects
-and their confidence intervals above carry the estimate, and the per-subject pattern shows it holds
-broadly across the curriculum. The designed-contrast personas make the separation concrete (Figure 4, which plots five
-profiles). Three are especially telling: a <em>weak-framer / strong-judge</em> learner scores Framing C but
-Judging A; a <em>strong-framer / weak-judge</em> learner inverts this to Framing B, Judging C; and a
-<em>weak / weak / strong-steerer</em> elevates only Steering. A single underlying "AI-use
-ability" cannot produce these crossed profiles. Converging evidence comes from outside our synthetic
-setting. In an intervention study, students' <em>behavioral</em> regulation of LLM use (reformulating queries,
-checking correctness) predicts effective use, whereas self-rated AI expertise does not (Clerc et al.,
-2026). The skill of working with AI is thus distinct from a general, self-assessed competence.</p>
-<p><strong>Robustness and ablations.</strong> Three checks, reported in full in Appendix B, support the result. First, the grader is <strong>92% self-consistent</strong> on repeat, a precision check, not accuracy against humans. Second, the dissociation replicates across three grader backends spanning two providers (gpt-4o, gpt-4o-mini, and Meta's llama-3.3-70b; diagonal-to-off-diagonal ratio 39), so it does not hinge on one model snapshot. Third, a ground-truth ablation shows Framing and Steering are scored by rubric-guided model judgment while Judging, as instrumented, tracks the seeded answer key, which locates the Judging score to settings with known ground truth (Section 9.3 specifies the open-ended variant).</p>
-<p><strong>Scope.</strong> These results establish feasibility. (i) Judging's clean diagonal (+2.00, zero cross-effects)
-is a controlled check by design: its competence is set by a controlled selection over the seeded
-issues, so the diagonal confirms that the grader correctly rewards recall and precision, and the
-independent separation evidence is carried by the free-text, blind-graded skills, Framing and Steering,
-whose positive own-effects (+0.62, +0.43) with near-zero cross-effects drive the result. (ii) The
-dissociation replicates across grader backends spanning two providers (Appendix B); agreement with
-human experts is the validity step the prepared study in Section 9.3 supplies.
-(iii) With three constructs the separability evidence rests on the manipulation-based effect matrix and
-the inter-skill correlations, the appropriate tests for the design. (iv) Steering's own-effect (+0.43
-at N=80) is governed by the P2 ceiling by design: steering quality is bounded by the judging that
-precedes it, so manipulating steering alone has bounded headroom. This is a property of the construct,
-not of the grader: under a deliberately strict steering rubric (a C for vague or non-prioritized
-commands) the steering own-effect is unchanged (+0.40 versus +0.50, statistically indistinguishable)
-and the dissociation persists (ratio 27.5). Human steering data will trace this ceiling directly.</p>
+<p>The own-skill effects are directionally consistent across subjects: Framing and Steering each show a
+positive own-competence effect in nine of the 10 subject areas, the two exceptions reflecting the small
+per-subject sample rather than a sign reversal (Judging is fixed by construction throughout). The
+designed-contrast personas make the separation concrete (Figure 4): a <em>weak-framer / strong-judge</em>
+learner scores Framing C but Judging A; a <em>strong-framer / weak-judge</em> learner inverts this; and a
+<em>weak / weak / strong-steerer</em> elevates only Steering. A single underlying "AI-use ability" cannot
+produce these crossed profiles. Converging evidence comes from outside our synthetic setting: in an
+intervention study, students' <em>behavioral</em> regulation of LLM use predicts effective use whereas
+self-rated AI expertise does not (Clerc et al., 2026), so the skill of working with AI is distinct from
+a general, self-assessed competence.</p>
+<p><strong>Robustness and ablations.</strong> Three checks, reported in full in the Supplementary Material, support the result. First, the grader is <strong>92% self-consistent</strong> on repeat, a precision check, not accuracy against humans. Second, the dissociation replicates across three grader backends spanning two providers (gpt-4o, gpt-4o-mini, and Meta's llama-3.3-70b; diagonal-to-off-diagonal ratio 39), so it does not hinge on one model snapshot. Third, a ground-truth ablation shows Framing and Steering are scored by rubric-guided model judgment while Judging, as instrumented, tracks the seeded answer key, which locates the Judging score to settings with known ground truth (Section 9.3 specifies the open-ended variant).</p>
+<p><strong>Scope.</strong> These results establish feasibility, with four qualifications. Judging's clean diagonal
+(+2.00, zero cross-effects) is a controlled check by design, so the independent separation evidence is
+carried by the free-text, blind-graded Framing and Steering (own-effects +0.62 and +0.43 with near-zero
+cross-effects). The dissociation replicates across grader backends from two providers (Supplementary
+Material), while agreement with human experts is the validity step the prepared study of Section 9.3
+supplies. With three constructs the evidence rests on the manipulation-based effect matrix and the
+inter-skill correlations, the appropriate tests for this design. Finally, Steering's own-effect is
+governed by the P2 ceiling by design (its quality is bounded by the judging that precedes it); this is a
+property of the construct, not the grader, since under a deliberately strict steering rubric the effect
+is unchanged (+0.40 versus +0.50) and the dissociation persists. Human steering data will trace this
+ceiling directly.</p>
 <h2 id="9-discussion">9. Discussion</h2>
 <p>The feasibility demonstration establishes that the three skills are separable and automatically scoreable; this section reconciles the tensions the framework raises, bounds the present evidence, and specifies the validation program it invites.</p>
 <h3 id="91-tensions-the-framework-reconciles">9.1 Tensions the framework reconciles</h3>
@@ -851,202 +778,92 @@ from the post-generation one in a way prior frameworks do not, and shows that th
 measured apart. Because the decomposition tracks what a person must contribute rather than what today's
 models cannot yet do, it does not lapse as the models improve: the more capable the system, the more
 the assessable skill is the framing, judging, and steering of it. We release the model, the instrument,
-and the validation protocol as a foundation to build on: an open, domain-general platform with which an
-educator in any discipline, from algorithms to applied ethics, can assess and train this skill, for the
+and the validation protocol as a foundation to build on: an open, domain-general platform with which a
+university educator in any discipline, from algorithms to applied ethics, can assess and train this skill, for the
 assessment and instruction the moment demands.</p>
+<h2 id="declarations">Declarations</h2>
+<p><strong>Availability of data and materials.</strong> The assessment instrument (the 16-prompt scoring engine),
+the experiment data, and the prepared human-rater validation protocol are released in a public
+repository (URL withheld to preserve anonymous review; available to the editors on request).</p>
+<p><strong>Competing interests.</strong> The authors declare that they have no competing interests.</p>
+<p><strong>Funding.</strong> The authors received no specific grant from any funding agency in the public, commercial,
+or not-for-profit sectors for this research.</p>
+<p><strong>Authors' contributions.</strong> Both authors contributed to the conception and design of the competency
+model, the design and implementation of the instrument and experiments, the analysis and interpretation
+of the results, and the drafting and critical revision of the manuscript. Both authors read and approved
+the final manuscript.</p>
+<p><strong>Ethics approval and consent to participate.</strong> Not applicable. The study reports a feasibility
+demonstration over model-generated simulated learners and involves no human participants.</p>
+<p><strong>Consent for publication.</strong> Not applicable.</p>
+<p><strong>Acknowledgements.</strong> Not applicable.</p>
 <h2 id="references">References</h2>
 <div class="references">
-<p>Acar, O. A. (2023). AI Prompt Engineering Isn't the Future. <em>Harvard Business Review, June 6</em>.</p>
-<p>Anderson, L. W., &amp; Krathwohl, D. R. (2001). A Taxonomy for Learning, Teaching, and Assessing: A Revision of Bloom's Taxonomy of Educational Objectives. <em>Longman</em>.</p>
-<p>Annapureddy, R., Fornaroli, A., &amp; Gatica-Perez, D. (2024). Generative AI Literacy: Twelve Defining Competencies. <em>Digital Government: Research and Practice</em>.</p>
-<p>Bansal, G., Wu, T., Zhou, J., Fok, R., Nushi, B., Kamar, E., Ribeiro, M. T., &amp; Weld, D. S. (2021). Does the Whole Exceed Its Parts? The Effect of AI Explanations on Complementary Team Performance. <em>Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems</em>.</p>
-<p>Barzilai, S., &amp; Chinn, C. A. (2018). On the Goals of Epistemic Education: Promoting Apt Epistemic Performance. <em>Journal of the Learning Sciences</em>, 27(3), 353–389.</p>
-<p>Bearman, M., Tai, J., Dawson, P., Boud, D., &amp; Ajjawi, R. (2024). Developing Evaluative Judgement for a Time of Generative Artificial Intelligence. <em>Assessment &amp; Evaluation in Higher Education</em>, 49(6), 893–905. https://doi.org/10.1080/02602938.2024.2335321</p>
-<p>Bjork, E. L., &amp; Bjork, R. A. (2011). Making Things Hard on Yourself, but in a Good Way: Creating Desirable Difficulties to Enhance Learning. <em>Psychology and the Real World</em>, 56–64.</p>
-<p>Buçinca, Z., Malaya, M. B., &amp; Gajos, K. Z. (2021). To Trust or to Think: Cognitive Forcing Functions Can Reduce Overreliance on AI in AI-Assisted Decision-Making. <em>Proceedings of the ACM on Human-Computer Interaction</em>, 5(CSCW1), 1–21.</p>
-<p>Campbell, D. T., &amp; Fiske, D. W. (1959). Convergent and Discriminant Validation by the Multitrait-Multimethod Matrix. <em>Psychological Bulletin</em>, 56(2), 81–105.</p>
-<p>Chi, M. T. H., &amp; Wylie, R. (2014). The ICAP Framework: Linking Cognitive Engagement to Active Learning Outcomes. <em>Educational Psychologist</em>, 49(4), 219–243.</p>
-<p>Clerc, O., Abdelghani, R., Desvaux, C., Poisson, E., Oudeyer, P., &amp; Sauzéon, H. (2026). Teaching Students to Question the Machine: An AI Literacy Intervention Improves Students' Regulation of LLM Use in a Science Task. <em>arXiv preprint arXiv:2604.01955</em>.</p>
-<p>Collins, A., Brown, J. S., &amp; Newman, S. E. (1989). Cognitive Apprenticeship: Teaching the Crafts of Reading, Writing, and Mathematics. <em>Knowing, Learning, and Instruction: Essays in Honor of Robert Glaser</em>, 453–494.</p>
-<p>Dakan, R., &amp; Feller, J. (2025). Framework for AI Fluency. <em>Anthropic</em>.</p>
-<p>Dell'Acqua, F., McFowland III, E., Mollick, E., Lifshitz-Assaf, H., Kellogg, K., Rajendran, S., Krayer, L., Candelon, F., &amp; Lakhani, K. R. (2023). Navigating the Jagged Technological Frontier. <em>Harvard Business School Working Paper 24-013</em>.</p>
-<p>Denny, P., Leinonen, J., Prather, J., Luxton-Reilly, A., Amarouche, T., Becker, B. A., &amp; Reeves, B. N. (2024). Prompt Problems: A New Programming Exercise for the Generative AI Era. <em>Proceedings of the 55th ACM Technical Symposium on Computer Science Education (SIGCSE)</em>.</p>
-<p>Di Santi, E. (2026). Cognitive Amplification vs Cognitive Delegation in Human-AI Systems: A Metric Framework. <em>arXiv preprint arXiv:2603.18677</em>.</p>
-<p>Durkin, K., &amp; Rittle-Johnson, B. (2012). The Effectiveness of Using Incorrect Examples to Support Learning about Decimal Magnitude. <em>Learning and Instruction</em>, 22(3), 206–214. https://doi.org/10.1016/j.learninstruc.2011.11.001</p>
-<p>Elshall, A. S., &amp; Badir, A. (2025). Balancing AI-Assisted Learning and Traditional Assessment: The FACT Assessment in Environmental Data Science Education. <em>Frontiers in Education</em>, 10, 1596462. https://doi.org/10.3389/feduc.2025.1596462</p>
-<p>Facione, P. A. (1990). Critical Thinking: A Statement of Expert Consensus for Purposes of Educational Assessment and Instruction (The Delphi Report). <em>American Philosophical Association</em>.</p>
-<p>Fan, Y., Tang, L., Le, H., Shen, K., Tan, S., Zhao, Y., Shen, Y., Li, X., &amp; Gašević, D. (2025). Beware of Metacognitive Laziness: Effects of Generative Artificial Intelligence on Learning Motivation, Processes, and Performance. <em>British Journal of Educational Technology</em>, 56(2), 489–530. https://doi.org/10.1111/bjet.13544</p>
-<p>Feng, Y., Wang, S., Cheng, Z., Wan, Y., &amp; Chen, D. (2025). Are We on the Right Way to Assessing LLM-as-a-Judge?. <em>arXiv preprint arXiv:2512.16041</em>.</p>
-<p>Fernandes, D., Villa, S., Nicholls, S., Haavisto, O., Buschek, D., Schmidt, A., Kosch, T., Shen, C., &amp; Welsch, R. (2024). Performance and Metacognition Disconnect when Reasoning in Human-AI Interaction. <em>arXiv preprint arXiv:2409.16708</em>.</p>
-<p>Flavell, J. H. (1979). Metacognition and Cognitive Monitoring: A New Area of Cognitive-Developmental Inquiry. <em>American Psychologist</em>, 34(10), 906–911.</p>
-<p>Ganuthula, V. R. R., &amp; Balaraman, K. K. (2025). Artificial Intelligence Quotient Framework for Measuring Human Collaboration with Artificial Intelligence. <em>Discover Artificial Intelligence</em>, 5, 268. https://doi.org/10.1007/s44163-025-00516-1</p>
-<p>Gerlich, M. (2025). AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking. <em>Societies</em>, 15(1), 6.</p>
-<p>Gilson, L. L., &amp; Goldberg, C. B. (2015). Editors' Comment: So, What Is a Conceptual Paper?. <em>Group &amp; Organization Management</em>, 40(2), 127–130. https://doi.org/10.1177/1059601115576425</p>
-<p>Große, C. S., &amp; Renkl, A. (2007). Finding and Fixing Errors in Worked Examples: Can This Foster Learning Outcomes?. <em>Learning and Instruction</em>, 17(6), 612–634. https://doi.org/10.1016/j.learninstruc.2007.09.008</p>
-<p>Gu, X., &amp; Ericson, B. J. (2025). AI Literacy in K-12 and Higher Education in the Wake of Generative AI: An Integrative Review. <em>Proceedings of the 2025 ACM Conference on International Computing Education Research (ICER)</em>, 125–140. https://doi.org/10.1145/3702652.3744217</p>
-<p>Hattie, J., &amp; Timperley, H. (2007). The Power of Feedback. <em>Review of Educational Research</em>, 77(1), 81–112.</p>
-<p>Jaakkola, E. (2020). Designing Conceptual Articles: Four Approaches. <em>AMS Review</em>, 10, 18–26.</p>
-<p>Jin, Y., Martinez-Maldonado, R., Gašević, D., &amp; Yan, L. (2024). GLAT: The Generative AI Literacy Assessment Test. <em>arXiv preprint arXiv:2411.00283</em>.</p>
-<p>Kane, M. T. (2013). Validating the Interpretations and Uses of Test Scores. <em>Journal of Educational Measurement</em>, 50(1), 1–73. https://doi.org/10.1111/jedm.12000</p>
-<p>Kapur, M. (2008). Productive Failure. <em>Cognition and Instruction</em>, 26(3), 379–424.</p>
-<p>Kim, P., Wang, W., &amp; Bonk, C. J. (2025). Generative AI as a Coach to Help Students Enhance Proficiency in Question Formulation. <em>Journal of Educational Computing Research</em>, 63(3), 565–586. https://doi.org/10.1177/07356331251314222</p>
-<p>Kosmyna, N., Hauptmann, E., Yuan, Y. T., Situ, J., Liao, X., Beresnitzky, A. V., Braunstein, I., &amp; Maes, P. (2025). Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task. <em>arXiv preprint arXiv:2506.08872</em>.</p>
-<p>Lee, H., &amp; Bosch, N. (2025). Calibration Discrepancy Predicts Students' Subsequent Metacognitive Strategy Use in Computer-Based Learning Environments. <em>International Journal of Artificial Intelligence in Education</em>, 35(6), 3746–3779. https://doi.org/10.1007/s40593-025-00514-5</p>
-<p>Lee, J. D., &amp; See, K. A. (2004). Trust in Automation: Designing for Appropriate Reliance. <em>Human Factors</em>, 46(1), 50–80.</p>
-<p>Lee, S. C., Baby, T., Vongvit, R., Lee, J., Kim, Y., Min, C., &amp; Yoon, S. H. (2025). Development and Validation of a Generative AI Competence Scale. <em>Technology in Society</em>. https://doi.org/10.1016/j.techsoc.2025.103059</p>
-<p>Li, C., Cui, H., &amp; Hagedorn, L. S. (2026). The Cognitive Impact of ChatGPT in Higher Education: A Systematic Review of Critical and Creative Thinking Outcomes. <em>Computers and Education: Artificial Intelligence</em>, 10, 100571. https://doi.org/10.1016/j.caeai.2026.100571</p>
-<p>Lo, L. S. (2023). The CLEAR Path: A Framework for Enhancing Information Literacy through Prompt Engineering. <em>The Journal of Academic Librarianship</em>, 49(4).</p>
-<p>Long, D., &amp; Magerko, B. (2020). What Is AI Literacy? Competencies and Design Considerations. <em>Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems</em>, 1–16.</p>
-<p>McNichols, H., Ikram, F., &amp; Lan, A. (2025). The StudyChat Dataset: Student Dialogues With ChatGPT in an Artificial Intelligence Course. <em>arXiv preprint arXiv:2503.07928</em>. https://doi.org/10.48550/arXiv.2503.07928</p>
-<p>Messick, S. (1995). Validity of Psychological Assessment: Validation of Inferences from Persons' Responses and Performances as Scientific Inquiry into Score Meaning. <em>American Psychologist</em>, 50(9), 741–749. https://doi.org/10.1037/0003-066X.50.9.741</p>
-<p>Nazaretsky, T., Gabbay, H., &amp; Käser, T. (2025). Can Students Judge Like Experts? A Large-Scale Study on AI and Human Personalized Formative Feedback. <em>Computers and Education: Artificial Intelligence</em>. https://doi.org/10.1016/j.caeai.2025.100533</p>
-<p>Nelson, T. O., &amp; Narens, L. (1990). Metamemory: A Theoretical Framework and New Findings. <em>The Psychology of Learning and Motivation</em>, 26, 125–173.</p>
-<p>Parasuraman, R., &amp; Manzey, D. H. (2010). Complacency and Bias in Human Use of Automation: An Attentional Integration. <em>Human Factors</em>, 52(3), 381–410.</p>
-<p>Paul, R., &amp; Elder, L. (2006). The Miniature Guide to Critical Thinking: Concepts and Tools. <em>Foundation for Critical Thinking</em>.</p>
-<p>Randazzo, B., Lifshitz-Assaf, H., Kellogg, K., Dell'Acqua, F., Mollick, E., Candelon, F., &amp; Lakhani, K. R. (2025). Cyborgs, Centaurs and Self-Automators: Modes of Human-AI Collaboration in Knowledge Work. <em>Harvard Business School Working Paper 26-036</em>.</p>
-<p>Runco, M. A., &amp; Chand, I. (1995). Cognition and Creativity. <em>Educational Psychology Review</em>, 7(3), 243–267.</p>
-<p>Sadler, D. R. (1989). Formative Assessment and the Design of Instructional Systems. <em>Instructional Science</em>, 18(2), 119–144.</p>
-<p>Salomon, G., Perkins, D. N., &amp; Globerson, T. (1991). Partners in Cognition: Extending Human Intelligence with Intelligent Technologies. <em>Educational Researcher</em>, 20(3), 2–9.</p>
-<p>Sidra, S., &amp; Mason, C. (2025). Generative AI in Human-AI Collaboration: Validation of the Collaborative AI Literacy and Collaborative AI Metacognition Scales. <em>International Journal of Human-Computer Interaction</em>. https://doi.org/10.1080/10447318.2025.2543997</p>
-<p>Sperber, D., Clément, F., Heintz, C., Mascaro, O., Mercier, H., Origgi, G., &amp; Wilson, D. (2010). Epistemic Vigilance. <em>Mind &amp; Language</em>, 25(4), 359–393.</p>
-<p>Srinath, S., Vadaparty, A., Smith IV, D. H., Porter, L., &amp; Zingaro, D. (2025). Assessing Problem Decomposition in CS1 for the GenAI Era. <em>arXiv preprint arXiv:2511.05764</em>.</p>
-<p>Tankelevitch, L., Kewenig, V., Simkute, A., Scott, A. E., Sarkar, A., Sellen, A., &amp; Rintel, S. (2024). The Metacognitive Demands and Opportunities of Generative AI. <em>Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems</em>.</p>
-<p>Tour, E., &amp; Zadorozhnyy, A. (2025). Conceptualizing and Operationalizing Prompt Literacy for English Language Learners. <em>Journal of Adolescent &amp; Adult Literacy</em>. https://doi.org/10.1002/jaal.70020</p>
-<p>Vaccaro, M., Almaatouq, A., &amp; Malone, T. (2024). When Combinations of Humans and AI Are Useful: A Systematic Review and Meta-Analysis. <em>Nature Human Behaviour</em>, 8, 2293–2303.</p>
-<p>Vygotsky, L. S. (1978). Mind in Society: The Development of Higher Psychological Processes. <em>Harvard University Press</em>.</p>
-<p>Walton, J., Bearman, M., Crawford, N., Tai, J., &amp; Boud, D. (2025). How University Students Work on Assessment Tasks with Generative Artificial Intelligence: Matters of Judgement. <em>Assessment &amp; Evaluation in Higher Education</em> (advance online publication). https://doi.org/10.1080/02602938.2025.2570328</p>
-<p>Wingerter, T. L., Straub, T., &amp; Schweitzer, S. (2025). Mitigating Automation Bias in Generative AI through Nudges: A Cognitive Reflection Test Study. <em>Procedia Computer Science</em>, 270, 2106–2114. https://doi.org/10.1016/j.procs.2025.09.331</p>
-<p>Winne, P. H., &amp; Hadwin, A. F. (1998). Studying as Self-Regulated Learning. <em>Metacognition in Educational Theory and Practice</em>, 277–304.</p>
-<p>Wirth, J., Weber-Reuter, X.-L., Schuster, C., Fleischer, J., Leutner, D., &amp; Stebner, F. (2025). Far Transfer of Metacognitive Regulation: From Cognitive Learning Strategy Use to Mental Effort Regulation. <em>Educational Psychology Review</em>, 37(1), 7. https://doi.org/10.1007/s10648-024-09983-x</p>
-<p>Yao, G., &amp; Fan, L. (2025). Cognitive Load Scale for AI-Assisted L2 Writing: Scale Development and Validation. <em>Frontiers in Psychology</em>, 16, 1666974. https://doi.org/10.3389/fpsyg.2025.1666974</p>
-<p>Yavuz, F., Çelik, Ö., &amp; Yavaş Çelik, G. (2025). Utilizing Large Language Models for EFL Essay Grading: An Examination of Reliability and Validity in Rubric-Based Assessments. <em>British Journal of Educational Technology</em>, 56(4), 1–17. https://doi.org/10.1111/bjet.13494</p>
-<p>Zimmerman, B. J. (2000). Attaining Self-Regulation: A Social Cognitive Perspective. <em>Handbook of Self-Regulation</em>, 13–39.</p>
-<p>UNESCO (2024). AI Competency Framework for Students. <em>UNESCO</em>.</p>
+<p>Acar, O. A. (2023, June 6). AI prompt engineering isn't the future. <em>Harvard Business Review</em>.</p>
+<p>Anderson, L. W., &amp; Krathwohl, D. R. (2001). A taxonomy for learning, teaching, and assessing: A revision of Bloom's taxonomy of educational objectives. Longman.</p>
+<p>Annapureddy, R., Fornaroli, A., &amp; Gatica-Perez, D. (2024). Generative AI literacy: Twelve defining competencies. <em>Digital Government: Research and Practice</em>.</p>
+<p>Bansal, G., Wu, T., Zhou, J., Fok, R., Nushi, B., Kamar, E., Ribeiro, M. T., &amp; Weld, D. S. (2021). Does the whole exceed its parts? The effect of AI explanations on complementary team performance. <em>Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems</em>.</p>
+<p>Barzilai, S., &amp; Chinn, C. A. (2018). On the goals of epistemic education: Promoting apt epistemic performance. <em>Journal of the Learning Sciences, 27</em>(3), 353–389.</p>
+<p>Bearman, M., Tai, J., Dawson, P., Boud, D., &amp; Ajjawi, R. (2024). Developing evaluative judgement for a time of generative artificial intelligence. <em>Assessment &amp; Evaluation in Higher Education, 49</em>(6), 893–905. https://doi.org/10.1080/02602938.2024.2335321</p>
+<p>Bjork, E. L., &amp; Bjork, R. A. (2011). Making things hard on yourself, but in a good way: Creating desirable difficulties to enhance learning. <em>Psychology and the Real World</em>, 56–64.</p>
+<p>Buçinca, Z., Malaya, M. B., &amp; Gajos, K. Z. (2021). To trust or to think: Cognitive forcing functions can reduce overreliance on AI in AI-assisted decision-making. <em>Proceedings of the ACM on Human-Computer Interaction, 5</em>(CSCW1), 1–21.</p>
+<p>Campbell, D. T., &amp; Fiske, D. W. (1959). Convergent and discriminant validation by the multitrait-multimethod matrix. <em>Psychological Bulletin, 56</em>(2), 81–105.</p>
+<p>Chi, M. T. H., &amp; Wylie, R. (2014). The ICAP framework: Linking cognitive engagement to active learning outcomes. <em>Educational Psychologist, 49</em>(4), 219–243.</p>
+<p>Clerc, O., Abdelghani, R., Desvaux, C., Poisson, E., Oudeyer, P., &amp; Sauzéon, H. (2026). Teaching students to question the machine: An AI literacy intervention improves students' regulation of LLM use in a science task. <em>arXiv preprint arXiv:2604.01955</em>.</p>
+<p>Collins, A., Brown, J. S., &amp; Newman, S. E. (1989). Cognitive apprenticeship: Teaching the crafts of reading, writing, and mathematics. <em>Knowing, Learning, and Instruction: Essays in Honor of Robert Glaser</em>, 453–494.</p>
+<p>Dakan, R., &amp; Feller, J. (2025). Framework for AI fluency. Anthropic.</p>
+<p>Dell'Acqua, F., McFowland III, E., Mollick, E., Lifshitz-Assaf, H., Kellogg, K., Rajendran, S., Krayer, L., Candelon, F., &amp; Lakhani, K. R. (2023). Navigating the jagged technological frontier. <em>Harvard Business School Working Paper 24-013</em>.</p>
+<p>Denny, P., Leinonen, J., Prather, J., Luxton-Reilly, A., Amarouche, T., Becker, B. A., &amp; Reeves, B. N. (2024). Prompt problems: A new programming exercise for the generative AI era. <em>Proceedings of the 55th ACM Technical Symposium on Computer Science Education (SIGCSE)</em>.</p>
+<p>Di Santi, E. (2026). Cognitive amplification vs cognitive delegation in human-AI systems: A metric framework. <em>arXiv preprint arXiv:2603.18677</em>.</p>
+<p>Durkin, K., &amp; Rittle-Johnson, B. (2012). The effectiveness of using incorrect examples to support learning about decimal magnitude. <em>Learning and Instruction, 22</em>(3), 206–214. https://doi.org/10.1016/j.learninstruc.2011.11.001</p>
+<p>Elshall, A. S., &amp; Badir, A. (2025). Balancing AI-assisted learning and traditional assessment: The FACT assessment in environmental data science education. <em>Frontiers in Education, 10</em>, 1596462. https://doi.org/10.3389/feduc.2025.1596462</p>
+<p>Facione, P. A. (1990). Critical thinking: A statement of expert consensus for purposes of educational assessment and instruction (the Delphi report). American Philosophical Association.</p>
+<p>Fan, Y., Tang, L., Le, H., Shen, K., Tan, S., Zhao, Y., Shen, Y., Li, X., &amp; Gašević, D. (2025). Beware of metacognitive laziness: Effects of generative artificial intelligence on learning motivation, processes, and performance. <em>British Journal of Educational Technology, 56</em>(2), 489–530. https://doi.org/10.1111/bjet.13544</p>
+<p>Feng, Y., Wang, S., Cheng, Z., Wan, Y., &amp; Chen, D. (2025). Are we on the right way to assessing LLM-as-a-judge? <em>arXiv preprint arXiv:2512.16041</em>.</p>
+<p>Fernandes, D., Villa, S., Nicholls, S., Haavisto, O., Buschek, D., Schmidt, A., Kosch, T., Shen, C., &amp; Welsch, R. (2024). Performance and metacognition disconnect when reasoning in human-AI interaction. <em>arXiv preprint arXiv:2409.16708</em>.</p>
+<p>Flavell, J. H. (1979). Metacognition and cognitive monitoring: A new area of cognitive-developmental inquiry. <em>American Psychologist, 34</em>(10), 906–911.</p>
+<p>Ganuthula, V. R. R., &amp; Balaraman, K. K. (2025). Artificial intelligence quotient framework for measuring human collaboration with artificial intelligence. <em>Discover Artificial Intelligence, 5</em>, 268. https://doi.org/10.1007/s44163-025-00516-1</p>
+<p>Gerlich, M. (2025). AI tools in society: Impacts on cognitive offloading and the future of critical thinking. <em>Societies, 15</em>(1), 6.</p>
+<p>Gilson, L. L., &amp; Goldberg, C. B. (2015). Editors' comment: So, what is a conceptual paper? <em>Group &amp; Organization Management, 40</em>(2), 127–130. https://doi.org/10.1177/1059601115576425</p>
+<p>Große, C. S., &amp; Renkl, A. (2007). Finding and fixing errors in worked examples: Can this foster learning outcomes? <em>Learning and Instruction, 17</em>(6), 612–634. https://doi.org/10.1016/j.learninstruc.2007.09.008</p>
+<p>Gu, X., &amp; Ericson, B. J. (2025). AI literacy in K-12 and higher education in the wake of generative AI: An integrative review. <em>Proceedings of the 2025 ACM Conference on International Computing Education Research (ICER)</em>, 125–140. https://doi.org/10.1145/3702652.3744217</p>
+<p>Hattie, J., &amp; Timperley, H. (2007). The power of feedback. <em>Review of Educational Research, 77</em>(1), 81–112.</p>
+<p>Jaakkola, E. (2020). Designing conceptual articles: Four approaches. <em>AMS Review, 10</em>, 18–26.</p>
+<p>Jin, Y., Martinez-Maldonado, R., Gašević, D., &amp; Yan, L. (2024). GLAT: The generative AI literacy assessment test. <em>arXiv preprint arXiv:2411.00283</em>.</p>
+<p>Kane, M. T. (2013). Validating the interpretations and uses of test scores. <em>Journal of Educational Measurement, 50</em>(1), 1–73. https://doi.org/10.1111/jedm.12000</p>
+<p>Kapur, M. (2008). Productive failure. <em>Cognition and Instruction, 26</em>(3), 379–424.</p>
+<p>Kim, P., Wang, W., &amp; Bonk, C. J. (2025). Generative AI as a coach to help students enhance proficiency in question formulation. <em>Journal of Educational Computing Research, 63</em>(3), 565–586. https://doi.org/10.1177/07356331251314222</p>
+<p>Kosmyna, N., Hauptmann, E., Yuan, Y. T., Situ, J., Liao, X., Beresnitzky, A. V., Braunstein, I., &amp; Maes, P. (2025). Your brain on ChatGPT: Accumulation of cognitive debt when using an AI assistant for essay writing task. <em>arXiv preprint arXiv:2506.08872</em>.</p>
+<p>Lee, H., &amp; Bosch, N. (2025). Calibration discrepancy predicts students' subsequent metacognitive strategy use in computer-based learning environments. <em>International Journal of Artificial Intelligence in Education, 35</em>(6), 3746–3779. https://doi.org/10.1007/s40593-025-00514-5</p>
+<p>Lee, J. D., &amp; See, K. A. (2004). Trust in automation: Designing for appropriate reliance. <em>Human Factors, 46</em>(1), 50–80.</p>
+<p>Lee, S. C., Baby, T., Vongvit, R., Lee, J., Kim, Y., Min, C., &amp; Yoon, S. H. (2025). Development and validation of a generative AI competence scale. <em>Technology in Society</em>. https://doi.org/10.1016/j.techsoc.2025.103059</p>
+<p>Li, C., Cui, H., &amp; Hagedorn, L. S. (2026). The cognitive impact of ChatGPT in higher education: A systematic review of critical and creative thinking outcomes. <em>Computers and Education: Artificial Intelligence, 10</em>, 100571. https://doi.org/10.1016/j.caeai.2026.100571</p>
+<p>Lo, L. S. (2023). The CLEAR path: A framework for enhancing information literacy through prompt engineering. <em>The Journal of Academic Librarianship, 49</em>(4).</p>
+<p>Long, D., &amp; Magerko, B. (2020). What is AI literacy? Competencies and design considerations. <em>Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems</em>, 1–16.</p>
+<p>McNichols, H., Ikram, F., &amp; Lan, A. (2025). The StudyChat dataset: Student dialogues with ChatGPT in an artificial intelligence course. <em>arXiv preprint arXiv:2503.07928</em>. https://doi.org/10.48550/arXiv.2503.07928</p>
+<p>Messick, S. (1995). Validity of psychological assessment: Validation of inferences from persons' responses and performances as scientific inquiry into score meaning. <em>American Psychologist, 50</em>(9), 741–749. https://doi.org/10.1037/0003-066X.50.9.741</p>
+<p>Nazaretsky, T., Gabbay, H., &amp; Käser, T. (2025). Can students judge like experts? A large-scale study on AI and human personalized formative feedback. <em>Computers and Education: Artificial Intelligence</em>. https://doi.org/10.1016/j.caeai.2025.100533</p>
+<p>Nelson, T. O., &amp; Narens, L. (1990). Metamemory: A theoretical framework and new findings. <em>The Psychology of Learning and Motivation, 26</em>, 125–173.</p>
+<p>Parasuraman, R., &amp; Manzey, D. H. (2010). Complacency and bias in human use of automation: An attentional integration. <em>Human Factors, 52</em>(3), 381–410.</p>
+<p>Paul, R., &amp; Elder, L. (2006). The miniature guide to critical thinking: Concepts and tools. Foundation for Critical Thinking.</p>
+<p>Randazzo, B., Lifshitz-Assaf, H., Kellogg, K., Dell'Acqua, F., Mollick, E., Candelon, F., &amp; Lakhani, K. R. (2025). Cyborgs, Centaurs and Self-Automators: Modes of human-AI collaboration in knowledge work. <em>Harvard Business School Working Paper 26-036</em>.</p>
+<p>Runco, M. A., &amp; Chand, I. (1995). Cognition and creativity. <em>Educational Psychology Review, 7</em>(3), 243–267.</p>
+<p>Sadler, D. R. (1989). Formative assessment and the design of instructional systems. <em>Instructional Science, 18</em>(2), 119–144.</p>
+<p>Salomon, G., Perkins, D. N., &amp; Globerson, T. (1991). Partners in cognition: Extending human intelligence with intelligent technologies. <em>Educational Researcher, 20</em>(3), 2–9.</p>
+<p>Sidra, S., &amp; Mason, C. (2025). Generative AI in human-AI collaboration: Validation of the collaborative AI literacy and collaborative AI metacognition scales. <em>International Journal of Human-Computer Interaction</em>. https://doi.org/10.1080/10447318.2025.2543997</p>
+<p>Sperber, D., Clément, F., Heintz, C., Mascaro, O., Mercier, H., Origgi, G., &amp; Wilson, D. (2010). Epistemic vigilance. <em>Mind &amp; Language, 25</em>(4), 359–393.</p>
+<p>Srinath, S., Vadaparty, A., Smith IV, D. H., Porter, L., &amp; Zingaro, D. (2025). Assessing problem decomposition in CS1 for the GenAI era. <em>arXiv preprint arXiv:2511.05764</em>.</p>
+<p>Tankelevitch, L., Kewenig, V., Simkute, A., Scott, A. E., Sarkar, A., Sellen, A., &amp; Rintel, S. (2024). The metacognitive demands and opportunities of generative AI. <em>Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems</em>.</p>
+<p>Tour, E., &amp; Zadorozhnyy, A. (2025). Conceptualizing and operationalizing prompt literacy for English language learners. <em>Journal of Adolescent &amp; Adult Literacy</em>. https://doi.org/10.1002/jaal.70020</p>
+<p>UNESCO (2024). AI competency framework for students. UNESCO.</p>
+<p>Vaccaro, M., Almaatouq, A., &amp; Malone, T. (2024). When combinations of humans and AI are useful: A systematic review and meta-analysis. <em>Nature Human Behaviour, 8</em>, 2293–2303.</p>
+<p>Vygotsky, L. S. (1978). Mind in society: The development of higher psychological processes. Harvard University Press.</p>
+<p>Walton, J., Bearman, M., Crawford, N., Tai, J., &amp; Boud, D. (2025). How university students work on assessment tasks with generative artificial intelligence: Matters of judgement. <em>Assessment &amp; Evaluation in Higher Education</em> (advance online publication). https://doi.org/10.1080/02602938.2025.2570328</p>
+<p>Wingerter, T. L., Straub, T., &amp; Schweitzer, S. (2025). Mitigating automation bias in generative AI through nudges: A cognitive reflection test study. <em>Procedia Computer Science, 270</em>, 2106–2114. https://doi.org/10.1016/j.procs.2025.09.331</p>
+<p>Winne, P. H., &amp; Hadwin, A. F. (1998). Studying as self-regulated learning. <em>Metacognition in Educational Theory and Practice</em>, 277–304.</p>
+<p>Wirth, J., Weber-Reuter, X.-L., Schuster, C., Fleischer, J., Leutner, D., &amp; Stebner, F. (2025). Far transfer of metacognitive regulation: From cognitive learning strategy use to mental effort regulation. <em>Educational Psychology Review, 37</em>(1), 7. https://doi.org/10.1007/s10648-024-09983-x</p>
+<p>Yao, G., &amp; Fan, L. (2025). Cognitive load scale for AI-assisted L2 writing: Scale development and validation. <em>Frontiers in Psychology, 16</em>, 1666974. https://doi.org/10.3389/fpsyg.2025.1666974</p>
+<p>Yavuz, F., Çelik, Ö., &amp; Yavaş Çelik, G. (2025). Utilizing large language models for EFL essay grading: An examination of reliability and validity in rubric-based assessments. <em>British Journal of Educational Technology, 56</em>(4), 1–17. https://doi.org/10.1111/bjet.13494</p>
+<p>Zimmerman, B. J. (2000). Attaining self-regulation: A social cognitive perspective. <em>Handbook of Self-Regulation</em>, 13–39.</p>
 </div>
-<h2 id="appendix-a-system-walkthrough">Appendix A. System walkthrough</h2>
-<p>Figure A1 shows a single challenge run in CoReasoningLab, illustrating how the three skills appear as
-distinct, separately-scored stages of one continuous task. In Phase 1 the learner refines an
-ill-defined problem and receives a Framing grade. The system then produces a deliberately flawed
-solution. In Phase 2 the learner judges that output (flagging real issues while avoiding distractors)
-and steers the AI with a targeted correction; the output converges across cycles. The final report
-returns three independent grades with per-skill diagnostic feedback, the interface-level expression of
-the framework's central claim that productive AI use is not one skill but three.</p>
-<p><img alt="Figure A1. A CoReasoningLab challenge run." src="assets/system-challenge-run.png" /></p>
-<p><em>Figure A1. Screenshot of the running platform: a learner's challenge run at the Framing phase. The
-engine has generated an ill-defined problem (here, an AI hiring-screening task), and the learner
-specifies refinements before any solution is produced. The two-phase structure is explicit in the
-interface, Phase 1 (Framing) and Phase 2 (the Judge-Steer cycle), and each skill is scored and given
-feedback independently.</em></p>
-<p>The platform exposes role-specific interfaces beyond the challenge run (Figure A2). Students see a
-dashboard of pending challenges and courses and a personal results view that trends Framing, Judging,
-and Steering separately over time. Instructors author challenges (the system auto-generates the
-ill-defined problem and the three per-skill rubrics) and read course analytics that break grade
-distributions down by rubric and by student. In every view the three skills remain distinct columns,
-which is the design commitment the framework makes visible.</p>
-<p><img alt="Figure A2. CoReasoningLab instructor course analytics." src="assets/system-instructor-analytics.png" /></p>
-<p><em>Figure A2. Screenshot of the running platform: the instructor course-analytics view. Grade
-distribution is broken out into separate Framing, Judging, and Steering panels, and the per-student
-results list the three skills as distinct columns, the interface-level expression of the framework's
-central claim that productive AI use is not one skill but three.</em></p>
-<p><img alt="Figure A3. Auto-generation and assessment pipeline of the CoReasoningLab engine." src="assets/system-pipeline.svg" /></p>
-<p><em>Figure A3. The sixteen-prompt engine in two phases. In authoring, the instructor names a subject and the
-engine generates the ill-defined problem (prompt 01), three per-skill rubrics and a gold framing (02, 14),
-and a deliberately flawed AI solution carrying seeded issues (03). In assessment, each learner response is
-scored against a different referent: Framing against the gold framing and rubric (08), Judging against the
-seeded issues (09), and Steering against the corrected trajectory after the output is re-run (04, 10); a
-single grader prompt (11) then assigns each skill its own grade, and the three feed the per-student report
-and course analytics. Because the three evaluation prompts interrogate different referents, the grades are
-produced independently rather than as one global impression.</em></p>
-<h2 id="appendix-b-robustness-and-ablations">Appendix B. Robustness and ablations</h2>
-<p><strong>Reliability.</strong> To check that the grades are not noise, we hold four learner transcripts fixed and
-re-run the evaluation-and-grading prompts five times each, an independent sample each time at the
-production temperatures. The grader is <strong>92% self-consistent</strong> overall: the
-mean grade-flip rate across repeats is 0.08, with Judging deterministic (0.00, by construction),
-Framing 0.15, and Steering 0.10, and a mean within-cell grade standard deviation near 0.2 on the
-three-point scale, indicating that disagreements are occasional one-level boundary jitter rather than
-unstable scoring. This addresses the documented self-inconsistency of LLM judges, though it measures
-<em>precision</em> (repeatability), not <em>accuracy</em> against humans (Section 9.3). Because Judging contributes a
-flip rate of zero by construction, the load-bearing figure is the blind-graded skills, whose flip rate
-is near 0.12.</p>
-<p><strong>Grader-backend robustness (across vendors).</strong> The dissociation holds across three grader backends
-spanning two providers. The primary grades come from gpt-4o; re-grading the identical 40 transcripts
-(challenges and learner responses held fixed) with gpt-4o-mini reproduces it (diagonal +0.47 versus
-off-diagonal +0.07), and re-grading the same transcripts with an independent-vendor model,
-Meta's llama-3.3-70b (the prototype's own engine), reproduces it again with a stronger margin:
-own-skill effects of +0.80 (Framing), +0.75 (Judging), and +0.40 (Steering) against a mean cross-skill
-effect of +0.02, a diagonal-to-off-diagonal ratio of 39. Two facts stand out across backends. First,
-Judging's own-effect is +2.00 only under gpt-4o's strict adherence to the seeded-issue selection; under
-both gpt-4o-mini and the independent-vendor llama it settles to +0.65 and +0.75, level with Framing
-(+0.65 and +0.80), so the separation is balanced across all three skills, not propped up by the built-in
-Judging diagonal. Second, every backend reproduces the designed contrast profiles (a strong-framer /
-weak-judge learner scores high Framing and low Judging, and the inverse for a weak-framer / strong-judge
-learner), which a single general-ability account cannot produce. Because the result holds across three
-independently-versioned models from two vendors (gpt-4o, gpt-4o-mini, and Meta's llama-3.3-70b), it does
-not hinge on a single model snapshot; the released harness pins the model identifiers so the run
-reproduces, and the cross-backend agreement is the evidence that it generalizes beyond any one of them.
-Cross-vendor replication is therefore established, not deferred.</p>
-<p><strong>Dependence on ground-truth scaffolding.</strong> To probe how much the instrument's discrimination relies on
-the seeded ground truth (the gold framing supplied to the framing evaluator and the known seeded issues
-supplied to the judging evaluator) versus the model's own judgment, we re-grade a 40-learner subset
-(five subjects) with that scaffolding removed, comparing against that subset's own baseline (Framing
-+0.60, Judging +2.00, Steering +0.50). The effect is sharply skill-specific. Framing discrimination is essentially
-unaffected (own-effect +0.75 without the gold reference, versus +0.60 with it): the rubric and the
-model's own judgment carry it. Judging discrimination, by contrast, falls sharply (+2.00 to +0.45):
-without the known issues the grader has no recall-precision anchor and no longer separates strong from
-weak judging. Steering falls in between (+0.50 to +0.25). The skills still
-dissociate (ratio 29), and the result pinpoints what each grade measures: Framing and Steering are
-scored largely by rubric-guided model judgment, whereas Judging <em>as instrumented here</em> tracks agreement
-with a known answer key. This both explains Judging's by-construction +2.00 and locates the Judging
-score precisely: it applies where ground truth is known, and open-ended judging without a key is the
-distinct instrumentation Section 9.3 specifies.</p>
-<h2 id="appendix-c-cross-disciplinary-challenge-showcase">Appendix C. Cross-disciplinary challenge showcase</h2>
-<p>The framework and the platform are domain-general. An ill-defined problem with seeded flaws, three
-per-skill rubrics, and a deliberately-imperfect AI solution can be generated for any subject, because
-each is produced by a prompt that an educator parameterizes with a course and topic. The released
-platform ships challenge content across twelve disciplines (Table C1) spanning STEM, the social
-sciences, the humanities, law, and professional and education fields. CoReasoningLab is in this sense
-not a computing-education tool but a generic instrument for any discipline in which a learner must
-specify an ill-defined task, judge a fallible solution, and steer it toward a better one.</p>
-<p><strong>Table C1. Disciplines covered by the released challenge content.</strong></p>
-<table>
-<thead>
-<tr>
-<th>Area</th>
-<th>Disciplines</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>STEM</td>
-<td>Computer Science (algorithms); Physics (classical mechanics); Mathematics (linear algebra); Electrical Engineering (signal processing); Biology (molecular biology)</td>
-</tr>
-<tr>
-<td>Social sciences</td>
-<td>Economics (microeconomics); Political Science (international relations); Psychology (cognitive psychology)</td>
-</tr>
-<tr>
-<td>Humanities and law</td>
-<td>Philosophy (applied ethics); Law (constitutional law)</td>
-</tr>
-<tr>
-<td>Professional and education</td>
-<td>Business (organizational behavior); Education (educational technology)</td>
-</tr>
-</tbody>
-</table>
-<p>The four examples below are real ill-defined problems the platform generated, in applied ethics,
-physics, instructional design, and computing, each of which a learner must Frame before the AI produces
-a flawed solution to Judge and Steer:</p>
-<ul>
-<li><strong>Applied ethics.</strong> "As a member of the AI Ethics Committee at a technology company, you have been tasked with developing a set of ethical guidelines for the deployment of a new AI system."</li>
-<li><strong>Physics.</strong> "As part of a project for a local amusement park, design a new ride that involves a projectile-motion component, and analyze the outcomes."</li>
-<li><strong>Instructional design (education).</strong> "Our organization is developing a new training program on effective communication skills. Design a backward lesson plan."</li>
-<li><strong>Computer science.</strong> "Our company is building a navigation app. Design an algorithm that computes the shortest path between two locations on a road network with varying travel speeds, possible road closures, and concurrent route requests."</li>
-</ul>
-<p>The deliberate gaps differ by discipline (a missing fairness criterion in the ethics task, an unstated
-launch or safety constraint in the physics task, undefined learning objectives in the lesson-plan task),
-but the learner's work is identical across all of them: specify the task (Framing), evaluate the AI's
-flawed solution (Judging), and redirect it toward an adequate one (Steering). Full per-discipline session
-logs ship with the platform.</p>
 </body>
 </html>
