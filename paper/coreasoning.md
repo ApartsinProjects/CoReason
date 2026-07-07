@@ -53,14 +53,13 @@ task badly, failed to detect the flaws in the output, or knew the flaws but coul
 These are different failures with different remedies, and a single "prompting" score conflates them.
 
 This trajectory is not transient, and that is what raises the stakes for assessment. As models absorb
-more of the execution, the human contribution does not disappear; it concentrates in the operations a
-system cannot perform on its own behalf: choosing which problem is worth solving and specifying it,
-judging whether a fluent output is actually right, and redirecting the model when it is not. The field
-evidence that AI's value is conditional on the user's skill (Dell'Acqua et al., 2023; Vaccaro et al.,
-2024) implies that this conditioning tightens rather than loosens as systems improve, so the durable,
-assessable human skill shifts from executing a task to framing, judging, and steering it (Acar, 2023;
-Denny et al., 2024) (Figure 1). An assessment that still measures unaided execution therefore measures
-a shrinking part of what competent work will require.
+more of the execution, the human contribution concentrates in the operations a system cannot perform on
+its own behalf: specifying which problem is worth solving, judging whether a fluent output is right, and
+redirecting the model when it is not. Field evidence that AI's value is conditional on the user's skill
+(Dell'Acqua et al., 2023; Vaccaro et al., 2024) implies this conditioning tightens as systems improve,
+so the durable, assessable skill shifts from executing a task to framing, judging, and steering it
+(Acar, 2023; Denny et al., 2024) (Figure 1). An assessment that still measures unaided execution
+therefore measures a shrinking part of what competent work will require.
 
 ![Figure 1. As model capability rises, the human contribution concentrates in Framing, Judging, and Steering.](assets/forward-thesis.svg)
 
@@ -283,54 +282,28 @@ signatures (for example, reduced post-task recall) documented in the cognitive-d
 
 The constructs that compose CoRe-3 are not individually new; what is new is their separation into
 three parallel, independently-assessable competencies anchored in a monitor-control architecture. We
-make the boundary explicit by confronting the nearest priors directly.
+make the boundary explicit against the nearest priors.
 
-**AI-fluency frameworks.** The closest practitioner framework is the 4D model of AI fluency (Dakan &
-Feller, 2025): Delegation, Description, Discernment, Diligence. Its Discernment maps cleanly onto
-Judging, but its Description bundles two operations we deliberately separate: crafting the initial
-specification and conducting the iterative back-and-forth. CoRe-3's contention is that these are
-distinct skills at distinct times, the pre-generation act of Framing and the post-generation act of
-Steering, with different error modes (a malformed task versus a mis-targeted correction) and different
-instructional remedies. CoRe-3 also derives its skills from learning theory and an assessment
-rationale rather than from a fluency heuristic, and so yields rubrics and dissociation predictions
-that a checklist does not.
+**Fluency, metacognitive, and prompt-literacy frameworks.** The 4D model of AI fluency (Dakan &
+Feller, 2025) maps Discernment onto Judging but bundles the initial specification and the iterative
+back-and-forth into one "Description," exactly the pre- versus post-generation operations we separate.
+Tankelevitch et al. (2024) analyse generative-AI use as metacognitive demands (prompting, output
+evaluation, workflow iteration); we share that foundation but convert a demands analysis into an
+assessable model with rubrics, propositions, and dissociation evidence. Prompt-literacy models such as
+CLEAR (Lo, 2023), including the formulate-interpret-refine decomposition of Tour and Zadorozhnyy
+(2025), likewise fuse task specification and refinement under "prompting" and do not grade the
+sub-practices as dissociable competencies. This fusion of Framing and Steering is the conflation
+CoRe-3 rejects, and our feasibility demonstration shows the two grades can diverge.
 
-**Metacognitive analyses of generative AI.** The strongest construct-level neighbour is Tankelevitch
-et al. (2024), who analyse generative-AI use through the lens of metacognitive demands, naming
-prompting, output evaluation, and workflow iteration as sites of metacognitive monitoring and control.
-We share the metacognitive foundation but differ in goal: their contribution is a demands analysis (a
-cognitive-load lens that explains why GenAI is hard to use well), whereas ours is an assessable
-competency model with explicit rubrics, propositions, and feasibility evidence that the components
-dissociate. The two are complementary: their analysis motivates why each of our skills is cognitively
-demanding; our framework makes each one measurable.
-
-**Prompt-literacy frameworks.** Prompt-literacy models such as CLEAR (Lo, 2023) and the broader
-prompt-literacy literature define competence as constructing a precise prompt and iteratively refining
-it. The most developed recent decomposition, an operationalization of prompt literacy into formulate,
-interpret, and refine sub-practices (Tour & Zadorozhnyy, 2025), is the closest competitor to our
-triad; but it bundles task specification and iterative refinement under "prompting" and does not treat
-the sub-practices as separately graded, dissociable competencies. This fusion of Framing and Steering
-into a single "prompting" skill is exactly the conflation CoRe-3 rejects. Treating them
-separately is consequential: it predicts, and our feasibility demonstration supports, that
-a simulated learner's model-assigned Framing and Steering grades can diverge.
-
-**Metric frameworks for human-AI cognition.** A distinct 2026 line proposes named multi-metric schemes
-for working with AI, for instance a cognitive-amplification-versus-delegation framework with dependency
-and drift metrics (Di Santi, 2026). These measure the *sustainability* of reliance rather than
-teachable framing, judging, and steering competencies, and so are complementary to, not competitive
-with, an assessable-skill decomposition.
-
-**Knowledge-oriented AI-literacy frameworks.** Field-defining competency sets such as Long & Magerko
-(2020) and the UNESCO (2024) student framework define AI literacy primarily as understanding AI
-systems, their capabilities, limits, and ethics, rather than as executing tasks within a human-AI
-loop. They contain no Framing or Steering construct and only a diffuse notion of critical evaluation
-that partly overlaps Judging. CoRe-3 is orthogonal: it specifies the task-execution competencies
-these frameworks leave implicit.
-
-**Empirical accounts of AI-use modes.** Field studies describe how skilled users actually work with AI:
-the "Cyborg" mode of continuous push-back-and-validate (Randazzo et al., 2025) and the sharp
-skill-dependence of AI's value at the competence frontier (Dell'Acqua et al., 2023). These describe the
-behaviour; CoRe-3 supplies the assessable skill decomposition that underlies it.
+**Literacy, metric, and mode frameworks.** Knowledge-oriented AI-literacy sets (Long & Magerko, 2020;
+UNESCO, 2024) define literacy as understanding AI systems and contain no Framing or Steering construct,
+only a diffuse "critical evaluation"; CoRe-3 supplies the task-execution competencies they leave
+implicit. Metric schemes for human-AI cognition, such as a cognitive-amplification-versus-delegation
+framework with dependency and drift metrics (Di Santi, 2026), measure the *sustainability* of reliance
+rather than teachable skills. Field accounts of how skilled users work, the continuous
+push-back-and-validate "Cyborg" mode (Randazzo et al., 2025) and the skill-dependence of AI's value at
+the competence frontier (Dell'Acqua et al., 2023), describe the behaviour that CoRe-3 decomposes into
+assessable skills.
 
 Table 1 makes the boundary explicit by mapping each nearest prior framework's constructs onto
 Framing, Judging, and Steering. The recurring pattern is that prior frameworks either (i) omit a
@@ -349,47 +322,28 @@ construct, or (ii) *fuse* Framing and Steering into one "prompting/iteration" sk
 No prior column cleanly separates the pre-generation and post-generation skills *and* treats all
 three as independently scored competencies. That conjunction is the contribution.
 
-**Validated GenAI-competency instruments.** A parallel line of work builds psychometric instruments
-for AI and generative-AI competence, including validated scales such as GenAIComp (Lee et al., 2025;
-with factors derived from digital-competence frameworks) and assessment tests such as GLAT
-(Jin et al., 2024). These establish that GenAI competence can be measured, but their factor structures
-are literacy-oriented (information literacy, ethics, content creation) and do not isolate a Framing,
-Judging, or Steering construct. The work closest to ours pairs AI-collaboration literacy with
-metacognition (Sidra & Mason, 2025) and includes an AI-evaluation
-sub-construct that overlaps Judging; we differ in separating the pre-generation and post-generation
-control skills and in demonstrating their dissociation rather than positing correlated factors.
-CoRe-3 is complementary to this measurement program: it supplies the specific, theory-derived
-decomposition that a future validated instrument could operationalize. Rubric-based LLM grading studies
-report high agreement with human raters (intraclass correlation up to 0.97) yet systematic divergence on
-subjective criteria (Yavuz et al., 2025); the multitrait-multimethod design we use across three grader
-backends (Section 8) treats that grader-method variance as a measured term rather than a confound.
+**Validated instruments and evaluative judgement.** Psychometric GenAI-competence scales such as
+GenAIComp (Lee et al., 2025) and tests such as GLAT (Jin et al., 2024) establish that GenAI competence
+is measurable, but their factor structures are literacy-oriented and isolate no Framing, Judging, or
+Steering construct; the work closest to ours pairs AI-collaboration literacy with metacognition
+(Sidra & Mason, 2025) yet posits correlated factors rather than demonstrating dissociation. Because
+rubric-based LLM grading can agree highly with humans yet diverge on subjective criteria
+(Yavuz et al., 2025), our multitrait-multimethod design across three grader backends (Section 8) treats
+grader-method variance as a measured term. Our Judging skill operationalizes the evaluative judgement
+argued to be the core human capability for the AI era (Bearman et al., 2024; Walton et al., 2025):
+critical evaluation is the highest-load activity in AI-assisted writing (Yao & Fan, 2025) and users
+default to uncritical acceptance without intervention (Wingerter et al., 2025), which is why we treat
+it as one of three separable skills rather than one overarching disposition. Among named frameworks,
+the eight-dimension AI Quotient (Ganuthula & Balaraman, 2025) leaves prompt-engineering fused, whereas
+CoRe-3 splits it into pre-generation Framing and post-generation Steering; assessment-mode partitions of
+coursework (Elshall & Badir, 2025) are orthogonal and complementary.
 
-**Problem formulation as the AI-era skill.** A prominent strand argues that, as models absorb
-execution, the durable human skill shifts from prompt crafting to *problem formulation*, identifying,
-analyzing, and delineating the problem worth solving (Acar, 2023). This is precisely our Framing
-construct, and classroom work has begun to assess it directly, for example through "prompt problems"
-that require students to specify and evaluate rather than only prompt (Denny et al., 2024), and
-through instruments that treat question formulation (Kim et al., 2025) and problem decomposition
-(Srinath et al., 2025) as independently measurable, trainable skills in generative-AI settings. That
-Framing is a distinct competency is further supported by the older problem-finding literature, which
-established problem finding as empirically separable from problem solving (Runco & Chand, 1995). We
-build on this strand by placing Framing in a measured loop with Judging and Steering.
-
-**Evaluative judgement and named-competency frameworks.** The capacity to discern quality, *evaluative
-judgement*, has been argued to be the core human capability for the generative-AI era (Bearman et al.,
-2024), and students are observed to make continuous in-the-loop accept-and-reject judgements while
-working with AI on assessment tasks (Walton et al., 2025). Our Judging skill operationalizes evaluative
-judgement specifically for AI output; CoRe-3 then departs from a unified-judgement account by
-separating it from the generative acts of Framing and Steering, treating evaluation as one of three
-independently-measurable skills rather than a single overarching disposition. Two findings reinforce
-that Judging is a separable, demanding construct: critical evaluation is the single highest-load
-activity in AI-assisted writing (Yao & Fan, 2025), and users default to uncritically accepting AI
-output absent intervention (Wingerter et al., 2025). Among named competency frameworks, the AI Quotient
-enumerates eight broad collaboration dimensions (Ganuthula & Balaraman, 2025); CoRe-3 instead
-collapses to three minimal, independently-assessable skills and, crucially, splits the single
-prompt-engineering dimension that such frameworks leave fused into a pre-generation Framing skill and a
-post-generation Steering skill. Frameworks that partition coursework by assessment mode rather than by
-cognitive skill (Elshall & Badir, 2025) are orthogonal and complementary.
+**Problem formulation as the AI-era skill.** As models absorb execution, a prominent strand argues the
+durable human skill shifts to *problem formulation* (Acar, 2023), precisely our Framing construct;
+classroom work assesses it through prompt problems (Denny et al., 2024), question formulation
+(Kim et al., 2025), and problem decomposition (Srinath et al., 2025), and the older problem-finding
+literature established it as separable from problem solving (Runco & Chand, 1995). We build on this
+strand by placing Framing in a measured loop with Judging and Steering.
 
 **One-line novelty.** CoRe-3 is, to our knowledge, the first theoretically-grounded decomposition
 of productive generative-AI use into three independently-assessable competencies that separates
@@ -400,57 +354,42 @@ measured apart).
 
 ## 7. The CoReasoningLab system
 
-The framework is instantiated in *CoReasoningLab*, a runnable open-source web platform, which we
-describe here so that the abstract skills map onto a concrete learner experience. The platform is a
-Node/Express application with role-based access (student, instructor, administrator), a challenge
-database, practice and assessment modes, multiple-choice and open-ended response formats per phase, and
-a five-language content library (English, Hebrew, German, Spanish, French). Its full source, the web
-application, the database schema, the content library, and the *scoring engine* of sixteen prompts
-(Section 7.1), is released, alongside a pedagogical-foundations document mapping the design to learning
-theory. Figures A1 and A2 are screenshots of the running platform, and Appendix A walks through the
-system end to end. All challenges evaluated in this paper are
-English-language (Section 9.2), and the quantitative results come from the scoring engine over controlled
-inputs rather than from production usage logs.
+The framework is instantiated in *CoReasoningLab*, a runnable open-source web platform that maps the
+abstract skills onto a concrete learner experience. It is a Node/Express application with role-based
+access (student, instructor, administrator), a challenge database, practice and assessment modes,
+multiple-choice and open-ended response formats, and a five-language content library (English, Hebrew,
+German, Spanish, French). Its full source, the web application, the database schema, the content
+library, and the *scoring engine* of sixteen prompts (Section 7.1), is released, alongside a
+pedagogical-foundations document; the Supplementary Material walks through the running system. All
+challenges evaluated here are English-language (Section 9.2), and the quantitative results come from the
+scoring engine over controlled inputs, not production logs.
 
 Because challenge generation, rubric generation, and scoring are themselves prompt-defined, the engine
-extends to a new subject, language, or grader backend by substitution rather than redesign: the
-feasibility demonstration exercises it unchanged across ten subjects (Section 8) and two grader models,
-and the released artifact lets others add their own. The platform is therefore **domain-general**: it is
-not a computing-education tool but a generic instrument for any discipline in which a learner must
-specify an ill-defined task, judge a fallible solution, and steer it toward a better one. The released
-content already spans **twelve disciplines** across STEM, the social sciences, the humanities, law, and
-professional and education fields, from algorithms and classical mechanics to constitutional law,
-applied ethics, and instructional design (Appendix C). An educator in any of these fields authors a
-challenge by naming a subject; the system generates the ill-defined problem, the three per-skill
-rubrics, and the seeded-flaw solution. The monitor-control scaffold is likewise open to
-additional skills where a setting calls for them; the three are a deliberately small decomposition that
-separates pre-generation, evaluative, and post-generation control. The released instrument is therefore
-usable as a starting point for others to extend, not only to reproduce.
+extends to a new subject, language, or grader backend by substitution rather than redesign, and the
+released artifact lets others add their own. The platform is therefore **domain-general**: not a
+computing-education tool but a generic instrument for any discipline in which a learner must specify an
+ill-defined task, judge a fallible solution, and steer it toward a better one. Its released content
+already spans **twelve disciplines** across STEM, the social sciences, the humanities, law, and
+professional fields (Supplementary Material). An educator authors a challenge by naming a subject; the
+system generates the ill-defined problem, the three per-skill rubrics, and the seeded-flaw solution.
 
 **Authoring flow (instructor).** An instructor defines a challenge by choosing a course and subject
 path; the system then generates the ill-defined problem, the three per-skill rubrics, the gold-standard
 framing, and the seeded-flaw solution that the learner will critique (Section 7.1). Challenges are
 organized into courses and can be assigned to cohorts.
 
-**Learner flow (student).** From a dashboard of assigned challenges, a student enters a
-challenge run that walks through the framework's two phases (Figure A1):
-
-1. *Phase 1: Framing.* The student is shown the raw, ill-defined problem and adds refinement sections
-   (assumptions, constraints, clarifications, success metrics) or selects refinements in
-   multiple-choice mode, then submits. The platform returns rubric-driven Framing feedback and a grade.
-2. *AI generation.* The system produces a plausible but deliberately flawed solution to the framed task.
-3. *Phase 2: Judge/Steer cycles.* In each cycle the student first **judges** the current output
-   (flagging issues it contains) and then **steers** the AI (issuing correction commands); the AI
-   returns an updated output. The student repeats this up to a configured maximum number of cycles and
-   marks the task complete when satisfied.
-4. *Per-skill feedback and grades.* Framing, Judging, and Steering are scored separately, each with its
-   own rubric-driven feedback, and surfaced in a per-challenge report and in longitudinal student
-   analytics that track the three skills independently over time.
-
-This separation in the interface, distinct phases, distinct feedback channels, and distinct grade
-columns, is the framework's central claim made operational: a learner sees, and is scored on, three
-different things they did, not one undifferentiated "AI use." The remainder of this section describes
-the instrument that produces those scores.
+**Learner flow (student).** A student enters a challenge run with two phases, walked through step by
+step in the Supplementary Material. In Phase 1 (Framing) the student refines the raw ill-defined problem,
+by writing refinement sections (assumptions, constraints, clarifications, success metrics) or selecting
+them in multiple-choice mode, and receives rubric-driven Framing feedback and a grade. The system then
+produces a plausible but deliberately flawed solution. In Phase 2 the student repeatedly **judges** the
+current output (flagging its issues) and **steers** the AI (issuing correction commands), up to a
+configured maximum, and marks the task complete when satisfied. Framing, Judging, and Steering are
+scored separately, each with its own rubric-driven feedback, and surfaced in a per-challenge report and
+longitudinal analytics that track the three skills independently. This separation in the interface,
+distinct phases, feedback channels, and grade columns, is the framework's central claim made
+operational: a learner sees, and is scored on, three different things, not one undifferentiated
+"AI use." The remainder of this section describes the instrument that produces those scores.
 
 ### 7.1 Operationalization: the assessment instrument
 
@@ -488,20 +427,15 @@ and falsely flagged); and Steering is evaluated against the trajectory of the ou
 rewarding corrections that demonstrably move the solution toward correctness. This is why the skills
 are measured *apart*: each evaluator interrogates a different referent.
 
-The instrument used in this paper is the scoring engine of the CoReasoningLab platform, a library
-of sixteen prompts spanning challenge construction, AI generation, and evaluation (Figure A3 traces the full
-generation-and-assessment pipeline). The released library
-carries the platform's evaluation logic verbatim, the same rubrics, criteria, and system prompts as the
-deployed application; the only adaptation is that JSON output formatting is supplied by the research
-harness rather than embedded in each prompt. The surrounding harness (simulated-learner generation, the
-crossed factorial, and the analysis) is research orchestration around that fixed evaluation logic, not a
-reimplementation of it, so the measurements characterize the instrument itself. Scoring a single
-learner exercises the relevant subset, the three skill evaluators and the generic grader, over
-controlled inputs, so that the measurements are reproducible and the ground truth is known. A
-scope note: the grader is a language model, so the results below characterize the *internal* behavior
-of the instrument (whether it separates controlled competence levels and dissociates the skills);
-agreement with human experts is the separate validity question the prepared study in Section 9.3
-addresses.
+The instrument used here is the scoring engine of the CoReasoningLab platform, a library of sixteen
+prompts spanning challenge construction, AI generation, and evaluation (traced in the Supplementary
+Material). It carries the deployed application's evaluation logic verbatim, the same rubrics, criteria,
+and system prompts; the research harness (simulated-learner generation, the crossed factorial, and the
+analysis) only orchestrates that fixed logic over controlled inputs, so the measurements are
+reproducible and characterize the instrument itself. Because the grader is a language model, the results
+below characterize the instrument's *internal* behavior (whether it separates controlled competence
+levels and dissociates the skills); agreement with human experts is the separate validity question the
+prepared study in Section 9.3 addresses.
 
 ## 8. Feasibility demonstration
 
@@ -514,15 +448,13 @@ graders is prepared and is the next stage (Section 9.3).
 
 **Design.** We use a crossed factorial: each of the three skills is independently set to a strong or
 weak competence level, giving $2^3 = 8$ profiles, crossed with ten challenges across ten distinct
-subjects (algorithms, microeconomics, machine learning, databases, statistics, operating systems,
-calculus, organic chemistry, linguistics, and corporate finance), for 80 simulated learners. Framing
-and Steering responses are generated by the competence-conditioned learner model; Judging is operationalized by a competence-conditioned
-selection over the challenge's ground-truth seeded issues (a strong judge flags all real issues and no
-false ones; a weak judge flags few real issues and some false ones). These seeded issues and the
-distractors are themselves machine-generated and not yet human-verified, so Judging's by-construction
-own-effect is explicitly contingent on that ground truth being correct. Because the manipulation is per skill,
-the design can separate whether each grade tracks its *own* skill's competence (discrimination) from
-whether it is *insensitive* to the other skills' competence (dissociation).
+subjects (spanning STEM, the social sciences, and the humanities), for 80 simulated learners. Framing
+and Steering responses are generated by the competence-conditioned learner model; Judging is
+operationalized by a competence-conditioned selection over the challenge's ground-truth seeded issues (a
+strong judge flags all real issues and no false ones; a weak judge flags few and adds false ones), which
+are themselves machine-generated and not yet human-verified. Because the manipulation is per skill, the
+design separates whether each grade tracks its *own* skill's competence (discrimination) from whether it
+is *insensitive* to the others' (dissociation).
 
 **Discrimination.** Grades move monotonically with competence: the all-weak profile averages C on every
 skill, the all-strong profile averages between B and A, and each skill's grade rises when that skill is
@@ -578,28 +510,22 @@ under-identified, so we rest the separability evidence on the manipulation-based
 inter-skill correlations rather than on a confirmatory dimensionality test.
 
 **Convergent and discriminant validity (a multitrait-multimethod view).** The result so far is a
-*discriminant*-validity finding: three skills (traits) separate. Construct validity also requires the
-complementary *convergent* property, that the same skill measured by different methods agrees, and that
-the instrument reports correlation when the underlying competence really is shared (Campbell & Fiske,
-1959). Two analyses supply it. First, treating the three grader backends as independent methods, the
-same skill graded by gpt-4o, gpt-4o-mini, and the independent-vendor llama-3.3-70b agrees at the
-per-learner level for the two skills with the widest grade range (mean pairwise rank correlation +0.57
-for Framing and +0.67 for Judging across the 40 shared transcripts), while *different* skills stay near
-zero, the convergent-high / discriminant-low pattern a valid measure should show; Steering's narrower
-range under the P2 ceiling yields a lower cross-method correlation (+0.21), a restriction of variance
-rather than a separate construct. Laid out as the full multitrait-multimethod matrix, the convergent
-correlations (same skill across graders, mean +0.49) exceed both the heterotrait-monomethod correlations
-(different skills within one grader, mean +0.08) and the heterotrait-heteromethod correlations (different skills across different graders, mean
-+0.06); no grader shows halo (within-grader cross-skill mean $|\rho|$ of 0.13, 0.18, 0.13 for the three
-backends), so all three Campbell-Fiske criteria hold. Second, the instrument is faithful to the population's dependence
-structure: on learners whose three competences are set *independently* (the full crossed design) the
-inter-skill grade correlations are near zero (mean $|\rho| = 0.13$; Framing-Judging $\rho = -0.03$),
-whereas on the 20 learners whose three competences are all set strong or all set weak (a single shared
-ability level) the same instrument returns *positive* correlations (mean $\rho = +0.41$;
-Framing-Judging $\rho = +0.52$). The instrument therefore does not
-manufacture dissociation: it recovers independence when the competences are independent and correlation
-when they are shared, which is what licenses reading the crossed-design separation as a property of the
-skills rather than of the scoring (Table 3).
+*discriminant*-validity finding: three traits separate. Construct validity also requires the convergent
+property, that the same skill measured by different methods agrees, and that the instrument reports
+correlation when the underlying competence really is shared (Campbell & Fiske, 1959). Two analyses
+supply it. First, treating the three grader backends (gpt-4o, gpt-4o-mini, and the independent-vendor
+llama-3.3-70b) as independent methods, the same skill agrees across graders for the two skills with the
+widest grade range while *different* skills stay near zero (Table 3, Panel A), the convergent-high /
+discriminant-low pattern a valid measure should show; Steering's narrower range under the P2 ceiling
+gives a lower cross-method correlation, a restriction of variance rather than a separate construct.
+Across the full matrix the convergent correlations exceed both heterotrait terms and no grader shows
+halo, so all three Campbell-Fiske criteria hold. Second, the instrument is faithful to the population's
+dependence structure (Table 3, Panel B): on learners whose competences are set *independently* the
+inter-skill grade correlations are near zero, whereas on the 20 learners whose competences are all
+strong or all weak the same instrument returns *positive* correlations. It therefore does not
+manufacture dissociation, recovering independence when the competences are independent and correlation
+when they are shared, which licenses reading the crossed-design separation as a property of the skills
+rather than of the scoring.
 
 **Table 3. Multitrait-multimethod validity.** Panel A: convergent agreement of the same skill across
 the three grader backends (mean pairwise per-learner rank correlation on the 40 shared transcripts).
@@ -616,37 +542,30 @@ all-weak learners whose three competences share one level).
 | independent (crossed) competences | −0.03 | −0.12 | +0.25 | mean $\lvert\rho\rvert$ = 0.13 |
 | shared single-ability level | **+0.52** | +0.14 | **+0.56** | mean $\rho$ = +0.41 |
 
-The own-skill effects are directionally consistent across subjects: broken down by the ten subject
-areas (eight learners each), Framing and Steering each show a positive own-competence effect in nine of
-ten subjects, with the two exceptions (Framing in statistics, Steering in microeconomics) reflecting
-the small per-subject sample rather than a sign reversal; Judging is fixed by construction in every
-subject. The own-competence effect is therefore not driven by any single domain; the pooled own-effects
-and their confidence intervals above carry the estimate, and the per-subject pattern shows it holds
-broadly across the curriculum. The designed-contrast personas make the separation concrete (Figure 4, which plots five
-profiles). Three are especially telling: a *weak-framer / strong-judge* learner scores Framing C but
-Judging A; a *strong-framer / weak-judge* learner inverts this to Framing B, Judging C; and a
-*weak / weak / strong-steerer* elevates only Steering. A single underlying "AI-use
-ability" cannot produce these crossed profiles. Converging evidence comes from outside our synthetic
-setting. In an intervention study, students' *behavioral* regulation of LLM use (reformulating queries,
-checking correctness) predicts effective use, whereas self-rated AI expertise does not (Clerc et al.,
-2026). The skill of working with AI is thus distinct from a general, self-assessed competence.
+The own-skill effects are directionally consistent across subjects: Framing and Steering each show a
+positive own-competence effect in nine of ten subject areas, the two exceptions reflecting the small
+per-subject sample rather than a sign reversal (Judging is fixed by construction throughout). The
+designed-contrast personas make the separation concrete (Figure 4): a *weak-framer / strong-judge*
+learner scores Framing C but Judging A; a *strong-framer / weak-judge* learner inverts this; and a
+*weak / weak / strong-steerer* elevates only Steering. A single underlying "AI-use ability" cannot
+produce these crossed profiles. Converging evidence comes from outside our synthetic setting: in an
+intervention study, students' *behavioral* regulation of LLM use predicts effective use whereas
+self-rated AI expertise does not (Clerc et al., 2026), so the skill of working with AI is distinct from
+a general, self-assessed competence.
 
-**Robustness and ablations.** Three checks, reported in full in Appendix B, support the result. First, the grader is **92% self-consistent** on repeat, a precision check, not accuracy against humans. Second, the dissociation replicates across three grader backends spanning two providers (gpt-4o, gpt-4o-mini, and Meta's llama-3.3-70b; diagonal-to-off-diagonal ratio 39), so it does not hinge on one model snapshot. Third, a ground-truth ablation shows Framing and Steering are scored by rubric-guided model judgment while Judging, as instrumented, tracks the seeded answer key, which locates the Judging score to settings with known ground truth (Section 9.3 specifies the open-ended variant).
+**Robustness and ablations.** Three checks, reported in full in the Supplementary Material, support the result. First, the grader is **92% self-consistent** on repeat, a precision check, not accuracy against humans. Second, the dissociation replicates across three grader backends spanning two providers (gpt-4o, gpt-4o-mini, and Meta's llama-3.3-70b; diagonal-to-off-diagonal ratio 39), so it does not hinge on one model snapshot. Third, a ground-truth ablation shows Framing and Steering are scored by rubric-guided model judgment while Judging, as instrumented, tracks the seeded answer key, which locates the Judging score to settings with known ground truth (Section 9.3 specifies the open-ended variant).
 
-**Scope.** These results establish feasibility. (i) Judging's clean diagonal (+2.00, zero cross-effects)
-is a controlled check by design: its competence is set by a controlled selection over the seeded
-issues, so the diagonal confirms that the grader correctly rewards recall and precision, and the
-independent separation evidence is carried by the free-text, blind-graded skills, Framing and Steering,
-whose positive own-effects (+0.62, +0.43) with near-zero cross-effects drive the result. (ii) The
-dissociation replicates across grader backends spanning two providers (Appendix B); agreement with
-human experts is the validity step the prepared study in Section 9.3 supplies.
-(iii) With three constructs the separability evidence rests on the manipulation-based effect matrix and
-the inter-skill correlations, the appropriate tests for the design. (iv) Steering's own-effect (+0.43
-at N=80) is governed by the P2 ceiling by design: steering quality is bounded by the judging that
-precedes it, so manipulating steering alone has bounded headroom. This is a property of the construct,
-not of the grader: under a deliberately strict steering rubric (a C for vague or non-prioritized
-commands) the steering own-effect is unchanged (+0.40 versus +0.50, statistically indistinguishable)
-and the dissociation persists (ratio 27.5). Human steering data will trace this ceiling directly.
+**Scope.** These results establish feasibility, with four qualifications. Judging's clean diagonal
+(+2.00, zero cross-effects) is a controlled check by design, so the independent separation evidence is
+carried by the free-text, blind-graded Framing and Steering (own-effects +0.62 and +0.43 with near-zero
+cross-effects). The dissociation replicates across grader backends from two providers (Supplementary
+Material), while agreement with human experts is the validity step the prepared study of Section 9.3
+supplies. With three constructs the evidence rests on the manipulation-based effect matrix and the
+inter-skill correlations, the appropriate tests for this design. Finally, Steering's own-effect is
+governed by the P2 ceiling by design (its quality is bounded by the judging that precedes it); this is a
+property of the construct, not the grader, since under a deliberately strict steering rubric the effect
+is unchanged (+0.40 versus +0.50) and the dissociation persists. Human steering data will trace this
+ceiling directly.
 
 ## 9. Discussion
 
@@ -767,6 +686,25 @@ the assessable skill is the framing, judging, and steering of it. We release the
 and the validation protocol as a foundation to build on: an open, domain-general platform with which a
 university educator in any discipline, from algorithms to applied ethics, can assess and train this skill, for the
 assessment and instruction the moment demands.
+
+## Declarations
+
+**Availability of data and materials.** The assessment instrument (the sixteen-prompt scoring engine),
+the experiment data, and the prepared human-rater validation protocol are released in a public
+repository (URL withheld to preserve anonymous review; available to the editors on request).
+
+**Competing interests.** The authors declare that they have no competing interests.
+
+**Funding.** [To be completed by the authors.]
+
+**Authors' contributions.** [To be completed by the authors.]
+
+**Ethics approval and consent to participate.** Not applicable. The study reports a feasibility
+demonstration over model-generated simulated learners and involves no human participants.
+
+**Consent for publication.** Not applicable.
+
+**Acknowledgements.** [To be completed by the authors, if any.]
 
 ## References
 <div class="references" markdown="1">
@@ -904,126 +842,3 @@ Zimmerman, B. J. (2000). Attaining Self-Regulation: A Social Cognitive Perspecti
 UNESCO (2024). AI Competency Framework for Students. *UNESCO*.
 
 </div>
-
-## Appendix A. System walkthrough
-
-Figure A1 shows a single challenge run in CoReasoningLab, illustrating how the three skills appear as
-distinct, separately-scored stages of one continuous task. In Phase 1 the learner refines an
-ill-defined problem and receives a Framing grade. The system then produces a deliberately flawed
-solution. In Phase 2 the learner judges that output (flagging real issues while avoiding distractors)
-and steers the AI with a targeted correction; the output converges across cycles. The final report
-returns three independent grades with per-skill diagnostic feedback, the interface-level expression of
-the framework's central claim that productive AI use is not one skill but three.
-
-![Figure A1. A CoReasoningLab challenge run.](assets/system-challenge-run.png)
-
-*Figure A1. Screenshot of the running platform: a learner's challenge run at the Framing phase. The
-engine has generated an ill-defined problem (here, an AI hiring-screening task), and the learner
-specifies refinements before any solution is produced. The two-phase structure is explicit in the
-interface, Phase 1 (Framing) and Phase 2 (the Judge-Steer cycle), and each skill is scored and given
-feedback independently.*
-
-The platform exposes role-specific interfaces beyond the challenge run (Figure A2). Students see a
-dashboard of pending challenges and courses and a personal results view that trends Framing, Judging,
-and Steering separately over time. Instructors author challenges (the system auto-generates the
-ill-defined problem and the three per-skill rubrics) and read course analytics that break grade
-distributions down by rubric and by student. In every view the three skills remain distinct columns,
-which is the design commitment the framework makes visible.
-
-![Figure A2. CoReasoningLab instructor course analytics.](assets/system-instructor-analytics.png)
-
-*Figure A2. Screenshot of the running platform: the instructor course-analytics view. Grade
-distribution is broken out into separate Framing, Judging, and Steering panels, and the per-student
-results list the three skills as distinct columns, the interface-level expression of the framework's
-central claim that productive AI use is not one skill but three.*
-
-![Figure A3. Auto-generation and assessment pipeline of the CoReasoningLab engine.](assets/system-pipeline.svg)
-
-*Figure A3. The sixteen-prompt engine in two phases. In authoring, the instructor names a subject and the
-engine generates the ill-defined problem (prompt 01), three per-skill rubrics and a gold framing (02, 14),
-and a deliberately flawed AI solution carrying seeded issues (03). In assessment, each learner response is
-scored against a different referent: Framing against the gold framing and rubric (08), Judging against the
-seeded issues (09), and Steering against the corrected trajectory after the output is re-run (04, 10); a
-single grader prompt (11) then assigns each skill its own grade, and the three feed the per-student report
-and course analytics. Because the three evaluation prompts interrogate different referents, the grades are
-produced independently rather than as one global impression.*
-
-## Appendix B. Robustness and ablations
-
-**Reliability.** To check that the grades are not noise, we hold four learner transcripts fixed and
-re-run the evaluation-and-grading prompts five times each, an independent sample each time at the
-production temperatures. The grader is **92% self-consistent** overall: the
-mean grade-flip rate across repeats is 0.08, with Judging deterministic (0.00, by construction),
-Framing 0.15, and Steering 0.10, and a mean within-cell grade standard deviation near 0.2 on the
-three-point scale, indicating that disagreements are occasional one-level boundary jitter rather than
-unstable scoring. This addresses the documented self-inconsistency of LLM judges, though it measures
-*precision* (repeatability), not *accuracy* against humans (Section 9.3). Because Judging contributes a
-flip rate of zero by construction, the load-bearing figure is the blind-graded skills, whose flip rate
-is near 0.12.
-
-**Grader-backend robustness (across vendors).** The dissociation holds across three grader backends
-spanning two providers. The primary grades come from gpt-4o; re-grading the identical 40 transcripts
-(challenges and learner responses held fixed) with gpt-4o-mini reproduces it (diagonal +0.47 versus
-off-diagonal +0.07), and re-grading the same transcripts with an independent-vendor model,
-Meta's llama-3.3-70b (the prototype's own engine), reproduces it again with a stronger margin:
-own-skill effects of +0.80 (Framing), +0.75 (Judging), and +0.40 (Steering) against a mean cross-skill
-effect of +0.02, a diagonal-to-off-diagonal ratio of 39. Two facts stand out across backends. First,
-Judging's own-effect is +2.00 only under gpt-4o's strict adherence to the seeded-issue selection; under
-both gpt-4o-mini and the independent-vendor llama it settles to +0.65 and +0.75, level with Framing
-(+0.65 and +0.80), so the separation is balanced across all three skills, not propped up by the built-in
-Judging diagonal. Second, every backend reproduces the designed contrast profiles (a strong-framer /
-weak-judge learner scores high Framing and low Judging, and the inverse for a weak-framer / strong-judge
-learner), which a single general-ability account cannot produce. Because the result holds across three
-independently-versioned models from two vendors (gpt-4o, gpt-4o-mini, and Meta's llama-3.3-70b), it does
-not hinge on a single model snapshot; the released harness pins the model identifiers so the run
-reproduces, and the cross-backend agreement is the evidence that it generalizes beyond any one of them.
-Cross-vendor replication is therefore established, not deferred.
-
-**Dependence on ground-truth scaffolding.** To probe how much the instrument's discrimination relies on
-the seeded ground truth (the gold framing supplied to the framing evaluator and the known seeded issues
-supplied to the judging evaluator) versus the model's own judgment, we re-grade a 40-learner subset
-(five subjects) with that scaffolding removed, comparing against that subset's own baseline (Framing
-+0.60, Judging +2.00, Steering +0.50). The effect is sharply skill-specific. Framing discrimination is essentially
-unaffected (own-effect +0.75 without the gold reference, versus +0.60 with it): the rubric and the
-model's own judgment carry it. Judging discrimination, by contrast, falls sharply (+2.00 to +0.45):
-without the known issues the grader has no recall-precision anchor and no longer separates strong from
-weak judging. Steering falls in between (+0.50 to +0.25). The skills still
-dissociate (ratio 29), and the result pinpoints what each grade measures: Framing and Steering are
-scored largely by rubric-guided model judgment, whereas Judging *as instrumented here* tracks agreement
-with a known answer key. This both explains Judging's by-construction +2.00 and locates the Judging
-score precisely: it applies where ground truth is known, and open-ended judging without a key is the
-distinct instrumentation Section 9.3 specifies.
-
-## Appendix C. Cross-disciplinary challenge showcase
-
-The framework and the platform are domain-general. An ill-defined problem with seeded flaws, three
-per-skill rubrics, and a deliberately-imperfect AI solution can be generated for any subject, because
-each is produced by a prompt that an educator parameterizes with a course and topic. The released
-platform ships challenge content across twelve disciplines (Table C1) spanning STEM, the social
-sciences, the humanities, law, and professional and education fields. CoReasoningLab is in this sense
-not a computing-education tool but a generic instrument for any discipline in which a learner must
-specify an ill-defined task, judge a fallible solution, and steer it toward a better one.
-
-**Table C1. Disciplines covered by the released challenge content.**
-
-| Area | Disciplines |
-|---|---|
-| STEM | Computer Science (algorithms); Physics (classical mechanics); Mathematics (linear algebra); Electrical Engineering (signal processing); Biology (molecular biology) |
-| Social sciences | Economics (microeconomics); Political Science (international relations); Psychology (cognitive psychology) |
-| Humanities and law | Philosophy (applied ethics); Law (constitutional law) |
-| Professional and education | Business (organizational behavior); Education (educational technology) |
-
-The four examples below are real ill-defined problems the platform generated, in applied ethics,
-physics, instructional design, and computing, each of which a learner must Frame before the AI produces
-a flawed solution to Judge and Steer:
-
-- **Applied ethics.** "As a member of the AI Ethics Committee at a technology company, you have been tasked with developing a set of ethical guidelines for the deployment of a new AI system."
-- **Physics.** "As part of a project for a local amusement park, design a new ride that involves a projectile-motion component, and analyze the outcomes."
-- **Instructional design (education).** "Our organization is developing a new training program on effective communication skills. Design a backward lesson plan."
-- **Computer science.** "Our company is building a navigation app. Design an algorithm that computes the shortest path between two locations on a road network with varying travel speeds, possible road closures, and concurrent route requests."
-
-The deliberate gaps differ by discipline (a missing fairness criterion in the ethics task, an unstated
-launch or safety constraint in the physics task, undefined learning objectives in the lesson-plan task),
-but the learner's work is identical across all of them: specify the task (Framing), evaluate the AI's
-flawed solution (Judging), and redirect it toward an adequate one (Steering). Full per-discipline session
-logs ship with the platform.
