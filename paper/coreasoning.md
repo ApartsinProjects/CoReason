@@ -6,7 +6,7 @@
 ¹ Holon Institute of Technology  ·  ² Afeka College of Engineering
 {: .affil }
 
-*Corresponding author: Dr. Yehudit Aperstein, Afeka College of Engineering.*
+*Corresponding author: Dr. Yehudit Aperstein, Afeka College of Engineering (apersteiny@afeka.ac.il).*
 {: .affil }
 
 <div class="abstract" markdown="1">
