@@ -41,8 +41,8 @@ AI alone (Vaccaro et al., 2024), which makes the human's skill in directing the 
 to it, the decisive variable. Direct behavioral evidence sharpens the point: across 16,851 real
 student-ChatGPT interactions from a university course (McNichols et al., 2025), students' moves are
 dominated by framing-type queries, while explicit verification of the AI's output (about 4% of
-interactions) and corrective editing (about 2.5%) are rare, the very under-judging and under-steering a
-competency model must target.
+interactions) and corrective editing (about 2.5%) are rare. This is the very under-judging and
+under-steering a competency model must target.
 
 These findings share a structure. The difference between productive and counterproductive AI use is
 not access to AI; it is a *competency* that some learners exercise and others do not. This echoes the
