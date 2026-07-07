@@ -7,7 +7,7 @@
 
 ## Abstract
 
-Generative AI makes answers cheap and understanding scarce: a university student can now produce fluent work without the thinking a degree should develop. The competency that matters is no longer solving a problem unaided but working well with a fallible machine: framing an ill-defined task, judging what the model returns, and steering it. Yet this ability is rarely assessed on its own; where measured, it collapses into a single "prompting" score that cannot say *why* AI use succeeded or failed. We propose CoRe-3 (Co-Reasoning), a competency model that factors productive AI use into three assessable skills, abbreviated FJS: Framing (specifying an ill-defined task before invoking AI), Judging (evaluating the output for errors and unstated assumptions), and Steering (iteratively redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the skills in metacognition and self-regulated learning theory, state five testable propositions, and instantiate them in an open web platform that scores each skill independently. Over simulated learners of controlled competence graded by a different model, the three grades dissociate: each tracks its own manipulated skill while staying flat in the others, and they correlate only when a single ability is shared across all three, the convergent-and-discriminant signature of a valid measure, replicated across grader backends from two vendors. We release the instrument, data, and a prepared human-rater protocol; human-rater agreement and learning outcomes are next.
+Generative AI makes answers cheap and understanding scarce: students can now produce fluent work without the thinking a degree should develop. The competency that matters is no longer solving a problem unaided but working well with a fallible machine. Yet this ability is rarely assessed on its own; where measured, it collapses into a single "prompting" score that cannot say *why* AI use succeeded or failed. We propose CoRe-3 (Co-Reasoning), a competency model that factors productive AI use into three assessable skills, abbreviated FJS: Framing (structuring the task before invoking AI), Judging (evaluating the output), and Steering (redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the skills in metacognition and self-regulated learning theory, state five testable propositions, and instantiate them in an open platform that scores each skill independently. Over simulated learners of controlled competence, graded by a different model from a different vendor and with the free-text skills scored blind to the intended competence, the three grades dissociate: each tracks its own manipulated skill while staying flat in the others, and correlate only when one ability is shared across all three, the convergent-and-discriminant signature of a valid measure. We release the instrument, the data, and a runnable human-rater protocol, positioning this as the construct-separability stage of a validity program whose human-agreement and efficacy stages are specified and ready to run.
 
 </div>
 
@@ -80,7 +80,7 @@ three distinct skills, each independently assessable and collectively abbreviate
   output measurably closer to an adequate solution. Steering is a control skill exercised *after*
   generation, in a loop with Judging.
 
-**Contributions.** This paper makes the following contributions:
+**Contributions.** This paper makes the following contributions, spanning a theoretical framework and its novelty positioning (1-4), a feasibility demonstration (5), and a released artifact and protocol (6):
 
 1. **A competency model** that decomposes productive work with generative AI into three temporally and
    cognitively distinct, independently-assessable skills (Framing, Judging, and Steering), whose
@@ -100,11 +100,16 @@ three distinct skills, each independently assessable and collectively abbreviate
    scored automatically, with a multitrait-multimethod validity analysis (three grader backends across
    two vendors; shared- versus independent-competence populations) giving convergent and discriminant
    evidence that the three skills are separately measurable and genuinely distinct.
-6. **A reproducible, released artifact** (the assessment instrument and the experiment data) together
-   with a fully prepared human-rater validation protocol for the community to run.
+6. **A released, runnable validation package**: the assessment instrument, the experiment data, a
+   scoring codebook, per-rater task files with hidden ground truth, and seed-fixed agreement-scoring
+   scripts, so the human-agreement study is executable on rater recruitment alone, not a methodological
+   sketch.
 
-The empirical material is a feasibility demonstration of *construct separability and measurability*;
-the efficacy study that tests learning outcomes is the next stage of the program (Section 9.3).
+Following the argument-based validity tradition (Kane, 2013; Messick, 1995), instrument development
+proceeds in stages: a measure must first separate the constructs it claims to measure before
+human-agreement and outcome evidence are warranted. This paper delivers that prerequisite stage,
+construct separability and automated measurability, with a released, runnable protocol for the
+human-agreement stage that follows (Section 9.3).
 
 ## 2. The problem with current AI-literacy assessment
 
@@ -671,6 +676,15 @@ testing whether metacognitive monitoring accuracy predicts Judging, extending fi
 predicts subsequent strategy use in computer-based learning (Lee & Bosch, 2025) and tying the construct
 to its monitor-control grounding.
 
+### 9.4 Implications for higher-education practice
+
+The decomposition is immediately actionable for higher education. An instructor can diagnose *which*
+cognitive operation a student's AI use failed at and give per-skill formative feedback, rather than a
+single "prompting" grade; a programme can define reasoning with generative AI as an assessable learning
+outcome and track it across a curriculum; and academic-integrity policy can shift from prohibiting AI
+use toward assessing the framing, judging, and steering that competent use requires. The released,
+discipline-general platform lets any department instantiate this without building an instrument.
+
 ## 10. Conclusion
 
 The task of education in the age of generative AI is not to produce faster answer-getters but to
@@ -697,15 +711,16 @@ repository (URL withheld to preserve anonymous review; available to the editors 
 **Funding.** The authors received no specific grant from any funding agency in the public, commercial,
 or not-for-profit sectors for this research.
 
-**Authors' contributions.** Both authors contributed to the conception and design of the competency
-model, the design and implementation of the instrument and experiments, the analysis and interpretation
-of the results, and the drafting and critical revision of the manuscript. Both authors read and approved
-the final manuscript.
+**Authors' contributions.** AA and YA jointly conceived the competency model, designed and implemented
+the instrument and experiments, analysed and interpreted the results, and drafted and critically revised
+the manuscript. Both authors read and approved the final manuscript.
 
 **Ethics approval and consent to participate.** Not applicable. The study reports a feasibility
 demonstration over model-generated simulated learners and involves no human participants.
 
 **Consent for publication.** Not applicable.
+
+**Use of generative AI.** Generative AI is the assessment instrument evaluated in this paper (Section 7.1); no generative-AI tool was used to author the scholarly content of the manuscript.
 
 **Acknowledgements.** Not applicable.
 

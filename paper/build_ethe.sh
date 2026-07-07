@@ -43,4 +43,22 @@ conv supplementary.html supplementary.docx
 $PY -c "import pypandoc; pypandoc.convert_file('../paper/cover-letter.md','docx',outputfile='cover-letter.docx')"
 rm -f _blinded.html _ms.html
 
+# ETHE tables must not use colour/shading -> strip header fill from the submitted files
+# (headers stay distinguished by bold + the booktabs rules). Keep the identified
+# coreasoning.docx shaded (it is the web/records copy, not the submission).
+$PY - coreasoning-blinded.docx supplementary.docx <<'PYX'
+import sys, docx
+from docx.oxml.ns import qn
+for f in sys.argv[1:]:
+    d = docx.Document(f); n = 0
+    for t in d.tables:
+        for row in t.rows:
+            for c in row.cells:
+                tcPr = c._tc.tcPr
+                if tcPr is not None:
+                    for shd in tcPr.findall(qn('w:shd')):
+                        tcPr.remove(shd); n += 1
+    d.save(f); print(f"  stripped {n} shaded cells from {f}")
+PYX
+
 echo "Built: index.html, cover-letter.html, supplementary.html + 4 DOCX deliverables."
