@@ -1,30 +1,16 @@
-"""Build docs/index.html (GitHub Pages) from paper/coreasoning.md with KaTeX math.
-Usage: python paper/build_html.py
+"""Build a paper Markdown source into a styled HTML page with KaTeX math.
+
+Usage:
+  python paper/build_html.py                                  # index.html from coreasoning.md (+download links)
+  python paper/build_html.py --src paper/cover-letter.md --out docs/cover-letter.html --title "Cover letter" --plain
 """
+import argparse
 from pathlib import Path
 import markdown
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "paper/coreasoning.md"
-OUT = ROOT / "docs/index.html"
-OUT.parent.mkdir(parents=True, exist_ok=True)
 
-TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoRe-3: A Competency Model for Reasoning With Generative AI in Higher Education</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
-  integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
-  integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
-  integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
-  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\\\(',right:'\\\\)',display:false},{left:'\\\\[',right:'\\\\]',display:true}]});"></script>
-<style>
-/* Typography modeled on a TMLR/JMLR/NeurIPS camera-ready: serif body, justified,
-   white background. Font stack and sizes matched to the SynSmith paper layout. */
+STYLE = """
 :root{
   --fg:#111418;--fg-soft:#2c3138;--muted:#5a626c;--accent:#14385c;
   --bg:#ffffff;--bg-soft:#fafafa;--rule:#d1d4d8;--line:#d1d4d8;
@@ -79,6 +65,7 @@ p:has(img)+p,figcaption{font-size:9.5pt;color:var(--fg-soft);text-align:justify;
   border:1px solid var(--accent);color:var(--accent);background:var(--bg);text-decoration:none;
   border-radius:3px;letter-spacing:.01em;white-space:nowrap;line-height:1;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .docxlink:hover{background:var(--accent);color:var(--bg);text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.backlink{display:inline-block;margin:0 0 1.5rem;font-size:10pt}
 footer{margin-top:3rem;padding-top:.9rem;border-top:.5px solid var(--rule);font-size:9pt;color:var(--muted);text-align:center;font-family:var(--font-body)}
 @media print{
   .docxlinks{display:none}
@@ -90,26 +77,51 @@ footer{margin-top:3rem;padding-top:.9rem;border-top:.5px solid var(--rule);font-
   .references p{break-inside:avoid}
   a{color:#000;text-decoration:none}
 }
-</style>
-</head>
-<body>
-<div class="docxlinks">
-<a class="docxlink" href="coreasoning.docx" download>&#8595; Download .docx (1-column)</a>
-<a class="docxlink" href="coreasoning-2col.docx" download>&#8595; Download .docx (2-column)</a>
-</div>
-{body}
-</body>
-</html>
 """
 
+KATEX = """<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+  integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
+  integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\\\(',right:'\\\\)',display:false},{left:'\\\\[',right:'\\\\]',display:true}]});"></script>"""
+
+DOCXLINKS = """<div class="docxlinks">
+<a class="docxlink" href="coreasoning.docx" download>&#8595; Manuscript (.docx)</a>
+<a class="docxlink" href="coreasoning-blinded.docx" download>&#8595; Anonymized manuscript (.docx)</a>
+<a class="docxlink" href="supplementary.docx" download>&#8595; Supplementary Material (.docx)</a>
+<a class="docxlink" href="cover-letter.html">&#9993; Cover letter</a>
+<a class="docxlink" href="cover-letter.docx" download>&#8595; Cover letter (.docx)</a>
+</div>
+"""
+
+
+def build(src, out, title, extra_top=""):
+    md = Path(src).read_text(encoding="utf-8")
+    html = markdown.markdown(md, extensions=["tables", "fenced_code", "toc", "sane_lists",
+                                             "attr_list", "md_in_html"])
+    page = (f'<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
+            f'<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
+            f'<title>{title}</title>\n{KATEX}\n<style>{STYLE}</style>\n</head>\n<body>\n'
+            f'{extra_top}{html}\n</body>\n</html>\n')
+    outp = Path(out)
+    outp.parent.mkdir(parents=True, exist_ok=True)
+    outp.write_text(page, encoding="utf-8")
+    (outp.parent / ".nojekyll").write_text("", encoding="utf-8")
+    print(f"Wrote {outp} ({len(html)} chars)")
+
+
 def main():
-    text = SRC.read_text(encoding="utf-8")
-    html = markdown.markdown(text, extensions=["tables", "fenced_code", "toc", "sane_lists",
-                                               "attr_list", "md_in_html"])
-    # promote the first H1's following italic line to a subtitle look (handled by CSS via em)
-    OUT.write_text(TEMPLATE.replace("{body}", html), encoding="utf-8")
-    (OUT.parent / ".nojekyll").write_text("", encoding="utf-8")
-    print(f"Wrote {OUT} ({len(html)} chars)")
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--src", default=str(ROOT / "paper/coreasoning.md"))
+    ap.add_argument("--out", default=str(ROOT / "docs/index.html"))
+    ap.add_argument("--title", default="CoRe-3: A Competency Model for Reasoning With Generative AI in Higher Education")
+    ap.add_argument("--plain", action="store_true", help="no download-links sidebar; add a back-to-paper link")
+    a = ap.parse_args()
+    extra = "" if a.plain else DOCXLINKS
+    build(a.src, a.out, a.title, extra_top=extra)
+
 
 if __name__ == "__main__":
     main()
