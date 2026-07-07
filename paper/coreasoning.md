@@ -1,4 +1,4 @@
-# Framing, Judging, Steering: An Assessable Competency Model for Teaching Students to Reason With Generative AI
+# Framing, Judging, Steering: An Assessable Competency Model for Teaching University Students to Reason With Generative AI
 
 **Alexander Apartsin**¹ and **Yehudit Aperstein**²
 {: .authors }
@@ -10,14 +10,14 @@
 
 ## Abstract
 
-Generative AI makes answers easy and understanding hard, and uncritical use invites cognitive offloading. Schools still measure *unaided* performance, yet the real task is to produce good work *with* AI: framing an ill-defined task, judging the output, and steering the model toward a better result. This ability is rarely assessed in its own right; where measured, it collapses into one "prompting" score that cannot diagnose *why* AI use succeeds or fails. We propose **CoRe-3** (Co-Reasoning), a competency model factoring productive AI use into three assessable skills we abbreviate **FJS**: **Framing** (specifying an ill-defined task before invoking AI), **Judging** (evaluating output for errors and unstated assumptions), and **Steering** (iteratively redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the skills in theory, state five testable propositions, and instantiate them in **CoReasoningLab**, an open platform that presents flawed AI output and scores them independently. Over simulated learners (generated and graded by different models), the skills dissociate: each tracks its own manipulated competence while staying flat in the others, and grades become correlated when one competence is shared across all three (convergent and discriminant validity), across grader backends from two providers. Human-rater agreement and outcomes are next; we release the instrument, data, and protocol.
+Generative AI makes answers easy and understanding hard, and uncritical use invites cognitive offloading. Universities still measure *unaided* performance, yet the real task is to produce good work *with* AI: framing an ill-defined task, judging the output, and steering the model toward a better result. This ability is rarely assessed in its own right; where measured, it collapses into one "prompting" score that cannot diagnose *why* AI use succeeds or fails. We propose **CoRe-3** (Co-Reasoning), a competency model factoring productive AI use into three assessable skills we abbreviate **FJS**: **Framing** (specifying an ill-defined task before invoking AI), **Judging** (evaluating output for errors and unstated assumptions), and **Steering** (iteratively redirecting the model). Its distinguishing claim is the separation of pre-generation Framing from post-generation Steering, with Judging as the gate between. We ground the skills in theory, state five testable propositions, and instantiate them in **CoReasoningLab**, an open platform that presents flawed AI output and scores them independently. Over simulated learners (generated and graded by different models), the skills dissociate: each tracks its own manipulated competence while staying flat in the others, and grades become correlated when one competence is shared across all three (convergent and discriminant validity), across grader backends from two providers. Human-rater agreement and outcomes are next; we release the instrument, data, and protocol.
 
 </div>
 
 ## 1. Introduction
 
-Most AI-in-education tools optimize for the wrong variable. They shorten the path from question to
-answer, when the answer was never the point of education. The cognitive work of specifying a problem,
+Most tools bringing generative AI into higher education optimize for the wrong variable. They shorten the path from question to
+answer, when the answer was never the point of a university education. The cognitive work of specifying a problem,
 evaluating a candidate solution, and improving it is where learning happens; when that work is
 delegated wholesale to a machine, the learner walks away with a correct artifact and an unchanged mind.
 The educational opportunity of generative AI is therefore not to deliver answers faster, but to make
@@ -110,7 +110,7 @@ the efficacy study that tests learning outcomes is the next stage of the program
 
 ## 2. The problem with current AI-literacy assessment
 
-Existing instruments for assessing how students work with AI are not wrong so much as
+Existing instruments for assessing how university students work with AI are not wrong so much as
 under-resolved. Knowledge-oriented frameworks such as Long and Magerko (2020) and the UNESCO (2024)
 student competency framework define AI literacy chiefly as *understanding AI systems*: what AI is,
 what it can and cannot do, how it works, and how it should be governed. These are necessary, but they
@@ -764,8 +764,8 @@ from the post-generation one in a way prior frameworks do not, and shows that th
 measured apart. Because the decomposition tracks what a person must contribute rather than what today's
 models cannot yet do, it does not lapse as the models improve: the more capable the system, the more
 the assessable skill is the framing, judging, and steering of it. We release the model, the instrument,
-and the validation protocol as a foundation to build on: an open, domain-general platform with which an
-educator in any discipline, from algorithms to applied ethics, can assess and train this skill, for the
+and the validation protocol as a foundation to build on: an open, domain-general platform with which a
+university educator in any discipline, from algorithms to applied ethics, can assess and train this skill, for the
 assessment and instruction the moment demands.
 
 ## References
